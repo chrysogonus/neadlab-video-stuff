@@ -1,17 +1,19 @@
 import { hexToLinear } from './util';
 
-// The whole video lives in a restrained palette: ink, bone, and one signal colour.
-// One rare accent (acid, the shrooms moment) — see docs/TREATMENT.md.
+// The whole video lives in a restrained palette: ink, bone, and one cold accent (glacier) that
+// carries the archive. Signal orange is reserved for the one warm moment — see docs/TREATMENT.md.
 export const HEX = {
   ink: '#0A0A0B', // background black (slightly warm)
   ink2: '#151517', // raised black (panels, paper-in-the-dark)
   graphite: '#5E5B57', // dim lines, secondary text
   ash: '#9C978F', // mid grey
   bone: '#EEE9DF', // paper white, primary text
-  signal: '#FF4D12', // hazard orange: the spark, the fuse, P(doom)
+  glacier: '#3FB8CC', // cold cyan: the archive, the sung word, every live readout
+  glacierInk: '#14707F', // glacier as ink on bone paper (the inverted plates)
+  signal: '#FF4D12', // hazard orange: reserved for the key falling out (thaw)
   ember: '#FF8A3D', // hotter, lighter orange for cores/highlights
   blood: '#C21D0B', // deep red-orange for shadows of signal
-  acid: '#D8FF3C', // acid: only for the shrooms moment
+  acid: '#D8FF3C', // unused
 } as const;
 
 export type PaletteKey = keyof typeof HEX;

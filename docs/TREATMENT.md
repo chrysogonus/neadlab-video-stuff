@@ -10,7 +10,7 @@ underneath are the only two things that change: **the year**, and **how much has
 Nothing moves on screen that is not either being sung or being counted. The joke, every time, is
 that the machine is in no hurry. Deadpan throughout; fictional names only.
 
-The video is cold for three minutes and goes warm for exactly four bars, when the key falls out.
+The video is cold for three minutes and goes warm when the key falls out — through the decrypted letter and the past-tense title line — then cools again for the last word.
 
 ## Tone
 
@@ -70,8 +70,8 @@ a form field, a cell count — never as a permanent corner readout. Both come fr
 
 | | arc | anchored to |
 |---|---|---|
-| **year** | 2021 → 2035 | starts at the year named in L0; climbs through verse 2; four ticks across L21; stops at L26 |
-| **kept** | 4.2 kB → 9.4 PB | one message at L0; monotone; crosses into PB under L23 |
+| **year** | 2021 → 2036 | starts at the year named in L0; climbs through verse 2; one tick per push across L21 (2033–2036); then holds |
+| **kept** | 4.2 kB → 9.4 PB | one message at L0; monotone; crosses into PB on the word “Petabytes” (L22 ends at 995 TB) |
 
 The year is the plot. The size is the joke.
 
@@ -123,7 +123,11 @@ frame. Escalation:
 - **①** clean, bone on ink, dial nearly empty, type at a civil size.
 - **②** inverted ground, heavier weight, the dial crowded with accumulated ticks, the `KEPT`
   figure now large enough to read across the room.
-- **③** past tense. The dial completes and keeps going. Type maximal. The year stops advancing.
+- **③** past tense. The dial completes as the plate ends. Type maximal. The year stops advancing.
+
+The dial's ring is a calendar, 2021 → 2037; the hand points at the year the archive has reached, the inner
+ring lights one tick per bar waited. After the title line (① and ②) the camera pulls back: this dial is one
+of fifteen, every hand moving as one — `15 SUBJECTS · ALL PENDING · NONE URGENT`.
 
 ### `qubits` — the machine being built
 A **dilution fridge in section**: the real thing is a chandelier of stacked plates, which draws
@@ -194,16 +198,16 @@ and last frames match and the video loops.
 | 18 | 104.74 | `wait` ② | "I'll see you…" | • hand sweeps past the start | 2032 | 12 TB |
 | 19 | 109.19 | `wait` ② | title line | • heavier slam, per word | 2032 | 38 TB |
 | 20 | 119.22 | `ticket` | "Ticket opened…" | • ticket typed, PRIORITY: LOW | 2032 | 95 TB |
-| 21 | 123.90 | `ticket` | "Pushed to next quarter…" | • four stamps, one per bar | 2035 | 210 TB |
-| 22 | 128.48 | `petabytes` | the question | • mono callout with leader line | 2035 | 540 TB |
-| 23 | 134.12 | `petabytes` | the answer | • unit crosses into PB; Cormorant | 2035 | 1.4 PB |
-| 24 | 139.13 | `wait` ③ | "I waited for you…" | • past tense; dial completes | 2035 | 2.6 PB |
-| 25 | 144.36 | `wait` ③ | "Every byte…" | • the figure stops climbing | 2035 | 4.1 PB |
-| 26 | 148.72 | `thaw` | "The fridge hums low…" | • **signal enters**; padlock opens | 2035 | 6.2 PB |
-| 27 | 154.12 | `thaw` | "So that's what…" | • slab resolves into readable text | 2035 | 7.8 PB |
-| 28 | 158.06 | `thaw` | "I said sooner or later" | • the wait animation runs backwards | 2035 | 8.8 PB |
-| 29 | 163.80 | `thaw` | title line, past tense | • the inversion, warm | 2035 | 9.4 PB |
-| 30 | 177.10 | `secure` | "Connection secure." | • frame closes in; padlock closed | 2035 | 9.4 PB |
+| 21 | 123.90 | `ticket` | "Pushed to next quarter…" | • four stamps, one per push | 2036 | 210 TB |
+| 22 | 128.48 | `petabytes` | the question | • mono callout with leader line | 2036 | 995 TB |
+| 23 | 134.12 | `petabytes` | the answer | • unit crosses into PB; Cormorant | 2036 | 1.4 PB |
+| 24 | 139.13 | `wait` ③ | "I waited for you…" | • past tense; dial completes | 2036 | 2.6 PB |
+| 25 | 144.36 | `wait` ③ | "Every byte…" | • the dial nearly closes | 2036 | 4.1 PB |
+| 26 | 148.72 | `thaw` | "The fridge hums low…" | • **signal enters**; padlock opens | 2036 | 6.2 PB |
+| 27 | 154.12 | `thaw` | "So that's what…" | • slab resolves into readable text | 2036 | 7.8 PB |
+| 28 | 158.06 | `thaw` | "I said sooner or later" | • the wait animation runs backwards | 2036 | 8.8 PB |
+| 29 | 163.80 | `thaw` | title line, past tense | • the inversion, warm | 2036 | 9.4 PB |
+| 30 | 177.10 | `secure` | "Connection secure." | • frame closes in; padlock closed | 2036 | 9.4 PB |
 
 ## Technical conventions
 

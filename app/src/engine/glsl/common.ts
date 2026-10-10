@@ -20,6 +20,7 @@ const vec3 C_INK2 = ${v3(LIN.ink2)};
 const vec3 C_GRAPHITE = ${v3(LIN.graphite)};
 const vec3 C_ASH = ${v3(LIN.ash)};
 const vec3 C_BONE = ${v3(LIN.bone)};
+const vec3 C_GLACIER = ${v3(LIN.glacier)};
 const vec3 C_SIGNAL = ${v3(LIN.signal)};
 const vec3 C_EMBER = ${v3(LIN.ember)};
 const vec3 C_BLOOD = ${v3(LIN.blood)};
