@@ -30,21 +30,27 @@ FPS = 100
 # case the pickup stays in the previous section.  The choruses all start with
 # a ~3-beat pickup "I'm upping my P-" over a bass stop, landing "DOOM" on the
 # next downbeat, so the chorus section starts at the pickup bar.
+# Tempo search window (BPM). SONG-SPECIFIC: the fitter does an exhaustive grid search
+# here, so a window that excludes the true tempo silently locks onto a metric relative
+# of it (the original song's 125-138 window fit this song at 128.9 = 97.5 x 4/3, with a
+# 27 ms kick residual). Find the range first:
+#   uv run python tempo_probe.py
+TEMPO_RANGE = (90.0, 105.0)
+
 SECTION_BARS = [
-    ("intro", None, 1),      # 0 .. bar 1 (1-bar synth intro, pickup "I" at 1.41)
-    ("verse1", 1, 9),        # Eb Bb Cm Ab x1 (2 bars each), no drums until bar 7
-    ("pre1", 9, 12),         # F F Ab  "ChatGPT, please don't eat me alive"
-    ("chorus1", 12, 20),     # pickup/stop bar 12, "DOOM" on bar 13
-    ("break1", 20, 21),      # 1-bar turnaround (tail of held "eyes")
-    ("verse2", 21, 29),
-    ("pre2", 29, 32),        # "Sydney, please let me free" (bass out)
-    ("chorus2", 32, 41),     # incl. bar 40 (held "reckoned", pickup "Forward")
-    ("verse3", 41, 49),
-    ("pre3", 49, 52),        # breakdown: drums + bass out, "Gato, please don't let me go"
-    ("chorus3", 52, 60),     # quiet chorus: light drums, no bass
-    ("bridge", 60, 68),      # "Just transformers ..." (full band from bar 61)
-    ("chorus4", 68, 77),     # final chorus, bar 76 = stop bar ("all for show?")
-    ("outro", 77, None),     # full band + "oh" vocals to bar 84 (152.98), then decay
+    # Derived from lyrics/sections.json against the fitted grid: `uv run python sections_bars.py`.
+    # Each section starts on the latest downbeat at or before its first sung line, so a plate
+    # is never late for its own first word (the same rule timeline.ts's cut() uses for beats).
+    ("intro", None, 3),
+    ("verse1", 3, 11),
+    ("prechorus1", 11, 16),
+    ("chorus1", 16, 27),
+    ("verse2", 27, 35),
+    ("prechorus2", 35, 38),
+    ("chorus2", 38, 47),
+    ("bridge", 47, 55),
+    ("finalchorus", 55, 71),
+    ("outro", 71, None),
 ]
 
 
@@ -105,7 +111,7 @@ def fit_grid(drums, mix, sr, duration):
         return np.maximum.reduce([o[idx - 1], o[idx], o[idx + 1]]).mean()
 
     best = (0, None, None)
-    for bpm in np.arange(125.0, 138.0, 0.02):
+    for bpm in np.arange(TEMPO_RANGE[0], TEMPO_RANGE[1], 0.02):
         P = 60 / bpm
         for off in np.arange(0, P, 0.004):
             s = score(P, off)
@@ -302,8 +308,8 @@ def main(plots=False):
         fps=FPS,
         **env,
         onsets=onsets,
-        notes=NOTES.format(bpm=bpm, off=off, P=P, first_db=float(downbeats[0]),
-                           b61=bar_t(61), b76=bar_t(76), b77=bar_t(77), b84=bar_t(84),
+        notes=NOTES.format(song=common.SONG, bpm=bpm, off=off, P=P, first_db=float(downbeats[0]),
+                           kick_sd=kick_res.std() * 1000,
                            sn=len(st), kk=len(kt), hh=len(ht)),
     )
     (common.DATA / "audio.json").write_text(json.dumps(doc, separators=(",", ":")))
@@ -315,33 +321,25 @@ def main(plots=False):
 
 
 NOTES = (
-    "Timeline = gapless mp3 decode (ffmpeg/libsndfile/browsers); Demucs stems were "
-    "shifted -23.0 ms (LAME encoder delay) to match. "
-    "Tempo is constant: {bpm:.3f} BPM (period {P:.5f} s), fitted over the whole song on "
-    "drum+mix onset envelopes (no drift: per-15 s phase deviation <= 2 ms), phase refined "
-    "on kick attack times; first beat {off:.3f} s. The grid is extrapolated through the "
-    "drum-less intro/verse1/pre3 and the fade. "
-    "Bar phase: the drums play four-on-the-floor kick with snare on beats 2 and 4 "
-    "(broadband snare bursts on odd beat indices) and 8th-note off-beat hats, which fixes "
-    "the phase up to half a bar; the half-bar ambiguity is resolved by the harmony: the "
-    "progression Eb-Bb-Cm-Ab (2 bars per chord, F-F-Ab in the pre-choruses) changes chord "
-    "exactly on beat indices = 0 mod 8, and every chorus lands 'DOOM' of 'P(doom)' on a "
-    "downbeat (bars 13/33/53/69). First downbeat {first_db:.3f} s; bar k starts "
-    "at first_downbeat + k*4*period. "
-    "Sections start on downbeats; choruses include their 3-beat pickup bar "
-    "('I'm upping my P-' over a bass stop). pre3 (89.3-94.8) is a breakdown with no drums "
-    "or bass; chorus3 (94.8-109.3) is a quiet chorus with light drums and no bass; the "
-    "full band returns in bar 61 ({b61:.2f} s). chorus4 ends with a stop bar ({b76:.2f}-{b77:.2f} s, "
-    "'all for show?'), outro is loud until {b84:.2f} s (drums stop) then decays to silence ~155.5 s. "
+    "Timeline = the WAV master (audio/{song}.wav); Demucs separates that same file, so "
+    "stems need no time correction. "
+    "Tempo is treated as constant: {bpm:.3f} BPM (period {P:.5f} s), fitted over the whole "
+    "song on drum+mix onset envelopes, phase refined on kick attack times; first beat "
+    "{off:.3f} s, kick residual sd {kick_sd:.1f} ms. The grid is extrapolated through any "
+    "drum-less passage. "
+    "Bar phase from snare-on-2&4 plus the bar-level onset pattern; first downbeat "
+    "{first_db:.3f} s, and bar k starts at first_downbeat + k*4*period. "
+    "Sections start on downbeats and come from SECTION_BARS in analyze.py, which is written "
+    "by hand from lyrics/sections.json against this grid. "
     "Envelopes: 100 fps, frame i centred at i/100 s, 46 ms RMS window, one-pole smoothing "
     "(10 ms attack / 90 ms release), each divided by its own 99th percentile and clipped "
     "to 0..1 (linear amplitude). low <150 Hz, mid 150-2000 Hz, high >4 kHz of the full mix; "
     "vocal/drums/bass/other = stem RMS. "
     "Onsets [time, strength 0-1] from the drums stem: kick = attack (steepest rise) of the "
-    "<120 Hz band ({kk}); snare = 1.5-5 kHz attacks whose 0.5-5 kHz noise tail 40-120 ms later is in the "
-    "loudest local class ({sn}; kick-only in pre1/pre2); hat = >7 kHz attacks not within 40 ms of a snare or 30 ms of a kick ({hh}; mostly 8th off-beats). vocal = note "
-    "onsets from the vocal stem (log-mel flux peaks + legato pitch jumps > 0.8 semitone), "
-    "including backing vocals / ad-libs."
+    "<120 Hz band ({kk}); snare = 1.5-5 kHz attacks whose 0.5-5 kHz noise tail 40-120 ms later "
+    "is in the loudest local class ({sn}); hat = >7 kHz attacks not within 40 ms of a snare or "
+    "30 ms of a kick ({hh}). vocal = note onsets from the vocal stem (log-mel flux peaks + "
+    "legato pitch jumps > 0.8 semitone), including backing vocals / ad-libs."
 )
 
 

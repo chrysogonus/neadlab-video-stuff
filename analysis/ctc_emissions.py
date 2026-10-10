@@ -22,7 +22,8 @@ def compute(name, chunk_s=20.0, ctx_s=3.0, device=None, source="vocals"):
         model = bundle.get_model(with_star=False)
     else:
         model = bundle.get_model()
-    device = device or ("mps" if torch.backends.mps.is_available() else "cpu")
+    device = device or ("cuda" if torch.cuda.is_available()
+                        else "mps" if torch.backends.mps.is_available() else "cpu")
     model = model.to(device).eval()
     y, sr = common.load_vocal_source(source, sr=16000)
     y = y / (np.abs(y).max() + 1e-9)
@@ -51,7 +52,8 @@ def compute(name, chunk_s=20.0, ctx_s=3.0, device=None, source="vocals"):
 
 
 if __name__ == "__main__":
-    srcs = sys.argv[1:] or ["vocals", "lead", "vocL", "vocR"]
+    # 'lead' (the optional audio-separator karaoke stem) is opt-in: pass it explicitly.
+    srcs = sys.argv[1:] or ["vocals", "vocL", "vocR"]
     for src in srcs:
         for n in ("mms", "lv60k"):
             compute(n, source=src)

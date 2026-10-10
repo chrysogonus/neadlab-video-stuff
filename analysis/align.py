@@ -28,7 +28,9 @@ from pron import pron
 # mono sum, left and right channel (choruses are double-tracked L/R).
 PRIMARY = "fused6"
 # Independent-ish alternatives, used for agreement-based confidence.
-ALTS = ("mms", "lv60k", "fused_vocL", "fused_vocR", "fused_lead")
+# Add "fused_lead" if you also ran the optional audio-separator karaoke stem
+# (see ctc_emissions.py) -- it helps where backing vocals bury the lead.
+ALTS = ("mms", "lv60k", "fused_vocL", "fused_vocR")
 
 # Per-line time windows (seconds) where the automatic path is ambiguous.
 LINE_WINDOWS = {}
@@ -42,41 +44,8 @@ ANCHORS = {}
 # Final manual corrections of word boundaries after refinement, only where the
 # plots clearly show the automatic result is wrong.  (line, token) ->
 # dict(start=..., end=...)
-FIX = {
-    # L5 "don't eat me alive": long legato vowels, CTC places eat/alive late /
-    # early.  /i:/ of "eat" starts right after the t-release at 20.26; "alive"
-    # starts with the pitch drop to the schwa at 21.35 ("-live" at 21.85).
-    (5, 3): dict(start=20.27),
-    (5, 5): dict(start=21.35),
-    # L11 "shinigami eyes": shi-ni-ga-mi then /a/ of "eyes" at 34.73
-    (11, 3): dict(start=34.73),
-    # L40 final chorus "I'm upping my P(doom)": lead is buried under a
-    # sustained backing "ah" pad (122.8-125.8); CTC finds nothing.  Placed from
-    # the median-filtered spectrogram + karaoke-lead stem ("doom" /d/ at
-    # 125.66 seen by both CTC models on the lead stem), rhythm identical to
-    # chorus 3 (95.46 / 95.70 / 96.10 / 96.32).
-    (40, 3): dict(start=125.40, syl=[125.66], conf=0.45),
-    (40, 0): dict(start=124.52, conf=0.35),
-    (40, 1): dict(start=124.78, conf=0.35),
-    (40, 2): dict(start=125.20, conf=0.4),
-    # Chorus pickups "I'm": strong vocal onset 2.5 beats before the DOOM
-    # downbeat in every chorus (the CTC path smears "I'm" over backing vocals).
-    (6, 0): dict(start=22.76, conf=0.7),
-    (17, 0): dict(start=59.13, conf=0.7),
-    (17, 1): dict(start=59.36),
-    (28, 0): dict(start=95.47, conf=0.75),
-    # "lies," voiced /l/ onset (lv60k / L / R channels agree, onset peak 31.16)
-    (10, 4): dict(start=31.14, conf=0.7),
-    # "We" / "don't": rest-onset rule fired on reverb tail / breath noise.
-    (12, 0): dict(start=38.62),
-    (27, 2): dict(start=92.46),
-    # "you are" is one long note; vowel change /u/ -> /a/ (spectral centroid
-    # 1020 -> 1180 Hz) at 83.93.  CTC models disagree (83.94 mms / 84.58 lv).
-    (25, 6): dict(start=83.93, conf=0.5),
-    # held notes whose automatic end ran into the next (unlisted) vocal
-    (33, 2): dict(end=108.45),
-    (45, 4): dict(end=140.55),
-}
+FIX = {}
+
 
 # ---------------------------------------------------------------------------
 

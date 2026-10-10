@@ -1,4 +1,4 @@
-"""Shared paths / cache setup for the pdoom analysis scripts.
+"""Shared paths / cache setup for the analysis scripts.
 
 Import this module FIRST (before torch / huggingface / mlx imports) so that all
 model downloads land in analysis/.cache/.
@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent          # analysis/
-PROJECT = ROOT.parent                            # pdoom/
+PROJECT = ROOT.parent                            # repo root
 CACHE = ROOT / ".cache"
 for var, sub in [("TORCH_HOME", "torch"), ("HF_HOME", "hf"), ("HF_HUB_CACHE", "hf/hub"),
                  ("XDG_CACHE_HOME", "xdg"), ("HUGGINGFACE_HUB_CACHE", "hf/hub"),
@@ -16,9 +16,15 @@ for var, sub in [("TORCH_HOME", "torch"), ("HF_HOME", "hf"), ("HF_HUB_CACHE", "h
     os.environ.setdefault(var, str(CACHE / sub))
     (CACHE / sub).mkdir(parents=True, exist_ok=True)
 
-AUDIO = PROJECT / "audio" / "pdoom.mp3"
-STEMS = ROOT / "stems" / "htdemucs_ft" / "pdoom"
-LYRICS_SRC = PROJECT / "lyrics" / "lyrics.src.js"
+# The song. The renderer keeps its own copy of this in app/src/song.ts.
+SONG = "harvest"
+
+# The lossless master is the one time reference for everything: the stems are separated
+# from it, the analysis reads it, and the export muxes it. No mp3 decode is involved
+# anywhere in this pipeline, so there is no encoder delay to correct (see STEM_OFFSET_SAMPLES).
+AUDIO = PROJECT / "audio" / f"{SONG}.wav"
+STEMS = ROOT / "stems" / "htdemucs_ft" / SONG
+LYRICS_SRC = PROJECT / "lyrics" / "lyrics.txt"
 DATA = PROJECT / "data"
 QA = ROOT / "qa"
 WORK = ROOT / "work"          # intermediate results (whisper json, alignments)
@@ -28,28 +34,27 @@ DATA.mkdir(exist_ok=True)
 
 
 def load_lyrics_src():
-    """Parse lyrics.src.js -> list of (start, end, text)."""
-    import json, re
-    src = LYRICS_SRC.read_text(encoding="utf-8")
-    body = src[src.index("["): src.rindex("]") + 1]
-    return [tuple(x) for x in json.loads(body)]
+    """Read lyrics.txt -> list of (start, end, text), one row per sung line.
+
+    The alignment is driven by the text and the audio alone; align.py destructures the
+    two time fields and never reads them, so they are None.
+    """
+    lines = [l.strip() for l in LYRICS_SRC.read_text(encoding="utf-8").splitlines()]
+    return [(None, None, " ".join(l.split())) for l in lines if l]
 
 
-# The Demucs stems were rendered from an mp3 decode that did NOT trim the LAME
-# encoder delay (1105 samples @ 48 kHz = 23.0 ms). The gapless decode of the mp3
-# (ffmpeg / libsndfile / browsers) is our time reference, so stems are shifted
-# earlier by 1015 samples @ 44.1 kHz (measured by cross-correlation, constant
-# over the whole song).
-STEM_OFFSET_SAMPLES = 1015
-STEM_OFFSET_SEC = STEM_OFFSET_SAMPLES / 44100
+# Zero by construction: Demucs separates the same WAV master that AUDIO points at, so
+# stem time is master time. (The original song went through an mp3 whose LAME encoder
+# delay had to be measured and subtracted here; with a WAV master there is no delay.)
+STEM_OFFSET_SAMPLES = 0
+STEM_OFFSET_SEC = 0.0
 
 
 def load_stem(name, sr=None, mono=True):
-    """Load a Demucs stem, time-aligned to the gapless mp3 decode."""
+    """Load a Demucs stem (already in master time, see STEM_OFFSET_SAMPLES)."""
     import soundfile as sf
     import numpy as np
     y, s = sf.read(STEMS / f"{name}.wav", dtype="float32", always_2d=True)
-    assert s == 44100
     y = y[STEM_OFFSET_SAMPLES:]
     y = y.mean(axis=1) if mono else y.T
     if sr and sr != s:
@@ -63,8 +68,7 @@ KARAOKE = ROOT / "stems" / "karaoke"
 
 
 def load_lead(sr=None, mono=True):
-    """Lead vocal only (mel-band-roformer karaoke model run on the mp3; already
-    in gapless-mp3 time, no offset)."""
+    """Lead vocal only (mel-band-roformer karaoke model run on the master)."""
     import soundfile as sf
     import numpy as np
     y, s = sf.read(KARAOKE / "lead.wav", dtype="float32", always_2d=True)
