@@ -5,15 +5,12 @@ pronunciation sub-words made of plain letters (and internal apostrophes).
 """
 import re
 
-PRON = {
-    # "qubits" is spelled qu- but sung /kjuː/; the grapheme models align it badly as-is.
-    "qubits,": "cue bits", "qubits": "cue bits",
-    # split the compound so refinement gets a boundary inside it
-    "Petabytes,": "peta bytes", "Petabytes": "peta bytes",
-}
+import common
 
+# song-specific spellings (analysis/songs/<song>.py)
+PRON = common.CFG.PRON
 # alternative pronunciations to test (scored by alignment likelihood)
-ALT = {}
+ALT = common.CFG.ALT
 
 
 def pron(token: str) -> list[str]:
@@ -27,6 +24,5 @@ def pron(token: str) -> list[str]:
 
 
 if __name__ == "__main__":
-    import common
     for _, _, t in common.load_lyrics_src():
         print(t, "->", " | ".join(" ".join(pron(w)) for w in t.split(" ")))

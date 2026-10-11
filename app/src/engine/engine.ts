@@ -16,6 +16,8 @@ export interface TimelineEntry {
   load: () => Promise<{ default: SceneClass }>;
   start: number;
   end: number;
+  /** Scene module name (scenes/<file>.ts) when it differs from `id`: lets HMR find the entries a changed module serves. */
+  file?: string;
   /** Plate caption shown bottom-right at the start of this entry. */
   caption?: { fig: string; text: string; dur?: number; delay?: number };
   /** Default post overrides for this entry (the scene's own overrides win). */
@@ -310,8 +312,9 @@ export class Engine {
     r.setRenderTarget(prev);
   }
 
-  async init(only?: (e: TimelineEntry) => boolean) {
-    [this.audio, this.lyrics] = await Promise.all([AudioData.load(), Lyrics.load(), loadFonts(), loadStrokeFonts()]) as [AudioData, Lyrics, void, void];
+  /** `dataDir`: the song's directory of audio.json and lyrics.json. */
+  async init(only?: (e: TimelineEntry) => boolean, dataDir = 'data') {
+    [this.audio, this.lyrics] = await Promise.all([AudioData.load(dataDir), Lyrics.load(dataDir), loadFonts(), loadStrokeFonts()]) as [AudioData, Lyrics, void, void];
     this.timeline = this.makeTimeline(this.lyrics, this.audio);
     this.ctx = { renderer: this.renderer, audio: this.audio, lyrics: this.lyrics, comp: this.comp, W, H, id: '', params: {}, start: 0, end: 0, mapTileMask: (rt, map) => this.mapTileMask(rt, map) };
     this.post = new Post();
@@ -584,6 +587,9 @@ export class Engine {
         ov = s.render(this.frameFor(e, t, sceneSeeked ? 0 : dt, sceneSeeked && !s.stateful, false, idx > 0 ? under : null, tin, tout), rt);
       } catch (err) {
         console.error(`scene ${e.id} render error`, err);
+        // recorded (once per entry) so an export fails instead of finishing with red frames
+        const msg = `[${e.id}] render error at t=${t.toFixed(3)}: ${String((err as Error)?.stack ?? err)}`;
+        if (!this.errors.some((x) => x.startsWith(`[${e.id}] render error`))) this.errors.push(msg);
         clearRT(r, rt, [0.25, 0.0, 0.0]);
       }
       rec.lastT = t;

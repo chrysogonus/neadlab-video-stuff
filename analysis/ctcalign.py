@@ -11,14 +11,15 @@
 * Optional per-subword time windows ("anchors") constrain the path; used for
   manually verified hard spots.
 """
-import common  # noqa: F401
+import common
 import numpy as np
 import numba
 import torchaudio
 from pron import pron
 
 FRAME = 0.02  # s per emission frame
-N_FRAMES = 7833
+# emission frames covering the whole master (emissions shorter than that are padded)
+N_FRAMES = int(round(common.source()["duration"] / FRAME))
 ALPHA = ["-"] + list("abcdefghijklmnopqrstuvwxyz'")
 AIDX = {c: i for i, c in enumerate(ALPHA)}
 

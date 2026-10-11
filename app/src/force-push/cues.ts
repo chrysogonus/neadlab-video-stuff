@@ -1,0 +1,301 @@
+// Force Push: the cue sheet as data. One cue per sung line (and per covered instrumental passage),
+// resolved against data/force-push/ by resolve.ts. docs/FORCE-PUSH-CUES.md is generated from this file
+// (bun scripts/cues.ts), and the timeline (timeline-force-push.ts) is built from ENTRIES below.
+
+export type Palette = 'dark' | 'paper' | 'green';
+export type Region = 'left' | 'right' | 'center' | 'top' | 'bottom' | 'full';
+export type Transition = 'cut' | 'match' | 'pullback' | 'wipe' | 'stamp' | 'none';
+/** A point in the song: a downbeat index, the song's start/end, or an edge of another cue. */
+export type Ref = number | 'start' | 'end' | { cue: string; edge: 'start' | 'end' };
+/** What the cue's dominant action lands on: a sung word of the line (nth occurrence in it) or a downbeat. */
+export type Anchor = { word: string; nth?: number } | { bar: number };
+
+export interface CueDef {
+  id: string;
+  /** Lyric cue: the line's exact text (straight or curly quotes) and, if that text repeats, which occurrence (0-based). */
+  lyric?: string;
+  occurrence?: number;
+  /** Instrumental cue: the span it covers. */
+  span?: [Ref, Ref];
+  /** Timeline entry that plays it, and the audio section (data/force-push/audio.json) it must start in. */
+  scene: string;
+  section: string;
+  initial: string;
+  action: string;
+  result: string;
+  anchor: Anchor;
+  palette: Palette;
+  region: Region;
+  transition: Transition;
+  /** State of the recurring motif (graph, pointers, counters) at this cue. */
+  motif: string;
+  assets?: string[];
+  notes?: string;
+}
+
+/** Where a timeline entry starts. */
+export type Cut =
+  | { at: 'zero' }
+  /** On the downbeat with this index. */
+  | { at: 'bar'; bar: number }
+  /** At the first word of a cue (a phrase boundary). */
+  | { at: 'word'; cue: string }
+  /** On the last beat at or before a cue's first word; if the previous line is still being sung there, at the phrase boundary. */
+  | { at: 'beat'; cue: string }
+  /** When a cue's line ends. */
+  | { at: 'end'; cue: string };
+
+export interface EntryDef { id: string; file: string; cut: Cut; params?: Record<string, unknown> }
+
+export const ENTRIES: EntryDef[] = [
+  { id: 'intro', file: 'force-push-terminal', cut: { at: 'zero' }, params: { mode: 'intro' } },
+  { id: 'graph', file: 'force-push-graph', cut: { at: 'bar', bar: 5 } },
+  { id: 'blame', file: 'force-push-blame', cut: { at: 'beat', cue: 'L07' } },
+  { id: 'nomore1', file: 'force-push-nomore', cut: { at: 'beat', cue: 'L11' }, params: { n: 1 } },
+  { id: 'chorus1', file: 'force-push-chorus', cut: { at: 'word', cue: 'L15' }, params: { n: 1 } },
+  { id: 'origin1', file: 'force-push-origin', cut: { at: 'beat', cue: 'L19' }, params: { n: 1 } },
+  { id: 'chant1', file: 'force-push-chant', cut: { at: 'word', cue: 'L21' }, params: { n: 1 } },
+  { id: 'squash', file: 'force-push-squash', cut: { at: 'beat', cue: 'L25' } },
+  { id: 'phone', file: 'force-push-phone', cut: { at: 'beat', cue: 'L29' } },
+  { id: 'nomore2', file: 'force-push-nomore', cut: { at: 'beat', cue: 'L33' }, params: { n: 2 } },
+  { id: 'chorus2', file: 'force-push-chorus', cut: { at: 'word', cue: 'L37' }, params: { n: 2 } },
+  { id: 'origin2', file: 'force-push-origin', cut: { at: 'beat', cue: 'L41' }, params: { n: 2 } },
+  { id: 'chant2', file: 'force-push-chant', cut: { at: 'word', cue: 'L43' }, params: { n: 2 } },
+  { id: 'etiquette', file: 'force-push-etiquette', cut: { at: 'beat', cue: 'L47' } },
+  { id: 'acapella', file: 'force-push-acapella', cut: { at: 'end', cue: 'L50' } },
+  { id: 'drop', file: 'force-push-chorus', cut: { at: 'word', cue: 'L53' }, params: { n: 3 } },
+  { id: 'origin3', file: 'force-push-origin', cut: { at: 'beat', cue: 'L55' }, params: { n: 3 } },
+  { id: 'chant3', file: 'force-push-chant', cut: { at: 'word', cue: 'L57' }, params: { n: 3 } },
+  { id: 'outro', file: 'force-push-terminal', cut: { at: 'end', cue: 'L60' }, params: { mode: 'outro' } },
+];
+
+const G = (o: string, h: number, u: number, x = '') => `graph: origin/main ${o}; ghost lanes ${h}; pushes ${u}${x ? `; ${x}` : ''}`;
+
+export const CUES: CueDef[] = [
+  // ------------------------------------------------------------------ intro (spoken, filtered beat)
+  { id: 'hook', span: ['start', { cue: 'L00', edge: 'start' }], scene: 'intro', section: 'intro',
+    initial: 'black', action: 'a huge block cursor blinks on the filtered beat', result: 'a prompt waiting for a command',
+    anchor: { bar: 0 }, palette: 'dark', region: 'center', transition: 'cut', motif: 'terminal: empty prompt; repo `us`, branch `main` (green pill)',
+    notes: 'The visual hook before any setup: the first frame is already the composition.' },
+  { id: 'L00', lyric: 'Git status.', scene: 'intro', section: 'intro',
+    initial: 'huge cursor', action: '`git status` types with the voice; the view pulls back to the terminal on "status."', result: 'the command entered',
+    anchor: { word: 'status.' }, palette: 'dark', region: 'center', transition: 'pullback', motif: 'terminal: command line' },
+  { id: 'L01', lyric: 'Nothing to commit.', scene: 'intro', section: 'intro',
+    initial: 'command entered', action: 'the output prints; "nothing to commit" lights as sung, ", working tree clean" stays dim', result: 'the planted status line',
+    anchor: { word: 'commit.' }, palette: 'dark', region: 'center', transition: 'none', motif: 'terminal: status line planted (first half lit)',
+    notes: 'Plant for the outro: the same line, other half lit.' },
+  { id: 'L02', lyric: 'Story of your life.', scene: 'intro', section: 'intro',
+    initial: 'status line', action: 'a leader from "nothing to commit" to the hero line "Story of your life."', result: 'the joke lands; `git log --graph` starts typing itself into the pad',
+    anchor: { word: 'life.' }, palette: 'dark', region: 'bottom', transition: 'none', motif: 'terminal → graph (match)' },
+  // ------------------------------------------------------------------ verse 1
+  { id: 'pad', span: [5, 9], scene: 'graph', section: 'intro',
+    initial: 'the log command at top left', action: 'commits by "me" stamp in along `main`, one per beat, over a 3-year axis', result: '16 commits, all "me"; counters me 16 · you 0',
+    anchor: { bar: 9 }, palette: 'dark', region: 'full', transition: 'match', motif: G('at the tip of the shared line', 0, 0, 'all commits filled (me)'),
+    notes: 'Instrumental pad (9.4–16.8 s): drums enter on bar 9 with "Three years".' },
+  { id: 'L03', lyric: 'Three years in and you never could commit', scene: 'graph', section: 'verse1',
+    initial: 'graph of my commits', action: 'a 3 YEARS dimension spans the axis; on "commit" a hollow ring tries to join `main` and falls off', result: 'you: 0 commits',
+    anchor: { word: 'commit' }, palette: 'dark', region: 'left', transition: 'none', motif: G('at tip', 0, 0, 'ring rejected') },
+  { id: 'L04', lyric: "Hid me in your stash, said we'd get to it", scene: 'graph', section: 'verse1',
+    initial: 'graph', action: 'on "stash" a "me" disc drops into a drawer `stash@{0}: WIP on main`; "get to it" adds a TODO and its age', result: 'me, stashed for 3 years',
+    anchor: { word: 'stash,' }, palette: 'dark', region: 'left', transition: 'none', motif: G('at tip', 0, 0, 'stash@{0} holds me') },
+  { id: 'L05', lyric: "Said it's just a feature, nothing on the side", scene: 'graph', section: 'verse1',
+    initial: 'graph + stash', action: 'a `feature` pill labelled "just a"; "nothing on the side": the lane above is labelled (none)', result: 'an alibi on screen',
+    anchor: { word: 'side' }, palette: 'dark', region: 'left', transition: 'none', motif: G('at tip', 0, 0, 'side lane hidden') },
+  { id: 'L06', lyric: 'Then I found the other branch you tried to hide', scene: 'graph', section: 'verse1',
+    initial: 'side lane "(none)"', action: 'on "found" the hidden lane unfolds: the ex\'s commits as coral rings, pill `other`; "(none)" struck on "hide"', result: 'the ex commits after all — elsewhere',
+    anchor: { word: 'found' }, palette: 'dark', region: 'full', transition: 'none', motif: G('at tip', 0, 0, 'branch `other` revealed (coral)'),
+    notes: 'First coral in the video.' },
+  { id: 'L07', lyric: 'So I ran the blame on every broken line', scene: 'blame', section: 'verse1',
+    initial: 'cut to a full-frame file', action: '`git blame relationship.md` typed; the blame column reveals top-down on "blame"; broken lines get a coral rule', result: 'evidence view',
+    anchor: { word: 'blame' }, palette: 'dark', region: 'full', transition: 'cut', motif: 'blame: authors pending' },
+  { id: 'L08', lyric: 'Every single one had your name, not mine', scene: 'blame', section: 'verse1',
+    initial: 'blame column', action: 'every author cell fills "you"; `--author=me` → 0 lines on "not mine"', result: 'you 12/12, me 0',
+    anchor: { word: 'name,' }, palette: 'dark', region: 'full', transition: 'none', motif: 'blame: you 12/12' },
+  { id: 'L09', lyric: 'You said we could merge, work the conflicts through', scene: 'blame', section: 'verse1',
+    initial: 'blamed file', action: '`git merge you` → CONFLICT; conflict markers open in the file on "conflicts"', result: 'three conflicts',
+    anchor: { word: 'merge,' }, palette: 'dark', region: 'full', transition: 'none', motif: 'blame: CONFLICT ×3' },
+  { id: 'L10', lyric: 'But every conflict, baby, started with you', scene: 'blame', section: 'verse1',
+    initial: 'conflicts', action: 'each conflict tagged "introduced by you" in turn; "you" lands coral', result: 'every conflict traced to you',
+    anchor: { word: 'you' }, palette: 'dark', region: 'full', transition: 'none', motif: 'blame: conflicts 3/3 you' },
+  // ------------------------------------------------------------------ pre-chorus 1
+  { id: 'L11', lyric: 'No more patches, no more one more try', occurrence: 0, scene: 'nomore1', section: 'prechorus1',
+    initial: 'cut to the big-type stage', action: 'NO MORE hero; `patches` and `one more try (47)` arrive and are struck', result: 'two things over',
+    anchor: { word: 'try' }, palette: 'dark', region: 'left', transition: 'cut', motif: 'list: 2 struck' },
+  { id: 'L12', lyric: 'No more reading your logs at night', scene: 'nomore1', section: 'prechorus1',
+    initial: 'list', action: 'a night-time `git log` card (23:41, 01:12, 02:58) arrives and is struck', result: 'three things over',
+    anchor: { word: 'night' }, palette: 'dark', region: 'right', transition: 'none', motif: 'list: 3 struck' },
+  { id: 'L13', lyric: "Head's been detached for way too long", scene: 'nomore1', section: 'prechorus1',
+    initial: 'list', action: 'the green HEAD pill detaches and drifts, `HEAD detached at 3f9e2c1`, a day counter running', result: 'HEAD adrift',
+    anchor: { word: 'detached' }, palette: 'dark', region: 'right', transition: 'none', motif: 'HEAD detached' },
+  { id: 'L14', lyric: "Stop, one beat and you're gone", scene: 'nomore1', section: 'prechorus1',
+    initial: 'drifting stage', action: '"Stop," freezes everything; "one beat" ticks a single beat; `git push --force origin main` types, Enter on "gone"', result: 'the command is sent',
+    anchor: { word: 'gone' }, palette: 'dark', region: 'bottom', transition: 'none', motif: 'terminal: push sent',
+    notes: 'Sung as written in the sheet\'s stage direction (see analysis/songs/force_push.py SUNG).' },
+  // ------------------------------------------------------------------ chorus 1
+  { id: 'L15', lyric: "FORCE PUSH! Baby, you're history", occurrence: 0, scene: 'chorus1', section: 'chorus1',
+    initial: 'cut on FORCE to the graph', action: 'FORCE / PUSH slam (impact on PUSH, the downbeat); `origin/main` jumps to the rewritten tip; the old line drops to a ghost lane labelled history', result: 'the remote rewritten',
+    anchor: { word: 'PUSH!' }, palette: 'dark', region: 'center', transition: 'stamp', motif: G('moved to the new tip', 1, 1),
+    notes: 'The near-silent beat after PUSH (54.3–54.6) is held still.' },
+  { id: 'L16', lyric: "I rewrote the past, there's no you and me", occurrence: 0, scene: 'chorus1', section: 'chorus1',
+    initial: 'new tip', action: 'commit messages reword one per beat (`us:` → `me:`); on "you and me" the ampersand is deleted', result: 'history says me',
+    anchor: { word: 'past,' }, palette: 'dark', region: 'top', transition: 'none', motif: G('new tip', 1, 1, 'messages reworded') },
+  { id: 'L17', lyric: 'FORCE PUSH! Right over your lies', occurrence: 0, scene: 'chorus1', section: 'chorus1',
+    initial: 'reworded graph', action: 'second slam; the green pointer runs over ghost commits labelled with the lies, striking each', result: 'lies crushed',
+    anchor: { word: 'lies' }, palette: 'dark', region: 'center', transition: 'none', motif: G('new tip', 1, 1, 'lies struck') },
+  { id: 'L18', lyric: 'Brand new timeline, no goodbyes', occurrence: 0, scene: 'chorus1', section: 'chorus1',
+    initial: 'graph', action: 'a clean green line runs off the right edge; "no goodbyes": a merge-back connector tries and fades', result: 'a fresh timeline, no merge',
+    anchor: { word: 'timeline,' }, palette: 'dark', region: 'full', transition: 'none', motif: G('new tip', 1, 1, 'new line') },
+  { id: 'L19', lyric: "Keep your local copy, I don't care", occurrence: 0, scene: 'origin1', section: 'chorus1',
+    initial: 'cut to a split', action: 'left: the ex\'s local copy (old graph intact); right: origin (clean); "I don\'t care" dims the left', result: 'two histories',
+    anchor: { word: 'copy,' }, palette: 'dark', region: 'full', transition: 'cut', motif: 'split: local intact' },
+  { id: 'L20', lyric: "Origin's mine and you're not there", occurrence: 0, scene: 'origin1', section: 'chorus1',
+    initial: 'split', action: 'origin grows to fill the frame; collaborators: me ✓, you — (struck on "not there")', result: 'origin = me',
+    anchor: { word: 'there' }, palette: 'dark', region: 'full', transition: 'none', motif: 'origin: members me' },
+  // ------------------------------------------------------------------ post-chorus 1
+  { id: 'L21', lyric: 'Force! Push! (hey!) Wipe it clean', occurrence: 0, scene: 'chant1', section: 'postchorus1',
+    initial: 'cut on "Force!" to stomp type', action: 'FORCE! / PUSH! / (hey!) per beat; a squeegee wipe clears the frame on "Wipe"', result: 'clean frame',
+    anchor: { word: 'Wipe' }, palette: 'dark', region: 'full', transition: 'stamp', motif: 'chant 1: crowd 0' },
+  { id: 'L22', lyric: "Force! Push! (hey!) Like you've never been", occurrence: 0, scene: 'chant1', section: 'postchorus1',
+    initial: 'clean frame', action: 'stomp; the ex\'s ring dissolves on "never been"', result: 'no ring',
+    anchor: { word: 'never' }, palette: 'dark', region: 'full', transition: 'none', motif: 'chant 1: ring erased' },
+  { id: 'L23', lyric: 'Force! Push! (hey!) Hear the crowd', occurrence: 0, scene: 'chant1', section: 'postchorus1',
+    initial: 'stage', action: 'stomp; +1 badges fill a grid and a counter rolls to 128 on "crowd"', result: 'crowd 128',
+    anchor: { word: 'crowd' }, palette: 'dark', region: 'full', transition: 'none', motif: 'chant 1: crowd 128' },
+  { id: 'L24', lyric: "You're not in my history now", occurrence: 0, scene: 'chant1', section: 'postchorus1',
+    initial: 'crowd', action: '`git log --author=you` → (no commits); "now" stamped', result: 'empty log',
+    anchor: { word: 'now' }, palette: 'dark', region: 'center', transition: 'none', motif: 'log --author=you: 0' },
+  // ------------------------------------------------------------------ verse 2 (paper)
+  { id: 'L25', lyric: 'Squashed three years down to a single line', scene: 'squash', section: 'verse2',
+    initial: 'cut to paper: a rebase todo list', action: 'on "Squashed" the picks flip to `squash` in a cascade; on "single line" they collapse into one', result: '1,095 commits → 1 line',
+    anchor: { word: 'single' }, palette: 'paper', region: 'right', transition: 'cut', motif: 'repo: squashed to 1 commit' },
+  { id: 'L26', lyric: 'Commit message says: fix, wasted time', scene: 'squash', section: 'verse2',
+    initial: 'one line', action: 'the commit message editor types `fix: wasted time` with the voice', result: 'the message',
+    anchor: { word: 'fix,' }, palette: 'paper', region: 'right', transition: 'none', motif: 'commit: fix: wasted time' },
+  { id: 'L27', lyric: 'Cherry-picked the good days, there were three', scene: 'squash', section: 'verse2',
+    initial: 'editor slides away to three rows of 365 dots', action: 'three dots light green on "good days"; counter 3 / 1,095 on "three"', result: 'three good days',
+    anchor: { word: 'three' }, palette: 'paper', region: 'full', transition: 'none', motif: 'days: 3 picked' },
+  { id: 'L28', lyric: 'Rebased the rest right out of my tree', scene: 'squash', section: 'verse2',
+    initial: 'dot grid', action: 'the other 1,092 dots slide off the right edge; the three green ones remain as a tiny tree', result: 'tree of 3',
+    anchor: { word: 'tree' }, palette: 'paper', region: 'full', transition: 'none', motif: 'tree: 3 commits' },
+  { id: 'L29', lyric: 'Your pull requests keep lighting up my phone', scene: 'phone', section: 'verse2',
+    initial: 'cut to a phone', action: 'PR notifications stack one per word; the screen lights', result: 'a lit phone',
+    anchor: { word: 'phone' }, palette: 'paper', region: 'right', transition: 'cut', motif: 'PRs: 4 open' },
+  { id: 'L30', lyric: "Please review? Honey, you're on your own", scene: 'phone', section: 'verse2',
+    initial: 'notifications', action: 'a review request card: reviewers (none), approvals 0/1 on "own"', result: 'unreviewed',
+    anchor: { word: 'own' }, palette: 'paper', region: 'right', transition: 'none', motif: 'PRs: reviewers none' },
+  { id: 'L31', lyric: 'Wrote your name at the top of my git-ignore', scene: 'phone', section: 'verse2',
+    initial: 'phone shrinks left', action: '`.gitignore` opens; line 1 `you` typed on "name"', result: 'you ignored',
+    anchor: { word: 'git-ignore' }, palette: 'paper', region: 'right', transition: 'none', motif: '.gitignore: you' },
+  { id: 'L32', lyric: "Whatever you send, I don't see it anymore", scene: 'phone', section: 'verse2',
+    initial: '.gitignore', action: 'files fly in and grey out (ignored); `git status` → nothing to commit on "anymore"', result: 'nothing to commit (callback)',
+    anchor: { word: 'anymore' }, palette: 'paper', region: 'full', transition: 'none', motif: 'status: nothing to commit' },
+  // ------------------------------------------------------------------ pre-chorus 2
+  { id: 'L33', lyric: 'No more patches, no more one more try', occurrence: 1, scene: 'nomore2', section: 'prechorus2',
+    initial: 'cut to the stage, already struck', action: 'NO MORE; the items return pre-struck, faster', result: 'still over',
+    anchor: { word: 'try' }, palette: 'dark', region: 'left', transition: 'cut', motif: 'list: returns struck' },
+  { id: 'L34', lyric: 'No more reading your logs', scene: 'nomore2', section: 'prechorus2',
+    initial: 'list', action: 'the log card returns, now full of the ex\'s pleading commits ("pls", "can we talk")', result: 'unread',
+    anchor: { word: 'logs' }, palette: 'dark', region: 'right', transition: 'none', motif: 'list: log ignored' },
+  { id: 'L35', lyric: "And now you want a revert? Baby, that's cute", scene: 'nomore2', section: 'prechorus2',
+    initial: 'stage', action: 'a coral `Revert "force push"` request card on "revert?"; "cute." stamped and the card flicked away', result: 'revert refused',
+    anchor: { word: 'revert?' }, palette: 'dark', region: 'right', transition: 'none', motif: 'revert: refused',
+    notes: 'Sung "logs, and now you want a revert?" (see SUNG).' },
+  { id: 'L36', lyric: 'Watch what I do', scene: 'nomore2', section: 'prechorus2',
+    initial: 'stage', action: '`git push --force origin main` again, Enter on "do"', result: 'second push sent',
+    anchor: { word: 'do' }, palette: 'dark', region: 'bottom', transition: 'none', motif: 'terminal: push 2 sent' },
+  // ------------------------------------------------------------------ chorus 2
+  { id: 'L37', lyric: "FORCE PUSH! Baby, you're history", occurrence: 1, scene: 'chorus2', section: 'chorus2',
+    initial: 'the graph again — the ex has pushed revert commits to their branch', action: 'slam; origin/main jumps again; the revert commits drop to a second ghost lane', result: 'pushed over the revert',
+    anchor: { word: 'PUSH!' }, palette: 'dark', region: 'center', transition: 'stamp', motif: G('moved again', 2, 2, 'revert commits ghosted') },
+  { id: 'L38', lyric: "I rewrote the past, there's no you and me", occurrence: 1, scene: 'chorus2', section: 'chorus2',
+    initial: 'graph', action: 'reword again: `revert: us` → `me`', result: 'still me',
+    anchor: { word: 'past,' }, palette: 'dark', region: 'top', transition: 'none', motif: G('new tip', 2, 2) },
+  { id: 'L39', lyric: 'FORCE PUSH! Right over your lies', occurrence: 1, scene: 'chorus2', section: 'chorus2',
+    initial: 'graph', action: 'slam; the pointer crushes the new lies ("i changed", "one more try")', result: 'lies struck',
+    anchor: { word: 'lies' }, palette: 'dark', region: 'center', transition: 'none', motif: G('new tip', 2, 2, 'lies struck') },
+  { id: 'L40', lyric: 'Brand new timeline, no goodbyes', occurrence: 1, scene: 'chorus2', section: 'chorus2',
+    initial: 'graph', action: 'the green line runs off-frame, longer; no merge back', result: 'fresh timeline',
+    anchor: { word: 'timeline,' }, palette: 'dark', region: 'full', transition: 'none', motif: G('new tip', 2, 2) },
+  { id: 'L41', lyric: "Keep your local copy, I don't care", occurrence: 1, scene: 'origin2', section: 'chorus2',
+    initial: 'split', action: 'the ex\'s copy tries to push: `! [rejected] main -> main (non-fast-forward)`', result: 'rejected',
+    anchor: { word: 'copy,' }, palette: 'dark', region: 'full', transition: 'cut', motif: 'split: local rejected ×1' },
+  { id: 'L42', lyric: "Origin's mine and you're not there", occurrence: 1, scene: 'origin2', section: 'chorus2',
+    initial: 'split', action: 'origin fills the frame; you — struck', result: 'origin = me',
+    anchor: { word: 'there' }, palette: 'dark', region: 'full', transition: 'none', motif: 'origin: members me' },
+  // ------------------------------------------------------------------ post-chorus 2 (paper)
+  { id: 'L43', lyric: 'Force! Push! (hey!) Wipe it clean', occurrence: 1, scene: 'chant2', section: 'postchorus2',
+    initial: 'cut to paper stomp type', action: 'stomp; squeegee wipe', result: 'clean',
+    anchor: { word: 'Wipe' }, palette: 'paper', region: 'full', transition: 'stamp', motif: 'chant 2: crowd 128' },
+  { id: 'L44', lyric: "Force! Push! (hey!) Like you've never been", occurrence: 1, scene: 'chant2', section: 'postchorus2',
+    initial: 'clean', action: 'stomp; the ring dissolves', result: 'no ring',
+    anchor: { word: 'never' }, palette: 'paper', region: 'full', transition: 'none', motif: 'chant 2: ring erased' },
+  { id: 'L45', lyric: 'Force! Push! (hey!) Hear the crowd', occurrence: 1, scene: 'chant2', section: 'postchorus2',
+    initial: 'stage', action: 'stomp; the crowd counter rolls to 4,096', result: 'crowd 4,096',
+    anchor: { word: 'crowd' }, palette: 'paper', region: 'full', transition: 'none', motif: 'chant 2: crowd 4,096' },
+  { id: 'L46', lyric: "You're not in my history now", occurrence: 1, scene: 'chant2', section: 'postchorus2',
+    initial: 'crowd', action: '`git log --author=you` → (no commits)', result: 'empty log',
+    anchor: { word: 'now' }, palette: 'paper', region: 'center', transition: 'none', motif: 'log --author=you: 0' },
+  // ------------------------------------------------------------------ bridge (paper, soft)
+  { id: 'L47', lyric: 'They say never force it on a shared branch', scene: 'etiquette', section: 'bridge',
+    initial: 'cut to the etiquette page', action: 'the rule typesets in Cormorant italic, word by word', result: 'the rule stated',
+    anchor: { word: 'shared' }, palette: 'paper', region: 'left', transition: 'cut', motif: 'etiquette: rule' },
+  { id: 'L48', lyric: 'Somebody could lose it all, no second chance', scene: 'etiquette', section: 'bridge',
+    initial: 'rule', action: 'a warning callout and a two-collaborator diagram where one loses their commits', result: 'the risk shown',
+    anchor: { word: 'lose' }, palette: 'paper', region: 'right', transition: 'none', motif: 'etiquette: warning' },
+  { id: 'L49', lyric: 'But you checked out a long, long time ago', scene: 'etiquette', section: 'bridge',
+    initial: 'diagram', action: 'the ex\'s collaborator row: last checkout 3 years ago; the timeline stretches on "long, long"', result: 'not a collaborator',
+    anchor: { word: 'checked' }, palette: 'paper', region: 'right', transition: 'none', motif: 'etiquette: you checked out' },
+  { id: 'L50', lyric: 'So no lease, no warning, here I go', scene: 'etiquette', section: 'bridge',
+    initial: 'page', action: '`--force-with-lease` → "-with-lease" struck on "lease"; warnings off on "warning"; Enter on "go"', result: 'plain --force sent',
+    anchor: { word: 'go' }, palette: 'paper', region: 'bottom', transition: 'none', motif: 'terminal: push 3 sent' },
+  // ------------------------------------------------------------------ final chorus (a cappella)
+  { id: 'build', span: [{ cue: 'L50', edge: 'end' }, { cue: 'L51', edge: 'start' }], scene: 'acapella', section: 'bridge',
+    initial: 'cut to dark', action: 'the drum build fills `Writing objects: 0 % → 100 %`', result: 'push uploaded',
+    anchor: { bar: 87 }, palette: 'dark', region: 'center', transition: 'cut', motif: 'terminal: push 3 uploading' },
+  { id: 'L51', lyric: "Force push. Baby, you're history.", scene: 'acapella', section: 'finalchorus',
+    initial: 'quiet dark', action: 'one line, light weight, lit slowly with the voice', result: 'said plainly',
+    anchor: { word: 'history.' }, palette: 'dark', region: 'center', transition: 'none', motif: 'quiet' },
+  { id: 'L52', lyric: "I rewrote the past, there's no you and me.", scene: 'acapella', section: 'finalchorus',
+    initial: 'line 1 at top', action: 'second line; "you and" fade out, leaving "me."', result: 'me.',
+    anchor: { word: 'me.' }, palette: 'dark', region: 'center', transition: 'none', motif: 'quiet: me.' },
+  // ------------------------------------------------------------------ drop (paper, biggest)
+  { id: 'L53', lyric: 'FORCE PUSH! Right over your lies', occurrence: 2, scene: 'drop', section: 'drop',
+    initial: 'cut on FORCE to the inverted graph', action: 'the biggest slam (drums return on PUSH); the whole graph with three ghost lanes; all lies struck at once', result: 'third push',
+    anchor: { word: 'PUSH!' }, palette: 'paper', region: 'center', transition: 'stamp', motif: G('moved a third time', 3, 3) },
+  { id: 'L54', lyric: 'Brand new timeline, no goodbyes', occurrence: 2, scene: 'drop', section: 'drop',
+    initial: 'graph', action: 'the green line runs the full width and keeps going', result: 'fresh timeline',
+    anchor: { word: 'timeline,' }, palette: 'paper', region: 'full', transition: 'none', motif: G('new tip', 3, 3) },
+  { id: 'L55', lyric: "Keep your local copy, I don't care", occurrence: 2, scene: 'origin3', section: 'drop',
+    initial: 'split, inverted', action: 'the ex\'s copy is tiny and far, rejected ×3', result: 'irrelevant',
+    anchor: { word: 'copy,' }, palette: 'paper', region: 'full', transition: 'cut', motif: 'split: local rejected ×3' },
+  { id: 'L56', lyric: "Origin's mine and you're not there", occurrence: 2, scene: 'origin3', section: 'drop',
+    initial: 'split', action: 'origin fills the frame', result: 'origin = me',
+    anchor: { word: 'there' }, palette: 'paper', region: 'full', transition: 'none', motif: 'origin: members me' },
+  // ------------------------------------------------------------------ post-chorus 3 (green)
+  { id: 'L57', lyric: 'Force! Push! (hey!) Wipe it clean', occurrence: 2, scene: 'chant3', section: 'postchorus3',
+    initial: 'cut to the green field', action: 'stomp; squeegee wipe', result: 'clean',
+    anchor: { word: 'Wipe' }, palette: 'green', region: 'full', transition: 'stamp', motif: 'chant 3: crowd 4,096' },
+  { id: 'L58', lyric: "Force! Push! (hey!) Like you've never been", occurrence: 2, scene: 'chant3', section: 'postchorus3',
+    initial: 'clean', action: 'stomp; the ring dissolves', result: 'no ring',
+    anchor: { word: 'never' }, palette: 'green', region: 'full', transition: 'none', motif: 'chant 3: ring erased' },
+  { id: 'L59', lyric: 'Force! Push! (hey!) Hear the crowd', occurrence: 2, scene: 'chant3', section: 'postchorus3',
+    initial: 'stage', action: 'stomp; the crowd counter rolls to 1,000,000', result: 'crowd 1,000,000',
+    anchor: { word: 'crowd' }, palette: 'green', region: 'full', transition: 'none', motif: 'chant 3: crowd 1,000,000' },
+  { id: 'L60', lyric: "You're not in my history now", occurrence: 2, scene: 'chant3', section: 'postchorus3',
+    initial: 'beat cuts out', action: '`git log --author=you` → (no commits); the field holds in silence', result: 'empty log',
+    anchor: { word: 'now' }, palette: 'green', region: 'center', transition: 'none', motif: 'log --author=you: 0' },
+  // ------------------------------------------------------------------ outro (spoken) and tag
+  { id: 'L61', lyric: 'Oh, and the ref-log?', scene: 'outro', section: 'outro',
+    initial: 'the opening terminal, same framing', action: '`git reflog` lists HEAD@{n} entries — the ex\'s old states still there, coral', result: 'Git remembers',
+    anchor: { word: 'ref-log?' }, palette: 'dark', region: 'center', transition: 'match', motif: 'terminal: reflog with 4 unreachable entries' },
+  { id: 'L62', lyric: 'It forgets you in thirty days.', scene: 'outro', section: 'outro',
+    initial: 'reflog', action: 'each coral entry gets `expires in 30 days`; "thirty days" counter', result: 'a deadline',
+    anchor: { word: 'thirty' }, palette: 'dark', region: 'center', transition: 'none', motif: 'reflog: expiring (30 d)' },
+  { id: 'L63', lyric: 'I can wait.', scene: 'outro', section: 'outro',
+    initial: 'reflog', action: '"I can wait." hero; the cursor blinks', result: 'patience',
+    anchor: { word: 'wait.' }, palette: 'dark', region: 'bottom', transition: 'none', motif: 'reflog: 30 d' },
+  { id: 'tag', span: [{ cue: 'L63', edge: 'end' }, 'end'], scene: 'outro', section: 'outro',
+    initial: 'the hit', action: 'the day counter runs 30 → 0; `git gc` prunes the coral entries one per beat; drums out: `git status` → nothing to commit, working tree clean (clean half lit green)', result: 'the payoff of the planted line',
+    anchor: { bar: 107 }, palette: 'dark', region: 'center', transition: 'none', motif: 'terminal: gc done; status clean',
+    notes: 'Covers the hard hit (197.43), the 7 s full-band "dun-dun" tag and the vocal-only tail to 209 s.' },
+];

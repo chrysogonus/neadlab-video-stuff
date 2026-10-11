@@ -42,12 +42,13 @@ export class AudioData {
     this.onsets = j.onsets ?? {};
   }
 
-  static async load(): Promise<AudioData> {
-    for (const url of ['data/audio.json', 'data/audio.approx.json']) {
+  /** Load `<dir>/audio.json` (or `<dir>/audio.approx.json`); `dir` is the song's data directory. */
+  static async load(dir = 'data'): Promise<AudioData> {
+    for (const url of [`${dir}/audio.json`, `${dir}/audio.approx.json`]) {
       const r = await fetch(url);
       if (r.ok && (r.headers.get('content-type') ?? '').includes('json')) return new AudioData(await r.json());
     }
-    throw new Error('no audio analysis data found');
+    throw new Error(`no audio analysis data found in ${dir}/`);
   }
 
   /** Linear-interpolated envelope value at time t. */

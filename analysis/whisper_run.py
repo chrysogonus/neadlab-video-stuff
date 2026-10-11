@@ -19,8 +19,7 @@ MODELS = {
 }
 
 # The song's jargon, so the decoder does not "correct" it into something commoner.
-PROMPT = ("Song lyrics: harvest now, decrypt later; qubits, petabytes, padlock, "
-          "ciphertext, blueprint, passwords, decade.")
+PROMPT = common.CFG.WHISPER_PROMPT
 
 
 def vocals16k():

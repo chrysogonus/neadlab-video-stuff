@@ -5,19 +5,25 @@
 //   sheet:   bun scripts/render.ts sheet --from 20 --to 35 [--n 12] [--cols 4] [--only ids] [--out file.png]   (or --times a,b,c | --cuts)
 //   plates:  bun scripts/render.ts plates   (renders one representative JPEG per plate into public/plates/ (used by the outro's rewind), times from plates.json or entry midpoints)
 //   perf:    bun scripts/render.ts perf --from 20 --to 25 [--only ids] [--samples 1] [--shutter 0.5]   (avg ms per frame incl. GPU sync and the export's pixel readback)
-//   video:   bun scripts/render.ts video [--from 0] [--to 156.65] [--fps 60] [--crf 16] [--x264 aq-mode=3] [--samples 1] [--shutter 0.5] [--out ../out/harvest.mp4] [--noaudio]
+//   check:   bun scripts/render.ts check --t 10,55,140 (seek/order determinism: the frames rendered in order, in reverse,
+//            and each after a far seek must be byte-identical; also with --samples N)
+//   video:   bun scripts/render.ts video [--from 0] [--to <duration>] [--fps 60] [--crf 16] [--x264 aq-mode=3] [--samples 1] [--shutter 0.5] [--out <song's out>] [--noaudio]
 //            [--workers 2] [--chunk 8] [--mem-gb 1] [--spool-gb 20]
 //            --samples N averages N sub-frames per frame over shutter×(1/fps): motion blur + temporal AA;
 //            --samples auto picks the count per 32x32 tile (12, 36, 108 or 324, see Engine.render; --refine frame: per frame)
 //            --workers N headless Chromes render chunks of --chunk frames into one ffmpeg, in order (see video())
 //   --scale N (all modes): render at N× the 1920x1080 layout (--scale 2 = true 3840x2160); stills are then saved
 //            full-res from the pixel buffer, videos are encoded at the physical size.
+//   --song ID (all modes): which song of songs.json to render (default: its `default`). The page loads that
+//            song's data and timeline; the video muxes its master and defaults to its `out`.
+//   A scene that fails to load or throws while rendering fails the run (non-zero exit).
 // Uses the Vite dev server at --url (default http://localhost:5173); starts a private one if unreachable.
 import { chromium, type Page } from 'playwright-core';
 import { mkdirSync, existsSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { MASTER, OUT } from '../src/song';
+import { getSong } from '../src/songs';
+import { pageURL } from './page-url';
 
 const argv = process.argv.slice(2);
 const mode = argv[0] ?? 'stills';
@@ -33,6 +39,7 @@ const SAMPLES = opt('samples', '1') === 'auto'
   : +opt('samples', '1')!;
 const hist = (h: Record<string, number>) => Object.entries(h).sort((a, b) => +a[0] - +b[0]).map(([k, v]) => `${k}:${v}`).join(' ');
 const ROOT = path.resolve(APP, '..');
+const SONG = getSong(opt('song'));
 
 async function reachable(url: string) {
   try { const r = await fetch(url, { signal: AbortSignal.timeout(1500) }); return r.ok; } catch { return false; }
@@ -73,15 +80,23 @@ async function openPage(url: string) {
   page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') logs.push(`[${m.type()}] ${m.text()}`); });
   page.on('pageerror', (e) => logs.push(`[pageerror] ${e.message}`));
   const only = opt('only');
-  await page.goto(`${url}/?export=1${only ? `&only=${only}` : ''}${SCALE !== 1 ? `&scale=${SCALE}` : ''}`);
+  // (built with URL so a --url carrying its own path or query keeps it)
+  await page.goto(pageURL(url, { song: SONG.id, only, scale: SCALE }));
   await page.waitForFunction(() => (window as any).__video?.ready || (window as any).__video?.error, null, { timeout: 120000 });
   const err = await page.evaluate(() => (window as any).__video.error);
   if (err) throw new Error(`app failed to boot:\n${err}\n${logs.join('\n')}`);
+  const loaded: string = await page.evaluate(() => (window as any).__video.song);
+  if (loaded !== SONG.id) throw new Error(`page loaded song '${loaded}', expected '${SONG.id}'`);
   const size: [number, number] = await page.evaluate(() => [(window as any).__video.width ?? 1920, (window as any).__video.height ?? 1080]);
   if (size[0] !== OW || size[1] !== OH) throw new Error(`app renders ${size[0]}x${size[1]}, expected ${OW}x${OH} (--scale ${SCALE})`);
-  const sceneErrors: string[] = await page.evaluate(() => (window as any).__video.errors);
-  if (sceneErrors.length) console.error('SCENE ERRORS:\n' + sceneErrors.join('\n'));
+  await checkScenes(page);
   return { browser, page, logs };
+}
+
+/** Throw if any scene failed to load or threw while rendering (the engine records both in __video.errors). */
+async function checkScenes(page: Page) {
+  const sceneErrors: string[] = await page.evaluate(() => (window as any).__video.errors);
+  if (sceneErrors.length) throw new Error('SCENE ERRORS:\n' + sceneErrors.join('\n'));
 }
 
 async function stills(page: Page, times: number[], outDir: string) {
@@ -132,13 +147,17 @@ async function sheet(page: Page, times: number[], cols: number, out: string) {
 async function video(url: string, from: number, to: number, fps: number, out: string) {
   mkdirSync(path.dirname(out), { recursive: true });
   const crf = opt('crf', '16')!;
-  const audio = path.join(ROOT, MASTER);
+  const audio = path.join(ROOT, SONG.master);
+  if (!flag('noaudio') && !existsSync(audio)) throw new Error(`master not found: ${audio}`);
   // (frames come as rgb24: the same YUV out of the scaler as from rgba, a quarter fewer bytes to move)
   const args = ['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', `${OW}x${OH}`, '-r', String(fps), '-i', 'pipe:0'];
   if (!flag('noaudio')) args.push('-ss', String(from), '-t', String(to - from), '-i', audio);
   // Frames are sRGB (toSRGB in the final pass): convert with the BT.709 matrix and tag the stream,
   // otherwise ffmpeg converts with BT.601 while players and YouTube decode untagged HD as BT.709.
   // scale tags the matrix and range; primaries and transfer need setparams (the -color_* output flags don't reach the stream).
+  // (explicit maps: the rendered frames and the master's audio, whatever else the audio file carries)
+  args.push('-map', '0:v');
+  if (!flag('noaudio')) args.push('-map', '1:a');
   args.push('-vf', 'vflip,scale=out_color_matrix=bt709,setparams=color_primaries=bt709:color_trc=bt709', '-c:v', 'libx264', '-preset', opt('preset', 'slow')!, '-crf', crf, '-pix_fmt', 'yuv420p', '-tune', 'grain', '-x264-params', opt('x264', 'aq-mode=3')!);
   if (!flag('noaudio')) args.push('-c:a', 'aac', '-b:a', '320k', '-shortest');
   args.push('-movflags', '+faststart', out);
@@ -265,6 +284,7 @@ async function video(url: string, from: number, to: number, fps: number, out: st
           from: r[0] / fps, to: r[1] / fps, fps, ws: `ws://localhost:${server.port}/?w=${k}`, samples: SAMPLES, shutter: +opt('shutter', '0.5')!, inflight: 4,
         });
         for (const [c, m] of Object.entries(h)) used[c] = (used[c] ?? 0) + m;
+        await checkScenes(page);
       }
     }));
     rendering.catch(() => {});
@@ -296,7 +316,7 @@ if (mode === 'video') {
     const { browser, page } = await openPage(url);
     const dur: number = await page.evaluate(() => (window as any).__video.duration);
     await browser.close();
-    await video(url, +opt('from', '0')!, +opt('to', String(dur))!, +opt('fps', '60')!, path.resolve(opt('out', path.join(ROOT, OUT))!));
+    await video(url, +opt('from', '0')!, +opt('to', String(dur))!, +opt('fps', '60')!, path.resolve(opt('out', path.join(ROOT, SONG.out))!));
   } finally { stop(); }
   process.exit(0);
 }
@@ -340,6 +360,42 @@ try {
       await page.screenshot({ path: f, type: 'jpeg', quality: 90, clip: { x: 0, y: 0, width: 1920, height: 1080 } });
       console.log(f, t.toFixed(2));
     }
+  } else if (mode === 'check') {
+    // the same frames three ways — in order, in reverse, and each right after a seek far away — compared pixel
+    // by pixel. Scenes are pure functions of t, so they must agree; Chrome's GPU Canvas2D can rasterise a few
+    // antialiased hairline pixels a level or two differently on a path's first draw, which --tol allows.
+    const times = (opt('t') ?? '5,30,55,100,140,170,200').split(',').map(Number);
+    const tol = +opt('tol', '8')!, maxPx = +opt('max-px', '0.001')!; // levels, share of pixels
+    const res: { t: number; diff: number; px: number }[] = await page.evaluate(async ([times, s, sh]) => {
+      const P = (window as any).__video;
+      const grab = async (t: number, pre: number | null) => {
+        if (pre !== null) P.still(pre, 1, sh);
+        P.still(t, s, sh);
+        return (await P.engine.readPixelsAsync()).slice() as Uint8Array;
+      };
+      const a = new Map<number, Uint8Array>(), b = new Map<number, Uint8Array>(), c = new Map<number, Uint8Array>();
+      for (const t of times) a.set(t, await grab(t, null));
+      for (const t of [...times].reverse()) b.set(t, await grab(t, null));
+      for (const t of times) c.set(t, await grab(t, t > 100 ? 1 : 205));
+      return times.map((t) => {
+        let diff = 0, px = 0;
+        const x = a.get(t)!;
+        for (const y of [b.get(t)!, c.get(t)!]) for (let i = 0; i < x.length; i += 4) {
+          const d = Math.max(Math.abs(x[i]! - y[i]!), Math.abs(x[i + 1]! - y[i + 1]!), Math.abs(x[i + 2]! - y[i + 2]!));
+          if (d) { px++; diff = Math.max(diff, d); }
+        }
+        return { t, diff, px: px / 2 };
+      });
+    }, [times, SAMPLES, +opt('shutter', '0.5')!] as const);
+    const total = OW * OH;
+    let bad = 0;
+    for (const r of res) {
+      const ok = r.diff <= tol && r.px / total <= maxPx;
+      if (!ok) bad++;
+      console.log(`t=${r.t}: ${r.px === 0 ? 'identical' : `max ${r.diff} levels on ${r.px} px (${((100 * r.px) / total).toFixed(4)} %)`} ${ok ? 'ok' : 'FAIL'}`);
+    }
+    if (bad) throw new Error(`${bad} frame(s) depend on render order beyond --tol ${tol} / --max-px ${maxPx}`);
+    console.log(`determinism: ${times.length} frames agree in order, in reverse and after seeks (samples ${JSON.stringify(SAMPLES)})`);
   } else if (mode === 'perf') {
     const from = +opt('from', '0')!, to = +opt('to', '5')!;
     const r = await page.evaluate(async ({ from, to, samples, shutter }) => {
@@ -360,6 +416,7 @@ try {
     }, { from, to, samples: SAMPLES, shutter: +opt('shutter', '0.5')! });
     console.log(`frames ${r.n}  avg ${r.avg.toFixed(1)}ms  p50 ${r.p50.toFixed(1)}  p95 ${r.p95.toFixed(1)}  max ${r.max.toFixed(1)}  sub-frames ${hist(r.used)}`);
   }
+  if (mode !== 'gpu') await checkScenes(page);
   if (logs.length) console.error('BROWSER LOG:\n' + logs.slice(0, 40).join('\n'));
 } finally {
   await browser.close();

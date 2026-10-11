@@ -1,0 +1,3152 @@
+{
+  "lines": [
+    {
+      "i": 0,
+      "text": "Git status.",
+      "start": 1.56,
+      "end": 2.759,
+      "words": [
+        {
+          "w": "Git",
+          "start": 1.56,
+          "end": 1.716,
+          "conf": 0.85
+        },
+        {
+          "w": "status.",
+          "start": 1.716,
+          "end": 2.759,
+          "conf": 1.0
+        }
+      ]
+    },
+    {
+      "i": 1,
+      "text": "Nothing to commit.",
+      "start": 4.739,
+      "end": 5.797,
+      "words": [
+        {
+          "w": "Nothing",
+          "start": 4.739,
+          "end": 5.3,
+          "conf": 0.92
+        },
+        {
+          "w": "to",
+          "start": 5.3,
+          "end": 5.46,
+          "conf": 0.85
+        },
+        {
+          "w": "commit.",
+          "start": 5.46,
+          "end": 5.797,
+          "conf": 1.0
+        }
+      ]
+    },
+    {
+      "i": 2,
+      "text": "Story of your life.",
+      "start": 7.403,
+      "end": 8.94,
+      "words": [
+        {
+          "w": "Story",
+          "start": 7.403,
+          "end": 8.16,
+          "conf": 0.92
+        },
+        {
+          "w": "of",
+          "start": 8.16,
+          "end": 8.28,
+          "conf": 0.85
+        },
+        {
+          "w": "your",
+          "start": 8.28,
+          "end": 8.5,
+          "conf": 1.0
+        },
+        {
+          "w": "life.",
+          "start": 8.5,
+          "end": 8.94,
+          "conf": 1.0
+        }
+      ]
+    },
+    {
+      "i": 3,
+      "text": "Three years in and you never could commit",
+      "start": 16.86,
+      "end": 19.945,
+      "words": [
+        {
+          "w": "Three",
+          "start": 16.86,
+          "end": 17.4,
+          "conf": 0.8
+        },
+        {
+          "w": "years",
+          "start": 17.4,
+          "end": 17.899,
+          "conf": 0.92
+        },
+        {
+          "w": "in",
+          "start": 17.899,
+          "end": 18.363,
+          "conf": 0.84
+        },
+        {
+          "w": "and",
+          "start": 18.363,
+          "end": 18.54,
+          "conf": 0.88
+        },
+        {
+          "w": "you",
+          "start": 18.54,
+          "end": 18.78,
+          "conf": 0.9
+        },
+        {
+          "w": "never",
+          "start": 18.78,
+          "end": 19.151,
+          "conf": 0.92
+        },
+        {
+          "w": "could",
+          "start": 19.22,
+          "end": 19.46,
+          "conf": 0.9
+        },
+        {
+          "w": "commit",
+          "start": 19.46,
+          "end": 19.945,
+          "conf": 0.92
+        }
+      ]
+    },
+    {
+      "i": 4,
+      "text": "Hid me in your stash, said we'd get to it",
+      "start": 19.945,
+      "end": 23.756,
+      "words": [
+        {
+          "w": "Hid",
+          "start": 19.945,
+          "end": 20.38,
+          "conf": 0.85
+        },
+        {
+          "w": "me",
+          "start": 20.38,
+          "end": 20.78,
+          "conf": 0.87
+        },
+        {
+          "w": "in",
+          "start": 20.78,
+          "end": 21.1,
+          "conf": 0.72
+        },
+        {
+          "w": "your",
+          "start": 21.1,
+          "end": 21.366,
+          "conf": 0.92
+        },
+        {
+          "w": "stash,",
+          "start": 21.366,
+          "end": 21.955,
+          "conf": 0.9
+        },
+        {
+          "w": "said",
+          "start": 21.955,
+          "end": 22.28,
+          "conf": 0.79
+        },
+        {
+          "w": "we'd",
+          "start": 22.28,
+          "end": 22.72,
+          "conf": 0.86
+        },
+        {
+          "w": "get",
+          "start": 22.72,
+          "end": 23.16,
+          "conf": 0.92
+        },
+        {
+          "w": "to",
+          "start": 23.16,
+          "end": 23.64,
+          "conf": 0.92
+        },
+        {
+          "w": "it",
+          "start": 23.64,
+          "end": 23.756,
+          "conf": 0.73
+        }
+      ]
+    },
+    {
+      "i": 5,
+      "text": "Said it's just a feature, nothing on the side",
+      "start": 23.756,
+      "end": 27.6,
+      "words": [
+        {
+          "w": "Said",
+          "start": 23.756,
+          "end": 24.2,
+          "conf": 0.85
+        },
+        {
+          "w": "it's",
+          "start": 24.2,
+          "end": 24.3,
+          "conf": 0.81
+        },
+        {
+          "w": "just",
+          "start": 24.3,
+          "end": 24.863,
+          "conf": 0.92
+        },
+        {
+          "w": "a",
+          "start": 24.863,
+          "end": 25.183,
+          "conf": 0.89
+        },
+        {
+          "w": "feature,",
+          "start": 25.183,
+          "end": 25.74,
+          "conf": 0.92
+        },
+        {
+          "w": "nothing",
+          "start": 25.74,
+          "end": 26.36,
+          "conf": 0.84
+        },
+        {
+          "w": "on",
+          "start": 26.36,
+          "end": 26.64,
+          "conf": 0.85
+        },
+        {
+          "w": "the",
+          "start": 26.64,
+          "end": 26.744,
+          "conf": 0.9
+        },
+        {
+          "w": "side",
+          "start": 26.744,
+          "end": 27.6,
+          "conf": 0.92
+        }
+      ]
+    },
+    {
+      "i": 6,
+      "text": "Then I found the other branch you tried to hide",
+      "start": 27.6,
+      "end": 31.199,
+      "words": [
+        {
+          "w": "Then",
+          "start": 27.6,
+          "end": 27.88,
+          "conf": 0.8
+        },
+        {
+          "w": "I",
+          "start": 27.88,
+          "end": 27.976,
+          "conf": 0.77
+        },
+        {
+          "w": "found",
+          "start": 27.976,
+          "end": 28.32,
+          "conf": 0.86
+        },
+        {
+          "w": "the",
+          "start": 28.32,
+          "end": 28.68,
+          "conf": 0.92
+        },
+        {
+          "w": "other",
+          "start": 28.68,
+          "end": 28.98,
+          "conf": 0.92
+        },
+        {
+          "w": "branch",
+          "start": 28.98,
+          "end": 29.5,
+          "conf": 0.92
+        },
+        {
+          "w": "you",
+          "start": 29.5,
+          "end": 29.88,
+          "conf": 0.91
+        },
+        {
+          "w": "tried",
+          "start": 29.88,
+          "end": 30.36,
+          "conf": 0.91
+        },
+        {
+          "w": "to",
+          "start": 30.36,
+          "end": 30.805,
+          "conf": 0.92
+        },
+        {
+          "w": "hide",
+          "start": 30.805,
+          "end": 31.199,
+          "conf": 0.76
+        }
+      ]
+    },
+    {
+      "i": 7,
+      "text": "So I ran the blame on every broken line",
+      "start": 31.199,
+      "end": 35.14,
+      "words": [
+        {
+          "w": "So",
+          "start": 31.199,
+          "end": 31.68,
+          "conf": 0.85
+        },
+        {
+          "w": "I",
+          "start": 31.68,
+          "end": 32.02,
+          "conf": 0.84
+        },
+        {
+          "w": "ran",
+          "start": 32.02,
+          "end": 32.272,
+          "conf": 0.85
+        },
+        {
+          "w": "the",
+          "start": 32.46,
+          "end": 32.66,
+          "conf": 0.77
+        },
+        {
+          "w": "blame",
+          "start": 32.66,
+          "end": 33.02,
+          "conf": 1.0
+        },
+        {
+          "w": "on",
+          "start": 33.02,
+          "end": 33.26,
+          "conf": 1.0
+        },
+        {
+          "w": "every",
+          "start": 33.26,
+          "end": 33.703,
+          "conf": 1.0
+        },
+        {
+          "w": "broken",
+          "start": 33.703,
+          "end": 34.5,
+          "conf": 0.81
+        },
+        {
+          "w": "line",
+          "start": 34.5,
+          "end": 35.14,
+          "conf": 0.63
+        }
+      ]
+    },
+    {
+      "i": 8,
+      "text": "Every single one had your name, not mine",
+      "start": 35.14,
+      "end": 38.76,
+      "words": [
+        {
+          "w": "Every",
+          "start": 35.14,
+          "end": 35.474,
+          "conf": 0.85
+        },
+        {
+          "w": "single",
+          "start": 35.474,
+          "end": 36.437,
+          "conf": 0.93
+        },
+        {
+          "w": "one",
+          "start": 36.437,
+          "end": 36.796,
+          "conf": 0.7
+        },
+        {
+          "w": "had",
+          "start": 36.796,
+          "end": 37.081,
+          "conf": 0.84
+        },
+        {
+          "w": "your",
+          "start": 37.081,
+          "end": 37.32,
+          "conf": 0.83
+        },
+        {
+          "w": "name,",
+          "start": 37.32,
+          "end": 37.84,
+          "conf": 0.97
+        },
+        {
+          "w": "not",
+          "start": 37.84,
+          "end": 38.24,
+          "conf": 0.75
+        },
+        {
+          "w": "mine",
+          "start": 38.24,
+          "end": 38.76,
+          "conf": 0.82
+        }
+      ]
+    },
+    {
+      "i": 9,
+      "text": "You said we could merge, work the conflicts through",
+      "start": 38.76,
+      "end": 42.16,
+      "words": [
+        {
+          "w": "You",
+          "start": 38.76,
+          "end": 38.857,
+          "conf": 0.59
+        },
+        {
+          "w": "said",
+          "start": 38.857,
+          "end": 39.4,
+          "conf": 0.89
+        },
+        {
+          "w": "we",
+          "start": 39.4,
+          "end": 39.63,
+          "conf": 0.85
+        },
+        {
+          "w": "could",
+          "start": 39.84,
+          "end": 40.1,
+          "conf": 0.85
+        },
+        {
+          "w": "merge,",
+          "start": 40.1,
+          "end": 40.508,
+          "conf": 1.0
+        },
+        {
+          "w": "work",
+          "start": 40.508,
+          "end": 40.678,
+          "conf": 0.86
+        },
+        {
+          "w": "the",
+          "start": 40.8,
+          "end": 40.877,
+          "conf": 1.0
+        },
+        {
+          "w": "conflicts",
+          "start": 40.98,
+          "end": 41.635,
+          "conf": 1.0
+        },
+        {
+          "w": "through",
+          "start": 41.635,
+          "end": 42.16,
+          "conf": 1.0
+        }
+      ]
+    },
+    {
+      "i": 10,
+      "text": "But every conflict, baby, started with you",
+      "start": 42.16,
+      "end": 46.58,
+      "words": [
+        {
+          "w": "But",
+          "start": 42.16,
+          "end": 42.56,
+          "conf": 0.85
+        },
+        {
+          "w": "every",
+          "start": 42.56,
+          "end": 42.88,
+          "conf": 0.82
+        },
+        {
+          "w": "conflict,",
+          "start": 42.88,
+          "end": 43.78,
+          "conf": 0.77
+        },
+        {
+          "w": "baby,",
+          "start": 43.78,
+          "end": 44.554,
+          "conf": 0.77
+        },
+        {
+          "w": "started",
+          "start": 44.554,
+          "end": 45.14,
+          "conf": 0.87
+        },
+        {
+          "w": "with",
+          "start": 45.14,
+          "end": 45.42,
+          "conf": 0.68
+        },
+        {
+          "w": "you",
+          "start": 45.42,
+          "end": 46.58,
+          "conf": 0.76
+        }
+      ]
+    },
+    {
+      "i": 11,
+      "text": "No more patches, no more one more try",
+      "start": 46.58,
+      "end": 48.44,
+      "words": [
+        {
+          "w": "No",
+          "start": 46.58,
+          "end": 46.8,
+          "conf": 0.62
+        },
+        {
+          "w": "more",
+          "start": 46.8,
+          "end": 47.02,
+          "conf": 0.78
+        },
+        {
+          "w": "patches,",
+          "start": 47.02,
+          "end": 47.327,
+          "conf": 0.77
+        },
+        {
+          "w": "no",
+          "start": 47.327,
+          "end": 47.357,
+          "conf": 0.81
+        },
+        {
+          "w": "more",
+          "start": 47.357,
+          "end": 47.542,
+          "conf": 0.84
+        },
+        {
+          "w": "one",
+          "start": 47.542,
+          "end": 47.7,
+          "conf": 0.81
+        },
+        {
+          "w": "more",
+          "start": 47.7,
+          "end": 47.92,
+          "conf": 0.85
+        },
+        {
+          "w": "try",
+          "start": 47.92,
+          "end": 48.44,
+          "conf": 0.9
+        }
+      ]
+    },
+    {
+      "i": 12,
+      "text": "No more reading your logs at night",
+      "start": 48.44,
+      "end": 50.1,
+      "words": [
+        {
+          "w": "No",
+          "start": 48.44,
+          "end": 48.64,
+          "conf": 0.62
+        },
+        {
+          "w": "more",
+          "start": 48.64,
+          "end": 48.88,
+          "conf": 0.88
+        },
+        {
+          "w": "reading",
+          "start": 48.88,
+          "end": 49.14,
+          "conf": 0.85
+        },
+        {
+          "w": "your",
+          "start": 49.14,
+          "end": 49.34,
+          "conf": 0.88
+        },
+        {
+          "w": "logs",
+          "start": 49.34,
+          "end": 49.66,
+          "conf": 0.88
+        },
+        {
+          "w": "at",
+          "start": 49.66,
+          "end": 49.82,
+          "conf": 0.87
+        },
+        {
+          "w": "night",
+          "start": 49.82,
+          "end": 50.1,
+          "conf": 0.92
+        }
+      ]
+    },
+    {
+      "i": 13,
+      "text": "Head's been detached for way too long",
+      "start": 50.1,
+      "end": 51.967,
+      "words": [
+        {
+          "w": "Head's",
+          "start": 50.1,
+          "end": 50.28,
+          "conf": 0.88
+        },
+        {
+          "w": "been",
+          "start": 50.28,
+          "end": 50.5,
+          "conf": 0.9
+        },
+        {
+          "w": "detached",
+          "start": 50.5,
+          "end": 50.869,
+          "conf": 0.85
+        },
+        {
+          "w": "for",
+          "start": 50.869,
+          "end": 51.18,
+          "conf": 0.89
+        },
+        {
+          "w": "way",
+          "start": 51.18,
+          "end": 51.42,
+          "conf": 0.89
+        },
+        {
+          "w": "too",
+          "start": 51.42,
+          "end": 51.66,
+          "conf": 0.92
+        },
+        {
+          "w": "long",
+          "start": 51.66,
+          "end": 51.967,
+          "conf": 0.86
+        }
+      ]
+    },
+    {
+      "i": 14,
+      "text": "Stop, one beat and you're gone",
+      "start": 51.967,
+      "end": 53.44,
+      "words": [
+        {
+          "w": "Stop,",
+          "start": 51.967,
+          "end": 52.376,
+          "conf": 0.88
+        },
+        {
+          "w": "one",
+          "start": 52.376,
+          "end": 52.56,
+          "conf": 0.97
+        },
+        {
+          "w": "beat",
+          "start": 52.56,
+          "end": 52.76,
+          "conf": 1.0
+        },
+        {
+          "w": "and",
+          "start": 52.76,
+          "end": 52.885,
+          "conf": 0.94
+        },
+        {
+          "w": "you're",
+          "start": 52.885,
+          "end": 53.06,
+          "conf": 1.0
+        },
+        {
+          "w": "gone",
+          "start": 53.06,
+          "end": 53.44,
+          "conf": 0.98
+        }
+      ]
+    },
+    {
+      "i": 15,
+      "text": "FORCE PUSH! Baby, you're history",
+      "start": 53.44,
+      "end": 56.4,
+      "words": [
+        {
+          "w": "FORCE",
+          "start": 53.44,
+          "end": 53.96,
+          "conf": 0.65
+        },
+        {
+          "w": "PUSH!",
+          "start": 53.96,
+          "end": 54.556,
+          "conf": 0.75
+        },
+        {
+          "w": "Baby,",
+          "start": 54.66,
+          "end": 55.28,
+          "conf": 0.64
+        },
+        {
+          "w": "you're",
+          "start": 55.28,
+          "end": 55.62,
+          "conf": 0.66
+        },
+        {
+          "w": "history",
+          "start": 55.62,
+          "end": 56.4,
+          "conf": 0.72
+        }
+      ]
+    },
+    {
+      "i": 16,
+      "text": "I rewrote the past, there's no you and me",
+      "start": 56.4,
+      "end": 60.84,
+      "words": [
+        {
+          "w": "I",
+          "start": 56.4,
+          "end": 56.5,
+          "conf": 0.44
+        },
+        {
+          "w": "rewrote",
+          "start": 56.5,
+          "end": 57.66,
+          "conf": 0.46
+        },
+        {
+          "w": "the",
+          "start": 57.66,
+          "end": 58.48,
+          "conf": 0.75
+        },
+        {
+          "w": "past,",
+          "start": 58.48,
+          "end": 58.8,
+          "conf": 0.55
+        },
+        {
+          "w": "there's",
+          "start": 58.8,
+          "end": 59.06,
+          "conf": 0.85
+        },
+        {
+          "w": "no",
+          "start": 59.06,
+          "end": 59.28,
+          "conf": 0.88
+        },
+        {
+          "w": "you",
+          "start": 59.28,
+          "end": 59.94,
+          "conf": 0.78
+        },
+        {
+          "w": "and",
+          "start": 59.94,
+          "end": 60.14,
+          "conf": 0.64
+        },
+        {
+          "w": "me",
+          "start": 60.14,
+          "end": 60.84,
+          "conf": 0.88
+        }
+      ]
+    },
+    {
+      "i": 17,
+      "text": "FORCE PUSH! Right over your lies",
+      "start": 60.84,
+      "end": 63.67,
+      "words": [
+        {
+          "w": "FORCE",
+          "start": 60.84,
+          "end": 61.33,
+          "conf": 0.51
+        },
+        {
+          "w": "PUSH!",
+          "start": 61.33,
+          "end": 61.86,
+          "conf": 0.8
+        },
+        {
+          "w": "Right",
+          "start": 61.86,
+          "end": 62.42,
+          "conf": 0.7
+        },
+        {
+          "w": "over",
+          "start": 62.42,
+          "end": 62.72,
+          "conf": 0.61
+        },
+        {
+          "w": "your",
+          "start": 62.72,
+          "end": 62.96,
+          "conf": 0.59
+        },
+        {
+          "w": "lies",
+          "start": 62.96,
+          "end": 63.67,
+          "conf": 0.9
+        }
+      ]
+    },
+    {
+      "i": 18,
+      "text": "Brand new timeline, no goodbyes",
+      "start": 63.88,
+      "end": 68.72,
+      "words": [
+        {
+          "w": "Brand",
+          "start": 63.88,
+          "end": 64.26,
+          "conf": 0.72
+        },
+        {
+          "w": "new",
+          "start": 64.26,
+          "end": 64.52,
+          "conf": 0.75
+        },
+        {
+          "w": "timeline,",
+          "start": 64.52,
+          "end": 67.82,
+          "conf": 0.85
+        },
+        {
+          "w": "no",
+          "start": 67.82,
+          "end": 68.04,
+          "conf": 0.73
+        },
+        {
+          "w": "goodbyes",
+          "start": 68.04,
+          "end": 68.72,
+          "conf": 0.88
+        }
+      ]
+    },
+    {
+      "i": 19,
+      "text": "Keep your local copy, I don't care",
+      "start": 68.72,
+      "end": 72.56,
+      "words": [
+        {
+          "w": "Keep",
+          "start": 68.72,
+          "end": 68.98,
+          "conf": 0.74
+        },
+        {
+          "w": "your",
+          "start": 68.98,
+          "end": 69.24,
+          "conf": 0.75
+        },
+        {
+          "w": "local",
+          "start": 69.24,
+          "end": 69.62,
+          "conf": 0.61
+        },
+        {
+          "w": "copy,",
+          "start": 69.62,
+          "end": 69.911,
+          "conf": 0.86
+        },
+        {
+          "w": "I",
+          "start": 69.911,
+          "end": 70.78,
+          "conf": 0.64
+        },
+        {
+          "w": "don't",
+          "start": 70.78,
+          "end": 71.068,
+          "conf": 0.83
+        },
+        {
+          "w": "care",
+          "start": 71.22,
+          "end": 72.56,
+          "conf": 0.82
+        }
+      ]
+    },
+    {
+      "i": 20,
+      "text": "Origin's mine and you're not there",
+      "start": 72.56,
+      "end": 76.12,
+      "words": [
+        {
+          "w": "Origin's",
+          "start": 72.56,
+          "end": 73.32,
+          "conf": 0.7
+        },
+        {
+          "w": "mine",
+          "start": 73.32,
+          "end": 73.82,
+          "conf": 0.9
+        },
+        {
+          "w": "and",
+          "start": 73.82,
+          "end": 74.0,
+          "conf": 0.62
+        },
+        {
+          "w": "you're",
+          "start": 74.0,
+          "end": 74.48,
+          "conf": 0.63
+        },
+        {
+          "w": "not",
+          "start": 74.48,
+          "end": 74.755,
+          "conf": 0.95
+        },
+        {
+          "w": "there",
+          "start": 74.945,
+          "end": 76.12,
+          "conf": 0.83
+        }
+      ]
+    },
+    {
+      "i": 21,
+      "text": "Force! Push! (hey!) Wipe it clean",
+      "start": 76.12,
+      "end": 77.873,
+      "words": [
+        {
+          "w": "Force!",
+          "start": 76.12,
+          "end": 76.54,
+          "conf": 0.75
+        },
+        {
+          "w": "Push!",
+          "start": 76.54,
+          "end": 76.86,
+          "conf": 0.81
+        },
+        {
+          "w": "(hey!)",
+          "start": 76.86,
+          "end": 77.02,
+          "conf": 0.65
+        },
+        {
+          "w": "Wipe",
+          "start": 77.02,
+          "end": 77.284,
+          "conf": 0.63
+        },
+        {
+          "w": "it",
+          "start": 77.284,
+          "end": 77.44,
+          "conf": 0.81
+        },
+        {
+          "w": "clean",
+          "start": 77.44,
+          "end": 77.873,
+          "conf": 0.94
+        }
+      ]
+    },
+    {
+      "i": 22,
+      "text": "Force! Push! (hey!) Like you've never been",
+      "start": 77.873,
+      "end": 79.8,
+      "words": [
+        {
+          "w": "Force!",
+          "start": 77.873,
+          "end": 78.42,
+          "conf": 0.73
+        },
+        {
+          "w": "Push!",
+          "start": 78.42,
+          "end": 78.64,
+          "conf": 0.66
+        },
+        {
+          "w": "(hey!)",
+          "start": 78.64,
+          "end": 78.7,
+          "conf": 0.58
+        },
+        {
+          "w": "Like",
+          "start": 78.7,
+          "end": 78.911,
+          "conf": 0.7
+        },
+        {
+          "w": "you've",
+          "start": 78.911,
+          "end": 79.14,
+          "conf": 0.53
+        },
+        {
+          "w": "never",
+          "start": 79.14,
+          "end": 79.3,
+          "conf": 0.5
+        },
+        {
+          "w": "been",
+          "start": 79.3,
+          "end": 79.8,
+          "conf": 0.77
+        }
+      ]
+    },
+    {
+      "i": 23,
+      "text": "Force! Push! (hey!) Hear the crowd",
+      "start": 79.8,
+      "end": 81.52,
+      "words": [
+        {
+          "w": "Force!",
+          "start": 79.8,
+          "end": 80.283,
+          "conf": 0.7
+        },
+        {
+          "w": "Push!",
+          "start": 80.283,
+          "end": 80.7,
+          "conf": 0.77
+        },
+        {
+          "w": "(hey!)",
+          "start": 80.7,
+          "end": 80.78,
+          "conf": 0.74
+        },
+        {
+          "w": "Hear",
+          "start": 80.78,
+          "end": 80.981,
+          "conf": 0.68
+        },
+        {
+          "w": "the",
+          "start": 80.981,
+          "end": 81.106,
+          "conf": 0.84
+        },
+        {
+          "w": "crowd",
+          "start": 81.106,
+          "end": 81.52,
+          "conf": 0.99
+        }
+      ]
+    },
+    {
+      "i": 24,
+      "text": "You're not in my history now",
+      "start": 81.52,
+      "end": 83.515,
+      "words": [
+        {
+          "w": "You're",
+          "start": 81.52,
+          "end": 81.66,
+          "conf": 0.89
+        },
+        {
+          "w": "not",
+          "start": 81.66,
+          "end": 81.909,
+          "conf": 0.96
+        },
+        {
+          "w": "in",
+          "start": 81.909,
+          "end": 82.32,
+          "conf": 0.94
+        },
+        {
+          "w": "my",
+          "start": 82.32,
+          "end": 82.502,
+          "conf": 0.85
+        },
+        {
+          "w": "history",
+          "start": 82.502,
+          "end": 83.22,
+          "conf": 1.0
+        },
+        {
+          "w": "now",
+          "start": 83.22,
+          "end": 83.515,
+          "conf": 0.81
+        }
+      ]
+    },
+    {
+      "i": 25,
+      "text": "Squashed three years down to a single line",
+      "start": 84.668,
+      "end": 88.28,
+      "words": [
+        {
+          "w": "Squashed",
+          "start": 84.668,
+          "end": 85.122,
+          "conf": 0.83
+        },
+        {
+          "w": "three",
+          "start": 85.122,
+          "end": 85.86,
+          "conf": 1.0
+        },
+        {
+          "w": "years",
+          "start": 85.86,
+          "end": 86.269,
+          "conf": 0.7
+        },
+        {
+          "w": "down",
+          "start": 86.269,
+          "end": 86.68,
+          "conf": 1.0
+        },
+        {
+          "w": "to",
+          "start": 86.68,
+          "end": 87.04,
+          "conf": 1.0
+        },
+        {
+          "w": "a",
+          "start": 87.04,
+          "end": 87.277,
+          "conf": 0.76
+        },
+        {
+          "w": "single",
+          "start": 87.277,
+          "end": 87.84,
+          "conf": 1.0
+        },
+        {
+          "w": "line",
+          "start": 87.84,
+          "end": 88.28,
+          "conf": 0.85
+        }
+      ]
+    },
+    {
+      "i": 26,
+      "text": "Commit message says: fix, wasted time",
+      "start": 88.28,
+      "end": 92.146,
+      "words": [
+        {
+          "w": "Commit",
+          "start": 88.28,
+          "end": 88.96,
+          "conf": 0.94
+        },
+        {
+          "w": "message",
+          "start": 88.96,
+          "end": 89.362,
+          "conf": 0.82
+        },
+        {
+          "w": "says:",
+          "start": 89.362,
+          "end": 89.776,
+          "conf": 0.98
+        },
+        {
+          "w": "fix,",
+          "start": 89.776,
+          "end": 90.594,
+          "conf": 0.98
+        },
+        {
+          "w": "wasted",
+          "start": 90.704,
+          "end": 91.427,
+          "conf": 0.85
+        },
+        {
+          "w": "time",
+          "start": 91.52,
+          "end": 92.146,
+          "conf": 0.85
+        }
+      ]
+    },
+    {
+      "i": 27,
+      "text": "Cherry-picked the good days, there were three",
+      "start": 92.146,
+      "end": 96.16,
+      "words": [
+        {
+          "w": "Cherry-picked",
+          "start": 92.146,
+          "end": 93.36,
+          "conf": 0.9,
+          "syl": [
+            [
+              92.146,
+              92.92
+            ],
+            [
+              92.92,
+              93.36
+            ]
+          ]
+        },
+        {
+          "w": "the",
+          "start": 93.36,
+          "end": 93.6,
+          "conf": 0.85
+        },
+        {
+          "w": "good",
+          "start": 93.6,
+          "end": 94.086,
+          "conf": 1.0
+        },
+        {
+          "w": "days,",
+          "start": 94.086,
+          "end": 94.74,
+          "conf": 0.83
+        },
+        {
+          "w": "there",
+          "start": 94.74,
+          "end": 94.98,
+          "conf": 0.82
+        },
+        {
+          "w": "were",
+          "start": 94.98,
+          "end": 95.099,
+          "conf": 0.83
+        },
+        {
+          "w": "three",
+          "start": 95.099,
+          "end": 96.16,
+          "conf": 0.98
+        }
+      ]
+    },
+    {
+      "i": 28,
+      "text": "Rebased the rest right out of my tree",
+      "start": 96.16,
+      "end": 100.033,
+      "words": [
+        {
+          "w": "Rebased",
+          "start": 96.16,
+          "end": 96.8,
+          "conf": 0.91
+        },
+        {
+          "w": "the",
+          "start": 96.8,
+          "end": 97.06,
+          "conf": 0.85
+        },
+        {
+          "w": "rest",
+          "start": 97.06,
+          "end": 97.5,
+          "conf": 0.9
+        },
+        {
+          "w": "right",
+          "start": 97.5,
+          "end": 98.38,
+          "conf": 0.81
+        },
+        {
+          "w": "out",
+          "start": 98.38,
+          "end": 98.5,
+          "conf": 0.52
+        },
+        {
+          "w": "of",
+          "start": 98.5,
+          "end": 98.64,
+          "conf": 0.66
+        },
+        {
+          "w": "my",
+          "start": 98.64,
+          "end": 99.08,
+          "conf": 0.79
+        },
+        {
+          "w": "tree",
+          "start": 99.08,
+          "end": 100.033,
+          "conf": 0.71
+        }
+      ]
+    },
+    {
+      "i": 29,
+      "text": "Your pull requests keep lighting up my phone",
+      "start": 100.14,
+      "end": 101.68,
+      "words": [
+        {
+          "w": "Your",
+          "start": 100.14,
+          "end": 100.26,
+          "conf": 0.74
+        },
+        {
+          "w": "pull",
+          "start": 100.26,
+          "end": 100.42,
+          "conf": 0.94
+        },
+        {
+          "w": "requests",
+          "start": 100.42,
+          "end": 100.746,
+          "conf": 0.97
+        },
+        {
+          "w": "keep",
+          "start": 100.746,
+          "end": 100.94,
+          "conf": 0.96
+        },
+        {
+          "w": "lighting",
+          "start": 100.94,
+          "end": 101.22,
+          "conf": 1.0
+        },
+        {
+          "w": "up",
+          "start": 101.22,
+          "end": 101.3,
+          "conf": 0.94
+        },
+        {
+          "w": "my",
+          "start": 101.3,
+          "end": 101.4,
+          "conf": 0.91
+        },
+        {
+          "w": "phone",
+          "start": 101.4,
+          "end": 101.68,
+          "conf": 0.84
+        }
+      ]
+    },
+    {
+      "i": 30,
+      "text": "Please review? Honey, you're on your own",
+      "start": 101.68,
+      "end": 103.525,
+      "words": [
+        {
+          "w": "Please",
+          "start": 101.68,
+          "end": 102.04,
+          "conf": 0.85
+        },
+        {
+          "w": "review?",
+          "start": 102.04,
+          "end": 102.138,
+          "conf": 1.0
+        },
+        {
+          "w": "Honey,",
+          "start": 102.138,
+          "end": 102.487,
+          "conf": 1.0
+        },
+        {
+          "w": "you're",
+          "start": 102.487,
+          "end": 102.826,
+          "conf": 0.97
+        },
+        {
+          "w": "on",
+          "start": 102.826,
+          "end": 103.04,
+          "conf": 1.0
+        },
+        {
+          "w": "your",
+          "start": 103.04,
+          "end": 103.285,
+          "conf": 1.0
+        },
+        {
+          "w": "own",
+          "start": 103.285,
+          "end": 103.525,
+          "conf": 0.9
+        }
+      ]
+    },
+    {
+      "i": 31,
+      "text": "Wrote your name at the top of my git-ignore",
+      "start": 103.525,
+      "end": 105.46,
+      "words": [
+        {
+          "w": "Wrote",
+          "start": 103.525,
+          "end": 103.62,
+          "conf": 0.83
+        },
+        {
+          "w": "your",
+          "start": 103.62,
+          "end": 103.72,
+          "conf": 0.83
+        },
+        {
+          "w": "name",
+          "start": 103.72,
+          "end": 103.98,
+          "conf": 0.94
+        },
+        {
+          "w": "at",
+          "start": 103.98,
+          "end": 104.06,
+          "conf": 1.0
+        },
+        {
+          "w": "the",
+          "start": 104.06,
+          "end": 104.16,
+          "conf": 1.0
+        },
+        {
+          "w": "top",
+          "start": 104.16,
+          "end": 104.32,
+          "conf": 1.0
+        },
+        {
+          "w": "of",
+          "start": 104.32,
+          "end": 104.4,
+          "conf": 0.98
+        },
+        {
+          "w": "my",
+          "start": 104.4,
+          "end": 104.62,
+          "conf": 0.96
+        },
+        {
+          "w": "git-ignore",
+          "start": 104.62,
+          "end": 105.46,
+          "conf": 0.88,
+          "syl": [
+            [
+              104.62,
+              104.892
+            ],
+            [
+              104.892,
+              105.46
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "i": 32,
+      "text": "Whatever you send, I don't see it anymore",
+      "start": 105.46,
+      "end": 107.4,
+      "words": [
+        {
+          "w": "Whatever",
+          "start": 105.46,
+          "end": 105.715,
+          "conf": 0.88
+        },
+        {
+          "w": "you",
+          "start": 105.715,
+          "end": 105.919,
+          "conf": 1.0
+        },
+        {
+          "w": "send,",
+          "start": 105.919,
+          "end": 106.28,
+          "conf": 1.0
+        },
+        {
+          "w": "I",
+          "start": 106.28,
+          "end": 106.34,
+          "conf": 0.91
+        },
+        {
+          "w": "don't",
+          "start": 106.34,
+          "end": 106.438,
+          "conf": 1.0
+        },
+        {
+          "w": "see",
+          "start": 106.438,
+          "end": 106.64,
+          "conf": 0.99
+        },
+        {
+          "w": "it",
+          "start": 106.64,
+          "end": 106.717,
+          "conf": 0.9
+        },
+        {
+          "w": "anymore",
+          "start": 106.717,
+          "end": 107.4,
+          "conf": 0.92
+        }
+      ]
+    },
+    {
+      "i": 33,
+      "text": "No more patches, no more one more try",
+      "start": 107.4,
+      "end": 109.18,
+      "words": [
+        {
+          "w": "No",
+          "start": 107.4,
+          "end": 107.62,
+          "conf": 0.69
+        },
+        {
+          "w": "more",
+          "start": 107.62,
+          "end": 107.865,
+          "conf": 0.88
+        },
+        {
+          "w": "patches,",
+          "start": 107.865,
+          "end": 108.129,
+          "conf": 0.85
+        },
+        {
+          "w": "no",
+          "start": 108.129,
+          "end": 108.2,
+          "conf": 0.85
+        },
+        {
+          "w": "more",
+          "start": 108.2,
+          "end": 108.354,
+          "conf": 0.82
+        },
+        {
+          "w": "one",
+          "start": 108.354,
+          "end": 108.54,
+          "conf": 0.83
+        },
+        {
+          "w": "more",
+          "start": 108.54,
+          "end": 108.72,
+          "conf": 0.87
+        },
+        {
+          "w": "try",
+          "start": 108.72,
+          "end": 109.18,
+          "conf": 0.67
+        }
+      ]
+    },
+    {
+      "i": 34,
+      "text": "No more reading your logs",
+      "start": 109.18,
+      "end": 110.48,
+      "words": [
+        {
+          "w": "No",
+          "start": 109.18,
+          "end": 109.46,
+          "conf": 0.49
+        },
+        {
+          "w": "more",
+          "start": 109.46,
+          "end": 109.7,
+          "conf": 0.83
+        },
+        {
+          "w": "reading",
+          "start": 109.7,
+          "end": 109.965,
+          "conf": 0.83
+        },
+        {
+          "w": "your",
+          "start": 109.965,
+          "end": 110.16,
+          "conf": 0.86
+        },
+        {
+          "w": "logs",
+          "start": 110.16,
+          "end": 110.48,
+          "conf": 0.79
+        }
+      ]
+    },
+    {
+      "i": 35,
+      "text": "And now you want a revert? Baby, that's cute",
+      "start": 110.48,
+      "end": 112.88,
+      "words": [
+        {
+          "w": "And",
+          "start": 110.48,
+          "end": 110.62,
+          "conf": 0.82
+        },
+        {
+          "w": "now",
+          "start": 110.62,
+          "end": 110.86,
+          "conf": 0.79
+        },
+        {
+          "w": "you",
+          "start": 110.86,
+          "end": 111.06,
+          "conf": 0.88
+        },
+        {
+          "w": "want",
+          "start": 111.06,
+          "end": 111.24,
+          "conf": 0.83
+        },
+        {
+          "w": "a",
+          "start": 111.24,
+          "end": 111.32,
+          "conf": 0.73
+        },
+        {
+          "w": "revert?",
+          "start": 111.32,
+          "end": 111.816,
+          "conf": 0.75
+        },
+        {
+          "w": "Baby,",
+          "start": 111.98,
+          "end": 112.22,
+          "conf": 0.68
+        },
+        {
+          "w": "that's",
+          "start": 112.22,
+          "end": 112.42,
+          "conf": 0.92
+        },
+        {
+          "w": "cute",
+          "start": 112.42,
+          "end": 112.88,
+          "conf": 0.75
+        }
+      ]
+    },
+    {
+      "i": 36,
+      "text": "Watch what I do",
+      "start": 112.88,
+      "end": 114.18,
+      "words": [
+        {
+          "w": "Watch",
+          "start": 112.88,
+          "end": 113.34,
+          "conf": 0.69
+        },
+        {
+          "w": "what",
+          "start": 113.34,
+          "end": 113.632,
+          "conf": 0.63
+        },
+        {
+          "w": "I",
+          "start": 113.632,
+          "end": 113.82,
+          "conf": 0.76
+        },
+        {
+          "w": "do",
+          "start": 113.82,
+          "end": 114.18,
+          "conf": 0.92
+        }
+      ]
+    },
+    {
+      "i": 37,
+      "text": "FORCE PUSH! Baby, you're history",
+      "start": 114.18,
+      "end": 117.22,
+      "words": [
+        {
+          "w": "FORCE",
+          "start": 114.18,
+          "end": 114.78,
+          "conf": 0.59
+        },
+        {
+          "w": "PUSH!",
+          "start": 114.78,
+          "end": 115.218,
+          "conf": 0.62
+        },
+        {
+          "w": "Baby,",
+          "start": 115.298,
+          "end": 116.18,
+          "conf": 0.57
+        },
+        {
+          "w": "you're",
+          "start": 116.18,
+          "end": 116.395,
+          "conf": 0.58
+        },
+        {
+          "w": "history",
+          "start": 116.395,
+          "end": 117.22,
+          "conf": 0.78
+        }
+      ]
+    },
+    {
+      "i": 38,
+      "text": "I rewrote the past, there's no you and me",
+      "start": 117.22,
+      "end": 121.594,
+      "words": [
+        {
+          "w": "I",
+          "start": 117.22,
+          "end": 117.28,
+          "conf": 0.59
+        },
+        {
+          "w": "rewrote",
+          "start": 117.28,
+          "end": 118.5,
+          "conf": 0.61
+        },
+        {
+          "w": "the",
+          "start": 118.5,
+          "end": 118.835,
+          "conf": 0.43
+        },
+        {
+          "w": "past,",
+          "start": 119.1,
+          "end": 119.56,
+          "conf": 0.68
+        },
+        {
+          "w": "there's",
+          "start": 119.56,
+          "end": 119.848,
+          "conf": 0.79
+        },
+        {
+          "w": "no",
+          "start": 119.848,
+          "end": 120.04,
+          "conf": 0.77
+        },
+        {
+          "w": "you",
+          "start": 120.04,
+          "end": 120.66,
+          "conf": 0.79
+        },
+        {
+          "w": "and",
+          "start": 120.66,
+          "end": 120.94,
+          "conf": 0.62
+        },
+        {
+          "w": "me",
+          "start": 120.94,
+          "end": 121.594,
+          "conf": 0.79
+        }
+      ]
+    },
+    {
+      "i": 39,
+      "text": "FORCE PUSH! Right over your lies",
+      "start": 121.594,
+      "end": 124.64,
+      "words": [
+        {
+          "w": "FORCE",
+          "start": 121.594,
+          "end": 122.08,
+          "conf": 0.59
+        },
+        {
+          "w": "PUSH!",
+          "start": 122.08,
+          "end": 122.68,
+          "conf": 0.67
+        },
+        {
+          "w": "Right",
+          "start": 122.68,
+          "end": 123.16,
+          "conf": 0.6
+        },
+        {
+          "w": "over",
+          "start": 123.16,
+          "end": 123.529,
+          "conf": 0.61
+        },
+        {
+          "w": "your",
+          "start": 123.529,
+          "end": 123.72,
+          "conf": 0.38
+        },
+        {
+          "w": "lies",
+          "start": 123.72,
+          "end": 124.64,
+          "conf": 0.74
+        }
+      ]
+    },
+    {
+      "i": 40,
+      "text": "Brand new timeline, no goodbyes",
+      "start": 124.64,
+      "end": 129.4,
+      "words": [
+        {
+          "w": "Brand",
+          "start": 124.64,
+          "end": 125.08,
+          "conf": 0.69
+        },
+        {
+          "w": "new",
+          "start": 125.08,
+          "end": 125.28,
+          "conf": 0.61
+        },
+        {
+          "w": "timeline,",
+          "start": 125.28,
+          "end": 128.54,
+          "conf": 0.71
+        },
+        {
+          "w": "no",
+          "start": 128.54,
+          "end": 128.78,
+          "conf": 0.68
+        },
+        {
+          "w": "goodbyes",
+          "start": 128.78,
+          "end": 129.4,
+          "conf": 0.85
+        }
+      ]
+    },
+    {
+      "i": 41,
+      "text": "Keep your local copy, I don't care",
+      "start": 129.4,
+      "end": 133.28,
+      "words": [
+        {
+          "w": "Keep",
+          "start": 129.4,
+          "end": 129.7,
+          "conf": 0.69
+        },
+        {
+          "w": "your",
+          "start": 129.7,
+          "end": 130.0,
+          "conf": 0.83
+        },
+        {
+          "w": "local",
+          "start": 130.0,
+          "end": 130.34,
+          "conf": 0.71
+        },
+        {
+          "w": "copy,",
+          "start": 130.34,
+          "end": 130.853,
+          "conf": 0.94
+        },
+        {
+          "w": "I",
+          "start": 131.092,
+          "end": 131.327,
+          "conf": 0.73
+        },
+        {
+          "w": "don't",
+          "start": 131.5,
+          "end": 131.815,
+          "conf": 0.81
+        },
+        {
+          "w": "care",
+          "start": 131.94,
+          "end": 133.28,
+          "conf": 0.85
+        }
+      ]
+    },
+    {
+      "i": 42,
+      "text": "Origin's mine and you're not there",
+      "start": 133.28,
+      "end": 136.82,
+      "words": [
+        {
+          "w": "Origin's",
+          "start": 133.28,
+          "end": 134.04,
+          "conf": 0.77
+        },
+        {
+          "w": "mine",
+          "start": 134.04,
+          "end": 134.66,
+          "conf": 0.91
+        },
+        {
+          "w": "and",
+          "start": 134.66,
+          "end": 134.76,
+          "conf": 0.58
+        },
+        {
+          "w": "you're",
+          "start": 134.76,
+          "end": 135.2,
+          "conf": 0.73
+        },
+        {
+          "w": "not",
+          "start": 135.2,
+          "end": 135.477,
+          "conf": 0.95
+        },
+        {
+          "w": "there",
+          "start": 135.64,
+          "end": 136.82,
+          "conf": 0.71
+        }
+      ]
+    },
+    {
+      "i": 43,
+      "text": "Force! Push! (hey!) Wipe it clean",
+      "start": 136.82,
+      "end": 138.515,
+      "words": [
+        {
+          "w": "Force!",
+          "start": 136.82,
+          "end": 137.26,
+          "conf": 0.75
+        },
+        {
+          "w": "Push!",
+          "start": 137.26,
+          "end": 137.52,
+          "conf": 0.75
+        },
+        {
+          "w": "(hey!)",
+          "start": 137.52,
+          "end": 137.747,
+          "conf": 0.6
+        },
+        {
+          "w": "Wipe",
+          "start": 137.747,
+          "end": 138.02,
+          "conf": 0.68
+        },
+        {
+          "w": "it",
+          "start": 138.02,
+          "end": 138.12,
+          "conf": 0.81
+        },
+        {
+          "w": "clean",
+          "start": 138.12,
+          "end": 138.515,
+          "conf": 0.96
+        }
+      ]
+    },
+    {
+      "i": 44,
+      "text": "Force! Push! (hey!) Like you've never been",
+      "start": 138.515,
+      "end": 140.44,
+      "words": [
+        {
+          "w": "Force!",
+          "start": 138.515,
+          "end": 138.86,
+          "conf": 0.67
+        },
+        {
+          "w": "Push!",
+          "start": 138.86,
+          "end": 139.06,
+          "conf": 0.66
+        },
+        {
+          "w": "(hey!)",
+          "start": 139.06,
+          "end": 139.18,
+          "conf": 0.66
+        },
+        {
+          "w": "Like",
+          "start": 139.18,
+          "end": 139.34,
+          "conf": 0.65
+        },
+        {
+          "w": "you've",
+          "start": 139.34,
+          "end": 139.54,
+          "conf": 0.72
+        },
+        {
+          "w": "never",
+          "start": 139.54,
+          "end": 139.98,
+          "conf": 0.97
+        },
+        {
+          "w": "been",
+          "start": 139.98,
+          "end": 140.44,
+          "conf": 0.93
+        }
+      ]
+    },
+    {
+      "i": 45,
+      "text": "Force! Push! (hey!) Hear the crowd",
+      "start": 140.44,
+      "end": 142.2,
+      "words": [
+        {
+          "w": "Force!",
+          "start": 140.44,
+          "end": 140.77,
+          "conf": 0.75
+        },
+        {
+          "w": "Push!",
+          "start": 140.77,
+          "end": 141.38,
+          "conf": 0.53
+        },
+        {
+          "w": "(hey!)",
+          "start": 141.38,
+          "end": 141.46,
+          "conf": 0.72
+        },
+        {
+          "w": "Hear",
+          "start": 141.46,
+          "end": 141.64,
+          "conf": 0.63
+        },
+        {
+          "w": "the",
+          "start": 141.64,
+          "end": 141.808,
+          "conf": 0.98
+        },
+        {
+          "w": "crowd",
+          "start": 141.808,
+          "end": 142.2,
+          "conf": 0.98
+        }
+      ]
+    },
+    {
+      "i": 46,
+      "text": "You're not in my history now",
+      "start": 142.2,
+      "end": 144.217,
+      "words": [
+        {
+          "w": "You're",
+          "start": 142.2,
+          "end": 142.36,
+          "conf": 0.84
+        },
+        {
+          "w": "not",
+          "start": 142.36,
+          "end": 142.476,
+          "conf": 0.92
+        },
+        {
+          "w": "in",
+          "start": 142.6,
+          "end": 143.025,
+          "conf": 0.91
+        },
+        {
+          "w": "my",
+          "start": 143.025,
+          "end": 143.2,
+          "conf": 0.85
+        },
+        {
+          "w": "history",
+          "start": 143.2,
+          "end": 143.92,
+          "conf": 1.0
+        },
+        {
+          "w": "now",
+          "start": 143.92,
+          "end": 144.217,
+          "conf": 0.83
+        }
+      ]
+    },
+    {
+      "i": 47,
+      "text": "They say never force it on a shared branch",
+      "start": 144.58,
+      "end": 147.959,
+      "words": [
+        {
+          "w": "They",
+          "start": 144.58,
+          "end": 144.751,
+          "conf": 0.85
+        },
+        {
+          "w": "say",
+          "start": 144.751,
+          "end": 145.08,
+          "conf": 1.0
+        },
+        {
+          "w": "never",
+          "start": 145.08,
+          "end": 145.41,
+          "conf": 1.0
+        },
+        {
+          "w": "force",
+          "start": 145.41,
+          "end": 145.853,
+          "conf": 1.0
+        },
+        {
+          "w": "it",
+          "start": 145.853,
+          "end": 145.998,
+          "conf": 0.96
+        },
+        {
+          "w": "on",
+          "start": 146.198,
+          "end": 146.48,
+          "conf": 0.77
+        },
+        {
+          "w": "a",
+          "start": 146.48,
+          "end": 146.577,
+          "conf": 0.99
+        },
+        {
+          "w": "shared",
+          "start": 146.577,
+          "end": 147.32,
+          "conf": 1.0
+        },
+        {
+          "w": "branch",
+          "start": 147.32,
+          "end": 147.959,
+          "conf": 0.85
+        }
+      ]
+    },
+    {
+      "i": 48,
+      "text": "Somebody could lose it all, no second chance",
+      "start": 147.959,
+      "end": 151.74,
+      "words": [
+        {
+          "w": "Somebody",
+          "start": 147.959,
+          "end": 148.453,
+          "conf": 0.85
+        },
+        {
+          "w": "could",
+          "start": 148.453,
+          "end": 148.76,
+          "conf": 1.0
+        },
+        {
+          "w": "lose",
+          "start": 148.76,
+          "end": 149.12,
+          "conf": 1.0
+        },
+        {
+          "w": "it",
+          "start": 149.12,
+          "end": 149.36,
+          "conf": 0.84
+        },
+        {
+          "w": "all,",
+          "start": 149.36,
+          "end": 149.92,
+          "conf": 0.88
+        },
+        {
+          "w": "no",
+          "start": 149.92,
+          "end": 150.254,
+          "conf": 0.99
+        },
+        {
+          "w": "second",
+          "start": 150.254,
+          "end": 151.002,
+          "conf": 1.0
+        },
+        {
+          "w": "chance",
+          "start": 151.002,
+          "end": 151.74,
+          "conf": 1.0
+        }
+      ]
+    },
+    {
+      "i": 49,
+      "text": "But you checked out a long, long time ago",
+      "start": 151.74,
+      "end": 155.352,
+      "words": [
+        {
+          "w": "But",
+          "start": 151.74,
+          "end": 151.92,
+          "conf": 0.85
+        },
+        {
+          "w": "you",
+          "start": 151.92,
+          "end": 152.16,
+          "conf": 1.0
+        },
+        {
+          "w": "checked",
+          "start": 152.16,
+          "end": 152.468,
+          "conf": 1.0
+        },
+        {
+          "w": "out",
+          "start": 152.468,
+          "end": 152.98,
+          "conf": 0.84
+        },
+        {
+          "w": "a",
+          "start": 152.98,
+          "end": 153.12,
+          "conf": 0.85
+        },
+        {
+          "w": "long,",
+          "start": 153.12,
+          "end": 153.78,
+          "conf": 0.88
+        },
+        {
+          "w": "long",
+          "start": 153.78,
+          "end": 154.06,
+          "conf": 0.91
+        },
+        {
+          "w": "time",
+          "start": 154.06,
+          "end": 154.569,
+          "conf": 0.98
+        },
+        {
+          "w": "ago",
+          "start": 154.569,
+          "end": 155.352,
+          "conf": 0.84
+        }
+      ]
+    },
+    {
+      "i": 50,
+      "text": "So no lease, no warning, here I go",
+      "start": 155.352,
+      "end": 159.078,
+      "words": [
+        {
+          "w": "So",
+          "start": 155.352,
+          "end": 155.66,
+          "conf": 0.85
+        },
+        {
+          "w": "no",
+          "start": 155.66,
+          "end": 156.12,
+          "conf": 0.85
+        },
+        {
+          "w": "lease,",
+          "start": 156.12,
+          "end": 156.6,
+          "conf": 0.85
+        },
+        {
+          "w": "no",
+          "start": 156.6,
+          "end": 157.04,
+          "conf": 1.0
+        },
+        {
+          "w": "warning,",
+          "start": 157.04,
+          "end": 157.98,
+          "conf": 0.83
+        },
+        {
+          "w": "here",
+          "start": 157.98,
+          "end": 158.32,
+          "conf": 0.85
+        },
+        {
+          "w": "I",
+          "start": 158.32,
+          "end": 158.44,
+          "conf": 1.0
+        },
+        {
+          "w": "go",
+          "start": 158.44,
+          "end": 159.078,
+          "conf": 1.0
+        }
+      ]
+    },
+    {
+      "i": 51,
+      "text": "Force push. Baby, you're history.",
+      "start": 161.912,
+      "end": 165.4,
+      "words": [
+        {
+          "w": "Force",
+          "start": 161.912,
+          "end": 162.52,
+          "conf": 0.63
+        },
+        {
+          "w": "push.",
+          "start": 162.52,
+          "end": 163.109,
+          "conf": 0.75
+        },
+        {
+          "w": "Baby,",
+          "start": 163.22,
+          "end": 163.84,
+          "conf": 0.72
+        },
+        {
+          "w": "you're",
+          "start": 163.84,
+          "end": 164.047,
+          "conf": 0.73
+        },
+        {
+          "w": "history.",
+          "start": 164.047,
+          "end": 165.4,
+          "conf": 0.96
+        }
+      ]
+    },
+    {
+      "i": 52,
+      "text": "I rewrote the past, there's no you and me.",
+      "start": 165.4,
+      "end": 169.33,
+      "words": [
+        {
+          "w": "I",
+          "start": 165.4,
+          "end": 166.003,
+          "conf": 0.6
+        },
+        {
+          "w": "rewrote",
+          "start": 166.003,
+          "end": 166.66,
+          "conf": 0.77
+        },
+        {
+          "w": "the",
+          "start": 166.66,
+          "end": 166.741,
+          "conf": 0.92
+        },
+        {
+          "w": "past,",
+          "start": 166.84,
+          "end": 167.34,
+          "conf": 0.99
+        },
+        {
+          "w": "there's",
+          "start": 167.34,
+          "end": 167.58,
+          "conf": 0.89
+        },
+        {
+          "w": "no",
+          "start": 167.58,
+          "end": 168.063,
+          "conf": 0.96
+        },
+        {
+          "w": "you",
+          "start": 168.063,
+          "end": 168.74,
+          "conf": 0.85
+        },
+        {
+          "w": "and",
+          "start": 168.74,
+          "end": 168.96,
+          "conf": 0.71
+        },
+        {
+          "w": "me.",
+          "start": 168.96,
+          "end": 169.33,
+          "conf": 0.99
+        }
+      ]
+    },
+    {
+      "i": 53,
+      "text": "FORCE PUSH! Right over your lies",
+      "start": 169.33,
+      "end": 172.308,
+      "words": [
+        {
+          "w": "FORCE",
+          "start": 169.33,
+          "end": 169.86,
+          "conf": 0.89
+        },
+        {
+          "w": "PUSH!",
+          "start": 169.86,
+          "end": 170.38,
+          "conf": 0.76
+        },
+        {
+          "w": "Right",
+          "start": 170.38,
+          "end": 170.92,
+          "conf": 0.6
+        },
+        {
+          "w": "over",
+          "start": 170.92,
+          "end": 171.16,
+          "conf": 0.61
+        },
+        {
+          "w": "your",
+          "start": 171.16,
+          "end": 171.46,
+          "conf": 0.66
+        },
+        {
+          "w": "lies",
+          "start": 171.46,
+          "end": 172.308,
+          "conf": 0.64
+        }
+      ]
+    },
+    {
+      "i": 54,
+      "text": "Brand new timeline, no goodbyes",
+      "start": 172.38,
+      "end": 177.18,
+      "words": [
+        {
+          "w": "Brand",
+          "start": 172.38,
+          "end": 172.76,
+          "conf": 0.65
+        },
+        {
+          "w": "new",
+          "start": 172.76,
+          "end": 172.98,
+          "conf": 0.52
+        },
+        {
+          "w": "timeline,",
+          "start": 172.98,
+          "end": 174.36,
+          "conf": 0.61
+        },
+        {
+          "w": "no",
+          "start": 174.36,
+          "end": 174.94,
+          "conf": 0.55
+        },
+        {
+          "w": "goodbyes",
+          "start": 174.94,
+          "end": 177.18,
+          "conf": 0.6
+        }
+      ]
+    },
+    {
+      "i": 55,
+      "text": "Keep your local copy, I don't care",
+      "start": 177.18,
+      "end": 180.16,
+      "words": [
+        {
+          "w": "Keep",
+          "start": 177.18,
+          "end": 177.46,
+          "conf": 0.63
+        },
+        {
+          "w": "your",
+          "start": 177.46,
+          "end": 177.76,
+          "conf": 0.76
+        },
+        {
+          "w": "local",
+          "start": 177.76,
+          "end": 178.04,
+          "conf": 0.77
+        },
+        {
+          "w": "copy,",
+          "start": 178.1,
+          "end": 178.599,
+          "conf": 0.78
+        },
+        {
+          "w": "I",
+          "start": 178.839,
+          "end": 179.26,
+          "conf": 0.67
+        },
+        {
+          "w": "don't",
+          "start": 179.26,
+          "end": 179.547,
+          "conf": 0.7
+        },
+        {
+          "w": "care",
+          "start": 179.7,
+          "end": 180.16,
+          "conf": 0.77
+        }
+      ]
+    },
+    {
+      "i": 56,
+      "text": "Origin's mine and you're not there",
+      "start": 180.16,
+      "end": 184.56,
+      "words": [
+        {
+          "w": "Origin's",
+          "start": 180.16,
+          "end": 181.78,
+          "conf": 0.55
+        },
+        {
+          "w": "mine",
+          "start": 181.78,
+          "end": 182.2,
+          "conf": 0.6
+        },
+        {
+          "w": "and",
+          "start": 182.2,
+          "end": 182.5,
+          "conf": 0.69
+        },
+        {
+          "w": "you're",
+          "start": 182.5,
+          "end": 182.94,
+          "conf": 0.57
+        },
+        {
+          "w": "not",
+          "start": 182.94,
+          "end": 183.209,
+          "conf": 0.69
+        },
+        {
+          "w": "there",
+          "start": 183.38,
+          "end": 184.56,
+          "conf": 0.65
+        }
+      ]
+    },
+    {
+      "i": 57,
+      "text": "Force! Push! (hey!) Wipe it clean",
+      "start": 184.56,
+      "end": 186.4,
+      "words": [
+        {
+          "w": "Force!",
+          "start": 184.56,
+          "end": 185.019,
+          "conf": 0.7
+        },
+        {
+          "w": "Push!",
+          "start": 185.019,
+          "end": 185.259,
+          "conf": 0.58
+        },
+        {
+          "w": "(hey!)",
+          "start": 185.259,
+          "end": 185.48,
+          "conf": 0.43
+        },
+        {
+          "w": "Wipe",
+          "start": 185.48,
+          "end": 185.738,
+          "conf": 0.71
+        },
+        {
+          "w": "it",
+          "start": 185.738,
+          "end": 185.907,
+          "conf": 0.82
+        },
+        {
+          "w": "clean",
+          "start": 185.907,
+          "end": 186.4,
+          "conf": 0.91
+        }
+      ]
+    },
+    {
+      "i": 58,
+      "text": "Force! Push! (hey!) Like you've never been",
+      "start": 186.4,
+      "end": 188.22,
+      "words": [
+        {
+          "w": "Force!",
+          "start": 186.4,
+          "end": 186.9,
+          "conf": 0.7
+        },
+        {
+          "w": "Push!",
+          "start": 186.9,
+          "end": 187.1,
+          "conf": 0.51
+        },
+        {
+          "w": "(hey!)",
+          "start": 187.1,
+          "end": 187.16,
+          "conf": 0.58
+        },
+        {
+          "w": "Like",
+          "start": 187.16,
+          "end": 187.42,
+          "conf": 0.43
+        },
+        {
+          "w": "you've",
+          "start": 187.42,
+          "end": 187.58,
+          "conf": 0.45
+        },
+        {
+          "w": "never",
+          "start": 187.58,
+          "end": 187.76,
+          "conf": 0.5
+        },
+        {
+          "w": "been",
+          "start": 187.76,
+          "end": 188.22,
+          "conf": 0.62
+        }
+      ]
+    },
+    {
+      "i": 59,
+      "text": "Force! Push! (hey!) Hear the crowd",
+      "start": 188.22,
+      "end": 189.9,
+      "words": [
+        {
+          "w": "Force!",
+          "start": 188.22,
+          "end": 188.44,
+          "conf": 0.7
+        },
+        {
+          "w": "Push!",
+          "start": 188.44,
+          "end": 189.02,
+          "conf": 0.73
+        },
+        {
+          "w": "(hey!)",
+          "start": 189.02,
+          "end": 189.14,
+          "conf": 0.55
+        },
+        {
+          "w": "Hear",
+          "start": 189.14,
+          "end": 189.38,
+          "conf": 0.62
+        },
+        {
+          "w": "the",
+          "start": 189.38,
+          "end": 189.459,
+          "conf": 0.9
+        },
+        {
+          "w": "crowd",
+          "start": 189.569,
+          "end": 189.9,
+          "conf": 0.98
+        }
+      ]
+    },
+    {
+      "i": 60,
+      "text": "You're not in my history now",
+      "start": 189.9,
+      "end": 192.014,
+      "words": [
+        {
+          "w": "You're",
+          "start": 189.9,
+          "end": 190.1,
+          "conf": 0.98
+        },
+        {
+          "w": "not",
+          "start": 190.1,
+          "end": 190.307,
+          "conf": 1.0
+        },
+        {
+          "w": "in",
+          "start": 190.307,
+          "end": 190.74,
+          "conf": 0.92
+        },
+        {
+          "w": "my",
+          "start": 190.74,
+          "end": 190.931,
+          "conf": 0.85
+        },
+        {
+          "w": "history",
+          "start": 190.931,
+          "end": 191.64,
+          "conf": 1.0
+        },
+        {
+          "w": "now",
+          "start": 191.64,
+          "end": 192.014,
+          "conf": 0.85
+        }
+      ]
+    },
+    {
+      "i": 61,
+      "text": "Oh, and the ref-log?",
+      "start": 192.328,
+      "end": 193.81,
+      "words": [
+        {
+          "w": "Oh,",
+          "start": 192.328,
+          "end": 192.777,
+          "conf": 0.75
+        },
+        {
+          "w": "and",
+          "start": 193.06,
+          "end": 193.14,
+          "conf": 0.98
+        },
+        {
+          "w": "the",
+          "start": 193.14,
+          "end": 193.26,
+          "conf": 1.0
+        },
+        {
+          "w": "ref-log?",
+          "start": 193.26,
+          "end": 193.81,
+          "conf": 0.92,
+          "syl": [
+            [
+              193.26,
+              193.52
+            ],
+            [
+              193.52,
+              193.81
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "i": 62,
+      "text": "It forgets you in thirty days.",
+      "start": 194.403,
+      "end": 196.124,
+      "words": [
+        {
+          "w": "It",
+          "start": 194.403,
+          "end": 194.503,
+          "conf": 0.85
+        },
+        {
+          "w": "forgets",
+          "start": 194.503,
+          "end": 195.0,
+          "conf": 1.0
+        },
+        {
+          "w": "you",
+          "start": 195.0,
+          "end": 195.18,
+          "conf": 1.0
+        },
+        {
+          "w": "in",
+          "start": 195.18,
+          "end": 195.3,
+          "conf": 1.0
+        },
+        {
+          "w": "thirty",
+          "start": 195.3,
+          "end": 195.62,
+          "conf": 1.0
+        },
+        {
+          "w": "days.",
+          "start": 195.62,
+          "end": 196.124,
+          "conf": 1.0
+        }
+      ]
+    },
+    {
+      "i": 63,
+      "text": "I can wait.",
+      "start": 196.803,
+      "end": 197.421,
+      "words": [
+        {
+          "w": "I",
+          "start": 196.803,
+          "end": 196.98,
+          "conf": 0.85
+        },
+        {
+          "w": "can",
+          "start": 196.98,
+          "end": 197.16,
+          "conf": 1.0
+        },
+        {
+          "w": "wait.",
+          "start": 197.16,
+          "end": 197.421,
+          "conf": 1.0
+        }
+      ]
+    }
+  ],
+  "extras": [
+    {
+      "start": 9.5,
+      "end": 16.76,
+      "desc": "sustained pitched pad / hum in the vocal stem before verse 1 (no lyric)"
+    },
+    {
+      "start": 83.73,
+      "end": 84.56,
+      "desc": "unlisted vocal (backing vocal / ad-lib / breath)"
+    },
+    {
+      "start": 197.55,
+      "end": 208.75,
+      "desc": "tag after 'I can wait.': the hard hit (197.43) starts ~7 s of full band with a 'dun-dun-dun' vocal chant; drums out at ~204.6, the chant alone until ~209"
+    }
+  ],
+  "source": {
+    "song": "force-push",
+    "file": "audio/Force Push.wav",
+    "sha256": "d991901177a38f642ef1339a7d8ed1440debfb75f6f319a88c1a651eee969698",
+    "sample_rate": 48000,
+    "frames": 10062720,
+    "duration": 209.64
+  },
+  "notes": "Timeline = the WAV master (see `source`); the Demucs stems are separated from it, so no offset. Lines: lyrics/force-push/lyrics.txt, derived from the sheet lyrics/force-push.txt by lyrics_sheet.py, with the two places the vocal differs from the sheet replaced by what is sung (analysis/songs/force_push.py SUNG: pre-chorus 1 sings the stage direction, 'Stop, one beat and you're gone'; pre-chorus 2 sings 'No more reading your logs, and now you want a revert?'). Method: (1) CTC emissions (20 ms) of the vocal stem from torchaudio MMS_FA and wav2vec2-large-lv60k-960h on the mono sum and the left/right channels, fused as a probability mixture; (2) one global constrained Viterbi alignment of all 64 lines with a garbage 'star' token between lines; (3) signal refinement of word starts/ends on the vocal stem (rest onsets, spectral-flux onsets, frication); (4) cross-check against faster-whisper large-v3-turbo (CPU) and the individual models/channels; (5) the disagreements inspected on zoomed spectrogram/pitch/onset plots against the tracked beat grid, with one anchor and 14 manual starts (FIX), mostly in the gang-chant post-choruses. conf: 0.35 + agreement of the alternatives (<=60 ms) + CTC posterior + Whisper agreement; manual fixes carry their own conf. Least certain: the gang chants' '(hey!)' and 'Like you've never' (+-100 ms, shouted over each other), 'I' in 'Keep your local copy, I don't care' (69.9 or ~70.4), chorus 'I rewrote' (56.4-56.7). Elsewhere word starts are expected within ~30-50 ms."
+}

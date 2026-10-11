@@ -1,0 +1,64 @@
+Git status.
+Nothing to commit.
+Story of your life.
+Three years in and you never could commit
+Hid me in your stash, said we'd get to it
+Said it's just a feature, nothing on the side
+Then I found the other branch you tried to hide
+So I ran the blame on every broken line
+Every single one had your name, not mine
+You said we could merge, work the conflicts through
+But every conflict, baby, started with you
+No more patches, no more one more try
+No more reading your logs at night
+Head's been detached for way too long
+Stop, one beat and you're gone
+FORCE PUSH! Baby, you're history
+I rewrote the past, there's no you and me
+FORCE PUSH! Right over your lies
+Brand new timeline, no goodbyes
+Keep your local copy, I don't care
+Origin's mine and you're not there
+Force! Push! (hey!) Wipe it clean
+Force! Push! (hey!) Like you've never been
+Force! Push! (hey!) Hear the crowd
+You're not in my history now
+Squashed three years down to a single line
+Commit message says: fix, wasted time
+Cherry-picked the good days, there were three
+Rebased the rest right out of my tree
+Your pull requests keep lighting up my phone
+Please review? Honey, you're on your own
+Wrote your name at the top of my git-ignore
+Whatever you send, I don't see it anymore
+No more patches, no more one more try
+No more reading your logs
+And now you want a revert? Baby, that's cute
+Watch what I do
+FORCE PUSH! Baby, you're history
+I rewrote the past, there's no you and me
+FORCE PUSH! Right over your lies
+Brand new timeline, no goodbyes
+Keep your local copy, I don't care
+Origin's mine and you're not there
+Force! Push! (hey!) Wipe it clean
+Force! Push! (hey!) Like you've never been
+Force! Push! (hey!) Hear the crowd
+You're not in my history now
+They say never force it on a shared branch
+Somebody could lose it all, no second chance
+But you checked out a long, long time ago
+So no lease, no warning, here I go
+Force push. Baby, you're history.
+I rewrote the past, there's no you and me.
+FORCE PUSH! Right over your lies
+Brand new timeline, no goodbyes
+Keep your local copy, I don't care
+Origin's mine and you're not there
+Force! Push! (hey!) Wipe it clean
+Force! Push! (hey!) Like you've never been
+Force! Push! (hey!) Hear the crowd
+You're not in my history now
+Oh, and the ref-log?
+It forgets you in thirty days.
+I can wait.

@@ -4,6 +4,8 @@ The video is a web app (`app/`, TypeScript + three.js, run with bun + Vite) that
 
 ## Running things
 
+- Several songs share the engine (`songs.json` at the repo root). Pick one with `?song=<id>` in the preview and `--song <id>` for `scripts/render.ts`; each song has its own data directory, timeline (`src/timelines.ts`) and scenes. Examples below omit it (the default song).
+
 - Dev server (probably already running): `cd app && bunx vite --port 5173`. Preview: http://localhost:5173/?t=23.0 (space = play/pause, ←/→ = ±1 s, shift = ±5 s, `,`/`.` = ±1 frame, `[`/`]` = previous/next timeline entry, `l` = loop the current entry, `h` = hide the UI).
 - Stills (the main way to check your work — then LOOK at the PNGs with the Read tool): `cd app && bun scripts/render.ts stills --t 12.5,13.0,14.2 --only open --out ../out/wip/open`
 - Contact sheet of a time range: `bun scripts/render.ts sheet --from 1.5 --to 9 --n 16 --cols 4 --only open --out ../out/wip/open/sheet.png`

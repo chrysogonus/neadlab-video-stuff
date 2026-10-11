@@ -36,12 +36,13 @@ export class Lyrics {
     this.words.forEach((w, i) => (w.gi = i));
   }
 
-  static async load(): Promise<Lyrics> {
-    for (const url of ['data/lyrics.json', 'data/lyrics.approx.json']) {
+  /** Load `<dir>/lyrics.json` (or `<dir>/lyrics.approx.json`); `dir` is the song's data directory. */
+  static async load(dir = 'data'): Promise<Lyrics> {
+    for (const url of [`${dir}/lyrics.json`, `${dir}/lyrics.approx.json`]) {
       const r = await fetch(url);
       if (r.ok && (r.headers.get('content-type') ?? '').includes('json')) return new Lyrics(await r.json());
     }
-    throw new Error('no lyrics data found');
+    throw new Error(`no lyrics data found in ${dir}/`);
   }
 
   /** The line being sung at t (or null in gaps). */
