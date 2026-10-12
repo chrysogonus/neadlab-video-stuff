@@ -55,6 +55,14 @@ export default class Etiquette extends FPScene {
       sing(c, this.lays[i]!, t, PAGE.x + 60, PAGE.y + 250, th, { dim: 0.16, color: { lose: th.coral, chance: th.coral, go: th.green } });
       c.restore();
     });
+    // the footnote that fills the page's foot: Git's real exception, which is the singer's way out
+    const kn = arrive(t, this.tChecked - 0.1, 0.5);
+    if (kn > 0) {
+      c.save(); c.globalAlpha = kn;
+      c.fillStyle = th.rule; c.fillRect(PAGE.x + 60, PAGE.y + PAGE.h - 150, 220, 2);
+      text(c, '\u00b9 Except on a branch nobody else has checked out.', PAGE.x + 60, PAGE.y + PAGE.h - 98, FONT.serif, 38, th.mist);
+      c.restore();
+    }
     this.diagram(c, t);
     this.warning(c, t);
     this.checkout(c, t);

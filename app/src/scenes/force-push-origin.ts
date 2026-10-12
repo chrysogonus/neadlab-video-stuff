@@ -99,36 +99,46 @@ export default class Origin extends FPScene {
   private origin(c: CanvasRenderingContext2D, t: number, x: number, y: number, w: number, h: number, take: number) {
     const th = this.th;
     const b = panel(c, x, y, w, h, th, { title: 'origin', right: take > 0.5 ? 'remote' : '' });
-    // the green line
-    const n = 8, gy = b.y + 190, x0 = b.x + 60, step = Math.min(110, (b.w - 260) / (n - 1));
-    c.strokeStyle = th.green; c.lineWidth = 5;
+    // the green line: grows with the panel, so origin fills the frame when it takes it
+    const n = 8, gy = b.y + lerp(190, 200, take), x0 = b.x + 70;
+    const step = (b.w - 300) / (n - 1), r = lerp(13, 18, take);
+    c.strokeStyle = th.green; c.lineWidth = lerp(5, 7, take);
     c.beginPath(); c.moveTo(x0, gy); c.lineTo(x0 + step * (n - 1), gy); c.stroke();
     for (let i = 0; i < n; i++) {
-      node(c, x0 + step * i, gy, 13, 'me', th.type);
-      c.strokeStyle = th.green; c.lineWidth = 3; c.beginPath(); c.arc(x0 + step * i, gy, 16, 0, Math.PI * 2); c.stroke();
+      node(c, x0 + step * i, gy, r, 'me', th.type);
+      c.strokeStyle = th.green; c.lineWidth = 3; c.beginPath(); c.arc(x0 + step * i, gy, r + 3, 0, Math.PI * 2); c.stroke();
     }
     const tipX = x0 + step * (n - 1);
-    c.strokeStyle = th.green; c.lineWidth = 2; c.beginPath(); c.moveTo(tipX, gy - 20); c.lineTo(tipX, gy - 50); c.stroke();
-    pill(c, 'origin/main', tipX, gy - 72, { size: 26, fill: th.green, color: th.onGreen, align: 'center', glow: th.green });
-    // collaborators
-    const cy = b.y + 330;
-    monoText(c, 'COLLABORATORS', b.x + 60, cy, 24, th.dim, { fam: FONT.monoB, track: 3 });
-    node(c, b.x + 76, cy + 62, 14, 'me', th.type);
-    monoText(c, 'me', b.x + 112, cy + 72, 34, th.type, { fam: FONT.monoB });
-    monoText(c, '✓ owner', b.x + 230, cy + 72, 30, th.green, { fam: FONT.monoB });
+    c.strokeStyle = th.green; c.lineWidth = 2; c.beginPath(); c.moveTo(tipX, gy - r - 6); c.lineTo(tipX, gy - 54); c.stroke();
+    pill(c, 'origin/main', tipX, gy - 78, { size: lerp(26, 30, take), fill: th.green, color: th.onGreen, align: 'center', glow: th.green });
+    // collaborators (left) and the branch's facts (right, once origin has the frame)
+    const cy = b.y + 330, fs = lerp(34, 44, take), row = lerp(70, 84, take);
+    monoText(c, 'COLLABORATORS', b.x + 70, cy, 24, th.dim, { fam: FONT.monoB, track: 3 });
+    node(c, b.x + 86, cy + row - 10, 15, 'me', th.type);
+    const mw = monoText(c, 'me', b.x + 122, cy + row, fs, th.type, { fam: FONT.monoB });
+    monoText(c, '\u2713 owner', b.x + 150 + mw, cy + row, fs * 0.85, th.green, { fam: FONT.monoB });
     // you: struck on "not", gone on "there"
     const gone = prog(t, this.tThere, this.tThere + 0.4, ease.inOutCubic);
+    const yy = cy + row * 2;
     c.save(); c.globalAlpha *= 1 - gone * 0.85;
-    node(c, b.x + 76, cy + 132, 14, 'you', th.coral, { ring: 4 });
-    const yw = monoText(c, 'you', b.x + 112, cy + 142, 34, th.coral, { fam: FONT.monoB });
+    node(c, b.x + 86, yy - 10, 15, 'you', th.coral, { ring: 4 });
+    const yw = monoText(c, 'you', b.x + 122, yy, fs, th.coral, { fam: FONT.monoB });
     c.restore();
-    strike(c, b.x + 104, cy + 130, b.x + 112 + yw + 10, prog(t, this.tNot, this.tNot + 0.25, ease.outCubic), th.coral, 6);
+    strike(c, b.x + 114, yy - fs * 0.32, b.x + 122 + yw + 10, prog(t, this.tNot, this.tNot + 0.25, ease.outCubic), th.coral, 6);
     if (gone > 0) {
       c.save(); c.globalAlpha *= gone;
       c.setLineDash([8, 8]); c.strokeStyle = th.dim; c.lineWidth = 2;
-      c.strokeRect(b.x + 200, cy + 106, 300, 52);
+      c.strokeRect(b.x + 140 + yw, yy - fs * 0.85, fs * 6, fs * 1.2);
       c.setLineDash([]);
-      monoText(c, 'not there', b.x + 220, cy + 142, 30, th.dim, { fam: FONT.monoM });
+      monoText(c, 'not there', b.x + 160 + yw, yy, fs * 0.8, th.dim, { fam: FONT.monoM });
+      c.restore();
+    }
+    if (take > 0) {
+      const fx = b.x + b.w - 70;
+      c.save(); c.globalAlpha *= take;
+      monoText(c, 'BRANCH', fx, cy, 24, th.dim, { fam: FONT.monoB, track: 3, align: 'right' });
+      monoText(c, 'main \u00b7 8 commits', fx, cy + row, fs * 0.85, th.type, { fam: FONT.monoB, align: 'right' });
+      monoText(c, `authors: 1 \u00b7 force pushes: ${this.n}`, fx, cy + row * 2, fs * 0.7, th.mist, { fam: FONT.monoM, align: 'right' });
       c.restore();
     }
   }

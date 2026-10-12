@@ -92,6 +92,23 @@ export abstract class FPScene extends Scene {
     if (!w) throw new Error(`[${this.ctx.id}] word "${text}" not in cue ${id}: "${this.line(id).text}"`);
     return w;
   }
+  /**
+   * Mode-change wipe (entry param `wipe`: the previous scene's mode): over the entry's first ~0.3 s the old
+   * ground slides off to the right behind a green edge, so a dark/paper change reads as a turned page.
+   */
+  private wipe(c: CanvasRenderingContext2D, f: Frame) {
+    const from = this.ctx.params.wipe as Mode | undefined;
+    if (!from) return;
+    const p = ease.inOutCubic(prog(f.t, this.ctx.start, this.ctx.start + 0.3));
+    if (p >= 1) return;
+    const x = lerp(0, W + 40, p), old = theme(from);
+    c.save();
+    c.setTransform(1, 0, 0, 1, 0, 0);
+    c.globalAlpha = 1;
+    c.fillStyle = old.bg; c.fillRect(x, 0, W - x + 1, H);
+    c.fillStyle = this.th.green; c.fillRect(x - 8, 0, 8, H);
+    c.restore();
+  }
   /** The beat at/before t and the beat index helpers. */
   beatTime(i: number) { return this.ctx.audio.timeOfBeat(i); }
   beatIdx(t: number) { return this.ctx.audio.beatAt(t); }
@@ -103,6 +120,7 @@ export abstract class FPScene extends Scene {
     try {
       ground(c, this.th);
       this.draw(c, f);
+      this.wipe(c, f);
     } catch (e) {
       // the context outlives the frame: reset its state stack before rethrowing
       c.reset();
@@ -155,8 +173,10 @@ export function typedWith(s: string, words: Word[], t: number) {
 export function lineShow(t: number, seq: Line[], i: number, end = Infinity, lead = 0.3, fin = 0.12, fout = 0.08) {
   const hand = (a: Line | undefined, b: Line) => (a ? Math.max(b.start - lead, Math.min(a.end, b.start) - 0.02) : b.start - lead);
   const l = seq[i]!, next = seq[i + 1];
-  const s = hand(seq[i - 1], l), e = next ? hand(l, next) - fout * 0.5 : end;
-  return clamp(Math.min((t - s) / fin, (e - t) / fout));
+  const s = hand(seq[i - 1], l), e = next ? hand(l, next) : end;
+  // a line still being sung near the handover switches out at once instead of fading over its last word
+  const fo = next && l.end > e - fout ? 0.02 : fout;
+  return clamp(Math.min((t - s) / fin, (e - t) / fo));
 }
 
 /** Block cursor: on for the first 60 % of every beat (blinks on the grid). */

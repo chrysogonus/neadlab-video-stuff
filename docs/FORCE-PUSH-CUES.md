@@ -23,14 +23,14 @@ line ends.
 | `chorus1` | `force-push-chorus` {"n":1} | 53.44 | 68.72 | 15.28 | word L15 | 29.71–37.98 |
 | `origin1` | `force-push-origin` {"n":1} | 68.72 | 76.12 | 7.40 | beat L19 | 37.98–42.00 |
 | `chant1` | `force-push-chant` {"n":1} | 76.12 | 84.41 | 8.28 | word L21 | 42.00–46.50 |
-| `squash` | `force-push-squash` | 84.41 | 100.04 | 15.64 | beat L25 | 46.50–55.00 |
+| `squash` | `force-push-squash` {"wipe":"dark"} | 84.41 | 100.04 | 15.64 | beat L25 | 46.50–55.00 |
 | `phone` | `force-push-phone` | 100.04 | 107.40 | 7.36 | beat L29 | 55.00–59.00 |
-| `nomore2` | `force-push-nomore` {"n":2} | 107.40 | 114.18 | 6.78 | beat L33 | 59.00–62.69 |
+| `nomore2` | `force-push-nomore` {"n":2,"wipe":"paper"} | 107.40 | 114.18 | 6.78 | beat L33 | 59.00–62.69 |
 | `chorus2` | `force-push-chorus` {"n":2} | 114.18 | 129.40 | 15.22 | word L37 | 62.69–70.96 |
 | `origin2` | `force-push-origin` {"n":2} | 129.40 | 136.82 | 7.42 | beat L41 | 70.96–75.00 |
 | `chant2` | `force-push-chant` {"n":2} | 136.82 | 144.17 | 7.35 | word L43 | 75.00–79.00 |
 | `etiquette` | `force-push-etiquette` | 144.17 | 159.08 | 14.91 | beat L47 | 79.00–87.09 |
-| `acapella` | `force-push-acapella` | 159.08 | 169.33 | 10.25 | end L50 | 87.09–92.70 |
+| `acapella` | `force-push-acapella` {"wipe":"paper"} | 159.08 | 169.33 | 10.25 | end L50 | 87.09–92.70 |
 | `drop` | `force-push-chorus` {"n":3} | 169.33 | 177.18 | 7.85 | word L53 | 92.70–96.97 |
 | `origin3` | `force-push-origin` {"n":3} | 177.18 | 184.56 | 7.38 | beat L55 | 96.97–101.00 |
 | `chant3` | `force-push-chant` {"n":3} | 184.56 | 192.01 | 7.45 | word L57 | 101.00–105.06 |

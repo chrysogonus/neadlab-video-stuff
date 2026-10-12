@@ -97,7 +97,7 @@ export default class Phone extends FPScene {
   /** The .gitignore: `you` on line 1; what is sent lands greyed out; status: nothing to commit. */
   private ignore(c: CanvasRenderingContext2D, t: number, k: number) {
     const th = this.th;
-    const x = 1000, y = 140, w = W - M - 1000, h = 560;
+    const x = 1000, y = 140, w = W - M - 1000, h = 600;
     c.save(); c.globalAlpha = k;
     const b = panel(c, x + (1 - k) * 60, y, w, h, th, { title: '.gitignore' });
     const lines = ['you', 'node_modules/', '.env', '*.log', 'drafts/'];
@@ -107,19 +107,22 @@ export default class Phone extends FPScene {
       const v = i === 0 ? typed(s, t, this.tName - 0.05, this.tName + 0.25) : s;
       monoText(c, v, b.x + 76, ly, 30, i === 0 ? th.green : th.mist, { fam: i === 0 ? FONT.monoB : FONT.monoM });
     });
-    // files the ex sends: fly in from the left, greyed and struck on arrival (ignored)
+    // files the ex sends: fly in from the left and land in a list under the rules, greyed and struck (ignored)
+    const k0 = arrive(t, this.tSend - 0.35, 0.2);
+    if (k0 > 0) {
+      c.fillStyle = th.a('rule', k0); c.fillRect(b.x + 26, b.y + 282, b.w - 52, 2);
+      monoText(c, 'sent by you', b.x + 26, b.y + 322, 22, th.a('dim', k0), { fam: FONT.monoB, track: 2 });
+    }
     FILES.forEach((s, i) => {
-      const t0 = this.tSend - 0.3 + i * 0.32;
-      const u = prog(t, t0, t0 + 0.45, ease.outCubic);
+      const t0 = this.tSend - 0.3 + i * 0.3;
+      const u = prog(t, t0, t0 + 0.4, ease.outCubic);
       if (u <= 0) return;
-      const fx = lerp(-300, b.x + 76, u), fy = b.y + 330 + i * 0; // they stack onto one row, each replacing the last
-      const gone = clamp((t - (t0 + 0.45)) / 0.25);
-      if (gone >= 1 && i < FILES.length - 1) return;
-      c.save(); c.globalAlpha *= 1 - (i < FILES.length - 1 ? gone : 0);
-      const fw = monoText(c, s, fx, fy, 30, u >= 1 ? th.dim : th.type, { fam: FONT.monoB });
-      if (u >= 1) strike(c, fx - 4, fy - 10, fx + fw + 4, 1, th.dim, 3);
-      monoText(c, u >= 1 ? 'ignored' : '→', fx + fw + 24, fy, 24, th.dim, { fam: FONT.monoM });
-      c.restore();
+      const fx = lerp(-320, b.x + 76, u), fy = b.y + 368 + i * 44;
+      const fw = monoText(c, s, fx, fy, 28, u >= 1 ? th.dim : th.type, { fam: FONT.monoB });
+      if (u >= 1) {
+        strike(c, fx - 4, fy - 9, fx + fw + 4, prog(t, t0 + 0.4, t0 + 0.55), th.dim, 3);
+        monoText(c, 'ignored', b.x + b.w - 26, fy, 22, th.dim, { fam: FONT.monoM, align: 'right' });
+      }
     });
     c.restore();
     // git status: the intro's half again

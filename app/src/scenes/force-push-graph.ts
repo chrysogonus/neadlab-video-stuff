@@ -114,7 +114,7 @@ export default class Graph extends FPScene {
       const tb = this.beats[i]!;
       if (t < tb - 0.02) break;
       const k = arrive(t, tb - 0.02, 0.18);
-      if (i > 0) edge(c, GX(i - 1) + R, GY, GX(i) - R, GY, th.a('type', 0.55), 4, k);
+      if (i > 0) edge(c, GX(i - 1) + R, GY, GX(i) - R, GY, th.a('type', 0.6), 5, k);
       node(c, GX(i), GY, R, 'me', th.type, { a: k });
       label(c, MAIN[i]!.h, GX(i), GY + 46, th.a('dim', k), 18);
     }

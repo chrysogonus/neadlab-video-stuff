@@ -6,7 +6,7 @@ import { FONT, monoText, node, pill, type Theme } from './kit';
 /** Main lane: commit i of MAIN at (GX(i), GY). */
 export const GY = 640;
 export const GX = (i: number) => 170 + i * 96;
-export const R = 15; // commit radius
+export const R = 18; // commit radius
 /** The side lane (the ex's `other`), and where it leaves main. */
 export const SIDE_Y = 500;
 export const SIDE_FROM = 6;

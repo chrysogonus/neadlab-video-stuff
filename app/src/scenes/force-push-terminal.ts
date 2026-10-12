@@ -52,6 +52,7 @@ export default class Terminal extends FPScene {
   // outro
   reflog: { h: string; ref: string; msg: string; you: boolean }[] = [];
   heroWait!: KLayout;
+  heroCleanSize = 150;
   tagStart = 0; gcAt: number[] = []; tStatus2 = 0; daysEnd = 0;
 
   override setup() {
@@ -182,6 +183,7 @@ export default class Terminal extends FPScene {
       { h: MAIN[1]!.h, ref: 'HEAD@{5}', msg: 'commit: us: first date', you: true },
     ];
     this.heroWait = fitWords(this.line('L63').words, FONT.hero, P.w, 160, 90, 1);
+    this.heroCleanSize = Math.min(this.heroWait.size, Math.floor((150 * P.w) / measure('working tree clean.', FONT.hero, 150)));
     this.heroLay = fitWords(this.line('L61').words, FONT.hero, P.w, 160, 90, 1);
     this.tagStart = this.cue('tag').start;
     // the thirty days run out over the tag's first bars; gc then prunes one coral entry per beat
@@ -258,24 +260,33 @@ export default class Terminal extends FPScene {
     }
     if (t >= this.tStatus2 - 0.1) {
       // the planted line, now the other half lit
-      const x2 = prompt(c, CX, PROMPT2 - 160, PROMPT.size, th);
-      monoText(c, 'git status', x2, PROMPT2 - 160, PROMPT.size, th.type, { fam: FONT.monoM });
+      // (under the two reflog entries gc kept: prompt 420, branch 470, status 548, prompt 640)
+      const sY = 548;
+      const x2 = prompt(c, CX, 420, PROMPT.size, th);
+      monoText(c, 'git status', x2, 420, PROMPT.size, th.type, { fam: FONT.monoM });
       const ks = arrive(t, this.tStatus2, 0.15);
       c.save(); c.globalAlpha = ks;
-      monoText(c, 'On branch main', CX, PROMPT2 - 94, MONO, th.dim);
+      monoText(c, 'On branch main', CX, 474, MONO, th.dim);
       const lit = prog(t, this.tStatus2 + 0.25, this.tStatus2 + 1.1, ease.inOutCubic);
-      const nw = monoText(c, 'nothing to commit', CX, STATUS.y + 60, STATUS.size, th.a('type', 0.85), { fam: FONT.monoB });
-      monoText(c, ', working tree clean', CX + nw, STATUS.y + 60, STATUS.size, th.a('type', 0.2), { fam: FONT.monoB });
+      const nw = monoText(c, 'nothing to commit', CX, sY, STATUS.size, th.a('type', 0.85), { fam: FONT.monoB });
+      monoText(c, ', working tree clean', CX + nw, sY, STATUS.size, th.a('type', 0.2), { fam: FONT.monoB });
       if (lit > 0) {
         const ww = measure(', working tree clean', FONT.monoB, STATUS.size);
-        c.save(); c.beginPath(); c.rect(CX + nw, STATUS.y - 10, ww * lit, STATUS.size * 1.5); c.clip();
-        monoText(c, ', working tree clean', CX + nw, STATUS.y + 60, STATUS.size, th.green, { fam: FONT.monoB });
+        c.save(); c.beginPath(); c.rect(CX + nw, sY - STATUS.size, ww * lit, STATUS.size * 1.5); c.clip();
+        monoText(c, ', working tree clean', CX + nw, sY, STATUS.size, th.green, { fam: FONT.monoB });
         c.restore();
-        c.fillStyle = th.green; c.fillRect(CX + nw + measure(', ', FONT.monoB, STATUS.size), STATUS.y + 78, (ww - measure(', ', FONT.monoB, STATUS.size)) * lit, 3);
+        c.fillStyle = th.green; c.fillRect(CX + nw + measure(', ', FONT.monoB, STATUS.size), sY + 18, (ww - measure(', ', FONT.monoB, STATUS.size)) * lit, 3);
       }
       c.restore();
-      const x3 = prompt(c, CX, PROMPT2 + 30, PROMPT.size, th);
-      cursor(c, x3, PROMPT2 + 30, PROMPT.size, th.type, cursorOn(f.beat));
+      const x3 = prompt(c, CX, 640, PROMPT.size, th);
+      cursor(c, x3, 640, PROMPT.size, th.type, cursorOn(f.beat));
+      // the payoff, where "Story of your life." stood: the clean half, as the hero
+      const kh = arrive(t, this.tStatus2 + 0.9, 0.3);
+      if (kh > 0) {
+        c.save(); c.globalAlpha = kh;
+        text(c, 'working tree clean.', P.x, HERO_Y + (1 - kh) * 16, FONT.hero, this.heroCleanSize, th.green);
+        c.restore();
+      }
     }
     // the hero lines under the terminal: "Oh, and the ref-log?", then "I can wait." (as "Story of your life.")
     const seq = [l61, l63];

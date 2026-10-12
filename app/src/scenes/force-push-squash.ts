@@ -12,8 +12,9 @@ import type { KLayout } from './_kit';
 
 const ED = { x: 1000, y: 140, w: W - M - 1000, h: 640 };
 const HERO = { x: M, y: 262, w: 860 };
-const GRID = { x: 250, y: 620, w: 1560, rowH: 70 };
-const GOOD = [[0, 73], [1, 183], [2, 357]] as const; // (row, day) of the three good days
+// three years of days: a block of 25 x 15 dots per year (365 of the 375 cells)
+const BLOCK = { x: 300, y: 640, cols: 25, cell: 14, dot: 4.4, w: 25 * 14, gap: 110 };
+const GOOD = [[0, 72], [1, 183], [2, 357]] as const; // (year, day) of the three good days
 const GOOD_LABEL = ['14 Mar 2023', '2 Jul 2024', '24 Dec 2025'];
 const LINES = ['L25', 'L26', 'L27', 'L28'];
 
@@ -100,49 +101,56 @@ export default class Squash extends FPScene {
     monoText(c, '# 1,095 commits squashed into one.', b.x + 30, b.y + 236, 22, th.dim, { fam: FONT.mono });
   }
 
-  /** Three rows of 365 days; three picked; the rest rebased off the right edge; the three become a tree. */
+  /** Three years of days as three blocks of 365 dots; three picked; the rest rebased off the right edge; the three become a tree. */
   private grid(c: CanvasRenderingContext2D, t: number) {
     const th = this.th;
     const show = arrive(t, this.tCherry - 0.3, 0.35);
-    const step = GRID.w / 365;
     const pick = prog(t, this.tGood - 0.05, this.tGood + 0.35, ease.outCubic);
     const off = prog(t, this.tRebased, this.tOut + 0.3, ease.inCubic);
     const tree = prog(t, this.tTree - 0.4, this.tTree + 0.3, ease.inOutCubic);
+    const cell = (r: number, d: number) => ({ x: BLOCK.x + r * (BLOCK.w + BLOCK.gap) + (d % BLOCK.cols) * BLOCK.cell + BLOCK.cell / 2, y: BLOCK.y + Math.floor(d / BLOCK.cols) * BLOCK.cell + BLOCK.cell / 2 });
     for (let r = 0; r < 3; r++) {
-      const y = GRID.y + r * GRID.rowH;
-      monoText(c, String(2023 + r), GRID.x - 30, y + 8, 26, th.a('mist', show), { fam: FONT.monoB, align: 'right' });
-      c.fillStyle = th.a('dim', 0.75 * show);
+      const bx = BLOCK.x + r * (BLOCK.w + BLOCK.gap);
+      monoText(c, String(2023 + r), bx, BLOCK.y - 26, 28, th.a('mist', show * (1 - off)), { fam: FONT.monoB });
+      monoText(c, '365 days', bx, BLOCK.y + 15 * BLOCK.cell + 30, 22, th.a('dim', show * (1 - off)), { fam: FONT.monoM });
+      c.fillStyle = th.a('dim', 0.6 * show);
       for (let d = 0; d < 365; d++) {
-        if (GOOD.some(([gr, gd]) => gr === r && gd === d) && pick > 0) continue;
-        // rebased off: each dot slides right, staggered, accelerating
-        const lag = hash(d, r, 3) * 0.35;
-        const k = clamp((off - lag) / 0.65);
-        const x = GRID.x + d * step + ease.inCubic(k) * 1400;
-        if (x > W + 10) continue;
-        c.globalAlpha = 1 - k * 0.6;
-        c.beginPath(); c.arc(x, y, 2.6, 0, Math.PI * 2); c.fill();
+        if (pick > 0 && GOOD.some(([gr, gd]) => gr === r && gd === d)) continue;
+        // rebased off: each day slides right, staggered, accelerating, and fades
+        const k = clamp((off - hash(d, r, 3) * 0.35) / 0.65);
+        const { x, y } = cell(r, d);
+        const px = x + ease.inCubic(k) * 1500;
+        if (px > W + 10) continue;
+        c.globalAlpha = 1 - k * 0.7;
+        c.beginPath(); c.arc(px, y, BLOCK.dot, 0, Math.PI * 2); c.fill();
       }
       c.globalAlpha = 1;
     }
-    // the three good days
+    // the three good days: picked out with a ring and a date, then carried to a small tree
     GOOD.forEach(([r, d], i) => {
       if (pick <= 0) return;
-      const gx = GRID.x + d * step, gy = GRID.y + r * GRID.rowH;
-      const tx = 1500, ty = 380 + i * 110; // the tree, right
-      const x = lerp(gx, tx, tree), y = lerp(gy, ty, tree);
+      const g = cell(r, d);
+      const tx = 1500, ty = 380 + i * 110;
+      const x = lerp(g.x, tx, tree), y = lerp(g.y, ty, tree);
       const k = clamp(pick * 3 - i * 0.6);
       if (k <= 0) return;
-      node(c, x, y, lerp(9, 18, tree), 'me', th.green, { a: k });
-      if (tree < 0.3) monoText(c, GOOD_LABEL[i]!, gx, gy - 24, 22, th.a('green', k * (1 - tree / 0.3)), { fam: FONT.monoB, align: 'center' });
+      node(c, x, y, lerp(BLOCK.dot * 1.6, 18, tree), 'me', th.green, { a: k });
+      if (tree < 0.3) {
+        const fade = k * (1 - tree / 0.3);
+        c.strokeStyle = th.a('green', fade); c.lineWidth = 2;
+        c.beginPath(); c.arc(g.x, g.y, BLOCK.dot * 3.2, 0, Math.PI * 2); c.stroke();
+        c.beginPath(); c.moveTo(g.x, g.y - BLOCK.dot * 3.2); c.lineTo(g.x, BLOCK.y - 60 - i * 34); c.stroke();
+        monoText(c, GOOD_LABEL[i]!, g.x + 8, BLOCK.y - 66 - i * 34, 24, th.a('green', fade), { fam: FONT.monoB });
+      }
     });
     if (tree > 0) {
       c.strokeStyle = th.a('green', tree); c.lineWidth = 5;
       c.beginPath(); c.moveTo(1500, 380 + 18); c.lineTo(1500, 380 + 220 - 18); c.stroke();
-      monoText(c, 'main · 3 commits', 1540, 500, 30, th.a('type', tree), { fam: FONT.monoB });
+      monoText(c, 'main \u00b7 3 commits', 1540, 500, 30, th.a('type', tree), { fam: FONT.monoB });
     }
     // "there were three": 3 / 1,095
     const k3 = arrive(t, this.tThree, 0.2) * (1 - tree);
-    if (k3 > 0) text(c, '3 / 1,095', W - M, 520, FONT.hero, 110, th.a('green', k3), { align: 'right' });
+    if (k3 > 0) text(c, '3 / 1,095', W - M, 380, FONT.hero, 110, th.a('green', k3), { align: 'right' });
   }
 
   override post(f: Frame) {

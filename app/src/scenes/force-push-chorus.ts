@@ -227,8 +227,8 @@ export default class Chorus extends FPScene {
     // "Brand new timeline": the line keeps going, off the right edge
     const ext = prog(t, this.tTimeline - 0.05, this.tTimeline + 1.8, ease.inOutCubic);
     const xEnd = lerp(GX(NEW - 1), GX(NEW - 1) + 260 + 900, ext);
-    edge(c, GX(0), GY, lerp(GX(0), GX(NEW - 1), grow), GY, th.green, 5);
-    if (ext > 0) edge(c, GX(NEW - 1), GY, xEnd, GY, th.green, 5);
+    edge(c, GX(0), GY, lerp(GX(0), GX(NEW - 1), grow), GY, th.green, 6);
+    if (ext > 0) edge(c, GX(NEW - 1), GY, xEnd, GY, th.green, 6);
     for (let i = 0; i < NEW; i++) {
       const k = clamp((grow * NEW - i) / 1.5);
       node(c, GX(i), GY, R, 'me', th.type, { a: k });

@@ -83,7 +83,7 @@ export default class NoMore extends FPScene {
     if (k1 > 0) {
       const b = this.card(c, 180, 130, k1, 'fix-us.patch');
       c.save(); c.globalAlpha = k1;
-      monoText(c, '@@ -1,3 +1,12 @@  we\'ll be fine', b.x + 24, b.y + 50, 26, th.mist, { fam: FONT.monoM });
+      monoText(c, '@@ -1,3 +1,12 @@  we\'ll be fine', b.x + 24, b.y + 52, 30, th.mist, { fam: FONT.monoM });
       c.restore();
       strike(c, COL.x - 10, 245, COL.x + COL.w + 10, prog(t, this.tPatches + 0.05, this.tPatches + 0.3, ease.outCubic), th.coral, 7);
     }
@@ -103,7 +103,7 @@ export default class NoMore extends FPScene {
       const b = this.card(c, 500, 200, k3, 'git log --author=you --since=23:00');
       c.save(); c.globalAlpha = k3;
       ['23:41  wip', '01:12  wip', '02:58  drinks?'].forEach((s, i) => {
-        if (t >= this.tNight - 0.9 + i * 0.2) monoText(c, s, b.x + 24, b.y + 46 + i * 40, 26, i === 2 ? th.coral : th.mist, { fam: FONT.monoM });
+        if (t >= this.tNight - 0.9 + i * 0.2) monoText(c, s, b.x + 24, b.y + 46 + i * 40, 30, i === 2 ? th.coral : th.mist, { fam: FONT.monoM });
       });
       c.restore();
       strike(c, COL.x - 10, 600, COL.x + COL.w + 10, prog(t, this.tNight + 0.05, this.tNight + 0.3, ease.outCubic), th.coral, 7);
