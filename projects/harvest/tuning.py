@@ -1,22 +1,14 @@
-"""Harvest Now, Decrypt Later: the analysis constants the committed data/*.json were made with."""
+"""Harvest Now, Decrypt Later: the analysis settings the committed data/*.json were made with.
 
-TEMPO_RANGE = (90.0, 105.0)
+The tempo window (90, 105), the bar phase and the sections are detected and match the committed
+data. data/lyrics.json predates this pipeline (it was aligned on an mp3 decode with ~20 manual
+corrections that are not recorded here): do not regenerate it with align.py.
+"""
 
-SECTION_BARS = [
-    # Derived from lyrics/sections.json against the fitted grid: `uv run python sections_bars.py`.
-    # Each section starts on the latest downbeat at or before its first sung line, so a plate
-    # is never late for its own first word (the same rule timeline.ts's cut() uses for beats).
-    ("intro", None, 3),
-    ("verse1", 3, 11),
-    ("prechorus1", 11, 16),
-    ("chorus1", 16, 27),
-    ("verse2", 27, 35),
-    ("prechorus2", 35, 38),
-    ("chorus2", 38, 47),
-    ("bridge", 47, 55),
-    ("finalchorus", 55, 71),
-    ("outro", 71, None),
-]
+# The published video was cut on a constant 96.71 BPM grid. The song drifts (Suno), and that grid
+# is off by up to ~150 ms in places (analyze.py: local phase error spread 244 ms; a tracked grid
+# gets 7 ms), but the video is timed against it, so it stays.
+GRID = "constant"
 
 # The song's jargon, so the decoder does not "correct" it into something commoner.
 WHISPER_PROMPT = ("Song lyrics: harvest now, decrypt later; qubits, petabytes, padlock, "

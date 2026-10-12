@@ -1,10 +1,12 @@
-"""Find the tempo search window for analyze.py's TEMPO_RANGE.
+"""Inspect the tempo: tempogram peaks, the median estimate, and the window analyze.py searches.
 
 analyze.py fits a constant-tempo grid by exhaustive search inside TEMPO_RANGE. That
 search cannot find a tempo outside its window -- it locks onto a metric relative
-instead (half/double/4:3) and the kick residual blows up. Run this first.
+instead (half/double/4:3) and the kick residual blows up. analyze.py derives the window
+from estimate() below; a project whose estimate lands on a metric relative pins
+TEMPO_RANGE in its tuning.py.
 
-  uv run python tempo_probe.py
+  uv run python tempo_probe.py --project <id>
 """
 import common
 import numpy as np
@@ -12,6 +14,14 @@ import librosa
 
 HOP = 256
 SR = 22050
+
+
+def estimate(y, sr=SR):
+    """Median tempo estimate of a drum stem, and the search window analyze.py uses around it:
+    +-7 BPM, widened to whole BPM (so the fit's 0.02 BPM lattice does not depend on the estimate)."""
+    onset = librosa.onset.onset_strength(y=y, sr=sr, hop_length=HOP)
+    est = float(librosa.feature.tempo(onset_envelope=onset, sr=sr, hop_length=HOP, aggregate=np.median)[0])
+    return est, (float(np.floor(est - 7)), float(np.ceil(est + 7)))
 
 
 def main():
@@ -41,7 +51,7 @@ def main():
     print("per-30s:          " + "  ".join(
         f"{float(librosa.feature.tempo(onset_envelope=onset[i:i+w], sr=sr, hop_length=HOP, aggregate=np.median)[0]):.1f}"
         for i in range(0, max(1, len(onset) - w // 2), w)))
-    print(f"\nTEMPO_RANGE = ({est - 7:.1f}, {est + 7:.1f})")
+    print(f"\nTEMPO_RANGE = {estimate(y, sr)[1]}   (what analyze.py uses unless tuning.py sets one)")
 
 
 if __name__ == "__main__":

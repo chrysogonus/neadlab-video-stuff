@@ -86,93 +86,9 @@ export const unitOf = (b: number) => (b < 1 ? 0 : Math.min(UNITS.length - 1, Mat
 
 // ------------------------------------------------------------------ karaoke
 
-export interface KItem { w: Word; x: number; width: number }
-export interface KRow { items: KItem[]; width: number }
-export interface KLayout { rows: KRow[]; fam: string; size: number; tracking: number; width: number }
-
-/**
- * Lay a line's words out in rows no wider than maxW, balanced (the widest row as narrow as possible).
- * Words keep their kerning inside; the space between words is the font's own space.
- */
-export function layoutWords(words: Word[], fam: string, size: number, maxW = Infinity, tracking = 0, maxRows = 3): KLayout {
-  const ws = words.map((w) => measure(w.w, fam, size, tracking));
-  const sp = measure(' ', fam, size) + tracking;
-  const rowW = (a: number, b: number) => ws.slice(a, b).reduce((s, x) => s + x, 0) + sp * Math.max(0, b - a - 1);
-  const n = words.length;
-  let best: number[] = [0, n];
-  if (rowW(0, n) > maxW) {
-    // try 2 rows, then 3 rows: minimise the widest row
-    let bestMax = Infinity;
-    for (let i = 1; i < n; i++) {
-      const m = Math.max(rowW(0, i), rowW(i, n));
-      if (m < bestMax) { bestMax = m; best = [0, i, n]; }
-    }
-    if (bestMax > maxW && maxRows >= 3) {
-      for (let i = 1; i < n; i++) for (let j = i + 1; j < n; j++) {
-        const m = Math.max(rowW(0, i), rowW(i, j), rowW(j, n));
-        if (m < bestMax) { bestMax = m; best = [0, i, j, n]; }
-      }
-    }
-  }
-  const rows: KRow[] = [];
-  for (let r = 0; r + 1 < best.length; r++) {
-    const items: KItem[] = [];
-    let x = 0;
-    for (let i = best[r]!; i < best[r + 1]!; i++) { items.push({ w: words[i]!, x, width: ws[i]! }); x += ws[i]! + sp; }
-    rows.push({ items, width: x - sp });
-  }
-  return { rows, fam, size, tracking, width: Math.max(...rows.map((r) => r.width)) };
-}
-
-export interface KStyle {
-  sung: string;
-  unsung: string;
-  /** Colour of the word being sung (wipe), settling to `sung` over ~0.4 s after its end. */
-  active?: string;
-  /** px the word rises from as it starts (settles over ~0.18 s); 0 = none. */
-  lift?: number;
-  align?: 'left' | 'center' | 'right';
-  lineH?: number; // row pitch in em (default 1.02)
-  /** Alpha of the unsung words: they appear up to `anticip` s before the line starts. */
-  anticip?: number;
-  /** Optional per-word override (colour/alpha) — e.g. one word in signal. */
-  wordStyle?: (w: Word) => { sung?: string; unsung?: string } | void;
-}
-
-/**
- * Draw a laid-out line at (x, y = first row's baseline) with per-word karaoke wipes: every word
- * in `unsung`, then the sung part (Lyrics.wordProgress, so the wipe never runs ahead of the voice)
- * clipped and drawn in `sung`. Returns the pixel box for layout of neighbours.
- */
-export function drawKaraoke(c: CanvasRenderingContext2D, lay: KLayout, t: number, x: number, y: number, st: KStyle) {
-  const lh = lay.size * (st.lineH ?? 1.02);
-  c.save();
-  c.font = font(lay.fam, lay.size);
-  c.textBaseline = 'alphabetic';
-  c.textAlign = 'left';
-  c.letterSpacing = `${lay.tracking}px`;
-  lay.rows.forEach((row, ri) => {
-    const ox = st.align === 'center' ? x - row.width / 2 : st.align === 'right' ? x - row.width : x;
-    const by = y + ri * lh;
-    for (const it of row.items) {
-      const p = Lyrics.wordProgress(it.w, t);
-      const ws = st.wordStyle?.(it.w) ?? {};
-      const lift = st.lift ? st.lift * (1 - ease.outCubic(prog(t, it.w.start, it.w.start + 0.18))) * (p > 0 ? 1 : 0) : 0;
-      const wx = ox + it.x;
-      if (p < 1) { c.fillStyle = ws.unsung ?? st.unsung; c.fillText(it.w.w, wx, by); }
-      if (p > 0) {
-        c.save();
-        if (p < 1) { c.beginPath(); c.rect(wx - lay.size, by - lay.size * 1.2, lay.size + it.width * p, lay.size * 1.6); c.clip(); }
-        const settle = st.active ? 1 - prog(t, it.w.end, it.w.end + 0.4, ease.inOutQuad) : 0;
-        c.fillStyle = settle > 0.01 ? mixC(ws.sung ?? st.sung, st.active!, settle) : ws.sung ?? st.sung;
-        c.fillText(it.w.w, wx, by - lift);
-        c.restore();
-      }
-    }
-  });
-  c.restore();
-  return { w: lay.width, h: lh * lay.rows.length };
-}
+// (the primitives live in the engine, which draws the project-wide karaoke layer with them)
+import { drawKaraoke, layoutWords, mixC, type KItem, type KLayout, type KRow, type KStyle } from '../engine/karaoke';
+export { drawKaraoke, layoutWords, mixC, type KItem, type KLayout, type KRow, type KStyle };
 
 /** First-row baseline for a laid-out line whose LAST row should sit on `yLast` (wrapped lines grow upward). */
 export const bottomUp = (lay: KLayout, yLast: number, lineH = 1.02) => yLast - (lay.rows.length - 1) * lay.size * lineH;
@@ -476,11 +392,6 @@ export class Ground {
 
 // ------------------------------------------------------------------ plate base
 
-/** Blend two rgba() strings (k = 0 → a, 1 → b). */
-export function mixC(a: string, b: string, k: number) {
-  const pa = a.match(/[\d.]+/g)!.map(Number), pb = b.match(/[\d.]+/g)!.map(Number);
-  return `rgba(${[0, 1, 2].map((i) => Math.round(lerp(pa[i]!, pb[i]!, k))).join(',')},${lerp(pa[3] ?? 1, pb[3] ?? 1, k)})`;
-}
 
 /** Colours as CSS strings for Canvas2D. */
 export const C = {

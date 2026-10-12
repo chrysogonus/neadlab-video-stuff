@@ -1,0 +1,86 @@
+{
+ "lines": {},
+ "evidence": [
+  {
+   "line": 8,
+   "sheet": "",
+   "heard": "You",
+   "p": 0.94,
+   "gain": -10.13,
+   "kept": false
+  },
+  {
+   "line": 22,
+   "sheet": "",
+   "heard": "Force",
+   "p": 0.99,
+   "gain": -33.1,
+   "kept": false
+  },
+  {
+   "line": 32,
+   "sheet": "",
+   "heard": "no",
+   "p": 0.98,
+   "gain": -1.61,
+   "kept": false
+  },
+  {
+   "line": 48,
+   "sheet": "",
+   "heard": "But",
+   "p": 1.0,
+   "gain": 0.0,
+   "kept": false
+  },
+  {
+   "line": 53,
+   "sheet": "FORCE",
+   "heard": "Fush",
+   "p": 0.98,
+   "gain": -0.73,
+   "kept": false
+  },
+  {
+   "line": 54,
+   "sheet": "",
+   "heard": "Keep",
+   "p": 1.0,
+   "gain": -8.54,
+   "kept": false
+  },
+  {
+   "line": 56,
+   "sheet": "Origin's",
+   "heard": "Courage is",
+   "p": 0.78,
+   "gain": -5.43,
+   "kept": false
+  },
+  {
+   "line": 57,
+   "sheet": "",
+   "heard": "Fush",
+   "p": 0.93,
+   "gain": -19.18,
+   "kept": false
+  },
+  {
+   "line": 57,
+   "sheet": "Force!",
+   "heard": "Fush",
+   "p": 0.97,
+   "gain": 2.8,
+   "kept": false
+  },
+  {
+   "line": 59,
+   "sheet": "Force!",
+   "heard": "Fush",
+   "p": 0.98,
+   "gain": 6.46,
+   "kept": false
+  }
+ ],
+ "margin": 8.0
+}

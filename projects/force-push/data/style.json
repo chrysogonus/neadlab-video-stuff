@@ -1,0 +1,20 @@
+{
+  "palettes": {
+    "dark": { "bg": "#0B1018", "panel": "#131A26", "panel2": "#1A2332", "rule": "#2A3546", "dim": "#5E6A7C", "mist": "#A3ADBB", "type": "#EEF1F4", "green": "#3BE07F", "coral": "#FF6F61", "onGreen": "#06120B" },
+    "paper": { "bg": "#F3EFE7", "panel": "#E9E3D8", "panel2": "#DED7CA", "rule": "#CFC7B8", "dim": "#8A8274", "mist": "#5F594F", "type": "#15171B", "green": "#0E9F4E", "coral": "#D2463A", "onGreen": "#F3EFE7" },
+    "green": { "bg": "#3BE07F", "panel": "#34CC72", "panel2": "#2EB866", "rule": "#27A85B", "dim": "#1D6B3E", "mist": "#11452A", "type": "#06120B", "green": "#06120B", "coral": "#A3271C", "onGreen": "#3BE07F" }
+  },
+  "fonts": {
+    "slam": { "family": "archivo", "width": 125, "weight": 900 },
+    "hero": { "family": "archivo", "width": 112, "weight": 900 },
+    "line": { "family": "archivo", "width": 100, "weight": 700 },
+    "lineWide": { "family": "archivo", "width": 112, "weight": 700 },
+    "light": { "family": "archivo", "width": 100, "weight": 300 },
+    "mono": { "family": "mono", "weight": 400 },
+    "monoM": { "family": "mono", "weight": 500 },
+    "monoB": { "family": "mono", "weight": 600 },
+    "serif": { "family": "serif", "weight": 400, "italic": true },
+    "serifUp": { "family": "serif", "weight": 600 }
+  },
+  "karaoke": { "palette": "dark", "font": { "family": "archivo", "width": 100, "weight": 700 }, "sung": "type", "unsung": "type", "active": "green", "scrimColor": "bg" }
+}

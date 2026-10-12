@@ -3,12 +3,15 @@
 import * as THREE from 'three';
 import { AudioData } from './audio';
 import { Lyrics } from './lyrics';
-import { Compositor, FSPass, W, H, PW, PH, SCALE, SS_TAP, makeRT, clearRT } from './gl';
+import { Compositor, FSPass, Layer2D, W, H, PW, PH, SCALE, SS_TAP, makeRT, clearRT } from './gl';
 import { DEFAULT_POST, Post, SHOULDER_GLSL, type PostParams } from './post';
 import { Hud, PDoom, type Caption } from './hud';
 import type { Frame, Scene, SceneClass, SceneCtx, PostOverrides } from './scene';
 import { loadFonts } from './type';
 import { loadStrokeFonts } from './stroke';
+import { KaraokeLayer } from './karaoke';
+import type { ResolvedCue } from './cues';
+import { DEFAULT_STYLE, type Style } from './style';
 
 export interface TimelineEntry {
   id: string;
@@ -120,6 +123,8 @@ export class Engine {
   errors: string[] = [];
   /** Suppress the HUD (captions, crop marks) — used when rendering plate thumbnails. */
   hudOff = false;
+  /** The project-wide karaoke layer and the canvas it draws into (none when style.json turns it off). */
+  private karaoke: { layer: KaraokeLayer; L: Layer2D } | null = null;
 
   timeline: TimelineEntry[] = [];
 
@@ -312,17 +317,19 @@ export class Engine {
     r.setRenderTarget(prev);
   }
 
-  /** `dataDir`: the song's directory of audio.json and lyrics.json. */
-  async init(only?: (e: TimelineEntry) => boolean, dataDir = 'data') {
+  /** `dataDir`: the project's directory of audio.json and lyrics.json; `style`: its style.json (see makeStyle). */
+  async init(only?: (e: TimelineEntry) => boolean, dataDir = 'data', style: Style = DEFAULT_STYLE) {
     [this.audio, this.lyrics] = await Promise.all([AudioData.load(dataDir), Lyrics.load(dataDir), loadFonts(), loadStrokeFonts()]) as [AudioData, Lyrics, void, void];
     this.timeline = this.makeTimeline(this.lyrics, this.audio);
-    this.ctx = { renderer: this.renderer, audio: this.audio, lyrics: this.lyrics, comp: this.comp, W, H, id: '', params: {}, start: 0, end: 0, mapTileMask: (rt, map) => this.mapTileMask(rt, map) };
+    this.ctx = { renderer: this.renderer, audio: this.audio, lyrics: this.lyrics, comp: this.comp, style, W, H, id: '', params: {}, start: 0, end: 0, mapTileMask: (rt, map) => this.mapTileMask(rt, map) };
     this.post = new Post();
     const captions: Caption[] = this.timeline.filter((e) => e.caption).map((e) => {
       const d = e.caption!.delay ?? 0.3;
       return { start: e.start + d, end: e.start + d + (e.caption!.dur ?? 4.5), fig: e.caption!.fig, text: e.caption!.text };
     });
     this.hud = new Hud(new PDoom(this.lyrics), captions);
+    const ks = style.karaoke;
+    if (ks) this.karaoke = { layer: new KaraokeLayer(this.lyrics, ks, style.palettes), L: new Layer2D() };
     const entries = only ? this.timeline.filter(only) : this.timeline;
     await Promise.all(entries.map((e) => this.loadEntry(e)));
   }
@@ -514,6 +521,7 @@ export class Engine {
       outTex = this.avgRT.texture;
     }
     this.lastSamples = n;
+    if (this.karaoke) this.drawKaraoke(t, outTex);
     const hudTex = this.hud.draw(t, { opacity: this.hudOff ? 0 : post.hud, frame: post.frame, readout: post.pdoom, paper: post.paper, pdoomOverride: post.pdoomText, corruption: post.hudCorruption });
     this.post.render(r, outTex, hudTex, this.finalRT, post, t);
     this.lastPost = post;
@@ -607,6 +615,24 @@ export class Engine {
 
     if (!outTex) { clearRT(r, this.rts[0]!, [0, 0, 0]); outTex = this.rts[0]!.texture; }
     return { outTex, post };
+  }
+
+  /**
+   * The project-wide karaoke layer, over the frame before post-processing (so it takes the grade, grain and
+   * bloom like the scene under it), unless the scene on screen at t (the incoming one during a transition) draws
+   * its own lyrics. In the palette of that entry's cue at t. Drawn once per frame, after the motion-blur
+   * sub-frames are averaged.
+   */
+  private drawKaraoke(t: number, outTex: THREE.Texture) {
+    const on = this.timeline.filter((e) => t >= e.start && t < e.end).at(-1);
+    if (!on || this.loaded.get(on.id)?.scene?.ownsLyrics || this.hudOff) return;
+    const cues = (on.params?.cues ?? []) as ResolvedCue[];
+    const cue = cues.filter((c) => c.start <= t).at(-1) ?? cues[0];
+    const { layer, L } = this.karaoke!;
+    L.clear();
+    layer.draw(L.ctx, t, cue?.def.palette);
+    const target = [...this.rts, this.mixRT, this.avgRT].find((rt) => rt.texture === outTex)!;
+    this.comp.draw(this.renderer, L.upload(), target, { mode: 'normal' });
   }
 
   /** RGBA8 pixels of the last rendered frame (bottom-up rows), PW x PH. */

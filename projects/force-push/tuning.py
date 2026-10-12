@@ -1,34 +1,16 @@
-"""Force Push: analysis constants (filled in from tempo_probe.py, sections_bars.py and the QA plots)."""
+"""Force Push: hand corrections to the analysis (verified on the QA plots in work/qa/).
 
-TEMPO_RANGE = (122.0, 137.0)   # tempo_probe.py: 129.2 BPM (tempogram peaks 129.2, 132.5, 65.4)
-# The tempo drifts (~129.3 BPM in verse 1, ~130.7 at the end): beats are tracked, see analyze.track_beats.
-GRID = "tracked"
-# The snare backbeat sits on tracked beats 1 and 3 (mod 4) through the whole song, so a downbeat is at 0 or 2;
-# 0 puts every gang-chant "Force!" and the chorus "PUSH!" on a downbeat ("FORCE" is the pickup), and the form
-# then falls in 4-bar phrases (12-bar choruses, 4-bar post-choruses, an 8-bar drop).
-BAR_PHASE = 0
-# sections_bars.py: each section starts on the latest downbeat at or before its first sung word (cut-safe;
-# several sections open with a pickup of 1.2-1.8 s, so the downbeat they are felt on is one bar later).
-SECTION_BARS = [
-    ("intro", None, 8),
-    ("verse1", 8, 24),
-    ("prechorus1", 24, 28),
-    ("chorus1", 28, 41),
-    ("postchorus1", 41, 45),
-    ("verse2", 45, 57),
-    ("prechorus2", 57, 61),
-    ("chorus2", 61, 74),
-    ("postchorus2", 74, 78),
-    ("bridge", 78, 87),
-    ("finalchorus", 87, 91),
-    ("drop", 91, 100),
-    ("postchorus3", 100, 104),
-    ("outro", 104, None),
-]
+The grid settings are detected (analyze.py) and match what this file used to pin: tempo window
+(122, 137) around the 129.2 BPM estimate; a tracked grid, because the tempo drifts from ~129.3 BPM
+in verse 1 to ~130.7 at the end (a constant grid is off by up to ~140 ms); bar phase 0, so every
+gang-chant "Force!" and the chorus "PUSH!" fall on a downbeat; sections on the latest downbeat at or
+before each section's first word (several sections open with a 1.2-1.8 s pickup).
+"""
+
 WHISPER_PROMPT = ("Song lyrics: git status, nothing to commit, force push, stash, branch, blame, "
                   "merge, conflicts, patches, logs, head detached, rebase, squash, cherry-picked, "
                   "pull requests, git-ignore, revert, origin, ref-log.")
-# Where the vocal sings something other than the sheet (lyrics/force-push.txt is left as written):
+# Where the vocal sings something other than the sheet (input/force-push.txt is left as written):
 # {line index in the sung-lines file: what is sung}. lyrics_sheet.py applies these. Evidence (2026-10-11):
 # both Whisper runs, a greedy decode of the wav2vec2-LV60K emissions on the mono, left and right vocal stem,
 # and constrained CTC Viterbi scores of both readings over the same window (fused6 emissions).
@@ -92,9 +74,9 @@ EXTRA_DESC = [
 
 ALIGN_NOTES = (
     "Timeline = the WAV master (see `source`); the Demucs stems are separated from it, so no offset. "
-    "Lines: lyrics/force-push/lyrics.txt, derived from the sheet lyrics/force-push.txt by lyrics_sheet.py, "
-    "with the two places the vocal differs from the sheet replaced by what is sung (analysis/songs/"
-    "force_push.py SUNG: pre-chorus 1 sings the stage direction, 'Stop, one beat and you're gone'; "
+    "Lines: data/lines.txt, derived from the sheet input/force-push.txt by lyrics_sheet.py, "
+    "with the two places the vocal differs from the sheet replaced by what is sung (tuning.py SUNG: "
+    "pre-chorus 1 sings the stage direction, 'Stop, one beat and you're gone'; "
     "pre-chorus 2 sings 'No more reading your logs, and now you want a revert?'). "
     "Method: (1) CTC emissions (20 ms) of the vocal stem from torchaudio MMS_FA and wav2vec2-large-lv60k-960h "
     "on the mono sum and the left/right channels, fused as a probability mixture; (2) one global constrained "

@@ -7,22 +7,21 @@ import { Scene, type Frame, type PostOverrides } from '../engine/scene';
 import { Layer2D, W, H } from '../engine/gl';
 import { rgba } from '../engine/palette';
 import { Lyrics, type Line, type Word } from '../engine/lyrics';
-import { F, font, measure, plain } from '../engine/type';
+import { font, measure, plain } from '../engine/type';
 import { clamp, ease, lerp, prog } from '../engine/util';
 import { bake, drawKaraoke, hexStr, layoutWords, type KLayout, type KStyle } from '../scenes/_kit';
-import type { ResolvedCue } from './resolve';
+import type { ResolvedCue } from '../engine/cues';
+import { fontFamily, type FontSpec } from '../engine/style';
+import STYLE from '../../../projects/force-push/data/style.json';
 
 export { W, H };
 export const M = 96; // title-safe margin (logical px)
 
 // ------------------------------------------------------------------ tokens
 
-const HEX = {
-  dark: { bg: '#0B1018', panel: '#131A26', panel2: '#1A2332', rule: '#2A3546', dim: '#5E6A7C', mist: '#A3ADBB', type: '#EEF1F4', green: '#3BE07F', coral: '#FF6F61', onGreen: '#06120B' },
-  paper: { bg: '#F3EFE7', panel: '#E9E3D8', panel2: '#DED7CA', rule: '#CFC7B8', dim: '#8A8274', mist: '#5F594F', type: '#15171B', green: '#0E9F4E', coral: '#D2463A', onGreen: '#F3EFE7' },
-  // the last chant: a green field, ink type; consequence stays coral-ink
-  green: { bg: '#3BE07F', panel: '#34CC72', panel2: '#2EB866', rule: '#27A85B', dim: '#1D6B3E', mist: '#11452A', type: '#06120B', green: '#06120B', coral: '#A3271C', onGreen: '#3BE07F' },
-} as const;
+// the palettes and font roles are the project's style.json; `green` is the last chant: a green field, ink type,
+// consequence stays coral-ink
+const HEX = STYLE.palettes;
 export type Mode = keyof typeof HEX;
 
 export interface Theme {
@@ -42,18 +41,7 @@ export function theme(mode: Mode): Theme {
   return t;
 }
 
-export const FONT = {
-  slam: F.archivo(125, 900),
-  hero: F.archivo(112, 900),
-  line: F.archivo(100, 700),
-  lineWide: F.archivo(112, 700),
-  light: F.archivo(100, 300),
-  mono: F.mono(400),
-  monoM: F.mono(500),
-  monoB: F.mono(600),
-  serif: F.serif(400, true),
-  serifUp: F.serif(600),
-};
+export const FONT = Object.fromEntries(Object.entries(STYLE.fonts).map(([k, v]) => [k, fontFamily(v as FontSpec)])) as Record<keyof typeof STYLE.fonts, string>;
 
 // ------------------------------------------------------------------ base scene
 
@@ -62,6 +50,7 @@ export const FONT = {
  * opaque into `out` (so it fully overwrites it). `cue(id)` returns this entry's resolved cues.
  */
 export abstract class FPScene extends Scene {
+  override ownsLyrics = true;
   L = new Layer2D();
   mode: Mode = 'dark';
   th = theme('dark');
@@ -109,6 +98,7 @@ export abstract class FPScene extends Scene {
     c.fillStyle = this.th.green; c.fillRect(x - 8, 0, 8, H);
     c.restore();
   }
+
   /** The beat at/before t and the beat index helpers. */
   beatTime(i: number) { return this.ctx.audio.timeOfBeat(i); }
   beatIdx(t: number) { return this.ctx.audio.beatAt(t); }

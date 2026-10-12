@@ -7,22 +7,22 @@
 //   perf:    bun scripts/render.ts perf --from 20 --to 25 [--only ids] [--samples 1] [--shutter 0.5]   (avg ms per frame incl. GPU sync and the export's pixel readback)
 //   check:   bun scripts/render.ts check --t 10,55,140 (seek/order determinism: the frames rendered in order, in reverse,
 //            and each after a far seek must be byte-identical; also with --samples N)
-//   video:   bun scripts/render.ts video [--from 0] [--to <duration>] [--fps 60] [--crf 16] [--x264 aq-mode=3] [--samples 1] [--shutter 0.5] [--out <song's out>] [--noaudio]
+//   video:   bun scripts/render.ts video [--from 0] [--to <duration>] [--fps 60] [--crf 16] [--x264 aq-mode=3] [--samples 1] [--shutter 0.5] [--out <project's out>] [--noaudio]
 //            [--workers 2] [--chunk 8] [--mem-gb 1] [--spool-gb 20]
 //            --samples N averages N sub-frames per frame over shutter×(1/fps): motion blur + temporal AA;
 //            --samples auto picks the count per 32x32 tile (12, 36, 108 or 324, see Engine.render; --refine frame: per frame)
 //            --workers N headless Chromes render chunks of --chunk frames into one ffmpeg, in order (see video())
 //   --scale N (all modes): render at N× the 1920x1080 layout (--scale 2 = true 3840x2160); stills are then saved
 //            full-res from the pixel buffer, videos are encoded at the physical size.
-//   --song ID (all modes): which song of songs.json to render (default: its `default`). The page loads that
-//            song's data and timeline; the video muxes its master and defaults to its `out`.
+//   --project ID (all modes): which project of projects/ to render (needed when there are several). The page
+//            loads that project's data and timeline; the video muxes its master and defaults to out/<id>.mp4.
 //   A scene that fails to load or throws while rendering fails the run (non-zero exit).
 // Uses the Vite dev server at --url (default http://localhost:5173); starts a private one if unreachable.
 import { chromium, type Page } from 'playwright-core';
 import { mkdirSync, existsSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { getSong } from '../src/songs';
+import { project } from './projects';
 import { pageURL } from './page-url';
 
 const argv = process.argv.slice(2);
@@ -39,7 +39,7 @@ const SAMPLES = opt('samples', '1') === 'auto'
   : +opt('samples', '1')!;
 const hist = (h: Record<string, number>) => Object.entries(h).sort((a, b) => +a[0] - +b[0]).map(([k, v]) => `${k}:${v}`).join(' ');
 const ROOT = path.resolve(APP, '..');
-const SONG = getSong(opt('song'));
+const PROJECT = project(opt('project'));
 
 async function reachable(url: string) {
   try { const r = await fetch(url, { signal: AbortSignal.timeout(1500) }); return r.ok; } catch { return false; }
@@ -81,12 +81,12 @@ async function openPage(url: string) {
   page.on('pageerror', (e) => logs.push(`[pageerror] ${e.message}`));
   const only = opt('only');
   // (built with URL so a --url carrying its own path or query keeps it)
-  await page.goto(pageURL(url, { song: SONG.id, only, scale: SCALE }));
+  await page.goto(pageURL(url, { project: PROJECT.id, only, scale: SCALE }));
   await page.waitForFunction(() => (window as any).__video?.ready || (window as any).__video?.error, null, { timeout: 120000 });
   const err = await page.evaluate(() => (window as any).__video.error);
   if (err) throw new Error(`app failed to boot:\n${err}\n${logs.join('\n')}`);
-  const loaded: string = await page.evaluate(() => (window as any).__video.song);
-  if (loaded !== SONG.id) throw new Error(`page loaded song '${loaded}', expected '${SONG.id}'`);
+  const loaded: string = await page.evaluate(() => (window as any).__video.project);
+  if (loaded !== PROJECT.id) throw new Error(`page loaded project '${loaded}', expected '${PROJECT.id}'`);
   const size: [number, number] = await page.evaluate(() => [(window as any).__video.width ?? 1920, (window as any).__video.height ?? 1080]);
   if (size[0] !== OW || size[1] !== OH) throw new Error(`app renders ${size[0]}x${size[1]}, expected ${OW}x${OH} (--scale ${SCALE})`);
   await checkScenes(page);
@@ -147,7 +147,7 @@ async function sheet(page: Page, times: number[], cols: number, out: string) {
 async function video(url: string, from: number, to: number, fps: number, out: string) {
   mkdirSync(path.dirname(out), { recursive: true });
   const crf = opt('crf', '16')!;
-  const audio = path.join(ROOT, SONG.master);
+  const audio = path.join(ROOT, PROJECT.master);
   if (!flag('noaudio') && !existsSync(audio)) throw new Error(`master not found: ${audio}`);
   // (frames come as rgb24: the same YUV out of the scaler as from rgba, a quarter fewer bytes to move)
   const args = ['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', `${OW}x${OH}`, '-r', String(fps), '-i', 'pipe:0'];
@@ -316,7 +316,7 @@ if (mode === 'video') {
     const { browser, page } = await openPage(url);
     const dur: number = await page.evaluate(() => (window as any).__video.duration);
     await browser.close();
-    await video(url, +opt('from', '0')!, +opt('to', String(dur))!, +opt('fps', '60')!, path.resolve(opt('out', path.join(ROOT, SONG.out))!));
+    await video(url, +opt('from', '0')!, +opt('to', String(dur))!, +opt('fps', '60')!, path.resolve(opt('out', path.join(ROOT, PROJECT.out))!));
   } finally { stop(); }
   process.exit(0);
 }

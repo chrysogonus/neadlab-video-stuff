@@ -4,7 +4,7 @@ The video is a web app (`app/`, TypeScript + three.js, run with bun + Vite) that
 
 ## Running things
 
-- Several songs share the engine (`songs.json` at the repo root). Pick one with `?song=<id>` in the preview and `--song <id>` for `scripts/render.ts`; each song has its own data directory, timeline (`src/timelines.ts`) and scenes. Examples below omit it (the default song).
+- Several projects share the engine (`projects/<id>/`, each with a `project.json`). Pick one with `?project=<id>` in the preview and `--project <id>` for `scripts/render.ts` (required while there is more than one); each project has its own data directory (`projects/<id>/data/`), cue sheet (`data/cues.json`, which the engine turns into the timeline; Harvest's timeline is `src/timeline.ts`), style (`data/style.json`) and scenes. Examples below omit it.
 
 - Dev server (probably already running): `cd app && bunx vite --port 5173`. Preview: http://localhost:5173/?t=23.0 (space = play/pause, ←/→ = ±1 s, shift = ±5 s, `,`/`.` = ±1 frame, `[`/`]` = previous/next timeline entry, `l` = loop the current entry, `h` = hide the UI).
 - Stills (the main way to check your work — then LOOK at the PNGs with the Read tool): `cd app && bun scripts/render.ts stills --t 12.5,13.0,14.2 --only open --out ../out/wip/open`
@@ -50,7 +50,9 @@ Rules:
 
 - **Deterministic**: output must be a pure function of `f.t` (and seeded randomness: `mulberry32(seed)`, `hash(...)`). Never use `Math.random()`, `Date.now()` or `performance.now()` for visuals. The export averages many sub-frames per frame, in any order (see "Motion blur and sampling"). If you need simulation state (particles, feedback buffers), set `stateful = true`, reset in `reset()`, integrate with `f.dt`, and the engine will fast-forward after seeks; such a scene can only be exported with a fixed `--samples`.
 - `render()` must fully overwrite `out` (a HalfFloat linear-HDR target). Colours are **linear**; values > ~0.85 bloom. Use palette constants (`C_INK`, `C_BONE`, `C_SIGNAL`… in GLSL; `LIN.signal` in TS for GL; `rgba('signal', a)` for Canvas2D).
-- `ctx.params` holds the timeline entry's params (one module can serve several entries); `ctx.start/ctx.end` its window; `f.lt`/`f.p` local time/progress.
+- `ctx.params` holds the timeline entry's params (one module can serve several entries) and, for a cue-sheet project, `ctx.params.cues`: the entry's resolved cues (`ResolvedCue` in `src/engine/cues.ts`: the line, the anchor word and the time `at` its action lands); `ctx.start/ctx.end` its window; `f.lt`/`f.p` local time/progress.
+- `ctx.style` is the project's `style.json` (`src/engine/style.ts`): named palettes (a cue's `palette` names one), font roles (`fontFamily(spec)`), the karaoke layer's settings.
+- Lyrics: the engine draws the project-wide karaoke layer over every scene unless it sets `ownsLyrics = true` and draws them itself (the karaoke primitives are in `src/engine/karaoke.ts`: `layoutWords`, `drawKaraoke`). The layer sits in the lower third (its last row at 86 % of the height): keep that area quiet in a scene that leaves the lyrics to it.
 - Transitions: by default the engine crossfades overlapping entries. For custom transitions set `handlesTransition = true` and composite `f.under` (the previous scene's frame) yourself using `f.tin` (0→1 over the overlap). Most cuts should be hard cuts on downbeats (no overlap) — that's the default when windows touch.
 - Post overrides you can return: `exposure, bloom, bloomThreshold, bloomKnee, bloomRadius, halation, ca, grain, vignette, hud (HUD opacity), fade, flash, shake:[x,y], zoom, invert, pdoomText, hudCorruption`. Defaults in `src/engine/post.ts`.
 - Performance: aim for < 25 ms/frame. Canvas2D layers cost ~2–4 ms to upload each; don't use more than 2–3 per scene. Precompute in `init()`.

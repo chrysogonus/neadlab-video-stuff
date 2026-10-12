@@ -1,0 +1,10 @@
+{
+  "title": "Harvest Now, Decrypt Later",
+  "kind": "song",
+  "audio": "input/harvest.wav",
+  "transcript": "input/harvest.txt",
+  "frozen": [
+    "sung",
+    "align"
+  ]
+}

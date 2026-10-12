@@ -1,15 +1,19 @@
 """Music analysis -> data/audio.json
 
-  * constant-tempo beat grid (tempo + phase fitted to drum / mix onsets, phase
-    refined on kick attacks), downbeats (bar phase from snare-on-2&4 and the
-    2-bar chord changes), sections on downbeats,
+  * beat grid: a constant tempo (tempo + phase fitted to drum / mix onsets, phase
+    refined on kick attacks), or beats tracked through a drifting tempo, whichever keeps
+    the local phase error small; downbeats (bar phase from the snare backbeat and the
+    chord changes), sections on downbeats (from the aligned lyrics, so run align.py first),
   * 100 fps normalized envelopes (mix rms / low / mid / high, stem rms),
   * kick / snare / hat onsets from the drums stem, vocal note onsets.
 
 All times are in the WAV master's timeline (the stems are separated from it, so they
 need no correction; see common.STEM_OFFSET_SEC).
 
-Run:  uv run python analyze.py [--song <id>] [--plots]
+Every setting is detected unless the project's tuning.py pins it (TEMPO_RANGE, GRID,
+BAR_PHASE, SECTION_BARS); what was used, and how it was found, goes into the JSON.
+
+Run:  uv run python analyze.py --project <id> [--plots]
 """
 import common
 import json
@@ -21,20 +25,26 @@ import librosa
 from scipy.ndimage import maximum_filter1d, median_filter, uniform_filter1d
 from scipy.signal import butter, find_peaks, sosfiltfilt
 
+from sections_bars import section_bars
+from tempo_probe import estimate as estimate_tempo
+
 SR = 44100
 FPS = 100
 
-# Song-specific (analysis/songs/<song>.py): the tempo search window and the section map.
+# Pinned by a project's tuning.py, else detected (None):
 # TEMPO_RANGE: the fitter does an exhaustive grid search inside it, so a window that excludes
 # the true tempo silently locks onto a metric relative (half/double/4:3) and the kick residual
-# blows up -- run tempo_probe.py first. SECTION_BARS: (name, first bar, end bar), bar k starts
-# at downbeat k; suggested by sections_bars.py from the aligned lyrics.
+# blows up; detected by tempo_probe.estimate. SECTION_BARS: (name, first bar, end bar), bar k
+# starts at downbeat k; detected by sections_bars.section_bars from the aligned lyrics.
+# GRID: "constant" (one tempo for the whole song) or "tracked" (a song whose tempo drifts: the beats
+# follow it, see track_beats); detected by local_shifts. BAR_PHASE: index of the first beat that is a
+# downbeat (0..3); detected by bar_phase.
 TEMPO_RANGE = common.CFG.TEMPO_RANGE
 SECTION_BARS = common.CFG.SECTION_BARS
-# GRID: "constant" (one tempo for the whole song) or "tracked" (a song whose tempo drifts: the beats
-# follow it, see track_beats). BAR_PHASE: index of the first beat that is a downbeat (0..3).
-GRID = getattr(common.CFG, "GRID", "constant")
-BAR_PHASE = getattr(common.CFG, "BAR_PHASE", 0)
+GRID = common.CFG.GRID
+BAR_PHASE = common.CFG.BAR_PHASE
+# A grid whose local phase error spreads wider than this (p5..p95) does not follow the song.
+DRIFT_MS = 40
 
 
 # ---------------------------------------------------------------------------
@@ -75,17 +85,18 @@ def norm01(x, pct=99.0):
 
 
 # ---------------------------------------------------------------------------
-def fit_grid(drums, mix, sr, duration):
-    """Constant-tempo grid: coarse tempo/phase search on spectral-flux onset
-    envelopes, then phase refinement on kick attack times."""
-    hop = 64
-    fps = sr / hop
+def onset_env(drums, mix, sr):
+    """Drum + mix spectral-flux onset envelope (22.05 kHz, 32-sample hop) -> (envelope, frames/s)."""
     od = librosa.onset.onset_strength(y=librosa.resample(drums, orig_sr=sr, target_sr=22050),
-                                      sr=22050, hop_length=hop // 2, lag=1, max_size=1)
+                                      sr=22050, hop_length=32, lag=1, max_size=1)
     om = librosa.onset.onset_strength(y=librosa.resample(mix, orig_sr=sr, target_sr=22050),
-                                      sr=22050, hop_length=hop // 2, lag=1, max_size=1)
-    o = od / (np.percentile(od, 99) + 1e-9) + om / (np.percentile(om, 99) + 1e-9)
-    ofps = 22050 / (hop // 2)
+                                      sr=22050, hop_length=32, lag=1, max_size=1)
+    return od / (np.percentile(od, 99) + 1e-9) + om / (np.percentile(om, 99) + 1e-9), 22050 / 32
+
+
+def fit_grid(drums, sr, duration, o, ofps, tempo_range):
+    """Constant-tempo grid: coarse tempo/phase search inside tempo_range (BPM) on spectral-flux
+    onset envelopes (onset_env), then phase refinement on kick attack times."""
 
     def score(P, off):
         ts = off + P * np.arange(int(duration / P) + 1)
@@ -94,7 +105,7 @@ def fit_grid(drums, mix, sr, duration):
         return np.maximum.reduce([o[idx - 1], o[idx], o[idx + 1]]).mean()
 
     best = (0, None, None)
-    for bpm in np.arange(TEMPO_RANGE[0], TEMPO_RANGE[1], 0.02):
+    for bpm in np.arange(tempo_range[0], tempo_range[1], 0.02):
         P = 60 / bpm
         for off in np.arange(0, P, 0.004):
             s = score(P, off)
@@ -118,6 +129,58 @@ def fit_grid(drums, mix, sr, duration):
     # first beat >= 0
     off = off - P * math.floor(off / P)
     return bpm, P, off, res
+
+
+def local_shifts(beats, o, ofps, win=16, step=4, reach=0.16):
+    """How far each stretch of `win` beats is off the song: the shift (s) within +-reach that best lines the
+    stretch up with the onset envelope, every `step` beats. A grid that follows the song gives a narrow
+    band (a constant lag of the envelope behind the attacks); a constant tempo laid over a drifting song
+    walks away from it."""
+    shifts = np.arange(-reach, reach + 1e-9, 0.002)
+    n = len(o)
+    out = []
+    for i in range(0, len(beats) - win, step):
+        b = np.asarray(beats[i:i + win])
+        sc = []
+        for d in shifts:
+            idx = np.round((b + d) * ofps).astype(int)
+            idx = idx[(idx > 1) & (idx < n - 2)]
+            sc.append(np.maximum.reduce([o[idx - 1], o[idx], o[idx + 1]]).mean() if len(idx) else 0.0)
+        out.append(shifts[int(np.argmax(sc))])
+    return np.array(out)
+
+
+def spread_ms(shifts):
+    return float(np.percentile(shifts, 95) - np.percentile(shifts, 5)) * 1000 if len(shifts) else 0.0
+
+
+def bar_phase(beats, snare_t, harmony, sr):
+    """Index (0..3) of the first beat that is a downbeat. The snare backbeat (2 and 4) leaves two candidates;
+    of those, the downbeat is where the harmony (the `other` + `bass` stems' chroma) changes most. Without a
+    backbeat (fewer than 16 snares on beats) all four phases compete on the chord changes alone.
+    Returns (phase, evidence)."""
+    beats = np.asarray(beats)
+    bi = np.interp(snare_t, beats, np.arange(len(beats)), left=np.nan, right=np.nan)
+    bi = bi[~np.isnan(bi)]
+    on_beat = np.round(bi[np.abs(bi - np.round(bi)) < 0.2]).astype(int)
+    hop = 512
+    ch = librosa.feature.chroma_cqt(y=harmony, sr=sr, hop_length=hop)
+    ct = librosa.frames_to_time(np.arange(ch.shape[1]), sr=sr, hop_length=hop)
+    bc = []
+    for i in range(len(beats) - 1):
+        m = (ct >= beats[i]) & (ct < beats[i + 1])
+        v = ch[:, m].mean(axis=1) if m.any() else np.zeros(12)
+        bc.append(v / (np.linalg.norm(v) + 1e-9))
+    bc = np.array(bc)
+    change = np.r_[0.0, 1 - (bc[1:] * bc[:-1]).sum(1)]          # how much the harmony changes into beat i
+    ev = []
+    for p in range(4):
+        pos = (np.arange(len(change)) - p) % 4
+        backbeat = float(np.mean(((on_beat - p) % 4) % 2 == 1)) if len(on_beat) else 0.0
+        ratio = float(change[pos == 0].mean() / (change[pos != 0].mean() + 1e-9))
+        ev.append(dict(phase=p, snare_backbeat=round(backbeat, 3), chord_change=round(ratio, 3)))
+    cands = [e for e in ev if e["snare_backbeat"] >= 0.6] if len(on_beat) >= 16 else ev
+    return max(cands or ev, key=lambda e: e["chord_change"])["phase"], ev
 
 
 def track_beats(drums, mix, sr, bpm, kick_t, duration):
@@ -271,19 +334,38 @@ def main(plots=False):
         if len(stems[n]) < len(mix):
             stems[n] = np.pad(stems[n], (0, len(mix) - len(stems[n])))
 
-    bpm, P, off, kick_res = fit_grid(stems["drums"], mix, SR, duration)
+    tempo_est, tempo_auto = estimate_tempo(librosa.resample(stems["drums"], orig_sr=SR, target_sr=22050), 22050)
+    tempo_range = tuple(TEMPO_RANGE) if TEMPO_RANGE else tempo_auto
+    print(f"tempo estimate {tempo_est:.2f} BPM; search window {tempo_range}{' (tuning.py)' if TEMPO_RANGE else ''}")
+    o, ofps = onset_env(stems["drums"], mix, SR)
+    bpm, P, off, kick_res = fit_grid(stems["drums"], SR, duration, o, ofps, tempo_range)
     print(f"tempo {bpm:.3f} BPM  period {P:.5f}s  first beat {off:.4f}s  kick residual sd {kick_res.std()*1000:.1f} ms")
-    if GRID == "tracked":
+    const = off + P * np.arange(int((duration - off) / P) + 1)
+    drift = dict(constant=round(spread_ms(local_shifts(const, o, ofps)), 1))
+    grid = GRID or ("tracked" if drift["constant"] > DRIFT_MS else "constant")
+    print(f"constant grid: local phase error spread {drift['constant']:.0f} ms -> {grid} grid{' (tuning.py)' if GRID else ''}")
+    if grid == "tracked":
         kt0, _ = band_onsets(stems["drums"], SR, None, 120, win=0.012, min_gap=0.15, rel_db=12)
         beats, kick_res = track_beats(stems["drums"], mix, SR, bpm, kt0, duration)
         kick_res = kick_res[np.abs(kick_res) < 0.06]
         per = np.diff(beats)
+        drift["tracked"] = round(spread_ms(local_shifts(beats, o, ofps)), 1)
         print(f"tracked grid: {len(beats)} beats, period {per.min()*1000:.0f}-{per.max()*1000:.0f} ms, "
-              f"kick residual sd {kick_res.std()*1000:.1f} ms")
+              f"kick residual sd {kick_res.std()*1000:.1f} ms, local phase error spread {drift['tracked']:.0f} ms")
     else:
-        beats = off + P * np.arange(int((duration - off) / P) + 1)
-    # bar phase: beat BAR_PHASE is the first downbeat (song-specific, from the snare backbeat)
-    beat_in_bar = (np.arange(len(beats)) - BAR_PHASE) % 4
+        beats = const
+    if drift[grid] > DRIFT_MS:
+        print(f"WARNING: the {grid} grid's local phase error spreads {drift[grid]:.0f} ms (> {DRIFT_MS}): "
+              f"check the beats on the plots (--plots)")
+
+    (kt, kdb), (st, sdb), (ht, hdb), sn_thr = drum_onsets(stems["drums"], SR, P, off)
+    if BAR_PHASE is None:
+        phase, phase_ev = bar_phase(beats, st, stems["other"] + stems["bass"], SR)
+        print("bar phase", phase, "from", phase_ev)
+    else:
+        phase, phase_ev = BAR_PHASE, None
+    # bar phase: beat `phase` is the first downbeat
+    beat_in_bar = (np.arange(len(beats)) - phase) % 4
     downbeats = beats[beat_in_bar == 0]
     bar_t = lambda k: float(downbeats[k]) if k < len(downbeats) else float(downbeats[-1] + (k - len(downbeats) + 1) * 4 * P)
 
@@ -301,7 +383,6 @@ def main(plots=False):
         assert len(env[k]) == n
 
     # onsets -------------------------------------------------------------------
-    (kt, kdb), (st, sdb), (ht, hdb), sn_thr = drum_onsets(stems["drums"], SR, P, off)
     onsets = {
         "kick": [[round(float(t), 3), round(float(s), 3)] for t, s in zip(kt, strength01(kdb))],
         "snare": [[round(float(t), 3), round(float(s), 3)] for t, s in zip(st, strength01(sdb))],
@@ -313,15 +394,24 @@ def main(plots=False):
         # 8th-note position in the bar (0 = downbeat), against the beats actually used
         ts = np.asarray(ts)
         bi = np.interp(ts, beats, np.arange(len(beats)), left=np.nan, right=np.nan)
-        bi = bi[~np.isnan(bi)] - BAR_PHASE
+        bi = bi[~np.isnan(bi)] - phase
         return np.bincount(np.round(bi * 2).astype(int) % 8, minlength=8).tolist()
     print("kick   8th-positions in bar:", pos_hist(kt))
     print("snare  8th-positions in bar:", pos_hist(st))
     print("hat    8th-positions in bar:", pos_hist(ht))
 
     # sections -------------------------------------------------------------------
+    if SECTION_BARS is None:
+        lyrics_json = common.DATA / "lyrics.json"
+        if not lyrics_json.exists():
+            raise SystemExit(f"{lyrics_json} is missing: sections are placed from the aligned lyrics, run align.py first")
+        # (against the downbeats as written, to the ms: a word fixed onto a downbeat starts its section there)
+        section_map = section_bars(np.round(downbeats, 3), json.loads(lyrics_json.read_text())["lines"],
+                                   json.loads(common.SECTIONS_SRC.read_text()))
+    else:
+        section_map = SECTION_BARS
     sections = []
-    for name, a, b in SECTION_BARS:
+    for name, a, b in section_map:
         s = 0.0 if a is None else bar_t(a)
         e = duration if b is None else bar_t(b)
         sections.append(dict(name=name, start=round(s, 3), end=round(e, 3), bars=[a if a is not None else -1, b]))
@@ -340,10 +430,14 @@ def main(plots=False):
         **env,
         onsets=onsets,
         source=common.source(),
-        tempo_range=list(TEMPO_RANGE),
-        grid=GRID,
-        notes=NOTES.format(song=common.SONG, bpm=bpm, off=off, P=P, first_db=float(downbeats[0]),
-                           grid=(GRID_TRACKED if GRID == "tracked" else GRID_CONSTANT).format(bpm=bpm, off=off, P=P, kick_sd=kick_res.std() * 1000),
+        tempo_range=list(tempo_range),
+        grid=grid,
+        bar_phase=phase,
+        detected=dict(tempo_estimate=round(tempo_est, 2), drift_ms=drift, bar_phase=phase_ev,
+                      pinned=[k for k in ("TEMPO_RANGE", "GRID", "BAR_PHASE", "SECTION_BARS")
+                              if getattr(common.CFG, k) is not None]),
+        notes=NOTES.format(song=common.PROJECT, bpm=bpm, off=off, P=P, first_db=float(downbeats[0]),
+                           grid=(GRID_TRACKED if grid == "tracked" else GRID_CONSTANT).format(bpm=bpm, off=off, P=P, kick_sd=kick_res.std() * 1000),
                            kick_sd=kick_res.std() * 1000,
                            sn=len(st), kk=len(kt), hh=len(ht)),
     )
@@ -370,10 +464,10 @@ NOTES = (
     "Timeline = the WAV master of '{song}' (see `source`); Demucs separates that same file, so "
     "stems need no time correction. "
     "{grid}"
-    "Bar phase from snare-on-2&4 plus the bar-level onset pattern; first downbeat "
+    "Bar phase from the snare backbeat (2 and 4) plus the chord changes (see `detected`); first downbeat "
     "{first_db:.3f} s, and bar k starts at downbeats[k]. "
-    "Sections start on downbeats and come from SECTION_BARS in analyze.py, which is written "
-    "by hand from the song's sections.json against this grid (analysis/songs/{song}.py). "
+    "Sections start on downbeats: each section of '{song}' data/sections.json on the latest downbeat at "
+    "or before its first sung word (sections_bars.py), unless its tuning.py pins SECTION_BARS. "
     "Envelopes: 100 fps, frame i centred at i/100 s, 46 ms RMS window, one-pole smoothing "
     "(10 ms attack / 90 ms release), each divided by its own 99th percentile and clipped "
     "to 0..1 (linear amplitude). low <150 Hz, mid 150-2000 Hz, high >4 kHz of the full mix; "

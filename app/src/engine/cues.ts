@@ -1,10 +1,62 @@
-// Resolve the cue sheet (cues.ts) against the song's word timings and beat grid. Every problem — a lyric
-// that is missing, ambiguous or out of range, an anchor word not in its line, a cue in the wrong section,
-// an entry with no cues — is collected and thrown together, so a broken sheet fails loudly at load.
-import type { AudioData } from '../engine/audio';
-import { Lyrics, type Line, type Word } from '../engine/lyrics';
-import { plain } from '../engine/type';
-import { CUES, ENTRIES, type CueDef, type Cut, type EntryDef, type Ref } from './cues';
+// The cue sheet (projects/<id>/data/cues.json) and its resolution against the project's word timings and beat
+// grid. A sheet lists the timeline entries (which scene module plays, and the rule its cut follows) and one cue
+// per sung line (plus cues for the instrumental passages it stages): what is on screen, what happens, and the
+// word or downbeat the action lands on. Every problem (a malformed cue, a lyric that is missing, ambiguous or
+// out of range, an anchor word not in its line, a cue in the wrong section, a line with no cue, an entry with
+// no cues) is collected and thrown together, so a broken sheet fails loudly at load.
+import type { AudioData } from './audio';
+import { Lyrics, type Line, type Word } from './lyrics';
+import { plain } from './type';
+
+export const REGIONS = ['left', 'right', 'center', 'top', 'bottom', 'full'] as const;
+export const TRANSITIONS = ['cut', 'match', 'pullback', 'wipe', 'stamp', 'none'] as const;
+export type Region = (typeof REGIONS)[number];
+export type Transition = (typeof TRANSITIONS)[number];
+/** A point in the song: a downbeat index, the song's start/end, or an edge of another cue. */
+export type Ref = number | 'start' | 'end' | { cue: string; edge: 'start' | 'end' };
+/** What the cue's dominant action lands on: a sung word of the line (nth occurrence in it) or a downbeat. */
+export type Anchor = { word: string; nth?: number } | { bar: number };
+
+export interface CueDef {
+  id: string;
+  /** Lyric cue: the line's exact text (straight or curly quotes) and, if that text repeats, which occurrence (0-based). */
+  lyric?: string;
+  occurrence?: number;
+  /** Instrumental cue: the span it covers. */
+  span?: [Ref, Ref];
+  /** Timeline entry that plays it, and the audio section (data/audio.json) it must start in. */
+  scene: string;
+  section: string;
+  initial: string;
+  action: string;
+  result: string;
+  anchor: Anchor;
+  /** One of the project's palettes (style.json). */
+  palette: string;
+  region: Region;
+  transition: Transition;
+  /** State of the recurring motif at this cue. */
+  motif: string;
+  assets?: string[];
+  notes?: string;
+}
+
+/** Where a timeline entry starts. */
+export type Cut =
+  | { at: 'zero' }
+  /** On the downbeat with this index. */
+  | { at: 'bar'; bar: number }
+  /** At the first word of a cue (a phrase boundary). */
+  | { at: 'word'; cue: string }
+  /** On the last beat at or before a cue's first word; if the previous line is still being sung there, at the phrase boundary. */
+  | { at: 'beat'; cue: string }
+  /** When a cue's line ends. */
+  | { at: 'end'; cue: string };
+
+/** A timeline entry: the scene module (src/scenes/<file>.ts) that plays from its cut to the next entry's. */
+export interface EntryDef { id: string; file: string; cut: Cut; params?: Record<string, unknown> }
+
+export interface CueSheet { entries: EntryDef[]; cues: CueDef[] }
 
 export interface ResolvedCue {
   def: CueDef;
@@ -28,6 +80,7 @@ export class CueError extends Error {
 }
 
 const key = (s: string) => plain(s).replace(/\s+/g, ' ').trim();
+const CUTS = ['zero', 'bar', 'word', 'beat', 'end'];
 
 /** Line indices whose text equals `text` (quote style and spacing ignored). */
 export function linesMatching(ly: Lyrics, text: string): number[] {
@@ -35,8 +88,39 @@ export function linesMatching(ly: Lyrics, text: string): number[] {
   return ly.lines.filter((l) => key(l.text) === k).map((l) => l.i);
 }
 
-export function resolveCues(ly: Lyrics, au: AudioData, cues: CueDef[] = CUES, entries: EntryDef[] = ENTRIES) {
+/** Problems with the sheet's shape (a sheet is data, written by hand or by a model): fields, vocabularies, ids. */
+function shapeProblems(sheet: CueSheet, palettes?: string[]): string[] {
   const problems: string[] = [];
+  if (!Array.isArray(sheet?.entries) || !Array.isArray(sheet?.cues)) return ['a cue sheet needs "entries" and "cues" arrays'];
+  const str = (v: unknown) => typeof v === 'string' && v.length > 0;
+  const ids = new Set<string>();
+  for (const e of sheet.entries) {
+    const at = (e?.cut as { at?: string } | undefined)?.at;
+    if (!str(e?.id) || !str(e?.file)) problems.push(`entry ${JSON.stringify(e)}: needs "id" and "file"`);
+    else if (ids.has(e.id)) problems.push(`entry ${e.id}: duplicate id`);
+    else ids.add(e.id);
+    if (!at || !CUTS.includes(at)) problems.push(`entry ${e?.id}: cut.at must be one of ${CUTS.join(', ')}`);
+    else if (at === 'bar' ? !Number.isInteger((e.cut as { bar: number }).bar) : at !== 'zero' && !str((e.cut as { cue: string }).cue))
+      problems.push(`entry ${e.id}: cut at '${at}' needs ${at === 'bar' ? 'an integer "bar"' : 'a "cue"'}`);
+  }
+  for (const c of sheet.cues) {
+    const id = c?.id ?? JSON.stringify(c).slice(0, 60);
+    for (const f of ['id', 'scene', 'section', 'initial', 'action', 'result', 'palette', 'motif'] as const)
+      if (!str(c?.[f])) problems.push(`${id}: needs "${f}"`);
+    if (!REGIONS.includes(c?.region)) problems.push(`${id}: region must be one of ${REGIONS.join(', ')}`);
+    if (!TRANSITIONS.includes(c?.transition)) problems.push(`${id}: transition must be one of ${TRANSITIONS.join(', ')}`);
+    const a = c?.anchor as Partial<{ word: string; bar: number }> | undefined;
+    if (!a || (str(a.word) === Number.isInteger(a.bar))) problems.push(`${id}: anchor must be {"word": ...} or {"bar": <downbeat>}`);
+    if (palettes && str(c?.palette) && !palettes.includes(c.palette)) problems.push(`${id}: palette '${c.palette}' is not in style.json (${palettes.join(', ')})`);
+  }
+  return problems;
+}
+
+/** `palettes`: the names a cue's palette must be one of (style.json); unchecked if not given. */
+export function resolveCues(ly: Lyrics, au: AudioData, sheet: CueSheet, palettes?: string[]) {
+  const problems = shapeProblems(sheet, palettes);
+  if (problems.length) throw new CueError(problems);
+  const { cues, entries } = sheet;
   const out = new Map<string, ResolvedCue>();
   const seen = new Set<string>();
   const ids = new Set(entries.map((e) => e.id));
@@ -99,7 +183,7 @@ export function resolveCues(ly: Lyrics, au: AudioData, cues: CueDef[] = CUES, en
   return out;
 }
 
-/** Entry start times from their cut rules (see Cut in cues.ts). */
+/** Entry start times from their cut rules (see Cut). */
 function cutTime(cut: Cut, cues: Map<string, ResolvedCue>, ly: Lyrics, au: AudioData): number {
   const lastBeatAtOrBefore = (t: number) => au.timeOfBeat(Math.floor(au.beatAt(t + 0.02)));
   switch (cut.at) {
@@ -117,13 +201,19 @@ function cutTime(cut: Cut, cues: Map<string, ResolvedCue>, ly: Lyrics, au: Audio
 }
 
 /** The edit: entries in order, each from its cut to the next one's (the last to the end of the song). */
-export function resolveEntries(ly: Lyrics, au: AudioData, cues = resolveCues(ly, au), entries: EntryDef[] = ENTRIES): ResolvedEntry[] {
+export function resolveEntries(ly: Lyrics, au: AudioData, sheet: CueSheet, cues = resolveCues(ly, au, sheet)): ResolvedEntry[] {
   const problems: string[] = [];
+  const { entries } = sheet;
   const starts = entries.map((e) => {
     const missing = 'cue' in e.cut && !cues.has(e.cut.cue);
     if (missing) problems.push(`entry ${e.id}: cut refers to unknown cue '${(e.cut as { cue: string }).cue}'`);
+    else if (e.cut.at === 'bar' && !(e.cut.bar >= 0 && e.cut.bar < au.downbeats.length)) {
+      problems.push(`entry ${e.id}: downbeat ${e.cut.bar} out of range (0..${au.downbeats.length - 1})`);
+      return NaN;
+    }
     return missing ? NaN : cutTime(e.cut, cues, ly, au);
   });
+  if (entries[0] && entries[0].cut.at !== 'zero') problems.push(`entry ${entries[0].id}: the first entry must cut at 'zero'`);
   const res = entries.map((def, i) => ({
     def, start: starts[i]!, end: i + 1 < entries.length ? starts[i + 1]! : au.duration,
     cues: [...cues.values()].filter((c) => c.def.scene === def.id).sort((a, b) => a.start - b.start),

@@ -1,7 +1,7 @@
 # Force Push — treatment & style bible
 
 Song: "Force Push" (NEAD), 3:29.64, ~130.5 BPM with a drifting tempo (tracked grid). Timing data:
-`data/force-push/` (see the cue sheet, [`FORCE-PUSH-CUES.md`](FORCE-PUSH-CUES.md), for every phrase).
+`data/force-push/` (see the cue sheet, [`projects/force-push/cues.md`](../projects/force-push/cues.md), for every phrase).
 
 ## The idea
 

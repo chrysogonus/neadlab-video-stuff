@@ -6,12 +6,15 @@ import type { AudioData, AudioSample } from './audio';
 import type { Lyrics } from './lyrics';
 import type { Compositor } from './gl';
 import type { PostParams } from './post';
+import type { Style } from './style';
 
 export interface SceneCtx {
   renderer: THREE.WebGLRenderer;
   audio: AudioData;
   lyrics: Lyrics;
   comp: Compositor;
+  /** The project's look (style.json): palettes, font roles, the karaoke layer. */
+  style: Style;
   W: number;
   H: number;
   /** Timeline entry id and its free-form params (lets one scene module serve several entries). */
@@ -70,6 +73,8 @@ export abstract class Scene {
   prerollMax = 6;
   /** If true, this scene composites `f.under` itself during its incoming transition. */
   handlesTransition = false;
+  /** If true, this scene draws the lyrics itself, and the project-wide karaoke layer stays off while it is on screen. */
+  ownsLyrics = false;
   /**
    * The scene's own render targets (with a depth buffer) that adaptive per-tile refinement may mask like
    * `out`: once a tile has converged, later sub-frames skip shading it there too. Only for a target whose

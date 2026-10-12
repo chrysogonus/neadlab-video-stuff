@@ -11,7 +11,7 @@ Pipeline
                          spots, then signal-based refinement of word starts/ends,
                          confidence scoring, QA plots.
 
-Run:  uv run python align.py [--song <id>] [--plots]
+Run:  uv run python align.py --project <id> [--plots]
 """
 import common
 import json
@@ -32,7 +32,7 @@ PRIMARY = "fused6"
 # (see ctc_emissions.py) -- it helps where backing vocals bury the lead.
 ALTS = ("mms", "lv60k", "fused_vocL", "fused_vocR")
 
-# Song-specific manual inputs (analysis/songs/<song>.py), established by inspecting the QA plots:
+# Manual inputs (projects/<id>/tuning.py), established by inspecting the QA plots:
 #   LINE_WINDOWS {line: (t_lo, t_hi)}           every token of the line lies inside
 #   ANCHORS {(line, token, subword): (lo, hi)}  earliest start / latest end of that subword's chars
 #   FIX {(line, token): dict(start=, end=, syl=[...], conf=)}  final corrections after refinement
@@ -326,9 +326,24 @@ def main(plots=False):
     doc = dict(lines=lines, extras=detect_extras(words, f), source=common.source(), notes=NOTES)
     (common.DATA / "lyrics.json").write_text(json.dumps(doc, indent=2, ensure_ascii=False))
     print("wrote", common.DATA / "lyrics.json", "score", score)
+    write_report(lines)
     if plots:
         make_plots(words, alt, L)
     return words, alt
+
+
+def write_report(lines, below=0.6):
+    """work/qa/align_report.md: the words the alignment is least sure of, to check on their line's plot."""
+    weak = [(l, w) for l in lines for w in l["words"] if w["conf"] < below]
+    n = sum(len(l["words"]) for l in lines)
+    out = [f"# Alignment QA: {common.PROJECT}", "",
+           f"{len(lines)} lines, {n} words; {len(weak)} below confidence {below} "
+           f"(check them on work/qa/line_NN.png and correct them in tuning.py FIX).", ""]
+    if weak:
+        out += ["| line | word | start | end | conf | line text |", "|---:|---|---:|---:|---:|---|"]
+        out += [f"| {l['i']} | {w['w']} | {w['start']:.2f} | {w['end']:.2f} | {w['conf']:.2f} | {l['text']} |" for l, w in weak]
+    (common.QA / "align_report.md").write_text("\n".join(out) + "\n")
+    print(f"{len(weak)}/{n} words below confidence {below}: {common.QA / 'align_report.md'}")
 
 
 def make_plots(words, alt, L):

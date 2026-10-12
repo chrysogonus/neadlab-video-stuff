@@ -7,6 +7,7 @@ reads work/whisper_turbo_prompt.json.
 """
 import common  # noqa: F401  (sets cache dirs)
 import json
+import re
 import sys
 
 import numpy as np
@@ -18,8 +19,21 @@ MODELS = {
     "large": "large-v3",
 }
 
-# The song's jargon, so the decoder does not "correct" it into something commoner.
+# The transcript's jargon, so the decoder does not "correct" it into something commoner
+# (tuning.py's WHISPER_PROMPT, else auto_prompt).
 PROMPT = common.CFG.WHISPER_PROMPT
+
+
+def auto_prompt(model, limit=30):
+    """The transcript's uncommon words: those Whisper's own tokenizer splits into several pieces
+    ("qubits", "rebase"), in order of first use. Common words are single tokens and need no help."""
+    seen = []
+    for _, _, text in common.load_lyrics_src(sung=False):
+        for w in re.findall(r"[A-Za-z][A-Za-z-]*[A-Za-z]", text):
+            k = w.lower()
+            if k not in seen and len(k) >= 4 and len(model.hf_tokenizer.encode(" " + k, add_special_tokens=False).ids) >= 2:
+                seen.append(k)
+    return ("Song lyrics: " if common.KIND == "song" else "Transcript: ") + ", ".join(seen[:limit]) + "."
 
 
 def vocals16k():
@@ -77,4 +91,4 @@ def run(tag, model_name, prompt=None):
 if __name__ == "__main__":
     which = sys.argv[1] if len(sys.argv) > 1 else "turbo"
     run(which, MODELS[which])
-    run(which + "_prompt", MODELS[which], PROMPT)   # the one align.py reads
+    run(which + "_prompt", MODELS[which], PROMPT or auto_prompt(load(MODELS[which])))   # the one align.py reads
