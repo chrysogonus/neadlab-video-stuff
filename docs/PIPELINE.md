@@ -52,7 +52,7 @@ replaced by phrase timing: sentence boundaries, pauses, emphasis. An optional mu
 |---|---|---|---|
 | 1 | `projects/` layout, `./vid`, analysis settings detected, both songs migrated | both songs render the same frames as before; the analysis reproduces the committed data | done, see below |
 | 2 | generic cue types and resolver, karaoke layer, `style.json` | Force Push runs from `cues.json` with no Force Push code in the engine | done, see below |
-| 3 | scene library: ~10 extracted + ~6 for explainers, with parameter schemas | a gallery page renders every scene with sample parameters | |
+| 3 | scene library: ~10 extracted + ~6 for explainers, with parameter schemas | a gallery page renders every scene with sample parameters | done, see below |
 | 4 | LLM steps 5–8 | a song not seen before goes end to end with no hand edits | |
 | 5 | explainer mode (script → TTS → video), delivery files | a 3-minute explainer renders end to end | |
 
@@ -127,3 +127,50 @@ replaced by phrase timing: sentence boundaries, pauses, emphasis. An optional mu
   - Harvest is still the code-edited exception (`src/timeline.ts`, and its palette and P(doom) HUD in the engine).
   - A cue's `transition` and `region` are descriptive: the scenes implement them, and the karaoke layer always
     sits low and centred.
+
+## Phase 3 results
+
+- 17 library scenes (`app/src/scenes/lib-*.ts`), each with a schema (`src/engine/schema.ts`). A schema gives what
+  the scene shows and when to use it (for the model that will write cue sheets), the kinds of video it suits, whether
+  it draws the lyric itself, its entry and cue parameters (type, description, default; no default means required),
+  and an example.
+  - Music: `lib-slam`, `lib-lyric`, `lib-quote`, `lib-pulse`, `lib-field`, `lib-plain`.
+  - Both kinds: `lib-title`, `lib-chat`, `lib-terminal`, `lib-list`, `lib-counter`.
+  - Explainers: `lib-chart`, `lib-timeline`, `lib-compare`, `lib-steps`, `lib-flow`, `lib-code`.
+  - Generalized from the two songs: the slam (Force Push's chants), the hero lyric (its chorus lines), the
+    terminal, the message thread (its phone), the strike list (its "no more"), the counter (Harvest's running byte
+    count), the timeline (Harvest's years), the flow diagram (Harvest's protocol plate).
+- `src/library.ts` registers them. When a sheet loads, each entry that plays a library scene and each of its cues
+  is checked against the schema: unknown, missing or mistyped parameters fail with the sheet's other problems.
+- The kit (`scenes/_lib.ts`, base `LibScene`) provides:
+  - **Colour roles:** `bg`, `panel`, `rule`, `dim`, `type`, `accent`, `accent2`, `onAccent`, from the palette of
+    the cue on screen and crossfaded when it changes. A palette needs `bg`, `type` and `accent`; the rest are
+    derived.
+  - **Fonts:** the style's roles (`display`, `body`, `mono`, `serif`).
+  - **Lyric area:** the lowest y a scene should use while the karaoke layer is on.
+  - **Helpers:** the shared timing and type helpers, including a balanced (widow-free) wrap.
+- The gallery (`?gallery`, `src/gallery.ts`) plays every library scene in turn over a project's song, each with
+  its example, dealing the song's lines out in order on a dark or light palette. `bun scripts/render.ts gallery`
+  writes the contact sheet; `--only` also writes full-size stills, and every mode takes `--gallery`. Over Force
+  Push and over Harvest, all 17 scenes render on both palettes without errors.
+- How it was made: I wrote the contract, the kit, the gallery and two reference scenes (slam, counter). Four
+  agents wrote the other 14 in parallel, each checking its scenes in the gallery on both palettes. I reviewed
+  every contact sheet and full-size stills, then sent back:
+  - the chat UI, which was too small to read at 1080p
+  - the lyric block, which sat high
+  - a widowed word in the comparison: the balanced wrap moved into the kit
+  - the slam's post flash, which lifted the whole ground to grey for a frame: removed
+- The karaoke layer now draws into a strip of the frame covering only its region and skips the upload when it
+  draws nothing. Same pixels, 11–15 ms less per frame. A full-frame canvas upload costs about 18 ms here, and a
+  Canvas2D library scene pays it once per motion-blur sub-frame.
+- Checks:
+  - **Tests:** 35 pass. New: every `lib-*.ts` is registered; each schema is complete and its example passes it;
+    the gallery resolves on both songs and both palettes; parameter problems are reported.
+  - **Other checks:** typechecks pass. Determinism (`render.ts check --gallery`) passes on five library scenes,
+    and each agent checked its own.
+  - **No regressions:** Force Push and Harvest stills are unchanged (at most 2 levels, the renderer's noise).
+  - **Frame times:** about 50–58 ms per frame on this machine, including the export's readback. Force Push's
+    own scenes measure 50 ms, so the 25 ms target in `docs/ENGINE.md` is not met by any scene here, old or new.
+- Left for later: scenes ignore a cue's `region` and `transition`, and the library is a first set, to be grown
+  by generalizing good custom scenes (phase 4).
+

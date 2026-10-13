@@ -185,10 +185,14 @@ export class KaraokeLayer {
     c.restore();
   }
 
-  /** `palette`: the palette of the cue on screen (the style's karaoke palette if none). */
+  /** Top of everything the layer can draw (the scrim, a two-row line, a line scrolling away): it draws below. */
+  get region() { return Math.max(0, Math.floor(this.st.y * H - this.st.size * 3)); }
+
+  /** `palette`: the palette of the cue on screen (the style's karaoke palette if none). Returns whether it drew anything. */
   draw(c: CanvasRenderingContext2D, t: number, palette = this.st.palette) {
     this.col = this.cols.get(palette) ?? this.cols.get(this.st.palette)!;
     const S = this.slots;
+    let drew = false;
     // the scrim: up while any line is, easing out over 0.6 s of silence (so it does not pump between lines)
     let gap = Infinity;
     for (const s of S) gap = Math.min(gap, t < s.show ? s.show - t : t > s.hide ? t - s.hide : 0);
@@ -201,11 +205,13 @@ export class KaraokeLayer {
       g.addColorStop(1, this.col.scrim(sa));
       c.fillStyle = g;
       c.fillRect(0, y0, W, H - y0);
+      drew = true;
     }
     for (let i = 0; i < S.length; i++) {
       const s = S[i]!, next = S[i + 1];
       const leaving = next?.previewed ? PROMOTE : 0;
       if (t < s.show || t >= s.hide + leaving) continue;
+      drew = true;
       const y = this.top(s.lay);
       if (t >= s.hide) {
         // scrolled away: up and out (gone in the first half) while the next line moves into place
@@ -225,5 +231,6 @@ export class KaraokeLayer {
       const from = Math.max(next?.previewFrom ?? 0, s.show + (s.previewed ? PROMOTE : FADE));
       if (next?.previewed && t >= from) this.line(c, next, t, SMALL, this.below(s.lay, next.lay), DIM * clamp((t - from) / 0.3));
     }
+    return drew;
   }
 }

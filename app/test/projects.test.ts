@@ -1,10 +1,13 @@
 // bun test (from app/): project configuration, selection propagation, cue sheets (the generic resolver on Force
 // Push's sheet) and timelines, styles.
 import { describe, expect, test } from 'bun:test';
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { getProject } from '../src/projects';
-import { CODE_TIMELINES, sheetTimeline } from '../src/timelines';
+import { CODE_TIMELINES, libraryProblems, sheetTimeline } from '../src/timelines';
+import { LIBRARY } from '../src/library';
+import { GALLERY_STYLE, gallerySheet } from '../src/gallery';
+import { paramProblems, withDefaults } from '../src/engine/schema';
 import { Lyrics } from '../src/engine/lyrics';
 import { AudioData } from '../src/engine/audio';
 import { CueError, resolveCues, resolveEntries, type CueDef, type CueSheet } from '../src/engine/cues';
@@ -204,5 +207,42 @@ describe('style.json', () => {
     expect(() => makeStyle({ palettes: { a: { bg: '#000000', type: '#FFFFFF', accent: '#FF0000' }, b: { bg: '#FFFFFF', type: '#000000' } } }))
       .toThrow(/karaoke active 'accent' is neither a hex colour nor a key of palette 'b'/);
     expect(() => makeStyle({ karaoke: { palette: 'nope' } })).toThrow(/karaoke palette 'nope'/);
+  });
+});
+
+describe('scene library', () => {
+  test('every scenes/lib-*.ts is registered, and every registered scene exists', () => {
+    const files = readdirSync(path.join(import.meta.dir, '../src/scenes')).filter((f) => /^lib-.*\.ts$/.test(f)).map((f) => f.slice(0, -3)).sort();
+    expect(Object.keys(LIBRARY).sort()).toEqual(files);
+  });
+  test('each schema is complete and its example passes it', () => {
+    for (const [name, s] of Object.entries(LIBRARY)) {
+      expect([name, s.description.length > 20 && s.description !== 'TODO']).toEqual([name, true]);
+      for (const spec of [...Object.values(s.entry), ...Object.values(s.cue)]) expect([name, spec.description.length > 0]).toEqual([name, true]);
+      expect(paramProblems(s.entry, s.example.entry, name)).toEqual([]);
+      expect(s.example.cues.length).toBeGreaterThan(0);
+      for (const c of s.example.cues) expect(paramProblems(s.cue, c, name)).toEqual([]);
+    }
+  });
+  for (const id of ['force-push', 'harvest']) for (const palette of ['night', 'day']) {
+    test(`the gallery resolves on ${id} (${palette}), every scene with cues`, async () => {
+      const { ly, au } = await load(id);
+      const tl = sheetTimeline(gallerySheet(ly, au, palette), GALLERY_STYLE)(ly, au);
+      expect(tl.map((e) => e.id)).toEqual(Object.keys(LIBRARY));
+      for (const e of tl) expect((e.params!.cues as unknown[]).length).toBeGreaterThan(0);
+    });
+  }
+  test('library parameters are checked: unknown, missing, mistyped, and unknown scenes', () => {
+    const sheet: CueSheet = {
+      entries: [{ id: 'a', file: 'lib-counter', cut: { at: 'zero' }, params: { decimals: 9, colour: 'red' } }, { id: 'b', file: 'lib-nope', cut: { at: 'zero' } }],
+      cues: [{ id: 'x', lyric: '-', scene: 'a', section: '-', initial: '-', action: '-', result: '-', anchor: { bar: 0 }, palette: 'main', region: 'full', transition: 'cut', motif: '-', params: { label: 3 } }],
+    };
+    const p = libraryProblems(sheet).join('\n');
+    expect(p).toContain("entry a (lib-counter): unknown parameter 'colour'");
+    expect(p).toContain("entry a (lib-counter): parameter 'decimals' must be a number in 0..3, not 9");
+    expect(p).toContain("x (lib-counter): needs parameter 'value'");
+    expect(p).toContain("x (lib-counter): parameter 'label' must be a string, not 3");
+    expect(p).toContain("entry b: no library scene 'lib-nope'");
+    expect(withDefaults(LIBRARY['lib-counter']!.entry, { unit: '%' })).toMatchObject({ unit: '%', decimals: 0, delta: true });
   });
 });

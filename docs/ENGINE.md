@@ -58,6 +58,41 @@ Rules:
 - Performance: aim for < 25 ms/frame. Canvas2D layers cost ~2–4 ms to upload each; don't use more than 2–3 per scene. Precompute in `init()`.
 - Don't edit files outside your scene files (and your own helper files named `scenes/<name>-*.ts`). Engine changes: ask the lead (report in your final message what you'd need). Do not edit `src/timeline.ts`.
 
+## The scene library (`app/src/scenes/lib-*.ts`)
+
+Library scenes know nothing about any one song, so any cue sheet can use them. Each module exports a `schema`
+(`src/engine/schema.ts`) next to its default class:
+- **What it is:** `description`, the kinds of video it suits, and whether it draws the lyric itself (`lyrics: 'own'`)
+  or leaves it to the karaoke layer (`'layer'`).
+- **Parameters:** those it takes on the timeline entry (`entry`) and on each cue (`cue`), each with a type, a
+  description and a default (no default means required).
+- **Example:** an `example` set of parameters.
+
+`src/library.ts` registers them by name. When a sheet loads, every entry that plays a library scene, and every cue in
+it, is checked against its schema: an unknown parameter, a missing required one or a wrong type fails with the
+others.
+
+A library scene extends `LibScene` from `scenes/_lib.ts`:
+- **Drawing:** it implements `draw(c, f, k)` on a Canvas2D layer, or overrides `render` for GL.
+- **Parameters and cues:** `this.P` holds the entry's parameters with defaults; `this.cues` the resolved cues in
+  order; `this.cp(cue)` a cue's parameters; `this.cueAt(t)` the cue on screen.
+- **Colours:** `k` is the `Look` of the palette of the cue on screen (crossfaded when it changes), in roles: `bg`,
+  `panel`, `rule`, `dim`, `type`, `accent`, `accent2`, `onAccent`. A palette needs at least `bg`, `type` and
+  `accent`; the others are derived.
+- **Fonts:** `this.font(role)` gives the font of a style role: `display`, `body`, `mono` or `serif`.
+- **Lyric area:** `this.bottom` is the lowest y for important content while the karaoke layer is on.
+- **Helpers:** the kit has the shared ones (`arrive`, `hit`, `typed`, `typedWith`, `fitWords`, `wrap`, `text`,
+  `pill`, `panel`, `label`).
+- **Timing:** land the main motion on a cue's `at`, the start of its anchor word.
+
+**The gallery** plays every library scene in turn over a project's song, each with its example parameters (the song's
+lines are dealt out in order, one cue per line), on a dark or light palette:
+http://localhost:5173/?project=force-push&gallery&palette=day.
+- `bun scripts/render.ts gallery --project force-push [--palette day]` writes a contact sheet, one row per scene at
+  four moments.
+- `--only lib-a,lib-b` limits it to those scenes and also writes full-size stills of them.
+- Every mode takes `--gallery` (e.g. `stills --gallery --only lib-chart --t …`).
+
 ## Toolbox
 
 - `gl.ts`: `FSPass(frag, uniforms)` fullscreen GLSL3 pass (has `vUv`, writes `fragColor`, gets `GLSL_COMMON`), `Compositor` via `this.ctx.comp.draw(renderer, tex, target, {mode:'normal'|'add'|'screen'|'multiply'|'max', opacity, tint, scale, offset})`, `Layer2D` (1920×1080 logical Canvas2D → sRGB texture), `makeRT()` (screen-sized HDR target; `makeRT(w, h)` takes logical px), `clearRT(renderer, rt, [r,g,b])`, `SCALE`/`PW`/`PH` (output scale and physical size).

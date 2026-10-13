@@ -5,11 +5,14 @@ import { getProject, type Project, type ProjectJson } from './projects';
 import { CODE_TIMELINES, sheetTimeline, type MakeTimeline } from './timelines';
 import type { CueSheet } from './engine/cues';
 import { makeStyle, type StyleJson } from './engine/style';
+import { GALLERY_STYLE, gallerySheet } from './gallery';
 
 const params = new URLSearchParams(location.search);
 const EXPORT = params.has('export');
 const ONLY = params.get('only'); // comma-separated scene ids to load (faster stills)
 const FROM = params.get('t') ? parseFloat(params.get('t')!) : null;
+// ?gallery: every library scene in turn over the project's song (src/gallery.ts), on ?palette=night|day
+const GALLERY = params.has('gallery');
 
 const canvas = document.getElementById('c') as HTMLCanvasElement;
 // physical size: 1920x1080 times ?scale= (the page CSS keeps showing it at 1920x1080)
@@ -34,12 +37,13 @@ let TIMELINE: typeof engine.timeline = [];
 
 async function boot() {
   PROJECT = getProject(PROJECTS, params.get('project'));
-  const style = makeStyle(STYLES[PROJECT.id]);
+  const style = GALLERY ? GALLERY_STYLE : makeStyle(STYLES[PROJECT.id]);
   const code = CODE_TIMELINES[PROJECT.id], sheet = SHEETS[PROJECT.id];
-  if (code) ({ makeTimeline } = await code());
+  if (GALLERY) makeTimeline = (ly, au) => sheetTimeline(gallerySheet(ly, au, params.get('palette') ?? 'night'), style)(ly, au);
+  else if (code) ({ makeTimeline } = await code());
   else if (sheet) makeTimeline = sheetTimeline(await sheet(), style);
   else throw new Error(`project '${PROJECT.id}' has no cue sheet (projects/${PROJECT.id}/data/cues.json)`);
-  document.title = PROJECT.title;
+  document.title = GALLERY ? `${PROJECT.title}: scene library` : PROJECT.title;
   const onlySet = ONLY ? new Set(ONLY.split(',')) : null;
   await engine.init(onlySet ? (e) => onlySet.has(e.id) : undefined, PROJECT.data, style);
   TIMELINE = engine.timeline;

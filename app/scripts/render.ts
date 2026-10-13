@@ -3,6 +3,9 @@
 //   gpu:     bun scripts/render.ts gpu                 (prints the WebGL renderer string)
 //   stills:  bun scripts/render.ts stills --t 1.5,23,40.2 [--only id1,id2] [--out dir]
 //   sheet:   bun scripts/render.ts sheet --from 20 --to 35 [--n 12] [--cols 4] [--only ids] [--out file.png]   (or --times a,b,c | --cuts)
+//   gallery: bun scripts/render.ts gallery [--palette night|day] [--only lib-a,lib-b] [--out file.png]   (the scene library over
+//            the project's song, src/gallery.ts: a contact sheet, one row per scene at four moments; with --only also
+//            full-size stills of those scenes in out/gallery/<scene>/)
 //   plates:  bun scripts/render.ts plates   (renders one representative JPEG per plate into public/plates/ (used by the outro's rewind), times from plates.json or entry midpoints)
 //   perf:    bun scripts/render.ts perf --from 20 --to 25 [--only ids] [--samples 1] [--shutter 0.5]   (avg ms per frame incl. GPU sync and the export's pixel readback)
 //   check:   bun scripts/render.ts check --t 10,55,140 (seek/order determinism: the frames rendered in order, in reverse,
@@ -16,6 +19,7 @@
 //            full-res from the pixel buffer, videos are encoded at the physical size.
 //   --project ID (all modes): which project of projects/ to render (needed when there are several). The page
 //            loads that project's data and timeline; the video muxes its master and defaults to out/<id>.mp4.
+//   --gallery (all modes): load the gallery (?gallery, on --palette night|day) instead of the project's own edit.
 //   A scene that fails to load or throws while rendering fails the run (non-zero exit).
 // Uses the Vite dev server at --url (default http://localhost:5173); starts a private one if unreachable.
 import { chromium, type Page } from 'playwright-core';
@@ -37,6 +41,7 @@ const OW = 1920 * SCALE, OH = 1080 * SCALE; // output size
 const SAMPLES = opt('samples', '1') === 'auto'
   ? { min: +opt('min-samples', '4')!, max: +opt('max-samples', '324')!, tol: +opt('tol', '3')!, refine: opt('refine', 'tiles') as 'tiles' | 'frame' }
   : +opt('samples', '1')!;
+const GALLERY = mode === 'gallery' || flag('gallery');
 const hist = (h: Record<string, number>) => Object.entries(h).sort((a, b) => +a[0] - +b[0]).map(([k, v]) => `${k}:${v}`).join(' ');
 const ROOT = path.resolve(APP, '..');
 const PROJECT = project(opt('project'));
@@ -81,7 +86,8 @@ async function openPage(url: string) {
   page.on('pageerror', (e) => logs.push(`[pageerror] ${e.message}`));
   const only = opt('only');
   // (built with URL so a --url carrying its own path or query keeps it)
-  await page.goto(pageURL(url, { project: PROJECT.id, only, scale: SCALE }));
+  const extra: Record<string, string> = GALLERY ? { gallery: '1', palette: opt('palette', 'night')! } : {};
+  await page.goto(pageURL(url, { project: PROJECT.id, only, scale: SCALE, extra }));
   await page.waitForFunction(() => (window as any).__video?.ready || (window as any).__video?.error, null, { timeout: 120000 });
   const err = await page.evaluate(() => (window as any).__video.error);
   if (err) throw new Error(`app failed to boot:\n${err}\n${logs.join('\n')}`);
@@ -114,8 +120,8 @@ async function stills(page: Page, times: number[], outDir: string) {
   return files;
 }
 
-async function sheet(page: Page, times: number[], cols: number, out: string) {
-  const dataUrl: string = await page.evaluate(async ({ times, cols }) => {
+async function sheet(page: Page, times: number[], cols: number, out: string, labels?: string[]) {
+  const dataUrl: string = await page.evaluate(async ({ times, cols, labels }) => {
     const P = (window as any).__video;
     const cw = 480, ch = 270, pad = 4, lab = 18;
     const rows = Math.ceil(times.length / cols);
@@ -128,10 +134,10 @@ async function sheet(page: Page, times: number[], cols: number, out: string) {
       P.still(t);
       const x = pad + (i % cols) * (cw + pad), y = pad + Math.floor(i / cols) * (ch + lab + pad);
       c.drawImage(src, x, y + lab, cw, ch);
-      c.fillStyle = '#ddd'; c.font = '13px monospace'; c.fillText(`${t.toFixed(2)}s`, x + 2, y + 13);
+      c.fillStyle = '#ddd'; c.font = '13px monospace'; c.fillText(`${labels?.[i] ? `${labels[i]}  ` : ''}${t.toFixed(2)}s`, x + 2, y + 13);
     });
     return cv.toDataURL('image/png');
-  }, { times, cols });
+  }, { times, cols, labels });
   mkdirSync(path.dirname(out), { recursive: true });
   await Bun.write(out, Buffer.from(dataUrl.split(',')[1]!, 'base64'));
 }
@@ -344,6 +350,15 @@ try {
     const out = opt('out', path.join(ROOT, `out/sheets/sheet_${from}-${to}.png`))!;
     await sheet(page, times, +opt('cols', '4')!, out);
     console.log(out);
+  } else if (mode === 'gallery') {
+    const tl: { id: string; start: number; end: number }[] = await page.evaluate(() => (window as any).__video.timeline);
+    const only = opt('only')?.split(',');
+    const shown = tl.filter((e) => !only || only.includes(e.id));
+    const times = shown.flatMap((e) => [0.12, 0.4, 0.7, 0.95].map((k) => +(e.start + (e.end - e.start) * k).toFixed(2)));
+    const out = opt('out', path.join(ROOT, `out/gallery-${opt('palette', 'night')}${only ? `-${only.join('+')}` : ''}.png`))!;
+    await sheet(page, times, 4, out, shown.flatMap((e) => [e.id, '', '', '']));
+    console.log(out);
+    if (only) for (const e of shown) console.log((await stills(page, times.filter((t) => t >= e.start && t < e.end), path.join(ROOT, 'out/gallery', `${e.id}-${opt('palette', 'night')}`))).join('\n'));
   } else if (mode === 'plates') {
     const tl: { id: string; start: number; end: number }[] = await page.evaluate(() => (window as any).__video.timeline);
     const figs = tl.map((e) => e.id);

@@ -329,7 +329,11 @@ export class Engine {
     });
     this.hud = new Hud(new PDoom(this.lyrics), captions);
     const ks = style.karaoke;
-    if (ks) this.karaoke = { layer: new KaraokeLayer(this.lyrics, ks, style.palettes), L: new Layer2D() };
+    if (ks) {
+      // (a strip of the frame, from the top of the layer's region down: uploading a canvas costs by its size)
+      const layer = new KaraokeLayer(this.lyrics, ks, style.palettes);
+      this.karaoke = { layer, L: new Layer2D(W, H - layer.region) };
+    }
     const entries = only ? this.timeline.filter(only) : this.timeline;
     await Promise.all(entries.map((e) => this.loadEntry(e)));
   }
@@ -630,9 +634,14 @@ export class Engine {
     const cue = cues.filter((c) => c.start <= t).at(-1) ?? cues[0];
     const { layer, L } = this.karaoke!;
     L.clear();
-    layer.draw(L.ctx, t, cue?.def.palette);
-    const target = [...this.rts, this.mixRT, this.avgRT].find((rt) => rt.texture === outTex)!;
-    this.comp.draw(this.renderer, L.upload(), target, { mode: 'normal' });
+    L.ctx.save();
+    L.ctx.translate(0, -layer.region);
+    const drew = layer.draw(L.ctx, t, cue?.def.palette);
+    L.ctx.restore();
+    if (!drew) return;
+    // the strip covers the bottom of the frame: screen uv.y in [0, h/H] reads the whole texture
+    const target = [...this.rts, this.mixRT, this.avgRT].find((rt) => rt.texture === outTex)!, s = H / L.h;
+    this.comp.draw(this.renderer, L.upload(), target, { mode: 'normal', scale: [1, s], offset: [0, 0.5 * s - 0.5] });
   }
 
   /** RGBA8 pixels of the last rendered frame (bottom-up rows), PW x PH. */

@@ -37,6 +37,8 @@ export interface CueDef {
   transition: Transition;
   /** State of the recurring motif at this cue. */
   motif: string;
+  /** The scene's parameters for this cue (a library scene's schema says which). */
+  params?: Record<string, unknown>;
   assets?: string[];
   notes?: string;
 }
@@ -98,6 +100,7 @@ function shapeProblems(sheet: CueSheet, palettes?: string[]): string[] {
     const at = (e?.cut as { at?: string } | undefined)?.at;
     if (!str(e?.id) || !str(e?.file)) problems.push(`entry ${JSON.stringify(e)}: needs "id" and "file"`);
     else if (ids.has(e.id)) problems.push(`entry ${e.id}: duplicate id`);
+    if (e?.params !== undefined && (typeof e.params !== 'object' || e.params === null || Array.isArray(e.params))) problems.push(`entry ${e?.id}: params must be an object`);
     else ids.add(e.id);
     if (!at || !CUTS.includes(at)) problems.push(`entry ${e?.id}: cut.at must be one of ${CUTS.join(', ')}`);
     else if (at === 'bar' ? !Number.isInteger((e.cut as { bar: number }).bar) : at !== 'zero' && !str((e.cut as { cue: string }).cue))
@@ -112,6 +115,7 @@ function shapeProblems(sheet: CueSheet, palettes?: string[]): string[] {
     const a = c?.anchor as Partial<{ word: string; bar: number }> | undefined;
     if (!a || (str(a.word) === Number.isInteger(a.bar))) problems.push(`${id}: anchor must be {"word": ...} or {"bar": <downbeat>}`);
     if (palettes && str(c?.palette) && !palettes.includes(c.palette)) problems.push(`${id}: palette '${c.palette}' is not in style.json (${palettes.join(', ')})`);
+    if (c?.params !== undefined && (typeof c.params !== 'object' || c.params === null || Array.isArray(c.params))) problems.push(`${id}: params must be an object`);
   }
   return problems;
 }

@@ -48,7 +48,10 @@ export const DEFAULT_KARAOKE: KaraokeStyle = {
 
 export const DEFAULT_STYLE: Style = {
   palettes: { main: { bg: '#0B0B0E', panel: '#16161B', dim: '#6B6B75', type: '#F2F0EA', accent: '#FFC24B' } },
-  fonts: { display: { family: 'archivo', width: 100, weight: 900 }, body: { family: 'archivo', width: 100, weight: 500 }, mono: { family: 'mono', weight: 400 } },
+  fonts: {
+    display: { family: 'archivo', width: 100, weight: 900 }, body: { family: 'archivo', width: 100, weight: 500 },
+    mono: { family: 'mono', weight: 400 }, serif: { family: 'serif', weight: 400, italic: true },
+  },
   karaoke: DEFAULT_KARAOKE,
 };
 
