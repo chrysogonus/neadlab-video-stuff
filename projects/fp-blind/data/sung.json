@@ -1,0 +1,105 @@
+{
+ "lines": {
+  "14": "One beat and you're gone",
+  "34": "No more reading your logs and now"
+ },
+ "evidence": [
+  {
+   "line": 4,
+   "sheet": "Hid",
+   "heard": "Hit",
+   "p": 0.81,
+   "gain": 0.65,
+   "kept": false
+  },
+  {
+   "line": 5,
+   "sheet": "",
+   "heard": "Then",
+   "p": 0.99,
+   "gain": -5.91,
+   "kept": false
+  },
+  {
+   "line": 11,
+   "sheet": "patches,",
+   "heard": "pictures",
+   "p": 0.89,
+   "gain": -3.71,
+   "kept": false
+  },
+  {
+   "line": 14,
+   "sheet": "command",
+   "heard": "beat",
+   "p": 0.86,
+   "gain": 30.74,
+   "kept": true
+  },
+  {
+   "line": 14,
+   "sheet": "",
+   "heard": "Stop",
+   "p": 0.91,
+   "gain": -0.17,
+   "kept": false
+  },
+  {
+   "line": 32,
+   "sheet": "",
+   "heard": "No",
+   "p": 0.98,
+   "gain": -1.46,
+   "kept": false
+  },
+  {
+   "line": 34,
+   "sheet": "at night",
+   "heard": "and now",
+   "p": 0.65,
+   "gain": 16.95,
+   "kept": true
+  },
+  {
+   "line": 39,
+   "sheet": "FORCE",
+   "heard": "Push",
+   "p": 0.81,
+   "gain": 1.98,
+   "kept": false
+  },
+  {
+   "line": 42,
+   "sheet": "",
+   "heard": "Push",
+   "p": 0.96,
+   "gain": -14.54,
+   "kept": false
+  },
+  {
+   "line": 44,
+   "sheet": "(hey!)",
+   "heard": "push",
+   "p": 1.0,
+   "gain": -9.67,
+   "kept": false
+  },
+  {
+   "line": 45,
+   "sheet": "(hey!)",
+   "heard": "push push",
+   "p": 1.0,
+   "gain": -33.09,
+   "kept": false
+  },
+  {
+   "line": 62,
+   "sheet": "",
+   "heard": "I",
+   "p": 0.81,
+   "gain": 0.0,
+   "kept": false
+  }
+ ],
+ "margin": 8.0
+}

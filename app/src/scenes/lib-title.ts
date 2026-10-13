@@ -27,8 +27,8 @@ export const schema: SceneSchema = {
     subtitle: { type: 'string', default: '', description: 'a new subtitle from this cue on; empty: keep the current one' },
   },
   example: {
-    entry: { title: 'Force Push', kicker: 'Chapter one', subtitle: 'A love story in version control' },
-    cues: [{}, {}, { title: 'History, rewritten', kicker: 'Chapter two', subtitle: 'What git push --force leaves behind' }],
+    entry: { title: 'The Long Way Home', kicker: 'Chapter one', subtitle: 'A story in four seasons' },
+    cues: [{}, {}, { title: 'Winter', kicker: 'Chapter two', subtitle: 'The year the lights went out' }],
   },
 };
 

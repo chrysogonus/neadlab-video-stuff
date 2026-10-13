@@ -3,6 +3,8 @@
 //   gpu:     bun scripts/render.ts gpu                 (prints the WebGL renderer string)
 //   stills:  bun scripts/render.ts stills --t 1.5,23,40.2 [--only id1,id2] [--out dir]
 //   sheet:   bun scripts/render.ts sheet --from 20 --to 35 [--n 12] [--cols 4] [--only ids] [--out file.png]   (or --times a,b,c | --cuts)
+//   sheets:  bun scripts/render.ts sheets --spec file.json   (several labelled contact sheets in one page load: the spec is
+//            [{ "out": "a.png", "times": [..], "labels": [..], "cols": 4 }, ...]; the pipeline's review uses it)
 //   gallery: bun scripts/render.ts gallery [--palette night|day] [--only lib-a,lib-b] [--out file.png]   (the scene library over
 //            the project's song, src/gallery.ts: a contact sheet, one row per scene at four moments; with --only also
 //            full-size stills of those scenes in out/gallery/<scene>/)
@@ -350,6 +352,9 @@ try {
     const out = opt('out', path.join(ROOT, `out/sheets/sheet_${from}-${to}.png`))!;
     await sheet(page, times, +opt('cols', '4')!, out);
     console.log(out);
+  } else if (mode === 'sheets') {
+    const spec: { out: string; times: number[]; labels?: string[]; cols?: number }[] = await Bun.file(opt('spec')!).json();
+    for (const s of spec) { await sheet(page, s.times, s.cols ?? 4, s.out, s.labels); console.log(s.out); }
   } else if (mode === 'gallery') {
     const tl: { id: string; start: number; end: number }[] = await page.evaluate(() => (window as any).__video.timeline);
     const only = opt('only')?.split(',');

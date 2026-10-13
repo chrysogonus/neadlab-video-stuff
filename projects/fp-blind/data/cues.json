@@ -1,0 +1,626 @@
+{
+  "entries": [
+    { "id": "status", "file": "lib-terminal", "cut": { "at": "zero" }, "params": { "prompt": "~/us main $", "title": "zsh — ~/us" } },
+    { "id": "title", "file": "lib-title", "cut": { "at": "bar", "bar": 6 }, "params": { "title": "Force Push", "kicker": "~/us · main · 1,095 commits", "subtitle": "a history, rewritten" } },
+    { "id": "v1-terminal", "file": "lib-terminal", "cut": { "at": "beat", "cue": "L03" }, "params": { "prompt": "~/us main $", "title": "zsh — ~/us" } },
+    { "id": "v1-blame", "file": "lib-compare", "cut": { "at": "beat", "cue": "L07" }, "params": { "left": "<<<<<<< HEAD (me)", "right": ">>>>>>> you", "verdict": "CONFLICT (content): every hunk is yours" } },
+    { "id": "vow1", "file": "lib-list", "cut": { "at": "beat", "cue": "L11" }, "params": { "title": "No more", "mark": "strike", "numbered": true } },
+    { "id": "rewrite", "file": "fp-blind-history", "cut": { "at": "word", "cue": "L15" }, "params": { "act": "rewrite", "commits": 1095, "oldTip": "3f9c2e1", "side": "you/other", "sideCommits": ["b81e0c7", "44d9a2f", "e07c3b5"] } },
+    { "id": "chant1", "file": "lib-slam", "cut": { "at": "beat", "cue": "L21" }, "params": { "fill": "accent", "upper": true } },
+    { "id": "squash", "file": "lib-terminal", "cut": { "at": "beat", "cue": "L25" }, "params": { "prompt": "~/us main $", "title": "zsh — ~/us" } },
+    { "id": "prs", "file": "lib-chat", "cut": { "at": "beat", "cue": "L29" }, "params": { "name": "Unknown" } },
+    { "id": "push", "file": "lib-terminal", "cut": { "at": "beat", "cue": "L33" }, "params": { "prompt": "~/us main $", "title": "zsh — ~/us" } },
+    { "id": "anthem", "file": "lib-lyric", "cut": { "at": "word", "cue": "L37" }, "params": { "align": "center", "upper": true } },
+    { "id": "chant2", "file": "lib-slam", "cut": { "at": "beat", "cue": "L43" }, "params": { "fill": "type", "upper": true } },
+    { "id": "they-say", "file": "lib-quote", "cut": { "at": "word", "cue": "L47" }, "params": {} },
+    { "id": "no-lease", "file": "lib-terminal", "cut": { "at": "beat", "cue": "L50" }, "params": { "prompt": "~/us main $", "title": "zsh — ~/us" } },
+    { "id": "acapella", "file": "lib-lyric", "cut": { "at": "beat", "cue": "L51" }, "params": { "align": "left", "upper": false } },
+    { "id": "own", "file": "fp-blind-history", "cut": { "at": "word", "cue": "L53" }, "params": { "act": "own", "root": "5eed1e5" } },
+    { "id": "chant3", "file": "lib-slam", "cut": { "at": "beat", "cue": "L57" }, "params": { "fill": "accent", "upper": true } },
+    { "id": "reflog", "file": "lib-counter", "cut": { "at": "beat", "cue": "L61" }, "params": { "title": "git reflog · unreachable", "delta": false } },
+    { "id": "clean", "file": "lib-title", "cut": { "at": "bar", "bar": 111 }, "params": { "title": "Nothing to commit.", "kicker": "git status", "subtitle": "working tree clean" } }
+  ],
+  "cues": [
+    {
+      "id": "L00", "lyric": "Git status.", "scene": "status", "section": "intro",
+      "initial": "An empty graphite terminal window titled 'zsh — ~/us', the prompt '~/us main $' at the top left with a cursor blinking on the beat.",
+      "action": "'git status' is typed with the voice and entered on 'status.'; git prints two lines.",
+      "result": "Terminal shows '~/us main $ git status' followed by 'On branch main' and 'Your branch is up to date with 'origin/main'.', a fresh prompt below.",
+      "anchor": { "word": "status." }, "palette": "local", "region": "full", "transition": "cut",
+      "motif": "unplanted: the history exists but no number yet",
+      "params": { "command": "git status", "output": ["On branch main", "Your branch is up to date with 'origin/main'."] }
+    },
+    {
+      "id": "L01", "lyric": "Nothing to commit.", "scene": "status", "section": "intro",
+      "initial": "The git status output sits on screen, a new prompt with a blinking cursor below it.",
+      "action": "'git commit -am \"us\"' is typed and entered on 'commit.'; git refuses deadpan.",
+      "result": "Under the second command the terminal reads 'nothing to commit, working tree clean'.",
+      "anchor": { "word": "commit." }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "the insult planted: 'nothing to commit' (paid off on the end card)",
+      "params": { "command": "git commit -am \"us\"", "output": ["nothing to commit, working tree clean"] }
+    },
+    {
+      "id": "L02", "lyric": "Story of your life.", "scene": "status", "section": "intro",
+      "initial": "Two commands and their replies; an empty prompt waits.",
+      "action": "'git log --oneline | wc -l' is typed and entered on 'life.'; a single number prints and just sits there.",
+      "result": "The last line of the terminal is the bare number '1095' under 'git log --oneline | wc -l', with a fresh blinking prompt.",
+      "anchor": { "word": "life." }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "plant: 1095 commits, unexplained",
+      "params": { "command": "git log --oneline | wc -l", "output": ["1095"] }
+    },
+    {
+      "id": "intro-title", "span": [6, { "cue": "L03", "edge": "start" }], "scene": "title", "section": "intro",
+      "initial": "Graphite ground, empty but for a vermilion rule beginning to draw in.",
+      "action": "On bar 6 the title 'Force Push' rises letter by letter in wide heavy display type; the mono kicker and serif subtitle follow.",
+      "result": "Editorial title card, set left: small vermilion mono capitals '~/us · main · 1,095 commits' above a huge 'Force Push', a vermilion rule, the italic serif 'a history, rewritten' below.",
+      "anchor": { "bar": 6 }, "palette": "local", "region": "center", "transition": "cut",
+      "motif": "1,095 commits named on the slate"
+    },
+    {
+      "id": "L03", "lyric": "Three years in and you never could commit", "scene": "v1-terminal", "section": "verse1",
+      "initial": "A fresh terminal session: '~/us main $' and a blinking cursor on graphite.",
+      "action": "'git commit' is typed with the line and entered on 'commit'; git aborts.",
+      "result": "Terminal shows '~/us main $ git commit' and below it 'Aborting commit due to empty commit message.'",
+      "anchor": { "word": "commit" }, "palette": "local", "region": "full", "transition": "cut",
+      "motif": "1095 commits, none of them a commitment",
+      "params": { "command": "git commit", "output": ["Aborting commit due to empty commit message."] }
+    },
+    {
+      "id": "L04", "lyric": "Hid me in your stash, said we’d get to it", "scene": "v1-terminal", "section": "verse1",
+      "initial": "The aborted commit sits above an empty prompt.",
+      "action": "'git stash list' is typed and entered on 'stash,'; one stash entry prints.",
+      "result": "Under 'git stash list' the terminal reads 'stash@{0}: On main: me'.",
+      "anchor": { "word": "stash," }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "her: one stash entry",
+      "params": { "command": "git stash list", "output": ["stash@{0}: On main: me"] }
+    },
+    {
+      "id": "L05", "lyric": "Said it’s just a feature, nothing on the side", "scene": "v1-terminal", "section": "verse1",
+      "initial": "Three commands scrolled up; an empty prompt.",
+      "action": "'git branch' is typed and entered on 'side'; git lists exactly one branch.",
+      "result": "Under 'git branch' a single line '* main': nothing else listed.",
+      "anchor": { "word": "side" }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "the side branch exists but is hidden",
+      "params": { "command": "git branch", "output": ["* main"] }
+    },
+    {
+      "id": "L06", "lyric": "Then I found the other branch you tried to hide", "scene": "v1-terminal", "section": "verse1",
+      "initial": "'* main' alone under 'git branch'; an empty prompt.",
+      "action": "'git branch -a' is typed and entered on 'branch'; with --all the hidden remote branch appears and holds through 'you tried to hide'.",
+      "result": "Under 'git branch -a': '* main', '  remotes/origin/main' and '  remotes/you/other' as the last line.",
+      "anchor": { "word": "branch" }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "you/other found",
+      "params": { "command": "git branch -a", "output": ["* main", "  remotes/origin/main", "  remotes/you/other"] }
+    },
+    {
+      "id": "L07", "lyric": "So I ran the blame on every broken line", "scene": "v1-blame", "section": "verse1",
+      "initial": "Two empty columns headed '<<<<<<< HEAD (me)' on the left and '>>>>>>> you' on the right, a divider between.",
+      "action": "On 'blame' the item 'every broken line' drops into the right column, which lights.",
+      "result": "Right column '>>>>>>> you' holds 'every broken line'; the left column '<<<<<<< HEAD (me)' is empty.",
+      "anchor": { "word": "blame" }, "palette": "local", "region": "right", "transition": "cut",
+      "motif": "blame: every line is his",
+      "params": { "side": "right", "item": "every broken line" }
+    },
+    {
+      "id": "L08", "lyric": "Every single one had your name, not mine", "scene": "v1-blame", "section": "verse1",
+      "initial": "One item under '>>>>>>> you', nothing under '<<<<<<< HEAD (me)'.",
+      "action": "On 'name,' 'every single one' joins the right column.",
+      "result": "Right column lists 'every broken line' and 'every single one'; the left column is still empty.",
+      "anchor": { "word": "name," }, "palette": "local", "region": "right", "transition": "none",
+      "motif": "blame: her column empty",
+      "params": { "side": "right", "item": "every single one" }
+    },
+    {
+      "id": "L09", "lyric": "You said we could merge, work the conflicts through", "scene": "v1-blame", "section": "verse1",
+      "initial": "Two items on the right, nothing on the left.",
+      "action": "On 'merge,' a shared item 'merge, work it through' is set across the divider, spanning both columns.",
+      "result": "'merge, work it through' sits across both columns below the right column's two items; the left column has no item of its own.",
+      "anchor": { "word": "merge," }, "palette": "local", "region": "center", "transition": "none",
+      "motif": "the one promise they shared",
+      "params": { "side": "both", "item": "merge, work it through" }
+    },
+    {
+      "id": "L10", "lyric": "But every conflict, baby, started with you", "scene": "v1-blame", "section": "verse1",
+      "initial": "Right column two items, the shared item across both, left column empty.",
+      "action": "On 'you' 'every conflict' lands in the right column and the verdict line appears under both columns.",
+      "result": "Right column: 'every broken line', 'every single one', 'every conflict'; left column empty; under both the verdict 'CONFLICT (content): every hunk is yours'.",
+      "anchor": { "word": "you" }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "blame complete: three hunks, all his",
+      "params": { "side": "right", "item": "every conflict" }
+    },
+    {
+      "id": "L11", "lyric": "No more patches, no more one more try", "occurrence": 0, "scene": "vow1", "section": "prechorus1",
+      "initial": "Graphite ground, the kicker 'No more' at the top left, no items yet.",
+      "action": "Item '01 patches' arrives as the line starts and a vermilion strike crosses it on 'patches,'.",
+      "result": "Under 'No more': '01 patches' in big type, struck through in vermilion.",
+      "anchor": { "word": "patches," }, "palette": "local", "region": "left", "transition": "cut",
+      "motif": "the vow begins",
+      "params": { "item": "patches" }
+    },
+    {
+      "id": "L12", "lyric": "No more reading your logs at night", "scene": "vow1", "section": "prechorus1",
+      "initial": "'01 patches' struck through under 'No more'.",
+      "action": "'02 reading your logs at night' arrives and is struck on 'night'; the first item dims.",
+      "result": "'02 reading your logs at night' leads, struck in vermilion; '01 patches' dimmed and struck above it.",
+      "anchor": { "word": "night" }, "palette": "local", "region": "left", "transition": "none",
+      "motif": "his log: no longer read",
+      "params": { "item": "reading your logs at night" }
+    },
+    {
+      "id": "L13", "lyric": "Head’s been detached for way too long", "scene": "vow1", "section": "prechorus1",
+      "initial": "Two struck items under 'No more'.",
+      "action": "'03 a detached HEAD' arrives and is struck on 'long'.",
+      "result": "'03 a detached HEAD' leads, struck through; '01' and '02' dimmed and struck above.",
+      "anchor": { "word": "long" }, "palette": "local", "region": "left", "transition": "none",
+      "motif": "her HEAD reattached",
+      "params": { "item": "a detached HEAD" }
+    },
+    {
+      "id": "L14", "lyric": "One beat and you’re gone", "scene": "vow1", "section": "chorus1",
+      "initial": "Three struck items under 'No more'.",
+      "action": "'04 you' arrives, holds unstruck through the beat of silence, then the strike slashes it on 'gone'.",
+      "result": "'04 you' in big type leading the list, struck through in vermilion; the earlier three dim above.",
+      "anchor": { "word": "gone" }, "palette": "local", "region": "left", "transition": "none",
+      "motif": "you: struck, about to be pushed out",
+      "params": { "item": "you" }
+    },
+    {
+      "id": "L15", "lyric": "FORCE PUSH! Baby, you’re history", "occurrence": 0, "scene": "rewrite", "section": "chorus1",
+      "initial": "Hard cut to bright paper. A vertical history rail of ink commit dots on the left third, newest at the top: '3f9c2e1' labelled 'main, origin/main', older dots with 7-character hashes fading downward to '… 1095 commits'; a side branch 'you/other' splits off to the right with three dots (b81e0c7, 44d9a2f, e07c3b5).",
+      "action": "A new dot '7e1d0a3' lands on top labelled 'HEAD -> main' and the line is typed beside it in huge wide display type as its commit message; on 'PUSH!' the you/other branch and its three dots are struck through in vermilion and drop out of the frame, and the rail snaps straight.",
+      "result": "Paper ground, one straight ink rail: top dot '7e1d0a3' with 'HEAD -> main' and the message 'FORCE PUSH! Baby, you’re history' in big display type (PUSH! in vermilion); below it '3f9c2e1 main, origin/main' and the old commits fading down; no side branch.",
+      "anchor": { "word": "PUSH!" }, "palette": "origin", "region": "full", "transition": "stamp",
+      "motif": "hero A: his side branch torn out",
+      "params": { "hash": "7e1d0a3", "event": "tear" }
+    },
+    {
+      "id": "L16", "lyric": "I rewrote the past, there’s no you and me", "occurrence": 0, "scene": "rewrite", "section": "chorus1",
+      "initial": "Straight rail, her tip '7e1d0a3' on top, his old commits below, origin/main still on '3f9c2e1'.",
+      "action": "New dot 'c45f9b2' lands on top with the line as its message; on 'rewrote' every old hash below re-rolls to a new value (the history rewritten), digits ticking.",
+      "result": "Top dot 'c45f9b2' with 'HEAD -> main' and 'I rewrote the past, there’s no you and me' in display type, 'rewrote' in vermilion; the previous message shrinks to a small mono label on 7e1d0a3; the old commits below show new hashes.",
+      "anchor": { "word": "rewrote" }, "palette": "origin", "region": "full", "transition": "none",
+      "motif": "hero A: history rewritten (hashes change)",
+      "params": { "hash": "c45f9b2", "event": "rehash" }
+    },
+    {
+      "id": "L17", "lyric": "FORCE PUSH! Right over your lies", "occurrence": 0, "scene": "rewrite", "section": "chorus1",
+      "initial": "Two of her commits on top, the long old history below with origin/main on '3f9c2e1'.",
+      "action": "New dot '19ae6d8' lands with the line as message; on 'PUSH!' all old commits below her first commit collapse downward and vanish off the bottom; the 'origin/main' label is left hanging alone under the rail, pointing at nothing.",
+      "result": "A short rail of three dots (19ae6d8, c45f9b2, 7e1d0a3), top message 'FORCE PUSH! Right over your lies' with PUSH! in vermilion; under the rail a lone 'origin/main' label with no dot; no old commits.",
+      "anchor": { "word": "PUSH!" }, "palette": "origin", "region": "full", "transition": "stamp",
+      "motif": "hero A: 1095 commits collapsed",
+      "params": { "hash": "19ae6d8", "event": "collapse" }
+    },
+    {
+      "id": "L18", "lyric": "Brand new timeline, no goodbyes", "occurrence": 0, "scene": "rewrite", "section": "chorus1",
+      "initial": "Three dots of hers, the dangling origin/main label beneath.",
+      "action": "New dot 'e0b3f71' lands on top on 'timeline,'; the rail extends upward; hashes tick on the beats.",
+      "result": "Four dots on a clean straight rail, top 'e0b3f71' with 'Brand new timeline, no goodbyes', 'timeline,' in vermilion; origin/main still dangling below.",
+      "anchor": { "word": "timeline," }, "palette": "origin", "region": "full", "transition": "none",
+      "motif": "hero A: her new timeline, four commits",
+      "params": { "hash": "e0b3f71", "event": "commit" }
+    },
+    {
+      "id": "L19", "lyric": "Keep your local copy, I don’t care", "occurrence": 0, "scene": "rewrite", "section": "chorus1",
+      "initial": "Four dots of hers, origin/main dangling.",
+      "action": "New dot '8d2c5aa' lands on top on 'care'.",
+      "result": "Five dots, top '8d2c5aa' with 'Keep your local copy, I don’t care', 'care' in vermilion; origin/main still dangling below the rail.",
+      "anchor": { "word": "care" }, "palette": "origin", "region": "full", "transition": "none",
+      "motif": "hero A: five commits, all hers",
+      "params": { "hash": "8d2c5aa", "event": "commit" }
+    },
+    {
+      "id": "L20", "lyric": "Origin’s mine and you’re not there", "occurrence": 0, "scene": "rewrite", "section": "chorus1",
+      "initial": "Five dots of hers, the lone origin/main label under the rail.",
+      "action": "New dot 'd2a84f4' lands on top; on 'mine' the origin/main label slides up the whole rail and docks beside HEAD on the new tip.",
+      "result": "Six dots on a straight rail; the top dot 'd2a84f4' labelled 'HEAD -> main, origin/main' with 'Origin’s mine and you’re not there', 'mine' in vermilion; nothing below the rail.",
+      "anchor": { "word": "mine" }, "palette": "origin", "region": "full", "transition": "none",
+      "motif": "hero A: origin/main is hers",
+      "params": { "hash": "d2a84f4", "event": "origin" }
+    },
+    {
+      "id": "L21", "lyric": "Force! Push! (hey!) Wipe it clean", "occurrence": 0, "scene": "chant1", "section": "postchorus1",
+      "initial": "Empty paper ground.",
+      "action": "On 'clean' the word CLEAN slams in huge vermilion display type with a hit of the frame.",
+      "result": "'CLEAN' huge in vermilion across the upper frame on paper.",
+      "anchor": { "word": "clean" }, "palette": "origin", "region": "center", "transition": "stamp",
+      "motif": "origin clean",
+      "params": { "word": "clean" }
+    },
+    {
+      "id": "L22", "lyric": "Force! Push! (hey!) Like you’ve never been", "occurrence": 0, "scene": "chant1", "section": "postchorus1",
+      "initial": "'CLEAN' in vermilion.",
+      "action": "On 'never' NEVER slams in; CLEAN drops back to an outlined ghost.",
+      "result": "'NEVER' huge in vermilion, 'CLEAN' as a faint outline behind.",
+      "anchor": { "word": "never" }, "palette": "origin", "region": "center", "transition": "stamp",
+      "motif": "never been",
+      "params": { "word": "never" }
+    },
+    {
+      "id": "L23", "lyric": "Force! Push! (hey!) Hear the crowd", "occurrence": 0, "scene": "chant1", "section": "postchorus1",
+      "initial": "'NEVER' in vermilion over a ghost of CLEAN.",
+      "action": "On 'crowd' CROWD slams in; NEVER becomes a ghost.",
+      "result": "'CROWD' huge in vermilion, outlined ghosts of CLEAN and NEVER behind.",
+      "anchor": { "word": "crowd" }, "palette": "origin", "region": "center", "transition": "stamp",
+      "motif": "everyone pulls her history",
+      "params": { "word": "crowd" }
+    },
+    {
+      "id": "L24", "lyric": "You’re not in my history now", "occurrence": 0, "scene": "chant1", "section": "postchorus1",
+      "initial": "'CROWD' in vermilion over two ghosts.",
+      "action": "On 'history' HISTORY slams in, the biggest hit of the chant.",
+      "result": "'HISTORY' huge in vermilion across the frame, outlined ghosts of the earlier words behind.",
+      "anchor": { "word": "history" }, "palette": "origin", "region": "center", "transition": "stamp",
+      "motif": "you: not in history (public)",
+      "params": { "word": "history" }
+    },
+    {
+      "id": "L25", "lyric": "Squashed three years down to a single line", "scene": "squash", "section": "verse2",
+      "initial": "Back to the graphite terminal: '~/us main $' and a blinking cursor.",
+      "action": "'git rebase -i --root' is typed and entered on 'line'; git prints the squash header and success.",
+      "result": "Under 'git rebase -i --root': '# This is a combination of 1095 commits.' and 'Successfully rebased and updated refs/heads/main.'",
+      "anchor": { "word": "line" }, "palette": "local", "region": "full", "transition": "cut",
+      "motif": "1095 → 1: squashed",
+      "params": { "command": "git rebase -i --root", "output": ["# This is a combination of 1095 commits.", "Successfully rebased and updated refs/heads/main."] }
+    },
+    {
+      "id": "L26", "lyric": "Commit message says: fix, wasted time", "scene": "squash", "section": "verse2",
+      "initial": "The rebase output above an empty prompt.",
+      "action": "'git commit --amend -m \"fix, wasted time\"' is typed and entered on 'time'.",
+      "result": "Under the amend command: '[main 0a1f3e2] fix, wasted time'.",
+      "anchor": { "word": "time" }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "1 commit: 'fix, wasted time'",
+      "params": { "command": "git commit --amend -m \"fix, wasted time\"", "output": ["[main 0a1f3e2] fix, wasted time"] }
+    },
+    {
+      "id": "L27", "lyric": "Cherry-picked the good days, there were three", "scene": "squash", "section": "verse2",
+      "initial": "The amended commit line above an empty prompt.",
+      "action": "'git cherry-pick 3c0ffee f00d42 b4dc0de' is typed and entered on 'three'; three commits apply.",
+      "result": "Three output lines: '[main 6a0e2b1] first date', '[main 91c4d7f] the road trip', '[main 2fe8b30] that one christmas'.",
+      "anchor": { "word": "three" }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "cherry-picked: 3",
+      "params": { "command": "git cherry-pick 3c0ffee f00d42 b4dc0de", "output": ["[main 6a0e2b1] first date", "[main 91c4d7f] the road trip", "[main 2fe8b30] that one christmas"] }
+    },
+    {
+      "id": "L28", "lyric": "Rebased the rest right out of my tree", "scene": "squash", "section": "verse2",
+      "initial": "The three cherry-picked commits above an empty prompt.",
+      "action": "'git branch -D -r you/other' is typed and entered on 'tree'.",
+      "result": "Last output line: 'Deleted remote-tracking branch you/other (was b81e0c7).'",
+      "anchor": { "word": "tree" }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "you/other deleted from her tree",
+      "params": { "command": "git branch -D -r you/other", "output": ["Deleted remote-tracking branch you/other (was b81e0c7)."] }
+    },
+    {
+      "id": "L29", "lyric": "Your pull requests keep lighting up my phone", "scene": "prs", "section": "verse2",
+      "initial": "A minimal phone thread on graphite, header 'Unknown' with a 'U' avatar, no messages yet.",
+      "action": "A typing indicator, then a grey bubble from them on the left types in with the line: 'Review requested: \"us (v2)\"'.",
+      "result": "One left bubble from Unknown: 'Review requested: \"us (v2)\"'.",
+      "anchor": { "word": "phone" }, "palette": "local", "region": "left", "transition": "cut",
+      "motif": "he wants to merge again (v2)",
+      "params": { "from": "them", "text": "Review requested: \"us (v2)\"" }
+    },
+    {
+      "id": "L30", "lyric": "Please review? Honey, you’re on your own", "scene": "prs", "section": "verse2",
+      "initial": "His review request bubble on the left.",
+      "action": "Her reply types in on the right in a vermilion bubble: 'closed without merging.'",
+      "result": "Right vermilion bubble 'closed without merging.' under his left bubble 'Review requested: \"us (v2)\"'.",
+      "anchor": { "word": "own" }, "palette": "local", "region": "right", "transition": "none",
+      "motif": "PR closed",
+      "params": { "from": "me", "text": "closed without merging." }
+    },
+    {
+      "id": "L31", "lyric": "Wrote your name at the top of my git-ignore", "scene": "prs", "section": "verse2",
+      "initial": "Two bubbles: his request, her 'closed without merging.'",
+      "action": "Another vermilion bubble from her types in: 'echo you >> .gitignore'.",
+      "result": "Newest bubble on the right in vermilion: 'echo you >> .gitignore'; the two earlier bubbles scroll up.",
+      "anchor": { "word": "git-ignore" }, "palette": "local", "region": "right", "transition": "none",
+      "motif": "you: ignored",
+      "params": { "from": "me", "text": "echo you >> .gitignore" }
+    },
+    {
+      "id": "L32", "lyric": "Whatever you send, I don’t see it anymore", "scene": "prs", "section": "verse2",
+      "initial": "Her 'echo you >> .gitignore' bubble is the newest.",
+      "action": "His typing indicator, then a small grey bubble 'hello??' lands on the left on 'send,'; no reply follows through 'I don’t see it anymore'.",
+      "result": "The thread ends on his left bubble 'hello??' with nothing after it, her 'echo you >> .gitignore' above.",
+      "anchor": { "word": "send," }, "palette": "local", "region": "left", "transition": "none",
+      "motif": "you: unseen",
+      "params": { "from": "them", "text": "hello??" }
+    },
+    {
+      "id": "L33", "lyric": "No more patches, no more one more try", "occurrence": 1, "scene": "push", "section": "prechorus2",
+      "initial": "Graphite terminal, '~/us main $', cursor blinking.",
+      "action": "'git apply one-more-try.patch' is typed and entered on 'try'; the patch fails.",
+      "result": "Under the command: 'error: patch failed: us.txt:1' and 'error: us.txt: patch does not apply'.",
+      "anchor": { "word": "try" }, "palette": "local", "region": "full", "transition": "cut",
+      "motif": "his patch refused",
+      "params": { "command": "git apply one-more-try.patch", "output": ["error: patch failed: us.txt:1", "error: us.txt: patch does not apply"] }
+    },
+    {
+      "id": "L34", "lyric": "No more reading your logs and now", "scene": "push", "section": "prechorus2",
+      "initial": "The failed patch above an empty prompt.",
+      "action": "'git log --author=you --oneline' is typed and entered on 'logs'; one line is all that's left of him.",
+      "result": "Under the command a single line: '0a1f3e2 fix, wasted time'.",
+      "anchor": { "word": "logs" }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "his whole log: 1 line",
+      "params": { "command": "git log --author=you --oneline", "output": ["0a1f3e2 fix, wasted time"] }
+    },
+    {
+      "id": "L35", "lyric": "You want a revert? Baby, that’s cute", "scene": "push", "section": "prechorus2",
+      "initial": "'0a1f3e2 fix, wasted time' above an empty prompt.",
+      "action": "'git revert you' is typed and entered on 'cute'; git doesn't recognise him.",
+      "result": "Under 'git revert you': 'fatal: bad revision 'you''.",
+      "anchor": { "word": "cute" }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "you: not even a revision",
+      "params": { "command": "git revert you", "output": ["fatal: bad revision 'you'"] }
+    },
+    {
+      "id": "L36", "lyric": "Watch what I do", "scene": "push", "section": "prechorus2",
+      "initial": "The fatal error above an empty prompt.",
+      "action": "'git push --force origin main' is typed fast and entered on 'do'; the forced update prints.",
+      "result": "Last line on screen: ' + d2a84f4...a41b7d0 main -> main (forced update)' under the push command.",
+      "anchor": { "word": "do" }, "palette": "local", "region": "full", "transition": "none",
+      "motif": "the second force push lands",
+      "params": { "command": "git push --force origin main", "output": [" + d2a84f4...a41b7d0 main -> main (forced update)"] }
+    },
+    {
+      "id": "L37", "lyric": "FORCE PUSH! Baby, you’re history", "occurrence": 1, "scene": "anthem", "section": "chorus2",
+      "initial": "Hard cut to bright paper, empty.",
+      "action": "The line is set huge in wide capitals, centred, word by word as sung; 'HISTORY' turns vermilion as it is sung.",
+      "result": "Centred huge ink capitals 'FORCE PUSH! BABY, YOU’RE HISTORY' on paper, 'HISTORY' in vermilion.",
+      "anchor": { "word": "history" }, "palette": "origin", "region": "center", "transition": "stamp",
+      "motif": "anthem: the push already happened",
+      "params": {}
+    },
+    {
+      "id": "L38", "lyric": "I rewrote the past, there’s no you and me", "occurrence": 1, "scene": "anthem", "section": "chorus2",
+      "initial": "The previous line in big centred capitals.",
+      "action": "The new line replaces it word by word; 'REWROTE' lands in vermilion.",
+      "result": "Centred capitals 'I REWROTE THE PAST, THERE’S NO YOU AND ME', 'REWROTE' in vermilion.",
+      "anchor": { "word": "rewrote" }, "palette": "origin", "region": "center", "transition": "none",
+      "motif": "anthem",
+      "params": {}
+    },
+    {
+      "id": "L39", "lyric": "FORCE PUSH! Right over your lies", "occurrence": 1, "scene": "anthem", "section": "chorus2",
+      "initial": "The previous line in big centred capitals.",
+      "action": "The new line replaces it; 'LIES' lands in vermilion.",
+      "result": "Centred capitals 'FORCE PUSH! RIGHT OVER YOUR LIES', 'LIES' in vermilion.",
+      "anchor": { "word": "lies" }, "palette": "origin", "region": "center", "transition": "none",
+      "motif": "anthem",
+      "params": {}
+    },
+    {
+      "id": "L40", "lyric": "Brand new timeline, no goodbyes", "occurrence": 1, "scene": "anthem", "section": "chorus2",
+      "initial": "The previous line in big centred capitals.",
+      "action": "The new line replaces it; 'TIMELINE,' lands in vermilion.",
+      "result": "Centred capitals 'BRAND NEW TIMELINE, NO GOODBYES', 'TIMELINE,' in vermilion.",
+      "anchor": { "word": "timeline," }, "palette": "origin", "region": "center", "transition": "none",
+      "motif": "anthem",
+      "params": {}
+    },
+    {
+      "id": "L41", "lyric": "Keep your local copy, I don’t care", "occurrence": 1, "scene": "anthem", "section": "chorus2",
+      "initial": "The previous line in big centred capitals.",
+      "action": "The new line replaces it; 'CARE' lands in vermilion.",
+      "result": "Centred capitals 'KEEP YOUR LOCAL COPY, I DON’T CARE', 'CARE' in vermilion.",
+      "anchor": { "word": "care" }, "palette": "origin", "region": "center", "transition": "none",
+      "motif": "anthem",
+      "params": {}
+    },
+    {
+      "id": "L42", "lyric": "Origin’s mine and you’re not there", "occurrence": 1, "scene": "anthem", "section": "chorus2",
+      "initial": "The previous line in big centred capitals.",
+      "action": "The new line replaces it; 'MINE' lands in vermilion.",
+      "result": "Centred capitals 'ORIGIN’S MINE AND YOU’RE NOT THERE', 'MINE' in vermilion.",
+      "anchor": { "word": "mine" }, "palette": "origin", "region": "center", "transition": "none",
+      "motif": "anthem: origin is hers",
+      "params": {}
+    },
+    {
+      "id": "L43", "lyric": "Force! Push! (hey!) Wipe it clean", "occurrence": 1, "scene": "chant2", "section": "postchorus2",
+      "initial": "Empty paper ground.",
+      "action": "On '(hey!)' the crowd's HEY! slams in huge ink display type with a hit of the frame.",
+      "result": "'HEY!' huge in ink on paper.",
+      "anchor": { "word": "(hey!)" }, "palette": "origin", "region": "center", "transition": "stamp",
+      "motif": "the crowd answers",
+      "params": { "word": "hey!" }
+    },
+    {
+      "id": "L44", "lyric": "Force! Push! (hey!) Like you’ve never been", "occurrence": 1, "scene": "chant2", "section": "postchorus2",
+      "initial": "'HEY!' in ink.",
+      "action": "On '(hey!)' a second HEY! slams; the first becomes an outlined ghost.",
+      "result": "'HEY!' huge in ink over an outlined ghost of the previous HEY!.",
+      "anchor": { "word": "(hey!)" }, "palette": "origin", "region": "center", "transition": "stamp",
+      "motif": "the crowd answers",
+      "params": { "word": "hey!" }
+    },
+    {
+      "id": "L45", "lyric": "Force! Push! (hey!) Hear the crowd", "occurrence": 1, "scene": "chant2", "section": "postchorus2",
+      "initial": "'HEY!' over one ghost.",
+      "action": "On '(hey!)' the third HEY! slams.",
+      "result": "'HEY!' huge in ink over two outlined ghosts.",
+      "anchor": { "word": "(hey!)" }, "palette": "origin", "region": "center", "transition": "stamp",
+      "motif": "the crowd answers",
+      "params": { "word": "hey!" }
+    },
+    {
+      "id": "L46", "lyric": "You’re not in my history now", "occurrence": 1, "scene": "chant2", "section": "postchorus2",
+      "initial": "'HEY!' over two ghosts.",
+      "action": "On 'now' NOW slams in, the last hit before the music strips back.",
+      "result": "'NOW' huge in ink on paper, outlined HEY! ghosts behind.",
+      "anchor": { "word": "now" }, "palette": "origin", "region": "center", "transition": "stamp",
+      "motif": "you: not in history now",
+      "params": { "word": "now" }
+    },
+    {
+      "id": "L47", "lyric": "They say never force it on a shared branch", "scene": "they-say", "section": "bridge",
+      "initial": "Graphite ground, a large vermilion quote mark top left, lots of space.",
+      "action": "The sung line is wiped in large italic serif as it is sung; the attribution appears under it.",
+      "result": "Serif italic quote 'They say never force it on a shared branch' under the vermilion quote mark, attributed 'every git tutorial'.",
+      "anchor": { "word": "branch" }, "palette": "local", "region": "center", "transition": "cut",
+      "motif": "the received wisdom",
+      "params": { "by": "every git tutorial" }
+    },
+    {
+      "id": "L48", "lyric": "Somebody could lose it all, no second chance", "scene": "they-say", "section": "bridge",
+      "initial": "The first quote with its attribution.",
+      "action": "The new line wipes in, replacing it, in the same serif.",
+      "result": "Serif italic quote 'Somebody could lose it all, no second chance', attributed 'the docs, again'.",
+      "anchor": { "word": "chance" }, "palette": "local", "region": "center", "transition": "wipe",
+      "motif": "the warning",
+      "params": { "by": "the docs, again" }
+    },
+    {
+      "id": "L49", "lyric": "But you checked out a long, long time ago", "scene": "they-say", "section": "bridge",
+      "initial": "The second quote with its attribution.",
+      "action": "Her own line wipes in, with no attribution under it.",
+      "result": "Serif italic quote 'But you checked out a long, long time ago' under the vermilion quote mark, nothing beneath it.",
+      "anchor": { "word": "checked" }, "palette": "local", "region": "center", "transition": "wipe",
+      "motif": "he left first",
+      "params": {}
+    },
+    {
+      "id": "L50", "lyric": "So no lease, no warning, here I go", "scene": "no-lease", "section": "bridge",
+      "initial": "Graphite terminal, '~/us main $', cursor blinking.",
+      "action": "'git push --force --no-force-with-lease --no-verify' is typed with the line and entered on 'go'.",
+      "result": "Under the command: 'Writing objects: 100% (1/1), done.' and ' + a41b7d0...5eed1e5 main -> main (forced update)'.",
+      "anchor": { "word": "go" }, "palette": "local", "region": "full", "transition": "cut",
+      "motif": "the final force push, no lease",
+      "params": { "command": "git push --force --no-force-with-lease --no-verify", "output": ["Writing objects: 100% (1/1), done.", " + a41b7d0...5eed1e5 main -> main (forced update)"] }
+    },
+    {
+      "id": "L51", "lyric": "Force push. Baby, you’re history.", "scene": "acapella", "section": "finalchorus",
+      "initial": "Graphite ground, empty, still.",
+      "action": "The line is set left-aligned in sentence case, word by word as sung, with no beat motion; 'history.' turns vermilion.",
+      "result": "Left-aligned 'Force push. Baby, you’re history.' in warm white on graphite, 'history.' in vermilion.",
+      "anchor": { "word": "history." }, "palette": "local", "region": "left", "transition": "cut",
+      "motif": "stated, not shouted",
+      "params": {}
+    },
+    {
+      "id": "L52", "lyric": "I rewrote the past, there’s no you and me.", "scene": "acapella", "section": "finalchorus",
+      "initial": "'Force push. Baby, you’re history.' left-aligned.",
+      "action": "The new line replaces it word by word; 'rewrote' in vermilion.",
+      "result": "Left-aligned 'I rewrote the past, there’s no you and me.' on graphite, 'rewrote' in vermilion.",
+      "anchor": { "word": "rewrote" }, "palette": "local", "region": "left", "transition": "none",
+      "motif": "stated, not shouted",
+      "params": {}
+    },
+    {
+      "id": "L53", "lyric": "FORCE PUSH! Right over your lies", "occurrence": 2, "scene": "own", "section": "drop",
+      "initial": "Hard cut to oxide red. A single warm-white commit dot '5eed1e5' near the bottom of a vertical rail, labelled 'main'; no other history, no side branch.",
+      "action": "A new dot 'c7e2a19' lands above on 'PUSH!', the rail climbing; the line types beside it in huge display type as the commit message, 'PUSH!' in amber.",
+      "result": "Red ground, a straight two-dot rail (5eed1e5 below, c7e2a19 on top labelled 'HEAD -> main'), message 'FORCE PUSH! Right over your lies' in big warm-white display type with 'PUSH!' in amber.",
+      "anchor": { "word": "PUSH!" }, "palette": "forced", "region": "full", "transition": "stamp",
+      "motif": "hero B: her history only, growing",
+      "params": { "hash": "c7e2a19", "event": "commit" }
+    },
+    {
+      "id": "L54", "lyric": "Brand new timeline, no goodbyes", "occurrence": 2, "scene": "own", "section": "drop",
+      "initial": "Two dots on the red rail.",
+      "action": "Dot '0ddba11' lands on top on 'timeline,'; the rail climbs higher up the frame, hashes ticking on the beat.",
+      "result": "Three dots on a straight warm-white rail, top '0ddba11' with 'Brand new timeline, no goodbyes', 'timeline,' in amber.",
+      "anchor": { "word": "timeline," }, "palette": "forced", "region": "full", "transition": "none",
+      "motif": "hero B: three commits, all hers",
+      "params": { "hash": "0ddba11", "event": "commit" }
+    },
+    {
+      "id": "L55", "lyric": "Keep your local copy, I don’t care", "occurrence": 2, "scene": "own", "section": "drop",
+      "initial": "Three dots on the red rail.",
+      "action": "Dot '4b9f1e6' lands on top on 'care'.",
+      "result": "Four dots climbing the frame, top '4b9f1e6' with 'Keep your local copy, I don’t care', 'care' in amber.",
+      "anchor": { "word": "care" }, "palette": "forced", "region": "full", "transition": "none",
+      "motif": "hero B: four commits",
+      "params": { "hash": "4b9f1e6", "event": "commit" }
+    },
+    {
+      "id": "L56", "lyric": "Origin’s mine and you’re not there", "occurrence": 2, "scene": "own", "section": "drop",
+      "initial": "Four dots, 'HEAD -> main' on the top one.",
+      "action": "Dot 'e4d1c9a' lands on top; on 'mine' the labels 'HEAD -> main' and 'origin/main' land together on it.",
+      "result": "Five dots on one straight rail up the red frame; top 'e4d1c9a' labelled 'HEAD -> main, origin/main' with 'Origin’s mine and you’re not there', 'mine' in amber.",
+      "anchor": { "word": "mine" }, "palette": "forced", "region": "full", "transition": "none",
+      "motif": "hero B: HEAD and origin together on her tip",
+      "params": { "hash": "e4d1c9a", "event": "origin" }
+    },
+    {
+      "id": "L57", "lyric": "Force! Push! (hey!) Wipe it clean", "occurrence": 2, "scene": "chant3", "section": "postchorus3",
+      "initial": "Empty oxide-red ground.",
+      "action": "On 'Push!' PUSH! slams in huge amber display type with a hit of the frame.",
+      "result": "'PUSH!' huge in amber on red.",
+      "anchor": { "word": "Push!" }, "palette": "forced", "region": "center", "transition": "stamp",
+      "motif": "the biggest chant",
+      "params": { "word": "push!" }
+    },
+    {
+      "id": "L58", "lyric": "Force! Push! (hey!) Like you’ve never been", "occurrence": 2, "scene": "chant3", "section": "postchorus3",
+      "initial": "'PUSH!' in amber.",
+      "action": "On 'Push!' a second PUSH! slams; the first becomes an outlined ghost.",
+      "result": "'PUSH!' huge in amber over an outlined ghost of the previous one.",
+      "anchor": { "word": "Push!" }, "palette": "forced", "region": "center", "transition": "stamp",
+      "motif": "the biggest chant",
+      "params": { "word": "push!" }
+    },
+    {
+      "id": "L59", "lyric": "Force! Push! (hey!) Hear the crowd", "occurrence": 2, "scene": "chant3", "section": "postchorus3",
+      "initial": "'PUSH!' over one ghost.",
+      "action": "On 'Push!' the third PUSH! slams.",
+      "result": "'PUSH!' huge in amber over two outlined ghosts.",
+      "anchor": { "word": "Push!" }, "palette": "forced", "region": "center", "transition": "stamp",
+      "motif": "the biggest chant",
+      "params": { "word": "push!" }
+    },
+    {
+      "id": "L60", "lyric": "You’re not in my history now", "occurrence": 2, "scene": "chant3", "section": "postchorus3",
+      "initial": "'PUSH!' over two ghosts.",
+      "action": "On 'history' HISTORY slams in.",
+      "result": "'HISTORY' huge in amber on red, outlined PUSH! ghosts behind.",
+      "anchor": { "word": "history" }, "palette": "forced", "region": "center", "transition": "stamp",
+      "motif": "you: out of history for good",
+      "params": { "word": "history" }
+    },
+    {
+      "id": "L61", "lyric": "Oh, and the ref-log?", "scene": "reflog", "section": "outro",
+      "initial": "Graphite ground, the kicker 'git reflog · unreachable' top left, a dim 0 waiting.",
+      "action": "On 'ref-log?' the big number rolls up to 1095 with the label 'commits by you'.",
+      "result": "Huge '1095' in warm white under the kicker 'git reflog · unreachable', label 'commits by you', a one-point sparkline.",
+      "anchor": { "word": "ref-log?" }, "palette": "local", "region": "center", "transition": "cut",
+      "motif": "payoff: the 1095 return, unreachable",
+      "params": { "value": 1095, "label": "commits by you" }
+    },
+    {
+      "id": "L62", "lyric": "It forgets you in thirty days.", "scene": "reflog", "section": "outro",
+      "initial": "'1095' with 'commits by you'.",
+      "action": "On 'thirty' the number rolls down to 30 and the label changes.",
+      "result": "Huge '30' with the label 'days until git forgets'; the sparkline drops from 1095 to 30.",
+      "anchor": { "word": "thirty" }, "palette": "local", "region": "center", "transition": "none",
+      "motif": "30 days to expiry",
+      "params": { "value": 30, "label": "days until git forgets" }
+    },
+    {
+      "id": "L63", "lyric": "I can wait.", "scene": "reflog", "section": "outro",
+      "initial": "'30' with 'days until git forgets'.",
+      "action": "On 'wait.' the number ticks down one to 29.",
+      "result": "Huge '29' with the label 'days to go'; the sparkline steps down once more.",
+      "anchor": { "word": "wait." }, "palette": "local", "region": "center", "transition": "none",
+      "motif": "counting down: 29",
+      "params": { "value": 29, "label": "days to go" }
+    },
+    {
+      "id": "outro-roll", "span": [{ "cue": "L63", "edge": "end" }, 111], "scene": "reflog", "section": "outro",
+      "initial": "'29' with 'days to go'.",
+      "action": "Through the instrumental the number rolls all the way down and lands on 0 on bar 109; the label becomes the prune command.",
+      "result": "Huge '0' with the label 'git gc --prune=now'; the sparkline is the whole falling history 1095 → 30 → 29 → 0.",
+      "anchor": { "bar": 109 }, "palette": "local", "region": "center", "transition": "none",
+      "motif": "payoff: 0, pruned",
+      "params": { "value": 0, "label": "git gc --prune=now" }
+    },
+    {
+      "id": "end-card", "span": [111, "end"], "scene": "clean", "section": "outro",
+      "initial": "Graphite ground, a vermilion rule drawing in.",
+      "action": "On bar 111 'Nothing to commit.' rises letter by letter; the kicker and subtitle follow; it holds to the end.",
+      "result": "Editorial title card, set left: small vermilion mono capitals 'git status' above a huge two-line 'Nothing to commit.', a vermilion rule, the italic serif 'working tree clean' below.",
+      "anchor": { "bar": 111 }, "palette": "local", "region": "center", "transition": "cut",
+      "motif": "second payoff: his flaw is her peace"
+    }
+  ]
+}

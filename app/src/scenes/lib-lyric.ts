@@ -19,6 +19,7 @@ export const schema: SceneSchema = {
   entry: {
     align: { type: 'string', enum: ['left', 'center'], default: 'left', description: 'alignment of the rows' },
     upper: { type: 'boolean', default: false, description: 'set the lines in capitals' },
+    scale: { type: 'number', default: 1, min: 0.35, max: 1, description: 'the largest type size, relative to full (e.g. 0.5 for a quieter passage); lines still shrink to fit' },
   },
   cue: {
     emphasis: { type: 'string', default: '', description: 'another word of the line to set in accent (besides the anchor word)' },
@@ -26,7 +27,7 @@ export const schema: SceneSchema = {
   example: { entry: { align: 'left', upper: false }, cues: [{}, { emphasis: 'name' }, {}, {}] },
 };
 
-interface P { align: 'left' | 'center'; upper: boolean }
+interface P { align: 'left' | 'center'; upper: boolean; scale: number }
 interface C { emphasis: string }
 
 const LEAD = 0.45; // s a line may come in before its first word (when the previous one is done)
@@ -66,7 +67,7 @@ export default class LibLyric extends LibScene<P, C> {
   /** The largest size (rows ≤ 3, inside the frame) the words fit at, laid out in balanced rows. */
   private fit(words: Word[], acc: boolean[], anchor: number, fam: string, heavy: string) {
     const maxW = W - 2 * X0, maxH = BASE - M - 40; // cap height of the first row stays under the top margin
-    for (let size = 230; ; size -= 4) {
+    for (let size = Math.round(230 * this.P.scale); ; size -= 4) {
       const track = (this.P.upper ? 0.01 : -0.02) * size;
       const sizes = acc.map((a) => (a ? size * BIG : size));
       const fams = acc.map((a) => (a ? heavy : fam));

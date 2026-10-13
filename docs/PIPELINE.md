@@ -53,7 +53,7 @@ replaced by phrase timing: sentence boundaries, pauses, emphasis. An optional mu
 | 1 | `projects/` layout, `./vid`, analysis settings detected, both songs migrated | both songs render the same frames as before; the analysis reproduces the committed data | done, see below |
 | 2 | generic cue types and resolver, karaoke layer, `style.json` | Force Push runs from `cues.json` with no Force Push code in the engine | done, see below |
 | 3 | scene library: ~10 extracted + ~6 for explainers, with parameter schemas | a gallery page renders every scene with sample parameters | done, see below |
-| 4 | LLM steps 5–8 | a song not seen before goes end to end with no hand edits | |
+| 4 | LLM steps 5–8 | a song not seen before goes end to end with no hand edits | done (on a blind copy of Force Push), see below |
 | 5 | explainer mode (script → TTS → video), delivery files | a 3-minute explainer renders end to end | |
 
 ## Phase 1 results
@@ -173,4 +173,64 @@ replaced by phrase timing: sentence boundaries, pauses, emphasis. An optional mu
     own scenes measure 50 ms, so the 25 ms target in `docs/ENGINE.md` is not met by any scene here, old or new.
 - Left for later: scenes ignore a cue's `region` and `transition`, and the library is a first set, to be grown
   by generalizing good custom scenes (phase 4).
+
+## Phase 4 results
+
+- `./vid make <id>` runs everything after the analysis. Each model step is headless Claude Code (`claude -p`) on a
+  prompt in `prompts/` (`_common.md` plus the step's own).
+  - **Permissions:** each step may read the repo but not other projects, `out/`, or the docs that describe the
+    existing videos. It may write only its own files and run only the commands it needs (path-scoped allow and
+    deny rules; tested: writes elsewhere and reads of denied paths are refused).
+  - **Inputs:** a generated brief (`work/agent/brief.md`: lines with times and word tokens, repeats, sections with
+    energy, instrumental passages with downbeats, the formats) and `work/agent/library.md` (the schemas).
+  - **Gates:** mechanical checks (`app/scripts/check.ts`: style contrast and roles, the sheet resolving against
+    the data, library parameters, scene modules, typecheck) run after each step. Their problems go back to the
+    step, up to 3 runs.
+  - **Steps:**
+    - align-review: only when the alignment flags a placement; writes corrections to `tuning.py`
+    - treatment: `treatment.md` and `style.json`
+    - cues: `cues.json`
+    - scenes: the custom scenes the sheet asks for
+    - review: contact sheets at every cue's anchor, judged against the cue's `result` and fixed at the source; up
+      to 2 rounds
+  - Every run is logged with its cost (`work/agent/log/`, `costs.json`).
+- **Alignment QA.** The open problem from phase 1 is solved for its known cases. The report now flags a line whose
+  first word lasts more than 1 s per syllable (`work/qa/align_flags.json`). On the blind Force Push alignment it
+  flags exactly the 3 lines Force Push's hand corrections fix, and nothing on the hand-corrected data or on Harvest.
+  - **Review:** the model step reads each flagged line's plot. The plot window now always reaches the line's second
+    word.
+  - **First prompt:** it assumed the first word was parked early and got 2 of 3 right. On "FORCE PUSH!" the first
+    word was right and the words after it were late.
+  - **Rewritten prompt:** it covers both cases and gets all three: "Git" 1.56 s (hand 1.56), "Three" 16.97 (16.86),
+    "PUSH!" 54.00 (53.96), "Baby," 54.66 (54.66). It also corrected the same delivery in the unflagged second
+    chorus.
+  - **Against the hand-corrected timings:** 93.4% of word starts are within 50 ms (92.7% before), 96.1% within
+    100 ms. The worst error drops from 7.44 s to 0.50 s; the 5 words still over 0.3 s are gang chants and a pickup.
+- **The end-to-end test (`projects/fp-blind`):** Force Push's WAV and lyric sheet, no `tuning.py`, the model steps
+  unable to read the Force Push project, its scenes or its docs. It ran `./vid make` with no hand edits.
+  - **Treatment:** "the jargon is exact: play it straight". Real git commands and git's real replies are the
+    punchlines.
+  - **Palettes:** three (dark `local` verses, a paper `origin` for the choruses, oxide red for the drop).
+  - **Motif:** a count of his commits, 1,095 → 0. The opening "Nothing to commit." returns as the end card.
+  - **Sheet:** 19 entries, 67 cues, passing every check on the first run.
+  - **Custom scene:** one hero scene (`fp-blind-history`, a git graph torn on "PUSH!" and rebuilt for the drop),
+    written in 112 turns. The step rendered and looked at its own stills, fixed five problems it found, and checked
+    determinism.
+  - **Review:** two rounds. The first moved three punchlines that landed too close to a cut to be read; the second
+    fixed a git hash that named the wrong branch.
+  - **Repair:** re-running the alignment after the sheet was written moved a section boundary. `make` now checks the
+    sheet before the review and hands the problems back to the cue step, which fixed that one cue ($0.25).
+  - **Cost** (list prices, as reported by `claude`): align $0.69 (first prompt; $0.96 with the second), treatment
+    $1.10, cues $1.74, scenes $5.62, review $4.27: about $13.40 and 50 minutes for a 3.5-minute song, before
+    rendering.
+- **Library feedback from the review:** it can only report limits of library scenes, not change them. It found two,
+  now added: a per-cue colour for `lib-slam` (`fill`), and a size control for `lib-lyric` (`scale`).
+- **Other changes:** a step that reads only some `tuning.py` settings now depends only on them. A correction to one
+  word reruns the alignment and the beat analysis, not Whisper (which falls back to CPU here). The existing step
+  records were migrated without recomputing anything. Both songs freeze the model steps in `project.json`.
+- **Limits:**
+  - The review sees stills, not motion.
+  - The model steps are as good as the model's eye on a contact sheet.
+  - The blind test is a song whose concept is in its own words (git jargon); a song with a less literal lyric is
+    the real test of the treatment step.
 

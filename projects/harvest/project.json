@@ -5,6 +5,10 @@
   "transcript": "input/harvest.txt",
   "frozen": [
     "sung",
-    "align"
+    "align",
+    "treatment",
+    "cues",
+    "scenes",
+    "review"
   ]
 }

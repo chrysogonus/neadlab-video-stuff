@@ -332,18 +332,45 @@ def main(plots=False):
     return words, alt
 
 
+def syllables(word):
+    return max(1, len(re.findall(r"[aeiouy]+", re.sub(r"e\b", "", word.lower())) or [""]))
+
+
+def suspects(lines, per_syl=1.0):
+    """Lines whose first word lasts over `per_syl` s per syllable: the path parked it early, on an instrumental
+    lead-in the vocal stem still carries (a pad, a drone), when every model agrees on the wrong place and the
+    confidence stays high. A held note mid-line is sung; a first word stretched over the lead-in is not."""
+    out = []
+    for l in lines:
+        w = l["words"][0]
+        if len(l["words"]) > 1 and (w["end"] - w["start"]) / syllables(w["w"]) > per_syl:
+            out.append(dict(line=l["i"], token=0, word=w["w"], start=w["start"], end=w["end"],
+                            next=l["words"][1]["start"], text=l["text"]))
+    return out
+
+
 def write_report(lines, below=0.6):
-    """work/qa/align_report.md: the words the alignment is least sure of, to check on their line's plot."""
+    """work/qa/align_report.md: the words the alignment is least sure of and the suspect placements, to check on
+    their line's plot; the suspects also go to work/qa/align_flags.json (the pipeline's alignment review)."""
     weak = [(l, w) for l in lines for w in l["words"] if w["conf"] < below]
+    sus = suspects(lines)
     n = sum(len(l["words"]) for l in lines)
     out = [f"# Alignment QA: {common.PROJECT}", "",
-           f"{len(lines)} lines, {n} words; {len(weak)} below confidence {below} "
-           f"(check them on work/qa/line_NN.png and correct them in tuning.py FIX).", ""]
+           f"{len(lines)} lines, {n} words; {len(weak)} below confidence {below}, {len(sus)} suspect placements "
+           f"(check them on work/qa/line_NN.png and correct them in tuning.py FIX / ANCHORS).", ""]
+    if sus:
+        out += ["## Suspect placements", "",
+                "A line's first word stretched over more than 1 s per syllable: probably parked early on an "
+                "instrumental lead-in.", "",
+                "| line | word | start | end | next word at | line text |", "|---:|---|---:|---:|---:|---|"]
+        out += [f"| {s['line']} | {s['word']} | {s['start']:.2f} | {s['end']:.2f} | {s['next']:.2f} | {s['text']} |" for s in sus]
+        out += [""]
     if weak:
-        out += ["| line | word | start | end | conf | line text |", "|---:|---|---:|---:|---:|---|"]
+        out += ["## Low confidence", "", "| line | word | start | end | conf | line text |", "|---:|---|---:|---:|---:|---|"]
         out += [f"| {l['i']} | {w['w']} | {w['start']:.2f} | {w['end']:.2f} | {w['conf']:.2f} | {l['text']} |" for l, w in weak]
     (common.QA / "align_report.md").write_text("\n".join(out) + "\n")
-    print(f"{len(weak)}/{n} words below confidence {below}: {common.QA / 'align_report.md'}")
+    (common.QA / "align_flags.json").write_text(json.dumps(sus, indent=1, ensure_ascii=False) + "\n")
+    print(f"{len(weak)}/{n} words below confidence {below}, {len(sus)} suspect placements: {common.QA / 'align_report.md'}")
 
 
 def make_plots(words, alt, L):
@@ -353,7 +380,8 @@ def make_plots(words, alt, L):
         ws = [w for w in words if w["li"] == li]
         t0 = min(ws[0]["start"], ws[0]["ctc_start"]) - 0.8
         t1 = max(ws[-1]["end"], ws[-1]["ctc_end"]) + 0.6
-        t1 = min(t1, t0 + 7)
+        # (at most 7 s, but always through the second word: a first word parked early stays readable against it)
+        t1 = min(t1, max(t0 + 7, ws[min(1, len(ws) - 1)]["start"] + 1.5))
         tracks = [
             ("final", [(w["w"], w["start"], w["end"]) for w in words]),
             ("fused-ctc", [(w["w"], w["ctc_start"], w["ctc_end"]) for w in words]),

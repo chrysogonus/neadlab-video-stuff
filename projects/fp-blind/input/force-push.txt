@@ -1,0 +1,97 @@
+[Intro - spoken, dry, filtered beat]
+Git status.
+Nothing to commit.
+Story of your life.
+
+[Verse 1 - low, cool, half-sung, snaps and sub bass]
+Three years in and you never could commit
+Hid me in your stash, said we'd get to it
+Said it's just a feature, nothing on the side
+Then I found the other branch you tried to hide
+
+So I ran the blame on every broken line
+Every single one had your name, not mine
+You said we could merge, work the conflicts through
+But every conflict, baby, started with you
+
+[Pre-Chorus - climbing, claps, rising synths]
+No more patches, no more one more try
+No more reading your logs at night
+Head's been detached for way too long
+[Stop - one beat of silence]
+One command and you're gone
+
+[Chorus - explosive, belted, huge synths, stacked harmonies]
+FORCE PUSH! Baby, you're history
+I rewrote the past, there's no you and me
+FORCE PUSH! Right over your lies
+Brand new timeline, no goodbyes
+Keep your local copy, I don't care
+Origin's mine and you're not there
+
+[Post-Chorus - drop, stomping gang chant, distorted bass]
+Force! Push! (hey!) Wipe it clean
+Force! Push! (hey!) Like you've never been
+Force! Push! (hey!) Hear the crowd
+You're not in my history now
+
+[Verse 2 - low, playful, smug, beat stays heavy]
+Squashed three years down to a single line
+Commit message says: fix, wasted time
+Cherry-picked the good days, there were three
+Rebased the rest right out of my tree
+
+Your pull requests keep lighting up my phone
+Please review? Honey, you're on your own
+Wrote your name at the top of my git-ignore
+Whatever you send, I don't see it anymore
+
+[Pre-Chorus - climbing, bigger, snare roll]
+No more patches, no more one more try
+No more reading your logs at night
+You want a revert? Baby, that's cute
+[Stop - one beat of silence]
+Watch what I do
+
+[Chorus - explosive, louder, high ad-libs]
+FORCE PUSH! Baby, you're history
+I rewrote the past, there's no you and me
+FORCE PUSH! Right over your lies
+Brand new timeline, no goodbyes
+Keep your local copy, I don't care
+Origin's mine and you're not there
+
+[Post-Chorus - drop, stomping gang chant, distorted bass]
+Force! Push! (hey!) Wipe it clean
+Force! Push! (hey!) Like you've never been
+Force! Push! (hey!) Hear the crowd
+You're not in my history now
+
+[Bridge - stripped, piano and pads, half-time, soft]
+They say never force it on a shared branch
+Somebody could lose it all, no second chance
+But you checked out a long, long time ago
+So no lease, no warning, here I go
+
+[Final Chorus - a cappella, no drums]
+Force push. Baby, you're history.
+I rewrote the past, there's no you and me.
+
+[Drop - key change up, biggest, explosive, full harmonies]
+FORCE PUSH! Right over your lies
+Brand new timeline, no goodbyes
+Keep your local copy, I don't care
+Origin's mine and you're not there
+
+[Post-Chorus - biggest drop, gang chant, crowd claps]
+Force! Push! (hey!) Wipe it clean
+Force! Push! (hey!) Like you've never been
+Force! Push! (hey!) Hear the crowd
+You're not in my history now
+
+[Outro - spoken, dry, beat cuts out]
+Oh, and the ref-log?
+It forgets you in thirty days.
+I can wait.
+
+[End - single hard hit]

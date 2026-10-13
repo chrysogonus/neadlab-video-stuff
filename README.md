@@ -90,7 +90,28 @@ Motion blur, adaptive sampling and the render pipeline are described in [`docs/E
 ./vid status my-song              # which steps are current
 ./vid analyze my-song --force align,beats
 ./vid render force-push           # = bun scripts/render.ts video --project force-push --samples auto --shutter 0.2
+./vid make my-song [--draft]      # everything, no hand edits: analyze, the model steps below, render
 ```
+
+`./vid make` runs the steps a director and an editor would, each as headless Claude Code (`claude -p`) on a prompt in
+`prompts/`:
+- **Inputs:** a generated brief (`work/agent/brief.md`: lines with times and word tokens, sections with energy,
+  instrumental passages, formats) and the library's schemas (`work/agent/library.md`).
+- **Permissions:** each step may write only its own files and run only the commands it needs. It may not read other
+  projects.
+- **Checks:** mechanical checks (`app/scripts/check.ts`) run after each step, and their problems go back to it.
+
+| step | writes | checked by |
+|---|---|---|
+| align-review (only when the alignment flags a line's first word as parked on an instrumental lead-in) | `tuning.py` corrections; the analysis reruns | the flags clearing |
+| treatment | `data/treatment.md` (the central idea, motif, arc, hero moments, style bible), `data/style.json` | palettes complete; contrast type/bg ≥ 7, accent/bg ≥ 3 |
+| cues | `data/cues.json` | the resolver (coverage, cuts, anchors, sections) and the library schemas |
+| scenes | the custom scenes the sheet asks for, `app/src/scenes/<id>-*.ts` | modules exist, typecheck; the step renders and looks at its own stills |
+| review | fixes at the source, after judging contact sheets of every cue's anchor (`work/qa/review/`) against the cue's intended result | up to two rounds, until one changes nothing |
+
+Each run's result and cost is kept in `work/agent/log/` (`work/agent/costs.json` sums them). `VID_MODEL` and
+`VID_BUDGET` (USD per run) pass through to `claude`. Steps listed in `project.json`'s `frozen` never run: both songs here
+freeze theirs, since their edits were made by hand.
 
 | step | script (`analysis/`) | writes |
 |---|---|---|

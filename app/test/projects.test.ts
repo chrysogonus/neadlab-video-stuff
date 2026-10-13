@@ -4,8 +4,8 @@ import { describe, expect, test } from 'bun:test';
 import { existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { getProject } from '../src/projects';
-import { CODE_TIMELINES, libraryProblems, sheetTimeline } from '../src/timelines';
-import { LIBRARY } from '../src/library';
+import { CODE_TIMELINES, sheetTimeline } from '../src/timelines';
+import { LIBRARY, libraryProblems } from '../src/library';
 import { GALLERY_STYLE, gallerySheet } from '../src/gallery';
 import { paramProblems, withDefaults } from '../src/engine/schema';
 import { Lyrics } from '../src/engine/lyrics';
@@ -33,8 +33,9 @@ describe('project configuration', () => {
     for (const id of Object.keys(CODE_TIMELINES)) expect(IDS).toContain(id);
   });
   test('unknown or unchosen projects fail clearly', () => {
-    expect(() => project('nope')).toThrow(/unknown project 'nope' \(projects\/ has: force-push, harvest\)/);
-    expect(() => project()).toThrow(/choose a project .*: force-push, harvest/);
+    const list = [...IDS].sort().join(', ');
+    expect(() => project('nope')).toThrow(`unknown project 'nope' (projects/ has: ${list})`);
+    expect(() => project()).toThrow(`: ${list}`);
     const one = { solo: { title: 'Solo', kind: 'song' as const, audio: 'input/a.wav', transcript: 'input/a.txt' } };
     expect(getProject(one).id).toBe('solo');
   });

@@ -1,6 +1,7 @@
 // The scene library: every scenes/lib-*.ts by name, with its schema (what it takes, what it is for). The cue
 // sheet's entries that play a library scene are checked against it, and the gallery plays them all (in this order).
-import type { SceneSchema } from './engine/schema';
+import type { CueSheet } from './engine/cues';
+import { paramProblems, type SceneSchema } from './engine/schema';
 import { schema as chart } from './scenes/lib-chart';
 import { schema as chat } from './scenes/lib-chat';
 import { schema as code } from './scenes/lib-code';
@@ -38,3 +39,18 @@ export const LIBRARY: Record<string, SceneSchema> = {
   'lib-flow': flow,
   'lib-code': code,
 };
+
+/** Problems with the parameters of the sheet's library entries and their cues (see LIBRARY). */
+export function libraryProblems(sheet: CueSheet): string[] {
+  const out: string[] = [];
+  for (const e of sheet.entries) {
+    const s = LIBRARY[e.file];
+    if (!s) {
+      if (e.file.startsWith('lib-')) out.push(`entry ${e.id}: no library scene '${e.file}' (has: ${Object.keys(LIBRARY).join(', ')})`);
+      continue;
+    }
+    out.push(...paramProblems(s.entry, e.params, `entry ${e.id} (${e.file})`));
+    for (const c of sheet.cues) if (c.scene === e.id) out.push(...paramProblems(s.cue, c.params, `${c.id} (${e.file})`));
+  }
+  return out;
+}

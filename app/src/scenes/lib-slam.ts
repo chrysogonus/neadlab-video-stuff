@@ -19,12 +19,13 @@ export const schema: SceneSchema = {
   },
   cue: {
     word: { type: 'string', default: '', description: 'the word to slam (default: the anchor word, punctuation dropped)' },
+    fill: { type: 'string', enum: ['', 'type', 'accent'], default: '', description: "this word's colour, when it differs from the entry's fill" },
   },
   example: { entry: { fill: 'accent', upper: true }, cues: [{}, {}, { word: 'never' }, {}] },
 };
 
 interface P { fill: 'type' | 'accent'; upper: boolean }
-interface C { word: string }
+interface C { word: string; fill: '' | 'type' | 'accent' }
 
 const GHOSTS = 2;
 
@@ -84,7 +85,7 @@ export default class LibSlam extends LibScene<P, C> {
     c.translate(W / 2, cy);
     c.scale(scale, scale);
     c.globalAlpha = clamp(lt / 0.05);
-    text(c, s, 0, 0, fam, z, mixHex(k[this.P.fill], k.type, hot * 0.7), { align: 'center' });
+    text(c, s, 0, 0, fam, z, mixHex(k[this.cp(cur.c).fill || this.P.fill], k.type, hot * 0.7), { align: 'center' });
     c.restore();
     this.rays(c, cur.c, t, k, measure(s, fam, z) * scale, cy - z * 0.35);
   }
