@@ -16,7 +16,7 @@
 // project.json's "frozen" never run: their committed outputs cannot be made again (Harvest's alignment), or they
 // were made by hand (both songs' treatment, cue sheet and scenes).
 import { createHash } from 'node:crypto';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { ROOT, loadProjects, loadSheet, loadStyle, project } from './projects';
 import { Lyrics } from '../src/engine/lyrics';
@@ -175,7 +175,8 @@ function render(pid: string, extra: string[]) {
 //                 tuning.py, then the analysis runs again (2 rounds at most)
 //   treatment     data/treatment.md + data/style.json (checked: style)
 //   cues          data/cues.json (checked: style, cues)
-//   scenes        the custom scenes the sheet plays that do not exist yet, app/src/scenes/<id>-*.ts (checked: scenes)
+//   scenes        each custom scene the sheet plays that does not exist yet, app/src/scenes/<id>-*.ts, one run per
+//                 scene (checked: scene:<file>)
 //   review        contact sheets at every cue's anchor (work/qa/review/), judged against the cues and fixed at the
 //                 source; up to 2 rounds, until a round changes nothing
 // Environment: VID_MODEL (claude --model), VID_BUDGET (--max-budget-usd per run).
@@ -192,9 +193,15 @@ function promptText(pid: string, name: string, vars: Record<string, string>) {
 interface AgentOpts { write: string[]; bash?: string[]; vars?: Record<string, string>; extra?: string }
 
 function agent(pid: string, name: string, o: AgentOpts) {
-  const others = Object.keys(loadProjects()).filter((x) => x !== pid);
+  const ids = Object.keys(loadProjects()), others = ids.filter((x) => x !== pid);
+  // A scene belongs to the longest project id it starts with (harvest-remix-vault is harvest-remix's, not harvest's);
+  // every scene but the library's and this project's is hidden, the first videos' unprefixed ones too.
+  const owner = (f: string) => ids.filter((x) => f.startsWith(`${x}-`)).sort((a, b) => b.length - a.length)[0];
+  const scenes = readdirSync(path.join(ROOT, 'app', 'src', 'scenes'))
+    .filter((f) => !/^(lib-|_)/.test(f) && owner(f) !== pid).map((f) => `app/src/scenes/${f}`);
   // (and the docs that describe the existing videos: each video is its own)
-  const hidden = [...others.flatMap((x) => [`projects/${x}/**`, `app/src/scenes/${x}-*`, `app/src/${x}/**`, `docs/${x.toUpperCase()}-*`]),
+  const hidden = [...others.flatMap((x) => [`projects/${x}/**`, `app/src/${x}/**`]), ...scenes,
+    ...readdirSync(path.join(ROOT, 'docs')).filter((f) => ![undefined, pid].includes(owner(f.toLowerCase()))).map((f) => `docs/${f}`),
     'out/**', 'README.md', 'docs/PIPELINE.md', 'docs/TREATMENT.md'];
   const allow = ['Read', 'Glob', 'Grep', ...o.write.flatMap((w) => [`Write(${abs(w)})`, `Edit(${abs(w)})`]), ...(o.bash ?? []).map((b) => `Bash(${b}:*)`)];
   const deny = hidden.flatMap((h) => [`Read(${abs(h)})`, `Grep(${abs(h)})`]);
@@ -240,11 +247,10 @@ function checked(pid: string, name: string, stages: string[], o: AgentOpts, roun
   }
 }
 
-/** Library-less entries whose scene module does not exist yet. */
-function missingScenes(pid: string) {
-  const sheet = loadSheet(pid);
-  return [...new Set((sheet?.entries ?? []).map((e) => e.file).filter((f) => !LIBRARY[f] && !existsSync(path.join(ROOT, 'app/src/scenes', `${f}.ts`))))];
-}
+/** The sheet's custom (non-library) scenes. */
+const customScenes = (pid: string) => [...new Set((loadSheet(pid)?.entries ?? []).map((e) => e.file).filter((f) => !LIBRARY[f]))];
+/** Custom scenes whose module does not exist yet. */
+const missingScenes = (pid: string) => customScenes(pid).filter((f) => !existsSync(path.join(ROOT, 'app/src/scenes', `${f}.ts`)));
 
 /** Contact sheets of every entry (a frame 0.25 s after each cue's anchor) and the cue list beside them. */
 async function reviewSheets(pid: string) {
@@ -278,7 +284,13 @@ async function make(pid: string, force: string[], draft: boolean, renderToo: boo
   const dir = path.join(ROOT, 'projects', pid);
   const json = JSON.parse(readFileSync(path.join(dir, 'project.json'), 'utf8'));
   const frozen = (s: string) => json.frozen?.includes(s) || (only !== undefined && !only.includes(s));
-  const run = (s: string, out: string[]) => !frozen(s) && (force.includes(s) || out.some((f) => !existsSync(path.join(dir, f))));
+  // (a forced step starts from scratch: given its previous outputs, it revises them instead of starting over)
+  const run = (s: string, out: string[]) => {
+    if (frozen(s)) return false;
+    if (!force.includes(s)) return out.some((f) => !existsSync(path.join(dir, f)));
+    for (const f of out) rmSync(path.join(dir, f), { force: true });
+    return true;
+  };
   analyze(pid, force);
 
   // the alignment's suspect placements, reviewed on their plots (the analysis runs again on the corrections)
@@ -298,12 +310,15 @@ async function make(pid: string, force: string[], draft: boolean, renderToo: boo
     checked(pid, 'treatment', ['style'], { write: [`projects/${pid}/data/treatment.md`, `projects/${pid}/data/style.json`], bash: [CHECK] });
   if (run('cues', ['data/cues.json']))
     checked(pid, 'cues', ['style', 'cues'], { write: [`projects/${pid}/data/cues.json`], bash: [CHECK] });
-  const missing = missingScenes(pid);
-  if (!frozen('scenes') && (missing.length || force.includes('scenes')))
-    checked(pid, 'scenes', ['scenes'], {
-      write: [`app/src/scenes/${pid}-*`, `projects/${pid}/work/**`], bash: [CHECK, 'bun app/scripts/render.ts', 'bunx tsc'],
-      vars: { missing: missing.map((f) => `\`${f}\``).join(', ') || '(none missing; improve the existing ones if needed)' },
+  // the custom scenes, one run each (a scene gets the step's whole attention and context); forced: all of them again
+  const scenes = frozen('scenes') ? [] : force.includes('scenes') ? customScenes(pid) : missingScenes(pid);
+  for (const f of scenes) {
+    if (force.includes('scenes')) rmSync(path.join(ROOT, 'app', 'src', 'scenes', `${f}.ts`), { force: true });
+    checked(pid, 'scenes', [`scene:${f}`], {
+      write: [`app/src/scenes/${f}.ts`, `projects/${pid}/work/**`], bash: [CHECK, 'bun app/scripts/render.ts', 'bunx tsc'],
+      vars: { missing: `\`${f}\`` },
     });
+  }
 
   // a sheet that no longer fits the data (an analysis rerun moved a section boundary or a line) goes back to the cue
   // step with the problems, before anything renders it

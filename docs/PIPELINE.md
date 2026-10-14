@@ -33,7 +33,7 @@ projects/<id>/
 4. **Alignment:** detection of lines sung differently from the transcript, CTC + Whisper cross-check, confidence, QA report. *(done)*
 5. **Treatment** (LLM): one central metaphor, a style bible and an arc. Writes `treatment.md` + `style.json` (palette, fonts, texture, motion vocabulary).
 6. **Cue sheet** (LLM, then checked mechanically): Force Push's typed `CueDef`/`Cut` generalized into the engine. One cue per line with an anchor word, scene, transition and motif state; the resolver rejects cuts off the beat or phrase, missing words, gaps, and lines with no cue.
-7. **Scenes:** a library of parametric scenes with parameter schemas covers most cues. A custom-scene agent writes the 2–5 hero scenes against the `Scene` API. Good custom scenes are generalized into the library afterwards.
+7. **Scenes:** a library of parametric scenes with parameter schemas covers most cues. A custom-scene agent writes 4–8 scenes per song against the `Scene` API, one run each: the pictures of the video's world (the first unseen song came out as type over the karaoke layer when the library covered it and custom scenes were capped at 3). Good custom scenes are generalized into the library afterwards.
 8. **QA loop:** stills at every cue's anchor, critiqued against the cue's `result` text. Mechanical checks: text contrast and safe area, karaoke highlight within ±1 frame of the word, determinism, frame-time budget. At most 2–3 repair rounds.
 9. **Render and delivery files:** the existing renderer; captions (.srt/.vtt), YouTube chapters from the sections, thumbnail.
 

@@ -1,0 +1,1616 @@
+{
+  "lines": [
+    {
+      "i": 0,
+      "text": "You sent it on a Tuesday, twenty twenty-one",
+      "start": 8.351,
+      "end": 12.357,
+      "words": [
+        {
+          "w": "You",
+          "start": 8.351,
+          "end": 8.725,
+          "conf": 0.85
+        },
+        {
+          "w": "sent",
+          "start": 8.725,
+          "end": 9.124,
+          "conf": 1.0
+        },
+        {
+          "w": "it",
+          "start": 9.124,
+          "end": 9.394,
+          "conf": 0.92
+        },
+        {
+          "w": "on",
+          "start": 9.394,
+          "end": 9.66,
+          "conf": 0.9
+        },
+        {
+          "w": "a",
+          "start": 9.66,
+          "end": 9.74,
+          "conf": 0.98
+        },
+        {
+          "w": "Tuesday,",
+          "start": 9.74,
+          "end": 10.66,
+          "conf": 0.98
+        },
+        {
+          "w": "twenty",
+          "start": 10.66,
+          "end": 11.005,
+          "conf": 0.97
+        },
+        {
+          "w": "twenty-one",
+          "start": 11.005,
+          "end": 12.357,
+          "conf": 0.9,
+          "syl": [
+            [
+              11.005,
+              11.8
+            ],
+            [
+              11.8,
+              12.357
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "i": 1,
+      "text": "A little green padlock said the hard part was done",
+      "start": 12.357,
+      "end": 16.06,
+      "words": [
+        {
+          "w": "A",
+          "start": 12.357,
+          "end": 12.54,
+          "conf": 0.92
+        },
+        {
+          "w": "little",
+          "start": 12.54,
+          "end": 12.706,
+          "conf": 1.0
+        },
+        {
+          "w": "green",
+          "start": 12.706,
+          "end": 13.22,
+          "conf": 1.0
+        },
+        {
+          "w": "padlock",
+          "start": 13.22,
+          "end": 13.844,
+          "conf": 0.96
+        },
+        {
+          "w": "said",
+          "start": 13.844,
+          "end": 14.16,
+          "conf": 1.0
+        },
+        {
+          "w": "the",
+          "start": 14.16,
+          "end": 14.317,
+          "conf": 1.0
+        },
+        {
+          "w": "hard",
+          "start": 14.317,
+          "end": 14.62,
+          "conf": 1.0
+        },
+        {
+          "w": "part",
+          "start": 14.62,
+          "end": 14.88,
+          "conf": 1.0
+        },
+        {
+          "w": "was",
+          "start": 14.88,
+          "end": 15.1,
+          "conf": 1.0
+        },
+        {
+          "w": "done",
+          "start": 15.1,
+          "end": 16.06,
+          "conf": 1.0
+        }
+      ]
+    },
+    {
+      "i": 2,
+      "text": "I couldn't read a word of it, I didn't even try",
+      "start": 16.06,
+      "end": 19.74,
+      "words": [
+        {
+          "w": "I",
+          "start": 16.06,
+          "end": 16.18,
+          "conf": 0.79
+        },
+        {
+          "w": "couldn't",
+          "start": 16.18,
+          "end": 16.7,
+          "conf": 1.0
+        },
+        {
+          "w": "read",
+          "start": 16.7,
+          "end": 17.04,
+          "conf": 1.0
+        },
+        {
+          "w": "a",
+          "start": 17.04,
+          "end": 17.16,
+          "conf": 0.84
+        },
+        {
+          "w": "word",
+          "start": 17.16,
+          "end": 17.48,
+          "conf": 1.0
+        },
+        {
+          "w": "of",
+          "start": 17.48,
+          "end": 17.57,
+          "conf": 0.97
+        },
+        {
+          "w": "it,",
+          "start": 17.57,
+          "end": 17.9,
+          "conf": 1.0
+        },
+        {
+          "w": "I",
+          "start": 17.9,
+          "end": 18.06,
+          "conf": 0.94
+        },
+        {
+          "w": "didn't",
+          "start": 18.06,
+          "end": 18.56,
+          "conf": 1.0
+        },
+        {
+          "w": "even",
+          "start": 18.56,
+          "end": 18.98,
+          "conf": 1.0
+        },
+        {
+          "w": "try",
+          "start": 18.98,
+          "end": 19.74,
+          "conf": 0.85
+        }
+      ]
+    },
+    {
+      "i": 3,
+      "text": "I made myself a copy and I put it on ice",
+      "start": 19.74,
+      "end": 23.656,
+      "words": [
+        {
+          "w": "I",
+          "start": 19.74,
+          "end": 19.92,
+          "conf": 1.0
+        },
+        {
+          "w": "made",
+          "start": 19.92,
+          "end": 20.16,
+          "conf": 1.0
+        },
+        {
+          "w": "myself",
+          "start": 20.16,
+          "end": 20.68,
+          "conf": 1.0
+        },
+        {
+          "w": "a",
+          "start": 20.68,
+          "end": 20.74,
+          "conf": 0.85
+        },
+        {
+          "w": "copy",
+          "start": 20.74,
+          "end": 21.42,
+          "conf": 1.0
+        },
+        {
+          "w": "and",
+          "start": 21.42,
+          "end": 21.62,
+          "conf": 0.82
+        },
+        {
+          "w": "I",
+          "start": 21.62,
+          "end": 21.76,
+          "conf": 1.0
+        },
+        {
+          "w": "put",
+          "start": 21.76,
+          "end": 21.98,
+          "conf": 1.0
+        },
+        {
+          "w": "it",
+          "start": 21.98,
+          "end": 22.06,
+          "conf": 1.0
+        },
+        {
+          "w": "on",
+          "start": 22.06,
+          "end": 22.96,
+          "conf": 0.92
+        },
+        {
+          "w": "ice",
+          "start": 22.96,
+          "end": 23.656,
+          "conf": 0.83
+        }
+      ]
+    },
+    {
+      "i": 4,
+      "text": "I don't have to break you",
+      "start": 23.656,
+      "end": 27.133,
+      "words": [
+        {
+          "w": "I",
+          "start": 23.656,
+          "end": 23.9,
+          "conf": 0.83
+        },
+        {
+          "w": "don't",
+          "start": 23.9,
+          "end": 24.16,
+          "conf": 0.94
+        },
+        {
+          "w": "have",
+          "start": 24.16,
+          "end": 24.34,
+          "conf": 0.93
+        },
+        {
+          "w": "to",
+          "start": 24.34,
+          "end": 24.54,
+          "conf": 0.91
+        },
+        {
+          "w": "break",
+          "start": 24.54,
+          "end": 25.58,
+          "conf": 0.85
+        },
+        {
+          "w": "you",
+          "start": 25.58,
+          "end": 27.133,
+          "conf": 0.54
+        }
+      ]
+    },
+    {
+      "i": 5,
+      "text": "I only have to keep you",
+      "start": 27.133,
+      "end": 31.997,
+      "words": [
+        {
+          "w": "I",
+          "start": 27.133,
+          "end": 27.44,
+          "conf": 0.77
+        },
+        {
+          "w": "only",
+          "start": 27.44,
+          "end": 27.592,
+          "conf": 0.81
+        },
+        {
+          "w": "have",
+          "start": 27.592,
+          "end": 28.02,
+          "conf": 0.9
+        },
+        {
+          "w": "to",
+          "start": 28.02,
+          "end": 28.091,
+          "conf": 1.0
+        },
+        {
+          "w": "keep",
+          "start": 28.091,
+          "end": 29.24,
+          "conf": 0.85
+        },
+        {
+          "w": "you",
+          "start": 29.24,
+          "end": 31.997,
+          "conf": 0.73
+        }
+      ]
+    },
+    {
+      "i": 6,
+      "text": "I'll wait for you, I've got the time",
+      "start": 34.222,
+      "end": 38.068,
+      "words": [
+        {
+          "w": "I'll",
+          "start": 34.222,
+          "end": 34.68,
+          "conf": 0.66
+        },
+        {
+          "w": "wait",
+          "start": 34.68,
+          "end": 35.02,
+          "conf": 0.85
+        },
+        {
+          "w": "for",
+          "start": 35.02,
+          "end": 35.44,
+          "conf": 0.95
+        },
+        {
+          "w": "you,",
+          "start": 35.44,
+          "end": 35.704,
+          "conf": 0.9
+        },
+        {
+          "w": "I've",
+          "start": 36.108,
+          "end": 36.52,
+          "conf": 0.61
+        },
+        {
+          "w": "got",
+          "start": 36.52,
+          "end": 36.98,
+          "conf": 0.89
+        },
+        {
+          "w": "the",
+          "start": 36.98,
+          "end": 37.1,
+          "conf": 0.69
+        },
+        {
+          "w": "time",
+          "start": 37.1,
+          "end": 38.068,
+          "conf": 0.72
+        }
+      ]
+    },
+    {
+      "i": 7,
+      "text": "Every byte you ever sent is mine",
+      "start": 38.642,
+      "end": 41.72,
+      "words": [
+        {
+          "w": "Every",
+          "start": 38.642,
+          "end": 39.06,
+          "conf": 0.77
+        },
+        {
+          "w": "byte",
+          "start": 39.06,
+          "end": 39.54,
+          "conf": 0.88
+        },
+        {
+          "w": "you",
+          "start": 39.54,
+          "end": 39.79,
+          "conf": 0.8
+        },
+        {
+          "w": "ever",
+          "start": 39.79,
+          "end": 40.059,
+          "conf": 0.88
+        },
+        {
+          "w": "sent",
+          "start": 40.059,
+          "end": 40.717,
+          "conf": 0.92
+        },
+        {
+          "w": "is",
+          "start": 40.717,
+          "end": 40.942,
+          "conf": 1.0
+        },
+        {
+          "w": "mine",
+          "start": 40.942,
+          "end": 41.72,
+          "conf": 0.91
+        }
+      ]
+    },
+    {
+      "i": 8,
+      "text": "I'll see you sooner or later",
+      "start": 41.72,
+      "end": 45.487,
+      "words": [
+        {
+          "w": "I'll",
+          "start": 41.72,
+          "end": 41.91,
+          "conf": 0.55
+        },
+        {
+          "w": "see",
+          "start": 41.91,
+          "end": 42.52,
+          "conf": 0.92
+        },
+        {
+          "w": "you",
+          "start": 42.52,
+          "end": 42.818,
+          "conf": 0.78
+        },
+        {
+          "w": "sooner",
+          "start": 42.818,
+          "end": 44.165,
+          "conf": 0.88
+        },
+        {
+          "w": "or",
+          "start": 44.165,
+          "end": 44.58,
+          "conf": 0.61
+        },
+        {
+          "w": "later",
+          "start": 44.58,
+          "end": 45.487,
+          "conf": 0.73
+        }
+      ]
+    },
+    {
+      "i": 9,
+      "text": "Harvest now, decrypt later",
+      "start": 45.487,
+      "end": 48.515,
+      "words": [
+        {
+          "w": "Harvest",
+          "start": 45.487,
+          "end": 46.375,
+          "conf": 0.98
+        },
+        {
+          "w": "now,",
+          "start": 46.375,
+          "end": 47.223,
+          "conf": 0.95
+        },
+        {
+          "w": "decrypt",
+          "start": 47.56,
+          "end": 48.011,
+          "conf": 0.78
+        },
+        {
+          "w": "later",
+          "start": 48.011,
+          "end": 48.515,
+          "conf": 1.0
+        }
+      ]
+    },
+    {
+      "i": 10,
+      "text": "They're stacking up the qubits, a few more every year",
+      "start": 62.02,
+      "end": 65.616,
+      "words": [
+        {
+          "w": "They're",
+          "start": 62.02,
+          "end": 62.119,
+          "conf": 0.7
+        },
+        {
+          "w": "stacking",
+          "start": 62.119,
+          "end": 62.8,
+          "conf": 0.9
+        },
+        {
+          "w": "up",
+          "start": 62.8,
+          "end": 62.94,
+          "conf": 0.88
+        },
+        {
+          "w": "the",
+          "start": 62.94,
+          "end": 63.027,
+          "conf": 0.92
+        },
+        {
+          "w": "qubits,",
+          "start": 63.1,
+          "end": 63.86,
+          "conf": 0.81
+        },
+        {
+          "w": "a",
+          "start": 63.86,
+          "end": 63.96,
+          "conf": 0.89
+        },
+        {
+          "w": "few",
+          "start": 63.96,
+          "end": 64.3,
+          "conf": 0.9
+        },
+        {
+          "w": "more",
+          "start": 64.3,
+          "end": 64.603,
+          "conf": 0.92
+        },
+        {
+          "w": "every",
+          "start": 64.603,
+          "end": 65.0,
+          "conf": 0.85
+        },
+        {
+          "w": "year",
+          "start": 65.0,
+          "end": 65.616,
+          "conf": 0.92
+        }
+      ]
+    },
+    {
+      "i": 11,
+      "text": "The experts said a decade, now the decade's nearly here",
+      "start": 65.616,
+      "end": 69.04,
+      "words": [
+        {
+          "w": "The",
+          "start": 65.616,
+          "end": 65.98,
+          "conf": 0.92
+        },
+        {
+          "w": "experts",
+          "start": 65.98,
+          "end": 66.34,
+          "conf": 0.91
+        },
+        {
+          "w": "said",
+          "start": 66.34,
+          "end": 66.66,
+          "conf": 0.9
+        },
+        {
+          "w": "a",
+          "start": 66.66,
+          "end": 66.8,
+          "conf": 0.89
+        },
+        {
+          "w": "decade,",
+          "start": 66.8,
+          "end": 67.26,
+          "conf": 0.92
+        },
+        {
+          "w": "now",
+          "start": 67.26,
+          "end": 67.52,
+          "conf": 0.82
+        },
+        {
+          "w": "the",
+          "start": 67.52,
+          "end": 67.7,
+          "conf": 0.87
+        },
+        {
+          "w": "decade's",
+          "start": 67.7,
+          "end": 68.195,
+          "conf": 0.9
+        },
+        {
+          "w": "nearly",
+          "start": 68.195,
+          "end": 68.619,
+          "conf": 0.92
+        },
+        {
+          "w": "here",
+          "start": 68.619,
+          "end": 69.04,
+          "conf": 0.87
+        }
+      ]
+    },
+    {
+      "i": 12,
+      "text": "You changed all of your passwords, you think that sees you through",
+      "start": 69.04,
+      "end": 73.0,
+      "words": [
+        {
+          "w": "You",
+          "start": 69.04,
+          "end": 69.233,
+          "conf": 0.73
+        },
+        {
+          "w": "changed",
+          "start": 69.233,
+          "end": 69.831,
+          "conf": 0.91
+        },
+        {
+          "w": "all",
+          "start": 69.831,
+          "end": 70.101,
+          "conf": 0.92
+        },
+        {
+          "w": "of",
+          "start": 70.101,
+          "end": 70.3,
+          "conf": 0.91
+        },
+        {
+          "w": "your",
+          "start": 70.3,
+          "end": 70.505,
+          "conf": 0.92
+        },
+        {
+          "w": "passwords,",
+          "start": 70.505,
+          "end": 71.18,
+          "conf": 0.92
+        },
+        {
+          "w": "you",
+          "start": 71.18,
+          "end": 71.278,
+          "conf": 0.92
+        },
+        {
+          "w": "think",
+          "start": 71.278,
+          "end": 71.62,
+          "conf": 0.92
+        },
+        {
+          "w": "that",
+          "start": 71.62,
+          "end": 71.762,
+          "conf": 0.88
+        },
+        {
+          "w": "sees",
+          "start": 71.762,
+          "end": 72.12,
+          "conf": 0.9
+        },
+        {
+          "w": "you",
+          "start": 72.12,
+          "end": 72.3,
+          "conf": 0.92
+        },
+        {
+          "w": "through",
+          "start": 72.3,
+          "end": 73.0,
+          "conf": 0.89
+        }
+      ]
+    },
+    {
+      "i": 13,
+      "text": "But a blueprint or a birthday stays as true as true",
+      "start": 73.0,
+      "end": 76.46,
+      "words": [
+        {
+          "w": "But",
+          "start": 73.0,
+          "end": 73.16,
+          "conf": 0.92
+        },
+        {
+          "w": "a",
+          "start": 73.16,
+          "end": 73.22,
+          "conf": 0.81
+        },
+        {
+          "w": "blueprint",
+          "start": 73.22,
+          "end": 73.78,
+          "conf": 0.85
+        },
+        {
+          "w": "or",
+          "start": 73.78,
+          "end": 74.0,
+          "conf": 0.8
+        },
+        {
+          "w": "a",
+          "start": 74.0,
+          "end": 74.14,
+          "conf": 0.87
+        },
+        {
+          "w": "birthday",
+          "start": 74.14,
+          "end": 74.496,
+          "conf": 0.81
+        },
+        {
+          "w": "stays",
+          "start": 74.496,
+          "end": 74.88,
+          "conf": 0.85
+        },
+        {
+          "w": "as",
+          "start": 74.88,
+          "end": 75.02,
+          "conf": 0.88
+        },
+        {
+          "w": "true",
+          "start": 75.02,
+          "end": 75.598,
+          "conf": 0.92
+        },
+        {
+          "w": "as",
+          "start": 75.598,
+          "end": 75.96,
+          "conf": 0.77
+        },
+        {
+          "w": "true",
+          "start": 75.96,
+          "end": 76.46,
+          "conf": 0.92
+        }
+      ]
+    },
+    {
+      "i": 14,
+      "text": "They handed you the new math",
+      "start": 76.46,
+      "end": 79.559,
+      "words": [
+        {
+          "w": "They",
+          "start": 76.46,
+          "end": 76.84,
+          "conf": 0.92
+        },
+        {
+          "w": "handed",
+          "start": 76.84,
+          "end": 77.384,
+          "conf": 0.87
+        },
+        {
+          "w": "you",
+          "start": 77.384,
+          "end": 77.58,
+          "conf": 0.86
+        },
+        {
+          "w": "the",
+          "start": 77.58,
+          "end": 77.7,
+          "conf": 0.85
+        },
+        {
+          "w": "new",
+          "start": 77.7,
+          "end": 78.72,
+          "conf": 0.75
+        },
+        {
+          "w": "math",
+          "start": 78.72,
+          "end": 79.559,
+          "conf": 0.85
+        }
+      ]
+    },
+    {
+      "i": 15,
+      "text": "You said you'd get around to that",
+      "start": 79.84,
+      "end": 85.211,
+      "words": [
+        {
+          "w": "You",
+          "start": 79.84,
+          "end": 79.968,
+          "conf": 0.92
+        },
+        {
+          "w": "said",
+          "start": 79.968,
+          "end": 80.34,
+          "conf": 0.92
+        },
+        {
+          "w": "you'd",
+          "start": 80.34,
+          "end": 80.54,
+          "conf": 0.79
+        },
+        {
+          "w": "get",
+          "start": 80.54,
+          "end": 80.92,
+          "conf": 0.92
+        },
+        {
+          "w": "around",
+          "start": 80.92,
+          "end": 81.26,
+          "conf": 0.92
+        },
+        {
+          "w": "to",
+          "start": 81.26,
+          "end": 81.46,
+          "conf": 0.92
+        },
+        {
+          "w": "that",
+          "start": 81.46,
+          "end": 85.211,
+          "conf": 0.87
+        }
+      ]
+    },
+    {
+      "i": 16,
+      "text": "I'll wait for you, I've got the time",
+      "start": 85.556,
+      "end": 89.417,
+      "words": [
+        {
+          "w": "I'll",
+          "start": 85.556,
+          "end": 86.04,
+          "conf": 0.64
+        },
+        {
+          "w": "wait",
+          "start": 86.04,
+          "end": 86.354,
+          "conf": 0.96
+        },
+        {
+          "w": "for",
+          "start": 86.354,
+          "end": 86.8,
+          "conf": 0.98
+        },
+        {
+          "w": "you,",
+          "start": 86.8,
+          "end": 87.072,
+          "conf": 0.96
+        },
+        {
+          "w": "I've",
+          "start": 87.391,
+          "end": 87.86,
+          "conf": 0.7
+        },
+        {
+          "w": "got",
+          "start": 87.86,
+          "end": 88.14,
+          "conf": 0.87
+        },
+        {
+          "w": "the",
+          "start": 88.14,
+          "end": 88.52,
+          "conf": 0.69
+        },
+        {
+          "w": "time",
+          "start": 88.52,
+          "end": 89.417,
+          "conf": 0.75
+        }
+      ]
+    },
+    {
+      "i": 17,
+      "text": "Every byte you ever sent is mine",
+      "start": 89.946,
+      "end": 92.959,
+      "words": [
+        {
+          "w": "Every",
+          "start": 89.946,
+          "end": 90.36,
+          "conf": 0.77
+        },
+        {
+          "w": "byte",
+          "start": 90.36,
+          "end": 90.84,
+          "conf": 0.9
+        },
+        {
+          "w": "you",
+          "start": 90.84,
+          "end": 91.128,
+          "conf": 0.83
+        },
+        {
+          "w": "ever",
+          "start": 91.128,
+          "end": 91.367,
+          "conf": 0.97
+        },
+        {
+          "w": "sent",
+          "start": 91.367,
+          "end": 91.991,
+          "conf": 0.97
+        },
+        {
+          "w": "is",
+          "start": 91.991,
+          "end": 92.22,
+          "conf": 1.0
+        },
+        {
+          "w": "mine",
+          "start": 92.22,
+          "end": 92.959,
+          "conf": 0.88
+        }
+      ]
+    },
+    {
+      "i": 18,
+      "text": "I'll see you sooner or later",
+      "start": 92.959,
+      "end": 96.635,
+      "words": [
+        {
+          "w": "I'll",
+          "start": 92.959,
+          "end": 93.198,
+          "conf": 0.8
+        },
+        {
+          "w": "see",
+          "start": 93.198,
+          "end": 93.8,
+          "conf": 0.93
+        },
+        {
+          "w": "you",
+          "start": 93.8,
+          "end": 94.111,
+          "conf": 0.78
+        },
+        {
+          "w": "sooner",
+          "start": 94.111,
+          "end": 95.438,
+          "conf": 0.91
+        },
+        {
+          "w": "or",
+          "start": 95.438,
+          "end": 95.84,
+          "conf": 0.64
+        },
+        {
+          "w": "later",
+          "start": 95.84,
+          "end": 96.635,
+          "conf": 0.81
+        }
+      ]
+    },
+    {
+      "i": 19,
+      "text": "Harvest now, decrypt later",
+      "start": 96.82,
+      "end": 99.823,
+      "words": [
+        {
+          "w": "Harvest",
+          "start": 96.82,
+          "end": 97.653,
+          "conf": 0.84
+        },
+        {
+          "w": "now,",
+          "start": 97.653,
+          "end": 98.431,
+          "conf": 0.93
+        },
+        {
+          "w": "decrypt",
+          "start": 98.8,
+          "end": 99.28,
+          "conf": 0.71
+        },
+        {
+          "w": "later",
+          "start": 99.28,
+          "end": 99.823,
+          "conf": 0.96
+        }
+      ]
+    },
+    {
+      "i": 20,
+      "text": "Ticket opened, priority low",
+      "start": 107.0,
+      "end": 110.66,
+      "words": [
+        {
+          "w": "Ticket",
+          "start": 107.0,
+          "end": 107.496,
+          "conf": 0.77
+        },
+        {
+          "w": "opened,",
+          "start": 107.765,
+          "end": 108.444,
+          "conf": 0.66
+        },
+        {
+          "w": "priority",
+          "start": 108.6,
+          "end": 109.54,
+          "conf": 0.95
+        },
+        {
+          "w": "low",
+          "start": 109.54,
+          "end": 110.66,
+          "conf": 0.76
+        }
+      ]
+    },
+    {
+      "i": 21,
+      "text": "Pushed to next quarter, four years in a row",
+      "start": 110.66,
+      "end": 114.2,
+      "words": [
+        {
+          "w": "Pushed",
+          "start": 110.66,
+          "end": 110.92,
+          "conf": 0.63
+        },
+        {
+          "w": "to",
+          "start": 110.92,
+          "end": 111.14,
+          "conf": 0.88
+        },
+        {
+          "w": "next",
+          "start": 111.14,
+          "end": 111.56,
+          "conf": 0.99
+        },
+        {
+          "w": "quarter,",
+          "start": 111.56,
+          "end": 111.931,
+          "conf": 0.9
+        },
+        {
+          "w": "four",
+          "start": 111.931,
+          "end": 112.5,
+          "conf": 0.82
+        },
+        {
+          "w": "years",
+          "start": 112.5,
+          "end": 112.819,
+          "conf": 0.85
+        },
+        {
+          "w": "in",
+          "start": 112.819,
+          "end": 113.048,
+          "conf": 0.85
+        },
+        {
+          "w": "a",
+          "start": 113.048,
+          "end": 113.22,
+          "conf": 0.83
+        },
+        {
+          "w": "row",
+          "start": 113.22,
+          "end": 114.2,
+          "conf": 0.9
+        }
+      ]
+    },
+    {
+      "i": 22,
+      "text": "Somebody asked, \"Who'd even store it?\"",
+      "start": 114.2,
+      "end": 117.872,
+      "words": [
+        {
+          "w": "Somebody",
+          "start": 114.2,
+          "end": 115.747,
+          "conf": 0.85
+        },
+        {
+          "w": "asked,",
+          "start": 115.747,
+          "end": 116.12,
+          "conf": 0.62
+        },
+        {
+          "w": "\"Who'd",
+          "start": 116.12,
+          "end": 116.6,
+          "conf": 0.79
+        },
+        {
+          "w": "even",
+          "start": 116.6,
+          "end": 116.944,
+          "conf": 1.0
+        },
+        {
+          "w": "store",
+          "start": 116.944,
+          "end": 117.76,
+          "conf": 0.96
+        },
+        {
+          "w": "it?\"",
+          "start": 117.76,
+          "end": 117.872,
+          "conf": 0.66
+        }
+      ]
+    },
+    {
+      "i": 23,
+      "text": "Petabytes, darling. I adore it.",
+      "start": 117.94,
+      "end": 123.719,
+      "words": [
+        {
+          "w": "Petabytes,",
+          "start": 117.94,
+          "end": 118.88,
+          "conf": 0.75
+        },
+        {
+          "w": "darling.",
+          "start": 118.88,
+          "end": 119.8,
+          "conf": 0.9
+        },
+        {
+          "w": "I",
+          "start": 119.8,
+          "end": 119.92,
+          "conf": 0.58
+        },
+        {
+          "w": "adore",
+          "start": 119.92,
+          "end": 120.5,
+          "conf": 0.45
+        },
+        {
+          "w": "it.",
+          "start": 120.5,
+          "end": 123.719,
+          "conf": 0.57
+        }
+      ]
+    },
+    {
+      "i": 24,
+      "text": "I waited for you, I had the time",
+      "start": 123.928,
+      "end": 128.253,
+      "words": [
+        {
+          "w": "I",
+          "start": 123.928,
+          "end": 124.34,
+          "conf": 0.61
+        },
+        {
+          "w": "waited",
+          "start": 124.34,
+          "end": 124.732,
+          "conf": 0.7
+        },
+        {
+          "w": "for",
+          "start": 124.732,
+          "end": 125.1,
+          "conf": 0.8
+        },
+        {
+          "w": "you,",
+          "start": 125.1,
+          "end": 125.4,
+          "conf": 0.73
+        },
+        {
+          "w": "I",
+          "start": 125.689,
+          "end": 126.14,
+          "conf": 0.75
+        },
+        {
+          "w": "had",
+          "start": 126.14,
+          "end": 126.64,
+          "conf": 0.77
+        },
+        {
+          "w": "the",
+          "start": 126.64,
+          "end": 126.84,
+          "conf": 0.78
+        },
+        {
+          "w": "time",
+          "start": 126.84,
+          "end": 128.253,
+          "conf": 0.77
+        }
+      ]
+    },
+    {
+      "i": 25,
+      "text": "Every byte you ever sent is mine",
+      "start": 128.253,
+      "end": 131.022,
+      "words": [
+        {
+          "w": "Every",
+          "start": 128.253,
+          "end": 128.66,
+          "conf": 0.85
+        },
+        {
+          "w": "byte",
+          "start": 128.66,
+          "end": 129.12,
+          "conf": 0.81
+        },
+        {
+          "w": "you",
+          "start": 129.12,
+          "end": 129.5,
+          "conf": 0.83
+        },
+        {
+          "w": "ever",
+          "start": 129.5,
+          "end": 129.73,
+          "conf": 0.69
+        },
+        {
+          "w": "sent",
+          "start": 129.73,
+          "end": 130.309,
+          "conf": 0.86
+        },
+        {
+          "w": "is",
+          "start": 130.309,
+          "end": 130.7,
+          "conf": 0.62
+        },
+        {
+          "w": "mine",
+          "start": 130.7,
+          "end": 131.022,
+          "conf": 0.73
+        }
+      ]
+    },
+    {
+      "i": 26,
+      "text": "The fridge hums low, the key falls out",
+      "start": 131.022,
+      "end": 134.514,
+      "words": [
+        {
+          "w": "The",
+          "start": 131.022,
+          "end": 131.122,
+          "conf": 0.65
+        },
+        {
+          "w": "fridge",
+          "start": 131.122,
+          "end": 131.371,
+          "conf": 0.83
+        },
+        {
+          "w": "hums",
+          "start": 131.371,
+          "end": 131.86,
+          "conf": 0.9
+        },
+        {
+          "w": "low,",
+          "start": 131.86,
+          "end": 132.619,
+          "conf": 0.62
+        },
+        {
+          "w": "the",
+          "start": 132.76,
+          "end": 132.94,
+          "conf": 0.85
+        },
+        {
+          "w": "key",
+          "start": 132.94,
+          "end": 133.2,
+          "conf": 0.84
+        },
+        {
+          "w": "falls",
+          "start": 133.2,
+          "end": 134.04,
+          "conf": 0.9
+        },
+        {
+          "w": "out",
+          "start": 134.04,
+          "end": 134.514,
+          "conf": 0.6
+        }
+      ]
+    },
+    {
+      "i": 27,
+      "text": "So that's what you were on about",
+      "start": 134.514,
+      "end": 137.54,
+      "words": [
+        {
+          "w": "So",
+          "start": 134.514,
+          "end": 134.8,
+          "conf": 0.85
+        },
+        {
+          "w": "that's",
+          "start": 134.8,
+          "end": 135.203,
+          "conf": 1.0
+        },
+        {
+          "w": "what",
+          "start": 135.203,
+          "end": 135.68,
+          "conf": 1.0
+        },
+        {
+          "w": "you",
+          "start": 135.68,
+          "end": 135.94,
+          "conf": 0.79
+        },
+        {
+          "w": "were",
+          "start": 135.94,
+          "end": 136.215,
+          "conf": 0.88
+        },
+        {
+          "w": "on",
+          "start": 136.215,
+          "end": 136.72,
+          "conf": 0.84
+        },
+        {
+          "w": "about",
+          "start": 136.72,
+          "end": 137.54,
+          "conf": 0.99
+        }
+      ]
+    },
+    {
+      "i": 28,
+      "text": "I said sooner or later",
+      "start": 137.54,
+      "end": 140.471,
+      "words": [
+        {
+          "w": "I",
+          "start": 137.54,
+          "end": 137.637,
+          "conf": 0.83
+        },
+        {
+          "w": "said",
+          "start": 137.637,
+          "end": 138.78,
+          "conf": 0.97
+        },
+        {
+          "w": "sooner",
+          "start": 138.78,
+          "end": 139.48,
+          "conf": 0.85
+        },
+        {
+          "w": "or",
+          "start": 139.48,
+          "end": 139.64,
+          "conf": 0.92
+        },
+        {
+          "w": "later",
+          "start": 139.64,
+          "end": 140.471,
+          "conf": 1.0
+        }
+      ]
+    },
+    {
+      "i": 29,
+      "text": "Harvested then, decrypted now",
+      "start": 140.675,
+      "end": 153.636,
+      "words": [
+        {
+          "w": "Harvested",
+          "start": 140.675,
+          "end": 141.96,
+          "conf": 0.85
+        },
+        {
+          "w": "then,",
+          "start": 141.96,
+          "end": 143.284,
+          "conf": 1.0
+        },
+        {
+          "w": "decrypted",
+          "start": 144.26,
+          "end": 145.27,
+          "conf": 0.92
+        },
+        {
+          "w": "now",
+          "start": 145.27,
+          "end": 153.636,
+          "conf": 0.67
+        }
+      ]
+    },
+    {
+      "i": 30,
+      "text": "Connection secure.",
+      "start": 160.76,
+      "end": 162.261,
+      "words": [
+        {
+          "w": "Connection",
+          "start": 160.76,
+          "end": 161.363,
+          "conf": 0.85
+        },
+        {
+          "w": "secure.",
+          "start": 161.563,
+          "end": 162.261,
+          "conf": 0.85
+        }
+      ]
+    }
+  ],
+  "extras": [
+    {
+      "start": 53.69,
+      "end": 61.92,
+      "desc": "unlisted vocal (backing vocal / ad-lib / breath)"
+    }
+  ],
+  "source": {
+    "project": "harvest-remix",
+    "file": "input/Harvest Now, Decrypt Later (Banger Remix).wav",
+    "sha256": "1b41c7e2e04d2ff74fe59bb93143dd3efdf389af4bb4bc8c997683214093d6d8",
+    "sample_rate": 48000,
+    "frames": 7891200,
+    "duration": 164.4
+  },
+  "notes": ""
+}

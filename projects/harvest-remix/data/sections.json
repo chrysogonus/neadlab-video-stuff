@@ -1,0 +1,48 @@
+[
+  {
+    "name": "Verse 1",
+    "first_line": 0,
+    "n_lines": 4
+  },
+  {
+    "name": "Pre-Chorus",
+    "first_line": 4,
+    "n_lines": 2
+  },
+  {
+    "name": "Chorus",
+    "first_line": 6,
+    "n_lines": 4
+  },
+  {
+    "name": "Verse 2",
+    "first_line": 10,
+    "n_lines": 4
+  },
+  {
+    "name": "Pre-Chorus",
+    "first_line": 14,
+    "n_lines": 2
+  },
+  {
+    "name": "Chorus",
+    "first_line": 16,
+    "n_lines": 4
+  },
+  {
+    "name": "Bridge",
+    "first_line": 20,
+    "n_lines": 4
+  },
+  {
+    "name": "Final Chorus",
+    "first_line": 24,
+    "n_lines": 6
+  },
+  {
+    "name": "Outro",
+    "first_line": 30,
+    "spoken": true,
+    "n_lines": 1
+  }
+]

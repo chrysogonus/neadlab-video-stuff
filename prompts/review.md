@@ -9,6 +9,9 @@ Look at every sheet (Read tool) and judge each entry as a demanding director wou
 - Does the frame show what the cue's `result` says? Is the moment landing on its anchor?
 - Legibility: nothing clipped or overflowing the frame, no text colliding with the karaoke lyric in the lower third,
   enough contrast, nothing too small to read on a TV.
+- Is there a picture? Each frame should show the treatment's world (an object, a place, a process) as an image. A
+  frame that is only text (beyond the karaoke lyric, labels and the at most 2 lyric-as-type moments) fails: give
+  the entry a scene or parameters that show the thing, or improve its custom scene.
 - Does it look like the treatment (its world, palette, restraint)? Is it beautiful? Do consecutive entries contrast?
 - Anything broken: empty or black frames, red error frames, placeholder text, a wrong palette.
 

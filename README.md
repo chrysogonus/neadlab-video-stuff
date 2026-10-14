@@ -104,10 +104,10 @@ Motion blur, adaptive sampling and the render pipeline are described in [`docs/E
 | step | writes | checked by |
 |---|---|---|
 | align-review (only when the alignment flags a line's first word as parked on an instrumental lead-in) | `tuning.py` corrections; the analysis reruns | the flags clearing |
-| treatment | `data/treatment.md` (the central idea, motif, arc, hero moments, style bible), `data/style.json` | palettes complete; contrast type/bg ≥ 7, accent/bg ≥ 3 |
-| cues | `data/cues.json` | the resolver (coverage, cuts, anchors, sections) and the library schemas |
-| scenes | the custom scenes the sheet asks for, `app/src/scenes/<id>-*.ts` | modules exist, typecheck; the step renders and looks at its own stills |
-| review | fixes at the source, after judging contact sheets of every cue's anchor (`work/qa/review/`) against the cue's intended result | up to two rounds, until one changes nothing |
+| treatment | `data/treatment.md` (the central idea, its pictures, motif, arc, 4–8 custom scenes, style bible), `data/style.json` | palettes complete; contrast type/bg ≥ 7, accent/bg ≥ 3 |
+| cues | `data/cues.json` | the resolver (coverage, cuts, anchors, sections), the library schemas; at most 2 lyric-as-type entries, 4–8 custom scenes in a song |
+| scenes | the custom scenes the sheet asks for, `app/src/scenes/<id>-*.ts`, one run per scene | module exists, typecheck; the step renders and looks at its own stills |
+| review | fixes at the source, after judging contact sheets of every cue's anchor (`work/qa/review/`) against the cue's intended result, and failing frames that are only text | up to two rounds, until one changes nothing |
 
 Each run's result and cost is kept in `work/agent/log/` (`work/agent/costs.json` sums them). `VID_MODEL` and
 `VID_BUDGET` (USD per run) pass through to `claude`. Steps listed in `project.json`'s `frozen` never run: both songs here

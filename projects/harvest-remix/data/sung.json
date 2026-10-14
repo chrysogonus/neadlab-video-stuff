@@ -1,0 +1,78 @@
+{
+ "lines": {},
+ "evidence": [
+  {
+   "line": 3,
+   "sheet": "",
+   "heard": "I",
+   "p": 0.86,
+   "gain": -0.07,
+   "kept": false
+  },
+  {
+   "line": 11,
+   "sheet": "The experts said a decade, now the decade's nearly here",
+   "heard": "oh oh oh",
+   "p": 1.0,
+   "gain": -12.94,
+   "kept": false
+  },
+  {
+   "line": 12,
+   "sheet": "You changed all of your passwords, you think that sees you through",
+   "heard": "oh",
+   "p": 1.0,
+   "gain": -31.49,
+   "kept": false
+  },
+  {
+   "line": 13,
+   "sheet": "But a blueprint or a birthday stays as true as true",
+   "heard": "oh oh oh oh oh oh oh oh oh oh oh oh oh oh oh",
+   "p": 1.0,
+   "gain": -70.16,
+   "kept": false
+  },
+  {
+   "line": 14,
+   "sheet": "They handed you the new math",
+   "heard": "oh oh oh oh oh oh oh oh oh oh oh oh oh oh oh oh oh oh oh oh oh oh",
+   "p": 1.0,
+   "gain": -151.48,
+   "kept": false
+  },
+  {
+   "line": 15,
+   "sheet": "You said you'd get around to that",
+   "heard": "oh oh oh oh oh oh oh oh oh oh oh oh",
+   "p": 1.0,
+   "gain": -89.37,
+   "kept": false
+  },
+  {
+   "line": 17,
+   "sheet": "",
+   "heard": "I'll",
+   "p": 0.99,
+   "gain": -1.67,
+   "kept": false
+  },
+  {
+   "line": 21,
+   "sheet": "to",
+   "heard": "the",
+   "p": 0.91,
+   "gain": -1.85,
+   "kept": false
+  },
+  {
+   "line": 27,
+   "sheet": "",
+   "heard": "I",
+   "p": 1.0,
+   "gain": -0.13,
+   "kept": false
+  }
+ ],
+ "margin": 8.0
+}
