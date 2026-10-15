@@ -18,7 +18,8 @@ import * as THREE from 'three';
 import type { Frame } from '../engine/scene';
 import type { SceneSchema } from '../engine/schema';
 import type { ResolvedCue } from '../engine/cues';
-import { FSPass } from '../engine/gl';
+import { FSPass, makeRT } from '../engine/gl';
+import { Finisher, shared, fitOf, fitFov } from './harvest-remix-kit';
 import { LineBatch } from '../engine/lines';
 import { rgba } from '../engine/palette';
 import { clamp, ease, hash, hexToLinear, keys, lerp, mulberry32, prog, type Key } from '../engine/util';
@@ -115,6 +116,20 @@ void main() {
   // the room: a breath of cold haze, drifting
   float n = fbm(p / 520.0 + vec2(time * 0.015, time * 0.006), 3) * 0.5 + 0.5;
   col += ice * 0.007 * n;
+  // far behind, out of focus: the landing station's equipment room, tall racks of optical gear whose status lights
+  // fall into soft oval discs, a few blinking with the traffic
+  float rw = 260.0, rx = (p.x + time * 4.0) / rw, fx = fract(rx);
+  float rack = smoothstep(0.04, 0.16, fx) * smoothstep(0.96, 0.84, fx) * smoothstep(${(H * 0.1).toFixed(1)}, ${(H * 0.2).toFixed(1)}, p.y) * (1.0 - smoothstep(${(H * 0.74).toFixed(1)}, ${(H * 0.84).toFixed(1)}, p.y));
+  col += ice * 0.005 * rack * (0.7 + 0.3 * sin(p.y * 0.08));
+  vec2 cs = vec2(rw / 2.0, 64.0), pp = vec2(p.x + time * 4.0, p.y), ci = floor(pp / cs), cf = pp - (ci + 0.5) * cs;
+  float hb = hash12(ci);
+  if (hb > 0.72 && rack > 0.3) {
+    float r = 12.0 + 13.0 * hash12(ci + 3.0), dq = length(vec2(cf.x / 0.7, cf.y));
+    float disc = smoothstep(r, r - 3.0, dq) * (0.7 + 0.3 * smoothstep(r - 5.0, r - 1.0, dq));
+    vec3 lc = hash12(ci + 7.0) < 0.72 ? ice : vec3(1.0, 0.62, 0.25);
+    float blink = hash12(ci + 11.0) < 0.3 ? step(0.45, hash12(ci + floor(time * 6.0 + hb * 9.0))) : 1.0;
+    col += lc * disc * 0.022 * blink * rack;
+  }
   // the fibre lights the air around it
   float d = sdSegment(p, fib.xy, fib.zw);
   col += ice * fibGlow * (0.03 * exp(-d / 46.0) + 0.016 * exp(-d / 240.0));
@@ -298,8 +313,8 @@ export default class HarvestRemixWire extends LibScene<P, C> {
     const ks = this.keys, comp = (f: (k: CamKey) => number) => keys(t, ks.map((k): Key => [k.t, f(k), k.e]));
     const c: V3 = [comp((k) => k.c[0]), comp((k) => k.c[1]), comp((k) => k.c[2])];
     const g: V3 = [comp((k) => k.g[0]), comp((k) => k.g[1]), comp((k) => k.g[2])];
-    const fov = comp((k) => k.fov ?? FOV);
-    this.cam.fov = fov;
+    let fov = comp((k) => k.fov ?? FOV);
+    this.cam.fov = fov = fitFov(fov, fitOf(this.ctx.style));
     this.cam.position.set(...c);
     this.cam.lookAt(...g);
     this.cam.updateProjectionMatrix();
@@ -573,7 +588,11 @@ export default class HarvestRemixWire extends LibScene<P, C> {
 
   override draw() {}
 
-  override render(f: Frame, out: THREE.WebGLRenderTarget) {
+  private buf = shared('wire-buf', () => makeRT(W, H, { depthBuffer: false }));
+  private fin = new Finisher();
+
+  override render(f: Frame, target: THREE.WebGLRenderTarget) {
+    const out = this.buf;
     const t = f.t, k = this.lookAt(t), r = this.ctx.renderer, a = f.a;
     this.setCamera(t);
     const ice = hexToLinear(k.accent), green = hexToLinear(k.accent2), white = hexToLinear(mixHex(k.type, k.accent, 0.25));
@@ -646,7 +665,16 @@ export default class HarvestRemixWire extends LibScene<P, C> {
     else this.fxRekey(t, ice, green, white);
     if (fb.count) fb.render(r, out);
 
-    return { bloom: 0.55, bloomThreshold: 0.7, bloomRadius: 0.45, halation: 0, ca: 0.15, grain: 0.034, vignette: 0.36, hud: 0 };
+    // light shafts from the prism, frost on the lens
+    const pp = this.pj(0, 0, 0);
+    this.fin.apply(r, this.buf.texture, target, {
+      rays: { uv: [pp[0] / W, 1 - pp[1] / H], amt: 0.9 + 0.5 * a.rms, thr: 0.8, len: 0.7, decay: 0.97, rad: 0.5, tint: new THREE.Color(...hexToLinear(k.accent)) },
+      lens: 0.045, lensCol: new THREE.Color(...hexToLinear(k.accent)).multiplyScalar(0.45),
+    });
+    return {
+      bloom: 0.65, bloomThreshold: 0.7, bloomRadius: 0.55, halation: 0, ca: 0.25, grain: 0.016, vignette: 0.42, hud: 0,
+      gain: [0.93, 1.0, 1.09] as [number, number, number], lift: [0, 0.004, 0.012] as [number, number, number], sat: 1.12,
+    };
   }
 
   // ------------------------------------------------------------------ phase one

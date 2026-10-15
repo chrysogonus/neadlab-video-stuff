@@ -29,6 +29,7 @@ import { LineBatch } from '../engine/lines';
 import { measure } from '../engine/type';
 import { clamp, ease, hash, hexToLinear, lerp, mulberry32, prog, smoothstep } from '../engine/util';
 import { LibScene, W, H, fitSize, hit, label, text, mixHex, type Look } from './_lib';
+import { Finisher, VolumeLight, shared, fitOf, fitFov } from './harvest-remix-kit';
 
 export const schema: SceneSchema = {
   description: 'The dilution refrigerator ("chandelier") of a quantum computer in three.js: five gold-plated stages hung on rods, coax coiling between them, a qubit chip at the bottom, stage callouts and a temperature / qubit readout; behind it, out of focus, a wall of frosted archive drawers with padlocks. build: plates bolt onto a bare frame, the chip lights, qubit count and Q-day ETA count; cool: the temperature falls a stage per cue, the camera tilts down to the drawers and a crack runs across one padlock, then the stages dim; base: every qubit lit, light down the coax, the drawers claimed, a key of qubit dots falls out. Harvest remix.',
@@ -130,7 +131,10 @@ void main() {
   if (wb < UPW || c > 2.0 || r >= NROW || r < 0.0) {
     // uprights and rails: brushed steel, a highlight down the upright's edge
     float e = wb < UPW ? 1.0 - smoothstep(0.0, 0.012, abs(wb - UPW * 0.3)) : 0.0;
-    col = uSteel * (0.55 + 0.9 * e) * lv * uKey;
+    // the rails' square cage-nut holes
+    float hy = abs(mod(w.y, 0.0445) - 0.0222);
+    float hole = wb < UPW ? (1.0 - smoothstep(0.004, 0.004 + px, max(abs(wb - UPW * 0.62), hy))) : 0.0;
+    col = uSteel * (0.55 + 0.9 * e) * (1.0 - 0.85 * hole) * lv * uKey;
   } else {
     vec2 q = vec2(wb - UPW - c * CW, w.y - r * CH);
     vec2 id = vec2(bay * 3.0 + c, r);
@@ -200,12 +204,22 @@ void main() {
     float tx = step(0.0, gi) * step(gi, 14.0 + floor(seed * 9.0)) * smoothstep(0.5 - gw * 0.5 - 0.05, 0.5 - gw * 0.5, gf)
       * (1.0 - smoothstep(0.5 + gw * 0.5, 0.5 + gw * 0.5 + 0.05, gf))
       * step(0.2, hash12(vec2(gi, floor(seed * 997.0)))) * (1.0 - smoothstep(0.003, 0.003 + aa, abs(q.y - 0.052)));
-    vec3 tag = mix(uPaper * 0.3, uPaper * 0.1, tx * 0.7);
+    // a barcode at the label's right end
+    float bar = step(0.45, hash12(vec2(floor((q.x - 0.25) / 0.0022), floor(seed * 577.0)))) * step(0.25, q.x) * step(q.x, 0.34) * step(abs(q.y - 0.052), 0.016);
+    vec3 tag = mix(uPaper * 0.3, uPaper * 0.05, max(tx * 0.7, bar * (1.0 - smoothstep(0.002, 0.006, px))));
     col = alb * lv * uKey;
     col = mix(col, glass * lv, fGlass);
     col = mix(col, tag * lv * uKey, fTag);
     col = mix(col, vec3(0.002), fHandle);
     col = mix(col, uSteel * 0.2 + uLampC * lamp * 6.0, fLed);
+    // activity and power LEDs beside the status lamp; ejector bars at the front's ends
+    float act = step(0.5, hash12(vec2(floor(uTime * 10.0 + seed * 31.0), floor(seed * 577.0)))) * step(0.05, lamp);
+    float l2 = 1.0 - smoothstep(-aa, aa, length(q - lc + vec2(0.03, 0.0)) - 0.007);
+    float l3 = 1.0 - smoothstep(-aa, aa, length(q - lc + vec2(0.06, 0.0)) - 0.007);
+    col = mix(col, uSteel * 0.2 + uLampC * act * 3.0, l2 * fCell);
+    col = mix(col, uSteel * 0.2 + uFrostC * min(1.0, lamp * 3.0) * 1.2, l3 * fCell);
+    float ej = (1.0 - smoothstep(-aa, aa, min(abs(q.x - 0.016), abs(q.x - (CW - 0.016))) - 0.008)) * step(0.02, q.y) * step(q.y, CH - 0.02);
+    col = mix(col, uSteel * 1.6 * lv * uKey * (0.9 + 0.2 * sin(q.y * 700.0)), ej * fCell);
     col = mix(vec3(0.002), col, fCell);
     // glass sheen: a soft diagonal reflection of the room's light
     col += uKey * 0.035 * fGlass * smoothstep(0.6, 1.0, sin((q.x + q.y * 1.6) * 7.0 + seed * 6.0) * 0.5 + 0.5);
@@ -335,7 +349,10 @@ interface Key { t: number; c: V3; g: V3; fov?: number; ap?: number; e?: (x: numb
 
 export default class HarvestRemixChandelier extends LibScene<P, C> {
   static schema = schema;
-  private rt = makeRT(W, H, { samples: 4 });
+  private rt = shared('stage', () => makeRT(W, H, { samples: 4 }));
+  private sharp = shared('sharp', () => makeRT(W, H, { depthBuffer: false }));
+  private fin = new Finisher();
+  private vl = new VolumeLight();
   private scene = new THREE.Scene();
   private cam = new THREE.PerspectiveCamera(32, W / H, 0.05, 400);
   private dof = new FSPass(DOF_F, { tCol: { value: null }, uFocus: { value: 6 }, uK: { value: 30 }, uMax: { value: 16 } });
@@ -852,9 +869,11 @@ export default class HarvestRemixChandelier extends LibScene<P, C> {
     const t = f.t, r = this.ctx.renderer, k = this.lookAt(t), a = f.a, S = this.S;
     const ph = this.ph;
 
-    // camera
+    // camera (the wide shots pulled in closer, so the machine fills the frame)
     const cam = this.camAt(t);
-    this.cam.fov = cam.fov;
+    const dd = Math.hypot(cam.c[0] - cam.g[0], cam.c[1] - cam.g[1], cam.c[2] - cam.g[2]);
+    if (dd > 3) { const kk = lerp(1, 0.74, smoothstep(3, 5, dd)); cam.c = [cam.g[0] + (cam.c[0] - cam.g[0]) * kk, cam.g[1] + (cam.c[1] - cam.g[1]) * kk, cam.g[2] + (cam.c[2] - cam.g[2]) * kk]; }
+    this.cam.fov = fitFov(cam.fov, fitOf(this.ctx.style));
     this.cam.position.set(...cam.c);
     this.cam.lookAt(...cam.g);
     this.cam.updateProjectionMatrix();
@@ -959,10 +978,30 @@ export default class HarvestRemixChandelier extends LibScene<P, C> {
     r.setRenderTarget(this.rt);
     r.render(this.scene, this.cam);
     if (this.frost.count) this.frost.render(r, this.rt, this.cam);
+    // the light in the air: work lamps' cones (build); a gold shaft down the machine into cold mist
+    this.vl.time = t;
+    const dimAll = 1 - 0.9 * (this.stages[0]!.U.uDim!.value as number);
+    const acc = hexToLinear(k.accent);
+    this.vl.beams = ph === 'build'
+      ? [{ p: [-2.6, 7.5, 1.5], d: [2.4, -4, -1.4], angle: 0.32, color: new THREE.Color(0.75, 0.86, 1).multiplyScalar(0.5 * blink), range: 9 },
+         { p: [3.0, 7.5, 1.2], d: [-2.8, -4, -1.2], angle: 0.32, color: new THREE.Color(0.75, 0.86, 1).multiplyScalar(0.5 * blink), range: 9 }]
+      : [{ p: [0, 7.8, 0.3], d: [0, -1, -0.04], angle: 0.24, color: new THREE.Color(acc[0], acc[1], acc[2]).multiplyScalar(0.9 * dimAll), range: 9 },
+         { p: [-3, 5, 4], d: [3, -2.5, -4], angle: 0.4, color: new THREE.Color(0.55, 0.75, 1).multiplyScalar(0.18 * dimAll), range: 10 }];
+    this.vl.fog = { density: ph === 'build' ? 0.07 : 0.14, noise: 0.65, haze: 0.0, maxDist: 25, drift: [0.03, -0.05, 0.02] };
+    this.vl.render(r, this.rt, this.cam);
     this.dof.u.tCol!.value = this.rt.texture;
     this.dof.u.uFocus!.value = focus;
     this.dof.u.uK!.value = cam.ap;
-    this.dof.render(r, out);
+    this.dof.render(r, this.sharp);
+    // light shafts from above the machine, ice dust in them; frost on the lens
+    const top = new THREE.Vector3(0, 6.2, 0).project(this.cam);
+    const warmLight = ph !== 'build';
+    const lc = warmLight ? hexToLinear(k.accent) : [0.75, 0.88, 1.0];
+    this.fin.apply(r, this.sharp.texture, out, {
+      rays: { uv: [top.x * 0.5 + 0.5, top.y * 0.5 + 0.5], amt: 0.9 * (1 - 0.9 * (this.stages[0]!.U.uDim!.value as number)), thr: 0.7, len: 0.8, decay: 0.975, rad: 0.9,
+        tint: new THREE.Color(lc[0], lc[1], lc[2]) },
+      lens: ph === 'build' ? 0.06 : 0.14, lensCol: new THREE.Color(...hexToLinear(k.accent2)).multiplyScalar(0.5),
+    });
 
     // callouts and readouts
     this.L.clear();
@@ -972,7 +1011,11 @@ export default class HarvestRemixChandelier extends LibScene<P, C> {
     c.restore();
     this.ctx.comp.draw(r, this.L.upload(), out, { mode: 'normal' });
 
-    return { bloom: 0.5, bloomThreshold: 0.88, bloomRadius: 0.55, halation: 0.08, ca: 0.25, grain: 0.03, vignette: 0.34, hud: 0 };
+    return {
+      bloom: 0.65, bloomThreshold: 0.85, bloomRadius: 0.6, halation: 0.1, ca: 0.22, grain: 0.016, vignette: 0.42, hud: 0,
+      gain: (ph === 'build' ? [0.94, 1.0, 1.08] : [1.06, 1.0, 0.9]) as [number, number, number],
+      lift: (ph === 'build' ? [0, 0.004, 0.012] : [0.006, 0.003, 0]) as [number, number, number], sat: 1.12,
+    };
   }
 
   /** The qubit dots: lit rows (build: a row block per plate; base: row by row to all), the key forming and falling. */
@@ -1039,8 +1082,8 @@ export default class HarvestRemixChandelier extends LibScene<P, C> {
   private overlay(c: CanvasRenderingContext2D, t: number, k: Look, target: V3) {
     const ph = this.ph, mono = this.font('mono');
     // stage callouts (cool, base) from the left rim of each plate to a column at the left, while the camera is on
-    // the machine
-    if (ph !== 'build') {
+    // the machine (off for a letterboxed, cinema frame: the picture carries it)
+    if (ph !== 'build' && !this.ctx.style.aspect) {
       const tK = this.kelvin(this.tempAt(t).s);
       const show = smoothstep(-1.4, -0.4, target[2]);
       const right = new THREE.Vector3().setFromMatrixColumn(this.cam.matrixWorld, 0);

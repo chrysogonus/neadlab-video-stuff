@@ -219,7 +219,10 @@ export function clearRT(renderer: THREE.WebGLRenderer, rt: THREE.WebGLRenderTarg
   const prev = renderer.getClearColor(new THREE.Color()).clone();
   const prevA = renderer.getClearAlpha();
   renderer.setRenderTarget(rt);
-  renderer.setClearColor(new THREE.Color().setRGB(rgb[0], rgb[1], rgb[2], THREE.LinearSRGBColorSpace), a);
+  // three premultiplies the clear colour by its alpha (premultiplied-alpha contexts): divide it back out, so an alpha
+  // other than 1 (e.g. a depth carried in alpha) leaves the colour as given
+  const k = renderer.getContextAttributes()?.premultipliedAlpha !== false && a > 0 ? 1 / a : 1;
+  renderer.setClearColor(new THREE.Color().setRGB(rgb[0] * k, rgb[1] * k, rgb[2] * k, THREE.LinearSRGBColorSpace), a);
   renderer.clear(true, true, true);
   renderer.setClearColor(prev, prevA);
 }

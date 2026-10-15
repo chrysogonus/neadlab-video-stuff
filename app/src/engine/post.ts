@@ -35,6 +35,15 @@ export interface PostParams {
   shake: [number, number]; // frame offset in px
   zoom: number; // frame zoom (1 = none), for punch-ins on hits
   invert: number; // 0..1 invert (ink <-> bone), applied before grain
+  /** Colour grade before the shoulder: col * gain + lift * (1 - col), then saturation (1 = unchanged). */
+  gain: [number, number, number];
+  lift: [number, number, number];
+  sat: number;
+  /** Letterbox bar height as a fraction of the frame (each, top and bottom): left black and untouched by post (the lyrics drawn in it stay crisp). */
+  bars: number;
+  /** Anamorphic streaks: highlights drawn out sideways into long thin flares (0 = off), and their tint. */
+  streak: number;
+  streakTint: [number, number, number];
   /** Replace the HUD P(doom) digits (e.g. 'NaN'). */
   pdoomText?: string;
   /** 0..1 glitch the HUD readout. */
@@ -60,6 +69,12 @@ export const DEFAULT_POST: PostParams = {
   shake: [0, 0],
   zoom: 1,
   invert: 0,
+  gain: [1, 1, 1],
+  lift: [0, 0, 0],
+  sat: 1,
+  bars: 0,
+  streak: 0,
+  streakTint: [0.55, 0.75, 1.0],
 };
 
 const MIPS = 7;
@@ -69,6 +84,8 @@ export class Post {
   private down: FSPass;
   private up: FSPass;
   private final: FSPass;
+  private streakPass: FSPass;
+  private streakRT: THREE.WebGLRenderTarget[];
   private mips: THREE.WebGLRenderTarget[] = [];
   private ups: THREE.WebGLRenderTarget[] = [];
 
@@ -121,10 +138,22 @@ ${SCALE === 1 ? `        c += texture(src, vUv + texel * vec2(-1, -1)).rgb; c +=
           + texture(src, vUv + vec2(-o.x, o.y)).rgb + 2.0 * texture(src, vUv + vec2(0, o.y)).rgb + texture(src, vUv + o).rgb;
         fragColor = vec4(texture(prev, vUv).rgb + s / 16.0, 1.0);
       }`, { src: { value: null }, prev: { value: null }, texel: { value: new THREE.Vector2() }, radius: { value: 1 } });
+    // the streak: a long horizontal gather of the thresholded highlights (quarter res), twice (short, then long)
+    this.streakRT = [0, 1].map(() => makeRT(W >> 2, H >> 2, { depthBuffer: false, pxScale: 1 }));
+    this.streakPass = new FSPass(/* glsl */ `
+      uniform sampler2D src; uniform vec2 texel; uniform float spread;
+      void main() {
+        vec3 s = vec3(0.0); float ws = 0.0;
+        for (int i = -24; i <= 24; i++) {
+          float w = exp(-abs(float(i)) / 9.0);
+          s += texture(src, vUv + vec2(float(i) * texel.x * spread, 0.0)).rgb * w; ws += w;
+        }
+        fragColor = vec4(s / ws, 1.0);
+      }`, { src: { value: null }, texel: { value: new THREE.Vector2() }, spread: { value: 1 } });
     this.final = new FSPass(/* glsl */ `
-      uniform sampler2D src; uniform sampler2D bloomTex; uniform sampler2D haloTex; uniform sampler2D hudTex;
+      uniform sampler2D src; uniform sampler2D bloomTex; uniform sampler2D streakTex; uniform float streak; uniform vec3 streakTint; uniform sampler2D haloTex; uniform sampler2D hudTex;
       uniform float exposure, bloom, halation, ca, grain, vignette, hud, fade, flash, time, zoom, invert;
-      uniform vec2 shake; uniform vec2 res;
+      uniform vec2 shake; uniform vec2 res; uniform vec3 gain, lift; uniform float satur, bars;
       ${SHOULDER_GLSL}
       void main() {
         vec2 uv = (vUv - 0.5) / zoom + 0.5 - shake / res;
@@ -138,11 +167,14 @@ ${SCALE === 1 ? `        c += texture(src, vUv + texel * vec2(-1, -1)).rgb; c +=
         vec3 bl = texture(bloomTex, uv).rgb;
         vec3 ha = texture(haloTex, uv).rgb;
         col += bl * bloom;
+        col += texture(streakTex, uv).rgb * streak * streakTint;
         col += vec3(1.0, 0.18, 0.04) * luma(ha) * halation;
         col *= exposure;
         // HUD is composited in linear space before the shoulder so it gets grain & vignette too
         vec4 h = texture(hudTex, vUv);
         col = mix(col, h.rgb / max(h.a, 1e-4), h.a * hud);
+        col = col * gain + lift * (1.0 - min(col, vec3(1.0)));
+        col = max(mix(vec3(luma(col)), col, satur), 0.0);
         col = shoulder(col);
         col = mix(col, vec3(0.8515) - col * 0.84, invert); // ink<->bone in linear-ish space
         col += C_BONE * flash;
@@ -161,12 +193,17 @@ ${SCALE === 1 ? `        float g1 = hash12(gl_FragCoord.xy + fract(time * 13.37)
         float amt = grain * (0.55 + 1.2 * lm * (1.0 - lm));
         s += (g1 * 0.6 + g2 * 0.4) * amt;
         s += (hash12(gl_FragCoord.xy * 1.37 + time) - 0.5) / 255.0; // dither
+        // the letterbox: plain black with what was drawn in it (the lyrics), no bloom, grain or vignette
+        float inBar = step(vUv.y, bars) + step(1.0 - bars, vUv.y);
+        if (inBar > 0.0) s = toSRGB(sat(shoulder(texture(src, vUv).rgb)));
         fragColor = vec4(sat(s), 1.0);
       }`, {
       src: { value: null }, bloomTex: { value: null }, haloTex: { value: null }, hudTex: { value: null },
       exposure: { value: 1 }, bloom: { value: 0.5 }, halation: { value: 0.2 }, ca: { value: 1 }, grain: { value: 0.05 },
       vignette: { value: 0.3 }, hud: { value: 1 }, fade: { value: 0 }, flash: { value: 0 }, time: { value: 0 },
       zoom: { value: 1 }, invert: { value: 0 }, shake: { value: new THREE.Vector2() }, res: { value: new THREE.Vector2(W, H) },
+      streakTex: { value: null }, streak: { value: 0 }, streakTint: { value: new THREE.Vector3(1, 1, 1) },
+      gain: { value: new THREE.Vector3(1, 1, 1) }, lift: { value: new THREE.Vector3() }, satur: { value: 1 }, bars: { value: 0 },
     });
   }
 
@@ -195,7 +232,20 @@ ${SCALE === 1 ? `        float g1 = hash12(gl_FragCoord.xy + fract(time * 13.37)
       this.up.render(renderer, this.ups[i]!);
       prevTex = this.ups[i]!.texture;
     }
+    if (p.streak > 0) {
+      const sp = this.streakPass, a = this.streakRT[0]!, b = this.streakRT[1]!;
+      sp.u.src!.value = this.mips[1]!.texture;
+      (sp.u.texel!.value as THREE.Vector2).set(1 / a.width, 1 / a.height);
+      sp.u.spread!.value = 1.5;
+      sp.render(renderer, a);
+      sp.u.src!.value = a.texture;
+      sp.u.spread!.value = 6;
+      sp.render(renderer, b);
+    }
     const f = this.final.u;
+    f.streakTex!.value = this.streakRT[1]!.texture;
+    f.streak!.value = p.streak;
+    (f.streakTint!.value as THREE.Vector3).set(...p.streakTint);
     f.src!.value = src;
     f.bloomTex!.value = this.ups[0]!.texture;
     f.haloTex!.value = this.ups[3]!.texture;
@@ -213,6 +263,10 @@ ${SCALE === 1 ? `        float g1 = hash12(gl_FragCoord.xy + fract(time * 13.37)
     f.zoom!.value = p.zoom;
     f.invert!.value = p.invert;
     (f.shake!.value as THREE.Vector2).set(p.shake[0], p.shake[1]);
+    (f.gain!.value as THREE.Vector3).set(...p.gain);
+    (f.lift!.value as THREE.Vector3).set(...p.lift);
+    f.satur!.value = p.sat;
+    f.bars!.value = p.bars;
     this.final.render(renderer, out);
   }
 }

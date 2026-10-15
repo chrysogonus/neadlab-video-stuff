@@ -82,8 +82,11 @@ export abstract class LibScene<P = Record<string, any>, C = Record<string, any>>
   get schema() { return (this.constructor as unknown as { schema: SceneSchema }).schema; }
 
   override init(): void | Promise<void> {
-    this.P = withDefaults<P>(this.schema.entry, this.ctx.params);
-    this.cues = ((this.ctx.params.cues ?? []) as ResolvedCue[]).slice().sort((a, b) => a.start - b.start);
+    const { plan, ...params } = this.ctx.params;
+    this.P = withDefaults<P>(this.schema.entry, params);
+    // a shot of a longer passage (see Plan in timelines.ts): the scene times itself over the whole passage
+    if (plan) { this.ctx.start = plan.start; this.ctx.end = plan.end; }
+    this.cues = ((plan?.cues ?? this.ctx.params.cues ?? []) as ResolvedCue[]).slice().sort((a, b) => a.start - b.start);
     const k = this.ctx.style.karaoke;
     if (k && !this.ownsLyrics) this.bottom = k.y * H - k.size * 1.9;
     return this.setup();

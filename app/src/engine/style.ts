@@ -39,6 +39,10 @@ export interface Style {
   fonts: Record<string, FontSpec>;
   /** The project-wide karaoke layer (shown under every scene that does not draw its own lyrics); false = off. */
   karaoke: KaraokeStyle | false;
+  /** Picture aspect: wider than 16:9 (e.g. 2.39) puts black bars above and below every frame (the lyrics may sit in the lower one). */
+  aspect?: number;
+  /** Post-processing defaults for the whole project (a scene's own overrides still win), e.g. anamorphic streaks. */
+  post?: Record<string, unknown>;
 }
 
 export const DEFAULT_KARAOKE: KaraokeStyle = {
@@ -69,6 +73,8 @@ export function makeStyle(json?: StyleJson): Style {
     palettes,
     fonts: { ...DEFAULT_STYLE.fonts, ...json?.fonts },
     karaoke: k === false ? false : { ...DEFAULT_KARAOKE, palette: Object.keys(palettes)[0]!, ...k },
+    ...(json?.aspect ? { aspect: json.aspect } : {}),
+    ...(json?.post ? { post: json.post } : {}),
   };
   if (style.karaoke) {
     const ks = style.karaoke;

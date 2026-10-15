@@ -15,136 +15,361 @@ line ends.
 
 | entry | module | start | end | dur | cut | bars |
 |---|---|---:|---:|---:|---|---|
-| `open` | `harvest-remix-padlock` {"phase":"open"} | 0.00 | 7.96 | 7.96 | song start | 0.74–5.00 |
-| `tap` | `harvest-remix-wire` {"phase":"one","stamp":"TUE 2021-03-09"} | 7.96 | 23.66 | 15.70 | beat L00 | 5.00–13.50 |
-| `keep` | `harvest-remix-vault` {"phase":"keep"} | 23.66 | 33.81 | 10.15 | beat L04 | 13.50–19.00 |
-| `harvest` | `harvest-remix-vault` {"phase":"harvest"} | 33.81 | 45.49 | 11.68 | downbeat 18 | 19.00–25.36 |
-| `hook` | `lib-lyric` {"align":"left","upper":true} | 45.49 | 50.34 | 4.85 | beat L09 | 25.36–28.00 |
-| `gauge` | `harvest-remix-vault` {"phase":"gauge","title":"Cold storage · used","unit":" PB","decimals":1} | 50.34 | 61.80 | 11.46 | downbeat 27 | 28.00–34.25 |
-| `build` | `harvest-remix-chandelier` {"phase":"build"} | 61.80 | 69.04 | 7.24 | beat L10 | 34.25–38.21 |
-| `rekey` | `harvest-remix-wire` {"phase":"rekey","stamp":"valid: forever"} | 69.04 | 76.45 | 7.41 | beat L12 | 38.21–42.25 |
-| `newmath` | `harvest-remix-lattice` {"label":"ML-KEM · FIPS 203 · 2024","stamp":"LATER"} | 76.45 | 85.15 | 8.70 | beat L14 | 42.25–47.00 |
-| `cryo` | `harvest-remix-chandelier` {"phase":"cool"} | 85.15 | 105.24 | 20.10 | beat L16 | 47.00–58.00 |
-| `backlog` | `harvest-remix-backlog` {"ticket":"PQC-114","title":"Migrate key exchange to post-quantum","from":"Q3 2022","moves":16} | 105.24 | 117.94 | 12.70 | downbeat 57 | 58.00–64.97 |
-| `petabytes` | `harvest-remix-vault` {"phase":"petabytes","wallTag":"31,000 PB"} | 117.94 | 123.93 | 5.99 | word L23 | 64.97–68.25 |
-| `base` | `harvest-remix-chandelier` {"phase":"base"} | 123.93 | 134.51 | 10.59 | beat L24 | 68.25–74.07 |
-| `thaw` | `harvest-remix-vault` {"phase":"thaw"} | 134.51 | 160.06 | 25.54 | word L27 | 74.07–88.00 |
-| `secure` | `harvest-remix-padlock` {"phase":"secure"} | 160.06 | 164.40 | 4.34 | downbeat 87 | 88.00–90.38 |
+| `title` | `harvest-remix-aerial` {"phase":"title"} | 0.00 | 4.25 | 4.25 | song start | 0.74–3.00 |
+| `open` | `harvest-remix-padlock` {"phase":"open"} | 4.25 | 6.12 | 1.86 | downbeat 2 | 3.00–4.00 |
+| `seal` | `harvest-remix-letter` {"phase":"seal","date":"TUE 2021-03-09"} | 6.12 | 12.36 | 6.24 | downbeat 3 | 4.00–7.39 |
+| `lock` | `harvest-remix-padlock` {"phase":"macro"} | 12.36 | 13.49 | 1.14 | beat L01 | 7.39–8.00 |
+| `cable` | `harvest-remix-cable` | 13.49 | 16.06 | 2.57 | downbeat 7 | 8.00–9.39 |
+| `tap` | `harvest-remix-wire` {"phase":"one","stamp":"TUE 2021-03-09","plan":{"from":"seal","to":"tap","cues":["L00","L01","L02","L03"]}} | 16.06 | 23.66 | 7.60 | beat L02 | 9.39–13.50 |
+| `keep` | `harvest-remix-vault` {"phase":"keep"} | 23.66 | 30.12 | 6.46 | beat L04 | 13.50–17.00 |
+| `door` | `harvest-remix-door` {"phase":"shut"} | 30.12 | 33.81 | 3.69 | downbeat 16 | 17.00–19.00 |
+| `harvest` | `harvest-remix-vault` {"phase":"harvest","plan":{"from":"harvest","to":"count","cues":["L06","L07","L08"]}} | 33.81 | 35.63 | 1.83 | downbeat 18 | 19.00–20.00 |
+| `clock1` | `harvest-remix-clock` {"phase":"freeze"} | 35.63 | 38.39 | 2.76 | downbeat 19 | 20.00–21.50 |
+| `silo` | `harvest-remix-silo` {"phase":"fill"} | 38.39 | 41.15 | 2.75 | beat L07 | 21.50–23.00 |
+| `robot1` | `harvest-remix-robot` | 41.15 | 42.99 | 1.84 | downbeat 22 | 23.00–24.00 |
+| `count` | `harvest-remix-vault` {"phase":"harvest","plan":{"from":"harvest","to":"count","cues":["L06","L07","L08"]}} | 42.99 | 45.49 | 2.50 | downbeat 23 | 24.00–25.36 |
+| `hook` | `harvest-remix-hook` | 45.49 | 50.34 | 4.85 | beat L09 | 25.36–28.00 |
+| `scale` | `harvest-remix-scale` {"phase":"gauge"} | 50.34 | 61.80 | 11.46 | downbeat 27 | 28.00–34.25 |
+| `build` | `harvest-remix-chandelier` {"phase":"build","plan":{"from":"build","to":"build","cues":["L10"]}} | 61.80 | 63.17 | 1.37 | beat L10 | 34.25–35.00 |
+| `fab` | `harvest-remix-chip` {"phase":"wafer"} | 63.17 | 65.62 | 2.45 | downbeat 34 | 35.00–36.34 |
+| `chip` | `harvest-remix-chip` {"phase":"decade"} | 65.62 | 69.04 | 3.42 | beat L11 | 36.34–38.21 |
+| `rekey` | `harvest-remix-wire` {"phase":"rekey","stamp":"valid: forever","plan":{"from":"rekey","to":"rekey","cues":["L12","L13"]}} | 69.04 | 73.00 | 3.96 | beat L12 | 38.21–40.37 |
+| `relic` | `harvest-remix-relic` | 73.00 | 76.45 | 3.45 | beat L13 | 40.37–42.25 |
+| `newmath` | `harvest-remix-lattice` {"label":"ML-KEM · FIPS 203 · 2024","stamp":"LATER","plan":{"from":"newmath","to":"crate","cues":["L14","L15"]}} | 76.45 | 79.66 | 3.21 | beat L14 | 42.25–44.00 |
+| `crate` | `harvest-remix-lattice` {"label":"ML-KEM · FIPS 203 · 2024","stamp":"LATER","view":"crate","plan":{"from":"newmath","to":"crate","cues":["L14","L15"]}} | 79.66 | 83.32 | 3.66 | beat L15 | 44.00–46.00 |
+| `stacks` | `harvest-remix-warehouse` | 83.32 | 85.15 | 1.83 | downbeat 45 | 46.00–47.00 |
+| `cryo` | `harvest-remix-chandelier` {"phase":"cool","plan":{"from":"cryo","to":"dim","cues":["L16","L17","L18","L19","dim"]}} | 85.15 | 86.97 | 1.82 | beat L16 | 47.00–48.00 |
+| `clock2` | `harvest-remix-clock` {"phase":"freeze"} | 86.97 | 89.71 | 2.74 | downbeat 47 | 48.00–49.50 |
+| `silo2` | `harvest-remix-silo` {"phase":"deep"} | 89.71 | 92.91 | 3.20 | beat L17 | 49.50–51.25 |
+| `robot2` | `harvest-remix-robot` {"phase":"fast"} | 92.91 | 94.28 | 1.37 | beat L18 | 51.25–52.00 |
+| `under` | `harvest-remix-chandelier` {"phase":"cool","plan":{"from":"cryo","to":"dim","cues":["L16","L17","L18","L19","dim"]}} | 94.28 | 96.56 | 2.28 | downbeat 51 | 52.00–53.25 |
+| `crack` | `harvest-remix-padlock` {"phase":"crack"} | 96.56 | 99.82 | 3.26 | beat L19 | 53.25–55.04 |
+| `dim` | `harvest-remix-chandelier` {"phase":"cool","plan":{"from":"cryo","to":"dim","cues":["L16","L17","L18","L19","dim"]}} | 99.82 | 105.24 | 5.42 | end L19 | 55.04–58.00 |
+| `backlog` | `harvest-remix-backlog` {"ticket":"PQC-114","title":"Migrate key exchange to post-quantum","from":"Q3 2022","moves":16,"plan":{"from":"backlog","to":"comment","cues":["board","L20","L21","L22"]}} | 105.24 | 110.70 | 5.45 | downbeat 57 | 58.00–61.00 |
+| `pages` | `harvest-remix-calendar` | 110.70 | 112.52 | 1.83 | downbeat 60 | 61.00–62.00 |
+| `backlog2` | `harvest-remix-backlog` {"ticket":"PQC-114","title":"Migrate key exchange to post-quantum","from":"Q3 2022","moves":16,"plan":{"from":"backlog","to":"comment","cues":["board","L20","L21","L22"]}} | 112.52 | 114.20 | 1.68 | downbeat 61 | 62.00–62.92 |
+| `comment` | `harvest-remix-backlog` {"ticket":"PQC-114","title":"Migrate key exchange to post-quantum","from":"Q3 2022","moves":16,"view":"comment","plan":{"from":"backlog","to":"comment","cues":["board","L20","L21","L22"]}} | 114.20 | 116.17 | 1.97 | beat L22 | 62.92–64.00 |
+| `outside` | `harvest-remix-aerial` {"phase":"exterior"} | 116.17 | 117.94 | 1.77 | downbeat 63 | 64.00–64.97 |
+| `petabytes` | `harvest-remix-scale` {"phase":"pullback"} | 117.94 | 123.93 | 5.99 | word L23 | 64.97–68.25 |
+| `base` | `harvest-remix-chandelier` {"phase":"base","plan":{"from":"base","to":"base","cues":["L24","L25","L26"]}} | 123.93 | 125.29 | 1.36 | beat L24 | 68.25–69.00 |
+| `clock3` | `harvest-remix-clock` {"phase":"thaw"} | 125.29 | 128.25 | 2.96 | downbeat 68 | 69.00–70.64 |
+| `qubits` | `harvest-remix-chip` {"phase":"base"} | 128.25 | 131.02 | 2.77 | beat L25 | 70.64–72.16 |
+| `key` | `harvest-remix-key` | 131.02 | 134.51 | 3.49 | beat L26 | 72.16–74.07 |
+| `unlock` | `harvest-remix-padlock` {"phase":"unlock"} | 134.51 | 136.20 | 1.68 | word L27 | 74.07–75.00 |
+| `thaw` | `harvest-remix-vault` {"phase":"thaw","plan":{"from":"thaw","to":"city","cues":["L27","L28","L29"]}} | 136.20 | 137.54 | 1.34 | downbeat 74 | 75.00–75.74 |
+| `letter` | `harvest-remix-letter` {"phase":"open","date":"TUE 2021-03-09"} | 137.54 | 140.68 | 3.14 | beat L28 | 75.74–77.43 |
+| `city` | `harvest-remix-vault` {"phase":"thaw","plan":{"from":"thaw","to":"city","cues":["L27","L28","L29"]}} | 140.68 | 147.28 | 6.60 | beat L29 | 77.43–81.00 |
+| `silo3` | `harvest-remix-silo` {"phase":"sun"} | 147.28 | 150.92 | 3.64 | downbeat 80 | 81.00–83.00 |
+| `door2` | `harvest-remix-door` {"phase":"open"} | 150.92 | 153.64 | 2.71 | downbeat 82 | 83.00–84.49 |
+| `sunrise` | `harvest-remix-scale` {"phase":"dawn"} | 153.64 | 160.06 | 6.42 | end L29 | 84.49–88.00 |
+| `secure` | `harvest-remix-padlock` {"phase":"secure"} | 160.06 | 161.87 | 1.81 | downbeat 87 | 88.00–89.00 |
+| `endcard` | `harvest-remix-aerial` {"phase":"end"} | 161.87 | 164.40 | 2.53 | downbeat 88 | 89.00–90.38 |
 
-## `open` — 0.00–7.96 s
+## `title` — 0.00–4.25 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
-| intro | *(instrumental)* | 0.00–8.35 | intro | Near-black blue ground. At centre a single wide, thin hairline rounded rectangle (an empty browser address bar, about 60% of the frame wide); at its left end a small closed padlock drawn in green (shackle arc, rounded body, keyhole) with a soft green glow beneath it; a thin caret blinking just right of the lock. The frame corners are clean. → On each downbeat frost dendrites (branching cyan-white hairlines) grow a step inward from all four frame corners; the caret blinks on every beat; the lock's glow breathes with the loudness. On bar 2 the padlock gives one small click: the shackle seats a pixel deeper and a thin green ring of light expands from it and fades. → The same dark frame with the hairline address bar and the small green padlock glowing at its left end; branching frost hairlines reach about a quarter of the way in from each corner, the centre and bar still clear. | downbeat 2 (4.25) | frost / center / cut | planted: one small green padlock, closed, in an empty address bar | — |
+| title | *(instrumental)* | 0.00–4.25 | intro | Night over a frozen plain; far off, the low block of a facility glows cold blue in the ice, an aurora moving over it. → A slow aerial push toward the facility; on bar 1 the title fades up, letter-spaced: HARVEST NOW, DECRYPT LATER, and NEAD beneath it. → The facility in the ice under the aurora, the title over it. | downbeat 1 (2.38) | frost / full / cut | the archive, seen from outside | — |
 
-## `tap` — 7.96–23.66 s
+## `open` — 4.25–6.12 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
-| L00 | L0 “You sent it on a Tuesday, twenty twenty-one” | 8.35–12.36 | verse1 | Dark blue-black frame. One glowing cyan fibre crosses the upper third from left to right, receding slightly toward the right. Halfway along, a small faceted prism housing clamps the fibre, a frost-lined chute dropping from it out of the bottom of frame; beside the housing a small dark reader panel. At the left end a single sealed envelope (a flat white card with folded flap and a small padlock on the seal) sits on the fibre. → The envelope hops along the fibre to the right in eased beat-steps, the fibre's light pulsing on each kick. On 'Tuesday,' a mono date stamp thuds onto the envelope's corner with a small settle: "TUE 2021-03-09". → The sealed envelope sits on the fibre about a third of the way across, its corner stamped "TUE 2021-03-09" in mono; the prism tap and its dark reader panel wait at centre; the chute below is empty. | "Tuesday," 9.74 | frost / left / match | the address-bar padlock is now the small lock on the Tuesday envelope's seal, still grey | — |
-| L01 | L1 “A little green padlock said the hard part was done” | 12.36–16.06 | verse1 | The stamped Tuesday envelope on the fibre, a third of the way across; its seal padlock small and grey. → The camera eases in on the envelope's seal. On 'padlock' the padlock clicks shut and turns green, a thin green ring of light popping off it; the envelope gives a satisfied little bounce and hops on toward the tap. → Close on the envelope's flap: the small padlock on the seal glowing green, the date stamp "TUE 2021-03-09" beside it, the fibre's cyan light running beneath; the prism tap visible just ahead on the right. | "padlock" 13.22 | frost / center / none | the padlock clicks green on the envelope: sealed, safe | — |
-| L02 | L2 “I couldn’t read a word of it, I didn’t even try” | 16.06–19.74 | verse1 | The green-locked envelope arriving under the prism tap at centre; the reader panel beside it dark. → The envelope slides under the tap; a thin scan line sweeps its face. On 'read' the reader panel lights and fills with a dense block of shifting mono hex and noise that churns with the hi-hats and never resolves into words. → The envelope under the prism at centre, its green padlock lit; beside it the reader panel full of churning cyan hex digits (e.g. "9F 3A C1 07 E4 …"), unreadable; the fibre glowing on either side. | "read" 16.70 | frost / center / none | the padlock holds: the tap sees only ciphertext | — |
+| intro | *(instrumental)* | 4.25–6.12 | intro | Ink-blue dark, close on a single glass padlock hanging in space, lit green from inside; the camera's own glass is clear. → The camera drifts around the lock; frost crystals grow in from the frame's edges on each downbeat; on bar 1 the lock's light breathes up and a green ring runs off it. → A glowing green glass padlock at centre, frost dendrites reaching in from the corners of the frame. | downbeat 2 (4.25) | frost / center / cut | planted: one small green padlock, closed, glowing | — |
+
+## `seal` — 6.12–12.36 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| wax | *(instrumental)* | 6.12–8.35 | intro | Close over a cream envelope lying face down in a pool of cold light; its flap open; a drop of red sealing wax pooling on the flap's tip. → A brass seal stamp with a padlock sigil descends into the frame and presses into the wax on bar 4; wax squeezes out at the rim, the stamp lifts. → The envelope's flap sealed with a round red wax seal bearing a padlock sigil, glistening; the paper lit cold blue from one side. | downbeat 4 (7.96) | frost / center / cut | the love letter sealed under the padlock sigil | — |
+| L00 | L0 “You sent it on a Tuesday, twenty twenty-one” | 8.35–12.36 | verse1 | The sealed envelope with its red wax padlock seal, close. → The camera pulls back and tilts as a postmark stamp slams onto the corner on 'Tuesday,': rings and the date "TUE 2021-03-09" in blue ink. → The whole envelope on the dark table: red wax seal at the flap, the postmark "TUE 2021-03-09" at the corner, cold light raking across the paper. | "Tuesday," 9.74 | frost / center / none | the Tuesday letter, sealed and dated | — |
+
+## `lock` — 12.36–13.49 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L01 | L1 “A little green padlock said the hard part was done” | 12.36–16.06 | verse1 | Macro on the wax seal's padlock: a small glass padlock set in the seal, dark. → On 'padlock' the lock clicks shut and lights from inside, bright green; a ring of green light runs out across the wax; frost glints at the frame edge. → Extreme close-up of a glowing green glass padlock, shallow focus, red wax around it falling out of focus. | "padlock" 13.22 | frost / center / cut | the padlock clicks green: sealed, safe | — |
+
+## `cable` — 13.49–16.06 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| cablerun | *(instrumental)* | 13.49–16.06 | verse1 | The ocean floor at night, a single armoured cable running into the dark. → A pulse of cyan light — the sealed letter — races along the cable past the camera on bar 7; silt drifts in the beam. → The cable glowing as the light runs away into the deep. | downbeat 7 (13.49) | frost / full / cut | the letter crossing the sea, sealed | — |
+
+## `tap` — 16.06–23.66 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L02 | L2 “I couldn’t read a word of it, I didn’t even try” | 16.06–19.74 | verse1 | The glowing cyan fibre across the upper third; the stamped, green-locked envelope arriving under the prism tap. → The envelope slides under the tap; a scan line sweeps its face; on 'read' the reader panel fills with churning hex that never resolves. → The envelope under the prism, its green padlock lit; the reader panel full of churning hex. | "read" 16.70 | frost / center / cut | the padlock holds: the tap sees only ciphertext | — |
 | L03 | L3 “I made myself a copy and I put it on ice” | 19.74–23.66 | verse1 | The envelope under the prism tap, the reader churning hex; the frost-lined chute below empty. → On 'copy' a translucent ghost of the envelope peels downward off the original (the original hops on along the fibre, untouched). The copy tips into the chute and falls; on 'ice' it hits the chute's floor at the bottom of the frame and frost blooms up the chute walls in a burst of branching white dendrites. → The original green-locked envelope riding off to the right along the fibre; below the tap the chute's walls thickly furred with frost, the pale copy lying in it, its padlock a frosted, colourless twin. | "ice" 22.96 | frost / bottom / none | the copy's padlock is a pale, frosted twin of the green one | — |
 
-## `keep` — 23.66–33.81 s
+## `keep` — 23.66–30.12 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
 | L04 | L4 “I don’t have to break you” | 23.66–27.13 | prechorus1 | Darkness in a cold room: one steel rack of small drawers lit by a single cold-blue strip light, the rest lost in fog; low mist on the floor. Drawer 0001, at eye level, stands open; the frosted copy of the Tuesday envelope slides down into it. → The camera glides close past the open drawer. On 'break' a cold glint runs across the frosted padlock on the envelope (a single bright specular streak), the lock untouched and whole. → Close on drawer 0001: inside, the pale envelope lies flat, its frosted padlock catching one bright glint; the drawer's frosted glass front and steel frame fill the right half; fog and darkness behind. | "break" 24.54 | frost / right / match | the frosted padlock filed in drawer 0001, glinting, unbroken | — |
 | L05 | L5 “I only have to keep you” | 27.13–32.00 | prechorus1 | Drawer 0001 open with the frosted envelope inside; one rack lit, fog around it. → The camera pulls back a step. On 'keep' the drawer slides shut with a small settle, frost creeps across its glass front, and its mono tag prints "0001 · TUE 2021-03-09" while its status lamp turns on pale. Behind it more racks fade up out of the fog, one by one. → A shut drawer with a frosted glass front and a lit mono tag "0001 · TUE 2021-03-09" in the right of frame; behind, a short aisle of steel racks faintly lit in cold blue, fading into fog; low floor mist. | "keep" 28.09 | frost / right / none | drawer 0001 shut on the frosted padlock: kept | — |
 
-## `harvest` — 33.81–45.49 s
+## `door` — 30.12–33.81 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| doorshut | *(instrumental)* | 30.12–33.81 | prechorus1 | A vast round vault door of frosted steel stands half open, cold light spilling from the archive behind it. → The door swings shut and its bolts drive home on bar 17; frost blooms across its face, vapour rolls off it. → The sealed door, frosted, its locking wheel still. | downbeat 17 (31.96) | frost / full / cut | the archive sealed | — |
+
+## `harvest` — 33.81–35.63 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
 | L06 | L6 “I’ll wait for you, I’ve got the time” (#0) | 34.22–38.07 | chorus1 | The full aisle in amber: two tall walls of drawers receding into fog toward a vanishing point at centre, frost on every glass front with an amber status lamp behind each, cold strip lights overhead; many drawers stand open. → Two rack-end counters frame the aisle mouth, rolling up from 00124; the camera dollies past them into the aisle a step per bar. On 'time' a wave of drawers slams shut from the camera toward the vanishing point, each lamp flicking amber as it closes; the counters (now behind the camera) roll to 00412. → A deep symmetrical aisle of shut, frosted drawers, hundreds of small amber lamps glowing behind frost on both walls, cold strip lights overhead; fog at the far end. | "time" 37.10 | amber / full / cut | hundreds of frosted padlocks fill the aisle | — |
-| L07 | L7 “Every byte you ever sent is mine” (#0) | 38.64–41.72 | chorus1 | The amber aisle, drawers shut; small square chutes open in the ceiling above both walls. → Sealed envelopes drop from the ceiling chutes into drawers that spring open to catch them, on the beats, faster and faster along the aisle; on 'mine' every drawer in view slams shut at once and all the amber lamps flare together. → Both walls of drawers shut and frosted, every amber lamp at full glow, a few late envelopes still falling from the ceiling chutes at the far end; the rack-end tag reads "01930". | "mine" 40.94 | amber / full / none | every envelope filed; the padlocks all frosted | — |
-| L08 | L8 “I’ll see you sooner or later” (#0) | 41.72–45.49 | chorus1 | The amber aisle at full glow; the camera moving toward the end of one rack. → The camera swings round the end of a rack to face its end panel, where a large mono drawer counter spins; on 'later' it stops on "08811" and the camera settles. → The steel end panel of a rack filling the left half of the frame, a mono counter "08811" in amber on it; to the right the aisle recedes into fog, amber lamps behind frost. | "later" 44.58 | amber / left / none | five figures of frosted padlocks | — |
+
+## `clock1` — 35.63–38.39 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| clock1 | *(instrumental)* | 35.63–38.64 | chorus1 | A clock face frozen in clear ice, its hands visible through it, gold light behind. → The second hand drags slower and slower as frost thickens; on the downbeat it stops. → The clock stopped inside the ice: all the time in the world. | downbeat 20 (37.47) | amber / full / cut | time held still | — |
+
+## `silo` — 38.39–41.15 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L07 | L7 “Every byte you ever sent is mine” (#0) | 38.64–41.72 | chorus1 | Looking straight down a vast round shaft lined with thousands of frosted drawers, gold lamps ringing it level below level into blue fog. → Sealed envelopes pour in from the rim and spiral down the shaft in a vortex, faster on every beat; on 'mine' every lamp in the shaft flares gold at once, ring after ring downward. → The shaft from above: a spiral of falling envelopes funnelling into the deep, rings of gold lamps glowing down to the fog. | "mine" 40.94 | amber / full / cut | every envelope falls into the archive | — |
+
+## `robot1` — 41.15–42.99 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| robot1 | *(instrumental)* | 41.15–42.99 | chorus1 | A robotic library arm on a rail between towering racks of frosted cartridges. → The arm whips along the rail and slots a cartridge home on the downbeat; status lights ripple. → The arm withdrawn, the cartridge seated, lights rippling down the rack. | downbeat 22 (41.15) | amber / full / cut | filed | — |
+| L08 | L8 “I’ll see you sooner or later” (#0) | 41.72–45.49 | chorus1 | Back in the amber aisle, the camera moving toward the end of one rack. → The camera swings round the end of a rack to face its end panel, where a large mono drawer counter spins; on 'later' it stops on "08811" and the camera settles. → The steel end panel of a rack filling the left half of the frame, a mono counter "08811" in amber on it; to the right the aisle recedes into fog, amber lamps behind frost. | "later" 44.58 | amber / left / cut | five figures of frosted padlocks | — |
+
+## `count` — 42.99–45.49 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| counter | *(instrumental)* | 42.99–45.49 | chorus1 | The amber aisle, the camera swinging toward a rack end. → The rack-end counter spins and stops. → The counter on the rack end in five figures. | downbeat 24 (44.82) | amber / full / cut | five figures of frosted padlocks | — |
 
 ## `hook` — 45.49–50.34 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
-| L09 | L9 “Harvest now, decrypt later” (#0) | 45.49–48.52 | chorus1 | A warm black frame, empty. → The line is set huge in capitals, left-aligned, word by word as it is sung; HARVEST lands in gold on 'Harvest', LATER also in gold. → "HARVEST NOW, DECRYPT LATER" in heavy warm-white capitals across the frame on warm black, HARVEST and LATER in gold. | "Harvest" 45.49 | amber / left / stamp | the collector's creed; no padlock on screen | — |
+| L09 | L9 “Harvest now, decrypt later” (#0) | 45.49–48.52 | chorus1 | Warm black, a sheet of frosted glass filling the frame, lit gold from behind. → The words are stamped into the frost as they are sung, each letter a clear cut through the ice with gold light blazing through; HARVEST and LATER land hardest, shaking frost dust loose. → "HARVEST NOW, DECRYPT LATER" cut through a wall of frost, gold light pouring through the letters, ice dust hanging in the beams. | "Harvest" 45.49 | amber / full / cut | the collector's creed, cut through the ice | — |
 
-## `gauge` — 50.34–61.80 s
+## `scale` — 50.34–61.80 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
-| gauge1 | *(instrumental)* | 50.34–54.02 | chorus1 | Back inside the cold room's aisle, amber lamps behind frost on both walls, only a few of them lit, some drawers standing open; hung from the ceiling over the aisle on two rods, a dark steel gauge panel: the mono kicker "COLD STORAGE · USED" above a big gold reading "0.0 PB" and an empty fill bar. The camera pushes slowly toward it, a step per bar. → On bar 27 the reading rolls up to 0.1 PB, the label "one Tuesday" appears under it and a sliver of the fill bar lights; a quarter of the open drawers slam shut in a wave down the aisle and the lamps flare. → The hanging gauge in the upper middle of the frame reading "0.1 PB", "one Tuesday", its bar barely started; below it the aisle recedes into fog, a scatter of amber lamps lit on the drawer walls. | downbeat 27 (50.34) | amber / center / cut | the archive's fill as a reading | — |
-| gauge2 | *(instrumental)* | 54.02–57.68 | chorus1 | The gauge at "0.1 PB", "one Tuesday". → On bar 29 the reading rolls to 4.7 PB, the label switching to "one company"; another wave of drawers slams shut and more amber lamps come on down the aisle. → The gauge a little closer: "4.7 PB" in gold, label "one company", the fill bar a fifth along; more of the aisle's lamps lit. | downbeat 29 (54.02) | amber / center / none | the archive's fill climbing | — |
-| gauge3 | *(instrumental)* | 57.68–59.51 | chorus1 | The gauge at "4.7 PB", "one company". → On bar 31 the reading rolls fast to 310 PB; label "one ministry"; drawers slam, the lamps flare and more stay lit. → The gauge reading "310.0 PB", label "one ministry", the fill bar past halfway; most of the aisle's amber lamps now lit. | downbeat 31 (57.68) | amber / center / none | the archive's fill climbing | — |
-| gauge4 | *(instrumental)* | 59.51–62.02 | chorus1 | The gauge at "310.0 PB", "one ministry". → On bar 32 the reading rolls into four figures, 9,400 PB; label "one continent"; the last open drawers slam and every lamp in the aisle comes on; it holds there to the cut. → The gauge large in the upper middle of the frame: "9,400.0 PB" under "COLD STORAGE · USED", label "one continent", the fill bar full; both walls of the aisle glowing with amber lamps behind frost. | downbeat 32 (59.51) | amber / center / none | four figures of petabytes on ice | — |
+| gauge1 | *(instrumental)* | 50.34–54.02 | chorus1 | Close on one frosted drawer front, its amber lamp behind the glass; a small gauge readout "0.1 PB · one Tuesday" beside it. → On bar 27 the camera starts a powers-of-ten pull back: the drawer becomes a rack, the readout rolling up as it goes. → One rack of glowing drawers in the dark, the readout "0.1 PB". | downbeat 27 (50.34) | amber / full / cut | the archive measured: one Tuesday | — |
+| gauge2 | *(instrumental)* | 54.02–57.68 | chorus1 | One rack in the dark. → On bar 29 the pull back continues: the rack becomes a hall of racks under strip lights; the reading rolls to 4.7 PB, "one company". → A hall of racks from above, amber lamps in rows; reading "4.7 PB · one company". | downbeat 29 (54.02) | amber / full / none | the archive measured: one company | — |
+| gauge3 | *(instrumental)* | 57.68–59.51 | chorus1 | A hall of racks from above. → On bar 31 the hall becomes a city block of data halls, roofs lit gold; the reading rolls to 310 PB, "one ministry". → City blocks of glowing data halls at night; reading "310 PB · one ministry". | downbeat 31 (57.68) | amber / full / none | the archive measured: one ministry | — |
+| gauge4 | *(instrumental)* | 59.51–62.02 | chorus1 | City blocks of data halls. → On bar 32 the view lifts to orbit: a whole continent of grids glowing gold under the blue night of the planet's limb; the reading rolls to 9,400 PB, "one continent". → From orbit: a continent of gold grid-light curving away under the blue atmosphere; reading "9,400 PB · one continent". | downbeat 32 (59.51) | amber / full / none | the archive measured: one continent | — |
 
-## `build` — 61.80–69.04 s
+## `build` — 61.80–63.17 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
 | L10 | L10 “They’re stacking up the qubits, a few more every year” | 62.02–65.62 | verse2 | Under cold white work lights, a bare frame of thin rods at centre with two plain circular plates hung on it; a small square chip at the bottom with a grid of mostly dark dots; mono readouts beside it: "300 K" and "QUBITS 53". → On each beat a new plate bolts onto the frame below the last with a small bounce, and a new row of the chip's dots lights; the qubit readout steps 53 → 127 → 433; on 'qubits,' the fifth and smallest plate bolts on and the readout lands "QUBITS 1121". The frame then turns slowly. → A bare five-stage frame of stacked circular plates, each smaller than the one above, on thin rods at centre, unlit metal under work lights; the chip at the bottom with its grid of dots lit cyan; readouts "300 K" and "QUBITS 1121". | "qubits," 63.10 | frost / center / cut | the padlocks are out of frame; the machine to open them is being built | — |
-| L11 | L11 “The experts said a decade, now the decade’s nearly here” | 65.62–69.04 | verse2 | The five-stage bare frame turning slowly; a new small mono readout "Q-DAY ETA 10 yr" appears at the right. → The ETA readout counts down fast, 10 → 9 → 8 … 1 yr, with the hats; on 'decade’s' it snaps to "Q-DAY ETA near", and the work lights blink once. → The bare five-plate frame at centre-left, chip lit; on the right the mono readout "Q-DAY ETA near" under "QUBITS 1121" and "300 K". | "decade’s" 67.70 | frost / right / none | the machine is nearly ready; the archive waits | — |
 
-## `rekey` — 69.04–76.45 s
+## `fab` — 63.17–65.62 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
-| L12 | L12 “You changed all of your passwords, you think that sees you through” | 69.04–73.00 | verse2 | The glowing fibre across the upper third, now dense: dozens of sealed envelopes hop along it in a stream, each passing under the prism tap; below it the frost-lined chute takes a steady drop of translucent copies. → On 'passwords,' every padlock on the envelopes riding the fibre re-keys at once: a ripple of green clicks runs left to right along the wire, each lock flashing a fresh green; the frosted copies already in the chute below stay pale and unchanged. → Upper third: a stream of envelopes with bright green padlocks along the cyan fibre; lower half: the chute packed with pale envelopes whose frosted padlocks are colourless and unchanged. | "passwords," 70.50 | frost / top / wipe | new green padlocks above; the old frosted copies below do not change | — |
-| L13 | L13 “But a blueprint or a birthday stays as true as true” | 73.00–76.46 | verse2 | The busy wire above, the frosted chute below. → The camera dips down into the chute. On 'blueprint' one old envelope turns face-up: through its frost a faint line drawing of a building floor plan shows; on 'birthday' a second one beside it shows a cake with candles and a date. Both carry a mono tag "valid: forever". → Inside the frosted chute: two pale envelopes side by side, one showing a faint cyan line drawing of a floor plan through the frost, the other a cake with candles; under each a mono tag "valid: forever". | "blueprint" 73.22 | frost / center / none | the frosted copies keep what never expires | — |
+| fab | *(instrumental)* | 63.17–65.62 | verse2 | A silicon wafer under cleanroom light, hundreds of chips on it. → The chips light their qubit grids one after another across the wafer. → A whole wafer of lit chips: a few more every year. | downbeat 34 (63.17) | frost / full / cut | the machine multiplied | — |
 
-## `newmath` — 76.45–85.15 s
+## `chip` — 65.62–69.04 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L11 | L11 “The experts said a decade, now the decade’s nearly here” | 65.62–69.04 | verse2 | Macro over a row of qubit chips on a dark bench, smallest at the left: four silicon dies wired with gold, each larger than the last. → The camera tracks along the row as each chip lights its grid of qubits, the counts 53, 127, 433, 1121 printed beside them; a "Q-DAY ETA" readout counts down its years on the hats and snaps to "near" on 'decade’s'. → Close on the largest chip, 1121 qubits lit cyan, gold bond wires shining; the readout "Q-DAY ETA near". | "decade’s" 67.70 | frost / full / cut | the machine to open them grows | — |
+
+## `rekey` — 69.04–73.00 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L12 | L12 “You changed all of your passwords, you think that sees you through” | 69.04–73.00 | verse2 | The glowing fibre across the upper third, now dense: dozens of sealed envelopes hop along it in a stream, each passing under the prism tap; below it the frost-lined chute takes a steady drop of translucent copies. → On 'passwords,' every padlock on the envelopes riding the fibre re-keys at once: a ripple of green clicks runs left to right along the wire, each lock flashing a fresh green; the frosted copies already in the chute below stay pale and unchanged. → Upper third: a stream of envelopes with bright green padlocks along the cyan fibre; lower half: the chute packed with pale envelopes whose frosted padlocks are colourless and unchanged. | "passwords," 70.50 | frost / top / cut | new green padlocks above; the old frosted copies below do not change | — |
+
+## `relic` — 73.00–76.45 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L13 | L13 “But a blueprint or a birthday stays as true as true” | 73.00–76.46 | verse2 | Darkness; two blocks of clear ice hang in a shaft of cold light, turning slowly. → On 'blueprint' the first block catches the light: frozen inside it, the line drawing of a building's floor plan, glowing through the ice; on 'birthday' the second: a cake with candles and a date. Tags hang from both: "valid: forever". → Two ice blocks side by side, a blueprint frozen in one, a birthday cake in the other, light refracting through them, ice dust in the beam. | "blueprint" 73.22 | frost / center / cut | the frosted copies keep what never expires | — |
+
+## `newmath` — 76.45–79.66 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
 | L14 | L14 “They handed you the new math” | 76.46–79.56 | prechorus2 | Dark frame; a sparse 3D lattice of faint points joined by hairlines, rotating slowly; a small mono label in the corner "ML-KEM · FIPS 203 · 2024". → Shells of lattice points light green outward from the origin on each beat; on 'math' the whole lattice snaps into full crystal and one short bright vector from the origin flares. → A complete crystalline lattice of green-lit points and hairlines filling the centre, a single short bright green vector from its origin; the corner label "ML-KEM · FIPS 203 · 2024". | "math" 78.72 | frost / center / cut | a new kind of lock, the lattice, handed over | — |
-| L15 | L15 “You said you’d get around to that” | 79.84–85.21 | prechorus2 | The full green lattice turning, its short vector bright. → The lattice folds down plane by plane into a plain cardboard crate; on 'that' a stamp slams onto the crate's side, "LATER" in heavy condensed capitals, and the crate slides off into the dark at the right. → A plain cardboard crate stamped "LATER" in condensed capitals, sliding out at the right edge into darkness; the lattice gone; only the corner label remains. | "that" 81.46 | frost / right / none | the new lock, boxed and stamped LATER | — |
 
-## `cryo` — 85.15–105.24 s
+## `crate` — 79.66–83.32 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L15 | L15 “You said you’d get around to that” | 79.84–85.21 | prechorus2 | Close on the green lattice beginning to fold. → The lattice folds down plane by plane into a plain cardboard crate; on 'that' a stamp slams onto the crate's side, "LATER" in heavy condensed capitals, and the crate slides off into the dark at the right. → A plain cardboard crate stamped "LATER" in condensed capitals, sliding out at the right edge into darkness; the lattice gone; only the corner label remains. | "that" 81.46 | frost / right / cut | the new lock, boxed and stamped LATER | — |
+
+## `stacks` — 83.32–85.15 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| stacks | *(instrumental)* | 83.32–85.56 | prechorus2 | A dark warehouse: shelves of identical crates to the ceiling and beyond. → The camera pulls back from the LATER crate slid onto a shelf, back and up until it is one of thousands. → An endless warehouse of crates stamped LATER. | downbeat 45 (83.32) | frost / full / cut | the new lock, shelved | — |
+
+## `cryo` — 85.15–86.97 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
 | L16 | L16 “I’ll wait for you, I’ve got the time” (#1) | 85.56–89.42 | chorus2 | Warm black. The chandelier complete at centre: five gold-plated circular plates on rods, coax lines spiralling between them, the chip at the bottom; readouts beside the plates; below, out of focus, rows of frosted drawers with their padlocks. It turns slowly; readout "50 K". → Plates flash a rim light top to bottom on the downbeats; on 'time' the temperature readout drops to "4 K" and frost creeps a little up the lowest plate's rods. → The gold chandelier at centre, rim-lit, turning; the readout beside it "4 K"; the blurred frosted drawers below. | "time" 88.52 | amber / center / cut | the frosted padlocks wait under the chandelier | — |
-| L17 | L17 “Every byte you ever sent is mine” (#1) | 89.95–92.96 | chorus2 | The turning gold chandelier at "4 K". → The camera tilts down the coax spirals toward the chip; on 'mine' the readout drops to "800 mK" and the chip's qubit grid glows gold. → Lower stages of the chandelier filling the frame, coax coils catching gold light, the chip glowing gold at the bottom; readout "800 mK". | "mine" 92.22 | amber / center / none | the padlocks below, frosted, waiting | — |
-| L18 | L18 “I’ll see you sooner or later” (#1) | 92.96–96.64 | chorus2 | Close on the lower stages, readout "800 mK". → The camera keeps tilting down past the chip until the frosted drawers below come into focus, the chandelier hanging above them; on 'later' the readout drops to "100 mK". → Frosted drawer fronts with pale padlocks in focus in the lower half; the gold chandelier hanging above them, blurred; readout "100 mK". | "later" 95.84 | amber / bottom / none | the frosted padlocks, close, under the machine | — |
-| L19 | L19 “Harvest now, decrypt later” (#1) | 96.82–99.82 | chorus2 | Frosted drawers in focus under the hanging chandelier; readout "100 mK". → The readout drops to "20 mK"; on 'decrypt' a single hairline crack runs across one frosted padlock behind a drawer front, with a tiny bright tick of light. → One frosted padlock large in the centre behind its drawer glass, a thin bright crack across its body; the chandelier glowing gold above; readout "20 mK". | "decrypt" 98.80 | amber / center / none | first crack: a hairline across one frosted padlock | — |
-| dim | *(instrumental)* | 99.82–105.24 | chorus2 | The full chandelier at centre, all five gold plates lit, turning; the cracked padlock below. → The chandelier hums alone; on each downbeat one plate dims to black, top to bottom; on bar 56 the last plate and the chip go dark. → A near-black frame: the chandelier only a faint silhouette of plates and rods, its readout "20 mK" the last thing lit. | downbeat 56 (103.41) | amber / center / none | the cracked padlock in the dark below | — |
 
-## `backlog` — 105.24–117.94 s
+## `clock2` — 86.97–89.71 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| clock2 | *(instrumental)* | 86.97–89.95 | chorus2 | The ice clock again, frost thicker, the chandelier's gold light on it. → Its hands tick once on the downbeat, and stop. → The clock in thick ice. | downbeat 48 (88.79) | amber / full / cut | time held still | — |
+
+## `silo2` — 89.71–92.91 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L17 | L17 “Every byte you ever sent is mine” (#1) | 89.95–92.96 | chorus2 | Looking down the round shaft of drawers, now frosted white, gold lamps far below. → The camera falls down the shaft past ring after ring of frosted drawers, envelopes falling with it; on 'mine' the deep glows gold. → Deep in the shaft: frosted rings of drawers rushing past, the gold glow below. | "mine" 92.22 | amber / full / cut | every byte falls into the cold | — |
+
+## `robot2` — 92.91–94.28 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L18 | L18 “I’ll see you sooner or later” (#1) | 92.96–96.64 | chorus2 | The gold chandelier above, the frosted drawers below in focus. → The camera settles low on the drawers under the hanging machine; on 'later' the readout drops to "100 mK". → Frosted drawer fronts with pale padlocks in focus in the lower half; the gold chandelier hanging above them, blurred; readout "100 mK". | "later" 95.84 | amber / bottom / cut | the frosted padlocks, close, under the machine | — |
+| robot2 | *(instrumental)* | 92.96–94.28 | chorus2 | The library arm between the racks, faster now. → Cartridges slot home in a rhythm down the rack. → Racks full, lights rippling. | downbeat 50 (92.46) | amber / full / cut | filed | — |
+
+## `under` — 94.28–96.56 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| below | *(instrumental)* | 94.28–96.82 | chorus2 | The drawers under the hanging chandelier. → The readout drops as the camera settles low on the drawers. → Frosted drawers under the gold machine. | downbeat 51 (94.28) | amber / full / cut | the frosted padlocks, under the machine | — |
+
+## `crack` — 96.56–99.82 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L19 | L19 “Harvest now, decrypt later” (#1) | 96.82–99.82 | chorus2 | Macro on a frosted glass padlock behind ice, gold light from above. → Frost thickens across the lock; on 'decrypt' a crack runs through it with a bright tick of gold light from inside. → A frosted padlock with a bright hairline crack across its body, gold light leaking out of it. | "decrypt" 98.80 | amber / center / cut | first crack: a hairline across one frosted padlock | — |
+
+## `dim` — 99.82–105.24 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| dim | *(instrumental)* | 99.82–105.24 | chorus2 | The full chandelier at centre, all five gold plates lit, turning; the cracked padlock below. → The chandelier hums alone; on each downbeat one plate dims to black, top to bottom; on bar 56 the last plate and the chip go dark. → A near-black frame: the chandelier only a faint silhouette of plates and rods, its readout "20 mK" the last thing lit. | downbeat 56 (103.41) | amber / center / cut | the cracked padlock in the dark below | — |
+
+## `backlog` — 105.24–110.70 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
 | board | *(instrumental)* | 105.24–107.00 | bridge | Flat paper-white daylight: a kanban board seen straight on, column headers "Q3 2022", "Q4 2022", "Q1 2023" across the top, the columns empty. → On bar 57 the board snaps into place with a small settle, ruled column lines drawing down. → An empty daylight kanban board, quarter headers along the top, thin grey column rules, no cards yet. | downbeat 57 (105.24) | plain / full / cut | the defenders' office; no padlock | — |
 | L20 | L20 “Ticket opened, priority low” | 107.00–110.66 | bridge | The empty daylight board, column "Q3 2022" at the left. → A large ticket card drops into the Q3 2022 column on 'opened,' and its fields fill in: "PQC-114 · Migrate key exchange to post-quantum", an assignee circle, a crate icon as attachment; on 'low' a red "LOW" chip stamps onto the card. → One big white card in the Q3 2022 column: "PQC-114", "Migrate key exchange to post-quantum", a grey assignee circle, a small crate icon stamped LATER, and a red "LOW" chip. | "low" 109.54 | plain / left / none | the boxed lattice is the ticket's attachment | — |
 | L21 | L21 “Pushed to next quarter, four years in a row” | 110.66–114.20 | bridge | The PQC-114 card in the Q3 2022 column. → The card is shoved one column right on every half-beat with a small paper skid, the quarter headers sliding past behind it (Q4 2022, Q1 2023 … Q2 2026); a "Moved" counter on the card ticks up; on 'row' it lands in "Q3 2026" reading "Moved 16×". → The card, slightly askew from its last skid, under the header "Q3 2026"; a small counter on it "Moved 16×"; the red LOW chip and crate icon still on it. | "row" 113.22 | plain / center / none | the lattice crate pushed quarter after quarter | — |
-| L22 | L22 “Somebody asked, “Who’d even store it?”” | 114.20–117.87 | bridge | The PQC-114 card in Q3 2026, "Moved 16×". → A comment box opens under the card, a small avatar circle at its left, and types itself: "who'd even store it?"; on 'store' a thumbs-up reaction pops on with the count 3. → Under the card, a small comment: "who'd even store it?" with a thumbs-up and "3"; the card above with LOW chip and crate icon, in flat daylight. | "store" 116.94 | plain / bottom / none | the defenders doubt the archive exists | — |
+
+## `pages` — 110.70–112.52 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| pages | *(instrumental)* | 110.70–112.52 | bridge | A desk calendar in office daylight, quarter pages. → Pages tear away one per beat in a gust, Q3 2022 to Q2 2026. → Pages flying, the quarter still turning. | downbeat 60 (110.70) | plain / full / cut | the lock postponed | — |
+
+## `backlog2` — 112.52–114.20 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| board2 | *(instrumental)* | 112.52–114.20 | bridge | The PQC-114 card mid-shove. → It lands in its last column, Moved 16×. → The card in Q3 2026. | downbeat 61 (112.52) | plain / full / cut | the lattice crate pushed | — |
+
+## `comment` — 114.20–116.17 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L22 | L22 “Somebody asked, “Who’d even store it?”” | 114.20–117.87 | bridge | Close on the empty space under the PQC-114 card. → A comment box opens under the card, a small avatar circle at its left, and types itself: "who'd even store it?"; on 'store' a thumbs-up reaction pops on with the count 3. → Close on the comment: "who'd even store it?" with a thumbs-up and "3", in flat daylight. | "store" 116.94 | plain / center / cut | the defenders doubt the archive exists | — |
+
+## `outside` — 116.17–117.94 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| outside | *(instrumental)* | 116.17–117.94 | bridge | The facility in the ice at night from the air, the aurora overhead. → The camera glides over its roofs: vents breathing vapour, rows of cold lights. → The archive from outside: somebody stores it. | downbeat 63 (116.17) | frost / full / cut | the answer to "who'd even store it" | — |
 
 ## `petabytes` — 117.94–123.93 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
-| L23 | L23 “Petabytes, darling. I adore it.” | 117.94–123.72 | bridge | Cold room, amber lamps: tight on one frosted drawer front filling the frame, its padlock pale behind the glass. → On 'Petabytes,' the camera starts a long pullback up and out: the drawer becomes a rack, the rack an aisle, the aisle one line among hundreds of racks laid out like a city grid under a dark ceiling, amber lamps as city lights; a wall tag swings into view, "31,000 PB". → High overhead view of an endless grid of racks receding into fog, thousands of tiny amber lamps behind frost; a mono wall tag "31,000 PB" in the upper corner. | "Petabytes," 117.94 | amber / full / pullback | an endless field of frosted padlocks | — |
+| L23 | L23 “Petabytes, darling. I adore it.” | 117.94–123.72 | bridge | From orbit at night: the archive's gold grid across a continent. → On 'Petabytes,' the camera pulls further back: the whole night side of the planet glows with archive grids, gold veins across every landmass, the blue atmosphere a thin line. → The night side of the earth, every continent veined with gold grid-light; a mono tag "31,000 PB". | "Petabytes," 117.94 | amber / full / cut | a planet of frosted padlocks | — |
 
-## `base` — 123.93–134.51 s
+## `base` — 123.93–125.29 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
 | L24 | L24 “I waited for you, I had the time” | 123.93–128.25 | finalchorus | The gold chandelier at centre, turning, frost on its outer rods, readout "20 mK"; the chip's qubit grid partly lit. → Qubit dots light row by row with the beats; on 'time' the readout settles at "10 mK · BASE" and every qubit on the chip is lit. → The gold chandelier at centre, frost on its rods, every dot on the chip at the bottom lit gold; readout "10 mK · BASE". | "time" 126.84 | amber / center / cut | the machine at base temperature above the cracked padlocks | — |
-| L25 | L25 “Every byte you ever sent is mine” (#2) | 128.25–131.02 | finalchorus | The chandelier at base, all qubits lit. → Gold light runs down the coax spirals from the top plate to the chip; on 'mine' the frosted drawers below (out of focus) all light amber at once, the machine claiming them. → The gold chandelier with glowing coax spirals at centre; below it a wide band of blurred drawers, every lamp amber; readout "10 mK · BASE". | "mine" 130.70 | amber / full / none | every frosted padlock in the archive lit, claimed | — |
-| L26 | L26 “The fridge hums low, the key falls out” | 131.02–134.51 | finalchorus | The chandelier at base, drawers glowing below. → On 'hums' the stages shiver with a low visible wobble; the chip's lit dots rearrange into the outline of a toothed key; on 'falls' the key drops out of the bottom of the chip, spinning slightly, and falls out of the frame. → The chandelier above, its chip now dark with a key-shaped gap of unlit dots; a toothed key of gold dots in mid-fall in the lower frame, heading out of the bottom edge. | "falls" 133.20 | amber / bottom / none | the key falls toward the padlocks | — |
 
-## `thaw` — 134.51–160.06 s
+## `clock3` — 125.29–128.25 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
-| L27 | L27 “So that’s what you were on about” | 134.51–137.54 | finalchorus | The cold aisle in blue-black, drawers frosted, padlocks pale; at the far end a wall of flat white daylight starts to roll toward the camera. → The daylight wave sweeps down the aisle, the frost retreating from every drawer front in one fast pass; on 'about' the padlocks behind the glass spring open in a chain down the aisle, shackles flipping up one after another. → A flat paper-white aisle of clear glass drawer fronts, every padlock open with its shackle up, small red broken seals; ink-dark rack lines in daylight. | "about" 136.72 | plain / full / wipe | padlocks spring open in a chain down the aisle | — |
-| L28 | L28 “I said sooner or later” | 137.54–140.47 | finalchorus | The white aisle of open padlocks; the camera approaching drawer 0001, its tag "0001 · TUE 2021-03-09". → Drawer 0001 slides open first; the Tuesday envelope lifts out and its flap unfolds; on 'later' the letter opens flat into ruled lines of handwriting-like strokes (illegible ink lines, a date in serif italic at the top). → Drawer 0001 open at the left with its tag "0001 · TUE 2021-03-09"; at centre an unfolded white page of ruled ink lines, an italic serif date at its top, an open padlock and broken red seal beside it. | "later" 139.64 | plain / center / none | drawer 0001 opens first: the Tuesday envelope, the plant paid off | — |
-| L29 | L29 “Harvested then, decrypted now” | 140.68–153.64 | finalchorus | The unfolded Tuesday page at centre, drawer 0001 open. → On 'decrypted' every drawer in the aisle opens at once and envelopes unfold into line drawings (blueprints, cakes, ruled letters); over the long held "now" the camera rises up and over the racks, revealing a whole white city of open drawers and unfolded pages. → High overhead view in flat daylight: a vast grid of open drawers and thousands of small unfolded white pages with ink line drawings, red broken seals scattered across them. | "decrypted" 144.26 | plain / full / none | every padlock open, every page readable | — |
-| settle | *(instrumental)* | 153.64–160.06 | finalchorus | The white city of open drawers from above. → The pages settle; from bar 85 the daylight drains toward a single point at centre, the frame darkening around it. → A dark frame with one small point of white light at the centre, the open archive barely visible around it. | downbeat 85 (156.40) | plain / center / none | the open archive fades to a point | — |
+| clock3 | *(instrumental)* | 125.29–128.25 | finalchorus | The ice clock, gold light hot on it. → The ice cracks across the face and falls away; the hands start to run again. → The clock free of the ice, its hands sweeping. | downbeat 68 (125.29) | amber / full / cut | time runs out | — |
 
-## `secure` — 160.06–164.40 s
+## `qubits` — 128.25–131.02 s
 
 | cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
 |---|---|---|---|---|---|---|---|---|
-| L30 | L30 “Connection secure.” | 160.76–162.26 | outro | Near-black blue ground: the hairline address bar at centre, the small green padlock at its left end, closed and intact, glowing; the frame corners clean of frost. → On 'secure.' the padlock gives its small click and a tiny tooltip opens under it, "Connection secure"; then one last thin thread of frost creeps in from the lower-left corner. → The dark address bar with the small glowing green padlock, a small tooltip "Connection secure" beneath it, and a single frost hairline reaching in from the lower-left corner. | "secure." 161.56 | frost / center / match | the little green padlock again, closed, intact: telling the truth, today | — |
+| L25 | L25 “Every byte you ever sent is mine” (#2) | 128.25–131.02 | finalchorus | Macro on the chip at the bottom of the chandelier, gold package, dark silicon. → Qubits light row by row; gold light runs down the bond wires; on 'mine' every qubit flares gold at once. → The chip filling the frame, every qubit blazing gold, bond wires lit, frost on the package's edges. | "mine" 130.70 | amber / full / cut | the machine at base: every qubit lit | — |
+
+## `key` — 131.02–134.51 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L26 | L26 “The fridge hums low, the key falls out” | 131.02–134.51 | finalchorus | The underside of the chandelier's chip in gold light, vapour curling below. → On 'hums' the rig shivers and the lit qubits gather into a toothed key; on 'falls' the key drops out of the chip and falls in slow motion through the cold vapour, turning, down toward a frosted drawer and its padlock. → A gold key in mid-fall, turning through curls of vapour, a frosted padlock waiting below. | "falls" 133.20 | amber / center / cut | the key falls toward the padlocks | — |
+
+## `unlock` — 134.51–136.20 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L27 | L27 “So that’s what you were on about” | 134.51–137.54 | finalchorus | The cold aisle in blue-black, drawers frosted, padlocks pale; at the far end a wall of warm sunrise light starts to roll toward the camera. → The sunrise sweeps down the aisle, frost melting from every drawer front into steam; on 'about' the padlocks spring open in a chain down the aisle, shackles flipping up. → A warm gold aisle in sunrise light, steam rising from the drawer fronts, every padlock open, small red broken seals. | "about" 136.72 | dawn / full / wipe | padlocks spring open in a chain down the aisle | — |
+| unlock | *(instrumental)* | 134.51–136.20 | finalchorus | Macro: the gold key at the keyhole of a frosted padlock. → The key slides in and turns; the shackle springs open in a burst of frost. → The padlock open, the key in it, frost falling. | downbeat 73 (134.38) | amber / full / cut | the lock opened | — |
+
+## `thaw` — 136.20–137.54 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| wave | *(instrumental)* | 136.20–137.54 | finalchorus | The aisle at sunrise. → Padlocks spring open in a chain down the aisle. → A warm gold aisle, every padlock open. | downbeat 74 (136.20) | dawn / full / cut | padlocks spring open | — |
+
+## `letter` — 137.54–140.68 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L28 | L28 “I said sooner or later” | 137.54–140.47 | finalchorus | Close on the Tuesday envelope in warm sunrise light, its red wax seal and the padlock sigil. → The seal cracks and breaks in two; the flap lifts; on 'later' the letter slides out and unfolds flat: ruled lines of ink, a date in serif italic at the top. → The opened letter in golden light, ruled ink lines and the date "Tuesday, 9 March 2021" in italic, the broken wax seal beside it. | "later" 139.64 | dawn / center / cut | the Tuesday letter opens: the plant paid off | — |
+
+## `city` — 140.68–147.28 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L29 | L29 “Harvested then, decrypted now” | 140.68–153.64 | finalchorus | Drawer 0001 open in the sunrise aisle. → On 'decrypted' every drawer in the aisle opens at once and envelopes unfold into line drawings (blueprints, cakes, ruled letters); over the long held "now" the camera rises up and over the racks, revealing a whole golden city of open drawers and unfolded pages. → High overhead in warm sunrise light: a vast grid of open drawers and unfolded pages, red broken seals scattered across them, steam rising. | "decrypted" 144.26 | dawn / full / cut | every padlock open, every page readable | — |
+
+## `silo3` — 147.28–150.92 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| sunshaft | *(instrumental)* | 147.28–150.92 | finalchorus | Looking up the silo of drawers from deep inside it. → Sunlight pours down the shaft from the rim; frost melts off ring after ring, steam rising. → The shaft flooded with warm light. | downbeat 80 (147.28) | dawn / full / cut | the thaw reaches the deep | — |
+
+## `door2` — 150.92–153.64 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| dooropen | *(instrumental)* | 150.92–153.64 | finalchorus | The vault door, sealed, frost on its face, sun behind the camera. → The locking wheel turns and the door swings open into the sunrise. → The open door, golden light pouring in. | downbeat 82 (150.92) | dawn / full / cut | the archive opened | — |
+
+## `sunrise` — 153.64–160.06 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| settle | *(instrumental)* | 153.64–160.06 | finalchorus | From orbit: the planet at dawn, the archive grids across the continents. → The terminator sweeps across the planet: the sun rises over the edge, the archive's gold grid lights go out one region after another as daylight reaches them; on bar 85 the sun clears the limb and floods the frame. → The planet's limb with the sun breaking over it, a blaze of light, the grids faded into daylight. | downbeat 85 (156.40) | amber / full / cut | the open archive in daylight | — |
+
+## `secure` — 160.06–161.87 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| L30 | L30 “Connection secure.” | 160.76–162.26 | outro | Ink-blue dark: the glass padlock glowing green, closed, intact. → On 'secure.' the lock gives its small click, a tiny "Connection secure" tooltip opens under it; then one last thread of frost creeps in from the frame's lower-left corner. → The glowing green padlock, "Connection secure" beneath it, a single frost thread reaching in from the corner. | "secure." 161.56 | frost / center / cut | the little green padlock again, closed, intact: telling the truth, today | — |
+
+## `endcard` — 161.87–164.40 s
+
+| cue | lyric (occurrence) | span | section | initial → action → result | payoff anchor | palette / region / transition | motif state | assets / notes |
+|---|---|---|---|---|---|---|---|---|
+| end | *(instrumental)* | 161.87–164.40 | outro | The facility in the ice at night under the aurora. → The title and credit fade up. → The end card. | downbeat 88 (161.87) | frost / full / cut | the end | — |
 
 ## Coverage
 
-Every sung line has one cue (31/31); the 15 entries tile 0–164.40 s with no gaps or overlaps. Instrumental passages covered: intro (0.00–8.35), gauge1 (50.34–54.02), gauge2 (54.02–57.68), gauge3 (57.68–59.51), gauge4 (59.51–62.02), dim (99.82–105.24), board (105.24–107.00), settle (153.64–160.06).
+Every sung line has one cue (31/31); the 49 entries tile 0–164.40 s with no gaps or overlaps. Instrumental passages covered: title (0.00–4.25), intro (4.25–6.12), wax (6.12–8.35), cablerun (13.49–16.06), doorshut (30.12–33.81), clock1 (35.63–38.64), robot1 (41.15–42.99), counter (42.99–45.49), gauge1 (50.34–54.02), gauge2 (54.02–57.68), gauge3 (57.68–59.51), gauge4 (59.51–62.02), fab (63.17–65.62), stacks (83.32–85.56), clock2 (86.97–89.95), robot2 (92.96–94.28), below (94.28–96.82), dim (99.82–105.24), board (105.24–107.00), pages (110.70–112.52), board2 (112.52–114.20), outside (116.17–117.94), clock3 (125.29–128.25), unlock (134.51–136.20), wave (136.20–137.54), sunshaft (147.28–150.92), dooropen (150.92–153.64), settle (153.64–160.06), end (161.87–164.40).

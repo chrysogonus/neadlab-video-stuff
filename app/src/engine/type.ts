@@ -22,6 +22,8 @@ for (const wt of [400, 600]) {
 for (const [n, f] of [['300', 'Light'], ['400', 'Regular'], ['500', 'Medium'], ['600', 'SemiBold'], ['700', 'Bold']] as const)
   DEFS.push({ family: `Plex-${n}`, file: `src/IBMPlexMono-${f}.ttf` });
 DEFS.push({ family: 'PlexItalic-400', file: 'src/IBMPlexMono-Italic.ttf' });
+// handwriting
+DEFS.push({ family: 'Caveat', file: 'src/Caveat.ttf' });
 
 /** Convenience family names. */
 export const F = {
@@ -37,6 +39,8 @@ export const F = {
   serif(weight = 400, italic = false): string {
     return `${italic ? 'CormorantItalic' : 'Cormorant'}-${weight < 500 ? 400 : 600}`;
   },
+  /** Handwriting (Caveat, at its default weight). */
+  hand(): string { return 'Caveat'; },
   mono(weight = 400, italic = false): string {
     if (italic) return 'PlexItalic-400';
     return `Plex-${nearest([300, 400, 500, 600, 700], weight)}`;

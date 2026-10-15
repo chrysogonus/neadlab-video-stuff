@@ -17,11 +17,12 @@
 // frame; a GL pass looks at it through a slightly yawed and pitched plane (real perspective) and lights it: the
 // blinds' bars of warm sun (breathing with the loudness) over cooler ambient office light. A pure function of t.
 import * as THREE from 'three';
+import { fitOf } from './harvest-remix-kit';
 import type { Frame } from '../engine/scene';
 import type { SceneSchema } from '../engine/schema';
 import type { Word } from '../engine/lyrics';
 import { FSPass, Layer2D } from '../engine/gl';
-import { measure, smart } from '../engine/type';
+import { F, font, measure, smart } from '../engine/type';
 import { clamp, ease, hash, lerp, noise1, prog, springStep } from '../engine/util';
 import { LibScene, H, W, arrive, cursorOn, hit, mixHex, pill, text, typed, typedWith, wrap, type Look } from './_lib';
 
@@ -34,6 +35,7 @@ export const schema: SceneSchema = {
     title: { type: 'string', default: 'Migrate key exchange to post-quantum', description: 'the ticket title (wraps to two or three rows)' },
     from: { type: 'string', default: 'Q3 2022', description: 'the first quarter column, "Q<n> <year>"; the columns step a quarter each' },
     moves: { type: 'number', default: 16, min: 1, max: 40, description: 'how many quarters the card is pushed in all (the board has that many columns after the first, and a few more)' },
+    view: { type: 'string', enum: ['board', 'comment'], default: 'board', description: 'board: the camera on the board and the card; comment: a close insert on the comment slip under the card' },
   },
   cue: {
     column: { type: 'string', default: '', description: 'the quarter the card is in after this cue; on a `moved` cue the card is shoved there, landing on the anchor' },
@@ -48,7 +50,7 @@ export const schema: SceneSchema = {
   },
 };
 
-interface P { ticket: string; title: string; from: string; moves: number }
+interface P { ticket: string; title: string; from: string; moves: number; view: 'board' | 'comment' }
 interface C { column: string; priority: string; moved: number; comment: string; likes: number }
 
 // ------------------------------------------------------------------ the board (board px, y down)
@@ -102,6 +104,19 @@ void main() {
 }`;
 
 const lin = (r: number, g: number, b: number) => new THREE.Vector3(r, g, b);
+
+/** The finished tickets of the past quarters: key, title, assignee. */
+const DONE: [string, string, string][] = [
+  ['PLAT-311', 'Fix flaky login test on CI', 'JM'], ['PLAT-298', 'Dark mode for settings page', 'AK'], ['OPS-87', 'Upgrade runtime to Node 20', 'RS'],
+  ['SEC-142', 'Rotate staging API keys', 'LT'], ['PLAT-305', 'Reduce cold-start time by 30%', 'JM'], ['WEB-77', 'Cookie banner copy (legal)', 'EB'],
+  ['OPS-91', 'Move CI runners to new region', 'RS'], ['SEC-150', 'Renew wildcard TLS certificate', 'LT'], ['PLAT-320', 'Refactor billing webhooks', 'AK'],
+  ['WEB-80', 'Fix PDF export margins', 'EB'], ['SEC-155', 'Enable SSO for partner portal', 'LT'], ['OPS-95', 'Holiday on-call rota', 'RS'],
+  ['PLAT-333', 'New onboarding checklist', 'JM'], ['SEC-161', 'Pen-test follow-ups (low)', 'LT'],
+];
+/** Sticky notes, in a hand. */
+const STICKY = ['Q-day??\nask Lena', 'after the\nlaunch!', 'budget:\nnext FY', 'not urgent\n(yet)', 'blocked:\nvendor', 're-estimate\n→ 13 pts'];
+/** Old marker, half wiped off the board. */
+const GHOST = ['sprint 14 goals', 'freeze 15 Dec', 'OKR: uptime 99.9', 'retro → Thu', 'demo day!'];
 
 export default class HarvestRemixBacklog extends LibScene<P, C> {
   static schema = schema;
@@ -237,13 +252,19 @@ export default class HarvestRemixBacklog extends LibScene<P, C> {
     zoom *= 1 + 0.07 * ease.inOutCubic(prog(t, this.tSlip, this.slipEnd + 0.3));
     zoom *= 1 + 0.004 * a.hit('kick', t, 0.1);
     const y = CAM0.y + 46 * ease.inOutCubic(prog(t, this.tSlip, this.tSlip + 1.6)) + 8 * noise1(t * 0.3, 3);
-    return { x: x + 10 * noise1(t * 0.25, 7), y, zoom };
+    return { x: x + 10 * noise1(t * 0.25, 7), y, zoom: zoom / fitOf(this.ctx.style) };
   }
 
   override render(f: Frame, out: THREE.WebGLRenderTarget) {
     const t = f.t, k = this.lookAt(t), c = this.board.ctx;
     const card = this.card(t);
-    const cam = this.camera(t);
+    let cam = this.camera(t);
+    if (this.P.view === 'comment') {
+      // the insert: close on the comment slip, pushing in slowly
+      const sx = card.x - CW / 2 + 48 + (CW - 48) / 2, sy = CARD_Y + this.CH + 24 + 98;
+      const u = prog(t, f.start, f.end);
+      cam = { x: sx - 30 + 40 * u, y: sy - 40, zoom: lerp(1.85, 2.0, u) };
+    }
     this.board.clear(mixHex(k.bg, k.dim, 0.42)); // the wall
     c.save();
     c.translate(LW / 2, LH / 2);
@@ -263,7 +284,7 @@ export default class HarvestRemixBacklog extends LibScene<P, C> {
     u.uShift!.value = (t - this.tBoard) * 4 - 90; // the sun creeps along the wall
     this.light.render(this.ctx.renderer, out);
     const s = hit(t, this.tStamp, 0.05) * 3;
-    return { bloom: 0.1, bloomThreshold: 1.05, halation: 0, ca: 0.18, grain: 0.03, vignette: 0.24, hud: 0, shake: [s * 0.6, s] as [number, number] };
+    return { bloom: 0.1, bloomThreshold: 1.05, halation: 0, ca: 0.18, grain: 0.016, vignette: 0.24, hud: 0, shake: [s * 0.6, s] as [number, number] };
   }
 
   // ------------------------------------------------------------------ the board
@@ -287,6 +308,7 @@ export default class HarvestRemixBacklog extends LibScene<P, C> {
     c.fillStyle = k.rule;
     c.fillRect(0, RULE_Y, (x1 + 200) * r, 2);
     const body = this.font('body');
+    text(c, 'PLATFORM SECURITY  ·  ROADMAP  ·  updated weekly', 0, 96, this.font('mono'), 20, k.dim, { track: 2 });
     const cur = Math.round(this.startCol + (card.x - (this.startCol * COL + COL / 2)) / COL);
     for (let i = 0; i < n; i++) {
       const cl = i * COL;
@@ -307,6 +329,7 @@ export default class HarvestRemixBacklog extends LibScene<P, C> {
       c.restore();
       // the finished tickets of the past quarters
       for (let j = 0; j < stubs; j++) this.drawStub(c, k, cl + (COL - CW) / 2, STUB_Y + j * 78, i, j, arrive(t, d + 0.2 + j * 0.06, 0.35));
+      this.drawNotes(c, k, i, cl, stubs, arrive(t, d + 0.3, 0.4));
     }
   }
 
@@ -328,15 +351,46 @@ export default class HarvestRemixBacklog extends LibScene<P, C> {
     c.fillStyle = mixHex(k.bg, '#ffffff', 0.5);
     c.beginPath(); c.roundRect(0, 0, w, h, 6); c.fill();
     c.shadowColor = 'transparent';
-    // a done tick, and the title as grey bars (too far to read)
+    // a done tick, the key and the title, the assignee's initials
     c.strokeStyle = k.dim; c.lineWidth = 3; c.lineCap = 'round'; c.lineJoin = 'round';
-    c.beginPath(); c.moveTo(24, 31); c.lineTo(31, 38); c.lineTo(44, 23); c.stroke();
-    c.fillStyle = k.rule;
-    c.fillRect(64, 20, 180 + hash(i, j, 6) * 200, 8);
-    c.fillRect(64, 36, 70 + hash(i, j, 7) * 110, 7);
+    c.beginPath(); c.moveTo(22, 31); c.lineTo(29, 38); c.lineTo(42, 23); c.stroke();
+    const d = DONE[(i * 5 + j * 3) % DONE.length]!;
+    text(c, `${d[0]}`, 60, 25, this.font('mono'), 15, k.dim, { track: 1 });
+    text(c, d[1], 60, 48, this.font('body'), 21, mixHex(k.type, k.dim, 0.35));
     c.fillStyle = mixHex(k.rule, k.dim, 0.3);
-    c.beginPath(); c.arc(w - 32, h / 2, 13, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.arc(w - 32, h / 2, 15, 0, Math.PI * 2); c.fill();
+    text(c, d[2], w - 32, h / 2 + 6, this.font('body'), 15, k.bg, { align: 'center' });
     c.restore();
+  }
+
+  /** The things stuck on the board that are not tickets: sticky notes in a hand, old marker half wiped off. */
+  private drawNotes(c: CanvasRenderingContext2D, k: Look, i: number, cl: number, stubs: number, a: number) {
+    if (a <= 0) return;
+    const hand = F.hand();
+    c.save();
+    c.globalAlpha = a * 0.07;
+    c.fillStyle = k.type; c.font = font(hand, 44); c.textAlign = 'left';
+    const g = GHOST[i % GHOST.length]!;
+    c.save(); c.translate(cl + 70, STUB_Y + stubs * 78 + 70 + hash(i, 3) * 40); c.rotate(-0.03); c.fillText(g, 0, 0);
+    c.strokeStyle = k.type; c.lineWidth = 4; c.beginPath(); c.moveTo(0, 18); c.quadraticCurveTo(160, 30, 300, 14); c.stroke(); c.restore();
+    c.restore();
+    if (stubs <= 1 && hash(i, 41) < 0.6) {
+      const n = STICKY[i % STICKY.length]!, col = hash(i, 43) < 0.6 ? '#F4E07C' : '#F5B9AE';
+      const x = cl + 300 + hash(i, 44) * 100, y = STUB_Y + stubs * 78 + 10 + hash(i, 45) * 40, r = (hash(i, 46) - 0.5) * 0.12;
+      c.save();
+      c.globalAlpha = a;
+      c.translate(x, y); c.rotate(r);
+      c.shadowColor = 'rgba(30,24,16,0.2)'; c.shadowBlur = 8; c.shadowOffsetX = 3; c.shadowOffsetY = 5;
+      c.fillStyle = col; c.fillRect(0, 0, 190, 170);
+      c.shadowColor = 'transparent';
+      const cg = c.createLinearGradient(0, 120, 0, 170);
+      cg.addColorStop(0, 'rgba(0,0,0,0)'); cg.addColorStop(1, 'rgba(60,40,0,0.08)');
+      c.fillStyle = cg; c.fillRect(0, 0, 190, 170);
+      c.fillStyle = 'rgba(0,0,0,0.05)'; c.fillRect(0, 0, 190, 26);
+      c.fillStyle = '#2A2F3A'; c.font = font(hand, 42);
+      n.split('\n').forEach((ln, li) => c.fillText(ln, 16, 72 + li * 46));
+      c.restore();
+    }
   }
 
   // ------------------------------------------------------------------ the ticket

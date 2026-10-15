@@ -176,7 +176,7 @@ A new project also needs its edit: `data/cues.json` and, for its look, `data/sty
 
 - **Songs:** "Harvest Now, Decrypt Later", "Force Push". <!-- TODO: songwriter / performer credit -->
 - **Engine and tooling:** [mexicat/pdoom-video](https://github.com/mexicat/pdoom-video), MIT.
-- **Fonts:** Archivo, IBM Plex Mono and Cormorant Garamond (SIL Open Font License). Single-stroke EMS and Hershey fonts via the `hersheytext` package (OFL / public domain).
+- **Fonts:** Archivo, IBM Plex Mono, Cormorant Garamond and Caveat (SIL Open Font License). Single-stroke EMS and Hershey fonts via the `hersheytext` package (OFL / public domain).
 
 ## License
 

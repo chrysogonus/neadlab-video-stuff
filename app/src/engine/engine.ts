@@ -525,6 +525,13 @@ export class Engine {
       outTex = this.avgRT.texture;
     }
     this.lastSamples = n;
+    const bars = this.barsFrac();
+    if (bars > 0) {
+      const target = [...this.rts, this.mixRT, this.avgRT].find((rt) => rt.texture === outTex)!;
+      this.barPass.u.bars!.value = bars;
+      this.barPass.render(r, target);
+      post = { ...post, bars };
+    }
     if (this.karaoke) this.drawKaraoke(t, outTex);
     const hudTex = this.hud.draw(t, { opacity: this.hudOff ? 0 : post.hud, frame: post.frame, readout: post.pdoom, paper: post.paper, pdoomOverride: post.pdoomText, corruption: post.hudCorruption });
     this.post.render(r, outTex, hudTex, this.finalRT, post, t);
@@ -566,7 +573,7 @@ export class Engine {
     const r = this.renderer;
 
     const active = this.timeline.filter((e) => t >= e.start && t < e.end).sort((a, b) => a.start - b.start);
-    let post: PostParams = { ...DEFAULT_POST };
+    let post: PostParams = { ...DEFAULT_POST, ...(this.ctx.style.post as Partial<PostParams> | undefined) };
     let under: THREE.Texture | null = null;
     let outTex: THREE.Texture | null = null;
 
@@ -643,6 +650,15 @@ export class Engine {
     const target = [...this.rts, this.mixRT, this.avgRT].find((rt) => rt.texture === outTex)!, s = H / L.h;
     this.comp.draw(this.renderer, L.upload(), target, { mode: 'normal', scale: [1, s], offset: [0, 0.5 * s - 0.5] });
   }
+
+  /** Letterbox bar height (fraction of the frame, each) for the style's picture aspect; 0 for 16:9 or narrower. */
+  private barsFrac() {
+    const a = this.ctx?.style.aspect;
+    return a && a > W / H ? (1 - (W / a) / H) / 2 : 0;
+  }
+  private barPass = new FSPass(/* glsl */ `
+    uniform float bars;
+    void main() { if (vUv.y > bars && vUv.y < 1.0 - bars) discard; fragColor = vec4(0.0, 0.0, 0.0, 1.0); }`, { bars: { value: 0 } });
 
   /** RGBA8 pixels of the last rendered frame (bottom-up rows), PW x PH. */
   readPixels(buf?: Uint8Array) {

@@ -30,6 +30,7 @@ import { rgba } from '../engine/palette';
 import { font } from '../engine/type';
 import { clamp, ease, hash, hexToLinear, keys, lerp, mulberry32, prog, smoothstep, type Key } from '../engine/util';
 import { LibScene, W, H, look, mixHex, type Look } from './_lib';
+import { Finisher, LETTER, NOTES, VolumeLight, drawLetter, lin as linC, shared, fitOf, fitFov } from './harvest-remix-kit';
 
 export const schema: SceneSchema = {
   description: 'The cold room: a three.js aisle of steel racks of frosted glass drawers receding into fog under cold strip lights, each drawer holding a sealed envelope with a frosted padlock, the racks repeating into a city grid. keep: drawer 0001 receives the copy, glints, shuts and prints its tag; harvest: drawers slam in waves, envelopes drop from ceiling chutes, rack-end counters climb; gauge: a storage gauge hung over the aisle rolls up as more lamps come on; petabytes: a pullback from one drawer to the endless grid; thaw: daylight sweeps the aisle, padlocks spring open, letters unfold, the camera rises over a white city of open drawers. Harvest remix.',
@@ -93,15 +94,16 @@ const float LY = ${f3(LY)}, NEAR_S = ${f3(NEAR_S)};
 const float TD = ${f3(TD)}, TW = ${f3(TW)}, TH = ${f3(TH)};
 `;
 
-// shading shared by every mesh: the strip lights, the drawer front, fog and mist, the cold → daylight blend
+// shading shared by every mesh: the strip lights (cold) and the low sun down the aisle (thaw), the storage sled's
+// front, fog and mist
 const WORLD = /* glsl */ `
 uniform vec3 uCam; uniform float uTime;
 uniform vec3 uSteel, uStrip, uLampC, uFrostC, uPaperC, uFogC, uMistC;
-uniform vec3 uDay, uInk, uRed, uFogDay;
+uniform vec3 uDay, uInk, uRed, uFogDay, uSunC;
 uniform float uFogDen, uFogDenDay, uMist, uAmb, uFront, uOther, uSegLo, uSegHi, uLevel;
 uniform float uLampAll, uFill, uFarOpen, uLockT, uFrostAll, uTwinkle;
 uniform float uSeg[${NSEG}];
-uniform sampler2D uFrostTex; uniform sampler2D uAtlas;
+uniform sampler2D uFrostTex; uniform sampler2D uAtlas; uniform sampler2D uLabels;
 
 float thawAt(float s) { return sat((s - uFront) / 5.0 + 0.5); }
 float segAt(float i) { return i < 0.0 ? uSegLo : i >= ${NSEG}.0 ? uSegHi : uSeg[int(i)]; }
@@ -129,6 +131,19 @@ vec3 coldLight(vec3 p, vec3 n, vec3 alb, float spec) {
   float sp = pow(max(dot(n, h), 0.0), 36.0) * spec / (1.0 + 0.12 * d2);
   return alb * (uAmb + uStrip * lv * 2.2 * diff) + uStrip * lv * sp;
 }
+/** The sunrise: a low sun at the far end of the aisles (-z), warm sky light from above, a warm bounce off the floor. */
+vec3 sunLight(vec3 p, vec3 n, vec3 alb, float spec) {
+  vec3 l = normalize(vec3(0.12, 0.3, -1.0));
+  float diff = sat((dot(n, l) + 0.25) / 1.25);
+  vec3 v = normalize(uCam - p), h = normalize(l + v);
+  float sp = pow(max(dot(n, h), 0.0), 40.0) * spec;
+  float sky = 0.62 + 0.22 * n.y + 0.1 * smoothstep(0.0, 3.0, p.y);
+  return alb * uSunC * (sky + 0.9 * diff) + uSunC * sp * 1.2;
+}
+vec3 light(vec3 p, vec3 n, vec3 alb, float spec, float th) {
+  vec3 c = th < 1.0 ? coldLight(p, n, alb, spec) : vec3(0.0);
+  return th > 0.0 ? mix(c, sunLight(p, n, alb, spec), th) : c;
+}
 /** Fog toward the room's air (cold, or daylight where the thaw has passed) and the mist on the floor, lit by the strips. */
 vec3 finish(vec3 col, vec3 p, float th) {
   float d = length(p - uCam);
@@ -142,6 +157,17 @@ vec3 finish(vec3 col, vec3 p, float th) {
   return col;
 }
 float fillAA(float d, float px) { return 1.0 - smoothstep(-px, px, d); }
+/** A thin band along an edge (distance d), w wide, antialiased. */
+float band(float d, float w, float px) { return 1.0 - smoothstep(w, w + px, abs(d)); }
+/** Round holes on a hex grid of pitch s, radius r: 1 inside a hole. */
+float hexHoles(vec2 p, float s, float r, float px) {
+  vec2 R = vec2(1.0, 1.7320508) * s, hR = R * 0.5;
+  vec2 a = mod(p, R) - hR, b = mod(p - hR, R) - hR;
+  vec2 g = dot(a, a) < dot(b, b) ? a : b;
+  return fillAA(length(g) - r, px);
+}
+/** Square holes on a square grid of pitch s, half size r. */
+float sqHoles(vec2 p, float s, float r, float px) { vec2 g = mod(p, s) - 0.5 * s; return fillAA(max(abs(g.x), abs(g.y)) - r, px); }
 /** A padlock, body width s, its body centred a little below the origin; open (0..1) lifts and turns the shackle. */
 float sdLock(vec2 p, float s, float open) {
   float body = sdBox(p - vec2(0.0, -0.2 * s), vec2(0.5 * s, 0.38 * s) - 0.1 * s) - 0.1 * s;
@@ -167,42 +193,79 @@ vec3 atlas(float i, vec2 uv, vec2 dx, vec2 dy) {
   vec2 s = tileSize(i);
   return textureGrad(uAtlas, tileUV(i, uv), dx * s, dy * s).rgb;
 }
+/** Printed label i of the label atlas (2 x 64 labels; 0..95 sleds, 96..111 rack headers, 112..127 row plates), uv 0..1 y up. */
+vec3 label(float i, vec2 uv) {
+  i = floor(i);
+  vec2 a = (vec2(mod(i, 2.0), floor(i / 2.0)) + vec2(clamp(uv.x, 0.004, 0.996), 1.0 - clamp(uv.y, 0.02, 0.98))) / vec2(2.0, 64.0);
+  return texture(uLabels, a).rgb;
+}
+/** The racks' steel: graphite in the cold, warm brushed aluminium in the sun. */
+vec3 steelAt(float th) { return mix(uSteel, uDay, th); }
 
-struct Shade { vec3 alb; vec3 emis; float spec; vec3 day; };
+struct Shade { vec3 alb; vec3 emis; float spec; };
 /**
- * A drawer front, q in metres in its cell (x left to right as seen from the aisle, y up): a steel plate, a glass pane
- * with an envelope and its padlock behind it under frost, a paper tag and a handle on the rail, the status lamp.
- * cavity: the cell of a tray (the tray is the front; the face shows the dark hole); env: an envelope stands behind
- * the glass. day: the same in ink on paper. Fine detail fades out first (lod), then the whole front to its average
- * (far); the lamp stays a point of light down to a pixel or two, so a far wall of drawers reads as lit windows.
+ * A storage sled's front, q in metres in its cell (x left to right as seen from the aisle, y up): an anodised face
+ * with an ejector handle at each end, hex-perforated vents, a window in a recessed bezel with an envelope and its
+ * padlock behind it under frost, a label with a typed line and a barcode, a recessed pull and three LEDs (power,
+ * activity, the status lamp). cavity: the cell of a tray (the tray is the front; the face shows the dark hole); env:
+ * an envelope stands behind the glass; th: the thaw (no frost, the padlock open, a broken red seal, warm paper).
+ * Fine detail fades out first (lod), then the whole front to its average (far); the LEDs stay points of light down
+ * to a pixel or two, so a far wall of sleds reads as lit windows.
  */
-Shade drawerFront(vec2 q, float seed, float frost, float lamp, float lock, float px, float cavity, float env) {
+Shade drawerFront(vec2 q, float seed, float frost, float lamp, float lock, float px, float cavity, float env, float th) {
   Shade o;
-  float lod = smoothstep(0.003, 0.012, px), far = smoothstep(0.035, 0.12, px);
+  float lod = smoothstep(0.0022, 0.008, px), far = smoothstep(0.03, 0.1, px);
   vec2 hc = vec2(CW, CH) * 0.5;
-  float dCell = sdBox(q - hc, hc - 0.007);
-  float dGlass = sdBox(q - vec2(0.35, 0.216), vec2(0.306, 0.113)) - 0.004;
+  vec3 steel = steelAt(th), face = steel * 0.62, metal = steel * 2.1;
+  float dCell = sdBox(q - hc, hc - 0.0045);
+  float hx = abs(q.x - hc.x) - (hc.x - 0.026);
+  float dH = sdBox(vec2(hx, q.y - 0.18), vec2(0.011, 0.148)) - 0.003;
+  float dV = min(sdBox(q - vec2(0.088, 0.2), vec2(0.03, 0.124)), sdBox(q - vec2(0.612, 0.215), vec2(0.03, 0.108)));
+  vec2 pq = q - vec2(0.35, 0.215);
+  float dGlass = sdBox(pq, vec2(0.205, 0.105)) - 0.006;
+  float dRing = sdBox(pq, vec2(0.215, 0.115)) - 0.008;
   float dTag = sdBox(q - vec2(0.235, 0.048), vec2(0.19, 0.026));
-  float dHandle = sdBox(q - vec2(0.53, 0.048), vec2(0.04, 0.005)) - 0.004;
-  vec2 lc = vec2(0.64, 0.048);
-  float dLed = length(q - lc) - 0.011;
-  vec2 pq = q - vec2(0.35, 0.216);
-  float dEnv = sdBox(pq - vec2(0.0, -0.012), vec2(0.19, 0.08)) - 0.003;
-  float dLk = sdLock(pq - vec2(0.0, 0.016), 0.05, lock);
-  float fCell = fillAA(dCell, px), fGlass = fillAA(dGlass, px), fTag = fillAA(dTag, px);
-  float fHandle = fillAA(dHandle, px), fLed = fillAA(dLed, px), fEnv = fillAA(dEnv, px) * env, fLk = fillAA(dLk, px) * env;
-  float rL = max(0.011, px * 1.1);
-  float fLedFar = fillAA(length(q - lc) - rL, px) * pow(0.011 / rL, 1.1);
-  // the tag's typed line (glyph-like marks)
-  float gx = (q.x - 0.062) / 0.0128, gi = floor(gx);
-  float len = 12.0 + floor(fract(seed * 13.7) * 9.0);
-  float tx = step(0.0, gi) * step(gi, len) * step(0.2, fract(gx)) * step(fract(gx), 0.82) * step(0.22, hash12(vec2(gi, floor(seed * 997.0))))
-    * step(abs(q.y - 0.048), 0.0085) * (1.0 - lod);
-  // ---- cold
-  vec3 alb = uSteel;
-  vec3 behind = mix(uSteel * 0.16, uPaperC * 0.36, fEnv);
-  behind = mix(behind, mix(uPaperC, uFrostC, 0.5) * 0.5, fLk);
-  vec2 fuv = pq / vec2(0.62, 0.234) + 0.5;
+  float dPull = sdBox(q - vec2(0.50, 0.048), vec2(0.04, 0.008)) - 0.004;
+  vec2 lc = vec2(0.64, 0.048), ac = vec2(0.615, 0.048), pc = vec2(0.59, 0.048);
+  vec2 eq = pq - vec2(0.0, -0.008);
+  float dEnv = sdBox(eq, vec2(0.17, 0.072)) - 0.003;
+  float dLk = sdLock(pq - vec2(0.0, 0.014), 0.045, lock);
+  float fCell = fillAA(dCell, px), fGlass = fillAA(dGlass, px), fRing = fillAA(dRing, px), fTag = fillAA(dTag, px);
+  float fH = fillAA(dH, px), fV = fillAA(dV, px), fPull = fillAA(dPull, px);
+  float fEnv = fillAA(dEnv, px) * env, fLk = fillAA(dLk, px) * env;
+  // the anodised face: a fine brushed grain; its top edge catches the light, its bottom falls into shadow
+  float grain = (1.0 - lod) * (hash12(vec2(floor(q.y * 2600.0), floor(seed * 50.0))) - 0.5) * 0.14;
+  vec3 alb = face * (1.0 + grain);
+  alb *= 1.0 + 1.1 * band(q.y - (CH - 0.008), 0.0025, px) - 0.45 * band(q.y - 0.008, 0.004, px);
+  float spec = 0.35;
+  // vents: round holes on a hex grid looking into the sled (a faint glow of its lamp inside)
+  float holes = mix(hexHoles(q, 0.0088, 0.0031, px), 0.42, lod);
+  alb = mix(alb, mix(face * 0.8, vec3(0.002) + uLampC * lamp * 0.03, holes), fV);
+  alb = mix(alb, face * 0.45, band(dV, 0.0012, px) * (1.0 - lod));
+  // ejector handles: brushed metal, a dark finger notch near the top, a lit top edge
+  float hl = 1.0 + 0.6 * band(q.y - 0.322, 0.003, px) + 0.25 * sin(q.y * 900.0 + seed * 9.0) * (1.0 - lod);
+  alb = mix(alb, metal * hl, fH);
+  alb = mix(alb, vec3(0.004), fillAA(sdBox(vec2(hx, q.y - 0.29), vec2(0.0055, 0.014)) - 0.002, px) * fH);
+  spec = mix(spec, 1.0, fH);
+  // the window's recessed bezel: a dark recess, a bright lip along its top, shadow along its bottom
+  alb = mix(alb, face * 0.22, fRing);
+  alb += face * 1.2 * band(dRing, 0.0018, px) * step(0.0, pq.y) * (1.0 - lod);
+  // behind the glass: the dark of the sled, the envelope standing in it, its padlock, the flap's edges
+  vec3 paper = mix(uPaperC * 0.36, vec3(0.75, 0.64, 0.5), th);
+  vec3 behind = mix(steel * 0.1, paper, fEnv);
+  float flap = min(sdSegment(eq, vec2(-0.17, 0.072), vec2(0.0, -0.004)), sdSegment(eq, vec2(0.17, 0.072), vec2(0.0, -0.004)));
+  behind *= 1.0 - 0.3 * band(flap, 0.0008, px) * fEnv * (1.0 - lod);
+  behind = mix(behind, mix(mix(uPaperC, uFrostC, 0.5) * 0.5, uInk * 0.5, th), fLk);
+  vec2 sq = pq - vec2(0.05, -0.03);
+  float seal = fillAA(length(sq) - 0.012, px) * step(0.0018, abs(sq.x + sq.y * 0.35)) * step(0.5, lock) * env;
+  behind = mix(behind, uRed * 0.7, seal);
+  if (uFarOpen > 0.0 && env > 0.5) {
+    // the drawer opened in the daylight: a page standing up in it
+    float dp = sdBox(pq - vec2(0.0, -0.01), vec2(0.13, 0.09));
+    behind = mix(behind, mix(mix(steel * 0.3, paper * 1.1, fillAA(dp, px)), uInk * 0.5, band(abs(fract((pq.y + 0.01) / 0.016) - 0.5) * 0.016, 0.0012, px) * fillAA(dp + 0.02, px) * step(-0.06, pq.x) * (1.0 - lod) * 0.6), uFarOpen);
+  }
+  // frost on the glass: branching hairlines grown in from the edges, a milky haze
+  vec2 fuv = pq / vec2(0.62, 0.234) * vec2(1.48, 1.0) + 0.5;
   if (fract(seed * 7.13) > 0.5) fuv.x = 1.0 - fuv.x;
   if (fract(seed * 3.71) > 0.5) fuv.y = 1.0 - fuv.y;
   vec4 ft = texture(uFrostTex, fuv);
@@ -210,51 +273,43 @@ Shade drawerFront(vec2 q, float seed, float frost, float lamp, float lock, float
   float edgeIn = 1.0 - smoothstep(0.0, 0.015 + 0.07 * frost, -dGlass);
   float haze = frost * (0.22 + 0.78 * edgeIn);
   vec3 glass = mix(behind, uFrostC * 0.36, sat(haze * 0.8)) + uFrostC * line * (0.16 + 0.22 * edgeIn) * (1.0 - lod);
-  // the bevel of the plate catches the light along its top edge; the pane sits in a dark recess
-  float bevel = (1.0 - smoothstep(0.0, 0.006, abs(q.y - (CH - 0.012)))) * fCell;
-  alb *= 1.0 + 0.8 * bevel;
-  alb = mix(alb, uSteel * 0.25, (1.0 - smoothstep(0.0, 0.006, abs(dGlass + 0.002))) * 0.8);
+  // a soft diagonal sheen across the pane
+  glass += mix(uFrostC * 0.05, vec3(0.06, 0.05, 0.04), th) * smoothstep(0.03, 0.0, abs(pq.x * 0.6 + pq.y - 0.04 + 0.06 * seed));
   alb = mix(alb, glass, fGlass);
-  alb = mix(alb, mix(uPaperC * 0.42, uSteel * 0.3, tx), fTag);
-  alb = mix(alb, vec3(0.003), fHandle);
-  alb = mix(alb, uSteel * 0.25, fLed);
-  alb = mix(vec3(0.003), alb, fCell);
+  spec = mix(spec, 1.3, fGlass);
+  // the label: printed, from the label atlas
+  vec3 labelC = mix(vec3(0.5, 0.53, 0.56), vec3(0.8, 0.72, 0.6), th);
+  vec3 lab = label(floor(seed * 96.0), (q - vec2(0.045, 0.022)) / vec2(0.38, 0.052)) * mix(vec3(0.6), vec3(0.95, 0.85, 0.7), th);
+  alb = mix(alb, lab, fTag);
+  // the pull: a dark recess, its lower lip lit
+  alb = mix(alb, vec3(0.006), fPull);
+  alb += metal * 0.25 * band(dPull, 0.0012, px) * step(q.y, 0.048) * (1.0 - lod);
+  alb = mix(vec3(0.002), alb, fCell);
+  // LEDs: power (ice, steady), activity (flickering with traffic), the status lamp
+  float act = step(0.5, hash12(vec2(floor(uTime * 11.0 + seed * 31.0), floor(seed * 577.0)))) * step(0.04, lamp);
+  float rL = max(0.0045, px * 1.1), k = pow(0.0045 / rL, 1.1);
+  float l1 = fillAA(length(q - lc) - rL, px) * k, l2 = fillAA(length(q - ac) - rL, px) * k, l3 = fillAA(length(q - pc) - rL, px) * k;
+  alb = mix(alb, face * 0.3, max(l1, max(l2, l3)) * (1.0 - lod));
+  vec3 em = uLampC * lamp * 6.0 * l1 + uLampC * act * lamp * 3.5 * l2 + uStrip * min(1.0, lamp * 3.0) * 1.6 * l3;
   float glow = exp(-dot(q - lc, q - lc) / 0.009) * (0.3 + 0.7 * sat(haze));
-  vec3 em = uLampC * lamp * 0.7 * glow * fGlass;
-  float glassAvg = 0.55;
-  vec3 avgA = uSteel * 0.4 + glassAvg * mix(mix(uSteel * 0.16, uPaperC * 0.36, 0.4 * env), uFrostC * 0.36, sat(frost * 0.7)) + 0.05 * uPaperC * 0.42;
+  em += uLampC * lamp * 0.6 * glow * fGlass;
+  // far: the average of the front
+  vec3 avgG = mix(mix(steel * 0.1, paper, 0.45 * env), uFrostC * 0.36, sat(frost * 0.7));
+  vec3 avgA = face * 0.58 + avgG * 0.34 + labelC * 0.05;
   o.alb = mix(alb, avgA, far);
-  o.emis = (mix(em, uLampC * lamp * 0.03, far) + uLampC * lamp * 5.0 * mix(fLed, fLedFar, lod)) * (1.0 - cavity);
-  o.spec = mix(0.3, 0.9, fGlass * (1.0 - far));
-  o.alb = mix(o.alb, vec3(0.005), fCell * cavity);
-  // ---- day: ink on paper, the glass clear, the padlock open, a broken red seal
-  vec3 dy = mix(uDay * 0.35, uDay, fCell);
-  vec3 gl = mix(uDay * 0.9, uDay, fEnv * 0.8);
-  float flap = min(sdSegment(pq, vec2(-0.19, 0.068), vec2(0.0, -0.004)), sdSegment(pq, vec2(0.19, 0.068), vec2(0.0, -0.004)));
-  float envInk = max(pxLine(abs(dEnv) / px, 0.4, 1.4) * 0.75, pxLine(flap / px, 0.3, 1.2) * 0.5 * fEnv);
-  gl = mix(gl, uInk, envInk);
-  gl = mix(gl, uInk, fLk);
-  vec2 sq = pq - vec2(0.05, -0.03);
-  float seal = fillAA(length(sq) - 0.012, px) * step(0.0018, abs(sq.x + sq.y * 0.35)) * step(0.5, lock) * env;
-  gl = mix(gl, uRed, seal);
-  dy = mix(dy, gl, fGlass);
-  dy = mix(dy, mix(uDay, uInk, tx * 0.8), fTag);
-  dy = mix(dy, uInk, fHandle);
-  float ink = max(pxLine(abs(dCell) / px, 0.5, 1.5), pxLine(abs(dGlass) / px, 0.5, 1.5));
-  ink = max(ink, max(pxLine(abs(dTag) / px, 0.4, 1.3) * 0.8, pxLine(abs(dLed) / px, 0.4, 1.3) * 0.7));
-  dy = mix(dy, uInk, ink);
-  dy = mix(dy, mix(uDay, uInk, 0.16), far);
-  o.day = mix(dy, uDay * 0.4, fCell * cavity);
+  o.emis = mix(em, uLampC * lamp * 0.05 + uStrip * min(1.0, lamp * 3.0) * 0.015, far * 0.6) * (1.0 - cavity);
+  o.spec = mix(spec, 0.5, far);
+  o.alb = mix(o.alb, vec3(0.004), fCell * cavity);
   return o;
 }
-/** Daylight shading: flat paper light, a little darker toward the floor. */
-vec3 dayLight(vec3 c, vec3 p, vec3 n) { return c * (0.93 + 0.07 * n.y) * mix(0.84, 1.0, smoothstep(0.0, 0.9, p.y)); }
 `;
 
 const HEAD_V = `precision highp float;\nprecision highp int;\nuniform mat4 projectionMatrix; uniform mat4 viewMatrix;\n${CONST}`;
 const HEAD_F = `precision highp float;\nprecision highp int;\nout vec4 fragColor;\n${GLSL_COMMON}\n${CONST}\n${WORLD}`;
 
-// the racks: instanced boxes; their long sides are walls of drawers
+// the racks: instanced boxes; their long sides are walls of storage sleds between rails, a perforated plinth with a
+// strip of light at the floor, a header with a label per bay and a light bar; their ends are panels with light
+// strips; their tops are vented
 const RACK_V = /* glsl */ `
 in vec3 position; in vec3 normal; in vec3 iB; in vec3 iS;
 out vec3 vW; out vec3 vN; out vec3 vL; out vec3 vS;
@@ -269,53 +324,90 @@ void main() {
   vec3 p = vW, n = normalize(vN);
   float s = -p.z, th = thawAt(s);
   float px = max(length(dFdx(p)), length(dFdy(p)));
-  vec3 e3 = (0.5 - abs(vL)) * vS;
-  float edge = abs(n.x) > 0.5 ? min(e3.y, e3.z) : abs(n.y) > 0.5 ? min(e3.x, e3.z) : min(e3.x, e3.y);
-  vec3 alb = uSteel * 0.7, emis = vec3(0.0), day = uDay;
-  float spec = 0.3, dayInk = pxLine(edge / px, 0.7, 1.7);
+  float lod = smoothstep(0.0022, 0.008, px);
+  vec3 steel = steelAt(th), alb = steel * 0.6, emis = vec3(0.0);
+  float spec = 0.3;
   if (abs(n.x) > 0.5) {
     float b = floor(s / BP), w = s - b * BP;
     float bay = min(floor(w / BAYW), NBAY - 1.0), wb = w - bay * BAYW;
     float c = floor((wb - UP) / CW);
     bool post = wb < UP || c > 2.0;
-    if (post || p.y < Y0 || p.y >= Y0 + NROW * CH) {
-      alb = post ? uSteel * 1.3 : p.y < Y0 ? uSteel * 0.4 : uSteel * 0.9;
-      spec = 0.6;
-      day = mix(uDay, uInk, post ? 0.88 : p.y < Y0 ? 0.55 : 0.8);
+    float ai = floor((p.x + n.x * A) / P + 0.5);
+    float lv = stripLevel(ai, s);
+    if (p.y < Y0) {
+      // the plinth: a perforated kick plate, its top lip lit, a strip of cold light along the floor
+      float holes = mix(sqHoles(vec2(w, p.y), 0.022, 0.0065, px), 0.3, lod) * step(0.045, p.y) * step(p.y, Y0 - 0.035);
+      alb = steel * 0.38 * (1.0 - 0.85 * holes);
+      alb *= 1.0 + 1.0 * band(p.y - (Y0 - 0.006), 0.003, px);
+      emis = uStrip * lv * 1.4 * smoothstep(0.032, 0.02, p.y) * smoothstep(0.004, 0.01, p.y) * (1.0 - th);
+      spec = 0.25;
+    } else if (p.y >= Y0 + NROW * CH) {
+      // the header: a dark band, a label per bay, a thin light bar along its foot
+      float hy = p.y - (Y0 + NROW * CH), mid = n.x < 0.0 ? BAYW * 0.5 - wb : wb - BAYW * 0.5;
+      alb = steel * 0.36;
+      float fl = fillAA(sdBox(vec2(mid, hy - 0.072), vec2(0.17, 0.026)), px);
+      vec3 lab = label(96.0 + mod(b * 7.0 + bay + abs(ai) * 3.0 + step(0.0, n.x) * 5.0, 16.0), (vec2(mid, hy) - vec2(-0.17, 0.046)) / vec2(0.34, 0.052));
+      alb = mix(alb, lab * mix(vec3(0.6), vec3(0.95, 0.85, 0.7), th), fl);
+      alb *= 1.0 + 1.2 * band(hy - 0.116, 0.002, px);
+      emis = uStrip * lv * 3.0 * band(hy - 0.018, 0.0045, px) * (1.0 - 0.8 * th);
+      spec = 0.4;
+    } else if (post) {
+      // the rail: two columns of square cage-nut holes, a bright edge each side
+      float u = wb < UP ? wb : wb - UP - 3.0 * CW;
+      float hy = abs(mod(p.y - Y0, 0.0445) - 0.0222);
+      float hole = max(fillAA(max(abs(u - UP * 0.27), hy) - 0.0042, px), fillAA(max(abs(u - UP * 0.73), hy) - 0.0042, px)) * (1.0 - lod);
+      alb = steel * 1.25 * (1.0 - 0.92 * hole);
+      alb *= 1.0 - 0.6 * (band(u, 0.003, px) + band(u - UP, 0.003, px)) + 0.5 * band(u - UP * 0.5, 0.002, px) * (1.0 - lod);
+      spec = 0.7;
     } else {
       float nr = floor((p.x - n.x * 0.02) / P);
       bool near = s >= 0.0 && s < NEAR_S && ((nr == 0.0 && n.x < 0.0) || (nr == -1.0 && n.x > 0.0));
       float us = wb - UP - c * CW, r = floor((p.y - Y0) / CH);
       vec2 q = vec2(n.x < 0.0 ? CW - us : us, p.y - Y0 - r * CH);
       vec3 id = vec3(nr * 2.0 + step(0.0, n.x), b * 21.0 + bay * 3.0 + c, r);
-      float seed = hash13(id * vec3(1.0, 1.0, 1.0) + vec3(0.37, 0.71, 0.13));
+      float seed = hash13(id + vec3(0.37, 0.71, 0.13));
       float seed2 = hash13(id.zxy + vec3(5.1, 2.3, 9.7));
       float lamp = uLampAll * step(seed2, uFill) * (0.8 + 0.2 * sin(uTime * 2.3 + seed * 50.0)) * (1.0 + uTwinkle * step(0.8, fract(seed * 17.0)));
       float lt = uLockT + max(s, 0.0) / ${LOCKV.toFixed(1)} + seed * 0.08;
       float lock = th * smoothstep(lt, lt + 0.16, uTime);
-      Shade sh = drawerFront(q, seed, uFrostAll * (1.0 - th), lamp, lock, px, near ? 1.0 : 0.0, 1.0);
-      alb = sh.alb; emis = sh.emis; spec = sh.spec; day = sh.day;
-      if (!near && uFarOpen > 0.0) {
-        // far drawers opened in the daylight: the dark of the slot, a page standing up in it
-        float far = smoothstep(0.035, 0.12, px), dp = sdBox(q - vec2(0.35, 0.2), vec2(0.15, 0.12));
-        vec3 od = mix(uDay * 0.45, uDay, fillAA(dp, px));
-        od = mix(od, uInk, pxLine(abs(dp) / px, 0.4, 1.4));
-        day = mix(day, mix(od, mix(uDay, uInk, 0.2), far), uFarOpen);
-      }
+      Shade sh = drawerFront(q, seed, uFrostAll * (1.0 - th), lamp, lock, px, near ? 1.0 : 0.0, 1.0, th);
+      alb = sh.alb; emis = sh.emis; spec = sh.spec;
     }
   } else if (n.y > 0.5) {
-    alb = uSteel * 0.55; spec = 0.2;
+    // the top: vented panels between seams, a cable cut-out at each bay
+    float u = vL.x * vS.x, w = mod(s, BAYW);
+    float vent = step(abs(u), 0.36) * step(0.12, w) * step(w, BAYW - 0.5);
+    alb = steel * mix(0.42, 0.7, th) * (1.0 - 0.6 * vent * mix(hexHoles(vec2(u, s), 0.02, 0.007, px), 0.3, lod));
+    alb *= 1.0 - 0.6 * band(w, 0.004, px);
+    alb = mix(alb, vec3(0.004), fillAA(sdBox(vec2(u, w - (BAYW - 0.28)), vec2(0.16, 0.09)) - 0.02, px));
+    spec = 0.25;
   } else {
-    alb = uSteel * 0.85; spec = 0.45;
-    float seam = pxLine(abs(fract(vL.x * 3.0) - 0.5) * vS.x / 3.0 / px, 0.4, 1.2);
-    alb *= 1.0 - 0.5 * seam;
+    // the end of a row: a panel with a light strip down each edge, seams, the row's plate and a handle
+    float u = vL.x * vS.x, y = p.y;
+    alb = steel * 0.6 * (1.0 + (hash12(vec2(floor(y * 2600.0), 3.0)) - 0.5) * 0.1 * (1.0 - lod));
+    float edge = RD * 0.5 - abs(u);
+    float strip = smoothstep(0.03, 0.026, edge) * smoothstep(0.012, 0.016, edge) * step(Y0, y) * step(y, RH - 0.12);
+    float lvE = max(stripLevel(floor(p.x / P), s), stripLevel(floor(p.x / P) + 1.0, s));
+    emis = uStrip * lvE * 2.2 * strip * (1.0 - 0.85 * th);
+    alb *= 1.0 - 0.55 * (band(y - 1.66, 0.0015, px) + band(y - Y0, 0.002, px) + band(y - (RH - 0.12), 0.002, px) + band(edge - 0.04, 0.0015, px));
+    // two perforated door panels, inset
+    float dd = min(sdBox(vec2(u, y - 0.92), vec2(0.42, 0.62)), sdBox(vec2(u, y - 2.3), vec2(0.42, 0.13)));
+    float fd = fillAA(dd, px);
+    alb *= 1.0 - fd * 0.75 * mix(hexHoles(vec2(u, y), 0.011, 0.0038, px), 0.38, lod);
+    alb *= 1.0 + 0.9 * band(dd, 0.0015, px) * (1.0 - lod);
+    float row = floor(p.x / P), blk = floor(s / BP + 0.5);
+    float fp = fillAA(sdBox(vec2(u, y - 2.66), vec2(0.3, 0.05)), px);
+    vec3 lab = label(112.0 + mod(row + 48.0 + blk * 5.0, 16.0), (vec2(u, y) - vec2(-0.3, 2.61)) / vec2(0.6, 0.1));
+    alb = mix(alb, lab * mix(vec3(0.6), vec3(0.95, 0.85, 0.7), th), fp);
+    float fh = fillAA(sdBox(vec2(u - 0.4, y - 1.2), vec2(0.012, 0.16)) - 0.004, px);
+    alb = mix(alb, steel * 2.0, fh);
+    spec = mix(0.4, 0.9, fh);
   }
-  day = mix(day, uInk, dayInk);
-  vec3 cold = coldLight(p, n, alb, spec) + emis;
-  fragColor = vec4(finish(mix(cold, dayLight(day, p, n), th), p, th), 1.0);
+  vec3 col = light(p, n, alb, spec, th) + emis;
+  fragColor = vec4(finish(col, p, th), length(p - uCam));
 }`;
 
-// the trays: the drawers of aisle 0's two walls near the camera, which slide out
+// the trays: the sleds of aisle 0's two walls near the camera, which slide out
 const TRAY_V = /* glsl */ `
 in vec3 position; in vec3 normal; in vec3 iPos; in float iNx; in vec4 iSt; in vec2 iEx;
 out vec3 vW; out vec3 vN; out vec3 vL; out vec3 vLN; out vec4 vSt; out vec2 vEx; out float vNx;
@@ -333,7 +425,8 @@ void main() {
   vec3 p = vW, n = normalize(vN);
   float s = -p.z, th = thawAt(s);
   float px = max(length(dFdx(p)), length(dFdy(p)));
-  vec3 alb = uSteel * 0.6, emis = vec3(0.0), day = uDay * 0.8;
+  float lod = smoothstep(0.0022, 0.008, px);
+  vec3 steel = steelAt(th), alb = steel * 0.6, emis = vec3(0.0);
   float spec = 0.3;
   // the card lying in the tray (its uv's derivatives taken here, outside the branches)
   vec2 m = vec2((0.5 - vNx * vL.z) * TW, (0.5 - vL.x) * TD);
@@ -342,33 +435,43 @@ void main() {
   vec2 cuv = vec2(cu.x + 0.5, 0.5 - cu.y), cdx = dFdx(cuv), cdy = dFdy(cuv);
   if (vLN.x > 0.5) {
     vec2 q = vec2((vNx < 0.0 ? 0.5 + vL.z : 0.5 - vL.z) * TW + 0.007, (vL.y + 0.5) * TH + 0.007);
-    Shade sh = drawerFront(q, abs(vEx.y), vSt.z * (1.0 - th), vSt.y, vSt.w, px, 0.0, step(0.0, vEx.y));
-    alb = sh.alb; emis = sh.emis; spec = sh.spec; day = sh.day;
+    Shade sh = drawerFront(q, abs(vEx.y), vSt.z * (1.0 - th), vSt.y, vSt.w, px, 0.0, step(0.0, vEx.y), th);
+    alb = sh.alb; emis = sh.emis; spec = sh.spec;
   } else if (vLN.y > 0.5) {
-    // the open top: a steel rim, the dark inside, the envelope or page lying in it
+    // the open top: a steel rim, a ribbed dark inside, the envelope or page lying in it
     float rim = min(min(m.x, TW - m.x), min(m.y, TD - m.y));
     float fr = fillAA(0.016 - rim, px);
-    alb = mix(uSteel * (0.03 + 0.05 * smoothstep(0.016, 0.1, rim)), uSteel * 1.2, fr);
+    float rib = band(mod(m.y, 0.05) - 0.025, 0.003, px) * (1.0 - lod);
+    alb = mix(steel * (0.04 + 0.05 * smoothstep(0.016, 0.1, rim) + 0.05 * rib), steel * 1.3, fr);
+    alb *= 1.0 + 0.8 * band(rim - 0.016, 0.0015, px);
     spec = 0.6 * fr;
-    day = mix(uDay * 0.55, uDay, fr);
-    day = mix(day, uInk, pxLine(abs(rim - 0.016) / px, 0.4, 1.4));
     if (vEx.x >= 0.0) {
       float inCard = fillAA(sdBox(cu, vec2(0.5)) * min(cs.x, cs.y), px);
       vec3 tx = atlas(vEx.x, cuv, cdx, cdy);
-      alb = mix(alb, tx * 0.85, inCard);
-      day = mix(day, tx, inCard);
+      alb = mix(alb, tx * mix(0.85, 1.0, th), inCard);
+      spec = mix(spec, 0.2, inCard);
     }
   } else {
-    alb = uSteel * 0.5;
+    // the sled's sides: steel with a rail groove and a perforated band
     vec3 e3 = (0.5 - abs(vL)) * vec3(TD, TH, TW);
     float edge = abs(vLN.y) > 0.5 ? min(e3.x, e3.z) : min(e3.x, e3.y);
-    day = mix(uDay * 0.9, uInk, pxLine(edge / px, 0.6, 1.6));
+    float along = (0.5 - vL.x) * TD, up = (vL.y + 0.5) * TH;
+    alb = steel * 0.32;
+    if (abs(vLN.z) > 0.5) {
+      alb *= 1.0 - 0.7 * band(up - 0.05, 0.004, px) + 0.6 * band(up - 0.044, 0.001, px) * (1.0 - lod);
+      float perf = step(0.12, up) * step(up, TH - 0.06) * step(0.06, along);
+      alb *= 1.0 - 0.8 * perf * mix(hexHoles(vec2(along, up), 0.012, 0.0042, px), 0.35, lod);
+    }
+    alb *= 1.0 + 0.9 * band(edge, 0.002, px);
+    spec = 0.5;
   }
-  vec3 cold = coldLight(p, n, alb, spec) + emis;
-  fragColor = vec4(finish(mix(cold, dayLight(day, p, n), th), p, th), 1.0);
+  vec3 col = light(p, n, alb, spec, th) + emis;
+  fragColor = vec4(finish(col, p, th), length(p - uCam));
 }`;
 
-// strip lights (type 0), ceiling chutes (1), steel rods (2): instanced boxes
+// instanced boxes: strip lights over the aisles (type 0), ceiling chutes (1), steel rods (2), and the services over
+// the racks: wire basket trays full of cable (3), the amber fibre raceway (4), the power busway with its tap-off
+// boxes (5)
 const STRIP_V = /* glsl */ `
 in vec3 position; in vec3 normal; in vec3 iB; in vec3 iS; in float iK;
 out vec3 vW; out vec3 vN; out vec3 vL; out float vK;
@@ -380,66 +483,130 @@ void main() {
 const STRIP_F = /* glsl */ `
 in vec3 vW; in vec3 vN; in vec3 vL; in float vK;
 uniform float uChute;
+/** Cables lying along z, across coordinate a (metres): rounded, mostly dark, some ice-blue patch leads and amber. */
+vec3 cables(float a, float px, vec3 steel) {
+  float ci = floor(a / 0.011), cf = fract(a / 0.011);
+  float h = hash12(vec2(ci, 7.0));
+  vec3 c = h < 0.62 ? steel * 0.35 + vec3(0.004, 0.006, 0.01) : h < 0.8 ? uStrip * 0.22 : h < 0.92 ? uLampC * 0.25 : vec3(0.3);
+  float round = sqrt(max(0.0, 1.0 - pow(2.0 * cf - 1.0, 2.0)));
+  return c * mix(0.75, 0.3 + 0.9 * round, 1.0 - smoothstep(0.004, 0.012, px));
+}
 void main() {
   vec3 p = vW, n = normalize(vN);
   float s = -p.z, th = thawAt(s);
-  vec3 col = uSteel * 0.08, day = uInk;
+  float px = max(length(dFdx(p)), length(dFdy(p)));
+  float lod = smoothstep(0.0022, 0.008, px);
+  vec3 steel = steelAt(th);
+  vec3 col = vec3(0.0);
   if (vK < 0.5) {
+    // a light fixture: a dark housing, the diffuser underneath behind cross louvres
     float lv = stripLevel(floor(p.x / P + 0.5), s);
     float w = s - floor(s / BP) * BP, wb = mod(w - UP, BAYW);
     float tube = smoothstep(0.08, 0.16, wb) * smoothstep(BAYW - 0.02, BAYW - 0.1, wb);
-    if (n.y < -0.5) col += uStrip * lv * 6.0 * tube;
-    else col += uStrip * lv * 0.4 * tube;
-    day = mix(uDay, uInk, 0.85);
+    float louv = mix(1.0 - 0.75 * band(mod(s, 0.14) - 0.07, 0.006, px), 0.85, lod);
+    float rim = band(abs(p.x - floor(p.x / P + 0.5) * P) - 0.04, 0.006, px);
+    col = light(p, n, steel * 0.25, 0.6, th);
+    if (n.y < -0.5) col += uStrip * lv * 6.0 * tube * louv * (1.0 - 0.8 * rim) * (1.0 - th);
+    else col += uStrip * lv * 0.3 * tube * (1.0 - th);
   } else if (vK < 1.5) {
     // a chute mouth: a dark square, its rim catching the light
     vec2 e = 0.5 - abs(vL.xz);
     float rim = 1.0 - smoothstep(0.03, 0.08, min(e.x, e.y));
-    col = uSteel * 0.05 + uStrip * rim * 0.5 * uChute * (n.y < -0.5 ? 1.0 : 0.3);
-    day = mix(uDay, uInk, 0.7);
+    col = steel * 0.05 + uStrip * rim * 0.5 * uChute * (n.y < -0.5 ? 1.0 : 0.3);
+  } else if (vK < 2.5) {
+    col = light(p, n, steel * 0.9, 0.5, th);
+  } else if (vK < 3.5) {
+    // a wire basket tray: a grid of bright wires over the cables inside it
+    float across = abs(n.x) > 0.5 ? p.y : p.x;
+    vec2 fc = abs(n.x) > 0.5 ? vec2(p.z, p.y) : vec2(p.x, p.z);
+    float wire = max(band(mod(fc.x, 0.05) - 0.025, 0.0016, px), band(mod(fc.y + 0.012, 0.05) - 0.025, 0.0016, px));
+    wire = mix(wire, 0.1, lod);
+    vec3 cab = cables(across + floor(p.x / P) * 0.37, px, steel);
+    if (n.y > 0.5) cab *= 0.9; else if (n.y < -0.5) cab *= 0.6;
+    vec3 alb = mix(cab, steel * 1.5, wire);
+    col = light(p, n, alb, mix(0.2, 0.9, wire), th);
+  } else if (vK < 4.5) {
+    // the fibre raceway: an amber plastic trough with ribs; its open top shows the fibres
+    vec3 amber = mix(vec3(0.42, 0.2, 0.035), vec3(0.6, 0.38, 0.12), th);
+    float rib = mix(band(mod(s, 0.1) - 0.05, 0.004, px), 0.08, lod);
+    vec3 alb = amber * (1.0 - 0.35 * rib);
+    if (n.y > 0.5) alb = mix(amber * 0.5, vec3(0.75, 0.5, 0.12) * (0.5 + 0.5 * sin(p.x * 900.0)), 0.5 * (1.0 - lod));
+    col = light(p, n, alb, 0.9, th);
   } else {
-    col = coldLight(p, n, uSteel * 0.9, 0.5);
+    // the busway: a dark duct; a tap-off box every 1.2 m with a small lit indicator
+    float tb = abs(mod(s, 1.2) - 0.6);
+    vec3 alb = steel * (tb < 0.12 ? 0.9 : 0.3);
+    alb *= 1.0 + 0.7 * band(tb - 0.12, 0.002, px);
+    col = light(p, n, alb, 0.5, th);
+    float led = fillAA(length(vec2(tb, vL.y * 0.1)) - 0.008, px) * step(0.5, abs(n.x));
+    col += uStrip * led * 2.0 * (1.0 - th) * step(0.5, uLampAll + uOther);
   }
-  fragColor = vec4(finish(mix(col, day, th), p, th), 1.0);
+  fragColor = vec4(finish(col, p, th), length(p - uCam));
 }`;
 
-// the floor: wet concrete, aisle lines, the strip lights smeared in its sheen
+// the floor: raised-floor tiles, perforated ones down the middle of each cold aisle breathing a little cold light,
+// glossy, with the room mirrored in it (uRefl: the scene drawn through a camera mirrored in the floor)
 const FLOOR_V = /* glsl */ `
 in vec3 position;
 out vec3 vW;
 void main() { vW = position; gl_Position = projectionMatrix * viewMatrix * vec4(position, 1.0); }`;
 const FLOOR_F = /* glsl */ `
 in vec3 vW;
+uniform sampler2D uRefl; uniform vec2 uRes;
 void main() {
   vec3 p = vW;
   float s = -p.z, th = thawAt(s);
   float px = max(length(dFdx(p)), length(dFdy(p)));
-  float nz = fbm(p.xz * 0.7, 3) * 0.5 + 0.5;
-  vec3 alb = uSteel * (0.22 + 0.14 * nz);
-  float xa = floor(p.x / P + 0.5) * P, dx = abs(p.x - xa);
-  float mark = 1.0 - smoothstep(0.012, 0.012 + px * 1.5, abs(dx - (A - 0.16)));
-  alb = mix(alb, uPaperC * 0.3, mark * 0.5);
-  vec3 cold = coldLight(p, vec3(0.0, 1.0, 0.0), alb, 0.0);
-  vec3 cm = vec3(uCam.x, -uCam.y, uCam.z), rd = p - cm;
-  vec3 q = p + rd * ((LY - p.y) / max(rd.y, 1e-3));
-  float qa = floor(q.x / P + 0.5) * P;
-  float refl = exp(-pow((q.x - qa) / 0.2, 2.0)) * stripLevel(floor(q.x / P + 0.5), -q.z) * (0.5 + 0.5 * nz);
-  cold += uStrip * refl * 0.35 / (1.0 + length(p - uCam) * 0.02);
-  vec3 day = uDay * 0.97;
-  day = mix(day, uInk, (1.0 - smoothstep(0.006, 0.006 + px * 1.2, abs(dx - (A - 0.16)))) * 0.35);
-  fragColor = vec4(finish(mix(cold, dayLight(day, p, vec3(0.0, 1.0, 0.0)), th), p, th), 1.0);
+  float lod = smoothstep(0.003, 0.012, px);
+  vec3 steel = steelAt(th);
+  float xa = floor(p.x / P + 0.5) * P, dx = p.x - xa;
+  vec2 tc = vec2(dx + 0.3, s) / 0.6, ti = floor(tc), tf = fract(tc) * 0.6;
+  float hT = hash12(ti + vec2(floor(p.x / P + 0.5) * 17.0, 3.0));
+  bool perf = ti.x == 0.0 && mod(ti.y, 4.0) != 3.0;
+  vec3 alb = steel * (0.3 + 0.06 * hT) * (0.92 + 0.08 * (fbm(p.xz * 3.0, 2) * 0.5 + 0.5));
+  float seam = mix(max(band(tf.x, 0.0025, px), band(tf.y, 0.0025, px)), 0.0, lod);
+  vec3 emis = vec3(0.0);
+  if (perf) {
+    float holes = sqHoles(tf - 0.3, 0.03, 0.009, px) * step(abs(tf.x - 0.3), 0.26) * step(abs(tf.y - 0.3), 0.26);
+    holes = mix(holes, 0.42, lod);
+    alb *= 1.0 - 0.85 * holes;
+    emis = uStrip * holes * 0.035 * stripLevel(floor(p.x / P + 0.5), s) * (1.0 - th);
+  }
+  // the safety line along each rack's foot
+  float mark = band(abs(dx) - (A - 0.12), 0.025, px);
+  alb = mix(alb, mix(vec3(0.45, 0.32, 0.06), vec3(0.6, 0.45, 0.15), th), mark * 0.8);
+  alb *= 1.0 - 0.7 * seam;
+  vec3 col = light(p, vec3(0.0, 1.0, 0.0), alb, 0.0, th) + emis;
+  // the reflection: sharper on the solid tiles, broken up by the perforations, stronger at grazing angles
+  vec3 v = normalize(uCam - p);
+  float fres = 0.05 + 0.95 * pow(1.0 - max(v.y, 0.0), 5.0);
+  float gloss = (perf ? 0.68 : 0.88) * (0.85 + 0.15 * hT) * (1.0 - 0.8 * seam);
+  vec2 suv = gl_FragCoord.xy / uRes + (vec2(hash12(ti), hash12(ti + 3.1)) - 0.5) * 0.0004;
+  // a blurred mirror: the blur grows with roughness and stretches along the view (the reflection streaks toward the camera)
+  float r = 0.003 + (1.0 - gloss) * 0.01;
+  vec3 rc = vec3(0.0);
+  float j = hash12(FRAG_PX) * 6.2832;
+  for (int i = 0; i < 12; i++) {
+    float fi = float(i) + 0.5, a = fi * 2.39996 + j, rr = sqrt(fi / 12.0) * r;
+    rc += texture(uRefl, suv + vec2(cos(a) * 0.5625 * 0.6, sin(a) * 1.6) * rr).rgb;
+  }
+  rc /= 12.0;
+  col += rc * mix(0.08, 0.6, fres) * gloss;
+  fragColor = vec4(finish(col, p, th), length(p - uCam));
 }`;
 
-// the ceiling over the aisles (keep, harvest): dark panels, light pooling around the strips
+// the ceiling over the aisles (keep, harvest): perforated panels in a grid, light pooling around the strips
 const CEIL_F = /* glsl */ `
 in vec3 vW;
 void main() {
   vec3 p = vW;
   float px = max(length(dFdx(p)), length(dFdy(p)));
-  vec3 alb = uSteel * (0.1 + 0.05 * (fbm(p.xz * 0.5, 2) * 0.5 + 0.5));
-  vec2 g = 0.6 - abs(fract(p.xz / 1.2) - 0.5) * 1.2;
-  alb *= 1.0 - 0.6 * (1.0 - smoothstep(0.0, px * 1.5 + 0.004, min(g.x, g.y)));
-  fragColor = vec4(finish(coldLight(p, vec3(0.0, -1.0, 0.0), alb, 0.0), p, 0.0), 1.0);
+  float lod = smoothstep(0.003, 0.012, px);
+  vec2 g = fract(p.xz / 0.6) * 0.6;
+  vec3 alb = uSteel * (0.12 + 0.04 * hash12(floor(p.xz / 0.6)));
+  alb *= 1.0 - 0.5 * mix(sqHoles(g, 0.02, 0.004, px) * step(abs(g.x - 0.3), 0.24) * step(abs(g.y - 0.3), 0.24), 0.2, lod);
+  alb *= 1.0 - 0.6 * max(band(g.x, 0.006, px), band(g.y, 0.006, px));
+  fragColor = vec4(finish(coldLight(p, vec3(0.0, -1.0, 0.0), alb, 0.0), p, 0.0), length(p - uCam));
 }`;
 
 // cards: envelopes and pages from the atlas (instanced quads, iU / iV half-extents)
@@ -462,14 +629,14 @@ void main() {
   vec3 tx = atlas(vT, back ? vec2(0.03, 0.97) : vUv, dx, dy);
   if (vFx.z < 0.999 && hash12(FRAG_PX + fract(uTime * 7.0) * 113.0) > vFx.z) discard;
   float th = max(thawAt(-vW.z), vFx.y);
-  vec3 cold = coldLight(vW, n, tx, 0.25) + tx * uAmb * 2.0;
+  vec3 col = light(vW, n, tx, 0.25, th) + tx * uAmb * 2.0 * (1.0 - th);
   if (vFx.x > -1.0) {
     // the glint: one bright streak across the padlock
     vec2 dl = (vUv - vec2(0.5, 0.56)) * vec2(1.6, 1.0);
     float band = exp(-pow(vUv.x * 0.8 + vUv.y * 0.6 - (0.6 + vFx.x * 1.3), 2.0) / 0.002);
-    cold += mix(uFrostC, vec3(1.0), 0.5) * 9.0 * band * exp(-dot(dl, dl) / 0.014) * exp(-max(vFx.x, 0.0) * 1.8);
+    col += mix(uFrostC, vec3(1.0), 0.5) * 9.0 * band * exp(-dot(dl, dl) / 0.014) * exp(-max(vFx.x, 0.0) * 1.8);
   }
-  fragColor = vec4(finish(mix(cold, tx, th), vW, th), 1.0);
+  fragColor = vec4(finish(col, vW, th), length(vW - uCam));
 }`;
 
 // plates: a Canvas2D texture on a quad (the tag, the counters, the wall tag)
@@ -483,7 +650,7 @@ uniform sampler2D uTex; uniform float uGain; uniform float uDayP;
 void main() {
   vec3 c = texture(uTex, vUv).rgb;
   float th = max(thawAt(-vW.z), uDayP);
-  fragColor = vec4(finish(c * mix(uGain, 1.0, th), vW, th), 1.0);
+  fragColor = vec4(finish(c * mix(uGain, 1.2, th) * mix(vec3(1.0), uSunC * 0.7, th), vW, th), length(vW - uCam));
 }`;
 
 // the light draining to a point (thaw, at the end)
@@ -530,7 +697,7 @@ interface Plate { mesh: THREE.Mesh; cv: HTMLCanvasElement; c: CanvasRenderingCon
 
 export default class HarvestRemixVault extends LibScene<P, C> {
   static schema = schema;
-  private rt = makeRT(W, H, { samples: 4 });
+  private rt = shared('stage', () => makeRT(W, H, { samples: 4 }));
   private scene = new THREE.Scene();
   private cam = new THREE.PerspectiveCamera(40, W / H, 0.03, 1600);
   private drain = new FSPass(DRAIN, { uR: { value: 2 }, uCol: { value: new THREE.Vector3() } }, { blending: THREE.NormalBlending, transparent: true });
@@ -560,6 +727,23 @@ export default class HarvestRemixVault extends LibScene<P, C> {
   private aDecr = 0;
   private pageAt = { c: [0, 0, 0] as V3, r: [1, 0, 0] as V3, u: [0, 1, 0] as V3 };
   private drainAt = 0;
+  private fin = new Finisher();
+  // the floor's reflection: the scene drawn through the camera mirrored in the floor, at half resolution
+  private reflRT = shared('vault-refl', () => makeRT(W / 2, H / 2));
+  private rcam = new THREE.PerspectiveCamera();
+  private floor!: THREE.Mesh;
+  private vl = new VolumeLight();
+  // steam rising off the thawing drawers (thaw): soft warm wisps, added
+  private steam = new FSPass(/* glsl */ `
+    uniform float uTime, uAmt; uniform vec3 uCol;
+    void main() {
+      vec2 p = vUv * vec2(${(W / H).toFixed(3)}, 1.0) * 3.0;
+      p.y -= uTime * 0.25;
+      vec2 w = vec2(fbm(p + vec2(0.0, uTime * 0.1), 3), fbm(p + 4.1, 3));
+      float n = fbm(p + 1.5 * w, 4);
+      float a = smoothstep(0.05, 0.6, n) * (0.35 + 0.65 * smoothstep(1.0, 0.2, vUv.y)) * uAmt;
+      fragColor = vec4(uCol * a, 1.0);
+    }`, { uTime: { value: 0 }, uAmt: { value: 0 }, uCol: { value: new THREE.Vector3(1, 0.8, 0.6) } }, { blending: THREE.AdditiveBlending, transparent: true });
 
   private get ph() { return this.P.phase; }
 
@@ -583,6 +767,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     this.buildWorld();
     this.buildAtlas();
     this.buildFrost();
+    this.buildLabels();
     this.buildPlates();
     if (this.ph === 'harvest') this.planDrops();
     if (this.ph === 'thaw') this.planThaw();
@@ -600,11 +785,11 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     const v3 = () => ({ value: new THREE.Vector3() }), f = (x = 0) => ({ value: x });
     this.U = {
       uCam: v3(), uTime: f(), uSteel: v3(), uStrip: v3(), uLampC: v3(), uFrostC: v3(), uPaperC: v3(), uFogC: v3(), uMistC: v3(),
-      uDay: v3(), uInk: v3(), uRed: v3(), uFogDay: v3(),
+      uDay: v3(), uInk: v3(), uRed: v3(), uFogDay: v3(), uSunC: v3(),
       uFogDen: f(0.03), uFogDenDay: f(0.006), uMist: f(), uAmb: f(0.03), uFront: f(1e5), uOther: f(1), uSegLo: f(1), uSegHi: f(1), uLevel: f(1),
       uLampAll: f(), uFill: f(), uFarOpen: f(), uLockT: f(1e5), uFrostAll: f(1), uTwinkle: f(),
       uSeg: { value: new Float32Array(NSEG).fill(1) },
-      uFrostTex: { value: null }, uAtlas: { value: null },
+      uFrostTex: { value: null }, uAtlas: { value: null }, uLabels: { value: null },
     };
   }
 
@@ -654,36 +839,41 @@ export default class HarvestRemixVault extends LibScene<P, C> {
       rk.a.iS!.setXYZ(i, RD, RH, BL);
     }
     this.add(rk.g, this.mat(RACK_V, RACK_F));
-    // strip lights over every aisle and block, chutes over aisle 0, the wall tag's rods
-    const nStrip = (R1 - R0 - 1) * (B1 - B0 + 1) + 2 * NB_NEAR * NBAY + 2;
-    const sk = this.instanced(box, { iB: 3, iS: 3, iK: 1 }, nStrip);
-    i = 0;
-    for (let n = R0 + 1; n < R1; n++) for (let b = B0; b <= B1; b++, i++) {
-      sk.a.iB!.setXYZ(i, n * P, LY + 0.03, -(b * BP + BL / 2));
-      sk.a.iS!.setXYZ(i, 0.1, 0.06, BL - 0.1);
-      sk.a.iK!.setX(i, 0);
+    // strip lights over every aisle and block, chutes over aisle 0, the gauge's rods; the services: two basket trays
+    // of cable flanking each aisle's light, the busway over it, the fibre raceway along each rack's top, and near
+    // the camera the rods they hang from
+    const boxes: [number, number, number, number, number, number, number][] = []; // centre, size, type
+    const ceil = this.ph === 'keep' || this.ph === 'harvest' || this.ph === 'gauge';
+    for (let n = R0 + 1; n < R1; n++) for (let b = B0; b <= B1; b++) {
+      const z = -(b * BP + BL / 2), zs = -(b * BP + BP / 2);
+      boxes.push([n * P, LY + 0.03, z, 0.1, 0.06, BL - 0.1, 0]);
+      for (const sd of [-1, 1]) boxes.push([n * P + sd * 0.86, LY - 0.1, zs, 0.3, 0.08, BP, 3]);
+      boxes.push([n * P + 0.42, LY + 0.3, zs, 0.13, 0.1, BP, 5]);
     }
-    for (let w = 0; w < 2; w++) for (let b = 0; b < NB_NEAR; b++) for (let bay = 0; bay < NBAY; bay++, i++) {
+    for (let n = R0; n < R1; n++) for (let b = B0; b <= B1; b++) boxes.push([(n + 0.5) * P, RH + 0.3, -(b * BP + BP / 2), 0.3, 0.1, BP, 4]);
+    if (ceil) for (let n = -3; n <= 3; n++) for (let b = -1; b < NB_NEAR + 2; b++) for (let k = 0; k < 6; k++) for (const sd of [-1, 1]) {
+      const top = LY - 0.06;
+      boxes.push([n * P + sd * 0.86 + sd * 0.13, (top + CEIL_Y) / 2, -(b * BP + (k + 0.5) * BP / 6), 0.012, CEIL_Y - top, 0.012, 2]);
+    }
+    for (let w = 0; w < 2; w++) for (let b = 0; b < NB_NEAR; b++) for (let bay = 0; bay < NBAY; bay++) {
       const s = b * BP + bay * BAYW + UP + 1.5 * CW;
-      sk.a.iB!.setXYZ(i, (w ? 1 : -1) * (A - 0.19), this.ph === 'harvest' ? CHUTE_Y : -50, -s);
-      sk.a.iS!.setXYZ(i, 0.5, 0.1, 0.5);
-      sk.a.iK!.setX(i, 1);
+      boxes.push([(w ? 1 : -1) * (A - 0.19), this.ph === 'harvest' ? CHUTE_Y : -50, -s, 0.5, 0.1, 0.5, 1]);
     }
-    for (let j = 0; i < nStrip; i++, j++) {
+    for (let j = 0; j < 2; j++) {
       // the gauge's two hanging rods (parked under the floor in the other phases)
       const top = GY + GH / 2, on = this.ph === 'gauge';
-      sk.a.iB!.setXYZ(i, on ? (j ? 0.85 : -0.85) : 0, on ? (top + CEIL_Y) / 2 : -50, on ? GZ : 0);
-      sk.a.iS!.setXYZ(i, on ? 0.025 : 0.01, on ? CEIL_Y - top : 0.01, on ? 0.025 : 0.01);
-      sk.a.iK!.setX(i, 2);
+      boxes.push([on ? (j ? 0.85 : -0.85) : 0, on ? (top + CEIL_Y) / 2 : -50, on ? GZ : 0, on ? 0.025 : 0.01, on ? CEIL_Y - top : 0.01, on ? 0.025 : 0.01, 2]);
     }
+    const sk = this.instanced(box, { iB: 3, iS: 3, iK: 1 }, boxes.length);
+    boxes.forEach(([x, y, z, sx, sy, sz, k], j) => { sk.a.iB!.setXYZ(j, x, y, z); sk.a.iS!.setXYZ(j, sx, sy, sz); sk.a.iK!.setX(j, k); });
     this.add(sk.g, this.mat(STRIP_V, STRIP_F, { uChute: { value: this.ph === 'harvest' ? 1 : 0 } }));
     // floor
     const fl = new THREE.BufferGeometry();
     const x0 = R0 * P - 20, x1 = R1 * P + 20, z0 = -(B1 + 1) * BP - 20, z1 = -B0 * BP + 20;
     fl.setAttribute('position', new THREE.Float32BufferAttribute([x0, 0, z0, x1, 0, z0, x1, 0, z1, x0, 0, z1], 3));
     fl.setIndex([0, 2, 1, 0, 3, 2]);
-    this.add(fl, this.mat(FLOOR_V, FLOOR_F));
-    if (this.ph === 'keep' || this.ph === 'harvest' || this.ph === 'gauge') {
+    this.floor = this.add(fl, this.mat(FLOOR_V, FLOOR_F, { uRefl: { value: this.reflRT.texture }, uRes: { value: new THREE.Vector2(this.rt.width, this.rt.height) } }));
+    if (ceil) {
       const ce = new THREE.BufferGeometry();
       ce.setAttribute('position', new THREE.Float32BufferAttribute([x0, CEIL_Y, z0, x1, CEIL_Y, z0, x1, CEIL_Y, z1, x0, CEIL_Y, z1], 3));
       ce.setIndex([0, 1, 2, 0, 2, 3]);
@@ -727,7 +917,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
   // ------------------------------------------------------------------ textures: the atlas, the frost, the plates
 
   private buildAtlas() {
-    const T = 512 * SCALE, cv = document.createElement('canvas');
+    const T = 1024, cv = document.createElement('canvas');
     cv.width = 4 * T; cv.height = 2 * T;
     const c = cv.getContext('2d')!;
     const pals = this.ctx.style.palettes, first = Object.values(pals)[0]!;
@@ -743,13 +933,13 @@ export default class HarvestRemixVault extends LibScene<P, C> {
       const col = i % 4, row = Math.floor(i / 4), w = T * 0.75, h = T;
       c.save(); c.translate(col * T + (T - w) / 2, row * T); c.scale(w / 360, h / 480); f(c, 360, 480); c.restore();
     };
-    const mono = this.font('mono'), serif = this.font('serif');
+    const mono = this.font('mono');
     const [stamp1, stamp2] = splitStamp(this.tagText);
     env(0, (x, w, h) => drawEnvelope(x, w, h, { paper: mixHex(cold.type, cold.bg, 0.16), line: cold.bg, lock: mixHex(cold.type, frostCol, 0.45), frost: mixHex('#ffffff', frostCol, 0.3), seed: 3 }));
     env(1, (x, w, h) => drawEnvelope(x, w, h, { paper: mixHex(cold.type, cold.bg, 0.16), line: cold.bg, lock: mixHex(cold.type, frostCol, 0.45), frost: mixHex('#ffffff', frostCol, 0.3), seed: 9, stamp: [stamp1, stamp2], mono }));
     const dPaper = mixHex(day.bg, '#ffffff', 0.55);
     env(2, (x, w, h) => drawEnvelope(x, w, h, { paper: dPaper, line: day.type, lock: day.type, open: true, seal: day.accent, seed: 9, stamp: [stamp1, stamp2], mono, ink: day.type }));
-    page(3, (x, w, h) => drawPage(x, w, h, 'letter', { paper: dPaper, ink: day.type, red: day.accent, date: this.dateLine, serif, seed: 21 }));
+    page(3, (x, w, h) => drawPage(x, w, h, 'letter', { paper: dPaper, ink: day.type, red: day.accent, date: this.dateLine, seed: 21 }));
     page(4, (x, w, h) => drawPage(x, w, h, 'plan', { paper: dPaper, ink: day.type, red: day.accent, seed: 4, mono }));
     page(5, (x, w, h) => drawPage(x, w, h, 'cake', { paper: dPaper, ink: day.type, red: day.accent, seed: 5, mono }));
     page(6, (x, w, h) => drawPage(x, w, h, 'letter', { paper: dPaper, ink: day.type, red: day.accent, seed: 6 }));
@@ -794,6 +984,50 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     tex.anisotropy = 4;
     tex.needsUpdate = true;
     this.U.uFrostTex!.value = tex;
+  }
+
+  /** The printed labels: 96 sled labels (an archive id, a date and a size, a barcode), 16 rack headers, 16 row plates. */
+  private buildLabels() {
+    const LW = 512, LH = 64, cv = document.createElement('canvas');
+    cv.width = 2 * LW; cv.height = 64 * LH;
+    const c = cv.getContext('2d')!;
+    const mono = this.font('mono'), rnd = mulberry32(4096);
+    const at = (i: number) => [(i % 2) * LW, Math.floor(i / 2) * LH] as const;
+    const pad = (n: number, k: number) => String(n).padStart(k, '0');
+    for (let i = 0; i < 128; i++) {
+      const [x, y] = at(i);
+      c.save(); c.translate(x, y);
+      c.fillStyle = i < 96 ? '#E9ECEE' : i < 112 ? '#D9DDE0' : '#E4E6E2'; c.fillRect(0, 0, LW, LH);
+      c.fillStyle = '#16181B'; c.textBaseline = 'alphabetic'; c.textAlign = 'left';
+      if (i < 96) {
+        const yr = 2016 + Math.floor(rnd() * 8), mo = 1 + Math.floor(rnd() * 12), d = 1 + Math.floor(rnd() * 28);
+        c.font = font(mono, 26); c.fillText(`AR-${pad(Math.floor(rnd() * 9999), 4)}-${pad(Math.floor(rnd() * 9999), 4)}`, 12, 30);
+        c.font = font(mono, 15); c.fillStyle = '#3A3E44';
+        c.fillText(`${yr}-${pad(mo, 2)}-${pad(d, 2)} · ${['1.92', '3.84', '7.68', '15.3'][Math.floor(rnd() * 4)]} TB · SEALED`, 12, 54);
+        // a barcode
+        c.fillStyle = '#16181B';
+        for (let bx = 330; bx < LW - 14;) { const bw = 1 + Math.floor(rnd() * 4); if (rnd() < 0.55) c.fillRect(bx, 10, bw, 44); bx += bw + 1 + Math.floor(rnd() * 2); }
+      } else if (i < 112) {
+        const k = i - 96;
+        c.font = font(mono, 30); c.fillText(`RACK ${'ABCDEFGH'[k % 8]}${pad(3 + k, 2)}`, 14, 42);
+        c.font = font(mono, 14); c.fillStyle = '#3A3E44'; c.fillText('COLD STORE · U01–U08', 250, 38);
+        c.fillStyle = '#16181B';
+        for (let q = 0; q < 36; q++) if (rnd() < 0.5) c.fillRect(LW - 58 + (q % 6) * 7, 10 + Math.floor(q / 6) * 7, 7, 7);
+      } else {
+        const k = i - 112;
+        c.fillStyle = '#16181B'; c.fillRect(0, 0, 150, LH);
+        c.fillStyle = '#E4E6E2'; c.font = font(mono, 40); c.textAlign = 'center'; c.fillText(`${'ABCDEFGH'[k % 8]}${pad(1 + k, 2)}`, 75, 47);
+        c.fillStyle = '#16181B'; c.textAlign = 'left'; c.font = font(mono, 22); c.fillText(`ROW ${pad(1 + k, 2)} · ARCHIVE`, 170, 30);
+        c.font = font(mono, 14); c.fillStyle = '#3A3E44'; c.fillText('KEEP CLOSED · 4 °C · NO ACCESS', 170, 52);
+      }
+      c.restore();
+    }
+    const tex = new THREE.CanvasTexture(cv);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.flipY = false;
+    tex.anisotropy = 8;
+    tex.minFilter = THREE.LinearMipmapLinearFilter;
+    this.U.uLabels!.value = tex;
   }
 
   private plate(name: string, w: number, h: number, gain: number) {
@@ -998,7 +1232,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
   override render(f: Frame, out: THREE.WebGLRenderTarget) {
     const t = f.t, r = this.ctx.renderer;
     const cam = this.camAt(t);
-    this.cam.fov = cam.fov;
+    this.cam.fov = fitFov(cam.fov, fitOf(this.ctx.style));
     this.cam.near = clamp(Math.hypot(...sub(cam.g, cam.c)) * 0.012, 0.03, 1.5); // depth precision for the wide shots
     this.cam.position.set(...cam.c);
     this.cam.lookAt(...cam.g);
@@ -1015,12 +1249,33 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     for (const a of Object.values(this.trayAttr)) a.needsUpdate = true;
 
     const fog = this.U.uFront!.value < 1e4 ? (this.U.uFogDay!.value as THREE.Vector3) : (this.U.uFogC!.value as THREE.Vector3);
-    clearRT(r, this.rt, [fog.x, fog.y, fog.z]);
+    this.reflect(r, [fog.x, fog.y, fog.z], cam.c);
+    clearRT(r, this.rt, [fog.x, fog.y, fog.z], 1000);
     r.setRenderTarget(this.rt);
     r.render(this.scene, this.cam);
-    this.ctx.comp.draw(r, this.rt.texture, out, { mode: 'replace' });
+    // the light in the air: the strip lights' cones down the aisle (cold), the sunrise pouring up it (thaw)
+    this.vl.time = t;
+    const cz = cam.c[2], warmV = this.ph === 'thaw';
+    const stripC = warmV ? new THREE.Color(1.0, 0.72, 0.42).multiplyScalar(0.3 * th) : new THREE.Color(0.55, 0.78, 1.0).multiplyScalar(this.ph === 'keep' ? 0.45 : 0.3);
+    this.vl.beams = [0, 1, 2, 3].map((k) => ({ p: [0, 3.6, cz - 2 - k * 4.5] as [number, number, number], d: [0, -1, -0.15] as [number, number, number], angle: 0.42, color: stripC, range: 6 }));
+    if (warmV) this.vl.beams = [{ p: [0, 2, cz - 60], d: [0, -0.05, 1], angle: 0.35, color: new THREE.Color(1.0, 0.7, 0.4).multiplyScalar(0.25 * th), range: 70 }];
+    this.vl.fog = { density: warmV ? 0.03 : 0.09, noise: 0.6, haze: 0, maxDist: 40, drift: [0.02, -0.03, -0.05] };
+    this.vl.render(r, this.rt, this.cam, true);
+    // the light: down the aisle from its far end (the sunrise, thaw; the cold strip lights otherwise)
+    const far = new THREE.Vector3(cam.g[0] + (cam.g[0] - cam.c[0]) * 30, 1.6, cam.g[2] + (cam.g[2] - cam.c[2]) * 30).project(this.cam);
+    const thaw = this.ph === 'thaw';
+    this.fin.apply(r, this.rt.texture, out, {
+      rays: { uv: [far.x * 0.5 + 0.5, far.y * 0.5 + 0.5], amt: thaw ? 0.3 + 0.9 * th : 0.55, thr: thaw ? 0.85 : 0.6, len: 0.85, decay: 0.975, rad: thaw ? 0.9 : 0.6,
+        tint: thaw ? linC('#FFC98A', 1) : linC((this.ctx.style.palettes.frost ?? {}).ice ?? '#8BE9FF', 0.8) },
+      lens: thaw ? 0 : this.ph === 'keep' ? 0.12 : 0.06, lensCol: linC('#BFE6FF', 0.5),
+    });
+    if (thaw && th > 0.01) {
+      this.steam.u.uTime!.value = t;
+      this.steam.u.uAmt!.value = 0.09 * th * (1 - 0.6 * smoothstep(this.aDecr + 2, this.aDecr + 6, t));
+      this.steam.render(r, out);
+    }
 
-    if (this.ph === 'thaw' && t > this.drainAt) {
+    if (this.ph === 'thaw' && t > this.drainAt && this.cues.some((c) => !c.line)) {
       const p = ease.inOutCubic(prog(t, this.drainAt, this.E - 0.25));
       this.drain.u.uR!.value = lerp(1.1, 0.004, p);
       const cold = hexToLinear((this.ctx.style.palettes.frost ?? {}).bg ?? '#060A10');
@@ -1029,9 +1284,28 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     }
     const day = th;
     return {
-      bloom: lerp(0.6, 0.12, day), bloomThreshold: lerp(0.72, 0.96, day), bloomRadius: 0.5, halation: 0, ca: lerp(0.18, 0.08, day),
-      grain: 0.034, vignette: lerp(0.4, 0.14, day), hud: 0,
+      bloom: lerp(0.65, 0.2, day), bloomThreshold: lerp(0.72, 1.15, day), streak: lerp(0.32, 0.1, day), bloomRadius: 0.6, halation: 0.08 * day, ca: lerp(0.25, 0.15, day),
+      grain: 0.016, vignette: lerp(0.42, 0.32, day), hud: 0,
+      gain: (thaw ? [1.06 + 0.04 * day, 1.0, 0.86] : this.ph === 'keep' ? [0.92, 1.0, 1.1] : [1.03, 1.0, 0.96]) as [number, number, number],
+      lift: (thaw ? [0.01 * day, 0.004 * day, 0] : [0, 0.003, 0.01]) as [number, number, number], sat: thaw ? 1.05 : 1.1,
     };
+  }
+
+  /** The floor's reflection: the scene (without the floor) through the camera mirrored in y = 0. */
+  private reflect(r: THREE.WebGLRenderer, fog: V3, c: V3) {
+    const rc = this.rcam;
+    rc.projectionMatrix.copy(this.cam.projectionMatrix);
+    rc.projectionMatrixInverse.copy(this.cam.projectionMatrixInverse);
+    rc.matrixAutoUpdate = false; rc.matrixWorldAutoUpdate = false;
+    rc.matrixWorld.multiplyMatrices(new THREE.Matrix4().makeScale(1, -1, 1), this.cam.matrixWorld);
+    rc.matrixWorldInverse.copy(rc.matrixWorld).invert();
+    (this.U.uCam!.value as THREE.Vector3).set(c[0], -c[1], c[2]);
+    this.floor.visible = false;
+    clearRT(r, this.reflRT, fog, 1000);
+    r.setRenderTarget(this.reflRT);
+    r.render(this.scene, rc);
+    this.floor.visible = true;
+    (this.U.uCam!.value as THREE.Vector3).set(...c);
   }
 
   /** Sets every uniform, tray, card and plate for t; returns how far the daylight has reached the camera (0..1). */
@@ -1052,7 +1326,14 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     vec('uFogC', [fogC[0] + si[0] * 0.004, fogC[1] + si[1] * 0.004, fogC[2] + si[2] * 0.004]);
     vec('uMistC', [si[0] * 0.07, si[1] * 0.07, si[2] * 0.07]);
     const dk = this.ph === 'thaw' ? k : ck;
-    vec('uDay', lin(dk.bg)); vec('uInk', lin(dk.type)); vec('uRed', lin(dk.accent)); vec('uFogDay', lin(dk.bg));
+    if (this.ph === 'thaw') {
+      // sunrise: the racks' metal turns warm brushed aluminium in the sun; the sunlight low and gold; a hot gold haze
+      // down the aisle toward the sun
+      const sc = lin('#FFC08A');
+      vec('uDay', lin('#8C8278')); vec('uSunC', [sc[0] * 1.25, sc[1] * 1.25, sc[2] * 1.25]); vec('uInk', lin(mixHex(dk.type, '#5A2A10', 0.3))); vec('uRed', lin(dk.accent));
+      const g = lin('#FF9C55');
+      vec('uFogDay', [g[0] * 1.7, g[1] * 1.9, g[2] * 2.4]);
+    } else { vec('uDay', lin(dk.bg)); vec('uSunC', lin(dk.type)); vec('uInk', lin(dk.type)); vec('uRed', lin(dk.accent)); vec('uFogDay', lin(dk.bg)); }
     set('uLevel', 0.85 + 0.3 * f.a.rms);
     set('uTwinkle', 0.6 * f.a.hat);
     const seg = U.uSeg!.value as Float32Array;
@@ -1234,7 +1515,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     set('uFront', front);
     set('uLampAll', 0.5); set('uFill', 0.95); set('uFrostAll', 1); set('uLockT', aAbout);
     set('uFarOpen', ease.outCubic(prog(t, aDecr + 0.1, aDecr + 0.6)));
-    set('uFogDen', 0.055); set('uFogDenDay', 0.0075); set('uMist', 0.4); set('uAmb', 0.02);
+    set('uFogDen', 0.055); set('uFogDenDay', lerp(0.016, 0.0045, smoothstep(aDecr + 1.5, aDecr + 6, t))); set('uMist', 0.4); set('uAmb', 0.02);
     const camS = -camC[2];
     const st = this.trayAttr.iSt!, ex = this.trayAttr.iEx!;
     const heroOpen = 0.45 * ease.outBack(prog(t, c28 + 0.15, c28 + 0.55));
@@ -1449,41 +1730,27 @@ function drawEnvelope(c: CanvasRenderingContext2D, w: number, h: number, o: {
   if (o.frost) drawFrost(c, w, h, o.frost, o.seed);
 }
 
-/** A page: a handwritten letter (with a date in serif italic), a floor plan, or a birthday cake; a broken red seal. */
+/** A page: a handwritten letter (the dated Tuesday letter, or someone else's note), a floor plan, or a birthday cake; a broken red seal. */
 function drawPage(c: CanvasRenderingContext2D, w: number, h: number, kind: 'letter' | 'plan' | 'cake', o: {
-  paper: string; ink: string; red: string; seed: number; date?: string; serif?: string; mono?: string; alt?: boolean;
+  paper: string; ink: string; red: string; seed: number; date?: string; mono?: string; alt?: boolean;
 }) {
   const rnd = mulberry32(o.seed);
   c.fillStyle = o.paper; c.fillRect(0, 0, w, h);
+  // paper fibres
+  for (let i = 0; i < 700; i++) {
+    const x = rnd() * w, y = rnd() * h, l = 1 + rnd() * 4, a = rnd() * Math.PI;
+    c.strokeStyle = rnd() < 0.5 ? 'rgba(120,90,50,0.06)' : 'rgba(255,255,255,0.12)'; c.lineWidth = 0.5;
+    c.beginPath(); c.moveTo(x, y); c.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); c.stroke();
+  }
   c.strokeStyle = rgba(o.ink, 0.25); c.lineWidth = 2; c.strokeRect(1, 1, w - 2, h - 2);
   // the creases of the tri-fold
   c.strokeStyle = rgba(o.ink, 0.1); c.lineWidth = 1.5;
   c.beginPath(); c.moveTo(0, h / 3); c.lineTo(w, h / 3); c.moveTo(0, (2 * h) / 3); c.lineTo(w, (2 * h) / 3); c.stroke();
   c.strokeStyle = o.ink; c.fillStyle = o.ink; c.lineJoin = 'round'; c.lineCap = 'round';
   if (kind === 'letter') {
-    let y0 = 52;
-    if (o.date && o.serif) {
-      c.font = font(o.serif, 30); c.textAlign = 'left'; c.fillText(o.date, 34, 58);
-      y0 = 104;
-    }
-    c.lineWidth = 2.2;
-    for (let y = y0; y < h - 40; y += 30) {
-      c.strokeStyle = rgba(o.ink, 0.12); c.lineWidth = 1.2;
-      c.beginPath(); c.moveTo(30, y + 6); c.lineTo(w - 30, y + 6); c.stroke();
-      c.strokeStyle = rgba(o.ink, 0.85); c.lineWidth = 2.1;
-      let x = 34 + (y === y0 ? 26 : 0);
-      const end = y > h - 80 ? w * 0.55 : w - 34 - rnd() * 50;
-      while (x < end) {
-        const wl = 18 + rnd() * 46;
-        c.beginPath();
-        for (let xx = x; xx < Math.min(x + wl, end); xx += 2) {
-          const yy = y + Math.sin(xx * 0.55 + rnd() * 0.4) * (3 + rnd() * 3) - (rnd() < 0.05 ? 7 : 0);
-          if (xx === x) c.moveTo(xx, yy); else c.lineTo(xx, yy);
-        }
-        c.stroke();
-        x += wl + 9 + rnd() * 6;
-      }
-    }
+    // the Tuesday letter (dated) or someone else's note, handwritten
+    const note = NOTES[o.seed % NOTES.length]!;
+    drawLetter(c, w, h, o.date ? { date: o.date, ...LETTER, ink: o.ink, seed: o.seed, size: 17 } : { ...note, ink: o.ink, seed: o.seed, size: 24 });
   } else if (kind === 'plan') {
     c.save(); c.translate(w / 2, h / 2 - 10); if (o.alt) c.rotate(Math.PI / 2); c.translate(-150, -170);
     c.lineWidth = 4; c.strokeRect(0, 0, 300, 340);
@@ -1534,14 +1801,37 @@ function drawTag(c: CanvasRenderingContext2D, w: number, h: number, s: string, m
   c.fillText(s, 34, h / 2 + 3);
 }
 
-/** A rack-end counter: five mono digits in the lamp colour on a steel plate. */
+/** A rack-end counter: a display behind smoked glass in a steel bezel, five glowing mono digits over their unlit ghosts, a caption and status pips. */
 function drawCounter(c: CanvasRenderingContext2D, w: number, h: number, v: number, mono: string, k: Look) {
-  c.fillStyle = mixHex(k.bg, k.dim, 0.28); c.fillRect(0, 0, w, h);
-  c.strokeStyle = rgba(k.dim, 0.6); c.lineWidth = 4; c.strokeRect(2, 2, w - 4, h - 4);
-  c.fillStyle = mixHex(k.bg, k.dim, 0.08); c.fillRect(26, 26, w - 52, h - 52);
-  const s = String(v).padStart(5, '0'), cw = 120, x0 = w / 2 - (cw * 5) / 2 + cw / 2;
-  c.font = font(mono, 170); c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = mixHex(k.accent, '#ffffff', 0.12);
-  for (let i = 0; i < 5; i++) c.fillText(s[i]!, x0 + i * cw, h / 2 + 6);
+  const bez = c.createLinearGradient(0, 0, 0, h);
+  bez.addColorStop(0, mixHex(k.bg, k.dim, 0.42)); bez.addColorStop(1, mixHex(k.bg, k.dim, 0.18));
+  c.fillStyle = bez; c.fillRect(0, 0, w, h);
+  c.strokeStyle = rgba(k.type, 0.25); c.lineWidth = 2; c.strokeRect(3, 3, w - 6, h - 6);
+  for (const [x, y] of [[14, 14], [w - 14, 14], [14, h - 14], [w - 14, h - 14]]) {
+    c.fillStyle = mixHex(k.bg, k.dim, 0.6); c.beginPath(); c.arc(x, y, 5, 0, Math.PI * 2); c.fill();
+    c.strokeStyle = rgba(k.bg, 0.8); c.lineWidth = 1.5; c.beginPath(); c.moveTo(x - 3, y); c.lineTo(x + 3, y); c.stroke();
+  }
+  // the smoked glass
+  const gx = 30, gy = 46, gw = w - 60, gh = h - 76;
+  c.fillStyle = mixHex(k.bg, '#000000', 0.55); c.fillRect(gx, gy, gw, gh);
+  c.font = font(mono, 20); c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillStyle = rgba(k.type, 0.55);
+  c.letterSpacing = '3px'; c.fillText('SEALED OBJECTS · AISLE 00', gx, 26); c.letterSpacing = '0px';
+  c.textAlign = 'right'; c.fillStyle = rgba(k.accent, 0.8); c.fillText('● REC', gx + gw, 26);
+  const s = String(v).padStart(5, '0'), cw = 116, x0 = w / 2 - (cw * 5) / 2 + cw / 2, y = gy + gh / 2 + 4;
+  c.font = font(mono, 158); c.textAlign = 'center';
+  c.fillStyle = rgba(k.accent, 0.08);
+  for (let i = 0; i < 5; i++) c.fillText('8', x0 + i * cw, y);
+  c.shadowColor = rgba(k.accent, 0.9); c.shadowBlur = 18;
+  c.fillStyle = mixHex(k.accent, '#ffffff', 0.18);
+  for (let i = 0; i < 5; i++) c.fillText(s[i]!, x0 + i * cw, y);
+  c.shadowBlur = 0;
+  // scan lines and a reflection on the glass
+  c.fillStyle = 'rgba(0,0,0,0.18)';
+  for (let yy = gy; yy < gy + gh; yy += 4) c.fillRect(gx, yy, gw, 1.5);
+  const rf = c.createLinearGradient(gx, gy, gx + gw * 0.6, gy + gh);
+  rf.addColorStop(0, 'rgba(255,255,255,0.09)'); rf.addColorStop(0.45, 'rgba(255,255,255,0.02)'); rf.addColorStop(0.46, 'rgba(255,255,255,0)');
+  c.fillStyle = rf; c.fillRect(gx, gy, gw, gh);
+  c.strokeStyle = rgba(k.type, 0.18); c.lineWidth = 2; c.strokeRect(gx, gy, gw, gh);
 }
 
 /** The storage gauge: a kicker, the big reading and its unit, a label, and a log-scale fill bar with decade ticks. */

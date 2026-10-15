@@ -21,6 +21,8 @@ import type { ResolvedCue } from '../engine/cues';
 import { FSPass, makeRT, clearRT } from '../engine/gl';
 import { LineBatch } from '../engine/lines';
 import { clamp, ease, hash, hexToLinear, lerp, mulberry32, noise1, prog } from '../engine/util';
+import { F, font } from '../engine/type';
+import { shared, fitOf, fitFov, Finisher } from './harvest-remix-kit';
 import { LibScene, M, W, H, hit, label, mixHex, type Look } from './_lib';
 
 export const schema: SceneSchema = {
@@ -30,6 +32,7 @@ export const schema: SceneSchema = {
   entry: {
     label: { type: 'string', default: 'ML-KEM · FIPS 203 · 2024', description: 'the mono label in the top-left corner (none if empty)' },
     stamp: { type: 'string', default: 'LATER', description: 'the word stamped on the crate, when the folding cue does not give one' },
+    view: { type: 'string', enum: ['lattice', 'crate'], default: 'lattice', description: 'lattice: the camera round the lattice and up over the box; crate: a low close shot of the crate as it closes' },
   },
   cue: {
     stamp: { type: 'string', default: '', description: 'set on the cue that boxes the lattice: it folds into a crate over the cue\'s line and this word is stamped on it at the anchor; empty: the cue that builds the lattice (snap on the anchor)' },
@@ -37,7 +40,7 @@ export const schema: SceneSchema = {
   example: { entry: { label: 'ML-KEM · FIPS 203 · 2024', stamp: 'LATER' }, cues: [{}, { stamp: 'LATER' }] },
 };
 
-interface P { label: string; stamp: string }
+interface P { label: string; stamp: string; view: 'lattice' | 'crate' }
 interface C { stamp: string }
 type V3 = [number, number, number];
 
@@ -73,14 +76,15 @@ function canvasTex(w: number, h: number, draw: (c: CanvasRenderingContext2D) => 
 
 export default class HarvestLattice extends LibScene<P, C> {
   static schema = schema;
-  private rt = makeRT(W, H, { samples: 4 });
+  private rt = shared('stage', () => makeRT(W, H, { samples: 4 }));
+  private fin = new Finisher();
   private back = new FSPass(BACK_F, {
     uBg: { value: new THREE.Vector3() }, uHaze: { value: new THREE.Vector3() }, uGlow: { value: new THREE.Vector3() },
     uC: { value: new THREE.Vector2(0.5, 0.6) }, uG: { value: 1 },
   });
   private lines = new LineBatch(6000, { screen2D: false, worldWidth: true, blend: 'add', depthTest: true });
   private scene = new THREE.Scene();
-  private cam = new THREE.PerspectiveCamera(30, W / H, 0.1, 60);
+  private cam = new THREE.PerspectiveCamera(fitFov(30, fitOf(this.ctx.style)), W / H, 0.1, 60);
 
   // lattice
   private pts: { c: V3; p: V3; shell: number; n: number; seed: number }[] = [];
@@ -181,8 +185,35 @@ export default class HarvestLattice extends LibScene<P, C> {
       c.fillStyle = 'rgba(214,190,150,0.55)'; c.fillRect(0, 0, 1024, 92);
       c.fillStyle = 'rgba(255,250,235,0.22)'; c.fillRect(0, 10, 1024, 6);
     });
+    // the side walls: printed handling marks, a shipping label with a barcode, a scuffed corner
+    const printedTex = canvasTex(1024, 1024, (c) => {
+      kraftFace(c, 1024, 1024);
+      const ink = 'rgba(30,22,14,0.82)';
+      c.strokeStyle = ink; c.fillStyle = ink; c.lineWidth = 9; c.lineCap = 'round';
+      // this way up: two arrows over a bar
+      for (const x of [110, 190]) { c.beginPath(); c.moveTo(x, 260); c.lineTo(x, 130); c.moveTo(x - 30, 165); c.lineTo(x, 130); c.lineTo(x + 30, 165); c.stroke(); }
+      c.fillRect(70, 275, 160, 12);
+      // keep dry: an umbrella
+      c.beginPath(); c.arc(360, 210, 60, Math.PI, 0); c.closePath(); c.stroke();
+      c.beginPath(); c.moveTo(360, 210); c.lineTo(360, 280); c.arc(345, 280, 15, 0, Math.PI); c.stroke();
+      // fragile: a glass
+      c.beginPath(); c.moveTo(500, 140); c.lineTo(580, 140); c.lineTo(560, 215); c.lineTo(520, 215); c.closePath(); c.stroke();
+      c.beginPath(); c.moveTo(540, 215); c.lineTo(540, 270); c.moveTo(510, 275); c.lineTo(570, 275); c.stroke();
+      c.font = font(F.archivo(100, 800), 34); c.fillText('THIS SIDE UP · KEEP DRY · FRAGILE', 70, 360);
+      // the label
+      c.save(); c.translate(560, 560); c.rotate(-0.025);
+      c.fillStyle = '#EEE8DA'; c.fillRect(0, 0, 400, 300);
+      c.fillStyle = '#1A1A1A'; c.font = font(F.mono(600), 30); c.fillText('PQC-114', 24, 50);
+      c.font = font(F.mono(400), 22);
+      ['ML-KEM · FIPS 203', 'from: security team', 'to:   platform (later)', 'qty 1 · do not open'].forEach((l, i) => c.fillText(l, 24, 92 + i * 32));
+      for (let x = 24; x < 376; x += 5) if (rnd() < 0.6) c.fillRect(x, 222, 2 + Math.floor(rnd() * 3), 56);
+      c.restore();
+      // a corrugated edge where the corner was crushed
+      c.fillStyle = 'rgba(40,26,12,0.25)';
+      for (let x = 0; x < 140; x += 10) { c.beginPath(); c.arc(x + 5, 1020, 5, Math.PI, 0); c.fill(); }
+    });
     const mat = (map: THREE.Texture, rough = 0.92) => new THREE.MeshStandardMaterial({ map, roughness: rough, metalness: 0 });
-    const plain = mat(plainTex), taped = mat(tapeTex, 0.7);
+    const plain = mat(plainTex), taped = mat(tapeTex, 0.7), printed = mat(printedTex);
 
     const bottom = new THREE.Mesh(new THREE.BoxGeometry(S, T, S), plain);
     bottom.position.y = T / 2;
@@ -194,7 +225,7 @@ export default class HarvestLattice extends LibScene<P, C> {
       hinge.position.set(0, T, S / 2);
       const outer = i % 2 === 0; // front and back: the outer flaps, full-height walls
       const h = outer ? S - T : S - 2 * T;
-      const wall = new THREE.Mesh(new THREE.BoxGeometry(S - (outer ? 0 : 2 * T), h, T), plain);
+      const wall = new THREE.Mesh(new THREE.BoxGeometry(S - (outer ? 0 : 2 * T), h, T), outer ? plain : [plain, plain, plain, plain, printed, plain]);
       wall.position.set(0, h / 2, -T / 2);
       hinge.add(wall);
       const fh = new THREE.Group();
@@ -311,8 +342,15 @@ export default class HarvestLattice extends LibScene<P, C> {
     const settle = ease.inOutCubic(prog(t, this.tStamp - 0.1, this.tSlide)); // then down toward the stamp
     p1.add(new THREE.Vector3(-0.4, -2.1, -0.5).multiplyScalar(settle));
     const pan = slide * 0.9;
-    this.cam.position.lerpVectors(p0, p1, cf).add(new THREE.Vector3(pan * 0.4, 0, 0));
-    this.cam.lookAt(tg0.lerp(tg1, cf).add(new THREE.Vector3(pan, 0, 0)));
+    if (this.P.view === 'crate') {
+      // the insert: low and close at the front right, drifting in, then following the crate out
+      const u = prog(t, f.start, f.end);
+      this.cam.position.set(lerp(2.9, 2.2, u) + pan * 0.6, lerp(1.25, 1.05, u), lerp(3.4, 2.7, u));
+      this.cam.lookAt(0.1 + pan, 0.5, 0);
+    } else {
+      this.cam.position.lerpVectors(p0, p1, cf).add(new THREE.Vector3(pan * 0.4, 0, 0));
+      this.cam.lookAt(tg0.lerp(tg1, cf).add(new THREE.Vector3(pan, 0, 0)));
+    }
     this.cam.updateMatrixWorld();
 
     // ------------------------------------------------ crate
@@ -337,7 +375,7 @@ export default class HarvestLattice extends LibScene<P, C> {
     this.green.position.set(0, lerp(LC[1], S + 0.3, ease.inOutCubic(prog(t, this.tFold, at(0.6)))), 0);
     this.green.intensity = 1.1 * glow * (1 + 1.6 * snapHit) * (1 - closed);
     this.rim.intensity = 0.15 + 0.25 * keyUp;
-    this.fill.intensity = 0.4 * keyUp * (1 - 0.7 * dark);
+    this.fill.intensity = 0.75 * keyUp * (1 - 0.6 * dark);
     this.hemi.intensity = 0.18;
 
     // ------------------------------------------------ lattice
@@ -357,12 +395,16 @@ export default class HarvestLattice extends LibScene<P, C> {
     r.setRenderTarget(this.rt);
     r.render(this.scene, this.cam);
     if (this.lines.count) this.lines.render(r, this.rt, this.cam);
-    this.ctx.comp.draw(r, this.rt.texture, out, { mode: 'replace' });
+    // green light streaming from the crystal; frost faint on the lens
+    this.fin.apply(r, this.rt.texture, out, {
+      rays: { uv: [lc.x * 0.5 + 0.5, lc.y * 0.5 + 0.5], amt: 1.1 * (1 - closed) + 0.2, thr: 0.6, len: 0.7, decay: 0.97, rad: 0.5, tint: new THREE.Color(ac2[0], ac2[1], ac2[2]) },
+      lens: 0.1, lensCol: new THREE.Color(0.6, 0.85, 1).multiplyScalar(0.4),
+    });
 
     // the label
     this.L.clear();
     if (this.P.label) {
-      const c = this.L.ctx, y = M + 6;
+      const c = this.L.ctx, y = (this.ctx.style.aspect ? (H - W / this.ctx.style.aspect) / 2 : 0) + M + 6;
       c.fillStyle = k.accent2;
       c.globalAlpha = 0.9;
       c.fillRect(M, y - 17, 10, 10);
@@ -374,7 +416,7 @@ export default class HarvestLattice extends LibScene<P, C> {
     this.ctx.comp.draw(r, this.L.upload(), out, { mode: 'normal' });
 
     return {
-      bloom: 0.55, bloomThreshold: 0.8, bloomRadius: 0.5, halation: 0.06, ca: 0.25, grain: 0.034, vignette: 0.36, hud: 0,
+      bloom: 0.55, bloomThreshold: 0.8, bloomRadius: 0.5, halation: 0.06, ca: 0.25, grain: 0.016, vignette: 0.36, hud: 0,
       shake: [7 * stampHit, -5 * stampHit] as [number, number],
     };
   }

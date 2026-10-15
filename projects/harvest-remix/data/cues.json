@@ -1,372 +1,1910 @@
 {
-  "entries": [
-    { "id": "open", "file": "harvest-remix-padlock", "cut": { "at": "zero" }, "params": { "phase": "open" } },
-    { "id": "tap", "file": "harvest-remix-wire", "cut": { "at": "beat", "cue": "L00" }, "params": { "phase": "one", "stamp": "TUE 2021-03-09" } },
-    { "id": "keep", "file": "harvest-remix-vault", "cut": { "at": "beat", "cue": "L04" }, "params": { "phase": "keep" } },
-    { "id": "harvest", "file": "harvest-remix-vault", "cut": { "at": "bar", "bar": 18 }, "params": { "phase": "harvest" } },
-    { "id": "hook", "file": "lib-lyric", "cut": { "at": "beat", "cue": "L09" }, "params": { "align": "left", "upper": true } },
-    { "id": "gauge", "file": "harvest-remix-vault", "cut": { "at": "bar", "bar": 27 }, "params": { "phase": "gauge", "title": "Cold storage · used", "unit": " PB", "decimals": 1 } },
-    { "id": "build", "file": "harvest-remix-chandelier", "cut": { "at": "beat", "cue": "L10" }, "params": { "phase": "build" } },
-    { "id": "rekey", "file": "harvest-remix-wire", "cut": { "at": "beat", "cue": "L12" }, "params": { "phase": "rekey", "stamp": "valid: forever" } },
-    { "id": "newmath", "file": "harvest-remix-lattice", "cut": { "at": "beat", "cue": "L14" }, "params": { "label": "ML-KEM · FIPS 203 · 2024", "stamp": "LATER" } },
-    { "id": "cryo", "file": "harvest-remix-chandelier", "cut": { "at": "beat", "cue": "L16" }, "params": { "phase": "cool" } },
-    { "id": "backlog", "file": "harvest-remix-backlog", "cut": { "at": "bar", "bar": 57 }, "params": { "ticket": "PQC-114", "title": "Migrate key exchange to post-quantum", "from": "Q3 2022", "moves": 16 } },
-    { "id": "petabytes", "file": "harvest-remix-vault", "cut": { "at": "word", "cue": "L23" }, "params": { "phase": "petabytes", "wallTag": "31,000 PB" } },
-    { "id": "base", "file": "harvest-remix-chandelier", "cut": { "at": "beat", "cue": "L24" }, "params": { "phase": "base" } },
-    { "id": "thaw", "file": "harvest-remix-vault", "cut": { "at": "word", "cue": "L27" }, "params": { "phase": "thaw" } },
-    { "id": "secure", "file": "harvest-remix-padlock", "cut": { "at": "bar", "bar": 87 }, "params": { "phase": "secure" } }
-  ],
-  "cues": [
-    {
-      "id": "intro", "span": ["start", { "cue": "L00", "edge": "start" }], "scene": "open", "section": "intro",
-      "initial": "Near-black blue ground. At centre a single wide, thin hairline rounded rectangle (an empty browser address bar, about 60% of the frame wide); at its left end a small closed padlock drawn in green (shackle arc, rounded body, keyhole) with a soft green glow beneath it; a thin caret blinking just right of the lock. The frame corners are clean.",
-      "action": "On each downbeat frost dendrites (branching cyan-white hairlines) grow a step inward from all four frame corners; the caret blinks on every beat; the lock's glow breathes with the loudness. On bar 2 the padlock gives one small click: the shackle seats a pixel deeper and a thin green ring of light expands from it and fades.",
-      "result": "The same dark frame with the hairline address bar and the small green padlock glowing at its left end; branching frost hairlines reach about a quarter of the way in from each corner, the centre and bar still clear.",
-      "anchor": { "bar": 2 }, "palette": "frost", "region": "center", "transition": "cut",
-      "motif": "planted: one small green padlock, closed, in an empty address bar",
-      "params": { "frost": 0.25 }
-    },
-    {
-      "id": "L00", "lyric": "You sent it on a Tuesday, twenty twenty-one", "scene": "tap", "section": "verse1",
-      "initial": "Dark blue-black frame. One glowing cyan fibre crosses the upper third from left to right, receding slightly toward the right. Halfway along, a small faceted prism housing clamps the fibre, a frost-lined chute dropping from it out of the bottom of frame; beside the housing a small dark reader panel. At the left end a single sealed envelope (a flat white card with folded flap and a small padlock on the seal) sits on the fibre.",
-      "action": "The envelope hops along the fibre to the right in eased beat-steps, the fibre's light pulsing on each kick. On 'Tuesday,' a mono date stamp thuds onto the envelope's corner with a small settle: \"TUE 2021-03-09\".",
-      "result": "The sealed envelope sits on the fibre about a third of the way across, its corner stamped \"TUE 2021-03-09\" in mono; the prism tap and its dark reader panel wait at centre; the chute below is empty.",
-      "anchor": { "word": "Tuesday," }, "palette": "frost", "region": "left", "transition": "match",
-      "motif": "the address-bar padlock is now the small lock on the Tuesday envelope's seal, still grey",
-      "params": { "stamp": "TUE 2021-03-09" }
-    },
-    {
-      "id": "L01", "lyric": "A little green padlock said the hard part was done", "scene": "tap", "section": "verse1",
-      "initial": "The stamped Tuesday envelope on the fibre, a third of the way across; its seal padlock small and grey.",
-      "action": "The camera eases in on the envelope's seal. On 'padlock' the padlock clicks shut and turns green, a thin green ring of light popping off it; the envelope gives a satisfied little bounce and hops on toward the tap.",
-      "result": "Close on the envelope's flap: the small padlock on the seal glowing green, the date stamp \"TUE 2021-03-09\" beside it, the fibre's cyan light running beneath; the prism tap visible just ahead on the right.",
-      "anchor": { "word": "padlock" }, "palette": "frost", "region": "center", "transition": "none",
-      "motif": "the padlock clicks green on the envelope: sealed, safe",
-      "params": {}
-    },
-    {
-      "id": "L02", "lyric": "I couldn’t read a word of it, I didn’t even try", "scene": "tap", "section": "verse1",
-      "initial": "The green-locked envelope arriving under the prism tap at centre; the reader panel beside it dark.",
-      "action": "The envelope slides under the tap; a thin scan line sweeps its face. On 'read' the reader panel lights and fills with a dense block of shifting mono hex and noise that churns with the hi-hats and never resolves into words.",
-      "result": "The envelope under the prism at centre, its green padlock lit; beside it the reader panel full of churning cyan hex digits (e.g. \"9F 3A C1 07 E4 …\"), unreadable; the fibre glowing on either side.",
-      "anchor": { "word": "read" }, "palette": "frost", "region": "center", "transition": "none",
-      "motif": "the padlock holds: the tap sees only ciphertext",
-      "params": {}
-    },
-    {
-      "id": "L03", "lyric": "I made myself a copy and I put it on ice", "scene": "tap", "section": "verse1",
-      "initial": "The envelope under the prism tap, the reader churning hex; the frost-lined chute below empty.",
-      "action": "On 'copy' a translucent ghost of the envelope peels downward off the original (the original hops on along the fibre, untouched). The copy tips into the chute and falls; on 'ice' it hits the chute's floor at the bottom of the frame and frost blooms up the chute walls in a burst of branching white dendrites.",
-      "result": "The original green-locked envelope riding off to the right along the fibre; below the tap the chute's walls thickly furred with frost, the pale copy lying in it, its padlock a frosted, colourless twin.",
-      "anchor": { "word": "ice" }, "palette": "frost", "region": "bottom", "transition": "none",
-      "motif": "the copy's padlock is a pale, frosted twin of the green one",
-      "params": {}
-    },
-    {
-      "id": "L04", "lyric": "I don’t have to break you", "scene": "keep", "section": "prechorus1",
-      "initial": "Darkness in a cold room: one steel rack of small drawers lit by a single cold-blue strip light, the rest lost in fog; low mist on the floor. Drawer 0001, at eye level, stands open; the frosted copy of the Tuesday envelope slides down into it.",
-      "action": "The camera glides close past the open drawer. On 'break' a cold glint runs across the frosted padlock on the envelope (a single bright specular streak), the lock untouched and whole.",
-      "result": "Close on drawer 0001: inside, the pale envelope lies flat, its frosted padlock catching one bright glint; the drawer's frosted glass front and steel frame fill the right half; fog and darkness behind.",
-      "anchor": { "word": "break" }, "palette": "frost", "region": "right", "transition": "match",
-      "motif": "the frosted padlock filed in drawer 0001, glinting, unbroken",
-      "params": { "drawer": "0001" }
-    },
-    {
-      "id": "L05", "lyric": "I only have to keep you", "scene": "keep", "section": "prechorus1",
-      "initial": "Drawer 0001 open with the frosted envelope inside; one rack lit, fog around it.",
-      "action": "The camera pulls back a step. On 'keep' the drawer slides shut with a small settle, frost creeps across its glass front, and its mono tag prints \"0001 · TUE 2021-03-09\" while its status lamp turns on pale. Behind it more racks fade up out of the fog, one by one.",
-      "result": "A shut drawer with a frosted glass front and a lit mono tag \"0001 · TUE 2021-03-09\" in the right of frame; behind, a short aisle of steel racks faintly lit in cold blue, fading into fog; low floor mist.",
-      "anchor": { "word": "keep" }, "palette": "frost", "region": "right", "transition": "none",
-      "motif": "drawer 0001 shut on the frosted padlock: kept",
-      "params": { "drawer": "0001", "tag": "0001 · TUE 2021-03-09" }
-    },
-    {
-      "id": "L06", "lyric": "I’ll wait for you, I’ve got the time", "occurrence": 0, "scene": "harvest", "section": "chorus1",
-      "initial": "The full aisle in amber: two tall walls of drawers receding into fog toward a vanishing point at centre, frost on every glass front with an amber status lamp behind each, cold strip lights overhead; many drawers stand open.",
-      "action": "Two rack-end counters frame the aisle mouth, rolling up from 00124; the camera dollies past them into the aisle a step per bar. On 'time' a wave of drawers slams shut from the camera toward the vanishing point, each lamp flicking amber as it closes; the counters (now behind the camera) roll to 00412.",
-      "result": "A deep symmetrical aisle of shut, frosted drawers, hundreds of small amber lamps glowing behind frost on both walls, cold strip lights overhead; fog at the far end.",
-      "anchor": { "word": "time" }, "palette": "amber", "region": "full", "transition": "cut",
-      "motif": "hundreds of frosted padlocks fill the aisle",
-      "params": { "count": "00412" }
-    },
-    {
-      "id": "L07", "lyric": "Every byte you ever sent is mine", "occurrence": 0, "scene": "harvest", "section": "chorus1",
-      "initial": "The amber aisle, drawers shut; small square chutes open in the ceiling above both walls.",
-      "action": "Sealed envelopes drop from the ceiling chutes into drawers that spring open to catch them, on the beats, faster and faster along the aisle; on 'mine' every drawer in view slams shut at once and all the amber lamps flare together.",
-      "result": "Both walls of drawers shut and frosted, every amber lamp at full glow, a few late envelopes still falling from the ceiling chutes at the far end; the rack-end tag reads \"01930\".",
-      "anchor": { "word": "mine" }, "palette": "amber", "region": "full", "transition": "none",
-      "motif": "every envelope filed; the padlocks all frosted",
-      "params": { "count": "01930" }
-    },
-    {
-      "id": "L08", "lyric": "I’ll see you sooner or later", "occurrence": 0, "scene": "harvest", "section": "chorus1",
-      "initial": "The amber aisle at full glow; the camera moving toward the end of one rack.",
-      "action": "The camera swings round the end of a rack to face its end panel, where a large mono drawer counter spins; on 'later' it stops on \"08811\" and the camera settles.",
-      "result": "The steel end panel of a rack filling the left half of the frame, a mono counter \"08811\" in amber on it; to the right the aisle recedes into fog, amber lamps behind frost.",
-      "anchor": { "word": "later" }, "palette": "amber", "region": "left", "transition": "none",
-      "motif": "five figures of frosted padlocks",
-      "params": { "count": "08811" }
-    },
-    {
-      "id": "L09", "lyric": "Harvest now, decrypt later", "occurrence": 0, "scene": "hook", "section": "chorus1",
-      "initial": "A warm black frame, empty.",
-      "action": "The line is set huge in capitals, left-aligned, word by word as it is sung; HARVEST lands in gold on 'Harvest', LATER also in gold.",
-      "result": "\"HARVEST NOW, DECRYPT LATER\" in heavy warm-white capitals across the frame on warm black, HARVEST and LATER in gold.",
-      "anchor": { "word": "Harvest" }, "palette": "amber", "region": "left", "transition": "stamp",
-      "motif": "the collector's creed; no padlock on screen",
-      "params": { "emphasis": "later" }
-    },
-    {
-      "id": "gauge1", "span": [27, 29], "scene": "gauge", "section": "chorus1",
-      "initial": "Back inside the cold room's aisle, amber lamps behind frost on both walls, only a few of them lit, some drawers standing open; hung from the ceiling over the aisle on two rods, a dark steel gauge panel: the mono kicker \"COLD STORAGE · USED\" above a big gold reading \"0.0 PB\" and an empty fill bar. The camera pushes slowly toward it, a step per bar.",
-      "action": "On bar 27 the reading rolls up to 0.1 PB, the label \"one Tuesday\" appears under it and a sliver of the fill bar lights; a quarter of the open drawers slam shut in a wave down the aisle and the lamps flare.",
-      "result": "The hanging gauge in the upper middle of the frame reading \"0.1 PB\", \"one Tuesday\", its bar barely started; below it the aisle recedes into fog, a scatter of amber lamps lit on the drawer walls.",
-      "anchor": { "bar": 27 }, "palette": "amber", "region": "center", "transition": "cut",
-      "motif": "the archive's fill as a reading",
-      "params": { "value": 0.1, "label": "one Tuesday" }
-    },
-    {
-      "id": "gauge2", "span": [29, 31], "scene": "gauge", "section": "chorus1",
-      "initial": "The gauge at \"0.1 PB\", \"one Tuesday\".",
-      "action": "On bar 29 the reading rolls to 4.7 PB, the label switching to \"one company\"; another wave of drawers slams shut and more amber lamps come on down the aisle.",
-      "result": "The gauge a little closer: \"4.7 PB\" in gold, label \"one company\", the fill bar a fifth along; more of the aisle's lamps lit.",
-      "anchor": { "bar": 29 }, "palette": "amber", "region": "center", "transition": "none",
-      "motif": "the archive's fill climbing",
-      "params": { "value": 4.7, "label": "one company" }
-    },
-    {
-      "id": "gauge3", "span": [31, 32], "scene": "gauge", "section": "chorus1",
-      "initial": "The gauge at \"4.7 PB\", \"one company\".",
-      "action": "On bar 31 the reading rolls fast to 310 PB; label \"one ministry\"; drawers slam, the lamps flare and more stay lit.",
-      "result": "The gauge reading \"310.0 PB\", label \"one ministry\", the fill bar past halfway; most of the aisle's amber lamps now lit.",
-      "anchor": { "bar": 31 }, "palette": "amber", "region": "center", "transition": "none",
-      "motif": "the archive's fill climbing",
-      "params": { "value": 310, "label": "one ministry" }
-    },
-    {
-      "id": "gauge4", "span": [32, { "cue": "L10", "edge": "start" }], "scene": "gauge", "section": "chorus1",
-      "initial": "The gauge at \"310.0 PB\", \"one ministry\".",
-      "action": "On bar 32 the reading rolls into four figures, 9,400 PB; label \"one continent\"; the last open drawers slam and every lamp in the aisle comes on; it holds there to the cut.",
-      "result": "The gauge large in the upper middle of the frame: \"9,400.0 PB\" under \"COLD STORAGE · USED\", label \"one continent\", the fill bar full; both walls of the aisle glowing with amber lamps behind frost.",
-      "anchor": { "bar": 32 }, "palette": "amber", "region": "center", "transition": "none",
-      "motif": "four figures of petabytes on ice",
-      "params": { "value": 9400, "label": "one continent" }
-    },
-    {
-      "id": "L10", "lyric": "They’re stacking up the qubits, a few more every year", "scene": "build", "section": "verse2",
-      "initial": "Under cold white work lights, a bare frame of thin rods at centre with two plain circular plates hung on it; a small square chip at the bottom with a grid of mostly dark dots; mono readouts beside it: \"300 K\" and \"QUBITS 53\".",
-      "action": "On each beat a new plate bolts onto the frame below the last with a small bounce, and a new row of the chip's dots lights; the qubit readout steps 53 → 127 → 433; on 'qubits,' the fifth and smallest plate bolts on and the readout lands \"QUBITS 1121\". The frame then turns slowly.",
-      "result": "A bare five-stage frame of stacked circular plates, each smaller than the one above, on thin rods at centre, unlit metal under work lights; the chip at the bottom with its grid of dots lit cyan; readouts \"300 K\" and \"QUBITS 1121\".",
-      "anchor": { "word": "qubits," }, "palette": "frost", "region": "center", "transition": "cut",
-      "motif": "the padlocks are out of frame; the machine to open them is being built",
-      "params": { "qubits": [53, 127, 433, 1121], "temp": "300 K" }
-    },
-    {
-      "id": "L11", "lyric": "The experts said a decade, now the decade’s nearly here", "scene": "build", "section": "verse2",
-      "initial": "The five-stage bare frame turning slowly; a new small mono readout \"Q-DAY ETA 10 yr\" appears at the right.",
-      "action": "The ETA readout counts down fast, 10 → 9 → 8 … 1 yr, with the hats; on 'decade’s' it snaps to \"Q-DAY ETA near\", and the work lights blink once.",
-      "result": "The bare five-plate frame at centre-left, chip lit; on the right the mono readout \"Q-DAY ETA near\" under \"QUBITS 1121\" and \"300 K\".",
-      "anchor": { "word": "decade’s" }, "palette": "frost", "region": "right", "transition": "none",
-      "motif": "the machine is nearly ready; the archive waits",
-      "params": { "eta": "near" }
-    },
-    {
-      "id": "L12", "lyric": "You changed all of your passwords, you think that sees you through", "scene": "rekey", "section": "verse2",
-      "initial": "The glowing fibre across the upper third, now dense: dozens of sealed envelopes hop along it in a stream, each passing under the prism tap; below it the frost-lined chute takes a steady drop of translucent copies.",
-      "action": "On 'passwords,' every padlock on the envelopes riding the fibre re-keys at once: a ripple of green clicks runs left to right along the wire, each lock flashing a fresh green; the frosted copies already in the chute below stay pale and unchanged.",
-      "result": "Upper third: a stream of envelopes with bright green padlocks along the cyan fibre; lower half: the chute packed with pale envelopes whose frosted padlocks are colourless and unchanged.",
-      "anchor": { "word": "passwords," }, "palette": "frost", "region": "top", "transition": "wipe",
-      "motif": "new green padlocks above; the old frosted copies below do not change",
-      "params": {}
-    },
-    {
-      "id": "L13", "lyric": "But a blueprint or a birthday stays as true as true", "scene": "rekey", "section": "verse2",
-      "initial": "The busy wire above, the frosted chute below.",
-      "action": "The camera dips down into the chute. On 'blueprint' one old envelope turns face-up: through its frost a faint line drawing of a building floor plan shows; on 'birthday' a second one beside it shows a cake with candles and a date. Both carry a mono tag \"valid: forever\".",
-      "result": "Inside the frosted chute: two pale envelopes side by side, one showing a faint cyan line drawing of a floor plan through the frost, the other a cake with candles; under each a mono tag \"valid: forever\".",
-      "anchor": { "word": "blueprint" }, "palette": "frost", "region": "center", "transition": "none",
-      "motif": "the frosted copies keep what never expires",
-      "params": { "tag": "valid: forever" }
-    },
-    {
-      "id": "L14", "lyric": "They handed you the new math", "scene": "newmath", "section": "prechorus2",
-      "initial": "Dark frame; a sparse 3D lattice of faint points joined by hairlines, rotating slowly; a small mono label in the corner \"ML-KEM · FIPS 203 · 2024\".",
-      "action": "Shells of lattice points light green outward from the origin on each beat; on 'math' the whole lattice snaps into full crystal and one short bright vector from the origin flares.",
-      "result": "A complete crystalline lattice of green-lit points and hairlines filling the centre, a single short bright green vector from its origin; the corner label \"ML-KEM · FIPS 203 · 2024\".",
-      "anchor": { "word": "math" }, "palette": "frost", "region": "center", "transition": "cut",
-      "motif": "a new kind of lock, the lattice, handed over",
-      "params": {}
-    },
-    {
-      "id": "L15", "lyric": "You said you’d get around to that", "scene": "newmath", "section": "prechorus2",
-      "initial": "The full green lattice turning, its short vector bright.",
-      "action": "The lattice folds down plane by plane into a plain cardboard crate; on 'that' a stamp slams onto the crate's side, \"LATER\" in heavy condensed capitals, and the crate slides off into the dark at the right.",
-      "result": "A plain cardboard crate stamped \"LATER\" in condensed capitals, sliding out at the right edge into darkness; the lattice gone; only the corner label remains.",
-      "anchor": { "word": "that" }, "palette": "frost", "region": "right", "transition": "none",
-      "motif": "the new lock, boxed and stamped LATER",
-      "params": { "stamp": "LATER" }
-    },
-    {
-      "id": "L16", "lyric": "I’ll wait for you, I’ve got the time", "occurrence": 1, "scene": "cryo", "section": "chorus2",
-      "initial": "Warm black. The chandelier complete at centre: five gold-plated circular plates on rods, coax lines spiralling between them, the chip at the bottom; readouts beside the plates; below, out of focus, rows of frosted drawers with their padlocks. It turns slowly; readout \"50 K\".",
-      "action": "Plates flash a rim light top to bottom on the downbeats; on 'time' the temperature readout drops to \"4 K\" and frost creeps a little up the lowest plate's rods.",
-      "result": "The gold chandelier at centre, rim-lit, turning; the readout beside it \"4 K\"; the blurred frosted drawers below.",
-      "anchor": { "word": "time" }, "palette": "amber", "region": "center", "transition": "cut",
-      "motif": "the frosted padlocks wait under the chandelier",
-      "params": { "temp": "4 K" }
-    },
-    {
-      "id": "L17", "lyric": "Every byte you ever sent is mine", "occurrence": 1, "scene": "cryo", "section": "chorus2",
-      "initial": "The turning gold chandelier at \"4 K\".",
-      "action": "The camera tilts down the coax spirals toward the chip; on 'mine' the readout drops to \"800 mK\" and the chip's qubit grid glows gold.",
-      "result": "Lower stages of the chandelier filling the frame, coax coils catching gold light, the chip glowing gold at the bottom; readout \"800 mK\".",
-      "anchor": { "word": "mine" }, "palette": "amber", "region": "center", "transition": "none",
-      "motif": "the padlocks below, frosted, waiting",
-      "params": { "temp": "800 mK" }
-    },
-    {
-      "id": "L18", "lyric": "I’ll see you sooner or later", "occurrence": 1, "scene": "cryo", "section": "chorus2",
-      "initial": "Close on the lower stages, readout \"800 mK\".",
-      "action": "The camera keeps tilting down past the chip until the frosted drawers below come into focus, the chandelier hanging above them; on 'later' the readout drops to \"100 mK\".",
-      "result": "Frosted drawer fronts with pale padlocks in focus in the lower half; the gold chandelier hanging above them, blurred; readout \"100 mK\".",
-      "anchor": { "word": "later" }, "palette": "amber", "region": "bottom", "transition": "none",
-      "motif": "the frosted padlocks, close, under the machine",
-      "params": { "temp": "100 mK" }
-    },
-    {
-      "id": "L19", "lyric": "Harvest now, decrypt later", "occurrence": 1, "scene": "cryo", "section": "chorus2",
-      "initial": "Frosted drawers in focus under the hanging chandelier; readout \"100 mK\".",
-      "action": "The readout drops to \"20 mK\"; on 'decrypt' a single hairline crack runs across one frosted padlock behind a drawer front, with a tiny bright tick of light.",
-      "result": "One frosted padlock large in the centre behind its drawer glass, a thin bright crack across its body; the chandelier glowing gold above; readout \"20 mK\".",
-      "anchor": { "word": "decrypt" }, "palette": "amber", "region": "center", "transition": "none",
-      "motif": "first crack: a hairline across one frosted padlock",
-      "params": { "temp": "20 mK" }
-    },
-    {
-      "id": "dim", "span": [{ "cue": "L19", "edge": "end" }, 57], "scene": "cryo", "section": "chorus2",
-      "initial": "The full chandelier at centre, all five gold plates lit, turning; the cracked padlock below.",
-      "action": "The chandelier hums alone; on each downbeat one plate dims to black, top to bottom; on bar 56 the last plate and the chip go dark.",
-      "result": "A near-black frame: the chandelier only a faint silhouette of plates and rods, its readout \"20 mK\" the last thing lit.",
-      "anchor": { "bar": 56 }, "palette": "amber", "region": "center", "transition": "none",
-      "motif": "the cracked padlock in the dark below",
-      "params": {}
-    },
-    {
-      "id": "board", "span": [57, { "cue": "L20", "edge": "start" }], "scene": "backlog", "section": "bridge",
-      "initial": "Flat paper-white daylight: a kanban board seen straight on, column headers \"Q3 2022\", \"Q4 2022\", \"Q1 2023\" across the top, the columns empty.",
-      "action": "On bar 57 the board snaps into place with a small settle, ruled column lines drawing down.",
-      "result": "An empty daylight kanban board, quarter headers along the top, thin grey column rules, no cards yet.",
-      "anchor": { "bar": 57 }, "palette": "plain", "region": "full", "transition": "cut",
-      "motif": "the defenders' office; no padlock",
-      "params": {}
-    },
-    {
-      "id": "L20", "lyric": "Ticket opened, priority low", "scene": "backlog", "section": "bridge",
-      "initial": "The empty daylight board, column \"Q3 2022\" at the left.",
-      "action": "A large ticket card drops into the Q3 2022 column on 'opened,' and its fields fill in: \"PQC-114 · Migrate key exchange to post-quantum\", an assignee circle, a crate icon as attachment; on 'low' a red \"LOW\" chip stamps onto the card.",
-      "result": "One big white card in the Q3 2022 column: \"PQC-114\", \"Migrate key exchange to post-quantum\", a grey assignee circle, a small crate icon stamped LATER, and a red \"LOW\" chip.",
-      "anchor": { "word": "low" }, "palette": "plain", "region": "left", "transition": "none",
-      "motif": "the boxed lattice is the ticket's attachment",
-      "params": { "column": "Q3 2022", "priority": "LOW" }
-    },
-    {
-      "id": "L21", "lyric": "Pushed to next quarter, four years in a row", "scene": "backlog", "section": "bridge",
-      "initial": "The PQC-114 card in the Q3 2022 column.",
-      "action": "The card is shoved one column right on every half-beat with a small paper skid, the quarter headers sliding past behind it (Q4 2022, Q1 2023 … Q2 2026); a \"Moved\" counter on the card ticks up; on 'row' it lands in \"Q3 2026\" reading \"Moved 16×\".",
-      "result": "The card, slightly askew from its last skid, under the header \"Q3 2026\"; a small counter on it \"Moved 16×\"; the red LOW chip and crate icon still on it.",
-      "anchor": { "word": "row" }, "palette": "plain", "region": "center", "transition": "none",
-      "motif": "the lattice crate pushed quarter after quarter",
-      "params": { "column": "Q3 2026", "moved": 16 }
-    },
-    {
-      "id": "L22", "lyric": "Somebody asked, “Who’d even store it?”", "scene": "backlog", "section": "bridge",
-      "initial": "The PQC-114 card in Q3 2026, \"Moved 16×\".",
-      "action": "A comment box opens under the card, a small avatar circle at its left, and types itself: \"who'd even store it?\"; on 'store' a thumbs-up reaction pops on with the count 3.",
-      "result": "Under the card, a small comment: \"who'd even store it?\" with a thumbs-up and \"3\"; the card above with LOW chip and crate icon, in flat daylight.",
-      "anchor": { "word": "store" }, "palette": "plain", "region": "bottom", "transition": "none",
-      "motif": "the defenders doubt the archive exists",
-      "params": { "comment": "who'd even store it?", "likes": 3 }
-    },
-    {
-      "id": "L23", "lyric": "Petabytes, darling. I adore it.", "scene": "petabytes", "section": "bridge",
-      "initial": "Cold room, amber lamps: tight on one frosted drawer front filling the frame, its padlock pale behind the glass.",
-      "action": "On 'Petabytes,' the camera starts a long pullback up and out: the drawer becomes a rack, the rack an aisle, the aisle one line among hundreds of racks laid out like a city grid under a dark ceiling, amber lamps as city lights; a wall tag swings into view, \"31,000 PB\".",
-      "result": "High overhead view of an endless grid of racks receding into fog, thousands of tiny amber lamps behind frost; a mono wall tag \"31,000 PB\" in the upper corner.",
-      "anchor": { "word": "Petabytes," }, "palette": "amber", "region": "full", "transition": "pullback",
-      "motif": "an endless field of frosted padlocks",
-      "params": { "wallTag": "31,000 PB" }
-    },
-    {
-      "id": "L24", "lyric": "I waited for you, I had the time", "scene": "base", "section": "finalchorus",
-      "initial": "The gold chandelier at centre, turning, frost on its outer rods, readout \"20 mK\"; the chip's qubit grid partly lit.",
-      "action": "Qubit dots light row by row with the beats; on 'time' the readout settles at \"10 mK · BASE\" and every qubit on the chip is lit.",
-      "result": "The gold chandelier at centre, frost on its rods, every dot on the chip at the bottom lit gold; readout \"10 mK · BASE\".",
-      "anchor": { "word": "time" }, "palette": "amber", "region": "center", "transition": "cut",
-      "motif": "the machine at base temperature above the cracked padlocks",
-      "params": { "temp": "10 mK · BASE" }
-    },
-    {
-      "id": "L25", "lyric": "Every byte you ever sent is mine", "occurrence": 2, "scene": "base", "section": "finalchorus",
-      "initial": "The chandelier at base, all qubits lit.",
-      "action": "Gold light runs down the coax spirals from the top plate to the chip; on 'mine' the frosted drawers below (out of focus) all light amber at once, the machine claiming them.",
-      "result": "The gold chandelier with glowing coax spirals at centre; below it a wide band of blurred drawers, every lamp amber; readout \"10 mK · BASE\".",
-      "anchor": { "word": "mine" }, "palette": "amber", "region": "full", "transition": "none",
-      "motif": "every frosted padlock in the archive lit, claimed",
-      "params": {}
-    },
-    {
-      "id": "L26", "lyric": "The fridge hums low, the key falls out", "scene": "base", "section": "finalchorus",
-      "initial": "The chandelier at base, drawers glowing below.",
-      "action": "On 'hums' the stages shiver with a low visible wobble; the chip's lit dots rearrange into the outline of a toothed key; on 'falls' the key drops out of the bottom of the chip, spinning slightly, and falls out of the frame.",
-      "result": "The chandelier above, its chip now dark with a key-shaped gap of unlit dots; a toothed key of gold dots in mid-fall in the lower frame, heading out of the bottom edge.",
-      "anchor": { "word": "falls" }, "palette": "amber", "region": "bottom", "transition": "none",
-      "motif": "the key falls toward the padlocks",
-      "params": {}
-    },
-    {
-      "id": "L27", "lyric": "So that’s what you were on about", "scene": "thaw", "section": "finalchorus",
-      "initial": "The cold aisle in blue-black, drawers frosted, padlocks pale; at the far end a wall of flat white daylight starts to roll toward the camera.",
-      "action": "The daylight wave sweeps down the aisle, the frost retreating from every drawer front in one fast pass; on 'about' the padlocks behind the glass spring open in a chain down the aisle, shackles flipping up one after another.",
-      "result": "A flat paper-white aisle of clear glass drawer fronts, every padlock open with its shackle up, small red broken seals; ink-dark rack lines in daylight.",
-      "anchor": { "word": "about" }, "palette": "plain", "region": "full", "transition": "wipe",
-      "motif": "padlocks spring open in a chain down the aisle",
-      "params": {}
-    },
-    {
-      "id": "L28", "lyric": "I said sooner or later", "scene": "thaw", "section": "finalchorus",
-      "initial": "The white aisle of open padlocks; the camera approaching drawer 0001, its tag \"0001 · TUE 2021-03-09\".",
-      "action": "Drawer 0001 slides open first; the Tuesday envelope lifts out and its flap unfolds; on 'later' the letter opens flat into ruled lines of handwriting-like strokes (illegible ink lines, a date in serif italic at the top).",
-      "result": "Drawer 0001 open at the left with its tag \"0001 · TUE 2021-03-09\"; at centre an unfolded white page of ruled ink lines, an italic serif date at its top, an open padlock and broken red seal beside it.",
-      "anchor": { "word": "later" }, "palette": "plain", "region": "center", "transition": "none",
-      "motif": "drawer 0001 opens first: the Tuesday envelope, the plant paid off",
-      "params": { "drawer": "0001" }
-    },
-    {
-      "id": "L29", "lyric": "Harvested then, decrypted now", "scene": "thaw", "section": "finalchorus",
-      "initial": "The unfolded Tuesday page at centre, drawer 0001 open.",
-      "action": "On 'decrypted' every drawer in the aisle opens at once and envelopes unfold into line drawings (blueprints, cakes, ruled letters); over the long held \"now\" the camera rises up and over the racks, revealing a whole white city of open drawers and unfolded pages.",
-      "result": "High overhead view in flat daylight: a vast grid of open drawers and thousands of small unfolded white pages with ink line drawings, red broken seals scattered across them.",
-      "anchor": { "word": "decrypted" }, "palette": "plain", "region": "full", "transition": "none",
-      "motif": "every padlock open, every page readable",
-      "params": {}
-    },
-    {
-      "id": "settle", "span": [{ "cue": "L29", "edge": "end" }, 87], "scene": "thaw", "section": "finalchorus",
-      "initial": "The white city of open drawers from above.",
-      "action": "The pages settle; from bar 85 the daylight drains toward a single point at centre, the frame darkening around it.",
-      "result": "A dark frame with one small point of white light at the centre, the open archive barely visible around it.",
-      "anchor": { "bar": 85 }, "palette": "plain", "region": "center", "transition": "none",
-      "motif": "the open archive fades to a point",
-      "params": {}
-    },
-    {
-      "id": "L30", "lyric": "Connection secure.", "scene": "secure", "section": "outro",
-      "initial": "Near-black blue ground: the hairline address bar at centre, the small green padlock at its left end, closed and intact, glowing; the frame corners clean of frost.",
-      "action": "On 'secure.' the padlock gives its small click and a tiny tooltip opens under it, \"Connection secure\"; then one last thin thread of frost creeps in from the lower-left corner.",
-      "result": "The dark address bar with the small glowing green padlock, a small tooltip \"Connection secure\" beneath it, and a single frost hairline reaching in from the lower-left corner.",
-      "anchor": { "word": "secure." }, "palette": "frost", "region": "center", "transition": "match",
-      "motif": "the little green padlock again, closed, intact: telling the truth, today",
-      "params": { "tooltip": "Connection secure" }
+ "entries": [
+  {
+   "id": "title",
+   "file": "harvest-remix-aerial",
+   "cut": {
+    "at": "zero"
+   },
+   "params": {
+    "phase": "title"
+   }
+  },
+  {
+   "id": "open",
+   "file": "harvest-remix-padlock",
+   "cut": {
+    "at": "bar",
+    "bar": 2
+   },
+   "params": {
+    "phase": "open"
+   }
+  },
+  {
+   "id": "seal",
+   "file": "harvest-remix-letter",
+   "cut": {
+    "at": "bar",
+    "bar": 3
+   },
+   "params": {
+    "phase": "seal",
+    "date": "TUE 2021-03-09"
+   }
+  },
+  {
+   "id": "lock",
+   "file": "harvest-remix-padlock",
+   "cut": {
+    "at": "beat",
+    "cue": "L01"
+   },
+   "params": {
+    "phase": "macro"
+   }
+  },
+  {
+   "id": "cable",
+   "file": "harvest-remix-cable",
+   "cut": {
+    "at": "bar",
+    "bar": 7
+   }
+  },
+  {
+   "id": "tap",
+   "file": "harvest-remix-wire",
+   "cut": {
+    "at": "beat",
+    "cue": "L02"
+   },
+   "params": {
+    "phase": "one",
+    "stamp": "TUE 2021-03-09",
+    "plan": {
+     "from": "seal",
+     "to": "tap",
+     "cues": [
+      "L00",
+      "L01",
+      "L02",
+      "L03"
+     ]
     }
-  ]
+   }
+  },
+  {
+   "id": "keep",
+   "file": "harvest-remix-vault",
+   "cut": {
+    "at": "beat",
+    "cue": "L04"
+   },
+   "params": {
+    "phase": "keep"
+   }
+  },
+  {
+   "id": "door",
+   "file": "harvest-remix-door",
+   "cut": {
+    "at": "bar",
+    "bar": 16
+   },
+   "params": {
+    "phase": "shut"
+   }
+  },
+  {
+   "id": "harvest",
+   "file": "harvest-remix-vault",
+   "cut": {
+    "at": "bar",
+    "bar": 18
+   },
+   "params": {
+    "phase": "harvest",
+    "plan": {
+     "from": "harvest",
+     "to": "count",
+     "cues": [
+      "L06",
+      "L07",
+      "L08"
+     ]
+    }
+   }
+  },
+  {
+   "id": "clock1",
+   "file": "harvest-remix-clock",
+   "cut": {
+    "at": "bar",
+    "bar": 19
+   },
+   "params": {
+    "phase": "freeze"
+   }
+  },
+  {
+   "id": "silo",
+   "file": "harvest-remix-silo",
+   "cut": {
+    "at": "beat",
+    "cue": "L07"
+   },
+   "params": {
+    "phase": "fill"
+   }
+  },
+  {
+   "id": "robot1",
+   "file": "harvest-remix-robot",
+   "cut": {
+    "at": "bar",
+    "bar": 22
+   }
+  },
+  {
+   "id": "count",
+   "file": "harvest-remix-vault",
+   "cut": {
+    "at": "bar",
+    "bar": 23
+   },
+   "params": {
+    "phase": "harvest",
+    "plan": {
+     "from": "harvest",
+     "to": "count",
+     "cues": [
+      "L06",
+      "L07",
+      "L08"
+     ]
+    }
+   }
+  },
+  {
+   "id": "hook",
+   "file": "harvest-remix-hook",
+   "cut": {
+    "at": "beat",
+    "cue": "L09"
+   }
+  },
+  {
+   "id": "scale",
+   "file": "harvest-remix-scale",
+   "cut": {
+    "at": "bar",
+    "bar": 27
+   },
+   "params": {
+    "phase": "gauge"
+   }
+  },
+  {
+   "id": "build",
+   "file": "harvest-remix-chandelier",
+   "cut": {
+    "at": "beat",
+    "cue": "L10"
+   },
+   "params": {
+    "phase": "build",
+    "plan": {
+     "from": "build",
+     "to": "build",
+     "cues": [
+      "L10"
+     ]
+    }
+   }
+  },
+  {
+   "id": "fab",
+   "file": "harvest-remix-chip",
+   "cut": {
+    "at": "bar",
+    "bar": 34
+   },
+   "params": {
+    "phase": "wafer"
+   }
+  },
+  {
+   "id": "chip",
+   "file": "harvest-remix-chip",
+   "cut": {
+    "at": "beat",
+    "cue": "L11"
+   },
+   "params": {
+    "phase": "decade"
+   }
+  },
+  {
+   "id": "rekey",
+   "file": "harvest-remix-wire",
+   "cut": {
+    "at": "beat",
+    "cue": "L12"
+   },
+   "params": {
+    "phase": "rekey",
+    "stamp": "valid: forever",
+    "plan": {
+     "from": "rekey",
+     "to": "rekey",
+     "cues": [
+      "L12",
+      "L13"
+     ]
+    }
+   }
+  },
+  {
+   "id": "relic",
+   "file": "harvest-remix-relic",
+   "cut": {
+    "at": "beat",
+    "cue": "L13"
+   }
+  },
+  {
+   "id": "newmath",
+   "file": "harvest-remix-lattice",
+   "cut": {
+    "at": "beat",
+    "cue": "L14"
+   },
+   "params": {
+    "label": "ML-KEM · FIPS 203 · 2024",
+    "stamp": "LATER",
+    "plan": {
+     "from": "newmath",
+     "to": "crate",
+     "cues": [
+      "L14",
+      "L15"
+     ]
+    }
+   }
+  },
+  {
+   "id": "crate",
+   "file": "harvest-remix-lattice",
+   "cut": {
+    "at": "beat",
+    "cue": "L15"
+   },
+   "params": {
+    "label": "ML-KEM · FIPS 203 · 2024",
+    "stamp": "LATER",
+    "view": "crate",
+    "plan": {
+     "from": "newmath",
+     "to": "crate",
+     "cues": [
+      "L14",
+      "L15"
+     ]
+    }
+   }
+  },
+  {
+   "id": "stacks",
+   "file": "harvest-remix-warehouse",
+   "cut": {
+    "at": "bar",
+    "bar": 45
+   }
+  },
+  {
+   "id": "cryo",
+   "file": "harvest-remix-chandelier",
+   "cut": {
+    "at": "beat",
+    "cue": "L16"
+   },
+   "params": {
+    "phase": "cool",
+    "plan": {
+     "from": "cryo",
+     "to": "dim",
+     "cues": [
+      "L16",
+      "L17",
+      "L18",
+      "L19",
+      "dim"
+     ]
+    }
+   }
+  },
+  {
+   "id": "clock2",
+   "file": "harvest-remix-clock",
+   "cut": {
+    "at": "bar",
+    "bar": 47
+   },
+   "params": {
+    "phase": "freeze"
+   }
+  },
+  {
+   "id": "silo2",
+   "file": "harvest-remix-silo",
+   "cut": {
+    "at": "beat",
+    "cue": "L17"
+   },
+   "params": {
+    "phase": "deep"
+   }
+  },
+  {
+   "id": "robot2",
+   "file": "harvest-remix-robot",
+   "cut": {
+    "at": "beat",
+    "cue": "L18"
+   },
+   "params": {
+    "phase": "fast"
+   }
+  },
+  {
+   "id": "under",
+   "file": "harvest-remix-chandelier",
+   "cut": {
+    "at": "bar",
+    "bar": 51
+   },
+   "params": {
+    "phase": "cool",
+    "plan": {
+     "from": "cryo",
+     "to": "dim",
+     "cues": [
+      "L16",
+      "L17",
+      "L18",
+      "L19",
+      "dim"
+     ]
+    }
+   }
+  },
+  {
+   "id": "crack",
+   "file": "harvest-remix-padlock",
+   "cut": {
+    "at": "beat",
+    "cue": "L19"
+   },
+   "params": {
+    "phase": "crack"
+   }
+  },
+  {
+   "id": "dim",
+   "file": "harvest-remix-chandelier",
+   "cut": {
+    "at": "end",
+    "cue": "L19"
+   },
+   "params": {
+    "phase": "cool",
+    "plan": {
+     "from": "cryo",
+     "to": "dim",
+     "cues": [
+      "L16",
+      "L17",
+      "L18",
+      "L19",
+      "dim"
+     ]
+    }
+   }
+  },
+  {
+   "id": "backlog",
+   "file": "harvest-remix-backlog",
+   "cut": {
+    "at": "bar",
+    "bar": 57
+   },
+   "params": {
+    "ticket": "PQC-114",
+    "title": "Migrate key exchange to post-quantum",
+    "from": "Q3 2022",
+    "moves": 16,
+    "plan": {
+     "from": "backlog",
+     "to": "comment",
+     "cues": [
+      "board",
+      "L20",
+      "L21",
+      "L22"
+     ]
+    }
+   }
+  },
+  {
+   "id": "pages",
+   "file": "harvest-remix-calendar",
+   "cut": {
+    "at": "bar",
+    "bar": 60
+   }
+  },
+  {
+   "id": "backlog2",
+   "file": "harvest-remix-backlog",
+   "cut": {
+    "at": "bar",
+    "bar": 61
+   },
+   "params": {
+    "ticket": "PQC-114",
+    "title": "Migrate key exchange to post-quantum",
+    "from": "Q3 2022",
+    "moves": 16,
+    "plan": {
+     "from": "backlog",
+     "to": "comment",
+     "cues": [
+      "board",
+      "L20",
+      "L21",
+      "L22"
+     ]
+    }
+   }
+  },
+  {
+   "id": "comment",
+   "file": "harvest-remix-backlog",
+   "cut": {
+    "at": "beat",
+    "cue": "L22"
+   },
+   "params": {
+    "ticket": "PQC-114",
+    "title": "Migrate key exchange to post-quantum",
+    "from": "Q3 2022",
+    "moves": 16,
+    "view": "comment",
+    "plan": {
+     "from": "backlog",
+     "to": "comment",
+     "cues": [
+      "board",
+      "L20",
+      "L21",
+      "L22"
+     ]
+    }
+   }
+  },
+  {
+   "id": "outside",
+   "file": "harvest-remix-aerial",
+   "cut": {
+    "at": "bar",
+    "bar": 63
+   },
+   "params": {
+    "phase": "exterior"
+   }
+  },
+  {
+   "id": "petabytes",
+   "file": "harvest-remix-scale",
+   "cut": {
+    "at": "word",
+    "cue": "L23"
+   },
+   "params": {
+    "phase": "pullback"
+   }
+  },
+  {
+   "id": "base",
+   "file": "harvest-remix-chandelier",
+   "cut": {
+    "at": "beat",
+    "cue": "L24"
+   },
+   "params": {
+    "phase": "base",
+    "plan": {
+     "from": "base",
+     "to": "base",
+     "cues": [
+      "L24",
+      "L25",
+      "L26"
+     ]
+    }
+   }
+  },
+  {
+   "id": "clock3",
+   "file": "harvest-remix-clock",
+   "cut": {
+    "at": "bar",
+    "bar": 68
+   },
+   "params": {
+    "phase": "thaw"
+   }
+  },
+  {
+   "id": "qubits",
+   "file": "harvest-remix-chip",
+   "cut": {
+    "at": "beat",
+    "cue": "L25"
+   },
+   "params": {
+    "phase": "base"
+   }
+  },
+  {
+   "id": "key",
+   "file": "harvest-remix-key",
+   "cut": {
+    "at": "beat",
+    "cue": "L26"
+   }
+  },
+  {
+   "id": "unlock",
+   "file": "harvest-remix-padlock",
+   "cut": {
+    "at": "word",
+    "cue": "L27"
+   },
+   "params": {
+    "phase": "unlock"
+   }
+  },
+  {
+   "id": "thaw",
+   "file": "harvest-remix-vault",
+   "cut": {
+    "at": "bar",
+    "bar": 74
+   },
+   "params": {
+    "phase": "thaw",
+    "plan": {
+     "from": "thaw",
+     "to": "city",
+     "cues": [
+      "L27",
+      "L28",
+      "L29"
+     ]
+    }
+   }
+  },
+  {
+   "id": "letter",
+   "file": "harvest-remix-letter",
+   "cut": {
+    "at": "beat",
+    "cue": "L28"
+   },
+   "params": {
+    "phase": "open",
+    "date": "TUE 2021-03-09"
+   }
+  },
+  {
+   "id": "city",
+   "file": "harvest-remix-vault",
+   "cut": {
+    "at": "beat",
+    "cue": "L29"
+   },
+   "params": {
+    "phase": "thaw",
+    "plan": {
+     "from": "thaw",
+     "to": "city",
+     "cues": [
+      "L27",
+      "L28",
+      "L29"
+     ]
+    }
+   }
+  },
+  {
+   "id": "silo3",
+   "file": "harvest-remix-silo",
+   "cut": {
+    "at": "bar",
+    "bar": 80
+   },
+   "params": {
+    "phase": "sun"
+   }
+  },
+  {
+   "id": "door2",
+   "file": "harvest-remix-door",
+   "cut": {
+    "at": "bar",
+    "bar": 82
+   },
+   "params": {
+    "phase": "open"
+   }
+  },
+  {
+   "id": "sunrise",
+   "file": "harvest-remix-scale",
+   "cut": {
+    "at": "end",
+    "cue": "L29"
+   },
+   "params": {
+    "phase": "dawn"
+   }
+  },
+  {
+   "id": "secure",
+   "file": "harvest-remix-padlock",
+   "cut": {
+    "at": "bar",
+    "bar": 87
+   },
+   "params": {
+    "phase": "secure"
+   }
+  },
+  {
+   "id": "endcard",
+   "file": "harvest-remix-aerial",
+   "cut": {
+    "at": "bar",
+    "bar": 88
+   },
+   "params": {
+    "phase": "end"
+   }
+  }
+ ],
+ "cues": [
+  {
+   "id": "title",
+   "span": [
+    "start",
+    2
+   ],
+   "scene": "title",
+   "section": "intro",
+   "initial": "Night over a frozen plain; far off, the low block of a facility glows cold blue in the ice, an aurora moving over it.",
+   "action": "A slow aerial push toward the facility; on bar 1 the title fades up, letter-spaced: HARVEST NOW, DECRYPT LATER, and NEAD beneath it.",
+   "result": "The facility in the ice under the aurora, the title over it.",
+   "anchor": {
+    "bar": 1
+   },
+   "palette": "frost",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the archive, seen from outside",
+   "params": {
+    "title": "HARVEST NOW, DECRYPT LATER",
+    "credit": "NEAD"
+   }
+  },
+  {
+   "id": "intro",
+   "span": [
+    2,
+    3
+   ],
+   "scene": "open",
+   "section": "intro",
+   "initial": "Ink-blue dark, close on a single glass padlock hanging in space, lit green from inside; the camera's own glass is clear.",
+   "action": "The camera drifts around the lock; frost crystals grow in from the frame's edges on each downbeat; on bar 1 the lock's light breathes up and a green ring runs off it.",
+   "result": "A glowing green glass padlock at centre, frost dendrites reaching in from the corners of the frame.",
+   "anchor": {
+    "bar": 2
+   },
+   "palette": "frost",
+   "region": "center",
+   "transition": "cut",
+   "motif": "planted: one small green padlock, closed, glowing",
+   "params": {}
+  },
+  {
+   "id": "wax",
+   "span": [
+    3,
+    {
+     "cue": "L00",
+     "edge": "start"
+    }
+   ],
+   "scene": "seal",
+   "section": "intro",
+   "initial": "Close over a cream envelope lying face down in a pool of cold light; its flap open; a drop of red sealing wax pooling on the flap's tip.",
+   "action": "A brass seal stamp with a padlock sigil descends into the frame and presses into the wax on bar 4; wax squeezes out at the rim, the stamp lifts.",
+   "result": "The envelope's flap sealed with a round red wax seal bearing a padlock sigil, glistening; the paper lit cold blue from one side.",
+   "anchor": {
+    "bar": 4
+   },
+   "palette": "frost",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the love letter sealed under the padlock sigil",
+   "params": {}
+  },
+  {
+   "id": "L00",
+   "lyric": "You sent it on a Tuesday, twenty twenty-one",
+   "scene": "seal",
+   "section": "verse1",
+   "initial": "The sealed envelope with its red wax padlock seal, close.",
+   "action": "The camera pulls back and tilts as a postmark stamp slams onto the corner on 'Tuesday,': rings and the date \"TUE 2021-03-09\" in blue ink.",
+   "result": "The whole envelope on the dark table: red wax seal at the flap, the postmark \"TUE 2021-03-09\" at the corner, cold light raking across the paper.",
+   "anchor": {
+    "word": "Tuesday,"
+   },
+   "palette": "frost",
+   "region": "center",
+   "transition": "none",
+   "motif": "the Tuesday letter, sealed and dated",
+   "params": {
+    "stamp": "TUE 2021-03-09"
+   }
+  },
+  {
+   "id": "L01",
+   "lyric": "A little green padlock said the hard part was done",
+   "scene": "lock",
+   "section": "verse1",
+   "initial": "Macro on the wax seal's padlock: a small glass padlock set in the seal, dark.",
+   "action": "On 'padlock' the lock clicks shut and lights from inside, bright green; a ring of green light runs out across the wax; frost glints at the frame edge.",
+   "result": "Extreme close-up of a glowing green glass padlock, shallow focus, red wax around it falling out of focus.",
+   "anchor": {
+    "word": "padlock"
+   },
+   "palette": "frost",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the padlock clicks green: sealed, safe",
+   "params": {}
+  },
+  {
+   "id": "L02",
+   "lyric": "I couldn’t read a word of it, I didn’t even try",
+   "scene": "tap",
+   "section": "verse1",
+   "initial": "The glowing cyan fibre across the upper third; the stamped, green-locked envelope arriving under the prism tap.",
+   "action": "The envelope slides under the tap; a scan line sweeps its face; on 'read' the reader panel fills with churning hex that never resolves.",
+   "result": "The envelope under the prism, its green padlock lit; the reader panel full of churning hex.",
+   "anchor": {
+    "word": "read"
+   },
+   "palette": "frost",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the padlock holds: the tap sees only ciphertext",
+   "params": {}
+  },
+  {
+   "id": "L03",
+   "lyric": "I made myself a copy and I put it on ice",
+   "scene": "tap",
+   "section": "verse1",
+   "initial": "The envelope under the prism tap, the reader churning hex; the frost-lined chute below empty.",
+   "action": "On 'copy' a translucent ghost of the envelope peels downward off the original (the original hops on along the fibre, untouched). The copy tips into the chute and falls; on 'ice' it hits the chute's floor at the bottom of the frame and frost blooms up the chute walls in a burst of branching white dendrites.",
+   "result": "The original green-locked envelope riding off to the right along the fibre; below the tap the chute's walls thickly furred with frost, the pale copy lying in it, its padlock a frosted, colourless twin.",
+   "anchor": {
+    "word": "ice"
+   },
+   "palette": "frost",
+   "region": "bottom",
+   "transition": "none",
+   "motif": "the copy's padlock is a pale, frosted twin of the green one",
+   "params": {}
+  },
+  {
+   "id": "L04",
+   "lyric": "I don’t have to break you",
+   "scene": "keep",
+   "section": "prechorus1",
+   "initial": "Darkness in a cold room: one steel rack of small drawers lit by a single cold-blue strip light, the rest lost in fog; low mist on the floor. Drawer 0001, at eye level, stands open; the frosted copy of the Tuesday envelope slides down into it.",
+   "action": "The camera glides close past the open drawer. On 'break' a cold glint runs across the frosted padlock on the envelope (a single bright specular streak), the lock untouched and whole.",
+   "result": "Close on drawer 0001: inside, the pale envelope lies flat, its frosted padlock catching one bright glint; the drawer's frosted glass front and steel frame fill the right half; fog and darkness behind.",
+   "anchor": {
+    "word": "break"
+   },
+   "palette": "frost",
+   "region": "right",
+   "transition": "match",
+   "motif": "the frosted padlock filed in drawer 0001, glinting, unbroken",
+   "params": {
+    "drawer": "0001"
+   }
+  },
+  {
+   "id": "L05",
+   "lyric": "I only have to keep you",
+   "scene": "keep",
+   "section": "prechorus1",
+   "initial": "Drawer 0001 open with the frosted envelope inside; one rack lit, fog around it.",
+   "action": "The camera pulls back a step. On 'keep' the drawer slides shut with a small settle, frost creeps across its glass front, and its mono tag prints \"0001 · TUE 2021-03-09\" while its status lamp turns on pale. Behind it more racks fade up out of the fog, one by one.",
+   "result": "A shut drawer with a frosted glass front and a lit mono tag \"0001 · TUE 2021-03-09\" in the right of frame; behind, a short aisle of steel racks faintly lit in cold blue, fading into fog; low floor mist.",
+   "anchor": {
+    "word": "keep"
+   },
+   "palette": "frost",
+   "region": "right",
+   "transition": "none",
+   "motif": "drawer 0001 shut on the frosted padlock: kept",
+   "params": {
+    "drawer": "0001",
+    "tag": "0001 · TUE 2021-03-09"
+   }
+  },
+  {
+   "id": "L06",
+   "lyric": "I’ll wait for you, I’ve got the time",
+   "occurrence": 0,
+   "scene": "harvest",
+   "section": "chorus1",
+   "initial": "The full aisle in amber: two tall walls of drawers receding into fog toward a vanishing point at centre, frost on every glass front with an amber status lamp behind each, cold strip lights overhead; many drawers stand open.",
+   "action": "Two rack-end counters frame the aisle mouth, rolling up from 00124; the camera dollies past them into the aisle a step per bar. On 'time' a wave of drawers slams shut from the camera toward the vanishing point, each lamp flicking amber as it closes; the counters (now behind the camera) roll to 00412.",
+   "result": "A deep symmetrical aisle of shut, frosted drawers, hundreds of small amber lamps glowing behind frost on both walls, cold strip lights overhead; fog at the far end.",
+   "anchor": {
+    "word": "time"
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "hundreds of frosted padlocks fill the aisle",
+   "params": {
+    "count": "00412"
+   }
+  },
+  {
+   "id": "L07",
+   "lyric": "Every byte you ever sent is mine",
+   "occurrence": 0,
+   "scene": "silo",
+   "section": "chorus1",
+   "initial": "Looking straight down a vast round shaft lined with thousands of frosted drawers, gold lamps ringing it level below level into blue fog.",
+   "action": "Sealed envelopes pour in from the rim and spiral down the shaft in a vortex, faster on every beat; on 'mine' every lamp in the shaft flares gold at once, ring after ring downward.",
+   "result": "The shaft from above: a spiral of falling envelopes funnelling into the deep, rings of gold lamps glowing down to the fog.",
+   "anchor": {
+    "word": "mine"
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "every envelope falls into the archive",
+   "params": {
+    "count": "01930"
+   }
+  },
+  {
+   "id": "L08",
+   "lyric": "I’ll see you sooner or later",
+   "occurrence": 0,
+   "scene": "robot1",
+   "section": "chorus1",
+   "initial": "Back in the amber aisle, the camera moving toward the end of one rack.",
+   "action": "The camera swings round the end of a rack to face its end panel, where a large mono drawer counter spins; on 'later' it stops on \"08811\" and the camera settles.",
+   "result": "The steel end panel of a rack filling the left half of the frame, a mono counter \"08811\" in amber on it; to the right the aisle recedes into fog, amber lamps behind frost.",
+   "anchor": {
+    "word": "later"
+   },
+   "palette": "amber",
+   "region": "left",
+   "transition": "cut",
+   "motif": "five figures of frosted padlocks",
+   "params": {
+    "count": "08811"
+   }
+  },
+  {
+   "id": "counter",
+   "span": [
+    23,
+    {
+     "cue": "L09",
+     "edge": "start"
+    }
+   ],
+   "scene": "count",
+   "section": "chorus1",
+   "initial": "The amber aisle, the camera swinging toward a rack end.",
+   "action": "The rack-end counter spins and stops.",
+   "result": "The counter on the rack end in five figures.",
+   "anchor": {
+    "bar": 24
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "five figures of frosted padlocks"
+  },
+  {
+   "id": "L09",
+   "lyric": "Harvest now, decrypt later",
+   "occurrence": 0,
+   "scene": "hook",
+   "section": "chorus1",
+   "initial": "Warm black, a sheet of frosted glass filling the frame, lit gold from behind.",
+   "action": "The words are stamped into the frost as they are sung, each letter a clear cut through the ice with gold light blazing through; HARVEST and LATER land hardest, shaking frost dust loose.",
+   "result": "\"HARVEST NOW, DECRYPT LATER\" cut through a wall of frost, gold light pouring through the letters, ice dust hanging in the beams.",
+   "anchor": {
+    "word": "Harvest"
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the collector's creed, cut through the ice",
+   "params": {}
+  },
+  {
+   "id": "gauge1",
+   "span": [
+    27,
+    29
+   ],
+   "scene": "scale",
+   "section": "chorus1",
+   "initial": "Close on one frosted drawer front, its amber lamp behind the glass; a small gauge readout \"0.1 PB · one Tuesday\" beside it.",
+   "action": "On bar 27 the camera starts a powers-of-ten pull back: the drawer becomes a rack, the readout rolling up as it goes.",
+   "result": "One rack of glowing drawers in the dark, the readout \"0.1 PB\".",
+   "anchor": {
+    "bar": 27
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the archive measured: one Tuesday",
+   "params": {
+    "value": 0.1,
+    "label": "one Tuesday"
+   }
+  },
+  {
+   "id": "gauge2",
+   "span": [
+    29,
+    31
+   ],
+   "scene": "scale",
+   "section": "chorus1",
+   "initial": "One rack in the dark.",
+   "action": "On bar 29 the pull back continues: the rack becomes a hall of racks under strip lights; the reading rolls to 4.7 PB, \"one company\".",
+   "result": "A hall of racks from above, amber lamps in rows; reading \"4.7 PB · one company\".",
+   "anchor": {
+    "bar": 29
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "none",
+   "motif": "the archive measured: one company",
+   "params": {
+    "value": 4.7,
+    "label": "one company"
+   }
+  },
+  {
+   "id": "gauge3",
+   "span": [
+    31,
+    32
+   ],
+   "scene": "scale",
+   "section": "chorus1",
+   "initial": "A hall of racks from above.",
+   "action": "On bar 31 the hall becomes a city block of data halls, roofs lit gold; the reading rolls to 310 PB, \"one ministry\".",
+   "result": "City blocks of glowing data halls at night; reading \"310 PB · one ministry\".",
+   "anchor": {
+    "bar": 31
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "none",
+   "motif": "the archive measured: one ministry",
+   "params": {
+    "value": 310,
+    "label": "one ministry"
+   }
+  },
+  {
+   "id": "gauge4",
+   "span": [
+    32,
+    {
+     "cue": "L10",
+     "edge": "start"
+    }
+   ],
+   "scene": "scale",
+   "section": "chorus1",
+   "initial": "City blocks of data halls.",
+   "action": "On bar 32 the view lifts to orbit: a whole continent of grids glowing gold under the blue night of the planet's limb; the reading rolls to 9,400 PB, \"one continent\".",
+   "result": "From orbit: a continent of gold grid-light curving away under the blue atmosphere; reading \"9,400 PB · one continent\".",
+   "anchor": {
+    "bar": 32
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "none",
+   "motif": "the archive measured: one continent",
+   "params": {
+    "value": 9400,
+    "label": "one continent"
+   }
+  },
+  {
+   "id": "L10",
+   "lyric": "They’re stacking up the qubits, a few more every year",
+   "scene": "build",
+   "section": "verse2",
+   "initial": "Under cold white work lights, a bare frame of thin rods at centre with two plain circular plates hung on it; a small square chip at the bottom with a grid of mostly dark dots; mono readouts beside it: \"300 K\" and \"QUBITS 53\".",
+   "action": "On each beat a new plate bolts onto the frame below the last with a small bounce, and a new row of the chip's dots lights; the qubit readout steps 53 → 127 → 433; on 'qubits,' the fifth and smallest plate bolts on and the readout lands \"QUBITS 1121\". The frame then turns slowly.",
+   "result": "A bare five-stage frame of stacked circular plates, each smaller than the one above, on thin rods at centre, unlit metal under work lights; the chip at the bottom with its grid of dots lit cyan; readouts \"300 K\" and \"QUBITS 1121\".",
+   "anchor": {
+    "word": "qubits,"
+   },
+   "palette": "frost",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the padlocks are out of frame; the machine to open them is being built",
+   "params": {
+    "qubits": [
+     53,
+     127,
+     433,
+     1121
+    ],
+    "temp": "300 K"
+   }
+  },
+  {
+   "id": "L11",
+   "lyric": "The experts said a decade, now the decade’s nearly here",
+   "scene": "chip",
+   "section": "verse2",
+   "initial": "Macro over a row of qubit chips on a dark bench, smallest at the left: four silicon dies wired with gold, each larger than the last.",
+   "action": "The camera tracks along the row as each chip lights its grid of qubits, the counts 53, 127, 433, 1121 printed beside them; a \"Q-DAY ETA\" readout counts down its years on the hats and snaps to \"near\" on 'decade’s'.",
+   "result": "Close on the largest chip, 1121 qubits lit cyan, gold bond wires shining; the readout \"Q-DAY ETA near\".",
+   "anchor": {
+    "word": "decade’s"
+   },
+   "palette": "frost",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the machine to open them grows",
+   "params": {
+    "eta": "near"
+   }
+  },
+  {
+   "id": "L12",
+   "lyric": "You changed all of your passwords, you think that sees you through",
+   "scene": "rekey",
+   "section": "verse2",
+   "initial": "The glowing fibre across the upper third, now dense: dozens of sealed envelopes hop along it in a stream, each passing under the prism tap; below it the frost-lined chute takes a steady drop of translucent copies.",
+   "action": "On 'passwords,' every padlock on the envelopes riding the fibre re-keys at once: a ripple of green clicks runs left to right along the wire, each lock flashing a fresh green; the frosted copies already in the chute below stay pale and unchanged.",
+   "result": "Upper third: a stream of envelopes with bright green padlocks along the cyan fibre; lower half: the chute packed with pale envelopes whose frosted padlocks are colourless and unchanged.",
+   "anchor": {
+    "word": "passwords,"
+   },
+   "palette": "frost",
+   "region": "top",
+   "transition": "cut",
+   "motif": "new green padlocks above; the old frosted copies below do not change",
+   "params": {}
+  },
+  {
+   "id": "L13",
+   "lyric": "But a blueprint or a birthday stays as true as true",
+   "scene": "relic",
+   "section": "verse2",
+   "initial": "Darkness; two blocks of clear ice hang in a shaft of cold light, turning slowly.",
+   "action": "On 'blueprint' the first block catches the light: frozen inside it, the line drawing of a building's floor plan, glowing through the ice; on 'birthday' the second: a cake with candles and a date. Tags hang from both: \"valid: forever\".",
+   "result": "Two ice blocks side by side, a blueprint frozen in one, a birthday cake in the other, light refracting through them, ice dust in the beam.",
+   "anchor": {
+    "word": "blueprint"
+   },
+   "palette": "frost",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the frosted copies keep what never expires",
+   "params": {
+    "tag": "valid: forever"
+   }
+  },
+  {
+   "id": "L14",
+   "lyric": "They handed you the new math",
+   "scene": "newmath",
+   "section": "prechorus2",
+   "initial": "Dark frame; a sparse 3D lattice of faint points joined by hairlines, rotating slowly; a small mono label in the corner \"ML-KEM · FIPS 203 · 2024\".",
+   "action": "Shells of lattice points light green outward from the origin on each beat; on 'math' the whole lattice snaps into full crystal and one short bright vector from the origin flares.",
+   "result": "A complete crystalline lattice of green-lit points and hairlines filling the centre, a single short bright green vector from its origin; the corner label \"ML-KEM · FIPS 203 · 2024\".",
+   "anchor": {
+    "word": "math"
+   },
+   "palette": "frost",
+   "region": "center",
+   "transition": "cut",
+   "motif": "a new kind of lock, the lattice, handed over",
+   "params": {}
+  },
+  {
+   "id": "L15",
+   "lyric": "You said you’d get around to that",
+   "scene": "crate",
+   "section": "prechorus2",
+   "initial": "Close on the green lattice beginning to fold.",
+   "action": "The lattice folds down plane by plane into a plain cardboard crate; on 'that' a stamp slams onto the crate's side, \"LATER\" in heavy condensed capitals, and the crate slides off into the dark at the right.",
+   "result": "A plain cardboard crate stamped \"LATER\" in condensed capitals, sliding out at the right edge into darkness; the lattice gone; only the corner label remains.",
+   "anchor": {
+    "word": "that"
+   },
+   "palette": "frost",
+   "region": "right",
+   "transition": "cut",
+   "motif": "the new lock, boxed and stamped LATER",
+   "params": {
+    "stamp": "LATER"
+   }
+  },
+  {
+   "id": "L16",
+   "lyric": "I’ll wait for you, I’ve got the time",
+   "occurrence": 1,
+   "scene": "cryo",
+   "section": "chorus2",
+   "initial": "Warm black. The chandelier complete at centre: five gold-plated circular plates on rods, coax lines spiralling between them, the chip at the bottom; readouts beside the plates; below, out of focus, rows of frosted drawers with their padlocks. It turns slowly; readout \"50 K\".",
+   "action": "Plates flash a rim light top to bottom on the downbeats; on 'time' the temperature readout drops to \"4 K\" and frost creeps a little up the lowest plate's rods.",
+   "result": "The gold chandelier at centre, rim-lit, turning; the readout beside it \"4 K\"; the blurred frosted drawers below.",
+   "anchor": {
+    "word": "time"
+   },
+   "palette": "amber",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the frosted padlocks wait under the chandelier",
+   "params": {
+    "temp": "4 K"
+   }
+  },
+  {
+   "id": "L17",
+   "lyric": "Every byte you ever sent is mine",
+   "occurrence": 1,
+   "scene": "silo2",
+   "section": "chorus2",
+   "initial": "Looking down the round shaft of drawers, now frosted white, gold lamps far below.",
+   "action": "The camera falls down the shaft past ring after ring of frosted drawers, envelopes falling with it; on 'mine' the deep glows gold.",
+   "result": "Deep in the shaft: frosted rings of drawers rushing past, the gold glow below.",
+   "anchor": {
+    "word": "mine"
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "every byte falls into the cold",
+   "params": {
+    "temp": "800 mK"
+   }
+  },
+  {
+   "id": "L18",
+   "lyric": "I’ll see you sooner or later",
+   "occurrence": 1,
+   "scene": "robot2",
+   "section": "chorus2",
+   "initial": "The gold chandelier above, the frosted drawers below in focus.",
+   "action": "The camera settles low on the drawers under the hanging machine; on 'later' the readout drops to \"100 mK\".",
+   "result": "Frosted drawer fronts with pale padlocks in focus in the lower half; the gold chandelier hanging above them, blurred; readout \"100 mK\".",
+   "anchor": {
+    "word": "later"
+   },
+   "palette": "amber",
+   "region": "bottom",
+   "transition": "cut",
+   "motif": "the frosted padlocks, close, under the machine",
+   "params": {
+    "temp": "100 mK"
+   }
+  },
+  {
+   "id": "below",
+   "span": [
+    51,
+    {
+     "cue": "L19",
+     "edge": "start"
+    }
+   ],
+   "scene": "under",
+   "section": "chorus2",
+   "initial": "The drawers under the hanging chandelier.",
+   "action": "The readout drops as the camera settles low on the drawers.",
+   "result": "Frosted drawers under the gold machine.",
+   "anchor": {
+    "bar": 51
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the frosted padlocks, under the machine"
+  },
+  {
+   "id": "L19",
+   "lyric": "Harvest now, decrypt later",
+   "occurrence": 1,
+   "scene": "crack",
+   "section": "chorus2",
+   "initial": "Macro on a frosted glass padlock behind ice, gold light from above.",
+   "action": "Frost thickens across the lock; on 'decrypt' a crack runs through it with a bright tick of gold light from inside.",
+   "result": "A frosted padlock with a bright hairline crack across its body, gold light leaking out of it.",
+   "anchor": {
+    "word": "decrypt"
+   },
+   "palette": "amber",
+   "region": "center",
+   "transition": "cut",
+   "motif": "first crack: a hairline across one frosted padlock",
+   "params": {}
+  },
+  {
+   "id": "dim",
+   "span": [
+    {
+     "cue": "L19",
+     "edge": "end"
+    },
+    57
+   ],
+   "scene": "dim",
+   "section": "chorus2",
+   "initial": "The full chandelier at centre, all five gold plates lit, turning; the cracked padlock below.",
+   "action": "The chandelier hums alone; on each downbeat one plate dims to black, top to bottom; on bar 56 the last plate and the chip go dark.",
+   "result": "A near-black frame: the chandelier only a faint silhouette of plates and rods, its readout \"20 mK\" the last thing lit.",
+   "anchor": {
+    "bar": 56
+   },
+   "palette": "amber",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the cracked padlock in the dark below",
+   "params": {}
+  },
+  {
+   "id": "board",
+   "span": [
+    57,
+    {
+     "cue": "L20",
+     "edge": "start"
+    }
+   ],
+   "scene": "backlog",
+   "section": "bridge",
+   "initial": "Flat paper-white daylight: a kanban board seen straight on, column headers \"Q3 2022\", \"Q4 2022\", \"Q1 2023\" across the top, the columns empty.",
+   "action": "On bar 57 the board snaps into place with a small settle, ruled column lines drawing down.",
+   "result": "An empty daylight kanban board, quarter headers along the top, thin grey column rules, no cards yet.",
+   "anchor": {
+    "bar": 57
+   },
+   "palette": "plain",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the defenders' office; no padlock",
+   "params": {}
+  },
+  {
+   "id": "L20",
+   "lyric": "Ticket opened, priority low",
+   "scene": "backlog",
+   "section": "bridge",
+   "initial": "The empty daylight board, column \"Q3 2022\" at the left.",
+   "action": "A large ticket card drops into the Q3 2022 column on 'opened,' and its fields fill in: \"PQC-114 · Migrate key exchange to post-quantum\", an assignee circle, a crate icon as attachment; on 'low' a red \"LOW\" chip stamps onto the card.",
+   "result": "One big white card in the Q3 2022 column: \"PQC-114\", \"Migrate key exchange to post-quantum\", a grey assignee circle, a small crate icon stamped LATER, and a red \"LOW\" chip.",
+   "anchor": {
+    "word": "low"
+   },
+   "palette": "plain",
+   "region": "left",
+   "transition": "none",
+   "motif": "the boxed lattice is the ticket's attachment",
+   "params": {
+    "column": "Q3 2022",
+    "priority": "LOW"
+   }
+  },
+  {
+   "id": "L21",
+   "lyric": "Pushed to next quarter, four years in a row",
+   "scene": "backlog",
+   "section": "bridge",
+   "initial": "The PQC-114 card in the Q3 2022 column.",
+   "action": "The card is shoved one column right on every half-beat with a small paper skid, the quarter headers sliding past behind it (Q4 2022, Q1 2023 … Q2 2026); a \"Moved\" counter on the card ticks up; on 'row' it lands in \"Q3 2026\" reading \"Moved 16×\".",
+   "result": "The card, slightly askew from its last skid, under the header \"Q3 2026\"; a small counter on it \"Moved 16×\"; the red LOW chip and crate icon still on it.",
+   "anchor": {
+    "word": "row"
+   },
+   "palette": "plain",
+   "region": "center",
+   "transition": "none",
+   "motif": "the lattice crate pushed quarter after quarter",
+   "params": {
+    "column": "Q3 2026",
+    "moved": 16
+   }
+  },
+  {
+   "id": "L22",
+   "lyric": "Somebody asked, “Who’d even store it?”",
+   "scene": "comment",
+   "section": "bridge",
+   "initial": "Close on the empty space under the PQC-114 card.",
+   "action": "A comment box opens under the card, a small avatar circle at its left, and types itself: \"who'd even store it?\"; on 'store' a thumbs-up reaction pops on with the count 3.",
+   "result": "Close on the comment: \"who'd even store it?\" with a thumbs-up and \"3\", in flat daylight.",
+   "anchor": {
+    "word": "store"
+   },
+   "palette": "plain",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the defenders doubt the archive exists",
+   "params": {
+    "comment": "who'd even store it?",
+    "likes": 3
+   }
+  },
+  {
+   "id": "L23",
+   "lyric": "Petabytes, darling. I adore it.",
+   "scene": "petabytes",
+   "section": "bridge",
+   "initial": "From orbit at night: the archive's gold grid across a continent.",
+   "action": "On 'Petabytes,' the camera pulls further back: the whole night side of the planet glows with archive grids, gold veins across every landmass, the blue atmosphere a thin line.",
+   "result": "The night side of the earth, every continent veined with gold grid-light; a mono tag \"31,000 PB\".",
+   "anchor": {
+    "word": "Petabytes,"
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "a planet of frosted padlocks",
+   "params": {
+    "wallTag": "31,000 PB"
+   }
+  },
+  {
+   "id": "L24",
+   "lyric": "I waited for you, I had the time",
+   "scene": "base",
+   "section": "finalchorus",
+   "initial": "The gold chandelier at centre, turning, frost on its outer rods, readout \"20 mK\"; the chip's qubit grid partly lit.",
+   "action": "Qubit dots light row by row with the beats; on 'time' the readout settles at \"10 mK · BASE\" and every qubit on the chip is lit.",
+   "result": "The gold chandelier at centre, frost on its rods, every dot on the chip at the bottom lit gold; readout \"10 mK · BASE\".",
+   "anchor": {
+    "word": "time"
+   },
+   "palette": "amber",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the machine at base temperature above the cracked padlocks",
+   "params": {
+    "temp": "10 mK · BASE"
+   }
+  },
+  {
+   "id": "L25",
+   "lyric": "Every byte you ever sent is mine",
+   "occurrence": 2,
+   "scene": "qubits",
+   "section": "finalchorus",
+   "initial": "Macro on the chip at the bottom of the chandelier, gold package, dark silicon.",
+   "action": "Qubits light row by row; gold light runs down the bond wires; on 'mine' every qubit flares gold at once.",
+   "result": "The chip filling the frame, every qubit blazing gold, bond wires lit, frost on the package's edges.",
+   "anchor": {
+    "word": "mine"
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the machine at base: every qubit lit",
+   "params": {}
+  },
+  {
+   "id": "L26",
+   "lyric": "The fridge hums low, the key falls out",
+   "scene": "key",
+   "section": "finalchorus",
+   "initial": "The underside of the chandelier's chip in gold light, vapour curling below.",
+   "action": "On 'hums' the rig shivers and the lit qubits gather into a toothed key; on 'falls' the key drops out of the chip and falls in slow motion through the cold vapour, turning, down toward a frosted drawer and its padlock.",
+   "result": "A gold key in mid-fall, turning through curls of vapour, a frosted padlock waiting below.",
+   "anchor": {
+    "word": "falls"
+   },
+   "palette": "amber",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the key falls toward the padlocks",
+   "params": {}
+  },
+  {
+   "id": "L27",
+   "lyric": "So that’s what you were on about",
+   "scene": "unlock",
+   "section": "finalchorus",
+   "initial": "The cold aisle in blue-black, drawers frosted, padlocks pale; at the far end a wall of warm sunrise light starts to roll toward the camera.",
+   "action": "The sunrise sweeps down the aisle, frost melting from every drawer front into steam; on 'about' the padlocks spring open in a chain down the aisle, shackles flipping up.",
+   "result": "A warm gold aisle in sunrise light, steam rising from the drawer fronts, every padlock open, small red broken seals.",
+   "anchor": {
+    "word": "about"
+   },
+   "palette": "dawn",
+   "region": "full",
+   "transition": "wipe",
+   "motif": "padlocks spring open in a chain down the aisle",
+   "params": {}
+  },
+  {
+   "id": "wave",
+   "span": [
+    74,
+    {
+     "cue": "L28",
+     "edge": "start"
+    }
+   ],
+   "scene": "thaw",
+   "section": "finalchorus",
+   "initial": "The aisle at sunrise.",
+   "action": "Padlocks spring open in a chain down the aisle.",
+   "result": "A warm gold aisle, every padlock open.",
+   "anchor": {
+    "bar": 74
+   },
+   "palette": "dawn",
+   "region": "full",
+   "transition": "cut",
+   "motif": "padlocks spring open"
+  },
+  {
+   "id": "L28",
+   "lyric": "I said sooner or later",
+   "scene": "letter",
+   "section": "finalchorus",
+   "initial": "Close on the Tuesday envelope in warm sunrise light, its red wax seal and the padlock sigil.",
+   "action": "The seal cracks and breaks in two; the flap lifts; on 'later' the letter slides out and unfolds flat: ruled lines of ink, a date in serif italic at the top.",
+   "result": "The opened letter in golden light, ruled ink lines and the date \"Tuesday, 9 March 2021\" in italic, the broken wax seal beside it.",
+   "anchor": {
+    "word": "later"
+   },
+   "palette": "dawn",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the Tuesday letter opens: the plant paid off",
+   "params": {}
+  },
+  {
+   "id": "L29",
+   "lyric": "Harvested then, decrypted now",
+   "scene": "city",
+   "section": "finalchorus",
+   "initial": "Drawer 0001 open in the sunrise aisle.",
+   "action": "On 'decrypted' every drawer in the aisle opens at once and envelopes unfold into line drawings (blueprints, cakes, ruled letters); over the long held \"now\" the camera rises up and over the racks, revealing a whole golden city of open drawers and unfolded pages.",
+   "result": "High overhead in warm sunrise light: a vast grid of open drawers and unfolded pages, red broken seals scattered across them, steam rising.",
+   "anchor": {
+    "word": "decrypted"
+   },
+   "palette": "dawn",
+   "region": "full",
+   "transition": "cut",
+   "motif": "every padlock open, every page readable",
+   "params": {}
+  },
+  {
+   "id": "settle",
+   "span": [
+    {
+     "cue": "L29",
+     "edge": "end"
+    },
+    87
+   ],
+   "scene": "sunrise",
+   "section": "finalchorus",
+   "initial": "From orbit: the planet at dawn, the archive grids across the continents.",
+   "action": "The terminator sweeps across the planet: the sun rises over the edge, the archive's gold grid lights go out one region after another as daylight reaches them; on bar 85 the sun clears the limb and floods the frame.",
+   "result": "The planet's limb with the sun breaking over it, a blaze of light, the grids faded into daylight.",
+   "anchor": {
+    "bar": 85
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the open archive in daylight",
+   "params": {}
+  },
+  {
+   "id": "L30",
+   "lyric": "Connection secure.",
+   "scene": "secure",
+   "section": "outro",
+   "initial": "Ink-blue dark: the glass padlock glowing green, closed, intact.",
+   "action": "On 'secure.' the lock gives its small click, a tiny \"Connection secure\" tooltip opens under it; then one last thread of frost creeps in from the frame's lower-left corner.",
+   "result": "The glowing green padlock, \"Connection secure\" beneath it, a single frost thread reaching in from the corner.",
+   "anchor": {
+    "word": "secure."
+   },
+   "palette": "frost",
+   "region": "center",
+   "transition": "cut",
+   "motif": "the little green padlock again, closed, intact: telling the truth, today",
+   "params": {
+    "tooltip": "Connection secure"
+   }
+  },
+  {
+   "id": "cablerun",
+   "span": [
+    7,
+    {
+     "cue": "L02",
+     "edge": "start"
+    }
+   ],
+   "scene": "cable",
+   "section": "verse1",
+   "initial": "The ocean floor at night, a single armoured cable running into the dark.",
+   "action": "A pulse of cyan light — the sealed letter — races along the cable past the camera on bar 7; silt drifts in the beam.",
+   "result": "The cable glowing as the light runs away into the deep.",
+   "anchor": {
+    "bar": 7
+   },
+   "palette": "frost",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the letter crossing the sea, sealed"
+  },
+  {
+   "id": "doorshut",
+   "span": [
+    16,
+    18
+   ],
+   "scene": "door",
+   "section": "prechorus1",
+   "initial": "A vast round vault door of frosted steel stands half open, cold light spilling from the archive behind it.",
+   "action": "The door swings shut and its bolts drive home on bar 17; frost blooms across its face, vapour rolls off it.",
+   "result": "The sealed door, frosted, its locking wheel still.",
+   "anchor": {
+    "bar": 17
+   },
+   "palette": "frost",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the archive sealed"
+  },
+  {
+   "id": "clock1",
+   "span": [
+    19,
+    {
+     "cue": "L07",
+     "edge": "start"
+    }
+   ],
+   "scene": "clock1",
+   "section": "chorus1",
+   "initial": "A clock face frozen in clear ice, its hands visible through it, gold light behind.",
+   "action": "The second hand drags slower and slower as frost thickens; on the downbeat it stops.",
+   "result": "The clock stopped inside the ice: all the time in the world.",
+   "anchor": {
+    "bar": 20
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "time held still"
+  },
+  {
+   "id": "robot1",
+   "span": [
+    22,
+    23
+   ],
+   "scene": "robot1",
+   "section": "chorus1",
+   "initial": "A robotic library arm on a rail between towering racks of frosted cartridges.",
+   "action": "The arm whips along the rail and slots a cartridge home on the downbeat; status lights ripple.",
+   "result": "The arm withdrawn, the cartridge seated, lights rippling down the rack.",
+   "anchor": {
+    "bar": 22
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "filed"
+  },
+  {
+   "id": "fab",
+   "span": [
+    34,
+    {
+     "cue": "L11",
+     "edge": "start"
+    }
+   ],
+   "scene": "fab",
+   "section": "verse2",
+   "initial": "A silicon wafer under cleanroom light, hundreds of chips on it.",
+   "action": "The chips light their qubit grids one after another across the wafer.",
+   "result": "A whole wafer of lit chips: a few more every year.",
+   "anchor": {
+    "bar": 34
+   },
+   "palette": "frost",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the machine multiplied"
+  },
+  {
+   "id": "stacks",
+   "span": [
+    45,
+    {
+     "cue": "L16",
+     "edge": "start"
+    }
+   ],
+   "scene": "stacks",
+   "section": "prechorus2",
+   "initial": "A dark warehouse: shelves of identical crates to the ceiling and beyond.",
+   "action": "The camera pulls back from the LATER crate slid onto a shelf, back and up until it is one of thousands.",
+   "result": "An endless warehouse of crates stamped LATER.",
+   "anchor": {
+    "bar": 45
+   },
+   "palette": "frost",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the new lock, shelved"
+  },
+  {
+   "id": "clock2",
+   "span": [
+    47,
+    {
+     "cue": "L17",
+     "edge": "start"
+    }
+   ],
+   "scene": "clock2",
+   "section": "chorus2",
+   "initial": "The ice clock again, frost thicker, the chandelier's gold light on it.",
+   "action": "Its hands tick once on the downbeat, and stop.",
+   "result": "The clock in thick ice.",
+   "anchor": {
+    "bar": 48
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "time held still"
+  },
+  {
+   "id": "robot2",
+   "span": [
+    {
+     "cue": "L18",
+     "edge": "start"
+    },
+    51
+   ],
+   "scene": "robot2",
+   "section": "chorus2",
+   "initial": "The library arm between the racks, faster now.",
+   "action": "Cartridges slot home in a rhythm down the rack.",
+   "result": "Racks full, lights rippling.",
+   "anchor": {
+    "bar": 50
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "filed"
+  },
+  {
+   "id": "pages",
+   "span": [
+    60,
+    61
+   ],
+   "scene": "pages",
+   "section": "bridge",
+   "initial": "A desk calendar in office daylight, quarter pages.",
+   "action": "Pages tear away one per beat in a gust, Q3 2022 to Q2 2026.",
+   "result": "Pages flying, the quarter still turning.",
+   "anchor": {
+    "bar": 60
+   },
+   "palette": "plain",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the lock postponed"
+  },
+  {
+   "id": "board2",
+   "span": [
+    61,
+    {
+     "cue": "L22",
+     "edge": "start"
+    }
+   ],
+   "scene": "backlog2",
+   "section": "bridge",
+   "initial": "The PQC-114 card mid-shove.",
+   "action": "It lands in its last column, Moved 16×.",
+   "result": "The card in Q3 2026.",
+   "anchor": {
+    "bar": 61
+   },
+   "palette": "plain",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the lattice crate pushed"
+  },
+  {
+   "id": "outside",
+   "span": [
+    63,
+    {
+     "cue": "L23",
+     "edge": "start"
+    }
+   ],
+   "scene": "outside",
+   "section": "bridge",
+   "initial": "The facility in the ice at night from the air, the aurora overhead.",
+   "action": "The camera glides over its roofs: vents breathing vapour, rows of cold lights.",
+   "result": "The archive from outside: somebody stores it.",
+   "anchor": {
+    "bar": 63
+   },
+   "palette": "frost",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the answer to \"who'd even store it\""
+  },
+  {
+   "id": "clock3",
+   "span": [
+    68,
+    {
+     "cue": "L25",
+     "edge": "start"
+    }
+   ],
+   "scene": "clock3",
+   "section": "finalchorus",
+   "initial": "The ice clock, gold light hot on it.",
+   "action": "The ice cracks across the face and falls away; the hands start to run again.",
+   "result": "The clock free of the ice, its hands sweeping.",
+   "anchor": {
+    "bar": 68
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "time runs out"
+  },
+  {
+   "id": "unlock",
+   "span": [
+    {
+     "cue": "L27",
+     "edge": "start"
+    },
+    74
+   ],
+   "scene": "unlock",
+   "section": "finalchorus",
+   "initial": "Macro: the gold key at the keyhole of a frosted padlock.",
+   "action": "The key slides in and turns; the shackle springs open in a burst of frost.",
+   "result": "The padlock open, the key in it, frost falling.",
+   "anchor": {
+    "bar": 73
+   },
+   "palette": "amber",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the lock opened"
+  },
+  {
+   "id": "sunshaft",
+   "span": [
+    80,
+    82
+   ],
+   "scene": "silo3",
+   "section": "finalchorus",
+   "initial": "Looking up the silo of drawers from deep inside it.",
+   "action": "Sunlight pours down the shaft from the rim; frost melts off ring after ring, steam rising.",
+   "result": "The shaft flooded with warm light.",
+   "anchor": {
+    "bar": 80
+   },
+   "palette": "dawn",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the thaw reaches the deep"
+  },
+  {
+   "id": "dooropen",
+   "span": [
+    82,
+    {
+     "cue": "L29",
+     "edge": "end"
+    }
+   ],
+   "scene": "door2",
+   "section": "finalchorus",
+   "initial": "The vault door, sealed, frost on its face, sun behind the camera.",
+   "action": "The locking wheel turns and the door swings open into the sunrise.",
+   "result": "The open door, golden light pouring in.",
+   "anchor": {
+    "bar": 82
+   },
+   "palette": "dawn",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the archive opened"
+  },
+  {
+   "id": "end",
+   "span": [
+    88,
+    "end"
+   ],
+   "scene": "endcard",
+   "section": "outro",
+   "initial": "The facility in the ice at night under the aurora.",
+   "action": "The title and credit fade up.",
+   "result": "The end card.",
+   "anchor": {
+    "bar": 88
+   },
+   "palette": "frost",
+   "region": "full",
+   "transition": "cut",
+   "motif": "the end",
+   "params": {
+    "title": "HARVEST NOW, DECRYPT LATER",
+    "credit": "NEAD"
+   }
+  }
+ ]
 }
