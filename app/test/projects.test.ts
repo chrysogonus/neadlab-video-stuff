@@ -63,9 +63,9 @@ describe('project configuration', () => {
     }
   });
   test('the Python pipeline picks the same project and paths', () => {
-    const uv = Bun.which('uv') ?? `${process.env.HOME}/.local/bin/uv`;
-    if (!existsSync(uv)) return; // (no analysis environment here)
-    const r = Bun.spawnSync([uv, 'run', '--project', path.join(ROOT, 'analysis'), 'python', '-c',
+    const python = Bun.which('python3') ?? Bun.which('python');
+    if (!python) throw new Error('Python 3 is required; run ./vid check from the repo root');
+    const r = Bun.spawnSync([python, '-c',
       'import common, json; print(json.dumps(dict(project=common.PROJECT, audio=str(common.AUDIO), data=str(common.DATA))))', '--project', 'force-push'],
     { cwd: path.join(ROOT, 'analysis') });
     expect(r.exitCode).toBe(0);
@@ -74,7 +74,7 @@ describe('project configuration', () => {
     expect(py.project).toBe('force-push');
     expect(py.audio).toBe(path.join(ROOT, p.master));
     expect(py.data).toBe(path.join(ROOT, p.data));
-    const bad = Bun.spawnSync([uv, 'run', '--project', path.join(ROOT, 'analysis'), 'python', '-c', 'import common', '--project', 'nope'], { cwd: path.join(ROOT, 'analysis') });
+    const bad = Bun.spawnSync([python, '-c', 'import common', '--project', 'nope'], { cwd: path.join(ROOT, 'analysis') });
     expect(bad.exitCode).not.toBe(0);
     expect(bad.stderr.toString()).toContain("unknown project 'nope'");
   }, 60000);
@@ -95,6 +95,29 @@ describe('render.ts page URL', () => {
 
 const FP = loadSheet('force-push')!;
 const PALETTES = Object.keys(loadStyle('force-push').palettes);
+
+describe('all project cue sheets (technical validity)', () => {
+  for (const id of IDS) {
+    const sheet = loadSheet(id);
+    if (!sheet) continue; // code timelines are compiled by the production build
+    test(`${id}: library parameters and scene modules are valid`, () => {
+      expect(libraryProblems(sheet)).toEqual([]);
+      for (const entry of sheet.entries)
+        expect(existsSync(path.join(ROOT, 'app/src/scenes', `${entry.file}.ts`))).toBe(true);
+    });
+    test(`${id}: cues resolve and the edit tiles the song`, async () => {
+      const { ly, au } = await load(id);
+      const timeline = sheetTimeline(sheet, loadStyle(id))(ly, au);
+      expect(timeline[0]!.start).toBe(0);
+      expect(timeline.at(-1)!.end).toBe(au.duration);
+      for (const entry of timeline) {
+        expect(Number.isFinite(entry.start) && Number.isFinite(entry.end)).toBe(true);
+        expect(entry.end).toBeGreaterThan(entry.start);
+      }
+      for (let i = 1; i < timeline.length; i++) expect(timeline[i]!.start).toBe(timeline[i - 1]!.end);
+    });
+  }
+});
 
 describe('cue sheet (Force Push)', async () => {
   const { ly, au } = await load('force-push');

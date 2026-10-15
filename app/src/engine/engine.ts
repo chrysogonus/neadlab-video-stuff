@@ -275,7 +275,7 @@ export class Engine {
 
   /** Write tileOn into the depth buffer of the masked targets (1 = still refining, 0 = converged). */
   private writeTileMask() {
-    const r = this.renderer, was = this.masking;
+    const was = this.masking;
     if (was) this.setMasking(false);
     this.tileTex.needsUpdate = true;
     // the mask widened by a tile, for scene targets read a little off the pixel

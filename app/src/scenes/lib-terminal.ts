@@ -4,7 +4,6 @@
 // the commands an explainer walks through, or a lyric that reads as one.
 import type { Frame } from '../engine/scene';
 import type { SceneSchema } from '../engine/schema';
-import type { ResolvedCue } from '../engine/cues';
 import { measure } from '../engine/type';
 import { clamp, ease, prog } from '../engine/util';
 import { LibScene, M, W, cursorOn, hit, mixHex, panel, text, typed, typedWith, type Look } from './_lib';
@@ -99,7 +98,6 @@ export default class LibTerminal extends LibScene<P, C> {
     const grow = (r: Row) => (r.n * LH + r.gap) * ease.outCubic(prog(t, r.t, r.t + 0.1));
     const total = shown.reduce((s, r) => s + grow(r), 0);
     let ry = top - Math.max(0, total - capH);
-    const cur = shown.at(-1)?.cue ?? 0; // the cue whose prompt is the latest
     const pre = this.P.prompt ? `${this.P.prompt} ` : '';
     const out = mixHex(k.dim, k.type, 0.3);
 

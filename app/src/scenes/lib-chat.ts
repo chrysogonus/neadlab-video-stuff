@@ -46,7 +46,7 @@ export default class LibChat extends LibScene<P, C> {
   override setup() {
     const fam = this.font('body');
     const cues = this.cues.filter((c) => c.line || this.cp(c).text.trim());
-    this.msgs = cues.map((cue, i) => {
+    this.msgs = cues.map((cue) => {
       const p = this.cp(cue), me = p.from === 'me';
       const s = (smart(p.text.trim()) || cue.line!.text).split(/\s+/).join(' ');
       // wrapped to the narrowest width that keeps the row count (balanced rows, no widows)

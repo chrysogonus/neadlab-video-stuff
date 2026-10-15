@@ -80,6 +80,25 @@ bun scripts/render.ts video --project harvest --samples auto --shutter 0.2      
 
 Motion blur, adaptive sampling and the render pipeline are described in [`docs/ENGINE.md`](docs/ENGINE.md).
 
+## Quality checks
+
+After `cd app && bun install --frozen-lockfile`, run `./vid check` from the repo root. It runs both TypeScript
+checks (including scripts, tests and configs), Ruff's bug checks, the Python and Bun tests, generated cue-document
+freshness, and a production build. GitHub Actions runs the same command on pushes and pull requests. Bun 1.4.2 and
+uv 0.11.21 are used in CI, with Python 3.12.
+
+The first run needs network access to prepare `analysis/tests/.venv/` from its own `uv.lock`: only NumPy, pytest
+and Ruff, with no models, GPU, Chrome or full analysis environment. The Python tests cover lyric-sheet parsing,
+pronunciation and section boundaries on tracked grids. Every project's cue sheet gets technical validation;
+the generation pipeline's editorial rules do not apply retroactively to existing edits.
+
+For an advisory dead-code report, run `cd app && bun run deadcode`. Knip reads scene entry points from the cue
+sheets; findings do not fail the gate and should be reviewed before deleting code.
+
+To opt into the local commit hook, run `git config core.hooksPath .githooks`. The hook checks the current working
+tree; CI checks the committed revision. Rendering determinism, visual baselines and full analysis reproduction
+remain separate, slower checks. Production builds exclude regenerable project `work/` and Python bytecode.
+
 ## Pipeline
 
 `./vid` (from the repo root) takes a project from audio + lyric sheet to timing data, and renders it once the project has a cue sheet. Each step runs only when its inputs changed (content hashes in `work/steps.json`; a changed script does not count, use `--force`); committed data without a record is adopted, not recomputed, and steps listed in `project.json`'s `frozen` never run (Harvest: `sung`, `align`).

@@ -371,7 +371,6 @@ export default class HarvestRemixChandelier extends LibScene<P, C> {
   private dimFrom = 1e9; private dimTimes: number[] = [];
   private runFrom = 1e9; private claimAt = 1e9;
   private humsAt = 1e9; private fallAt = 1e9;
-  private rowsFrom = 0;
   private hero: [number, number] = [0, 0];
   private crackPts: THREE.Vector2[] = [];
   private qubitsMax = 1121;
@@ -392,7 +391,6 @@ export default class HarvestRemixChandelier extends LibScene<P, C> {
   // ------------------------------------------------------------------ timing
   private lyricCues() { return this.cues.filter((c) => c.line); }
   private wordAt(c: ResolvedCue | undefined, re: RegExp) { return c?.line?.words.find((w) => re.test(w.w))?.start; }
-  private beatBefore(t: number) { return this.beats.filter((b) => b <= t + 1e-3).at(-1) ?? t; }
 
   private plan() {
     const S = this.S, E = this.E, ly = this.lyricCues(), b = this.beat;
@@ -434,7 +432,6 @@ export default class HarvestRemixChandelier extends LibScene<P, C> {
       }
     }
     if (this.ph === 'base') {
-      this.rowsFrom = S;
       this.runFrom = ly[1]?.start ?? S + 4.6;
       this.claimAt = ly[1]?.at ?? S + 7;
       this.humsAt = this.wordAt(ly[2], /^hums/i) ?? (ly[2]?.start ?? E - 3) + 0.35;

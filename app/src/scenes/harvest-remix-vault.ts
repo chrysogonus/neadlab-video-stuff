@@ -538,7 +538,6 @@ export default class HarvestRemixVault extends LibScene<P, C> {
   private trayAttr: Record<string, THREE.InstancedBufferAttribute> = {};
   private cardAttr: Record<string, THREE.InstancedBufferAttribute> = {};
   private cardGeo!: THREE.InstancedBufferGeometry;
-  private stripGeo!: THREE.InstancedBufferGeometry;
   private trays: Tray[] = [];
   private hero = 0;
   private nCard = 0;
@@ -552,14 +551,13 @@ export default class HarvestRemixVault extends LibScene<P, C> {
   private c: number[] = []; // the cues' starts
   private downbeats: number[] = [];
   private kicks: number[] = [];
-  private hats: number[] = [];
   private drops: Drop[] = [];
   private pages: Page[] = [];
   private counts: number[] = [];
   private tagText = '';
   private wallText = '';
   private dateLine = '';
-  private aDecr = 0; private aEnvLand = 0;
+  private aDecr = 0;
   private pageAt = { c: [0, 0, 0] as V3, r: [1, 0, 0] as V3, u: [0, 1, 0] as V3 };
   private drainAt = 0;
 
@@ -573,7 +571,6 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     this.c = this.cues.map((c) => c.start);
     this.downbeats = au.downbeats.filter((d) => d >= S - 0.01 && d < E + 0.01);
     this.kicks = au.events('kick', S - 1, E + 1).map(([t]) => t);
-    this.hats = au.events('hat', S - 1, E + 1).map(([t]) => t);
     const tagCue = this.cues.find((c) => this.cp(c).tag);
     this.tagText = (tagCue && this.cp(tagCue).tag) || this.P.tag;
     const wc = this.cues.find((c) => this.cp(c).wallTag);
@@ -679,7 +676,6 @@ export default class HarvestRemixVault extends LibScene<P, C> {
       sk.a.iS!.setXYZ(i, on ? 0.025 : 0.01, on ? CEIL_Y - top : 0.01, on ? 0.025 : 0.01);
       sk.a.iK!.setX(i, 2);
     }
-    this.stripGeo = sk.g;
     this.add(sk.g, this.mat(STRIP_V, STRIP_F, { uChute: { value: this.ph === 'harvest' ? 1 : 0 } }));
     // floor
     const fl = new THREE.BufferGeometry();
@@ -730,12 +726,10 @@ export default class HarvestRemixVault extends LibScene<P, C> {
 
   // ------------------------------------------------------------------ textures: the atlas, the frost, the plates
 
-  private atlasTile = 0;
   private buildAtlas() {
     const T = 512 * SCALE, cv = document.createElement('canvas');
     cv.width = 4 * T; cv.height = 2 * T;
     const c = cv.getContext('2d')!;
-    this.atlasTile = T;
     const pals = this.ctx.style.palettes, first = Object.values(pals)[0]!;
     const cold = look(this.ph === 'thaw' ? pals.frost ?? first : pals[this.cues[0]?.def.palette ?? ''] ?? first);
     const day = look(pals[this.cues.at(-1)?.def.palette ?? ''] ?? pals.plain ?? first);
@@ -1104,7 +1098,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     return dayAtCam;
   }
 
-  private stateHarvest(t: number, f: Frame, seg: Float32Array) {
+  private stateHarvest(t: number, _f: Frame, seg: Float32Array) {
     const S = this.S, aTime = this.at(0, S + 3.3), aMine = this.at(1, S + 7.1), aLater = this.at(2, S + 10.8);
     const set = (n: string, v: number) => { this.U[n]!.value = v; };
     seg.fill(1);
@@ -1230,7 +1224,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     else p.mesh.visible = false;
   }
 
-  private stateThaw(t: number, f: Frame, seg: Float32Array, camC: V3, k: Look) {
+  private stateThaw(t: number, _f: Frame, seg: Float32Array, camC: V3, k: Look) {
     const S = this.S, aAbout = this.at(0, S + 2.2), c28 = this.st(1, S + 3), aLater = this.at(1, S + 5.1), aDecr = this.aDecr;
     const set = (n: string, v: number) => { this.U[n]!.value = v; };
     seg.fill(1);

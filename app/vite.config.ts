@@ -21,7 +21,10 @@ function repoAssets(): Plugin {
     writeBundle(options) {
       if (!options.dir) return;
       for (const dir of assetDirs) {
-        cpSync(path.join(repoRoot, dir), path.join(options.dir, dir), { recursive: true });
+        cpSync(path.join(repoRoot, dir), path.join(options.dir, dir), {
+          recursive: true,
+          filter: (src) => !['work', '__pycache__'].includes(path.basename(src)),
+        });
       }
     },
   };

@@ -54,7 +54,7 @@ export default class LibFlow extends LibScene<P, C> {
       this.parent.push(p.from === 0 ? -1 : p.from > 0 && p.from <= i ? p.from - 1 : i - 1);
     });
     const depth: number[] = [];
-    this.parent.forEach((p, i) => depth.push(p < 0 ? 0 : depth[p]! + 1));
+    this.parent.forEach((p) => depth.push(p < 0 ? 0 : depth[p]! + 1));
     const top = M + (this.P.title ? 80 : 20), bot = this.bottom - 24, availW = W - 2 * M, availH = bot - top;
 
     for (let j = 0; j < this.cues.length; j++) {

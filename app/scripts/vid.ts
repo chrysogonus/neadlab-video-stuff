@@ -3,6 +3,7 @@
 //   ./vid new <id> --audio <file> --transcript <file> [--title <title>]   create projects/<id>/
 //   ./vid analyze <id> [--force step,step]   run the analysis steps whose inputs changed (see STEPS)
 //   ./vid status <id>                        which steps are current, stale or missing
+//   ./vid check                              fast repository quality gates (no GPU or Chrome)
 //   ./vid render <id> [render.ts options]    the final video (default: --samples auto --shutter 0.2); needs the
 //                                            project's cue sheet, data/cues.json (and optionally data/style.json)
 //   ./vid run <id>                           analyze, then render
@@ -348,8 +349,13 @@ async function make(pid: string, force: string[], draft: boolean, renderToo: boo
 }
 
 try {
-  if (cmd === 'new') create(id!);
-  else if (!id) throw new Error('usage: ./vid new|analyze|status|render|run|make <id> (see app/scripts/vid.ts)');
+  if (cmd === 'check') {
+    if (argv.length !== 1) throw new Error('usage: ./vid check');
+    const r = Bun.spawnSync([process.execPath, 'scripts/quality.ts'], { cwd: path.join(ROOT, 'app'), stdout: 'inherit', stderr: 'inherit' });
+    process.exit(r.exitCode);
+  }
+  else if (cmd === 'new') create(id!);
+  else if (!id) throw new Error('usage: ./vid check | new|analyze|status|render|run|make <id> (see app/scripts/vid.ts)');
   else if (cmd === 'analyze') analyze(id, opt('force')?.split(',') ?? []);
   else if (cmd === 'status') status(id);
   else if (cmd === 'render') render(id, argv.slice(2));

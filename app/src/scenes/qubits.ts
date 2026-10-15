@@ -8,7 +8,7 @@ import { type Frame } from '../engine/scene';
 import { F, font } from '../engine/type';
 import type { Line } from '../engine/lyrics';
 import { clamp, ease, hash, lerp, prog, pulse } from '../engine/util';
-import { C, Plate, W, H, MONO, bottomUp, drawKaraoke, hatch, layoutWords, leader, line, lineAlpha, mono, type KLayout } from './_kit';
+import { C, Plate, W, H, MONO, bottomUp, drawKaraoke, hatch, layoutWords, leader, line, mono, type KLayout } from './_kit';
 
 const FX = 520; // fridge axis
 const STAGES = [

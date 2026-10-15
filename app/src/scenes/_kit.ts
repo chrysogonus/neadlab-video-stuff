@@ -8,7 +8,7 @@ import { rgba } from '../engine/palette';
 import { Lyrics, type Line, type Word } from '../engine/lyrics';
 import { F, font, glyphX, measure } from '../engine/type';
 import { drawStrokeText } from '../engine/stroke';
-import { clamp, ease, hash, lerp, mulberry32, prog } from '../engine/util';
+import { clamp, ease, hash, lerp, mulberry32 } from '../engine/util';
 
 export { W, H };
 export const MONO = F.mono(400);
@@ -410,7 +410,7 @@ export abstract class Plate extends Scene {
   override init(): void | Promise<void> { this.ctr = new Counters(this.ctx.lyrics); this.setup(); }
   /** Per-plate setup (fonts are loaded; lyrics and audio are available). */
   setup(): void {}
-  ground(f: Frame, out: THREE.WebGLRenderTarget) { this.bg.render(this.ctx.renderer, out); }
+  ground(_f: Frame, out: THREE.WebGLRenderTarget) { this.bg.render(this.ctx.renderer, out); }
   abstract draw(c: CanvasRenderingContext2D, f: Frame): void;
   post(_f: Frame): PostOverrides { return {}; }
   /** Layers drawn after the Canvas2D layer (GL overlays). */

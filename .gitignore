@@ -7,6 +7,9 @@ out/
 
 # analysis: Python env and model weights; per project: stems, intermediates and QA plots (regenerable, large)
 analysis/.venv/
+analysis/tests/.venv/
 analysis/.cache/
-analysis/__pycache__/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
 projects/*/work/

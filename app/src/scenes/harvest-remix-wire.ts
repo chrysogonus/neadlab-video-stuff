@@ -159,7 +159,7 @@ export default class HarvestRemixWire extends LibScene<P, C> {
 
   // the moments
   private aStamp = 0; private aClick = 0; private aRead = 0; private aCopy = 0; private aIce = 0;
-  private c1 = 0; private c2 = 0; private c3 = 0;
+  private c1 = 0; private c2 = 0;
   private aRekey = 0; private l13 = 0; private aFlip1 = 0; private aFlip2 = 0;
   private stampText = ''; private tagText = '';
 
@@ -179,7 +179,7 @@ export default class HarvestRemixWire extends LibScene<P, C> {
       this.aStamp = cue(0)?.at ?? S + 1.5;
       this.c1 = cue(1)?.start ?? S + 4; this.aClick = cue(1)?.at ?? this.c1 + 0.8;
       this.c2 = cue(2)?.start ?? S + 8; this.aRead = cue(2)?.at ?? this.c2 + 0.6;
-      this.c3 = cue(3)?.start ?? S + 11; this.aIce = cue(3)?.at ?? E - 0.7;
+      this.aIce = cue(3)?.at ?? E - 0.7;
       this.aCopy = wordAt(cue(3), /copy/i, this.aIce - 2.2);
       const sc = this.cues.find((c) => this.cp(c).stamp);
       this.stampText = (sc && this.cp(sc).stamp) || this.P.stamp;
