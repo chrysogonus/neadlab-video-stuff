@@ -193,7 +193,8 @@ export class Layer2D {
     this.canvas = document.createElement('canvas');
     this.canvas.width = Math.round(w * scale);
     this.canvas.height = Math.round(h * scale);
-    this.ctx = scaleContext2D(this.canvas.getContext('2d')!, scale);
+    // CPU Canvas2D avoids Skia's draw-history-dependent GPU path rasterisation. WebGL stays on the GPU.
+    this.ctx = scaleContext2D(this.canvas.getContext('2d', { willReadFrequently: true })!, scale);
     this.texture = new THREE.CanvasTexture(this.canvas);
     this.texture.colorSpace = THREE.SRGBColorSpace;
     this.texture.minFilter = THREE.LinearFilter;

@@ -318,7 +318,8 @@ function scratch(w: number, h: number) {
   if (!s) {
     const canvas = document.createElement('canvas');
     canvas.width = w * SCALE; canvas.height = h * SCALE;
-    const ctx = canvas.getContext('2d')!;
+    // Stamps are redrawn into this shared canvas, so use the same stable rasterisation as Layer2D.
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
     ctx.scale(SCALE, SCALE);
     s = { canvas, ctx };
     scratches.set(key, s);

@@ -5,12 +5,8 @@ import type { SceneClass } from './engine/scene';
 import type { Lyrics } from './engine/lyrics';
 import type { AudioData } from './engine/audio';
 
-// Scene modules are discovered lazily so a missing/broken scene never breaks the build.
-const modules = import.meta.glob<{ default: SceneClass }>('./scenes/*.ts');
-const scene = (name: string) => () => {
-  const m = modules[`./scenes/${name}.ts`];
-  return m ? m() : Promise.reject(new Error(`scene module not found: scenes/${name}.ts`));
-};
+// Same lazy import as sheetTimeline, so the legacy timeline also runs in Bun's regression tests.
+const scene = (name: string) => () => import(`./scenes/${name}.ts`) as Promise<{ default: SceneClass }>;
 
 export function makeTimeline(ly: Lyrics, au: AudioData): TimelineEntry[] {
   /** Cut on the last beat at/before the first word of the matching line (never after the word). */

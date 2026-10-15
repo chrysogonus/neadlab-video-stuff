@@ -22,6 +22,7 @@
 //   --project ID (all modes): which project of projects/ to render (needed when there are several). The page
 //            loads that project's data and timeline; the video muxes its master and defaults to out/<id>.mp4.
 //   --gallery (all modes): load the gallery (?gallery, on --palette night|day) instead of the project's own edit.
+//   --coverage (stills/check): sample every entry, anchor and transition; stills also writes samples.json.
 //   A scene that fails to load or throws while rendering fails the run (non-zero exit).
 // Uses the Vite dev server at --url (default http://localhost:5173); starts a private one if unreachable.
 import { chromium, type Page } from 'playwright-core';
@@ -30,6 +31,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { project } from './projects';
 import { pageURL } from './page-url';
+import { coverageTimes, frameFile, type CoverageEntry, type RenderManifest } from './quality-checks';
 
 const argv = process.argv.slice(2);
 const mode = argv[0] ?? 'stills';
@@ -107,12 +109,28 @@ async function checkScenes(page: Page) {
   if (sceneErrors.length) throw new Error('SCENE ERRORS:\n' + sceneErrors.join('\n'));
 }
 
-async function stills(page: Page, times: number[], outDir: string) {
+async function coverage(page: Page): Promise<RenderManifest> {
+  const { entries, duration } = await page.evaluate(() => {
+    const E = (window as any).__video.engine;
+    return {
+      duration: E.duration as number,
+      entries: E.timeline.map((e: any) => ({
+        id: e.id, start: e.start, end: e.end,
+        anchors: e.params?.cues ? e.params.cues.map((c: any) => c.at)
+          : E.lyrics.lines.filter((l: any) => l.start >= e.start && l.start < e.end).map((l: any) => l.start),
+      })) as CoverageEntry[],
+    };
+  });
+  if (typeof SAMPLES !== 'number') throw new Error('--coverage requires a fixed --samples count');
+  return { project: PROJECT.id, width: OW, height: OH, samples: SAMPLES, shutter: +opt('shutter', '0.5')!, entries, times: coverageTimes(entries, duration) };
+}
+
+async function stills(page: Page, times: number[], outDir: string, covered = false) {
   mkdirSync(outDir, { recursive: true });
   const files: string[] = [];
   for (const t of times) {
     const k: number = await page.evaluate(([t, s, sh]) => (window as any).__video.still(t, s, sh), [t, SAMPLES, +opt('shutter', '0.5')!] as const);
-    const f = path.join(outDir, `f_${t.toFixed(2).padStart(7, '0')}.png`);
+    const f = path.join(outDir, covered ? frameFile(t) : `f_${t.toFixed(2).padStart(7, '0')}.png`);
     if (typeof SAMPLES !== 'number') console.log(`t=${t}: ${k} sub-frames`);
     // at scale > 1 the canvas is shown downscaled on the page: save the full-res pixel buffer instead
     if (SCALE !== 1) await Bun.write(f, Buffer.from(await page.evaluate(() => (window as any).__video.png()), 'base64'));
@@ -337,8 +355,12 @@ try {
       return ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
     }));
   } else if (mode === 'stills') {
-    const times = (opt('t') ?? '0').split(',').map(Number);
-    const files = await stills(page, times, opt('out', path.join(ROOT, 'out/stills'))!);
+    const manifest = flag('coverage') ? await coverage(page) : null;
+    const times = manifest?.times ?? (opt('t') ?? '0').split(',').map(Number);
+    const out = opt('out', path.join(ROOT, 'out/stills'))!;
+    const files = await stills(page, times, out, !!manifest);
+    await checkScenes(page);
+    if (manifest) writeFileSync(path.join(out, 'samples.json'), JSON.stringify(manifest, null, 2) + '\n');
     console.log(files.join('\n'));
   } else if (mode === 'sheet') {
     const from = +opt('from', '0')!, to = +opt('to', '10')!, n = +opt('n', '12')!;
@@ -384,7 +406,7 @@ try {
     // the same frames three ways — in order, in reverse, and each right after a seek far away — compared pixel
     // by pixel. Scenes are pure functions of t, so they must agree; Chrome's GPU Canvas2D can rasterise a few
     // antialiased hairline pixels a level or two differently on a path's first draw, which --tol allows.
-    const times = (opt('t') ?? '5,30,55,100,140,170,200').split(',').map(Number);
+    const times = flag('coverage') ? (await coverage(page)).times : (opt('t') ?? '5,30,55,100,140,170,200').split(',').map(Number);
     const tol = +opt('tol', '8')!, maxPx = +opt('max-px', '0.001')!; // levels, share of pixels
     const res: { t: number; diff: number; px: number }[] = await page.evaluate(async ([times, s, sh]) => {
       const P = (window as any).__video;
@@ -393,19 +415,23 @@ try {
         P.still(t, s, sh);
         return (await P.engine.readPixelsAsync()).slice() as Uint8Array;
       };
-      const a = new Map<number, Uint8Array>(), b = new Map<number, Uint8Array>(), c = new Map<number, Uint8Array>();
+      // Coverage can include hundreds of frames: retain one reference set, compare the other passes as they render.
+      const a = new Map<number, Uint8Array>();
+      const results = new Map(times.map((t) => [t, { t, diff: 0, px: 0 }]));
       for (const t of times) a.set(t, await grab(t, null));
-      for (const t of [...times].reverse()) b.set(t, await grab(t, null));
-      for (const t of times) c.set(t, await grab(t, t > 100 ? 1 : 205));
-      return times.map((t) => {
+      const compare = (t: number, y: Uint8Array) => {
         let diff = 0, px = 0;
         const x = a.get(t)!;
-        for (const y of [b.get(t)!, c.get(t)!]) for (let i = 0; i < x.length; i += 4) {
+        for (let i = 0; i < x.length; i += 4) {
           const d = Math.max(Math.abs(x[i]! - y[i]!), Math.abs(x[i + 1]! - y[i + 1]!), Math.abs(x[i + 2]! - y[i + 2]!));
           if (d) { px++; diff = Math.max(diff, d); }
         }
-        return { t, diff, px: px / 2 };
-      });
+        const r = results.get(t)!;
+        r.diff = Math.max(r.diff, diff); r.px = Math.max(r.px, px);
+      };
+      for (const t of [...times].reverse()) compare(t, await grab(t, null));
+      for (const t of times) compare(t, await grab(t, t > 100 ? 1 : 205));
+      return [...results.values()];
     }, [times, SAMPLES, +opt('shutter', '0.5')!] as const);
     const total = OW * OH;
     let bad = 0;

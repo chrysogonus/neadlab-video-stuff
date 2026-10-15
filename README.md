@@ -84,20 +84,39 @@ Motion blur, adaptive sampling and the render pipeline are described in [`docs/E
 
 After `cd app && bun install --frozen-lockfile`, run `./vid check` from the repo root. It runs both TypeScript
 checks (including scripts, tests and configs), Ruff's bug checks, the Python and Bun tests, generated cue-document
-freshness, and a production build. GitHub Actions runs the same command on pushes and pull requests. Bun 1.4.2 and
-uv 0.11.21 are used in CI, with Python 3.12.
+freshness, and a production build. Tests also pin each project's scene order and cut times, beat/lyric timing
+boundaries, and the full gate's failure handling. GitHub Actions runs the fast command on pushes and pull
+requests. Bun 1.4.2 and uv 0.11.21 are used in CI, with Python 3.12.
 
 The first run needs network access to prepare `analysis/tests/.venv/` from its own `uv.lock`: only NumPy, pytest
 and Ruff, with no models, GPU, Chrome or full analysis environment. The Python tests cover lyric-sheet parsing,
-pronunciation and section boundaries on tracked grids. Every project's cue sheet gets technical validation;
-the generation pipeline's editorial rules do not apply retroactively to existing edits.
+pronunciation and section boundaries on tracked grids. Every project's cue sheet gets technical validation; the
+generation pipeline's own rules (`scripts/check.ts`: palette contrast, at most 2 lyric-as-type entries, 4–8 custom
+scenes) apply to every project whose `cues` step is not frozen, as `./vid make` applies them. A tracked file over
+5 MB fails the check unless it is a project's `input/` or `data/preview.mp3`.
 
 For an advisory dead-code report, run `cd app && bun run deadcode`. Knip reads scene entry points from the cue
 sheets; findings do not fail the gate and should be reviewed before deleting code.
 
 To opt into the local commit hook, run `git config core.hooksPath .githooks`. The hook checks the current working
-tree; CI checks the committed revision. Rendering determinism, visual baselines and full analysis reproduction
-remain separate, slower checks. Production builds exclude regenerable project `work/` and Python bytecode.
+tree; CI checks the committed revision. Production builds exclude regenerable project `work/` and Python bytecode.
+
+Before refactoring, run `./vid check --update-baseline` to explicitly capture the current visuals in
+`out/baseline/<id>/`. It checks render determinism, then saves a frame at every entry midpoint and cue anchor,
+plus frames before and after each transition (on a 60 fps grid). Code timelines use lyric starts as anchors.
+`samples.json` records the timeline, sample times and render settings. Existing baselines are archived alongside
+their replacements. These local, ignored artifacts must be preserved through the refactor.
+
+`./vid check --full` requires those baselines, Chrome with a GPU, the analysis environment and every project's
+four `work/stems/htdemucs_ft/*.wav` stems. It checks render determinism, compares the complete frame set with the
+baseline, verifies a one-second MP4 export (60 frames at 1920×1080, audio present), and requires beat analysis to
+reproduce the reference `data/audio.json` byte for byte. It needs both ffmpeg and ffprobe. Analysis writes
+to `out/check/<id>/audio.json`, leaving project data untouched even on failure. Missing or stale baselines,
+missing stems, failed image decoding and incomplete frame sets fail the check. Visual comparisons allow at most
+8 colour levels of difference on at most 0.1% of pixels. CPU Canvas2D keeps stroke rasterisation independent of
+draw history; WebGL rendering stays on the GPU. Run this check after each refactoring milestone and before a
+release render. Update baselines only after reviewing an intentional visual or timing change; updating them
+does not count as passing full verification.
 
 ## Pipeline
 

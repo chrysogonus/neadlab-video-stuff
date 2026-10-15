@@ -18,7 +18,7 @@ Run:  uv run python analyze.py --project <id> [--plots]
 import common
 import json
 import math
-import sys
+from pathlib import Path
 
 import numpy as np
 import librosa
@@ -326,7 +326,7 @@ def vocal_onsets(v, sr):
 
 
 # ---------------------------------------------------------------------------
-def main(plots=False):
+def main(plots=False, output=None):
     mix, _ = common.load_mix(SR)
     duration = len(mix) / SR
     stems = {n: common.load_stem(n, sr=SR)[0][: len(mix)] for n in ("vocals", "drums", "bass", "other")}
@@ -441,8 +441,9 @@ def main(plots=False):
                            kick_sd=kick_res.std() * 1000,
                            sn=len(st), kk=len(kt), hh=len(ht)),
     )
-    (common.DATA / "audio.json").write_text(json.dumps(doc, separators=(",", ":")))
-    print("wrote", common.DATA / "audio.json", f"{len(beats)} beats, {len(downbeats)} downbeats, "
+    output = Path(output) if output is not None else common.DATA / "audio.json"
+    output.write_text(json.dumps(doc, separators=(",", ":")))
+    print("wrote", output, f"{len(beats)} beats, {len(downbeats)} downbeats, "
           f"{len(kt)} kicks, {len(st)} snares, {len(ht)} hats, {len(onsets['vocal'])} vocal onsets")
     if plots:
         make_plots(doc, stems)
@@ -547,4 +548,9 @@ def make_plots(doc, stems):
 
 
 if __name__ == "__main__":
-    main(plots="--plots" in sys.argv)
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--plots", action="store_true")
+    parser.add_argument("--output", type=Path, help="write analysis here instead of data/audio.json")
+    args = parser.parse_args()
+    main(plots=args.plots, output=args.output)

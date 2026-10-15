@@ -14,6 +14,7 @@ import { CueError, resolveCues, resolveEntries, type CueDef, type CueSheet } fro
 import { DEFAULT_STYLE, makeStyle } from '../src/engine/style';
 import { pageURL } from '../scripts/page-url';
 import { ROOT, loadProjects, loadSheet, loadStyle, project } from '../scripts/projects';
+import expectedCuts from './fixtures/timeline-cuts.json';
 
 const IDS = Object.keys(loadProjects());
 const load = async (id: string) => {
@@ -97,6 +98,22 @@ const FP = loadSheet('force-push')!;
 const PALETTES = Object.keys(loadStyle('force-push').palettes);
 
 describe('all project cue sheets (technical validity)', () => {
+  test('every project preserves its exact scene order and cut times', async () => {
+    expect([...IDS].sort()).toEqual(Object.keys(expectedCuts).sort());
+    for (const id of IDS) {
+      const { ly, au } = await load(id), sheet = loadSheet(id);
+      const make = sheet ? sheetTimeline(sheet, loadStyle(id)) : (await CODE_TIMELINES[id]!()).makeTimeline;
+      expect(make(ly, au).map((e) => [e.id, e.start, e.end])).toEqual(expectedCuts[id as keyof typeof expectedCuts]);
+    }
+  });
+  test('the legacy Harvest timeline executes and covers the song', async () => {
+    const { ly, au } = await load('harvest');
+    const { makeTimeline } = await CODE_TIMELINES.harvest!();
+    const timeline = makeTimeline(ly, au);
+    expect(timeline[0]!.start).toBe(0);
+    expect(timeline.at(-1)!.end).toBe(au.duration);
+    for (let i = 1; i < timeline.length; i++) expect(timeline[i]!.start).toBe(timeline[i - 1]!.end);
+  });
   for (const id of IDS) {
     const sheet = loadSheet(id);
     if (!sheet) continue; // code timelines are compiled by the production build
