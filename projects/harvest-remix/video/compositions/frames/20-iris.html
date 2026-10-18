@@ -1,0 +1,235 @@
+<!doctype html>
+<html><head><meta charset="UTF-8" /></head><body><template>
+<style>
+@font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+@font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+@font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+@font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+#root { position:absolute; inset:0; overflow:hidden; container-type:size;
+  --ink:#111111; --ink-alt:#1A1A18; --fire:#E85D26; --cream:#F0ECE5;
+  --cream-muted:#888880; --cream-hint:#505048; --border:#282826;
+  background:var(--fire); color:var(--ink); }
+#f20-ground { position:absolute; inset:-100px; background:var(--fire); }
+#f20-wall { position:absolute; left:-100px; top:-40px; width:2500px; font:500 25px/64px "IBM Plex Mono";
+  letter-spacing:0.14em; white-space:pre; color:var(--ink); opacity:0.045; }
+#f20-light { position:absolute; left:700px; top:-350px; width:1800px; height:1800px; border-radius:50%;
+  background:radial-gradient(closest-side,rgba(240,236,229,0.33),rgba(240,236,229,0) 100%); }
+#f20-mpos { position:absolute; left:0; top:0; width:0; height:0; transform-origin:0 0; }
+.f20-svg { position:absolute; left:-900px; top:-900px; width:1800px; height:1800px; overflow:visible; }
+.f20-body { fill:var(--ink); }
+.f20-groove { fill:none; stroke:var(--ink); stroke-width:2; stroke-opacity:0.24; }
+.f20-bevel { fill:none; stroke:var(--cream); stroke-opacity:0.34; stroke-linecap:round; }
+.f20-slot { fill:none; stroke:var(--ink); stroke-width:13; stroke-linecap:round; }
+.f20-blade { stroke:#E85D26; stroke-width:1.2; stroke-opacity:0.34; }
+.f20-reflection { fill:none; stroke:var(--cream); stroke-width:1.5; }
+#f20-chrome { transform-origin:50% 50%; }
+.f20-kicker { position:absolute; left:5.5cqw; top:4.2cqw; font:500 16px "IBM Plex Mono";
+  letter-spacing:0.14em; color:rgba(17,17,17,0.65); white-space:nowrap; }
+.f20-kicker::before { content:""; display:inline-block; width:36px; height:2px; background:currentColor;
+  vertical-align:middle; margin-right:16px; }
+#f20-fg { transform-origin:5.5% 16%; }
+#f20-hook, #f20-hk { opacity:0; }
+.f20-line { position:absolute; left:5.5cqw; top:9cqw; width:42cqw; display:flex; flex-direction:column;
+  align-items:flex-start; gap:0.6cqw; font-family:"Barlow"; }
+.f20-row { display:flex; flex-wrap:wrap; column-gap:0.26em; font-weight:800; font-size:4.4cqw;
+  line-height:1.04; letter-spacing:-0.02em; }
+.f20-big { font-weight:900; font-size:14cqw; line-height:0.86; letter-spacing:-0.04em;
+  margin:0.3cqw 0 0 -0.5cqw; transform-origin:0 80%; }
+.f20-w { display:inline-block; position:relative; opacity:0; }
+#f20-l18 { width:48cqw; top:10cqw; }
+.f20-sooner { font-size:6.4cqw; line-height:0.95; margin-top:0.6cqw; }
+#f20-hook { position:absolute; left:5.5cqw; top:24cqh; font-family:"Barlow"; transform-origin:0 60%; }
+.f20-hrow { display:flex; gap:1.7cqw; align-items:baseline; white-space:nowrap; }
+#f20-harvest { font-weight:900; font-size:12.8cqw; line-height:0.9; letter-spacing:-0.045em; color:var(--fire);
+  margin-left:-0.5cqw; text-shadow:3px 3px 0 #7a2c0e,6px 6px 0 #5e220b,9px 9px 0 #451a09,12px 12px 0 #2f1307; }
+.f20-hsub { font-weight:800; font-size:7.5cqw; line-height:1; letter-spacing:-0.03em; color:var(--cream); }
+#f20-hrow2 { margin-top:1.4cqw; }
+.f20-dark .f20-bevel { stroke:#E85D26; stroke-opacity:0.8; }
+.f20-dark .f20-blade { stroke:#E85D26; stroke-opacity:0.6; }
+
+.f20-bokeh { position:absolute; font:600 250px "IBM Plex Mono"; color:var(--ink); opacity:0.025;
+  filter:blur(18px); white-space:nowrap; }
+</style>
+<div data-hf-id="hf-37c0" id="root" data-composition-id="20-iris" data-width="1920" data-height="1080" data-duration="6.797">
+  <div data-hf-id="hf-acal" class="hr-layer" id="f20-bg" data-depth="0.3" data-dof="5" data-layout-ignore>
+    <div data-hf-id="hf-yan1" id="f20-ground"></div><div data-hf-id="hf-08xc" id="f20-wall"></div><div data-hf-id="hf-x5lc" id="f20-light"></div>
+  </div>
+  <div data-hf-id="hf-yzn4" class="hr-layer" id="f20-mid" data-depth="0.65" data-layout-ignore>
+    <div data-hf-id="hf-dwsp" id="f20-mpos">
+      <svg data-hf-id="hf-9u1l" class="f20-svg" viewBox="-900 -900 1800 1800">
+        <defs data-hf-id="hf-mh0t"><clipPath data-hf-id="hf-2bcy" id="f20-apertureclip"><circle data-hf-id="hf-mesg" id="f20-clipcircle" r="167" /></clipPath></defs>
+        <g data-hf-id="hf-7p5r" id="f20-housing"></g>
+        <g data-hf-id="hf-3nly" id="f20-aperture">
+          <circle data-hf-id="hf-vmoe" r="358" fill="#111111" />
+          <g data-hf-id="hf-nac7" id="f20-blades"></g>
+          <g data-hf-id="hf-z6dp" id="f20-glass" clip-path="url(#f20-apertureclip)">
+            <circle data-hf-id="hf-bocs" r="200" fill="#111111" />
+            <g data-hf-id="hf-l1rk" id="f20-archive"></g>
+            <path data-hf-id="hf-m067" d="M-175 -95 Q-30 -175 135 -92 L125 -65 Q-20 -115 -175 -48Z" fill="#F0ECE5" opacity="0.1" />
+            <path data-hf-id="hf-6xf0" d="M-150 95 Q-15 150 155 65" fill="none" stroke="#E85D26" stroke-width="3" opacity="0.45" />
+          </g>
+          <g data-hf-id="hf-yh4a" id="f20-letter">
+            <path data-hf-id="hf-jtb6" d="M-111 -66 L105 -66 L111 68 L-105 68Z" fill="#111111" opacity="0.55" transform="translate(7 12)" />
+            <rect data-hf-id="hf-emc6" x="-108" y="-68" width="216" height="135" fill="#F0ECE5" />
+            <path data-hf-id="hf-ejq7" d="M-108 -68 L0 0 L108 -68 M-108 67 L-25 -4 M108 67 L25 -4" fill="none" stroke="#111111" stroke-opacity="0.26" stroke-width="2" />
+            <g data-hf-id="hf-atd7" id="f20-lettercipher" fill="#505048" font-family="IBM Plex Mono" font-weight="500" font-size="7" letter-spacing="1.5"></g>
+            <circle data-hf-id="hf-j9iy" r="24" fill="#E85D26" /><circle data-hf-id="hf-37j7" r="19" fill="none" stroke="#111111" stroke-opacity="0.32" stroke-width="1.5" />
+            <text data-hf-id="hf-xl96" x="0" y="7" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="20" fill="#111111" fill-opacity="0.4">a.</text>
+            <path data-hf-id="hf-3m41" d="M-17 -11 A21 21 0 0 1 -3 -21" fill="none" stroke="#F0ECE5" stroke-opacity="0.7" stroke-width="2" />
+            <text data-hf-id="hf-ddd9" x="-107" y="85" fill="#111111" font-family="IBM Plex Mono" font-weight="600" font-size="12" letter-spacing="2">OBJ 0001</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div data-hf-id="hf-9tm6" class="hr-layer" id="f20-chrome" data-depth="0.2">
+    <div data-hf-id="hf-dib5" class="f20-kicker" id="f20-k18">STILL HELD</div>
+    <div data-hf-id="hf-dq42" class="f20-kicker" id="f20-hk">NEAD</div>
+  </div>
+  <div data-hf-id="hf-79ur" class="hr-layer" id="f20-fg" data-depth="0.8">
+    <div data-hf-id="hf-4a58" id="f20-s18"><div data-hf-id="hf-1y7j" class="f20-line" id="f20-l18"></div></div>
+    <div data-hf-id="hf-jxdd" id="f20-hook">
+      <div data-hf-id="hf-6aeh" class="f20-hrow"><span data-hf-id="hf-mhx8" id="f20-harvest" class="f20-w">harvest</span><span data-hf-id="hf-ujdj" id="f20-now" class="f20-w f20-hsub">now,</span></div>
+      <div data-hf-id="hf-pygs" class="f20-hrow" id="f20-hrow2"><span data-hf-id="hf-6dod" id="f20-decrypt" class="f20-w f20-hsub">decrypt</span><span data-hf-id="hf-jjmx" id="f20-later" class="f20-w f20-hsub">later</span></div>
+    </div>
+  </div>
+  <div data-hf-id="hf-9f2n" class="hr-layer" id="f20-near" data-depth="1.7" data-layout-ignore>
+    <div data-hf-id="hf-mmyc" class="f20-bokeh" style="left:30px;top:800px">A7</div><div data-hf-id="hf-knw2" class="f20-bokeh" style="left:1750px;top:-100px">0F</div>
+  </div>
+</div>
+<script src="assets/kit/env.js"></script><script src="assets/kit/hr-kit.js"></script>
+<script>
+(() => {
+  const T0=92.959, DUR=6.797, HOOK=96.82;
+  const L=t=>+(t-T0).toFixed(3), $=id=>document.getElementById(id), NS="http://www.w3.org/2000/svg";
+  const sv=(tag,parent,attrs)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);parent.appendChild(e);return e;};
+  const el=(tag,cls,parent,text)=>{const e=document.createElement(tag);e.className=cls;e.textContent=text||"";parent.appendChild(e);return e;};
+  const rad=d=>d*Math.PI/180;
+  const p=(r,a)=>[Math.cos(rad(a))*r,Math.sin(rad(a))*r];
+  const pt=(r,a)=>p(r,a).map(v=>v.toFixed(2)).join(" ");
+  const arc=(r,a,b)=>`M${pt(r,a)} A${r} ${r} 0 ${b-a>180?1:0} 1 ${pt(r,b)}`;
+  const ring=(ro,ri)=>`M${ro} 0 A${ro} ${ro} 0 1 1 ${-ro} 0 A${ro} ${ro} 0 1 1 ${ro} 0 M${ri} 0 A${ri} ${ri} 0 1 0 ${-ri} 0 A${ri} ${ri} 0 1 0 ${ri} 0`;
+  const wallRows=Array.from({length:19},(_,i)=>el("div","",$("f20-wall"),HR.cipher(90,801+i).replace(/(.{4})/g,"$1 ")));
+  const plates=[];
+  // Broad stepped rings have separate black sidewalls, warm faces and cream upper bevels.
+  [[366,432,0.62,4],[450,520,0.36,-2.7]].forEach(([ri,ro,op,speed],i)=>{
+    const base=sv("g",$("f20-housing"),{});
+    sv("path",base,{d:ring(ro+3,ri-3),fill:"#111111",opacity:0.56,transform:"translate(10 15)","fill-rule":"evenodd"});
+    sv("path",base,{d:ring(ro,ri),fill:"#E85D26","fill-rule":"evenodd"});
+    sv("path",base,{d:ring(ro,ri),fill:"#111111",opacity:op,"fill-rule":"evenodd"});
+    const rot=sv("g",base,{});
+    [ri+4,ri+10,ro-12,ro-6].forEach(r=>sv("circle",rot,{class:"f20-groove",r}));
+    sv("circle",base,{r:ri,fill:"none",stroke:"#111111","stroke-width":9,opacity:0.7});
+    sv("path",base,{class:"f20-bevel",d:arc(ro-2,-170,-15),"stroke-width":3});
+    sv("path",base,{class:"f20-bevel",d:arc(ri+3,20,140),"stroke-width":2,opacity:0.45});
+    const n=i===0?24:i===1?30:36;
+    for(let k=0;k<n;k++){
+      const a=k*360/n+i*7, q=p((ri+ro)/2,a);
+      sv("path",rot,{d:`M${pt(ri+17,a)} L${pt(ro-17,a)}`,stroke:"#111111","stroke-width":i===0?10:8,opacity:0.66});
+      sv("path",rot,{d:`M${pt(ri+17,a-0.7)} L${pt(ro-17,a-0.7)}`,stroke:"#F0ECE5","stroke-width":1,opacity:0.2});
+      if(k%3===0){sv("circle",rot,{cx:q[0],cy:q[1],r:7,fill:"#111111",opacity:0.9});sv("path",rot,{d:`M${q[0]-3} ${q[1]-1}L${q[0]+3} ${q[1]+1}`,stroke:"#E85D26","stroke-width":1.5});}
+    }
+    for(let k=0;k<4;k++)sv("path",rot,{class:"f20-slot",d:arc((ri+ro)/2,k*90+15,k*90+38),opacity:0.66});
+    plates.push({rot,speed});
+  });
+  // Ten swept steel leaves overlap; their inner edges form a ten-sided aperture.
+  const blades=Array.from({length:10},(_,i)=>{
+    const g=sv("g",$("f20-blades"),{});
+    const face=sv("path",g,{class:"f20-blade",fill:i%2?"#111111":"#1A1A18"});
+    const ribbon=sv("path",g,{fill:"none",stroke:"#F0ECE5","stroke-width":17,opacity:0.035});
+    const bevel=sv("path",g,{fill:"none",stroke:"#F0ECE5","stroke-width":2.2,opacity:0.28});
+    const seam=sv("path",g,{fill:"none",stroke:"#E85D26","stroke-width":5,opacity:0.28});
+    const pivot=p(327,i*36+9);
+    sv("circle",g,{cx:pivot[0],cy:pivot[1],r:10,fill:"#111111",stroke:"#E85D26","stroke-width":2,"stroke-opacity":0.42});
+    sv("circle",g,{cx:pivot[0]-2,cy:pivot[1]-2,r:3,fill:"#F0ECE5",opacity:0.3});
+    return {face,ribbon,bevel,seam,a:i*36};
+  });
+  // A reflected bank of drawers bends across the aperture glass, never across the type.
+  const reflections=[];
+  for(let row=0;row<5;row++)for(let col=0;col<5;col++){
+    const x=-165+col*69,y=-142+row*61;
+    const g=sv("g",$("f20-archive"),{});
+    sv("path",g,{class:"f20-reflection",d:`M${x} ${y}q30 -9 61 -3v42q-30 9 -61 4Z`});
+    sv("path",g,{d:`M${x+19} ${y+28}l22 -2`,fill:"none",stroke:"#F0ECE5","stroke-width":3});
+    sv("rect",g,{x:x+48,y:y+9,width:5,height:4,fill:"#E85D26"});
+    reflections.push(g);
+  }
+  for(let i=0;i<3;i++)sv("text",$("f20-lettercipher"),{x:-91,y:-44+i*11}).textContent=HR.cipher(20,881+i);
+  const LINES={l18:[[["i'll",92.959],["see",93.198],["you",93.8]],[["sooner",94.111],["or",95.438]],{big:[["later",95.84]]}]};
+  const lines=Object.fromEntries(Object.entries(LINES).map(([key,rows])=>[key,rows.flatMap((row,i)=>{
+    const big=!Array.isArray(row),box=el("div","f20-row"+(big?" f20-big":i===1?" f20-sooner":""),$("f20-"+key));
+    return (big?row.big:row).map(([w,t])=>({s:el("span","f20-w",box,w),t,big}));
+  })]));
+  const tl=gsap.timeline({paused:true});
+  const stage=HR.stage($("root"),{seed:13}),cam=stage.cam;
+  const camera={x:0,z:1,punch:0};
+  const eye={open:112,turn:51,px:-10,py:5,lx:-30,ly:20,ls:0.46,lr:9,reflection:0.19};
+  const machine={x:1710,y:448,s:1.86,rot:-16,sy:0.83,opacity:1};
+  // A continuous oblique macro view exposes the thick housing and broad aperture leaves.
+  tl.fromTo(machine,{x:1710,y:448,s:1.86,rot:-16},{x:1690,y:430,s:1.9,rot:-11,duration:HOOK-T0,ease:"sine.inOut"},0);
+  tl.fromTo(machine,{x:1690,y:430,s:1.9,rot:-11,opacity:1},{x:1680,y:455,s:1.52,rot:-8,opacity:0.52,duration:0.72,ease:"power3.out",immediateRender:false},L(HOOK));
+  tl.fromTo(machine,{x:1680,y:455,s:1.52,rot:-8},{x:1715,y:463,s:1.48,rot:-6,duration:T0+DUR-HOOK-0.72,ease:"sine.out",immediateRender:false},L(HOOK)+0.72);
+  tl.fromTo(eye,{open:112,turn:51},{open:150,turn:62,duration:1.15,ease:"power2.inOut",immediateRender:false},0);
+  tl.fromTo(eye,{px:-10,py:5,lx:-30,ly:20,lr:9},{px:18,py:-14,lx:32,ly:-22,lr:3,duration:2.6,ease:"sine.inOut",immediateRender:false},0);
+  tl.fromTo(eye,{open:150,turn:62},{open:109,turn:79,duration:0.2,ease:"power3.in",immediateRender:false},L(95.84)-0.2);
+  tl.fromTo(eye,{open:109,turn:79},{open:119,turn:82,duration:0.38,ease:"power3.out",immediateRender:false},L(95.84));
+  tl.fromTo(eye,{px:18,py:-14,lx:32,ly:-22},{px:4,py:0,lx:4,ly:0,duration:0.6,ease:"power2.inOut",immediateRender:false},L(95.84));
+  tl.fromTo(eye,{open:119,turn:82},{open:140,turn:88,reflection:0.28,duration:T0+DUR-HOOK,ease:"sine.out",immediateRender:false},L(HOOK));
+  tl.set("#f20-s18",{opacity:0},L(HOOK));
+  tl.set("#f20-hook",{opacity:1},L(HOOK));
+  tl.set("#f20-k18",{opacity:0},L(HOOK));
+  tl.set("#f20-hk",{opacity:1,color:"#E85D26"},L(HOOK));
+  tl.set("#f20-ground",{backgroundColor:"#111111"},L(HOOK));
+  tl.set("#f20-wall",{color:"#F0ECE5",opacity:0.045},L(HOOK));
+  tl.set("#f20-light",{opacity:0},L(HOOK));
+  tl.set("#f20-fg",{transformOrigin:"5.5% 55%"},L(HOOK));
+  for(const ws of Object.values(lines))for(const {s,t,big} of ws){
+    if(big)HR.hero(tl,s,L(t),{spread:40,settle:0.27});else HR.lead(tl,s,L(t));
+    tl.set(s,{opacity:1},L(t));
+  }
+  const hooks=[["f20-harvest",96.82,"hero"],["f20-now",97.653,"hero"],["f20-decrypt",98.8,"decode"],["f20-later",99.28,"decode"]];
+  for(const [id,t,kind]of hooks){
+    const w=$(id);
+    if(kind==="hero")HR.hero(tl,w,L(t),{spread:24,over:1.12,settle:0.27,skew:false});
+    else HR.decrypt(tl,w,L(t),{dur:0.34,seed:t*100|0});
+    tl.set(w,{opacity:1},L(t));
+  }
+  for(const [t,z]of[[95.84,0.025],[96.82,0.04]]){
+    tl.fromTo(camera,{punch:0},{punch:z,duration:0.06,ease:"power3.out",immediateRender:false},L(t));
+    tl.fromTo(camera,{punch:z},{punch:0,duration:0.5,ease:"power3.out",immediateRender:false},L(t)+0.06);
+  }
+  tl.fromTo(camera,{x:0,z:1},{x:18,z:1.025,duration:DUR,ease:"sine.inOut",immediateRender:false},0);
+  tl.fromTo("#f20-wall",{x:0},{x:-115,duration:DUR,ease:"none"},0);
+  tl.fromTo("#f20-near",{x:0},{x:-150,duration:DUR,ease:"none"},0);
+  const downbeats=[94.278,96.108,97.937];
+  function render(){
+    const t=tl.time(),T=T0+t,b=HR.band("bass",T),dark=T>=HOOK;
+    cam.x=camera.x;cam.z=camera.z+camera.punch;cam.focus=0.6;stage.apply(T);HR.draw(tl);
+    const pulse=Math.max(...downbeats.map(d=>T<d?0:Math.exp(-(T-d)/0.25)));
+    const m=$("f20-mpos");m.classList.toggle("f20-dark",dark);
+    m.style.transform=`translate(${machine.x.toFixed(2)}px,${machine.y.toFixed(2)}px) rotate(${machine.rot.toFixed(3)}deg) scale(${machine.s.toFixed(4)},${(machine.s*machine.sy).toFixed(4)})`;
+    m.style.opacity=machine.opacity.toFixed(3);
+    plates.forEach(({rot,speed},i)=>rot.setAttribute("transform",`rotate(${(t*speed+eye.turn*(i%2?-0.17:0.23)).toFixed(3)})`));
+    $("f20-aperture").setAttribute("transform",`translate(${eye.px.toFixed(2)} ${eye.py.toFixed(2)})`);
+    const r=eye.open+2*b+3*pulse;
+    blades.forEach(({face,ribbon,bevel,seam,a})=>{
+      const q=a+eye.turn;
+      face.setAttribute("d",`M${pt(355,q-5)} A355 355 0 0 1 ${pt(355,q+43)} Q${pt(260,q+66)} ${pt(r,q+80)} L${pt(r,q+43)} Q${pt(263,q+15)} ${pt(355,q-5)}Z`);
+      const edge=`M${pt(352,q-5)} Q${pt(263,q+15)} ${pt(r,q+43)}`;
+      ribbon.setAttribute("d",edge);bevel.setAttribute("d",edge);
+      seam.setAttribute("d",`M${pt(337,q+35)} Q${pt(252,q+62)} ${pt(r+8,q+76)}`);
+    });
+    $("f20-clipcircle").setAttribute("r",Math.max(20,r-2).toFixed(2));
+    $("f20-glass").setAttribute("transform",`rotate(${(eye.turn*0.18).toFixed(2)})`);
+    $("f20-archive").setAttribute("transform",`translate(${(-t*3).toFixed(2)} 0)`);
+    $("f20-archive").style.opacity=(eye.reflection+0.02*b).toFixed(3);
+    $("f20-letter").setAttribute("transform",`translate(${eye.lx.toFixed(2)} ${eye.ly.toFixed(2)}) rotate(${eye.lr.toFixed(2)}) scale(${eye.ls.toFixed(4)})`);
+    $("f20-light").style.opacity=dark?"0":(0.6+0.17*b).toFixed(3);
+    if(dark)HR.glow($("f20-harvest"),T,0.25,0.3);
+    const step=Math.floor(t*15);wallRows[3].textContent=HR.cipher(90,804+(HR.hit("hat",T,0.07)>0.4?step:0)).replace(/(.{4})/g,"$1 ");
+  }
+  tl.eventCallback("onUpdate",render);tl.seek(0);render();
+  window.__timelines["20-iris"]=tl;
+})();
+</script>
+</template></body></html>

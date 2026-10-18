@@ -1,0 +1,1344 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 3 — keep (pre-chorus, 23.656–33.806). Before "keep" (v10–v13, unchanged): compare panels; Plan A, a
+         brute-force rig (combination dial whipping on the kicks, a tries odometer, FOUND 0) under "break", which is
+         slashed and cracks into shards; Plan B, drawer 0001 in its cage. The rig plate reads "PLAN A · BREAK IT · X25519"
+         / "CLASSICAL ATTACK: NOT PRACTICAL"; the cage "PLAN B · KEEP IT · ≈ $0.001/GB·MONTH".
+         v14 H1 (from "keep", 28.091): the meaning made literal. He can't break it, so he only has to keep it.
+         - 28.091 "keep": the copy of the letter (01's cream envelope and fire seal) stands on the top edge of drawer 0001;
+           Archie (x 300–560, on the ground line y 970 = the drawer's top
+           edge) slams an oversized rubber stamp onto it on the word, the recoil lifting him off his treads; the
+           impression KEEP (fire ink, #C8481A on cream) IS the hero word. 29.24 "you": the luggage tag drops onto the envelope; 30.12 HELD.
+         - 30.256 the copy drops into the open drawer, the camera tilts down onto its face, 30.72 (kick) the drawer
+           shuts and its lamp lights; 30.74–31.88 the camera pulls back through the drawer front, out of the vault's
+           centre wall of drawers (drawer 0001 is one lamp among ~3,000), through the hub of the handle wheel, to the
+           whole vault door: three.js, the 11-petabytes recipe (one Points system of lamps drawn twice, sharp + additive
+           bloom; ink solids; hairline LineSegments; a fire haze round the limb).
+         - The seven-snare fill (31.943 … 33.787): one radial bolt per snare slides home into the frame, lighting its
+           own concentric ring of lamps and the receiver lamps, with a push and a kick; the wheel ratchets on each bolt,
+           spins on the last three and stops on 33.787. v15 keeps the entire rim and bolts in view: round door centre
+           (1030, 550), radius 405 px, with a contact-bound light tracing the seam as the bolts lock.
+           Engraved on the door: RETENTION: INDEFINITE, BOLT n/7. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f03-world { position: absolute; inset: 0; }
+        .f03-grp { position: absolute; inset: 0; }
+        #f03-ga { transform-origin: 680px 824px; }
+        #f03-gb { transform-origin: 1264px 819px; }
+        #f03-vg { position: absolute; inset: 0; transform-origin: 1283px 752px; }
+        #f03-mac { position: absolute; inset: 0; opacity: 0; background: #0A0A0A; transform-origin: 1283px 752px;
+          box-shadow: inset 0 0 0 5px #E85D26, inset 0 0 60px rgba(232, 93, 38, 0.35); overflow: hidden; }
+        #f03-mac svg { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+        #f03-wfx { position: absolute; inset: 0; pointer-events: none; }
+        /* v16: NOT PRACTICAL, slammed across the rig */
+        #f03-np { position: absolute; left: 24px; top: 128px; padding: 2px 20px 0; border: 8px solid var(--fire); opacity: 0;
+          font-family: "Barlow"; font-weight: 900; font-size: 100px; line-height: 0.92; letter-spacing: 0.01em; color: var(--fire);
+          white-space: nowrap; background: rgba(10, 10, 10, 0.5); text-shadow: 0 0 22px rgba(0, 0, 0, 0.9), 0 0 40px rgba(232, 93, 38, 0.45);
+          box-shadow: 0 0 40px rgba(232, 93, 38, 0.4), inset 0 0 30px rgba(232, 93, 38, 0.25); transform-origin: 50% 50%; }
+        #f03-np i { position: absolute; left: 0; right: 0; bottom: -34px; text-align: center; font-style: normal; font-family: "IBM Plex Mono";
+          font-weight: 600; font-size: 16px; letter-spacing: 0.26em; color: var(--fire); text-shadow: none; }
+        #f03-tl { transform-origin: 5.5% 16%; }   /* left lyric anchor */
+        #f03-tr { transform-origin: 55.5% 16%; }  /* right lyric anchor */
+
+        /* ---- midground: Plan A, the brute-force rig ---- */
+        #f03-plana { position: absolute; left: 92px; top: 636px; width: 808px; height: 376px; }
+        #f03-pshadow { position: absolute; left: 1%; right: -3%; bottom: -46px; height: 92px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0)); }
+        #f03-plate { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+        #f03-odo { position: absolute; left: 46px; top: 74px; display: flex; gap: 4px; }
+        .f03-drum { position: relative; width: 40px; height: 86px; overflow: hidden;
+          background: linear-gradient(90deg, #111111, #282826 50%, #111111); }
+        .f03-drum b { position: absolute; left: 0; top: 0; width: 100%; display: flex; flex-direction: column; text-align: center;
+          font-family: "IBM Plex Mono"; font-weight: 600; font-size: 50px; line-height: 86px; color: var(--cream); }
+        .f03-drum.f03-u b { color: var(--fire); }
+        .f03-drum::after { content: ""; position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0) 34%, rgba(240, 236, 229, 0.05) 50%, rgba(0, 0, 0, 0) 64%, rgba(0, 0, 0, 0.88)); }
+
+        #f03-divider { position: absolute; left: 960px; top: -40px; width: 1px; height: 1160px; background: #3a3a36; }
+
+        /* ---- midground: Plan B, drawer 0001 in its vault housing ---- */
+        #f03-cshadow { position: absolute; left: 980px; top: 930px; width: 700px; height: 110px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)); }
+        .f03-cont { position: absolute; inset: 0; transform: translateY(190px) scaleY(.8); transform-origin: 0 0; }
+        #f03-cage { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+        /* v13: the Plan B nameplate, a black engraved strip on the cage's bottom rail */
+        #f03-cagelbl { position: absolute; left: 1040px; top: 957px; padding: 3px 10px 2px; background: var(--ink);
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(240, 236, 229, 0.14);
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; line-height: 16px; letter-spacing: 0.12em;
+          color: var(--cream-muted); white-space: nowrap; }
+
+        #f03-drawer { position: absolute; left: 1066px; top: 720px; width: 400px; height: 200px; box-sizing: border-box;
+          border: 2px solid var(--fire); background: linear-gradient(180deg, #282826, #1A1A18 38%, #111111);
+          box-shadow: inset 0 2px 0 rgba(240, 236, 229, 0.22), inset 2px 0 0 rgba(240, 236, 229, 0.08), inset 0 -5px 0 rgba(0, 0, 0, 0.6),
+            inset -3px 0 0 rgba(0, 0, 0, 0.4), 0 18px 34px rgba(0, 0, 0, 0.55); }
+        #f03-holder { position: absolute; left: 22px; top: 7px; width: 236px; height: 44px; box-sizing: border-box;
+          border: 3px solid; border-color: #888880 #505048 #282826 #505048; background: #111111;
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.55); }
+        #f03-card { position: absolute; inset: 2px; background-color: var(--cream); background-size: 160px 60px;
+          box-shadow: inset 0 2px 2px rgba(17, 17, 17, 0.35); overflow: hidden; }
+        #f03-card b { position: absolute; left: 9px; top: 1px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 19px;
+          letter-spacing: 0.12em; color: var(--ink); }
+        #f03-card span { position: absolute; left: 10px; top: 23px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 9px;
+          letter-spacing: 0.12em; color: #5F5B54; white-space: nowrap; }
+        #f03-card svg { position: absolute; right: 7px; top: 4px; width: 40px; height: 28px; }
+        .f03-screw { position: absolute; width: 10px; height: 10px; border-radius: 50%;
+          background: radial-gradient(circle at 35% 30%, #888880, #505048 45%, #1A1A18);
+          box-shadow: 0 1px 0 rgba(240, 236, 229, 0.18), 0 -1px 1px rgba(0, 0, 0, 0.6); }
+        .f03-screw::after { content: ""; position: absolute; left: 1px; right: 1px; top: 4px; height: 2px; background: rgba(17, 17, 17, 0.85);
+          transform: rotate(var(--f03-a, 30deg)); }
+        #f03-lamp { position: absolute; right: 22px; top: 19px; width: 14px; height: 14px; border-radius: 50%; background: var(--fire);
+          box-shadow: 0 0 0 3px #282826, 0 0 0 4px #505048, 0 0 12px 4px rgba(232, 93, 38, 0.8), 0 0 34px 10px rgba(232, 93, 38, 0.35); }
+        #f03-micro { position: absolute; right: 48px; top: 19px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 10px;
+          letter-spacing: 0.16em; color: rgba(136, 136, 128, 0.85); white-space: nowrap; }
+        #f03-win { position: absolute; left: 22px; top: 72px; width: 352px; height: 54px; box-sizing: border-box; overflow: hidden;
+          border: 2px solid; border-color: #111111 #282826 #888880 #282826; background: #111111;
+          box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.9); }
+        #f03-hex { position: absolute; left: 12px; top: 3px; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 16px; line-height: 23px; letter-spacing: 0.08em; color: #888880; white-space: pre; opacity: 0.75; }
+        #f03-pull { position: absolute; left: 125px; top: 150px; width: 150px; height: 38px; }
+        #f03-pull i { position: absolute; top: 4px; width: 16px; height: 30px;
+          background: linear-gradient(90deg, #888880, #505048 40%, #1A1A18); box-shadow: 0 3px 4px rgba(0, 0, 0, 0.55); }
+        #f03-pull b { position: absolute; left: 6px; right: 6px; top: 9px; height: 13px;
+          background: linear-gradient(180deg, rgba(240, 236, 229, 0.8), #888880 18%, #505048 55%, #282826);
+          box-shadow: 0 7px 7px rgba(0, 0, 0, 0.6); }
+        .f03-pl { position: absolute; top: 164px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 10px; letter-spacing: 0.16em;
+          color: rgba(136, 136, 128, 0.85); white-space: nowrap; }
+        #f03-rake { position: absolute; inset: 0; pointer-events: none;
+          background: linear-gradient(118deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 34%, rgba(17, 17, 17, 0) 60%, rgba(17, 17, 17, 0.2)); }
+
+        .f03-ink { position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); opacity: 0; }
+
+        /* ---- type planes: chrome and lyrics ---- */
+        .f03-kicker { position: absolute; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 16px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); white-space: nowrap; }
+        .f03-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: var(--fire);
+          vertical-align: middle; margin-right: 16px; background: var(--f03-stub, var(--fire)); }
+        .f03-line { position: absolute; top: 9cqw; width: 40cqw; font-family: "Barlow"; display: flex; flex-direction: column;
+          align-items: flex-start; gap: 0.6cqw; transform-origin: 0 0; }
+        .f03-row { display: flex; flex-wrap: wrap; column-gap: 0.26em; font-weight: 800; font-size: 4.4cqw; line-height: 1.04;
+          letter-spacing: -0.02em; transform-origin: 0 100%; }
+        .f03-row.f03-big { font-weight: 900; font-size: 13cqw; line-height: 0.86; letter-spacing: -0.04em; margin: 0.3cqw 0 0.5cqw -0.5cqw; }
+        .f03-w { display: inline-block; position: relative; }
+        #f03-left { position: absolute; inset: 0; }
+        #f03-l4 { left: 5.5cqw; color: var(--cream); }
+        #f03-l4 .f03-big { color: var(--fire); }
+        #f03-slash { position: absolute; left: -5%; top: 66%; width: 110%; height: 0.075em; background: var(--fire); display: block;
+          transform-origin: 0 50%; }
+        #f03-l4 .f03-big .hr-g { position: relative; }
+        .f03-sh { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; color: var(--fire); }
+        #f03-l5 { left: calc(50% + 5.5cqw); color: var(--cream); }
+        #f03-l5 .f03-big { text-shadow: 3px 3px 0 rgba(120, 40, 10, 0.55), 6px 6px 0 rgba(120, 40, 10, 0.4), 9px 9px 0 rgba(120, 40, 10, 0.27),
+          12px 12px 0 rgba(120, 40, 10, 0.16), 26px 30px 36px rgba(80, 25, 5, 0.3); }
+
+        /* the archive's marker voice, on Plan A */
+        .f03-mark { position: absolute; font-family: "Caveat Brush"; font-size: 60px; line-height: 1; color: var(--fire); white-space: nowrap;
+          transform-origin: 0 100%; }
+        .f03-mark sup { font-size: 0.55em; vertical-align: 0.75em; line-height: 0; }
+        #f03-markpath { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+
+        /* ---- v14 H1: "keep" → the vault ---- */
+        #f03-gl { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; visibility: hidden; }
+        #f03-fx { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+        /* the keep shot: drawer-face coordinates (face centre 960, 1374); its transform follows the 3D drawer 0001 */
+        #f03-ks { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; opacity: 0;
+          will-change: transform; }
+        #f03-pkick { left: 5.5cqw; opacity: 0; }
+        #f03-kline { position: absolute; left: 5.5cqw; top: 150px; font-family: "Barlow"; color: var(--cream); }
+        #f03-arch { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+        /* the copy of the letter (01's envelope) */
+        #f03-envc, #f03-envg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #f03-env { position: absolute; left: 600px; top: 428px; width: 860px; height: 538px; transform-origin: 50% 100%; }
+        #f03-envsh { position: absolute; left: 3%; right: 3%; bottom: -34px; height: 56px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); }
+        #f03-ecard { position: absolute; inset: 0; background-color: var(--cream); background-size: 288px 180px; overflow: hidden;
+          box-shadow: inset 0 2px 0 rgba(240, 236, 229, 0.9), inset 0 -3px 0 rgba(110, 100, 90, 0.35), 0 40px 80px rgba(0, 0, 0, 0.5),
+            0 6px 14px rgba(0, 0, 0, 0.35); }
+        #f03-eflap { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #f03-erake { position: absolute; inset: 0;
+          background: linear-gradient(118deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 36%, rgba(17, 17, 17, 0) 58%, rgba(17, 17, 17, 0.16)); }
+        #f03-eseal { position: absolute; left: 358px; top: 120px; width: 144px; height: 144px; overflow: visible; }
+        /* KEEP: a rubber-stamp impression in fire ink, pressed into the paper */
+        #f03-stk { position: absolute; left: 96px; top: 282px; padding: 20px 38px 10px; border: 13px solid #C8481A;
+          font-family: "Barlow"; font-weight: 900; font-size: 200px; line-height: 0.86; letter-spacing: 0.035em; color: #C8481A;
+          white-space: nowrap; mix-blend-mode: multiply; opacity: 0; transform-origin: 50% 50%;
+          -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+        #f03-stk::before { content: ""; position: absolute; inset: 7px; border: 4px solid #C8481A; }
+        .f03-dot { position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: #C8481A;
+          opacity: 0; mix-blend-mode: multiply; }
+        /* "you": the luggage tag, tied to the envelope's corner, and the HELD stamp */
+        #f03-tagsc { position: absolute; left: 1424px; top: 446px; width: 0; height: 0; transform: scale(0.8); transform-origin: 0 0; }
+        #f03-tagp { position: absolute; left: 0; top: 0; width: 0; height: 0; opacity: 0; transform-origin: 0 0; }
+        #f03-string { position: absolute; left: -2px; top: 0; width: 4px; height: 128px; border-radius: 2px;
+          background: linear-gradient(90deg, #a39b8c, #F0ECE5, #6e675b); }
+        #f03-loop { position: absolute; left: -16px; top: -24px; width: 32px; height: 32px; border-radius: 50%; box-sizing: border-box;
+          border: 4px solid #d9d2c4; border-bottom-color: transparent; }
+        #f03-ytag { position: absolute; left: -110px; top: 90px; width: 640px; height: 230px; transform-origin: 110px 36px;
+          filter: drop-shadow(0 22px 18px rgba(0, 0, 0, 0.6)); }
+        #f03-ytagb { position: absolute; inset: 0; background-color: var(--cream); background-size: 160px 60px;
+          clip-path: polygon(0 34px, 34px 0, 100% 0, 100% 100%, 34px 100%, 0 calc(100% - 34px)); }
+        #f03-ytagb::before { content: ""; position: absolute; inset: 0;
+          background: linear-gradient(160deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 40%, rgba(17, 17, 17, 0.1)); }
+        #f03-yword { position: absolute; left: 150px; top: 6px; font-family: "Barlow"; font-weight: 900; font-size: 170px; line-height: 1;
+          letter-spacing: -0.035em; color: var(--ink); }
+        #f03-ymeta { position: absolute; left: 154px; bottom: 16px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 15px;
+          letter-spacing: 0.16em; color: #5F5B54; white-space: nowrap; }
+        #f03-yeye { position: absolute; left: 92px; top: 18px; width: 36px; height: 36px; border-radius: 50%; box-sizing: border-box;
+          border: 7px solid #888880; background: #2a2825; box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.6); }
+        #f03-ybar { position: absolute; left: 34px; top: 74px; width: 24px; height: 130px; }
+        #f03-stamp { position: absolute; left: 418px; top: 52px; padding: 4px 14px 2px; border: 6px solid var(--fire);
+          font-family: "Barlow"; font-weight: 900; font-size: 70px; line-height: 1; letter-spacing: 0.02em; color: var(--fire);
+          opacity: 0; mix-blend-mode: multiply; }
+        #f03-stampsub { position: absolute; left: 0; right: 0; bottom: -24px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 13px; letter-spacing: 0.3em; color: var(--fire); }
+        /* drawer 0001's face: open (scale 1.015) its top edge is the ground line, y 970 */
+        #f03-face { position: absolute; left: 340px; top: 975.5px; width: 1240px; height: 797px; box-sizing: border-box;
+          transform: scale(1.015); transform-origin: 50% 50%; border: 2px solid #050505;
+          background: linear-gradient(180deg, #2a2925 0, #1d1c19 9%, #161513 45%, #0f0f0e 100%);
+          box-shadow: inset 0 3px 0 rgba(240, 236, 229, 0.34), inset 3px 0 0 rgba(240, 236, 229, 0.08), inset 0 -8px 0 rgba(0, 0, 0, 0.6),
+            inset -4px 0 0 rgba(0, 0, 0, 0.45); }
+        #f03-fgap { position: absolute; left: -2px; right: -2px; top: -40px; height: 40px;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.85)); }
+        #f03-fholder { position: absolute; left: 64px; top: 64px; width: 470px; height: 196px; box-sizing: border-box;
+          border: 6px solid; border-color: #888880 #505048 #282826 #505048; background: #111111; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.55); }
+        #f03-fcard { position: absolute; inset: 4px; background-color: var(--cream); background-size: 288px 180px;
+          box-shadow: inset 0 3px 3px rgba(17, 17, 17, 0.35); }
+        #f03-fcard b { position: absolute; left: 30px; top: 4px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 150px; line-height: 1;
+          letter-spacing: 0.02em; color: #111111; }
+        #f03-flamp { position: absolute; left: 1010px; top: 167px; width: 64px; height: 64px; border-radius: 50%; background: #3a1608;
+          box-shadow: 0 0 0 7px #1d1c19, 0 0 0 9px #505048; }
+        #f03-flamp i { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 40% 36%, #FFF1E4, #FFB98F 30%, #E85D26 62%);
+          box-shadow: 0 0 22px 8px rgba(232, 93, 38, 0.85), 0 0 90px 30px rgba(232, 93, 38, 0.35); opacity: 0; }
+        #f03-fhandle { position: absolute; left: 330px; top: 540px; width: 580px; height: 92px; }
+        #f03-fhandle i { position: absolute; top: 8px; width: 40px; height: 76px;
+          background: linear-gradient(90deg, #888880, #505048 40%, #1A1A18); box-shadow: 0 5px 8px rgba(0, 0, 0, 0.6); }
+        #f03-fhandle b { position: absolute; left: 14px; right: 14px; top: 22px; height: 34px;
+          background: linear-gradient(180deg, rgba(240, 236, 229, 0.85), #888880 18%, #505048 55%, #1d1c19);
+          box-shadow: 0 16px 16px rgba(0, 0, 0, 0.6); }
+        #f03-face .f03-screw { width: 18px; height: 18px; }
+        #f03-face .f03-screw::after { top: 8px; height: 3px; }
+        #f03-frake { position: absolute; inset: 0;
+          background: linear-gradient(118deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 34%, rgba(17, 17, 17, 0) 60%, rgba(17, 17, 17, 0.25)); }
+        /* the globe's tag, following lamp 0001 on the way out */
+        #f03-dtag { position: absolute; left: 0; top: 0; display: flex; align-items: center; opacity: 0; will-change: transform; }
+        #f03-dtag i { display: block; width: 64px; height: 1px; background: var(--fire); }
+        #f03-dtag span { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 18px; letter-spacing: 0.14em; color: var(--cream);
+          background: var(--ink); border: 1px solid var(--fire); padding: 7px 10px 6px 12px; white-space: nowrap; }
+      </style>
+
+      <div data-hf-id="hf-vzbl" id="root" data-composition-id="03-keep" data-width="1920" data-height="1080" data-duration="10.15">
+        <svg data-hf-id="hf-p3r6" width="0" height="0" style="position: absolute" aria-hidden="true"><defs data-hf-id="hf-3k68" id="f03-defs">
+          <linearGradient data-hf-id="hf-vkrz" id="f03-frameface" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-f9lk" stop-color="#888880"/><stop data-hf-id="hf-j3k6" offset=".22" stop-color="#505048"/><stop data-hf-id="hf-9w3h" offset="1" stop-color="#111111"/></linearGradient>
+          <linearGradient data-hf-id="hf-fvk8" id="f03-frameside" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-56gm" stop-color="#111111"/><stop data-hf-id="hf-amt4" offset=".7" stop-color="#1A1A18"/><stop data-hf-id="hf-ppkn" offset="1" stop-color="#505048"/></linearGradient>
+          <linearGradient data-hf-id="hf-8h2e" id="f03-trapface" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-bfzk" stop-color="#888880"/><stop data-hf-id="hf-xvyl" offset=".16" stop-color="#505048"/><stop data-hf-id="hf-04i9" offset="1" stop-color="#111111"/></linearGradient>
+          <linearGradient data-hf-id="hf-u8mu" id="f03-shadeg" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-rvrh" stop-color="#141311"/><stop data-hf-id="hf-9xy8" offset=".3" stop-color="#4a4741"/><stop data-hf-id="hf-6rtn" offset=".55" stop-color="#26241f"/><stop data-hf-id="hf-sujm" offset="1" stop-color="#0A0A0A"/></linearGradient>
+          <radialGradient data-hf-id="hf-7yrm" id="f03-rivet" cx=".35" cy=".3" r=".75"><stop data-hf-id="hf-a92h" stop-color="#888880"/><stop data-hf-id="hf-gmth" offset=".5" stop-color="#505048"/><stop data-hf-id="hf-1bfc" offset="1" stop-color="#111111"/></radialGradient>
+        </defs></svg>
+        <div data-hf-id="hf-4g71" id="f03-world">
+          <div id="f03-ga" class="f03-grp">
+          <div data-hf-id="hf-gcp7" class="hr-layer" id="f03-mida" data-depth="0.62">
+            <div data-hf-id="hf-uuf8" id="f03-plana" data-layout-ignore>
+              <div data-hf-id="hf-ltsh" id="f03-pshadow"></div>
+              <svg data-hf-id="hf-7ky2" id="f03-plate" viewBox="0 0 808 376" aria-hidden="true"></svg>
+              <div data-hf-id="hf-lul9" id="f03-odo"></div>
+            </div>
+            <div data-hf-id="hf-pezd" id="f03-divider" data-layout-ignore></div>
+            </div>
+          <div data-hf-id="hf-zckj" class="hr-layer" id="f03-markl" data-depth="0.62" data-layout-ignore>
+            <svg data-hf-id="hf-3y65" id="f03-markpath" viewBox="0 0 1920 1080" aria-hidden="true">
+              <path data-hf-id="hf-59by" id="f03-arrow" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" d="M560 628 C 520 650, 492 668, 462 704 M462 704 l 3 -22 M462 704 l 21 -6" fill="none" stroke="#E85D26" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <div data-hf-id="hf-jrqg" class="f03-mark" id="f03-mark1" style="left: 520px; top: 548px; transform: rotate(-4deg); clip-path: inset(-30% 100% -40% -5%);">(not happening)</div>
+          </div>
+          <div data-hf-id="hf-b90i" class="hr-layer" id="f03-tl" data-depth="0.85">
+            <div data-hf-id="hf-ix0k" id="f03-left">
+              <div data-hf-id="hf-oe2c" class="f03-line" id="f03-l4"></div>
+            </div>
+          </div>
+          </div>
+          <div id="f03-gb" class="f03-grp">
+            <div data-hf-id="hf-gcp8" class="hr-layer" id="f03-midb" data-depth="0.62">
+            <div data-hf-id="hf-uox1" id="f03-cshadow" data-layout-ignore></div>
+            <div data-hf-id="hf-wk9f" class="f03-cont" data-layout-ignore>
+              <svg data-hf-id="hf-geb7" id="f03-cage" viewBox="0 0 1920 1080" aria-hidden="true">
+                <path data-hf-id="hf-pnf8" d="M1012 626 L1094 580 H1602 L1520 626 Z" fill="url(#f03-frameface)" stroke="#888880" stroke-width="2"/>
+                <path data-hf-id="hf-pzr7" d="M1520 626 L1602 580 V944 L1520 990 Z" fill="url(#f03-frameside)" stroke="#505048" stroke-width="2"/>
+                <path data-hf-id="hf-irvd" d="M1012 626 L1094 580 V944 L1012 990 Z" fill="#1A1A18" stroke="#505048" stroke-width="2"/>
+                <path data-hf-id="hf-zywp" d="M1012 626 H1520 V990 H1012 Z M1044 656 V956 H1488 V656 Z" fill="url(#f03-frameface)" fill-rule="evenodd" stroke="#888880" stroke-width="2"/>
+                <path data-hf-id="hf-xb9x" d="M1044 656 H1488 V956 H1044 Z" fill="#111111" stroke="#505048" stroke-width="3"/>
+                <path data-hf-id="hf-gk8o" d="M1044 656 L1080 679 H1466 V934 L1488 956" fill="none" stroke="#E85D26" stroke-width="3" opacity=".65"/>
+                <path data-hf-id="hf-tjwk" d="M1016 630 H1515 M1016 631 V986" fill="none" stroke="#F0ECE5" stroke-width="2" opacity=".48"/>
+                <path data-hf-id="hf-u6vz" d="M1046 954 H1486 V658" fill="none" stroke="#F0ECE5" stroke-width="1.5" opacity=".18"/>
+                <path data-hf-id="hf-i879" d="M1534 652 L1588 621 V914 L1534 944 Z" fill="#111111" stroke="#505048" stroke-width="2"/>
+                <path data-hf-id="hf-vh5y" d="M1548 676 L1576 660 M1548 755 L1576 739 M1548 834 L1576 818 M1548 913 L1576 897" stroke="#888880" stroke-width="7" opacity=".5"/>
+                <path data-hf-id="hf-yiql" d="M1100 588 H1590 M1110 596 H1580" stroke="#111111" stroke-width="1.5" opacity=".35"/>
+                <circle data-hf-id="hf-2sqd" cx="1028" cy="641" r="6" fill="url(#f03-rivet)"/><circle data-hf-id="hf-654y" cx="1504" cy="641" r="6" fill="url(#f03-rivet)"/>
+                <circle data-hf-id="hf-l5il" cx="1028" cy="973" r="6" fill="url(#f03-rivet)"/><circle data-hf-id="hf-04wi" cx="1504" cy="973" r="6" fill="url(#f03-rivet)"/>
+                <path data-hf-id="hf-y8xt" d="M1040 970 H1492 L1574 924" fill="none" stroke="#111111" stroke-width="12"/>
+              </svg>
+            </div>
+            <div data-hf-id="hf-jhuy" id="f03-cagelbl" data-layout-ignore>PLAN B · KEEP IT · ≈ $0.001/GB·MONTH</div>
+            <div data-hf-id="hf-8b65" id="f03-drawer" data-layout-ignore>
+              <div data-hf-id="hf-6cll" id="f03-holder"><div data-hf-id="hf-ldcp" id="f03-card"><b data-hf-id="hf-15wh">OBJ 0001</b><span data-hf-id="hf-p7wq">A. · 09.03.2021</span><svg data-hf-id="hf-p4rp" viewBox="0 0 40 28" id="f03-cbar"></svg></div></div>
+              <i data-hf-id="hf-7nsx" class="f03-screw" style="left: 6px; top: 6px; --f03-a: 35deg"></i>
+              <i data-hf-id="hf-h5pr" class="f03-screw" style="right: 6px; top: 6px; --f03-a: -20deg"></i>
+              <i data-hf-id="hf-pr1x" class="f03-screw" style="left: 6px; bottom: 6px; --f03-a: 80deg"></i>
+              <i data-hf-id="hf-07ld" class="f03-screw" style="right: 6px; bottom: 6px; --f03-a: 10deg"></i>
+              <div data-hf-id="hf-dmge" id="f03-micro">TLS 1.3</div>
+              <div data-hf-id="hf-vm9x" id="f03-lamp"></div>
+              <div data-hf-id="hf-uwov" id="f03-win"><div data-hf-id="hf-1vpe" id="f03-hex"></div></div>
+              <div data-hf-id="hf-tjdr" class="f03-pl" style="left: 24px">2,048 B</div>
+              <div data-hf-id="hf-zv2h" class="f03-pl" style="right: 24px">RET ∞</div>
+              <div data-hf-id="hf-8hra" id="f03-pull"><i data-hf-id="hf-1e40" style="left: 0"></i><i data-hf-id="hf-scr1" style="right: 0"></i><b data-hf-id="hf-xujp"></b></div>
+              <div data-hf-id="hf-oedg" id="f03-rake"></div>
+            </div>
+          </div>
+          <div data-hf-id="hf-j58k" class="hr-layer" id="f03-tr" data-depth="0.85">
+            <div data-hf-id="hf-o9ln" id="f03-right">
+              <div data-hf-id="hf-p5q5" class="f03-line" id="f03-l5"></div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div id="f03-vg" data-layout-ignore>
+        <canvas data-hf-id="hf-osh8" id="f03-gl" width="1920" height="1080" data-layout-ignore></canvas>
+        <canvas data-hf-id="hf-nzfd" id="f03-fx" width="1920" height="1080" data-layout-ignore></canvas>
+        </div>
+        <div id="f03-mac" data-layout-ignore></div>
+        <div data-hf-id="hf-n4it" id="f03-ks">
+          <div data-hf-id="hf-cdb0" id="f03-kline"></div>
+          <div data-hf-id="hf-k92j" id="f03-envc">
+          <div data-hf-id="hf-5fgv" id="f03-envg">
+            <div data-hf-id="hf-h314" id="f03-env">
+              <div data-hf-id="hf-qiym" id="f03-envsh" data-layout-ignore></div>
+              <div data-hf-id="hf-nvch" id="f03-ecard" data-layout-ignore>
+                <svg data-hf-id="hf-pyzn" id="f03-eflap" viewBox="0 0 576 360" preserveAspectRatio="none" aria-hidden="true">
+                  <defs data-hf-id="hf-mh0t">
+                    <linearGradient data-hf-id="hf-t60g" id="f03-gtop" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-aa8g" offset="0" stop-color="#111" stop-opacity="0.015" /><stop data-hf-id="hf-6b9g" offset="1" stop-color="#111" stop-opacity="0.085" /></linearGradient>
+                    <linearGradient data-hf-id="hf-rjc0" id="f03-gbot" x1="0" y1="1" x2="0" y2="0"><stop data-hf-id="hf-frap" offset="0" stop-color="#111" stop-opacity="0.07" /><stop data-hf-id="hf-up33" offset="1" stop-color="#111" stop-opacity="0" /></linearGradient>
+                    <linearGradient data-hf-id="hf-bal7" id="f03-gl2" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-ezmw" offset="0" stop-color="#111" stop-opacity="0.06" /><stop data-hf-id="hf-8olb" offset="1" stop-color="#111" stop-opacity="0" /></linearGradient>
+                    <linearGradient data-hf-id="hf-0aav" id="f03-gr2" x1="1" y1="0" x2="0" y2="0"><stop data-hf-id="hf-4366" offset="0" stop-color="#111" stop-opacity="0.075" /><stop data-hf-id="hf-8aaa" offset="1" stop-color="#111" stop-opacity="0" /></linearGradient>
+                    <filter data-hf-id="hf-9lzt" id="f03-esoft" x="-10%" y="-10%" width="120%" height="140%"><feGaussianBlur data-hf-id="hf-ehxa" stdDeviation="3.5" /></filter>
+                  </defs>
+                  <path data-hf-id="hf-cr3b" d="M0 0 L250 190 L0 360 Z" fill="url(#f03-gl2)" />
+                  <path data-hf-id="hf-nvm3" d="M576 0 L326 190 L576 360 Z" fill="url(#f03-gr2)" />
+                  <path data-hf-id="hf-xn8d" d="M0 360 L246 174 Q288 150 330 174 L576 360 Z" fill="url(#f03-gbot)" />
+                  <path data-hf-id="hf-buc3" d="M0 360 L246 174 Q288 150 330 174 L576 360" fill="none" stroke="rgba(17,17,17,0.10)" stroke-width="1.5" />
+                  <path data-hf-id="hf-2371" d="M2 360 L248 178 M574 360 L328 178" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
+                  <path data-hf-id="hf-i4cp" d="M0 2 L288 140 L576 2" fill="none" stroke="rgba(17,17,17,0.30)" stroke-width="7" filter="url(#f03-esoft)" />
+                  <path data-hf-id="hf-d1gq" d="M0 0 L288 130 L576 0 Z" fill="url(#f03-gtop)" />
+                  <path data-hf-id="hf-wukg" d="M0 0 L288 130 L576 0" fill="none" stroke="rgba(17,17,17,0.24)" stroke-width="1.6" />
+                  <path data-hf-id="hf-b7lu" d="M8 0 L288 123 L568 0" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1" />
+                  <path data-hf-id="hf-iwmt" d="M0 1.2 H576" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" />
+                  <text data-hf-id="hf-xer9" x="24" y="343" font-family="IBM Plex Mono" font-weight="500" font-size="9.5" letter-spacing="2" fill="rgba(17,17,17,0.72)">A. · TUE 09.03.2021 · 14:02 · COPY</text>
+                  <g data-hf-id="hf-fpmi" id="f03-esort"></g>
+                </svg>
+                <div data-hf-id="hf-iceb" id="f03-erake"></div>
+                <svg data-hf-id="hf-p2q8" id="f03-eseal" viewBox="-64 -64 128 128" aria-hidden="true">
+                  <defs data-hf-id="hf-vl9d">
+                    <radialGradient data-hf-id="hf-m3e4" id="f03-wg" cx="0.38" cy="0.34" r="0.78"><stop data-hf-id="hf-9ji3" offset="0" stop-color="#F68C5C" /><stop data-hf-id="hf-ecoc" offset="0.42" stop-color="#E85D26" /><stop data-hf-id="hf-w92l" offset="0.82" stop-color="#C94A1C" /><stop data-hf-id="hf-830a" offset="1" stop-color="#A63B14" /></radialGradient>
+                    <radialGradient data-hf-id="hf-yxvz" id="f03-wr" cx="0.5" cy="0.5" r="0.5"><stop data-hf-id="hf-7xzq" offset="0.82" stop-color="#B9431A" /><stop data-hf-id="hf-13mw" offset="1" stop-color="#8E3010" /></radialGradient>
+                  </defs>
+                  <path data-hf-id="hf-h35m" id="f03-erim" fill="url(#f03-wr)" />
+                  <circle data-hf-id="hf-3y41" r="50" fill="url(#f03-wg)" />
+                  <circle data-hf-id="hf-cvyr" r="43.5" fill="none" stroke="rgba(255,206,176,0.38)" stroke-width="1.2" transform="translate(0.8 0.8)" />
+                  <circle data-hf-id="hf-ejau" r="41" fill="rgba(17,17,17,0.06)" stroke="rgba(17,17,17,0.30)" stroke-width="2.4" />
+                  <g data-hf-id="hf-na6t" id="f03-ebeads"></g>
+                  <text data-hf-id="hf-3vod" x="1.6" y="15.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(17,17,17,0.36)">a.</text>
+                  <text data-hf-id="hf-rrqi" x="-1.1" y="12.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(255,214,188,0.5)">a.</text>
+                  <text data-hf-id="hf-av18" x="0" y="13.8" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="#D4521E">a.</text>
+                  <path data-hf-id="hf-yf3i" d="M-38 -24 A44 44 0 0 1 -8 -45" fill="none" stroke="rgba(255,236,224,0.6)" stroke-width="3.5" stroke-linecap="round" />
+                  <path data-hf-id="hf-4l3v" d="M30 34 A44 44 0 0 1 12 44" fill="none" stroke="rgba(255,236,224,0.22)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div data-hf-id="hf-cx0k" id="f03-stk" data-layout-allow-overlap>KEEP</div>
+              <div data-hf-id="hf-pyr2" id="f03-dots" data-layout-ignore></div>
+            </div>
+            <div data-hf-id="hf-0hsv" id="f03-tagsc">
+              <div data-hf-id="hf-oiyn" id="f03-tagp">
+                <div data-hf-id="hf-fjgt" id="f03-string" data-layout-ignore></div><div data-hf-id="hf-x9ik" id="f03-loop" data-layout-ignore></div>
+                <div data-hf-id="hf-7hq8" id="f03-ytag">
+                  <div data-hf-id="hf-wyia" id="f03-ytagb"><svg data-hf-id="hf-nufy" viewBox="0 0 24 130" id="f03-ybar" aria-hidden="true"></svg><span data-hf-id="hf-i3ai" id="f03-yword" data-layout-allow-overlap>you</span><span data-hf-id="hf-b2dw" id="f03-ymeta">SENDER A. · RETENTION INDEFINITE</span>
+                    <div data-hf-id="hf-e3yw" id="f03-stamp" aria-hidden="true" data-layout-allow-overlap>HELD<div data-hf-id="hf-cmvl" id="f03-stampsub">NOT FOR RELEASE</div></div></div>
+                  <i data-hf-id="hf-t9mb" id="f03-yeye"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+          <div data-hf-id="hf-r1e5" id="f03-face" data-layout-ignore>
+            <div data-hf-id="hf-6ict" id="f03-fgap"></div>
+            <div data-hf-id="hf-kwb1" id="f03-fholder"><div data-hf-id="hf-0cn9" id="f03-fcard"><b data-hf-id="hf-caua">0001</b></div></div>
+            <i data-hf-id="hf-4l0r" class="f03-screw" style="left: 12px; top: 12px; --f03-a: 35deg"></i>
+            <i data-hf-id="hf-ecd5" class="f03-screw" style="right: 12px; top: 12px; --f03-a: -20deg"></i>
+            <i data-hf-id="hf-ecfx" class="f03-screw" style="left: 12px; bottom: 12px; --f03-a: 80deg"></i>
+            <i data-hf-id="hf-99sp" class="f03-screw" style="right: 12px; bottom: 12px; --f03-a: 10deg"></i>
+            <div data-hf-id="hf-g4w9" id="f03-flamp"><i data-hf-id="hf-t267" class="hr-glowbox"></i></div>
+            <div data-hf-id="hf-1tgx" id="f03-fhandle"><i data-hf-id="hf-bts8" style="left: 0"></i><i data-hf-id="hf-b54x" style="right: 0"></i><b data-hf-id="hf-ey49"></b></div>
+            <div data-hf-id="hf-f5ps" id="f03-frake"></div>
+          </div>
+          <svg data-hf-id="hf-va66" id="f03-arch" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg>
+        </div>
+        <div data-hf-id="hf-60tm" id="f03-dtag" data-layout-ignore><i data-hf-id="hf-wt6k"></i><span data-hf-id="hf-sh7j">DRAWER 0001</span></div>
+        <div data-hf-id="hf-i7wo" class="f03-kicker" id="f03-pkick">PLAN B · KEEP IT · ≈ $0.001/GB·MONTH</div>
+        <div id="f03-wfx" data-layout-ignore></div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/archie.js"></script>
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+
+        (() => {
+          const T0 = 23.656, DUR = 10.15;
+          const L = (t) => +(t - T0).toFixed(3);
+          const LINES = {
+            l4: [["I", 23.656], ["don't", 23.9], ["have", 24.16], ["to", 24.34], ["break", 24.54, 1], ["you", 25.58]],
+            l5: [["I", 27.133], ["only", 27.44], ["have", 27.592], ["to", 28.02]],
+          };
+          const YOU = L(29.24), NOTE = L(26.05);
+          const BASS = L(24.584), SLASH = L(25.58), FLIP = L(28.091), HELD = L(30.12), G2 = L(31.943);
+          const FLOOD0 = FLIP - 0.24;
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const NS = "http://www.w3.org/2000/svg";
+          const S = (parent, tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+
+          // ---- static build ---------------------------------------------------------------------------------
+          // paper: seeded fibre baked once (label card, HELD tag)
+          const paper = (() => {
+            const c = document.createElement("canvas"); c.width = 160; c.height = 60;
+            const x = c.getContext("2d"), r = HR.rng(3301);
+            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 160, 60);
+            const img = x.getImageData(0, 0, 160, 60);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 16; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+            x.putImageData(img, 0, 0);
+            x.strokeStyle = "rgba(110,100,90,0.12)"; x.lineWidth = 0.6;
+            for (let k = 0; k < 40; k++) { const px = r() * 160, py = r() * 60, a = r() * Math.PI, l = 4 + r() * 12;
+              x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.4); x.stroke(); }
+            return `url(${c.toDataURL("image/png")})`;
+          })();
+          $("f03-card").style.backgroundImage = paper;
+          $("f03-ytagb").style.backgroundImage = paper;
+          // barcodes in fire ink
+          const bars = (svgEl, seed, w, h, vertical) => {
+            const r = HR.rng(seed);
+            for (let p = 0; p < (vertical ? h : w);) {
+              const s = 1 + ((r() * 3) | 0);
+              S(svgEl, "rect", vertical ? { x: 0, y: p, width: w, height: s, fill: "rgba(232,93,38,0.85)" } : { x: p, y: 0, width: s, height: h, fill: "rgba(232,93,38,0.85)" });
+              p += s + 1 + ((r() * 3) | 0);
+            }
+          };
+          bars($("f03-cbar"), 3302, 40, 28, false);
+          bars($("f03-ybar"), 3303, 24, 130, true);
+
+          // ---- Plan A: the brute-force rig (steel plate, tries odometer, combination dial) -------------------------
+          const plate = $("f03-plate");
+          S(plate, "defs", {}).innerHTML =
+            '<linearGradient id="f03-pg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3a3a36"/><stop offset=".35" stop-color="#282826"/><stop offset=".8" stop-color="#1A1A18"/><stop offset="1" stop-color="#111111"/></linearGradient>' +
+            '<linearGradient id="f03-bz" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#888880"/><stop offset=".3" stop-color="#505048"/><stop offset=".7" stop-color="#282826"/><stop offset="1" stop-color="#111111"/></linearGradient>' +
+            '<radialGradient id="f03-face" cx=".4" cy=".35" r=".7"><stop stop-color="#282826"/><stop offset=".6" stop-color="#1A1A18"/><stop offset="1" stop-color="#111111"/></radialGradient>' +
+            '<radialGradient id="f03-knob" cx=".36" cy=".3" r=".8"><stop stop-color="#505048"/><stop offset=".55" stop-color="#282826"/><stop offset="1" stop-color="#111111"/></radialGradient>' +
+            '<radialGradient id="f03-cap" cx=".35" cy=".3" r=".8"><stop stop-color="#888880"/><stop offset=".5" stop-color="#505048"/><stop offset="1" stop-color="#1A1A18"/></radialGradient>' +
+            '<radialGradient id="f03-gloss" cx=".5" cy=".5" r=".5"><stop stop-color="#F0ECE5" stop-opacity=".09"/><stop offset="1" stop-color="#F0ECE5" stop-opacity="0"/></radialGradient>' +
+            '<linearGradient id="f03-prake" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF" stop-opacity=".09"/><stop offset=".38" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".62" stop-color="#111111" stop-opacity="0"/><stop offset="1" stop-color="#111111" stop-opacity=".3"/></linearGradient>' +
+            '<filter id="f03-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter>';
+          S(plate, "rect", { x: 0, y: 0, width: 808, height: 376, fill: "url(#f03-pg)" });
+          S(plate, "path", { d: "M1 375 V1 H807", fill: "none", stroke: "rgba(240,236,229,0.32)", "stroke-width": 2 });
+          S(plate, "path", { d: "M807 1 V375 H1", fill: "none", stroke: "rgba(0,0,0,0.7)", "stroke-width": 2 });
+          S(plate, "rect", { x: 10, y: 10, width: 788, height: 356, fill: "none", stroke: "rgba(0,0,0,0.45)", "stroke-width": 1.5 });
+          S(plate, "path", { d: "M11.5 364.5 H796.5 V11.5", fill: "none", stroke: "rgba(240,236,229,0.12)", "stroke-width": 1 });
+          [[22, 22], [786, 22], [22, 354], [786, 354]].forEach(([cx, cy], i) => {
+            S(plate, "circle", { cx, cy, r: 8, fill: "url(#f03-cap)", stroke: "rgba(0,0,0,0.6)", "stroke-width": 1 });
+            S(plate, "path", { d: `M${cx - 5} ${cy} H${cx + 5}`, stroke: "#111111", "stroke-width": 2, transform: `rotate(${20 + i * 37} ${cx} ${cy})` });
+          });
+          const eng = (x, y, size, text, o = {}) => S(plate, "text", Object.assign({ x, y, fill: "rgba(136,136,128,0.9)", "font-family": "IBM Plex Mono",
+            "font-weight": 500, "font-size": size, "letter-spacing": 2.2 }, o), text);
+          // v13: the plan's own nameplate engraving (header and footer of the plate)
+          const PLBL = { fill: "rgba(240,236,229,0.66)", "font-weight": 600, "letter-spacing": 1.6 };
+          eng(38, 50, 14, "PLAN A · BREAK IT · X25519", PLBL);
+          // odometer housing: a recess with a lip
+          S(plate, "rect", { x: 36, y: 64, width: 324, height: 106, fill: "#111111" });
+          S(plate, "path", { d: "M36 170 V64 H360", fill: "none", stroke: "rgba(0,0,0,0.85)", "stroke-width": 3 });
+          S(plate, "path", { d: "M36 171 H361 V64", fill: "none", stroke: "rgba(240,236,229,0.22)", "stroke-width": 1.5 });
+          const fields = [["EXCHANGE", "X25519"], ["TARGET", "OBJ 0001 · A."], ["ATTACK", "DISCRETE LOG"], ["FOUND", "0"]];
+          fields.forEach(([k, v], i) => {
+            const y = 206 + i * 36;
+            eng(38, y, 12, k);
+            S(plate, "text", { x: 160, y: y + 1, fill: i === 3 ? "#E85D26" : "rgba(240,236,229,0.72)", "font-family": "IBM Plex Mono", "font-weight": 600,
+              "font-size": 18, "letter-spacing": 1.4 }, v);
+            S(plate, "path", { d: `M38 ${y + 13} H400`, stroke: "rgba(0,0,0,0.6)", "stroke-width": 1.5 });
+            S(plate, "path", { d: `M38 ${y + 14.5} H400`, stroke: "rgba(240,236,229,0.08)", "stroke-width": 1 });
+          });
+          // an unlit MATCH lamp beside FOUND: it never comes on
+          S(plate, "circle", { cx: 300, cy: 308, r: 9, fill: "#1A1A18", stroke: "#505048", "stroke-width": 3 });
+          S(plate, "circle", { cx: 298, cy: 306, r: 3, fill: "rgba(240,236,229,0.12)" });
+          eng(318, 313, 13, "MATCH");
+          eng(38, 356, 13, "CLASSICAL ATTACK: NOT PRACTICAL", Object.assign({}, PLBL, { "letter-spacing": 1.2 }));
+
+          // the combination dial
+          const DX = 588, DY = 188;
+          const dial = S(plate, "g", { transform: `translate(${DX} ${DY})` });
+          S(dial, "circle", { cx: 10, cy: 16, r: 170, fill: "rgba(0,0,0,0.6)", filter: "url(#f03-soft)" });
+          S(dial, "circle", { r: 168, fill: "url(#f03-bz)" });
+          const knurl = S(dial, "g", {});
+          for (let i = 0; i < 160; i++) {
+            const a = (i / 160) * Math.PI * 2, c = Math.cos(a), s = Math.sin(a);
+            S(knurl, "path", { d: `M${(c * 157).toFixed(1)} ${(s * 157).toFixed(1)} L${(c * 167).toFixed(1)} ${(s * 167).toFixed(1)}`,
+              stroke: i % 2 ? "rgba(0,0,0,0.55)" : "rgba(240,236,229,0.16)", "stroke-width": 2.2 });
+          }
+          S(dial, "circle", { r: 153, fill: "none", stroke: "rgba(240,236,229,0.22)", "stroke-width": 1.2 });
+          S(dial, "circle", { r: 151, fill: "#111111" });
+          const rot = S(dial, "g", { id: "f03-dialrot" });
+          S(rot, "circle", { r: 149, fill: "url(#f03-face)" });
+          for (let i = 0; i < 100; i++) {
+            const a = (i / 100) * Math.PI * 2 - Math.PI / 2, c = Math.cos(a), s = Math.sin(a);
+            const big = i % 10 === 0, mid = i % 5 === 0, r1 = big ? 124 : mid ? 131 : 137;
+            S(rot, "path", { d: `M${(c * r1).toFixed(1)} ${(s * r1).toFixed(1)} L${(c * 146).toFixed(1)} ${(s * 146).toFixed(1)}`,
+              stroke: big ? "rgba(240,236,229,0.85)" : mid ? "rgba(240,236,229,0.55)" : "#888880", "stroke-width": big ? 3 : mid ? 2 : 1.2 });
+          }
+          for (let k = 0; k < 10; k++) {
+            const g = S(rot, "g", { transform: `rotate(${k * 36})` });
+            S(g, "text", { x: 0, y: -100, "text-anchor": "middle", fill: k === 0 ? "#E85D26" : "rgba(240,236,229,0.78)", "font-family": "IBM Plex Mono",
+              "font-weight": 600, "font-size": 19 }, String(k * 10));
+          }
+          S(rot, "circle", { r: 82, fill: "none", stroke: "rgba(0,0,0,0.6)", "stroke-width": 2 });
+          S(rot, "circle", { r: 76, fill: "url(#f03-knob)" });
+          for (let i = 0; i < 48; i++) {
+            S(rot, "rect", { x: -2, y: -77, width: 4, height: 10, fill: "#111111", transform: `rotate(${i * 7.5})` });
+          }
+          S(rot, "path", { d: "M0 -60 L0 -40", stroke: "#E85D26", "stroke-width": 4 });
+          // fixed light on top of the turning parts
+          S(dial, "circle", { r: 76, fill: "none", stroke: "rgba(240,236,229,0.14)", "stroke-width": 1.5 });
+          S(dial, "circle", { r: 34, fill: "url(#f03-cap)", stroke: "rgba(0,0,0,0.5)", "stroke-width": 1.5 });
+          S(dial, "path", { d: "M-24 -10 A26 26 0 0 1 -8 -25", fill: "none", stroke: "rgba(240,236,229,0.55)", "stroke-width": 3, "stroke-linecap": "round" });
+          S(dial, "circle", { r: 5, fill: "#111111" });
+          S(dial, "ellipse", { cx: -48, cy: -56, rx: 120, ry: 86, fill: "url(#f03-gloss)" });
+          S(dial, "path", { d: "M-150 -40 A156 156 0 0 1 -40 -150", fill: "none", stroke: "rgba(240,236,229,0.42)", "stroke-width": 3, "stroke-linecap": "round" });
+          S(dial, "path", { d: "M140 70 A156 156 0 0 1 60 145", fill: "none", stroke: "rgba(0,0,0,0.6)", "stroke-width": 3, "stroke-linecap": "round" });
+          const pointer = S(dial, "path", { d: "M0 -148 L-11 -171 L11 -171 Z", fill: "#E85D26", class: "hr-glowbox" });
+          S(plate, "rect", { x: 0, y: 0, width: 808, height: 376, fill: "url(#f03-prake)" });
+          // odometer drums (rolled in render)
+          const drums = Array.from({ length: 7 }, (_, i) => {
+            const d = el("div", "f03-drum" + (i === 6 ? " f03-u" : ""), $("f03-odo"));
+            const col = el("b", "", d);
+            for (const n of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) el("span", "", col, String(n));
+            return col;
+          });
+
+          // lyric lines: lead rows and one display row per hero word
+          function buildLine(key) {
+            const box = $("f03-" + key), words = [];
+            let row = null;
+            for (const [w, t, hero] of LINES[key]) {
+              if (hero || !row || row.classList.contains("f03-big")) row = el("div", "f03-row" + (hero ? " f03-big" : ""), box);
+              words.push({ s: el("span", "f03-w", row, w.toLowerCase()), t: L(t), hero: !!hero, row });
+            }
+            return words;
+          }
+          const l4 = buildLine("l4"), l5 = buildLine("l5");
+          const breakW = l4.find((w) => w.hero);
+          // the full-bleed copy of "i only have to" (shown on the cut to "keep") and the giant word
+          el("div", "f03-row", $("f03-kline"), "i only have to");
+          // the HELD stamp's ink splats, in tag space
+          const spl = HR.rng(4401);
+          const splats = Array.from({ length: 11 }, () => {
+            const d = el("i", "f03-ink", $("f03-ytagb"));
+            Object.assign(d.style, { left: (400 + spl() * 220).toFixed(0) + "px", top: (40 + spl() * 160).toFixed(0) + "px", background: "#E85D26" });
+            return { d, s: 0.6 + spl() * 1.6 };
+          });
+
+          // ---- v14 H1: the keep shot (static build) -----------------------------------------------------------
+          $("f03-ecard").style.backgroundImage = paper; $("f03-ecard").style.backgroundSize = "160px 60px";
+          $("f03-fcard").style.backgroundImage = paper; $("f03-fcard").style.backgroundSize = "160px 60px";
+          // 01's postal sorting barcode and its hand-poured seal (rim with three drips, a pressed bead ring)
+          (() => {
+            const g = $("f03-esort"), r = HR.rng(611);
+            for (let x = 330, i = 0; i < 46; i++, x += 4.9) { const tall = r() < 0.5; S(g, "rect", { x: x.toFixed(1), y: tall ? 326 : 334, width: 2.2, height: tall ? 20 : 12, fill: "rgba(232,93,38,0.78)" }); }
+            let d = "";
+            const drips = [[0.6, 7], [2.5, 5], [4.4, 8.5]];
+            for (let k = 0; k <= 120; k++) {
+              const a = (k / 120) * Math.PI * 2;
+              let rr = 55.5 + 1.8 * Math.sin(7 * a + 0.5) + 1.2 * Math.sin(13 * a + 2) + 0.7 * Math.sin(23 * a);
+              for (const [a0, h] of drips) { const da = Math.atan2(Math.sin(a - a0), Math.cos(a - a0)); rr += h * Math.exp(-(da * da) / 0.012); }
+              d += (k ? "L" : "M") + (Math.cos(a) * rr).toFixed(2) + " " + (Math.sin(a) * rr).toFixed(2);
+            }
+            $("f03-erim").setAttribute("d", d + "Z");
+            for (let i = 0; i < 30; i++) { const a = (i / 30) * Math.PI * 2; S($("f03-ebeads"), "circle", { cx: (Math.cos(a) * 36.5).toFixed(2), cy: (Math.sin(a) * 36.5).toFixed(2), r: 1.35, fill: "rgba(17,17,17,0.26)" }); }
+          })();
+          // KEEP: rubber-stamp ink, baked once: pinholes, starved streaks, a light corner where the stamp rocked, a worn rim
+          const stk = $("f03-stk");
+          gsap.set("#f03-env", { rotation: -1.2 });
+          gsap.set(stk, { rotation: -5 });
+          const inkMaskK = (() => {
+            const W = 700, H = 300, c = document.createElement("canvas"); c.width = W; c.height = H;
+            const x = c.getContext("2d"), r = HR.rng(2803);
+            x.fillStyle = "#000"; x.fillRect(0, 0, W, H);
+            x.globalCompositeOperation = "destination-out";
+            for (let k = 0; k < 2200; k++) { x.fillStyle = `rgba(0,0,0,${(0.35 + r() * 0.6).toFixed(2)})`;
+              x.beginPath(); x.arc(r() * W, r() * H, 0.5 + r() * r() * 2.6, 0, Math.PI * 2); x.fill(); }
+            for (let k = 0; k < 46; k++) { x.fillStyle = `rgba(0,0,0,${(0.08 + r() * 0.2).toFixed(2)})`;
+              x.fillRect(r() * W, r() * H, 40 + r() * 220, 1 + r() * 3.5); }
+            const g = x.createRadialGradient(W * 0.92, H * 0.95, 10, W * 0.92, H * 0.95, W * 0.5);
+            g.addColorStop(0, "rgba(0,0,0,0.55)"); g.addColorStop(1, "rgba(0,0,0,0)");
+            x.fillStyle = g; x.fillRect(0, 0, W, H);
+            for (let k = 0; k < 160; k++) { const e = r(), px = e < 0.5 ? r() * W : (r() < 0.5 ? r() * 18 : W - r() * 18), py = e < 0.5 ? (r() < 0.5 ? r() * 16 : H - r() * 16) : r() * H;
+              x.fillStyle = `rgba(0,0,0,${(0.5 + r() * 0.5).toFixed(2)})`; x.beginPath(); x.arc(px, py, 1 + r() * 4, 0, Math.PI * 2); x.fill(); }
+            return `url(${c.toDataURL("image/png")})`;
+          })();
+          stk.style.webkitMaskImage = inkMaskK; stk.style.maskImage = inkMaskK;
+          // ink spat round the impression (envelope coordinates)
+          const dr2 = HR.rng(2811);
+          const dots = Array.from({ length: 14 }, () => {
+            const d = el("i", "f03-dot", $("f03-dots")), a = dr2() * Math.PI * 2;
+            Object.assign(d.style, { left: (400 + Math.cos(a) * (330 + dr2() * 60)).toFixed(0) + "px", top: (400 + Math.sin(a) * (140 + dr2() * 40)).toFixed(0) + "px" });
+            return { d, s: 0.35 + dr2() * 1.2 };
+          });
+
+          // ---- Archie, beside the copy, with an oversized rubber stamp (ground line y 970 in shot coordinates) -------
+          const archie = HR.archie($("f03-arch"), { id: "f03a", x: 470, y: 970, scale: 0.74, seed: 3 });
+          const stampG = archie.hand("R");
+          // the stamp, drawn down the forearm (+y): a turned knob, a wooden block, the rubber face wet with fire ink
+          stampG.innerHTML =
+            '<g transform="scale(0.62)">' +
+            '<rect x="-9" y="-4" width="18" height="50" rx="7" fill="#6E675B" stroke="#111111" stroke-width="3"/>' +
+            '<ellipse cx="0" cy="-8" rx="22" ry="17" fill="#3A3833" stroke="#111111" stroke-width="3"/>' +
+            '<rect x="-130" y="44" width="260" height="70" fill="#4A3A2E" stroke="#111111" stroke-width="4"/>' +
+            '<rect x="-130" y="44" width="260" height="10" fill="rgba(255,255,255,0.16)"/>' +
+            '<path d="M-118 66 H118 M-118 92 H118" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>' +
+            '<rect x="-124" y="114" width="248" height="18" fill="#2A2825" stroke="#111111" stroke-width="3"/>' +
+            '<rect x="-122" y="130" width="244" height="9" fill="#E85D26"/>' +
+            '</g>' +
+            '<g id="f03-puff" opacity="0">' + [[-30, 0, 14], [0, -10, 18], [28, -2, 13], [-8, -26, 11], [18, -30, 9]]
+              .map(([x, y, r]) => `<circle cx="${x}" cy="${y + 92}" r="${r}" fill="rgba(240,236,229,0.55)"/>`).join("") + '</g>';
+
+          // ---- v14 H1: the vault (three.js, the 11-petabytes recipe) ---------------------------------------------
+          // Units: drawer pitch 1.5 × 1.0 (the globe's). Drawer 0001's face (1.4 × 0.9) is centred on the origin, in the
+          // centre wall of drawers (z 0) inside the door's well; the door face is z 3, its frame z 2, the wheel z 8.
+          // The camera always looks down −z (front-on, so circles stay circles and the DOM shot maps exactly onto
+          // drawer 0001); where the origin sits on screen is set with a lens shift.
+          const FILE = L(30.256), SHUT = L(30.72), PULL = L(30.74), TILT0 = L(30.3), TILT1 = L(30.7);
+          const BOLTS = [31.943, 32.406, 32.865, 33.097, 33.326, 33.556, 33.787].map(L), B0 = BOLTS[0], B6 = BOLTS[6];
+          const ARRIVE = B0 - 0.06, SPIN0 = BOLTS[4] - 0.12;
+          const U = 540 / Math.tan((20 * Math.PI) / 180);       // px per unit at distance 1 (fov 40°)
+          const FW = 1240, DW = 1.4, DH = 0.9, PX = 1.5, PY = 1.0, FACE_CY = 1374;
+          const D0 = (DW * U) / FW;                               // drawer 0001 exactly 1240 px wide
+          const LOFF = [(1042 / FW - 0.5) * DW, (0.5 - 199 / 797) * DH]; // the lamp's place on every drawer face
+          const ZD = 3, ZF = 2, ZW = 8, RD = 100;
+          const D_FAR = 430, D_END = ZD + (RD * U) / 405;        // full outer rim (≈458 px) clears the frame at closure
+          const BA = Array.from({ length: 7 }, (_, k) => ((64.2857 - (k * 360) / 7) * Math.PI) / 180); // clockwise on screen
+          const clamp01 = (x) => Math.min(1, Math.max(0, x));
+          const smooth = (a, b, x) => { const u = clamp01((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+          const lerp = (a, b, u) => a + (b - a) * u;
+          const sineIO = (u) => 0.5 - 0.5 * Math.cos(Math.PI * u);
+          const angd = (a, b) => Math.abs(Math.atan2(Math.sin(a - b), Math.cos(a - b)));
+
+          const pos = [], size = [], kind = [], seed = [], ign = [], bolt = [];
+          let sid = 1;
+          const add = (x, y, z, k, s, ig = -99, b = -1) => { pos.push(x, y, z); size.push(s); kind.push(k); seed.push((sid++ * 0.61803398875) % 1); ign.push(ig); bolt.push(b); };
+          // the archive lights from drawer 0001 outward once it shuts (the globe's ignition front)
+          const wave = (d) => SHUT + Math.log(Math.max(d, 0.45) / 0.45) / 6.6;
+          // kinds: 0 centre-wall drawer, 1 archive wall, 2 rivet, 3 bolt ring, 4 bolt lamp, 5 drawer 0001, 6 frame, 7 wheel
+          const RW = 38;
+          for (let j = -38; j <= 38; j++) for (let i = -26; i <= 26; i++) {
+            const x = i * PX, y = j * PY;
+            if (Math.hypot(Math.abs(x) + DW / 2, Math.abs(y) + DH / 2) > RW) continue;
+            const hero = i === 0 && j === 0;
+            add(x + LOFF[0], y + LOFF[1], 0.01, hero ? 5 : 0, 0.075, hero ? SHUT : wave(Math.hypot(x, y)));
+          }
+          for (let j = -140; j <= 140; j++) for (let i = -96; i <= 96; i++) {
+            const x = i * 3.0 + (j & 1) * 1.5, y = j * 2.0, r = Math.hypot(x, y);
+            if (r < 120 || r > 282) continue;
+            add(x, y, ZF - 0.5, 1, 0.5, Math.abs(Math.sin(i * 12.9898 + j * 78.233) * 43758.5453) % 1 < 0.3 ? 99 : wave(r)); // some drawers stay dark
+          }
+          const ring = (r, step, z, k, s, igf) => {
+            const n = Math.round((2 * Math.PI * r) / step);
+            for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2, ig = igf(a); if (ig !== null) add(r * Math.cos(a), r * Math.sin(a), z, k, s, ig); }
+          };
+          ring(42.9, 1.5, ZD + 0.05, 2, 0.5, () => -99);
+          ring(97.7, 1.8, ZD + 0.05, 2, 0.6, () => -99);
+          // seven lamp rings, one per bolt: each ignites from its bolt round the door in 0.22 s
+          const RINGS = [48, 53.3, 58.6, 63.9, 69.2, 74.5, 79.8];
+          RINGS.forEach((r, k) => ring(r, 1.3, ZD + 0.05, 3, 0.62, (a) => {
+            if (r > 55 && BA.some((b) => angd(a, b) < 6.2 / r)) return null;
+            return BOLTS[k] + (angd(a, BA[k]) / Math.PI) * 0.22;
+          }));
+          BA.forEach((b, k) => { for (let i = 0; i < 12; i++) { const r = 62 + i * 2.7; add(r * Math.cos(b), r * Math.sin(b), ZD + 1.35, 4, 0.85, BOLTS[k] - 0.03 + i * 0.006, k); } });
+          // the frame: the receiver lamps light with their bolt and the light runs on round the jamb
+          [107.5].forEach((r) => ring(r, 1.7, ZF + 0.05, 6, 0.66, (a) => {
+            let best = 0, bd = 9; BA.forEach((b, k) => { const d = angd(a, b); if (d < bd) { bd = d; best = k; } });
+            return Math.min(BOLTS[best] + bd * 0.35, B6);
+          }));
+          ring(28, 1.25, ZW + 0.55, 7, 0.45, () => -99);
+          const SPOKE = Array.from({ length: 6 }, (_, k) => (k / 6) * Math.PI * 2 + Math.PI / 6);
+          SPOKE.forEach((a) => add(34 * Math.cos(a), 34 * Math.sin(a), ZW + 0.9, 7, 1.5));
+
+          const geo = new THREE.BufferGeometry();
+          geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+          geo.setAttribute("aSize", new THREE.Float32BufferAttribute(size, 1));
+          geo.setAttribute("aKind", new THREE.Float32BufferAttribute(kind, 1));
+          geo.setAttribute("aSeed", new THREE.Float32BufferAttribute(seed, 1));
+          geo.setAttribute("aIgn", new THREE.Float32BufferAttribute(ign, 1));
+          geo.setAttribute("aBolt", new THREE.Float32BufferAttribute(bolt, 1));
+
+          // ---- the lamp model (the globe's: a sharp disc with a soft halo, and an additive bloom pass) -------------
+          const HALO = 2.3;
+          const uni = { uTime: { value: 0 }, uScale: { value: U }, uPulse: { value: 0 }, uBloom: { value: 0.1 }, uWheel: { value: 0 },
+            uShut: { value: 0 }, uThrow: { value: [0, 0, 0, 0, 0, 0, 0] } };
+          const LAMP = `
+            attribute float aSize; attribute float aKind; attribute float aSeed; attribute float aIgn; attribute float aBolt;
+            uniform float uTime; uniform float uScale; uniform float uPulse; uniform float uWheel; uniform float uShut; uniform float uThrow[7];
+            varying vec3 vCol; varying float vA; varying float vPx;
+            void lamp(out vec3 col, out float a, out float px, out float lit) {
+              vec3 p = position;
+              if (aBolt > -0.5) {
+                float th = 0.0;
+                for (int i = 0; i < 7; i++) if (abs(aBolt - float(i)) < 0.5) th = uThrow[i];
+                p.xy += normalize(p.xy) * 20.0 * th;
+              }
+              if (aKind > 6.5) { float c = cos(uWheel), s = sin(uWheel); p.xy = vec2(c * p.x - s * p.y, s * p.x + c * p.y); }
+              vec4 mv = modelViewMatrix * vec4(p, 1.0);
+              float depth = max(-mv.z, 0.001);
+              float age = uTime - aIgn;
+              lit = step(0.0, age);
+              vec3 fire = vec3(0.9098, 0.3647, 0.1490), cream = vec3(0.9412, 0.9255, 0.8980);
+              vec3 hint = vec3(0.3137, 0.3137, 0.2824), muted = vec3(0.533, 0.533, 0.502);
+              float flash = lit * (1.0 - smoothstep(0.0, 0.22, age));
+              if (aKind < 0.5) { col = mix(hint, fire, lit); a = mix(0.3, 1.0, lit); }
+              else if (aKind < 1.5) { col = mix(hint, fire, lit); a = mix(0.2, 0.6, lit); }
+              else if (aKind < 2.5) { col = muted; a = 0.72; lit = 0.35; }
+              else if (aKind < 4.5) { col = mix(hint, fire, lit); a = mix(0.3, 1.0, lit); }
+              else if (aKind < 5.5) { col = mix(hint, fire, lit); a = 1.0; }
+              else if (aKind < 6.5) { col = mix(hint, fire, lit); a = mix(0.26, 0.9, lit); }
+              else { col = mix(muted, fire, uShut); a = 0.85; lit = 0.4 + 0.6 * uShut; }
+              float h = fract(sin(aSeed * 917.13 + floor(uTime * 15.0) * 0.731) * 43758.5453);
+              float blink = step(0.5, lit) * step(0.996, h);
+              col = mix(col, cream, max((aKind < 1.5 ? 0.45 : 0.8) * flash, blink));
+              px = aSize * uScale / depth * (1.0 + 0.6 * flash + 0.25 * uPulse * lit);
+              gl_Position = projectionMatrix * mv;
+              vec2 ndc = gl_Position.xy / gl_Position.w;
+              a *= 1.0 - 0.5 * smoothstep(0.0, 0.2, min(-0.4 - ndc.x, ndc.y - 0.74)); // the kicker, top left
+            }`;
+          const coreMat = new THREE.ShaderMaterial({
+            uniforms: uni, transparent: true, depthWrite: false, depthTest: true,
+            vertexShader: LAMP + `
+              void main() {
+                vec3 col; float a, px, lit; lamp(col, a, px, lit);
+                if (px < 2.5) { a *= pow(px / 2.5, 0.3); px = 2.5; }
+                vCol = col; vA = a; vPx = px;
+                gl_PointSize = a < 0.003 ? 0.0 : min(px * ${HALO.toFixed(2)}, 900.0);
+              }`,
+            fragmentShader: `
+              varying vec3 vCol; varying float vA; varying float vPx;
+              void main() {
+                float r = length(gl_PointCoord - 0.5) * 2.0 * ${HALO.toFixed(2)};
+                float fw = 1.0 / max(vPx, 1.0);
+                float core = 1.0 - smoothstep(1.0 - fw, 1.0 + fw, r);
+                float glow = 0.3 * exp(-2.4 * max(r - 1.0, 0.0)) * (1.0 - smoothstep(${(HALO - 0.3).toFixed(2)}, ${HALO.toFixed(2)}, r));
+                float a = vA * max(core, glow);
+                if (a < 0.004) discard;
+                gl_FragColor = vec4(vCol, a);
+              }`,
+          });
+          const bloomMat = new THREE.ShaderMaterial({
+            uniforms: uni, transparent: true, depthWrite: false, depthTest: true, blending: THREE.AdditiveBlending,
+            vertexShader: LAMP + `
+              uniform float uBloom;
+              void main() {
+                vec3 col; float a, px, lit; lamp(col, a, px, lit);
+                float hero = step(4.5, aKind) * step(aKind, 5.5);
+                if (px < 2.6) a *= mix(pow(px / 2.6, 0.6), 1.0, hero);
+                float wall = step(0.5, aKind) * step(aKind, 1.5);
+                vCol = col;
+                vA = a * lit * uBloom * mix(mix(1.0, 0.6, wall), 7.0, hero);
+                vPx = clamp(px * mix(4.0, 9.0, hero), mix(7.0, 90.0, hero), mix(160.0, 700.0, hero));
+                gl_PointSize = vA < 0.002 ? 0.0 : vPx;
+              }`,
+            fragmentShader: `
+              varying vec3 vCol; varying float vA;
+              void main() {
+                float r = length(gl_PointCoord - 0.5) * 2.0;
+                float g = exp(-r * r * 4.5) * (1.0 - smoothstep(0.75, 1.0, r));
+                gl_FragColor = vec4(vCol, vA * g);
+              }`,
+          });
+          const points = new THREE.Points(geo, coreMat); points.frustumCulled = false;
+          const bloom = new THREE.Points(geo, bloomMat); bloom.frustumCulled = false;
+
+          // ---- hairlines ---------------------------------------------------------------------------------------
+          const C = { hint: new THREE.Color(0x2c2b28), dim: new THREE.Color(0x3a3a36), muted: new THREE.Color(0x6e6c66), fire: new THREE.Color(0xe85d26) };
+          const mkLines = () => ({ p: [], c: [] });
+          const lseg = (Lb, a, b, c) => { Lb.p.push(a[0], a[1], a[2], b[0], b[1], b[2]); Lb.c.push(c.r, c.g, c.b, c.r, c.g, c.b); };
+          const circ = (Lb, r, z, n, c) => { for (let i = 0; i < n; i++) { const a0 = (i / n) * 2 * Math.PI, a1 = ((i + 1) / n) * 2 * Math.PI; lseg(Lb, [r * Math.cos(a0), r * Math.sin(a0), z], [r * Math.cos(a1), r * Math.sin(a1), z], c); } };
+          const rect = (Lb, x, y, w, h, z, c) => { const q = [[x - w / 2, y - h / 2], [x + w / 2, y - h / 2], [x + w / 2, y + h / 2], [x - w / 2, y + h / 2]]; for (let i = 0; i < 4; i++) lseg(Lb, [...q[i], z], [...q[(i + 1) % 4], z], c); };
+          const radRect = (Lb, ang, r0, r1, hw, z, c) => {
+            const ca = Math.cos(ang), sa = Math.sin(ang), pt = (r, w) => [r * ca - w * sa, r * sa + w * ca, z];
+            const q = [pt(r0, -hw), pt(r1, -hw), pt(r1, hw), pt(r0, hw)];
+            for (let i = 0; i < 4; i++) lseg(Lb, q[i], q[(i + 1) % 4], c);
+          };
+          const toLines = (Lb, opacity = 1) => {
+            const g = new THREE.BufferGeometry();
+            g.setAttribute("position", new THREE.Float32BufferAttribute(Lb.p, 3));
+            g.setAttribute("color", new THREE.Float32BufferAttribute(Lb.c, 3));
+            const m = new THREE.LineSegments(g, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity, depthWrite: false }));
+            m.frustumCulled = false; return m;
+          };
+          // near: the drawer faces round 0001, seen only up close
+          const LN = mkLines();
+          for (let j = -9; j <= 9; j++) for (let i = -7; i <= 7; i++) {
+            const x = i * PX, y = j * PY, fx0 = (u) => x + (u / FW - 0.5) * DW, fy0 = (v) => y + (0.5 - v / 797) * DH;
+            rect(LN, x, y, DW, DH, 0, i === 0 && j === 0 ? C.fire : C.dim);
+            rect(LN, fx0(299), fy0(162), (470 / FW) * DW, (196 / 797) * DH, 0, C.hint);
+            rect(LN, fx0(620), fy0(586), (580 / FW) * DW, (40 / 797) * DH, 0, C.hint);
+          }
+          // the door: engraved rings, the lit edge, the tick ring, the bolt housings; the frame and its receivers; the well
+          const LD = mkLines();
+          for (const [r, c] of [[40.2, C.muted], [41.7, C.dim], [44.2, C.dim], [46, C.hint], [82.4, C.dim], [93.4, C.hint], [95.6, C.dim], [99.2, C.muted]]) circ(LD, r, ZD + 0.02, 256, c);
+          circ(LD, 100, ZD + 0.02, 320, C.fire);
+          for (let i = 0; i < 180; i++) { const a = (i / 180) * 2 * Math.PI; lseg(LD, [96.2 * Math.cos(a), 96.2 * Math.sin(a), ZD + 0.02], [98.6 * Math.cos(a), 98.6 * Math.sin(a), ZD + 0.02], i % 5 ? C.hint : C.dim); }
+          BA.forEach((b) => { radRect(LD, b, 56, 99.4, 5.2, ZD + 0.03, C.muted); radRect(LD, b, 58, 99.4, 4.1, ZD + 0.03, C.hint); });
+          for (const [r, c] of [[101.7, C.muted], [103.2, C.dim], [111.4, C.hint], [113, C.muted]]) circ(LD, r, ZF + 0.02, 320, c);
+          BA.forEach((b) => radRect(LD, b, 101.7, 112.4, 4.7, ZF + 0.03, C.muted));
+          circ(LD, 40, 0, 200, C.dim);
+          for (let i = 0; i < 96; i++) { const a = (i / 96) * 2 * Math.PI; lseg(LD, [40 * Math.cos(a), 40 * Math.sin(a), 0], [40 * Math.cos(a), 40 * Math.sin(a), ZD], C.hint); }
+          for (const r of [140, 190, 240]) circ(LD, r, ZF - 0.5, 360, C.hint);
+          const linesNear = toLines(LN), linesDoor = toLines(LD, 0.95);
+
+          // ---- ink solids: they hide what is behind them, so the lamps read in depth ----------------------------
+          const ink = new THREE.MeshBasicMaterial({ color: 0x0a0a0a }), inkDoor = new THREE.MeshBasicMaterial({ color: 0x111111 });
+          const door = new THREE.Mesh(new THREE.RingGeometry(40, RD, 256, 1), inkDoor); door.position.z = ZD;
+          const frame = new THREE.Mesh(new THREE.RingGeometry(101.7, 113, 256, 1), ink); frame.position.z = ZF;
+          const face0 = new THREE.Mesh(new THREE.PlaneGeometry(DW, DH), new THREE.MeshBasicMaterial({ color: 0x151513 })); face0.position.z = -0.005;
+          // the handle wheel: hub (open, drawer 0001 shows through it), six spokes, a rim, six knobs
+          const wheel = new THREE.Group();
+          const LWh = mkLines();
+          wheel.add(new THREE.Mesh(new THREE.RingGeometry(4.6, 7, 64, 1), ink), new THREE.Mesh(new THREE.RingGeometry(26, 30, 192, 1), ink));
+          for (const r of [4.6, 7, 26, 30]) circ(LWh, r, 0.62, r < 10 ? 64 : 192, C.muted);
+          SPOKE.forEach((a) => {
+            const sp = new THREE.Mesh(new THREE.PlaneGeometry(19, 2.2), ink); sp.position.set(16.5 * Math.cos(a), 16.5 * Math.sin(a), 0.1); sp.rotation.z = a; wheel.add(sp);
+            const kn = new THREE.Mesh(new THREE.CircleGeometry(2.4, 32), ink); kn.position.set(34 * Math.cos(a), 34 * Math.sin(a), 0.3); wheel.add(kn);
+            const st = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 1.2), ink); st.position.set(31.4 * Math.cos(a), 31.4 * Math.sin(a), 0.2); st.rotation.z = a; wheel.add(st);
+            radRect(LWh, a, 7, 26, 1.1, 0.62, C.muted);
+            radRect(LWh, a, 30, 32, 0.6, 0.62, C.dim);
+            for (let i = 0; i < 32; i++) { const b0 = (i / 32) * 2 * Math.PI, b1 = ((i + 1) / 32) * 2 * Math.PI; lseg(LWh, [34 * Math.cos(a) + 2.4 * Math.cos(b0), 34 * Math.sin(a) + 2.4 * Math.sin(b0), 0.62], [34 * Math.cos(a) + 2.4 * Math.cos(b1), 34 * Math.sin(a) + 2.4 * Math.sin(b1), 0.62], C.muted); }
+          });
+          wheel.add(toLines(LWh));
+          wheel.position.z = ZW;
+          // the seven bolts: ink bars with hairline outlines; the outline lights fire once the bolt is home
+          const bolts = BA.map((b) => {
+            const g = new THREE.Group(), Lb = mkLines();
+            const box = new THREE.Mesh(new THREE.BoxGeometry(34, 7.2, 1.2), ink); box.position.set(77, 0, ZD + 0.7); g.add(box);
+            const W1 = new THREE.Color(1, 1, 1), W2 = new THREE.Color(0.55, 0.55, 0.55);
+            rect(Lb, 77, 0, 34, 7.2, ZD + 1.31, W1); rect(Lb, 77, 0, 30, 3.2, ZD + 1.31, W2);
+            const ln = toLines(Lb); g.add(ln);
+            g.rotation.z = b;
+            return { g, ln, b };
+          });
+          // depth haze: a fire glow round the frame's limb and a warm glow down the well, behind everything
+          const hazeMat = new THREE.ShaderMaterial({
+            uniforms: { uOut: { value: 0 }, uWell: { value: 0 } }, transparent: true, depthWrite: false, depthTest: true, blending: THREE.AdditiveBlending,
+            vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+            fragmentShader: `uniform float uOut; uniform float uWell; varying vec2 vUv;
+              void main() {
+                float r = length(vUv - 0.5) * 900.0, e = max(r - 113.0, 0.0);
+                float a = uOut * (0.42 * exp(-e / 18.0) + 0.16 * exp(-e / 90.0)) * step(113.0, r) + uWell * 0.2 * exp(-r / 22.0) * (1.0 - step(40.0, r));
+                gl_FragColor = vec4(0.9098, 0.3647, 0.1490, a);
+              }`,
+          });
+          const haze = new THREE.Mesh(new THREE.PlaneGeometry(900, 900), hazeMat); haze.position.z = -2; haze.frustumCulled = false;
+
+          const scene = new THREE.Scene();
+          for (const m of [door, frame, face0, wheel, ...bolts.map((x) => x.g)]) scene.add(m);
+          haze.renderOrder = 1; linesDoor.renderOrder = 2; linesNear.renderOrder = 2; bloom.renderOrder = 3; points.renderOrder = 4;
+          scene.add(haze, linesDoor, linesNear, bloom, points);
+          const glCanvas = $("f03-gl");
+          const renderer = new THREE.WebGLRenderer({ canvas: glCanvas, antialias: true, preserveDrawingBuffer: true });
+          renderer.setPixelRatio(1); renderer.setSize(1920, 1080, false); renderer.setClearColor(0x0a0a0a, 1);
+          const camera = new THREE.PerspectiveCamera(40, 1920 / 1080, 0.01, 4000);
+
+          // ---- the camera, a function of time ---------------------------------------------------------------------
+          const shake = (t, at, amp, dec) => { if (t < at) return [0, 0]; const dt = t - at, A = amp * Math.exp(-dt / dec); return [Math.sin(dt * 97) * A, Math.cos(dt * 79) * A * 0.7]; };
+          const KICKS3 = [[FLIP, 16, 0.09], [HELD, 6, 0.08], [SHUT, 10, 0.08], ...BOLTS.slice(0, 6).map((b) => [b, 18, 0.07])];
+          function camAt(t) {
+            let D = D0;
+            if (t >= PULL && t < ARRIVE) D = Math.exp(lerp(Math.log(D0), Math.log(D_FAR), sineIO((t - PULL) / (ARRIVE - PULL))));
+            else if (t >= ARRIVE) { let f = 0; for (const b of BOLTS) f += Math.pow(clamp01((t - (b - 0.06)) / 0.06), 2) / 7; D = Math.exp(lerp(Math.log(D_FAR), Math.log(D_END), f)); }
+            let px = 960 + 6 * Math.sin(t * 0.9), py = FACE_CY;
+            if (t >= TILT0) { const u = clamp01((t - TILT0) / (TILT1 - TILT0)); py = lerp(FACE_CY, 540, u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2); }
+            if (t >= PULL) { const k = smooth(Math.log(4), Math.log(D_FAR), Math.log(D)); px = lerp(960 + 6 * Math.sin(t * 0.9), 1000, k); py = lerp(540, 550, k); }
+            const bp = sineIO(clamp01((t - ARRIVE) / (B6 - ARRIVE)));
+            if (t >= ARRIVE) { px = lerp(1000, 1030, bp); py = 550; }
+            for (const [at, amp, dec] of KICKS3) { const [sx, sy] = shake(t, at, amp, dec); px += sx; py += sy; }
+            const off = 0.1 * D * smooth(Math.log(14), Math.log(60), Math.log(D)) * (1 - bp);
+            return { D, px, py, cx: -off, cy: 0.45 * off };
+          }
+          function placeCamera(c) {
+            camera.position.set(c.cx, c.cy, c.D);
+            camera.lookAt(c.cx, c.cy, c.D - 1);
+            camera.near = Math.max(0.01, 0.4 * (c.D - ZW - 1.5));
+            camera.far = c.D + 400;
+            const dx = c.px - 960 + (c.cx * U) / c.D, dy = c.py - 540 - (c.cy * U) / c.D;
+            camera.setViewOffset(1920, 1080, -dx, -dy, 1920, 1080);
+            camera.updateMatrixWorld();
+          }
+          const throwOf = (t, b) => (t < b - 0.07 ? 0 : t < b ? 1.06 * Math.pow((t - b + 0.07) / 0.07, 2) : 1 + 0.06 * Math.exp(-(t - b) / 0.05) * Math.cos((t - b) * 60));
+          function wheelAt(t) {
+            let w = 0;
+            for (const b of BOLTS) w += 0.16 * (1 - Math.pow(1 - clamp01((t - b + 0.06) / 0.12), 3));
+            return -(w + 2.6 * Math.PI * Math.pow(clamp01((t - SPIN0) / (B6 - SPIN0)), 2.2));
+          }
+
+          // engravings on the door (2D, over the GL): RETENTION: INDEFINITE and the bolt count, in the top gap
+          const fx = $("f03-fx").getContext("2d");
+          const arcText = (text, cx, cy, r, size, spacing, fill, glow) => {
+            fx.font = `600 ${size.toFixed(1)}px "IBM Plex Mono"`;
+            const ws = Array.from(text, (ch) => fx.measureText(ch).width + spacing);
+            const total = ws.reduce((a, b) => a + b, 0) - spacing;
+            let a = -Math.PI / 2 - total / (2 * r);
+            fx.textAlign = "center"; fx.textBaseline = "middle";
+            Array.from(text).forEach((ch, i) => {
+              const am = a + (ws[i] - spacing) / (2 * r);
+              fx.save(); fx.translate(cx + r * Math.cos(am), cy + r * Math.sin(am)); fx.rotate(am + Math.PI / 2);
+              fx.shadowBlur = 0; fx.fillStyle = "rgba(0,0,0,0.85)"; fx.fillText(ch, 0, Math.max(1, size * 0.06));
+              if (glow) { fx.shadowColor = "rgba(232,93,38,0.8)"; fx.shadowBlur = size * 0.6; }
+              fx.fillStyle = fill; fx.fillText(ch, 0, 0);
+              fx.restore();
+              a += ws[i] / r;
+            });
+          };
+          const vtmp = new THREE.Vector3();
+          const toScreen = (x, y, z) => { vtmp.set(x, y, z).project(camera); return [(vtmp.x + 1) * 960, (1 - vtmp.y) * 540]; };
+          const ksEl = $("f03-ks"), dtag = $("f03-dtag");
+          function renderVault(t, T) {
+            fx.clearRect(0, 0, 1920, 1080);
+            if (t < FLIP) { glCanvas.style.visibility = "hidden"; ksEl.style.opacity = "0"; dtag.style.opacity = "0"; return; }
+            glCanvas.style.visibility = "visible";
+            const c = camAt(t);
+            placeCamera(c);
+            const kick = HR.hit("kick", T, 0.12), snare = HR.hit("snare", T, 0.1), bass = HR.band("bass", T);
+            let pulse = 0;
+            for (const b of BOLTS) if (t >= b) pulse = Math.max(pulse, Math.exp(-(t - b) * 9));
+            if (t >= SHUT) pulse = Math.max(pulse, Math.exp(-(t - SHUT) * 7));
+            uni.uTime.value = t;
+            uni.uPulse.value = Math.max(pulse, 0.6 * snare, 0.5 * kick);
+            uni.uBloom.value = 0.09 * (1 + 0.6 * bass + 0.6 * kick) + 0.14 * pulse;
+            uni.uShut.value = t >= B6 ? 1 : 0;
+            const w = wheelAt(t);
+            uni.uWheel.value = w; wheel.rotation.z = w;
+            bolts.forEach((bo, k) => {
+              const th = throwOf(t, BOLTS[k]);
+              uni.uThrow.value[k] = th;
+              bo.g.position.set(Math.cos(bo.b) * 20 * th, Math.sin(bo.b) * 20 * th, 0);
+              bo.ln.material.color.setHex(t >= BOLTS[k] ? 0xe85d26 : 0x6e6c66);
+              bo.ln.material.opacity = t >= BOLTS[k] ? 1 : 0.9;
+            });
+            const lD = Math.log(c.D);
+            hazeMat.uniforms.uOut.value = smooth(Math.log(60), Math.log(300), c.D > 1 ? lD : 0) * (0.3 + 0.25 * bass + 0.35 * pulse);
+            hazeMat.uniforms.uWell.value = t >= SHUT ? (0.5 + 0.3 * bass + 0.4 * pulse) * smooth(Math.log(25), Math.log(140), lD) : 0;
+            linesNear.material.opacity = 1 - smooth(Math.log(6), Math.log(40), lD);
+            linesNear.visible = linesNear.material.opacity > 0.01;
+            renderer.render(scene, camera);
+
+            // A single light follows the physical door/frame gap. Each snare advances it to the next receiver;
+            // a soft orange trail wraps a thin hot core, leaving the machinery sharp and the black ground clear.
+            if (t >= B0) {
+              const [sx, sy] = toScreen(0, 0, ZD + 0.03), sk = U / (c.D - ZD - 0.03);
+              const seamR = 100.85 * sk;
+              let phase = 0;
+              for (let i = 0; i < BOLTS.length; i++) {
+                const next = i < 6 ? BOLTS[i + 1] : B6 + 0.16;
+                phase += clamp01((t - BOLTS[i]) / (next - BOLTS[i])) / 7;
+              }
+              const head = -BA[0] + phase * Math.PI * 2;
+              const envelope = smooth(B0, B0 + 0.055, t);
+              fx.save(); fx.globalCompositeOperation = "lighter"; fx.lineCap = "round";
+              for (let j = 0; j < 22; j++) {
+                const tail = j / 21, a = head - tail * 0.72, alpha = envelope * Math.pow(1 - tail, 1.7);
+                fx.beginPath(); fx.arc(sx, sy, seamR, a - 0.023, a + 0.023);
+                fx.strokeStyle = `rgba(232,93,38,${(alpha * 0.2).toFixed(3)})`;
+                fx.lineWidth = 2.4 * sk; fx.stroke();
+                fx.strokeStyle = `rgba(255,178,117,${(alpha * 0.8).toFixed(3)})`;
+                fx.lineWidth = 0.38 * sk; fx.stroke();
+              }
+              fx.beginPath(); fx.arc(sx, sy, seamR, head - 0.035, head + 0.012);
+              fx.strokeStyle = `rgba(255,243,221,${envelope.toFixed(3)})`;
+              fx.lineWidth = 0.42 * sk; fx.shadowColor = "#E85D26"; fx.shadowBlur = 4 * sk; fx.stroke();
+              fx.restore();
+            }
+
+            // the keep shot rides on drawer 0001: same centre, same scale, until it is a few dozen pixels wide
+            const s = D0 / c.D;
+            ksEl.style.transform = `translate(${(c.px - s * 960).toFixed(2)}px, ${(c.py - s * FACE_CY).toFixed(2)}px) scale(${s.toFixed(5)})`;
+            ksEl.style.opacity = clamp01((s - 0.05) / 0.07).toFixed(3);
+            // the globe's tag on lamp 0001, on the way out
+            const [hx, hy] = toScreen(LOFF[0], LOFF[1], 0.01);
+            const tagA = smooth(0.32, 0.16, s) * (1 - smooth(B0 - 0.3, B0 - 0.12, t));
+            dtag.style.opacity = tagA.toFixed(3);
+            dtag.style.transform = `translate(${(hx + 0.05 * U / c.D + 12).toFixed(1)}px, ${(hy - 17).toFixed(1)}px)`;
+            // engravings, once the door is in view
+            const ea = smooth(Math.log(80), Math.log(240), lD);
+            if (ea > 0.01) {
+              const [ex, ey] = toScreen(0, 0, ZD), k = U / (c.D - ZD);
+              fx.globalAlpha = ea;
+              arcText("RETENTION: INDEFINITE", ex, ey, 89.6 * k, 3.1 * k, 0.9 * k, "rgba(240,236,229,0.62)", false);
+              const n = BOLTS.filter((b) => t >= b).length;
+              arcText(`BOLT ${n}/7`, ex, ey, 85.4 * k, 3.6 * k, 0.9 * k, n ? "#E85D26" : "rgba(136,136,128,0.85)", n > 0);
+              fx.globalAlpha = 1;
+            }
+          }
+
+          breakW.row.classList.add("hr-glow");
+          breakW.s.setAttribute("data-layout-allow-overlap", "");
+
+          // "break" glyph shards: each glyph cracks along the slash. The crack line is fixed geometry (Barlow 900
+          // advances in em, the slash at 66 % of a 0.86 em line, rotated −4° about its left end), computed once here.
+          const slash = el("i", "", breakW.s); slash.id = "f03-slash"; slash.classList.add("hr-glowbox");
+          const shards = [], faces = [], hr = HR.rng(55);
+          const ADV = { b: 0.615, r: 0.43, e: 0.575, a: 0.565, k: 0.6 }, LS = -0.04, LH = 0.86, TAN = Math.tan(-4 * Math.PI / 180);
+          const gws = breakW.s.textContent.split("").map((ch) => ADV[ch] + LS);
+          const WW = gws.reduce((a, b) => a + b, 0), SX = -0.05 * WW, SY = 0.66 * LH + 0.0375;
+          let gx = 0;
+          const glyphs = HR.glyphs(breakW.s);
+          breakW.s._hrG = glyphs;
+          breakW.s.appendChild(slash);
+          glyphs.forEach((g, i) => {
+            const ch = g.textContent, gw = gws[i];
+            const yAt = (x) => ((SY + (x - SX) * TAN) / LH * 100).toFixed(1);
+            const yl = yAt(gx - 0.3 * gw), yr = yAt(gx + 1.3 * gw);
+            gx += gw;
+            g.textContent = "";
+            faces.push(el("span", "f03-face", g, ch));
+            for (const top of [true, false]) {
+              const s = el("span", "f03-sh", g, ch);
+              s.style.clipPath = top ? `polygon(-30% -60%, 130% -60%, 130% ${yr}%, -30% ${yl}%)` : `polygon(-30% ${yl}%, 130% ${yr}%, 130% 160%, -30% 160%)`;
+              shards.push({ s, top });
+            }
+          });
+          const shardEls = shards.map((x) => x.s);
+
+          // ---- timeline -------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const stage = HR.stage($("root"), { seed: 4 });
+          const cam = stage.cam;
+          const A = { x: -26, y: 0, z: 1, rot: 0, focus: 0.35 }; // the phrase camera
+          const N = { x: 0, y: 0, z: 0, rot: 0 };                // hit nudges, added on top
+          const seg = (at, dur, ease, from, to) => tl.fromTo(A, from, { ...to, duration: dur, ease, immediateRender: false }, at);
+          const nudge = (at, from, dur = 0.2) => tl.fromTo(N, from, { x: 0, y: 0, z: 0, rot: 0, duration: dur, ease: "power3.out", immediateRender: false }, at);
+
+          // the camera: a creep in; the bass entry drops and settles the whole stage once; a push through the phrase;
+          // a punch on "keep"; a wide re-frame on the bolts, a step per bolt, and the acceleration into the chorus
+          seg(0, BASS - 0.04, "sine.inOut", { z: 1, x: -26 }, { z: 1.015, x: -22 });
+          seg(BASS - 0.04, 0.04, "power3.in", { y: 0, z: 1.015 }, { y: -12, z: 1.05 });
+          seg(BASS, 0.6, "elastic.out(1, 0.45)", { y: -12, z: 1.05 }, { y: -7, z: 1.025 });
+          seg(1.6, FLIP - 0.04 - 1.6, "sine.inOut", { z: 1.025, x: -22 }, { z: 1.055, x: -17 });
+          seg(FLIP - 0.04, 0.04, "power3.in", { z: 1.055, focus: 0.35 }, { z: 1.085, focus: 0.15 });
+          seg(FLIP, 0.6, "elastic.out(1, 0.5)", { z: 1.085 }, { z: 1.065 });
+          nudge(SLASH, { x: -6, rot: -0.5 }, 0.35);
+
+          // lyrics: lead words build by glyph, the hero words slam
+          const KIND = { "don't": "left", have: "drop", to: "right", you: "zoom", only: "right" };
+          const L5K = { I: "zoom", only: "right", have: "drop", to: "left" };
+          for (const w of l4.concat(l5)) {
+            const word = w.s.textContent;
+            if (w.hero) WOW.explode(tl, w.s, w.t, { parent: $("f03-wfx"), x: 435, y: 410, r: 1100, rays: 24, burst: 34, seed: 9, from: "burst", fx: true });
+            else if (w.t === 0) {
+              const gs = w.s._hrG = HR.glyphs(w.s); w.s.classList.add("hr-clip");
+              tl.fromTo(gs, { yPercent: 45, opacity: 0.55, filter: "blur(3px)" }, { yPercent: 0, opacity: 1, filter: "blur(0px)", duration: 0.24, ease: "expo.out" }, 0);
+            } else if (l4.includes(w)) WOW.word(tl, w.s, w.t, { kind: KIND[word] || "pop" });
+            else WOW.word(tl, w.s, w.t, { kind: L5K[word] || "pop" });
+          }
+          // slow push on each line while it lives
+          tl.fromTo("#f03-l4", { scale: 1 }, { scale: 1.035, duration: G2, ease: "none" }, 0);
+          tl.fromTo("#f03-l5", { scale: 1 }, { scale: 1.035, duration: DUR - l5[0].t, ease: "none" }, l5[0].t);
+
+          // "you": the fire slash cuts through "break", which cracks along it into glyph shards
+          tl.fromTo(slash, { scaleX: 0, rotation: -4 }, { scaleX: 1, rotation: -4, duration: 0.1, ease: "power3.in" }, SLASH - 0.1);
+          tl.fromTo(slash, { scaleY: 1.8 }, { scaleY: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, SLASH);
+          shards.forEach(({ s, top }) => {
+            const sx = top ? (hr() - 0.45) * 130 : 10 + hr() * 90, sy = top ? -(24 + hr() * 46) : 18 + hr() * 30, sr2 = top ? -(5 + hr() * 13) : 4 + hr() * 12;
+            tl.fromTo(s, { x: 0, y: 0, rotation: 0 }, { x: sx, y: sy, rotation: sr2, duration: 0.5, ease: "expo.out", immediateRender: false }, SLASH);
+            tl.fromTo(s, { x: sx, y: sy, rotation: sr2 }, { x: sx * 1.6, y: sy * 1.5, rotation: sr2 * 1.4, duration: G2 - SLASH - 0.5, ease: "none", immediateRender: false }, SLASH + 0.5);
+          });
+          tl.set(faces, { opacity: 0 }, SLASH);
+          tl.set(shardEls, { opacity: 1 }, SLASH);
+          tl.set(breakW.row, { className: "f03-row f03-big" }, SLASH); // the glow dies with the word
+          tl.fromTo(shardEls, { color: "#F0ECE5" }, { color: "#888880", duration: 0.45, ease: "power2.out", immediateRender: false }, SLASH);
+          // the rig flinches on the slash
+          tl.fromTo("#f03-plana", { y: 0 }, { y: 6, duration: 0.05, ease: "power2.out" }, SLASH);
+          tl.fromTo("#f03-plana", { y: 6 }, { y: 0, duration: 0.45, ease: "elastic.out(1, 0.45)", immediateRender: false }, SLASH + 0.05);
+
+          // "keep" (v13): a hard light change, no colour flip. The split's lights sag in the last beat before the word;
+          // on the word the frame cuts to black, the pendant lamp snaps on (with one flicker) over "keep" in cream steel
+          tl.fromTo("#f03-world", { filter: "brightness(1)" }, { filter: "brightness(0.42)", duration: FLIP - FLOOD0, ease: "power2.in", immediateRender: false }, FLOOD0);
+          tl.set("#f03-world", { filter: "brightness(1)" }, FLIP);
+          tl.set(["#f03-left", "#f03-right", "#f03-plana", "#f03-divider", "#f03-drawer", ".f03-cont", "#f03-cagelbl", "#f03-cshadow", "#f03-markl"], { opacity: 0 }, FLIP);
+          tl.fromTo({ t: 0 }, { t: 0 }, { t: DUR, duration: DUR, ease: "none" }, 0); // the timeline spans the frame
+
+          // ---- v14 H1: "keep" — the stamp lands on the word ------------------------------------------------------
+          tl.set("#f03-pkick", { opacity: 1 }, FLIP);
+          tl.to("#f03-pkick", { opacity: 0, duration: 0.15, ease: "none" }, FILE);
+          tl.set("#f03-kline", { opacity: 0 }, TILT1);                                      // off frame by now; never back in the pull-back          // clears the way for the tilt
+          tl.fromTo("#f03-pkick", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none", immediateRender: false }, ARRIVE - 0.3);
+          tl.set(stk, { opacity: 1 }, FLIP);
+          tl.fromTo(stk, { scale: 1.06 }, { scale: 1, duration: 0.08, ease: "power2.out", immediateRender: false }, FLIP);
+          dots.forEach(({ d, s }, i) => tl.fromTo(d, { opacity: 0, scale: 0 }, { opacity: 0.85, scale: s, duration: 0.05, ease: "power2.out", immediateRender: false }, FLIP + (i % 3) * 0.012));
+          tl.fromTo("#f03-env", { scaleY: 0.975, scaleX: 1.012 }, { scaleY: 1, scaleX: 1, duration: 0.5, ease: "elastic.out(1, 0.4)", immediateRender: false }, FLIP);
+          // Archie: the wind-up happens under the cut; the slam lands on 28.091 and lifts him off his treads
+          archie.to(tl, { ...HR.archie.MOODS.focused, shR: 20, elR: 10, clawR: 1, lookX: 1, lookY: 0.3 }, 0, 0.01);
+          archie.to(tl, { shR: 165, elR: -4, rot: -9, sqx: 1.07, sqy: 0.91, neck: 0.2, lidL: 0.34, lidR: 0.34, browL: 6, browR: 6,
+            browRotL: 12, browRotR: -12, pupil: 0.9 }, FLIP - 0.42, 0.3, "power2.out");
+          archie.to(tl, { shR: 86, elR: 0, rot: 8, sqx: 0.93, sqy: 1.09 }, FLIP - 0.1, 0.1, "power3.in");
+          archie.to(tl, { sqx: 1.15, sqy: 0.84, lidL: 0, lidR: 0, browL: -20, browR: -20, browRotL: 0, browRotR: 0, pupil: 0.65, neck: 0 }, FLIP, 0.05, "power2.out");
+          archie.to(tl, { lift: 34, sqx: 0.96, sqy: 1.05, shR: 128, elR: 24 }, FLIP + 0.05, 0.12, "power2.out");
+          archie.to(tl, { lift: 0, sqx: 1.08, sqy: 0.92 }, FLIP + 0.17, 0.11, "power2.in");
+          archie.to(tl, { sqx: 1, sqy: 1 }, FLIP + 0.28, 0.45, "elastic.out(1, 0.4)");
+          archie.to(tl, { rot: 0 }, FLIP + 0.3, 0.6, "elastic.out(1, 0.45)");
+          // the stamp comes down to his side, he admires the impression (smug), then blows on the stamp like a smoking gun
+          archie.to(tl, { shR: 28, elR: 18, neck: 0.5, lidL: 0.3, lidR: 0.3, lowL: 0.35, lowR: 0.35, browL: -10, browR: 4,
+            browRotL: -6, browRotR: 10, pupil: 1.1, tilt: 8 }, FLIP + 0.45, 0.3, "back.out(1.6)");
+          archie.look(tl, 1, 0.35, FLIP + 0.45, 0.2);
+          archie.to(tl, { shR: 70, elR: 120, tilt: -6, turn: 0.3 }, FLIP + 0.85, 0.22, "power2.out");   // stamp up beside his head
+          archie.look(tl, 1.2, -0.6, FLIP + 0.85, 0.15);
+          archie.to(tl, { neck: 0.75, sqx: 0.97, sqy: 1.04 }, FLIP + 1.0, 0.12, "power2.out");          // inhale
+          archie.to(tl, { neck: 0.45, sqx: 1.03, sqy: 0.97, lidL: 0.6, lidR: 0.6 }, FLIP + 1.12, 0.08, "power2.out"); // blow
+          // the puff: a little cloud of ink dust leaves the rubber face on the blow, rises and fades
+          tl.fromTo("#f03-puff", { opacity: 0, scale: 0.4, y: 0, transformOrigin: "0px 92px" }, { opacity: 1, scale: 1, y: 6, duration: 0.12, ease: "power2.out", immediateRender: false }, FLIP + 1.12);
+          tl.to("#f03-puff", { opacity: 0, scale: 1.8, y: 40, duration: 0.45, ease: "power1.out" }, FLIP + 1.24);
+          archie.to(tl, { shR: 24, elR: 14, turn: 0, tilt: 0, lidL: 0.1, lidR: 0.1, lowL: 0, lowR: 0, sqx: 1, sqy: 1 }, YOU - 0.3, 0.2, "power2.inOut");
+          archie.look(tl, 1, -0.2, YOU - 0.12, 0.16);            // up at the tag dropping in
+          archie.mood(tl, "happy", HELD, 0.25);
+          archie.look(tl, 0.6, 1, FILE, 0.15);                    // watches the copy go into the drawer
+          // "you": the tag drops onto lock C on its string, lands on the word, and swings
+          tl.set("#f03-tagp", { opacity: 1 }, YOU - 0.17);
+          tl.fromTo("#f03-tagp", { y: -820 }, { y: 0, duration: 0.17, ease: "power2.in", immediateRender: false }, YOU - 0.17);
+          tl.fromTo("#f03-tagp", { rotation: 16 }, { rotation: 0, duration: 2.4, ease: "elastic.out(1, 0.22)", immediateRender: false }, YOU);
+          tl.fromTo("#f03-ytag", { scaleY: 1.08, scaleX: 0.96 }, { scaleY: 1, scaleX: 1, duration: 0.45, ease: "elastic.out(1, 0.4)", immediateRender: false }, YOU);
+          // HELD: the rubber stamp comes down on the kick, splats, and jolts the tag
+          tl.fromTo("#f03-stamp", { opacity: 0, scale: 2.6, rotation: -24 }, { opacity: 0.94, scale: 0.94, rotation: -11, duration: 0.1, ease: "power4.in", immediateRender: false }, HELD - 0.1);
+          tl.fromTo("#f03-stamp", { scale: 0.94 }, { scale: 1, duration: 0.25, ease: "power3.out", immediateRender: false }, HELD);
+          splats.forEach(({ d, s: sc }) => tl.fromTo(d, { opacity: 0, scale: 0 }, { opacity: 0.85, scale: sc, duration: 0.06, ease: "power2.out", immediateRender: false }, HELD));
+          tl.fromTo("#f03-ytag", { rotation: 0 }, { rotation: -7, duration: 0.06, ease: "power2.out", immediateRender: false }, HELD);
+          tl.fromTo("#f03-ytag", { rotation: -7 }, { rotation: 0, duration: 1.1, ease: "elastic.out(1, 0.3)", immediateRender: false }, HELD + 0.06);
+          // the copy drops into the open drawer, the camera tilts down onto its face, the drawer shuts on the kick
+          tl.set("#f03-envc", { clipPath: "inset(-700px -700px 110px -700px)" }, FILE);
+          tl.fromTo("#f03-envg", { y: 0 }, { y: 760, duration: 0.3, ease: "power2.in", immediateRender: false }, FILE);
+          tl.fromTo("#f03-face", { scale: 1.015 }, { scale: 0.996, duration: 0.05, ease: "power3.in", immediateRender: false }, SHUT - 0.05);
+          tl.fromTo("#f03-face", { scale: 0.996 }, { scale: 1, duration: 0.25, ease: "power2.out", immediateRender: false }, SHUT);
+          tl.fromTo("#f03-fgap", { opacity: 1 }, { opacity: 0, duration: 0.05, immediateRender: false }, SHUT - 0.05);
+          tl.fromTo("#f03-flamp i", { opacity: 0 }, { opacity: 1, duration: 0.03, immediateRender: false }, SHUT);
+          tl.set("#f03-flamp i", { opacity: 0.3 }, SHUT + 0.05);
+          tl.set("#f03-flamp i", { opacity: 1 }, SHUT + 0.09);
+
+          // ---- per-frame draw -------------------------------------------------------------------------------
+          // the dial whips on every kick (alternating like a combination being tried), creeping between
+          const KICKS = HR.onsetsIn("kick", T0, T0 + G2).map(L);
+          const dr = HR.rng(808);
+          const TURNS = KICKS.map((_, i) => (i % 2 ? -1 : 1) * (28 + dr() * 96));
+          const backOut = (p) => { const c = 1.9, q = p - 1; return 1 + (c + 1) * q * q * q + c * q * q; };
+          const dialAngle = (t) => {
+            let a = 14 * t + 260 * Math.pow(Math.max(0, t - 0.5), 2);
+            for (let i = 0; i < KICKS.length && KICKS[i] <= t; i++) a += TURNS[i] * backOut(Math.min(1, (t - KICKS[i]) / 0.24));
+            return a;
+          };
+          // the tries counter: a mechanical odometer, the low drums a blur, the high ones carrying over
+          const ODO0 = 4821390, RATE = 2871;
+          const dialRot = $("f03-dialrot"), arrow = $("f03-arrow"), mark1 = $("f03-mark1");
+          const hexEl = $("f03-hex"), lampEl = $("f03-lamp");
+
+          // ================================================================================================
+          // v16 (V16.md §4): overload, the shatter, the push-through into Plan B, the keep detonations, the bolt macro.
+          // Local times: BRK 0.884 "break", SLASH 1.924 "you", PUSH0–PUSH1 the dive into the dial, FLIP 4.435 "keep".
+          // ================================================================================================
+          const wfx = $("f03-wfx"), GA = $("f03-ga"), GB = $("f03-gb"), VG = $("f03-vg"), MAC = $("f03-mac"), plana = $("f03-plana"), KS = $("f03-ks");
+          const BRK = breakW.t, PUSH0 = 3.14, PUSH1 = 3.43, NPT = 2.81;
+          const smooth01 = (x) => Math.max(0, Math.min(1, x));
+          WOW.transition(tl, document.getElementById("el-03-keep"), { in: "drop", dur: 0.3 });
+
+          // -- Plan A overloads: sparks off the dial's rim on every kick and between them, the plate shaking harder, the ring glowing
+          const rfx = el("div", "", plana); Object.assign(rfx.style, { position: "absolute", inset: "0", pointerEvents: "none" });
+          const ovr = S(dial, "circle", { r: 177, fill: "none", stroke: "#E85D26", "stroke-width": 5, opacity: 0, class: "hr-glowbox" });
+          const ovl = S(plate, "text", { x: 262, y: 50, fill: "#E85D26", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 15, "letter-spacing": 2.4, opacity: 0 }, "▲ OVERLOAD");
+          const sr = HR.rng(612);
+          const sparkT = KICKS.filter((k) => k > 0.3 && k < 3.1).concat([0.6, 1.1, 1.28, 1.8, 2.15, 2.45, 2.62, 2.95, 3.08]).sort((a, b) => a - b);
+          sparkT.forEach((t, i) => {
+            const k = Math.min(1, t / 3), a = sr() * Math.PI * 2;
+            WOW.burst(tl, rfx, { x: 588 + Math.cos(a) * 165, y: 188 + Math.sin(a) * 165, t, n: 8 + Math.round(8 * k), speed: 520 + 520 * k, size: [3, 8], gravity: 1100,
+              spread: 110, aim: (a * 180) / Math.PI, seed: 600 + i, dur: 0.6, cream: 0.5 });
+            WOW.shake(tl, plana, t, { amp: 2 + 6 * k, dur: 0.14, seed: i + 1, rot: 0.2 });
+          });
+          WOW.pulse(tl, plana, { kind: "kick", amt: 0.025 });
+          // NOT PRACTICAL: slammed across the rig on the kick
+          const np = el("div", "", plana, "NOT PRACTICAL"); np.id = "f03-np"; np.setAttribute("data-layout-allow-overlap", "");
+          el("i", "", np, "2¹²⁸ OPERATIONS · 0 FOUND");
+          tl.fromTo(np, { opacity: 0, scale: 3.2, rotation: -22 }, { opacity: 1, scale: 0.94, rotation: -6, duration: 0.1, ease: "power4.in", immediateRender: false }, NPT - 0.1);
+          tl.fromTo(np, { scale: 0.94 }, { scale: 1, duration: 0.3, ease: "elastic.out(1, 0.4)", immediateRender: false }, NPT);
+          WOW.shock(tl, rfx, { x: 404, y: 190, t: NPT, r: 1200, n: 3, w: 9, color: "fire", dur: 0.6, gap: 0.07 });
+          WOW.rays(tl, rfx, { x: 404, y: 190, t: NPT, n: 26, r0: 220, r1: 1300, seed: 21, color: "cream", dur: 0.5, w: 5 });
+          WOW.burst(tl, rfx, { x: 404, y: 190, t: NPT, n: 40, speed: 1500, size: [5, 16], seed: 22, dur: 0.9, gravity: 900 });
+          WOW.flash(tl, wfx, NPT, { color: "fire", a: 0.4, dur: 0.2 });
+          WOW.shake(tl, GA, NPT, { amp: 22, dur: 0.5, seed: 5 });
+          WOW.shake(tl, plana, NPT, { amp: 14, dur: 0.4, seed: 7 });
+          tl.fromTo(plana, { y: 0 }, { y: 18, duration: 0.05, ease: "power2.out", immediateRender: false }, NPT);
+          tl.fromTo(plana, { y: 18 }, { y: 0, duration: 0.4, ease: "elastic.out(1, 0.4)", immediateRender: false }, NPT + 0.05);
+
+          // -- "break" lands with an explosion (WOW.explode, above); a crack runs through it at once, the strike on "you" blows it apart
+          WOW.shake(tl, GA, BRK, { amp: 16, dur: 0.45, seed: 2 });
+          WOW.flash(tl, wfx, BRK, { color: "fire", a: 0.3, dur: 0.16 });
+          WOW.burst(tl, wfx, { x: 435, y: 410, t: BRK, n: 26, speed: 1300, size: [6, 20], seed: 31, dur: 0.8, gravity: 800, color: "fire", cream: 0.2 });
+          WOW.shake(tl, GA, SLASH, { amp: 26, dur: 0.55, seed: 9 });
+          WOW.shock(tl, wfx, { x: 435, y: 420, t: SLASH, r: 1300, n: 3, w: 8, color: "fire", dur: 0.6, gap: 0.07 });
+          WOW.rays(tl, wfx, { x: 435, y: 420, t: SLASH, n: 28, r0: 120, r1: 1300, seed: 41, color: "cream", dur: 0.5, w: 5 });
+          WOW.burst(tl, wfx, { x: 435, y: 420, t: SLASH, n: 46, speed: 1700, size: [6, 22], seed: 42, dur: 1.0, gravity: 1100, cream: 0.35 });
+          WOW.flash(tl, wfx, SLASH, { a: 0.5, dur: 0.2 });
+          WOW.pulse(tl, GA, { kind: "snare", amt: 0.012 });
+
+          // -- the push-through: the camera dives into the dial's hub (GA, driven in render), cut, and Plan B comes out of its window
+          WOW.shock(tl, wfx, { x: 1264, y: 819, t: PUSH1, r: 1400, n: 3, w: 9, color: "fire", dur: 0.6, gap: 0.07 });
+          WOW.rays(tl, wfx, { x: 1264, y: 819, t: PUSH1, n: 30, r0: 100, r1: 1400, seed: 51, color: "cream", dur: 0.5, w: 5 });
+          WOW.flash(tl, wfx, PUSH1 - 0.02, { a: 0.65, dur: 0.2 });
+          WOW.shake(tl, GB, PUSH1, { amp: 18, dur: 0.45, seed: 11 });
+
+          // -- the keep: the stamp is a detonation; the tag, HELD and the drawer's slam answer
+          const KEEPC = { x: 990, y: 800 };
+          WOW.shock(tl, wfx, { x: KEEPC.x, y: KEEPC.y, t: FLIP, r: 1500, n: 3, w: 11, color: "fire", dur: 0.65, gap: 0.07 });
+          WOW.rays(tl, wfx, { x: KEEPC.x, y: KEEPC.y, t: FLIP, n: 32, r0: 260, r1: 1500, seed: 61, color: "cream", dur: 0.55, w: 6 });
+          WOW.burst(tl, wfx, { x: KEEPC.x, y: KEEPC.y, t: FLIP, n: 44, speed: 1600, size: [6, 20], seed: 62, dur: 1.0, gravity: 700, cream: 0.25 });
+          WOW.flash(tl, wfx, FLIP, { a: 0.6, dur: 0.2 });
+          WOW.shake(tl, KS, FLIP, { amp: 28, dur: 0.55, seed: 13 });
+          WOW.pulse(tl, $("f03-env"), { kind: "kick", amt: 0.012 });
+          WOW.shock(tl, wfx, { x: 1600, y: 640, t: YOU, r: 800, n: 2, w: 6, color: "cream", dur: 0.5 });
+          WOW.burst(tl, wfx, { x: 1600, y: 640, t: YOU, n: 14, speed: 700, size: [4, 10], seed: 63, dur: 0.6, gravity: 500, cream: 0.6 });
+          WOW.shake(tl, KS, YOU, { amp: 9, dur: 0.3, seed: 14 });
+          WOW.shock(tl, wfx, { x: 1730, y: 596, t: HELD, r: 1000, n: 2, w: 8, color: "fire", dur: 0.55 });
+          WOW.rays(tl, wfx, { x: 1730, y: 596, t: HELD, n: 22, r0: 140, r1: 1100, seed: 64, color: "cream", dur: 0.45, w: 5 });
+          WOW.flash(tl, wfx, HELD, { a: 0.3, dur: 0.16 });
+          WOW.shake(tl, KS, HELD, { amp: 16, dur: 0.4, seed: 15 });
+          WOW.flash(tl, wfx, SHUT, { color: "fire", a: 0.3, dur: 0.22 });
+          WOW.shake(tl, VG, SHUT, { amp: 12, dur: 0.4, seed: 16 });
+          WOW.rays(tl, wfx, { x: 1000, y: 550, t: PULL + 0.12, n: 30, r0: 240, r1: 1500, seed: 65, color: "cream", dur: 0.55, w: 5 });
+          WOW.shock(tl, wfx, { x: 1000, y: 550, t: ARRIVE, r: 1500, n: 2, w: 8, color: "cream", dur: 0.55 });
+          WOW.flash(tl, wfx, ARRIVE, { a: 0.35, dur: 0.18 });
+          [BOLTS[0], BOLTS[1], BOLTS[3], BOLTS[4], BOLTS[5]].forEach((b, i) => {
+            WOW.shock(tl, wfx, { x: 1030, y: 550, t: b, r: 800, n: 1, w: 5, color: "fire", dur: 0.45 });
+            WOW.shake(tl, VG, b, { amp: 7, dur: 0.2, seed: 20 + i, rot: 0.2 });
+          });
+
+          // -- the bolt macro: after bolt 2 the vault spins into bolt 3's housing; the bolt slides home in a close-up and the lens pulls back out
+          const MW = 8.80, MCUT = 9.0, MLOCK = BOLTS[2], MOUT0 = MLOCK + 0.04, MOUT1 = MOUT0 + 0.19;
+          const dvg = { p: 0 };
+          tl.fromTo(dvg, { p: 0 }, { p: 1, duration: MCUT - MW, ease: "power3.in", immediateRender: false }, MW);
+          tl.fromTo(dvg, { p: 1 }, { p: 0, duration: MOUT1 - MOUT0, ease: "power3.out", immediateRender: false }, MOUT0);
+          const msvg = S(MAC, "svg", { viewBox: "0 0 1920 1080", "aria-hidden": "true" });
+          const mg = S(msvg, "g", { transform: `translate(960 540) rotate(${(-BA[2] * 180 / Math.PI).toFixed(3)})` });
+          const MUTE = "#6e6c66";
+          S(mg, "rect", { x: -1800, y: -230, width: 3600, height: 460, fill: "#111111", stroke: MUTE, "stroke-width": 4 });
+          S(mg, "rect", { x: -1800, y: -150, width: 3600, height: 300, fill: "#0A0A0A", stroke: "#3a3a36", "stroke-width": 3 });
+          for (let x = -1760; x < 1800; x += 40) S(mg, "path", { d: `M${x} -230 v${x % 200 === 0 ? 26 : 14}`, stroke: "#3a3a36", "stroke-width": 2 });
+          for (let x = -1500; x < 1800; x += 300) for (const y of [-190, 190]) { S(mg, "circle", { cx: x, cy: y, r: 17, fill: "url(#f03-rivet)", stroke: "#111111", "stroke-width": 3 }); }
+          const glow = S(mg, "rect", { x: 520, y: -190, width: 120, height: 380, fill: "#E85D26", opacity: 0, style: "filter: blur(34px)" });
+          const mrecv = S(mg, "rect", { x: 580, y: -190, width: 560, height: 380, fill: "#151513", stroke: MUTE, "stroke-width": 5 });
+          S(mg, "rect", { x: 620, y: -140, width: 480, height: 280, fill: "none", stroke: "#3a3a36", "stroke-width": 3 });
+          const mb = S(mg, "g", {});
+          S(mb, "rect", { x: -640, y: -120, width: 1180, height: 240, fill: "#0A0A0A" });
+          const mbo = S(mb, "rect", { x: -640, y: -120, width: 1180, height: 240, fill: "none", stroke: "#bdb8ae", "stroke-width": 5 });
+          S(mb, "rect", { x: -600, y: -80, width: 1100, height: 160, fill: "none", stroke: "#6e6c66", "stroke-width": 3 });
+          S(mb, "text", { x: -560, y: 22, fill: "rgba(240,236,229,0.88)", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 84, "letter-spacing": 6 }, "BOLT 3/7");
+          S(mb, "text", { x: -560, y: 62, fill: "rgba(136,136,128,0.9)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 24, "letter-spacing": 8 }, "RETENTION: INDEFINITE");
+          tl.set(MAC, { opacity: 1 }, MCUT);
+          tl.fromTo(MAC, { scale: 2.6, rotation: -10, filter: "blur(14px)", transformOrigin: "50% 50%" }, { scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.14, ease: "power3.out", immediateRender: false }, MCUT);
+          tl.fromTo(mb, { x: -200 }, { x: 0, duration: MLOCK - MCUT - 0.02, ease: "power4.in", immediateRender: false }, MCUT + 0.02);
+          tl.set(mbo, { attr: { stroke: "#E85D26" } }, MLOCK);
+          tl.set(mrecv, { attr: { stroke: "#E85D26" } }, MLOCK);
+          tl.fromTo(glow, { opacity: 1 }, { opacity: 0, duration: 0.35, ease: "power2.out", immediateRender: false }, MLOCK);
+          WOW.shake(tl, MAC, MLOCK, { amp: 26, dur: 0.3, seed: 17 });
+          WOW.shock(tl, wfx, { x: 1398, y: 889, t: MLOCK, r: 1200, n: 2, w: 8, color: "fire", dur: 0.45 });
+          WOW.burst(tl, wfx, { x: 1398, y: 889, t: MLOCK, n: 34, speed: 1500, size: [4, 14], seed: 71, dur: 0.6, gravity: 700, cream: 0.4 });
+          WOW.flash(tl, wfx, MLOCK, { a: 0.5, dur: 0.16 });
+          tl.fromTo(MAC, { scale: 1, rotation: 0, filter: "blur(0px)", transformOrigin: "1283px 752px" }, { scale: 0.1, rotation: -14, filter: "blur(10px)", duration: MOUT1 - MOUT0, ease: "power2.in", immediateRender: false }, MOUT0);
+          tl.fromTo(MAC, { opacity: 1 }, { opacity: 0, duration: 0.07, ease: "none", immediateRender: false }, MOUT1 - 0.07);
+
+          function render() {
+            const t = tl.time(), T = t + T0, step = Math.floor(t * 15);
+            cam.x = A.x + N.x; cam.y = A.y + N.y; cam.z = A.z + N.z; cam.rot = A.rot + N.rot; cam.focus = A.focus;
+            stage.apply(T);
+            WOW.draw(tl, 23.656);
+            HR.draw(tl);
+            const bass = HR.band("bass", T), hat = HR.hit("hat", T, 0.07);
+
+            lampEl.style.opacity = (0.75 + 0.25 * bass - 0.3 * hat).toFixed(3);
+
+            // the marker voice on Plan A: the arrow draws on, then the words are written left to right
+            const ap = Math.max(0, Math.min(1, (t - NOTE) / 0.2)), mp = Math.max(0, Math.min(1, (t - NOTE - 0.1) / 0.4));
+            arrow.style.strokeDashoffset = (100 * (1 - ap)).toFixed(1);
+            mark1.style.clipPath = `inset(-30% ${(100 - mp * 100).toFixed(1)}% -40% -5%)`;
+
+            // Plan A: the dial and the odometer, futile and never stopping
+            if (t < FLIP) {
+              dialRot.setAttribute("transform", `rotate(${dialAngle(t).toFixed(2)})`);
+              HR.glow(pointer, T, 0.25, 0.5);
+              const ol = smooth01((t - 0.9) / 1.7);
+              HR.glow(ovr, T, 0.5, 0.8);
+              ovr.setAttribute("opacity", (ol * (0.55 + 0.45 * HR.hit("kick", T, 0.1))).toFixed(3));
+              ovl.setAttribute("opacity", t > SLASH && Math.floor(t * 9) % 2 === 0 ? "1" : "0");
+              const v = ODO0 + RATE * t + 40000 * Math.pow(Math.max(0, t - 0.4), 2);
+              drums.forEach((col, i) => {
+                const k = 6 - i, p10 = Math.pow(10, k);
+                let pos = (v / p10) % 10;
+                if (k > 0) { const low = v % p10, d = Math.floor(v / p10) % 10; pos = d + Math.max(0, low - (p10 - 1)); }
+                col.style.transform = `translateY(${(-pos * 86).toFixed(1)}px)`;
+              });
+            }
+
+            // glow: "break" until it is cut, the slash; heroes pulse on kicks and nudge on snares
+            if (t < SLASH) HR.glow(breakW.row, T, 0.35, 0.8);
+            HR.glow(slash, T, 0.3, 0.6);
+            const kick = HR.hit("kick", T, 0.14), sn = HR.hit("snare", T, 0.08);
+            breakW.row.style.transform = `translateX(${sn.toFixed(2)}px) scale(${(1 + 0.015 * kick).toFixed(4)})`;
+
+            // drawer 0001: the ciphertext churns behind its window; hats re-roll a row
+            const hb = Math.floor(HR.hit("hat", T, 0.05) * 3);
+            hexEl.textContent = Array.from({ length: 2 }, (_, i) => HR.cipher(24, 7001 + i * 31 + (i === 0 ? step : hb * 17)).replace(/(.{4})(?!$)/g, "$1 ")).join("\n");
+
+            archie.apply(T);
+            renderVault(t, T);
+
+            // v16: Plan A dives into the dial's hub and is gone; Plan B whips in as a ghost, then comes out of its window
+            const dp = Math.pow(smooth01((t - PUSH0) / (PUSH1 - PUSH0)), 2);
+            GA.style.visibility = t >= PUSH1 ? "hidden" : "visible";
+            GA.style.transform = dp > 0 ? `scale(${Math.exp(Math.log(16) * dp).toFixed(3)})` : "";
+            GA.style.filter = dp > 0.05 ? `blur(${(14 * dp * dp).toFixed(1)}px)` : "";
+            const wu = smooth01((t - 0.3) / 0.32), we = 1 - Math.pow(1 - wu, 4), eu = smooth01((t - (PUSH1 - 0.05)) / 0.3), ee = 1 - Math.pow(1 - eu, 3);
+            const out = t >= PUSH1 - 0.05;
+            const gx = 1500 * (1 - we), gsk = -14 * (1 - we), gsc = out ? 0.55 + 0.45 * ee : 1, gbl = Math.max(28 * (1 - we), out ? 14 * (1 - ee) : 0);
+            GB.style.transform = gx || gsk || gsc !== 1 ? `translateX(${gx.toFixed(1)}px) skewX(${gsk.toFixed(2)}deg) scale(${gsc.toFixed(4)})` : "";
+            GB.style.filter = gbl > 0.3 ? `blur(${gbl.toFixed(1)}px)` : "";
+            GB.style.opacity = (out ? 0.5 + 0.5 * smooth01(eu * 2.2) : 0.5).toFixed(3);
+            // the vault spins toward bolt 3 and back (the macro cut sits between)
+            const vp = dvg.p;
+            VG.style.transform = vp > 0.001 ? `scale(${Math.exp(Math.log(3.2) * vp).toFixed(4)}) rotate(${(14 * vp).toFixed(2)}deg)` : "";
+            VG.style.filter = vp > 0.05 ? `blur(${(16 * vp * vp).toFixed(1)}px)` : "";
+          }
+          tl.eventCallback("onUpdate", render);
+          tl.seek(0); render();
+          window.__timelines["03-keep"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

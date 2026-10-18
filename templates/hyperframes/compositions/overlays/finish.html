@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- The finish layer (docs/HOUSE-STYLE.md): film grain, vignette, light leaks on the register flips, drop flashes.
+         Mounted above every frame for the whole film by ./vid assemble. Set data-duration to the song's length and
+         LEAKS / FLASHES to its track seconds; the leak colours are the palette's accent and light. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        #root { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        #fin-vignette { position: absolute; inset: 0;
+          background: radial-gradient(ellipse 78% 72% at 50% 48%, rgba(10, 8, 6, 0) 52%, rgba(10, 8, 6, 0.42) 100%); }
+        #fin-grain { position: absolute; inset: -64px; background-repeat: repeat; background-size: 256px 256px;
+          mix-blend-mode: soft-light; opacity: 0.42; }
+        .fin-leak { position: absolute; inset: -20%; opacity: 0; mix-blend-mode: screen; will-change: transform, opacity; }
+        .fin-leak i { position: absolute; display: block; border-radius: 50%; filter: blur(60px); }
+        .fin-leak .a { width: 40%; height: 130%; left: -16%; top: -15%; background: rgba(232, 93, 38, 0.8); }
+        .fin-leak .b { width: 16%; height: 70%; left: -2%; top: 14%; background: rgba(240, 236, 229, 0.55); }
+        .fin-leak .c { width: 14%; height: 150%; left: 14%; top: -25%; background: rgba(232, 93, 38, 0.45); transform: rotate(12deg); }
+        #fin-flash { position: absolute; inset: 0; background: #F0ECE5; opacity: 0; }
+      </style>
+
+      <div id="root" data-composition-id="finish" data-width="1920" data-height="1080" data-duration="0" data-layout-ignore>
+        <div id="fin-leaks"></div>
+        <div id="fin-flash"></div>
+        <div id="fin-vignette"></div>
+        <div id="fin-grain"></div>
+      </div>
+
+      <script>
+        (() => {
+          // light arrives on every flip to the orange register and on the big hits (track seconds)
+          const LEAKS = []; // every flip to the loud register and the biggest hits (track seconds)
+          const FLASHES = []; // the drops (track seconds)
+          const rng = (seed) => () => { seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+            t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+
+          // four seeded grain tiles, baked once
+          const tiles = [0, 1, 2, 3].map((k) => {
+            const c = document.createElement("canvas"); c.width = c.height = 256;
+            const x = c.getContext("2d"), img = x.createImageData(256, 256), r = rng(101 + k * 17);
+            for (let i = 0; i < img.data.length; i += 4) {
+              const v = 128 + (r() + r() + r() - 1.5) * 150;
+              img.data[i] = img.data[i + 1] = img.data[i + 2] = Math.max(0, Math.min(255, v)); img.data[i + 3] = 255;
+            }
+            x.putImageData(img, 0, 0);
+            return `url(${c.toDataURL("image/png")})`;
+          });
+
+          const box = document.getElementById("fin-leaks");
+          const leaks = LEAKS.map((t, k) => {
+            const d = document.createElement("div"); d.className = "fin-leak"; d.innerHTML = "<i class='a'></i><i class='b'></i><i class='c'></i>";
+            box.appendChild(d); return { t, d, flip: k % 2 ? -1 : 1 };
+          });
+
+          const tl = gsap.timeline({ paused: true });
+          for (const { t, d, flip } of leaks) {
+            tl.fromTo(d, { opacity: 0, xPercent: -20, scale: 0.9 }, { opacity: 0.4, xPercent: 6, scale: 1, duration: 0.3, ease: "power2.out" }, Math.max(0, t - 0.06));
+            tl.fromTo(d, { opacity: 0.4, xPercent: 6 }, { opacity: 0, xPercent: 46, duration: 1.2, ease: "sine.in", immediateRender: false }, t + 0.24);
+          }
+          for (const t of FLASHES) {
+            tl.fromTo("#fin-flash", { opacity: 0.16 }, { opacity: 0, duration: 0.1, ease: "power2.out", immediateRender: false }, t);
+          }
+
+          const grain = document.getElementById("fin-grain");
+          function render() {
+            const step = Math.floor(tl.time() * 24), r = rng(step * 7919 + 13);
+            grain.style.backgroundImage = tiles[step % 4];
+            grain.style.backgroundPosition = `${Math.floor(r() * 256)}px ${Math.floor(r() * 256)}px`;
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["finish"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,404 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 21 — fridge (131.022–134.514), v14 H3: "the fridge hums low, the key falls out".
+         The dilution refrigerator seen from below, as 11-petabytes' lamps-and-hairlines (the globe recipe): six plates
+         as rings of lamps with engraved undersides, ~100 coax lines with control pulses running down to the chip, the
+         camera rising beneath it. On "key" the chip flashes; what falls out is the actual secret: Shor's algorithm (the
+         discrete-log version) recovers the X25519 ephemeral private key from the recorded handshake, and the AES-256-GCM
+         session key falls out of the chip as hex, settling into one line. Facts (sources in renders/texts-v14.md):
+         stage temperatures 50 K / 4 K / ~800 mK still / ~100 mK cold plate / ~10 mK mixing chamber; ~2,330 logical
+         qubits for a 256-bit curve (Roetteler et al. 2017). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --cream-muted: #888880; --cream-hint: #505048;
+          background: var(--ink); color: var(--cream);
+        }
+        #f21-gl { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+        #f21-fx { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+        /* stage tags that follow the plates */
+        .f21-tag { position: absolute; left: 0; top: 0; display: flex; align-items: center; white-space: nowrap; will-change: transform; }
+        .f21-tag i { display: block; width: 46px; height: 1px; background: var(--cream-muted); margin-right: 10px; }
+        .f21-tag span { font: 500 15px "IBM Plex Mono"; letter-spacing: 0.12em; color: var(--cream-muted); }
+        .f21-tag b { font-weight: 600; color: var(--cream); margin-right: 10px; }
+        .f21-tag.f21-mxc i { background: var(--fire); }
+        .f21-tag.f21-mxc b { color: var(--fire); }
+        .f21-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font: 500 16px "IBM Plex Mono"; letter-spacing: 0.14em; color: var(--fire); }
+        .f21-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor; vertical-align: middle; margin-right: 16px; }
+        /* the lyric */
+        .f21-line { position: absolute; left: 5.5cqw; top: 9.5cqw; width: 50cqw; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5cqw; font-family: "Barlow"; }
+        .f21-row { display: flex; flex-wrap: wrap; column-gap: 0.26em; font-weight: 800; font-size: 4.4cqw; line-height: 1.04; letter-spacing: -0.02em; }
+        .f21-row.f21-big { font-weight: 900; font-size: 13cqw; line-height: 0.86; letter-spacing: -0.04em; color: var(--fire); margin: 0.3cqw 0 0.5cqw -0.4cqw; transform-origin: 0 80%; }
+        .f21-w { display: inline-block; position: relative; }
+        /* what falls out: the derivation and the key */
+        #f21-out { position: absolute; left: 5.5cqw; top: 838px; width: 1300px; font-family: "IBM Plex Mono"; }
+        .f21-step { font: 500 16px "IBM Plex Mono"; letter-spacing: 0.08em; color: var(--cream-muted); white-space: nowrap; clip-path: inset(-20% 100% -20% 0); margin-bottom: 6px; }
+        .f21-step b { color: var(--cream); font-weight: 600; }
+        #f21-klabel { font: 600 15px "IBM Plex Mono"; letter-spacing: 0.14em; color: var(--fire); margin-top: 14px; opacity: 0; }
+        #f21-mark { position: absolute; left: 1262px; top: 958px; font: 400 52px/1 "Caveat Brush"; color: var(--fire); white-space: nowrap;
+          transform: rotate(-6deg); transform-origin: 0 100%; clip-path: inset(-20% 100% -30% -5%); }
+        #f21-foot { position: absolute; right: 5.5cqw; bottom: 3.6cqw; text-align: right; line-height: 1.7; font: 500 14px "IBM Plex Mono"; letter-spacing: 0.1em; color: var(--cream-muted); opacity: 0; }
+      </style>
+
+      <div data-hf-id="hf-ja9q" id="root" data-composition-id="21-fridge" data-width="1920" data-height="1080" data-duration="3.492">
+        <canvas data-hf-id="hf-z3xc" id="f21-gl" width="1920" height="1080" data-layout-ignore></canvas>
+        <div data-hf-id="hf-170h" id="f21-tags" data-layout-ignore></div>
+        <canvas data-hf-id="hf-uc9x" id="f21-fx" width="1920" height="1080" data-layout-ignore></canvas>
+        <div data-hf-id="hf-6jvb" class="f21-kicker">THE QUANTUM COMPUTER · DILUTION REFRIGERATOR</div>
+        <div data-hf-id="hf-h4jo" class="hr-layer" id="f21-fg" data-depth="0.8"><div data-hf-id="hf-of74" class="f21-line" id="f21-l26"></div></div>
+        <div data-hf-id="hf-1j1d" id="f21-out">
+          <div data-hf-id="hf-p2ds" class="f21-step" id="f21-s1"><b data-hf-id="hf-pkdf">SHOR</b> (DISCRETE-LOG VERSION) ON X25519 → THE EPHEMERAL PRIVATE KEY</div>
+          <div data-hf-id="hf-3us9" class="f21-step" id="f21-s2">+ THE RECORDED HANDSHAKE → THE SHARED SECRET → HKDF →</div>
+          <div data-hf-id="hf-pig4" id="f21-klabel">AES-256-GCM SESSION KEY</div>
+        </div>
+        <div data-hf-id="hf-emcy" id="f21-mark">(oops)</div>
+        <div data-hf-id="hf-zto1" id="f21-foot">10 mK: COLDER THAN DEEP SPACE (2.7 K)<br data-hf-id="hf-x5px">≈ 2,330 LOGICAL QUBITS FOR A 256-BIT CURVE · ROETTELER ET AL., 2017</div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+
+        const T0 = 131.022, DUR = 3.492;
+        const L = (t) => +(t - T0).toFixed(3);
+        const KEY = L(132.94), FALL = L(133.2), LAND = L(134.04);
+        const $ = (id) => document.getElementById(id);
+        const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+        const clamp01 = (x) => Math.min(1, Math.max(0, x));
+        const smooth = (a, b, x) => { const u = clamp01((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+        const rng = HR.rng(2121);
+
+        // ---- the lyric (L26), each word on its own start ------------------------------------------------------
+        const ROWS = [
+          { words: [["The", 131.022], ["fridge", 131.122], ["hums", 131.371], ["low,", 131.86]] },
+          { words: [["the", 132.76]] },
+          { big: true, words: [["key", 132.94]] },
+          { words: [["falls", 133.2], ["out", 134.04]] },
+        ];
+        const spans = [];
+        for (const r of ROWS) {
+          const row = el("div", "f21-row" + (r.big ? " f21-big hr-glow" : ""), $("f21-l26"));
+          for (const [w, t] of r.words) spans.push([el("span", "f21-w", row, w.toLowerCase()), t, !!r.big, row]);
+        }
+
+        // ---- the refrigerator: plates (y up, the mixing chamber at y = 0) ---------------------------------------
+        const PLATES = [
+          { y: 66, r: 27, label: null },
+          { y: 52, r: 25, label: ["50 K", ""] },
+          { y: 38, r: 23, label: ["4 K", ""] },
+          { y: 25, r: 20.5, label: ["800 mK", "STILL"] },
+          { y: 12.5, r: 18, label: ["100 mK", "COLD PLATE"] },
+          { y: 0, r: 15.5, label: ["10 mK", "MIXING CHAMBER"], mxc: true },
+        ];
+        const CHIP_Y = -7;
+        const pos = [], size = [], kind = [], seed = [];
+        let sid = 1;
+        const add = (x, y, z, k, s) => { pos.push(x, y, z); size.push(s); kind.push(k); seed.push((sid++ * 0.61803398875) % 1); };
+        const lpos = [], lcol = [];
+        const C = { hint: new THREE.Color(0x3a3a36), muted: new THREE.Color(0x6e6c66), fire: new THREE.Color(0xe85d26), dim: new THREE.Color(0x2a2a27) };
+        const seg = (a, b, c) => { lpos.push(a[0], a[1], a[2], b[0], b[1], b[2]); lcol.push(c.r, c.g, c.b, c.r, c.g, c.b); };
+        const circle = (y, r, n, c, a0 = 0) => { for (let i = 0; i < n; i++) { const a = a0 + (i / n) * Math.PI * 2, b = a0 + ((i + 1) / n) * Math.PI * 2; seg([r * Math.cos(a), y, r * Math.sin(a)], [r * Math.cos(b), y, r * Math.sin(b)], c); } };
+
+        for (const p of PLATES) {
+          const yu = p.y - 0.36; // the underside, which is what we see from below
+          // the rim: a dense ring of lamps (fire), the bolt circle (cream, dim)
+          const nr = Math.round((2 * Math.PI * p.r) / 0.34);
+          for (let i = 0; i < nr; i++) { const a = (i / nr) * Math.PI * 2; add(p.r * Math.cos(a), yu, p.r * Math.sin(a), 0, 0.2); }
+          const nb = Math.round((2 * Math.PI * p.r * 0.9) / 1.6);
+          for (let i = 0; i < nb; i++) { const a = (i / nb) * Math.PI * 2 + 0.05; add(0.9 * p.r * Math.cos(a), yu - 0.01, 0.9 * p.r * Math.sin(a), 1, 0.14); }
+          // the engraved underside: concentric rings and spokes
+          for (const f of [0.28, 0.5, 0.72]) circle(yu, f * p.r, 120, C.hint);
+          circle(yu, 0.97 * p.r, 160, C.muted);
+          for (let i = 0; i < 24; i++) { const a = (i / 24) * Math.PI * 2; seg([0.28 * p.r * Math.cos(a), yu, 0.28 * p.r * Math.sin(a)], [0.72 * p.r * Math.cos(a), yu, 0.72 * p.r * Math.sin(a)], C.dim); }
+        }
+        // support rods between the plates
+        for (let k = 0; k + 1 < PLATES.length; k++) {
+          const A = PLATES[k], B = PLATES[k + 1];
+          for (let i = 0; i < 6; i++) {
+            const a = (i / 6) * Math.PI * 2 + 0.26, ra = 0.82 * A.r, rb = 0.82 * B.r;
+            seg([ra * Math.cos(a), A.y - 0.4, ra * Math.sin(a)], [rb * Math.cos(a), B.y + 0.3, rb * Math.sin(a)], C.muted);
+          }
+        }
+        // the coax: ~100 lines from the top plate down through every stage to the sample holder
+        const COAX = [];
+        const radiusAt = (y, f) => {
+          if (y <= 0) return f * 15.5 * (0.18 + 0.82 * clamp01((y - CHIP_Y) / -CHIP_Y));
+          for (let k = PLATES.length - 1; k > 0; k--) {
+            const A = PLATES[k - 1], B = PLATES[k];
+            if (y <= A.y) { const u = (y - B.y) / (A.y - B.y); return f * (B.r + (A.r - B.r) * u); }
+          }
+          return f * PLATES[0].r;
+        };
+        for (let i = 0; i < 104; i++) {
+          const a = (i / 104) * Math.PI * 2 + rng() * 0.04, f = 0.42 + 0.14 * ((i * 7) % 5) / 4, ph = rng() * 6.28;
+          const path = [];
+          for (let s = 0; s <= 72; s++) {
+            const y = PLATES[0].y - (s / 72) * (PLATES[0].y - CHIP_Y);
+            const r = radiusAt(y, f) + 0.25 * Math.sin(y * 0.37 + ph);
+            path.push([r * Math.cos(a + 0.02 * Math.sin(y * 0.2 + ph)), y, r * Math.sin(a + 0.02 * Math.sin(y * 0.2 + ph))]);
+          }
+          const c = i % 9 === 0 ? C.fire : i % 3 === 0 ? C.muted : C.hint;
+          for (let s = 0; s < path.length - 1; s++) seg(path[s], path[s + 1], c);
+          COAX.push(path);
+        }
+        // the sample holder (a square box) and the chip's qubits, 6 × 6
+        const HB = 2.6;
+        for (const y of [CHIP_Y + 1.2, CHIP_Y - 0.4]) {
+          const q = [[-HB, y, -HB], [HB, y, -HB], [HB, y, HB], [-HB, y, HB]];
+          for (let i = 0; i < 4; i++) seg(q[i], q[(i + 1) % 4], C.muted);
+        }
+        for (const [x, z] of [[-HB, -HB], [HB, -HB], [HB, HB], [-HB, HB]]) seg([x, CHIP_Y + 1.2, z], [x, CHIP_Y - 0.4, z], C.muted);
+        for (let i = 0; i < 4; i++) { const a = (i / 4) * Math.PI * 2 + Math.PI / 4; seg([HB * Math.cos(a), CHIP_Y + 1.2, HB * Math.sin(a)], [5 * Math.cos(a), -0.4, 5 * Math.sin(a)], C.muted); }
+        const QUBIT0 = size.length;
+        for (let i = 0; i < 6; i++) for (let j = 0; j < 6; j++) add(-1.75 + i * 0.7, CHIP_Y - 0.42, -1.75 + j * 0.7, 3, 0.26);
+        // control pulses: lamps that travel down the coax (their positions are written every frame)
+        const NP = 220, PULSE0 = size.length;
+        const pulses = Array.from({ length: NP }, (_, i) => ({ line: (i * 37) % COAX.length, ph: rng(), sp: 0.55 + rng() * 0.6, born: rng() * 1.6 }));
+        for (let i = 0; i < NP; i++) add(0, 0, 0, 2, 0.17);
+
+        const COUNT = size.length;
+        const geo = new THREE.BufferGeometry();
+        const posAttr = new THREE.Float32BufferAttribute(pos, 3);
+        posAttr.setUsage(THREE.DynamicDrawUsage);
+        geo.setAttribute("position", posAttr);
+        geo.setAttribute("aSize", new THREE.Float32BufferAttribute(size, 1));
+        geo.setAttribute("aKind", new THREE.Float32BufferAttribute(kind, 1));
+        geo.setAttribute("aSeed", new THREE.Float32BufferAttribute(seed, 1));
+        const aVis = new THREE.Float32BufferAttribute(new Float32Array(COUNT).fill(1), 1);
+        aVis.setUsage(THREE.DynamicDrawUsage);
+        geo.setAttribute("aVis", aVis);
+
+        // ---- the lamp model (the globe's: a sharp disc and a soft halo; a separate additive bloom pass) --------
+        const HALO = 2.3;
+        const uni = { uTime: { value: 0 }, uScale: { value: 1000 }, uHum: { value: 0 }, uFlash: { value: 0 }, uBloom: { value: 0.1 }, uRun: { value: 0 } };
+        const LAMP = `
+          attribute float aSize; attribute float aKind; attribute float aSeed; attribute float aVis;
+          uniform float uTime; uniform float uScale; uniform float uHum; uniform float uFlash; uniform float uRun;
+          varying vec3 vCol; varying float vA; varying float vPx;
+          void lamp(out vec3 col, out float a, out float px) {
+            vec4 mv = modelViewMatrix * vec4(position, 1.0);
+            float depth = max(-mv.z, 0.01);
+            vec3 fire = vec3(0.9098, 0.3647, 0.1490), cream = vec3(0.9412, 0.9255, 0.8980), hint = vec3(0.42, 0.41, 0.38);
+            float shimmer = 0.85 + 0.15 * sin(uTime * 9.0 + aSeed * 40.0);
+            if (aKind < 0.5) { col = fire; a = (0.7 + 0.3 * uHum) * shimmer; }
+            else if (aKind < 1.5) { col = hint; a = 0.55; }
+            else if (aKind < 2.5) { col = cream; a = aVis; }
+            else { // the qubits: fire while the computation runs, white-hot on the flash
+              float blink = step(0.5, fract(sin(aSeed * 91.7 + floor(uTime * 18.0) * 3.1) * 4375.5));
+              col = mix(fire, cream, max(uFlash, 0.35 * blink * uRun)); a = 1.0;
+            }
+            float s = aSize * (aKind > 2.5 ? 1.0 + 0.5 * uFlash : 1.0) * (aKind < 0.5 ? 1.0 + 0.25 * uHum : 1.0);
+            px = s * uScale / depth;
+            gl_Position = projectionMatrix * mv;
+            // the lyric sits upper-left: lamps behind it step down so the type reads
+            vec2 ndc = gl_Position.xy / gl_Position.w;
+            a *= 1.0 - 0.6 * smoothstep(0.0, 0.25, min(-0.05 - ndc.x, ndc.y + 0.2));
+          }`;
+        const coreMat = new THREE.ShaderMaterial({
+          uniforms: uni, transparent: true, depthWrite: false, depthTest: true,
+          vertexShader: LAMP + `
+            void main() {
+              vec3 col; float a, px; lamp(col, a, px);
+              if (px < 2.4) { a *= pow(px / 2.4, 0.35); px = 2.4; }
+              vCol = col; vA = a; vPx = px;
+              gl_PointSize = a < 0.003 ? 0.0 : min(px * ${HALO.toFixed(2)}, 600.0);
+            }`,
+          fragmentShader: `
+            varying vec3 vCol; varying float vA; varying float vPx;
+            void main() {
+              float r = length(gl_PointCoord - 0.5) * 2.0 * ${HALO.toFixed(2)};
+              float fw = 1.0 / max(vPx, 1.0);
+              float core = 1.0 - smoothstep(1.0 - fw, 1.0 + fw, r);
+              float glow = 0.3 * exp(-2.4 * max(r - 1.0, 0.0)) * (1.0 - smoothstep(${(HALO - 0.3).toFixed(2)}, ${HALO.toFixed(2)}, r));
+              float a = vA * max(core, glow);
+              if (a < 0.004) discard;
+              gl_FragColor = vec4(vCol, a);
+            }`,
+        });
+        const bloomMat = new THREE.ShaderMaterial({
+          uniforms: uni, transparent: true, depthWrite: false, depthTest: true, blending: THREE.AdditiveBlending,
+          vertexShader: LAMP + `
+            uniform float uBloom;
+            void main() {
+              vec3 col; float a, px; lamp(col, a, px);
+              float hero = step(2.5, aKind);
+              vCol = col;
+              vA = a * uBloom * mix(1.0, 4.0 + 4.0 * uFlash, hero);
+              vPx = clamp(px * mix(4.0, 9.0, hero), 6.0, mix(160.0, 700.0, hero));
+              gl_PointSize = vA < 0.002 ? 0.0 : vPx;
+            }`,
+          fragmentShader: `
+            varying vec3 vCol; varying float vA;
+            void main() {
+              float r = length(gl_PointCoord - 0.5) * 2.0;
+              float g = exp(-r * r * 4.5) * (1.0 - smoothstep(0.75, 1.0, r));
+              gl_FragColor = vec4(vCol, vA * g);
+            }`,
+        });
+        const bloom = new THREE.Points(geo, bloomMat); bloom.frustumCulled = false;
+        const points = new THREE.Points(geo, coreMat); points.frustumCulled = false;
+        const lgeo = new THREE.BufferGeometry();
+        lgeo.setAttribute("position", new THREE.Float32BufferAttribute(lpos, 3));
+        lgeo.setAttribute("color", new THREE.Float32BufferAttribute(lcol, 3));
+        const lmat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.9, depthWrite: false });
+        const lines = new THREE.LineSegments(lgeo, lmat); lines.frustumCulled = false;
+        // ink solids: each plate occludes what is above it
+        const inkMat = new THREE.MeshBasicMaterial({ color: 0x0a0a0a });
+        const solids = PLATES.map((p) => { const m = new THREE.Mesh(new THREE.CylinderGeometry(p.r * 0.995, p.r * 0.995, 0.7, 96), inkMat); m.position.y = p.y; return m; });
+        const holder = new THREE.Mesh(new THREE.BoxGeometry(2 * HB - 0.1, 1.5, 2 * HB - 0.1), inkMat);
+        holder.position.set(0, CHIP_Y + 0.4, 0);
+        solids.push(holder);
+        // the cold glow round the chip (camera-facing, additive)
+        const hazeMat = new THREE.ShaderMaterial({
+          uniforms: { uHaze: { value: 0 } }, transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
+          vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+          fragmentShader: `uniform float uHaze; varying vec2 vUv;
+            void main() { float r = length(vUv - 0.5) * 2.0; float a = uHaze * (0.55 * exp(-r * 9.0) + 0.25 * exp(-r * 3.0)) * (1.0 - smoothstep(0.8, 1.0, r));
+              gl_FragColor = vec4(mix(vec3(0.9098, 0.3647, 0.1490), vec3(1.0, 0.94, 0.88), clamp(uHaze - 0.6, 0.0, 1.0)), a); }`,
+        });
+        const haze = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), hazeMat); haze.position.set(0, CHIP_Y - 0.5, 0); haze.frustumCulled = false;
+
+        const group = new THREE.Group();
+        group.add(...solids, lines, bloom, points);
+        haze.renderOrder = 4; lines.renderOrder = 1; bloom.renderOrder = 2; points.renderOrder = 3;
+        const scene = new THREE.Scene();
+        scene.add(group, haze);
+        const renderer = new THREE.WebGLRenderer({ canvas: $("f21-gl"), antialias: true, preserveDrawingBuffer: true });
+        renderer.setPixelRatio(1); renderer.setSize(1920, 1080, false); renderer.setClearColor(0x0a0a0a, 1);
+        const camera = new THREE.PerspectiveCamera(46, 1920 / 1080, 0.5, 600);
+        // lens shift: the look-at point sits right of centre, the lyric owns the left
+        const SX = 0.62, SY = 0.5;
+        camera.setViewOffset(1920, 1080, -(SX - 0.5) * 1920, (0.5 - SY) * 1080, 1920, 1080);
+
+        // ---- the camera, a function of time: rising beneath the fridge, a punch on "key" -------------------------
+        const tgt = new THREE.Vector3();
+        function placeCamera(t) {
+          const e = smooth(0, KEY, t), f = smooth(KEY, DUR, t);
+          const az = 0.95 - 0.35 * e - 0.1 * f;
+          const y = -34 + 8 * e + 3 * f, rh = 80 - 12 * e - 4 * f;
+          camera.position.set(rh * Math.sin(az), y, rh * Math.cos(az));
+          tgt.set(0, 22 - 12 * e - 5 * f, 0);
+          const punch = t >= KEY ? Math.exp(-(t - KEY) * 7) : 0;
+          camera.fov = 44 - 4 * e - 4 * punch;
+          camera.updateProjectionMatrix();
+          camera.lookAt(tgt);
+          camera.updateMatrixWorld();
+        }
+
+        // ---- stage tags ---------------------------------------------------------------------------------------
+        const tags = PLATES.filter((p) => p.label).map((p) => {
+          const d = el("div", "f21-tag" + (p.mxc ? " f21-mxc" : ""), $("f21-tags"));
+          el("i", "", d); const s = el("span", "", d); el("b", "", s, p.label[0]); s.append(p.label[1]);
+          return { p, d, v: new THREE.Vector3() };
+        });
+
+        // ---- the key that falls out: 64 hex characters (a fictional key; the derivation steps are real) --------
+        const KEYHEX = HR.cipher(64, 9113).toLowerCase();
+        const fx = $("f21-fx").getContext("2d");
+        const SLOT_X = 0.055 * 1920, SLOT_Y = 1000, ADV = 17.6;
+        const keyParts = Array.from(KEYHEX, (ch, i) => ({ ch, i, t0: FALL - 0.05 + i * 0.008 + rng() * 0.05, dur: 0.45 + rng() * 0.15, bend: (rng() - 0.5) * 260 }));
+        const spray = Array.from({ length: 120 }, () => ({ ch: HR.HEX[(rng() * 16) | 0].toLowerCase(), t0: KEY + 0.05 + rng() * (LAND - KEY), dur: 0.45 + rng() * 0.35, ang: rng() * Math.PI * 2, sp: 500 + rng() * 900 }));
+        const chipV = new THREE.Vector3();
+        const toScreen = (v) => { const p = v.clone().project(camera); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
+        const ease3 = (u) => 1 - Math.pow(1 - u, 3);
+        function drawFx(t) {
+          fx.clearRect(0, 0, 1920, 1080);
+          if (t < KEY) return;
+          chipV.set(0, CHIP_Y - 0.5, 0);
+          const [cx, cy] = toScreen(chipV);
+          fx.textAlign = "center"; fx.textBaseline = "middle";
+          // the spray: digits flung out of the chip toward the camera, growing as they come
+          for (const s of spray) {
+            const u = (t - s.t0) / s.dur; if (u <= 0 || u >= 1) continue;
+            const d = s.sp * u * u, sc = 0.4 + 3.2 * u * u;
+            fx.globalAlpha = 0.9 * (1 - u) * Math.min(1, u * 6);
+            fx.font = `600 ${(22 * sc).toFixed(1)}px "IBM Plex Mono"`;
+            fx.fillStyle = u < 0.3 ? "#FFF4E8" : "#E85D26";
+            fx.fillText(s.ch, cx + Math.cos(s.ang) * d, cy + Math.sin(s.ang) * d * 0.8 + 260 * u * u);
+          }
+          // the key: each character falls from the chip into its slot
+          fx.font = '600 29px "IBM Plex Mono"'; fx.textAlign = "left";
+          for (const k of keyParts) {
+            const u = clamp01((t - k.t0) / k.dur); if (t < k.t0) continue;
+            const e = ease3(u), x1 = SLOT_X + k.i * ADV, y1 = SLOT_Y;
+            const x = cx + (x1 - cx) * e + k.bend * Math.sin(Math.PI * e) * 0.3, y = cy + (y1 - cy) * (u * u * 0.4 + 0.6 * e);
+            const sc = u < 1 ? 0.45 + 0.75 * e + 0.5 * Math.sin(Math.PI * e) : 1;
+            fx.save(); fx.translate(x, y); fx.scale(sc, sc);
+            fx.globalAlpha = Math.min(1, u * 5);
+            fx.shadowColor = "rgba(232,93,38,0.7)"; fx.shadowBlur = u < 1 ? 18 : 10;
+            fx.fillStyle = u < 1 ? "#FFF0E2" : "#F0ECE5";
+            fx.fillText(k.ch, 0, 0); fx.restore();
+          }
+          fx.globalAlpha = 1; fx.shadowBlur = 0;
+        }
+
+        // ---- timeline -----------------------------------------------------------------------------------------
+        const tl = gsap.timeline({ paused: true });
+        const clock = { t: 0 };
+        tl.fromTo(clock, { t: 0 }, { t: DUR, duration: DUR, ease: "none" }, 0);
+        const stage = HR.stage($("root"), { seed: 21 });
+        for (const [s, t, big] of spans) big ? HR.hero(tl, s, L(t), { spread: 30, sharp: true }) : HR.lead(tl, s, L(t), t >= 133.2 ? { from: -130 } : {});
+        const cam = stage.cam;
+        tl.fromTo(cam, { z: 1.0 }, { z: 1.03, duration: KEY, ease: "sine.inOut" }, 0);
+        tl.fromTo(cam, { z: 1.06, rot: -0.4 }, { z: 1.03, rot: 0, duration: 0.5, ease: "elastic.out(1, 0.5)", immediateRender: false }, KEY);
+        // the derivation types on after the flash; the label and the marker after the last character lands
+        const typeOn = (id, at, d) => tl.fromTo("#" + id, { clipPath: "inset(-20% 100% -20% 0)" }, { clipPath: "inset(-20% 0% -20% 0)", duration: d, ease: "none" }, at);
+        typeOn("f21-s1", KEY + 0.08, 0.4);
+        typeOn("f21-s2", KEY + 0.42, 0.36);
+        tl.fromTo("#f21-klabel", { opacity: 0 }, { opacity: 1, duration: 0.15 }, FALL + 0.1);
+        tl.fromTo("#f21-mark", { clipPath: "inset(-20% 100% -30% -5%)" }, { clipPath: "inset(-20% 0% -30% -5%)", duration: 0.3, ease: "none" }, LAND + 0.08);
+        tl.fromTo("#f21-foot", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.4);
+
+        const v = new THREE.Vector3();
+        function render() {
+          const t = tl.time(), T = t + T0;
+          stage.apply(T);
+          const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.12);
+          placeCamera(t);
+          // the computation: pulses run faster and denser toward "key"; on the flash they all fire, then thin out
+          const run = smooth(0.3, KEY, t), post = t > KEY ? Math.exp(-(t - KEY) * 3) : 0;
+          for (let i = 0; i < NP; i++) {
+            const p = pulses[i], path = COAX[p.line];
+            const u = ((t * p.sp * (0.6 + 1.6 * run) + p.ph) % 1);
+            const s = u * (path.length - 1), k = Math.floor(s), w = s - k, a = path[k], b = path[Math.min(k + 1, path.length - 1)];
+            posAttr.setXYZ(PULSE0 + i, a[0] + (b[0] - a[0]) * w, a[1] + (b[1] - a[1]) * w, a[2] + (b[2] - a[2]) * w);
+            aVis.setX(PULSE0 + i, t < p.born * 0.6 ? 0 : (0.35 + 0.65 * run) * (1 - 0.7 * post * (i % 3 ? 1 : 0)));
+          }
+          posAttr.needsUpdate = true; aVis.needsUpdate = true;
+          // the hum: the whole cryostat trembles a hair with the bass
+          group.position.set(0.04 * bass * Math.sin(T * 2 * Math.PI * 23), 0, 0.04 * bass * Math.cos(T * 2 * Math.PI * 19));
+          const flash = t >= KEY ? Math.exp(-(t - KEY) * 2.6) : 0;
+          uni.uTime.value = t; uni.uHum.value = bass; uni.uRun.value = run; uni.uFlash.value = flash;
+          uni.uScale.value = 540 / Math.tan((camera.fov * Math.PI) / 360);
+          uni.uBloom.value = 0.08 * (1 + 0.6 * bass + 0.6 * kick) + 0.1 * flash;
+          hazeMat.uniforms.uHaze.value = 0.3 + 0.35 * run + 0.75 * flash;
+          haze.quaternion.copy(camera.quaternion);
+          renderer.render(scene, camera);
+          // tags follow their plates' right-hand rim
+          for (const g of tags) {
+            v.set(g.p.r * Math.cos(-0.15), g.p.y - 0.36, g.p.r * Math.sin(-0.15)).applyMatrix4(group.matrixWorld);
+            const [x, y] = toScreen(v);
+            g.d.style.transform = `translate(${(x + 14).toFixed(1)}px, ${(y - 10).toFixed(1)}px)`;
+            g.d.style.opacity = (x > 1880 || y < 30 ? 0 : 1).toFixed(2);
+          }
+          drawFx(t);
+          for (const [s, , big] of spans) if (big) HR.glow(s.parentNode, T, 0.5, 0.9);
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines["21-fridge"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

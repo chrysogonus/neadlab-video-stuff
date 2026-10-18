@@ -1,0 +1,393 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 13 — ticket (bridge, 105.243–117.94), v11. The film's light register: the company's issue tracker on
+         cream paper. g1: SEC-0001 "Migrate to post-quantum crypto" is typed in, filed into the backlog and its priority
+         stepped down to LOW ("low" sits literally low in the frame); the archive circles it in marker. g2: the roadmap
+         Gantt — the ticket's bar is shoved two quarters per kick, four years, into a hatched Q-DAY column; "again."
+         g3: the comment thread — "who'd even store it?" in the harvester's serif voice, answered in marker: "me."
+         SYSTEM.md V5 reference frame. v10's version: backups/v10-sources/compositions/frames/10-ticket.html
+         v13 (SYSTEM.md V7): grade only, --ink token #0A0A0A (the scene is all cream, ink is paint here); the counter label to #5F5B54 (contrast). SEC-0001 unchanged. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --paper: #F4F1EB; --rule: #CFC9BE; --muted: #6E6A62;
+          background: var(--cream); color: var(--ink);
+        }
+        #f10-type { transform-origin: 5.5% 30%; }
+
+        /* ---- background: paper stock, a faint dot grid, soft daylight ---- */
+        #f10-paper { position: absolute; inset: -60px; background-size: 512px 512px; }
+        #f10-dots { position: absolute; inset: -60px; opacity: 0.5;
+          background-image: radial-gradient(circle, rgba(17,17,17,0.13) 1.2px, transparent 1.6px); background-size: 32px 32px; }
+        #f10-sun { position: absolute; left: -200px; top: -300px; width: 1600px; height: 1200px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(255,255,255,0.55), rgba(255,255,255,0)); }
+
+        /* ---- shared UI: an app window on paper ---- */
+        .f10-win { position: absolute; background: var(--paper); border: 1.5px solid var(--rule);
+          box-shadow: 0 30px 60px rgba(60,50,40,0.18), 0 4px 10px rgba(60,50,40,0.12), inset 0 1px 0 #fff; }
+        .f10-tbar { position: absolute; left: 0; right: 0; top: 0; height: 44px; background: #E6E1D8; border-bottom: 1.5px solid var(--rule);
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 14px; letter-spacing: 0.12em; color: var(--muted);
+          display: flex; align-items: center; padding-left: 92px; white-space: nowrap; }
+        .f10-tbar i { position: absolute; top: 16px; width: 12px; height: 12px; border-radius: 50%; background: #CFC9BE; }
+        .f10-tbar b { font-weight: 600; color: var(--ink); }
+        .f10-mono { font-family: "IBM Plex Mono"; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+        .f10-chip { display: inline-block; padding: 3px 8px; border: 1.5px solid var(--rule); font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 12px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+        .f10-chip.f10-hot { border-color: var(--fire); color: #C8481A; }
+
+        /* g1: the board */
+        #f10-app { left: 880px; top: 122px; width: 960px; height: 820px; }
+        #f10-side { position: absolute; left: 0; top: 44px; bottom: 0; width: 190px; background: #EDE9E1; border-right: 1.5px solid var(--rule);
+          padding: 22px 0 0 20px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; letter-spacing: 0.1em; color: var(--muted); }
+        #f10-side div { margin-bottom: 14px; white-space: nowrap; }
+        #f10-side .on { color: var(--ink); font-weight: 600; }
+        #f10-side .on::before { content: ""; display: inline-block; width: 4px; height: 14px; background: var(--fire); margin-right: 8px; vertical-align: -2px; }
+        .f10-colh { position: absolute; top: 64px; width: 230px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 13px;
+          letter-spacing: 0.16em; color: var(--muted); border-bottom: 1.5px solid var(--rule); padding-bottom: 8px; }
+        .f10-card { position: absolute; width: 230px; height: 74px; background: #FBF9F5; border: 1.5px solid var(--rule);
+          box-shadow: 0 3px 0 rgba(60,50,40,0.06); padding: 10px 12px; }
+        .f10-card .f10-cid { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 11px; letter-spacing: 0.12em; color: var(--muted); }
+        .f10-card .f10-ct { font-family: "Barlow"; font-weight: 600; font-size: 17px; line-height: 1.1; color: var(--ink); margin-top: 4px; white-space: nowrap; }
+        .f10-card .f10-chip { position: absolute; right: 10px; top: 8px; font-size: 10px; padding: 1px 6px; }
+        #f10-sec { border-color: var(--ink); background: #fff; box-shadow: 0 10px 22px rgba(60,50,40,0.18); }
+        #f10-modal { position: absolute; left: 250px; top: 170px; width: 640px; height: 330px; background: #fff; border: 1.5px solid var(--ink);
+          box-shadow: 0 30px 60px rgba(60,50,40,0.25); padding: 26px 30px; }
+        #f10-modal .f10-lab { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; color: var(--muted); white-space: nowrap; }
+        #f10-field { margin-top: 10px; height: 54px; border: 1.5px solid var(--ink); padding: 12px 14px; font-family: "Barlow";
+          font-weight: 600; font-size: 25px; color: var(--ink); white-space: nowrap; }
+        .f10-caret { display: inline-block; width: 2.5px; height: 0.95em; background: var(--fire); vertical-align: -0.12em; margin-left: 2px; }
+        #f10-create { position: absolute; right: 30px; bottom: 26px; width: 150px; height: 44px; background: var(--fire); color: var(--ink);
+          font-family: "IBM Plex Mono"; font-weight: 600; font-size: 16px; letter-spacing: 0.18em; display: flex; align-items: center; justify-content: center; }
+        #f10-drop { position: absolute; left: 446px; top: 96px; width: 230px; background: #fff; border: 1.5px solid var(--ink);
+          box-shadow: 0 18px 36px rgba(60,50,40,0.22); opacity: 0; }
+        .f10-opt { position: relative; height: 46px; padding: 12px 16px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 15px;
+          letter-spacing: 0.14em; color: var(--ink); border-bottom: 1px solid #E6E1D8; }
+        #f10-hl { position: absolute; left: 0; top: 0; width: 100%; height: 46px; background: rgba(232,93,38,0.16); border-left: 4px solid var(--fire); }
+
+        /* g2: the roadmap */
+        #f10-road { left: 92px; top: 498px; width: 1736px; height: 520px; }
+        #f10-gantt { position: absolute; left: 0; top: 44px; width: 1736px; height: 476px; overflow: hidden; }
+
+        /* g3: the thread */
+        #f10-thread { left: 1150px; top: 150px; width: 690px; height: 780px; overflow: hidden; }
+        .f10-cm { position: absolute; left: 28px; right: 28px; padding: 14px 16px 14px 70px; background: #FBF9F5; border: 1.5px solid var(--rule); }
+        .f10-cm .f10-av { position: absolute; left: 14px; top: 14px; width: 40px; height: 40px; border-radius: 50%; background: #DCD6CB;
+          font-family: "Barlow"; font-weight: 800; font-size: 18px; color: var(--muted); display: flex; align-items: center; justify-content: center; }
+        .f10-cm .f10-who { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 12px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+        .f10-cm .f10-say { font-family: "Barlow"; font-weight: 600; font-size: 22px; color: var(--ink); margin-top: 4px; white-space: nowrap; }
+
+        /* the archive's marker voice */
+        .f10-again { opacity: 0; }
+        .f10-mark { position: absolute; font-family: "Caveat Brush"; font-size: 64px; line-height: 1; color: #C8481A; white-space: nowrap; }
+        #f10-marks { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+
+        /* ---- type plane ---- */
+        .f10-line { position: absolute; left: 5.5cqw; font-family: "Barlow"; color: var(--ink); display: flex; flex-direction: column;
+          align-items: flex-start; gap: 0.3cqw; }
+        .f10-row { display: flex; column-gap: 0.24em; font-weight: 800; font-size: 4.4cqw; line-height: 1.04; letter-spacing: -0.025em; white-space: nowrap; }
+        .f10-big { font-weight: 900; font-size: 15cqw; line-height: 0.84; letter-spacing: -0.045em; color: var(--fire); margin-left: -0.5cqw;
+          text-shadow: 4px 5px 0 rgba(17,17,17,0.12); }
+        .f10-serif { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 9.6cqw; line-height: 0.98;
+          letter-spacing: -0.01em; column-gap: 0.22em; }
+        .f10-hot { color: var(--fire); }
+        .f10-w { display: inline-block; position: relative; }
+
+        /* ---- chrome ---- */
+        .f10-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 16px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+        .f10-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: var(--fire); vertical-align: middle; margin-right: 16px; }
+        #f10-count { position: absolute; right: 5.5cqw; top: 3.6cqw; font-family: "IBM Plex Mono"; text-transform: uppercase; white-space: nowrap;
+          display: flex; align-items: baseline; gap: 14px; }
+        #f10-count span { font-weight: 500; font-size: 16px; letter-spacing: 0.14em; color: #5F5B54; }
+        #f10-count b { font-weight: 600; font-size: 34px; letter-spacing: 0.06em; color: var(--ink); }
+      </style>
+
+      <div data-hf-id="hf-ai4m" id="root" data-composition-id="10-ticket" data-width="1920" data-height="1080" data-duration="12.697">
+        <div data-hf-id="hf-c3xg" class="hr-layer" id="f10-bg" data-depth="0.3" data-dof="3" data-layout-ignore>
+          <div data-hf-id="hf-zuoj" id="f10-paper"></div>
+          <div data-hf-id="hf-vkh7" id="f10-dots"></div>
+          <div data-hf-id="hf-z97n" id="f10-sun"></div>
+        </div>
+
+        <div data-hf-id="hf-51n5" class="hr-layer" id="f10-mid" data-depth="0.65" data-layout-ignore>
+          <!-- g1: the board -->
+          <div data-hf-id="hf-ozuf" id="f10-g1">
+            <div data-hf-id="hf-k7od" class="f10-win" id="f10-app">
+              <div data-hf-id="hf-wavt" class="f10-tbar"><i data-hf-id="hf-vsyi" style="left:22px;background:#E85D26"></i><i data-hf-id="hf-qtum" style="left:42px"></i><i data-hf-id="hf-tz2o" style="left:62px"></i>nead tracker · <b data-hf-id="hf-oh0b">&nbsp;SECURITY</b>&nbsp;· board</div>
+              <div data-hf-id="hf-yxze" id="f10-side"><div data-hf-id="hf-7002">PROJECTS</div><div data-hf-id="hf-ifil" class="on">SECURITY</div><div data-hf-id="hf-bueb">AI EVERYTHING</div><div data-hf-id="hf-8yeh">REBRAND 2021</div><div data-hf-id="hf-d16o">OFFICE</div><div data-hf-id="hf-644u" style="margin-top:28px">FILTERS</div><div data-hf-id="hf-4po2">MY ISSUES</div><div data-hf-id="hf-0mla">DUE THIS WEEK</div></div>
+              <div data-hf-id="hf-w0w7" class="f10-colh" style="left:210px">BACKLOG</div>
+              <div data-hf-id="hf-rajj" class="f10-colh" style="left:460px">THIS QUARTER</div>
+              <div data-hf-id="hf-j86h" class="f10-colh" style="left:710px">DONE</div>
+              <div data-hf-id="hf-5jk6" class="f10-card" style="left:210px;top:196px"><div data-hf-id="hf-wris" class="f10-cid">SEC-0002</div><div data-hf-id="hf-id1d" class="f10-ct">Rotate the TLS certs</div><span data-hf-id="hf-jfa9" class="f10-chip">low</span></div>
+              <div data-hf-id="hf-nz8q" class="f10-card" style="left:210px;top:282px"><div data-hf-id="hf-wd7r" class="f10-cid">SEC-0003</div><div data-hf-id="hf-i6s3" class="f10-ct">Cookie banner, again</div><span data-hf-id="hf-0hmd" class="f10-chip">low</span></div>
+              <div data-hf-id="hf-o7ya" class="f10-card" style="left:460px;top:106px"><div data-hf-id="hf-yems" class="f10-cid">AI-0001</div><div data-hf-id="hf-muei" class="f10-ct">AI chatbot for billing</div><span data-hf-id="hf-r4br" class="f10-chip f10-hot">critical</span></div>
+              <div data-hf-id="hf-v1kl" class="f10-card" style="left:460px;top:192px"><div data-hf-id="hf-g96c" class="f10-cid">BRD-0007</div><div data-hf-id="hf-b7b0" class="f10-ct">New logo (rounder)</div><span data-hf-id="hf-ugaq" class="f10-chip f10-hot">high</span></div>
+              <div data-hf-id="hf-kb2u" class="f10-card" style="left:460px;top:278px"><div data-hf-id="hf-1nt4" class="f10-cid">OFC-0012</div><div data-hf-id="hf-ccd3" class="f10-ct">Kombucha on tap</div><span data-hf-id="hf-ie7a" class="f10-chip f10-hot">high</span></div>
+              <div data-hf-id="hf-04n4" class="f10-card" style="left:710px;top:106px"><div data-hf-id="hf-18ju" class="f10-cid">OFC-0003</div><div data-hf-id="hf-8mvh" class="f10-ct">Ping-pong table ✓</div><span data-hf-id="hf-geq9" class="f10-chip">done</span></div>
+              <div data-hf-id="hf-nqxn" class="f10-card" style="left:710px;top:192px"><div data-hf-id="hf-57m4" class="f10-cid">OFC-0009</div><div data-hf-id="hf-wlss" class="f10-ct">Offsite in Tulum ✓</div><span data-hf-id="hf-mgp1" class="f10-chip">done</span></div>
+              <div data-hf-id="hf-nw1c" class="f10-card" id="f10-sec" style="left:210px;top:106px;opacity:0"><div data-hf-id="hf-8qqw" class="f10-cid">SEC-0001 · OPEN</div><div data-hf-id="hf-41il" class="f10-ct">Migrate to post-quantum…</div><span data-hf-id="hf-lwln" class="f10-chip" id="f10-pchip">—</span></div>
+              <div data-hf-id="hf-2x8k" id="f10-drop">
+                <div data-hf-id="hf-chbn" id="f10-hl"></div>
+                <div data-hf-id="hf-rl78" class="f10-opt">CRITICAL</div><div data-hf-id="hf-91yp" class="f10-opt">HIGH</div><div data-hf-id="hf-0ih6" class="f10-opt">MEDIUM</div><div data-hf-id="hf-jopp" class="f10-opt">LOW</div><div data-hf-id="hf-77f1" class="f10-opt">SOMEDAY</div>
+              </div>
+              <div data-hf-id="hf-ex42" id="f10-modal">
+                <div data-hf-id="hf-drsd" class="f10-lab">NEW ISSUE · SECURITY · TASK</div>
+                <div data-hf-id="hf-lw59" id="f10-field"><span data-hf-id="hf-ezcr" id="f10-ftext"></span><span data-hf-id="hf-674v" class="f10-caret" id="f10-fcaret"></span></div>
+                <div data-hf-id="hf-drqe" class="f10-lab" style="margin-top:26px">REPORTER · A. (SECURITY) &nbsp;&nbsp; CREATED · TUE 09 MAR 2021</div>
+                <div data-hf-id="hf-wmkt" class="f10-lab" style="margin-top:12px">IMPACT · EVERYTHING EVER SENT &nbsp;&nbsp; EFFORT · ??</div>
+                <div data-hf-id="hf-gi5z" id="f10-create">CREATE</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- g2: the roadmap -->
+          <div data-hf-id="hf-4b4d" id="f10-g2" style="opacity:0">
+            <div data-hf-id="hf-fipa" class="f10-win" id="f10-road">
+              <div data-hf-id="hf-7xzw" class="f10-tbar"><i data-hf-id="hf-pyta" style="left:22px;background:#E85D26"></i><i data-hf-id="hf-50n6" style="left:42px"></i><i data-hf-id="hf-zr8o" style="left:62px"></i>nead tracker · <b data-hf-id="hf-b7yj">&nbsp;ROADMAP 2021–2024</b>&nbsp;· approved by leadership</div>
+              <svg data-hf-id="hf-mfmd" id="f10-gantt" viewBox="0 0 1736 476"></svg>
+            </div>
+          </div>
+
+          <!-- g3: the thread -->
+          <div data-hf-id="hf-ja64" id="f10-g3" style="opacity:0">
+            <div data-hf-id="hf-j3t8" class="f10-win" id="f10-thread">
+              <div data-hf-id="hf-8dxr" class="f10-tbar"><i data-hf-id="hf-qd4b" style="left:22px;background:#E85D26"></i><i data-hf-id="hf-5ey7" style="left:42px"></i><i data-hf-id="hf-ykbl" style="left:62px"></i>SEC-0001 · <b data-hf-id="hf-e4b3">&nbsp;post-quantum migration</b></div>
+              <div data-hf-id="hf-7n9e" class="f10-mono" style="position:absolute;left:28px;top:66px;font-size:12px;color:#6E6A62">OPEN · LOW · UNASSIGNED · 16 COMMENTS</div>
+              <div data-hf-id="hf-ohc6" id="f10-cms"></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-g35q" class="hr-layer" id="f10-type" data-depth="1">
+          <div data-hf-id="hf-8o38" class="f10-line" id="f10-l1" style="top:10cqw"></div>
+          <div data-hf-id="hf-t3hf" class="f10-line" id="f10-l1b" style="top:37cqw"></div>
+          <div data-hf-id="hf-boix" class="f10-line" id="f10-l2" style="top:7.6cqw;opacity:0"></div>
+          <div data-hf-id="hf-aoas" class="f10-line" id="f10-l3" style="top:9cqw;opacity:0"></div>
+        </div>
+
+        <div data-hf-id="hf-sqyw" class="hr-layer" id="f10-ml" data-depth="0.7" data-layout-ignore>
+          <svg data-hf-id="hf-jco4" id="f10-marks" viewBox="0 0 1920 1080"></svg>
+          <div data-hf-id="hf-3grk" class="f10-mark" id="f10-m1" style="left:1590px;top:350px;transform:rotate(-6deg)">(obviously)</div>
+          <div data-hf-id="hf-3ztr" class="f10-mark f10-again" style="left:600px;top:700px;transform:rotate(-8deg);font-size:46px">again.</div>
+          <div data-hf-id="hf-d8ak" class="f10-mark f10-again" style="left:930px;top:680px;transform:rotate(5deg);font-size:46px">again.</div>
+          <div data-hf-id="hf-ufql" class="f10-mark f10-again" style="left:1270px;top:700px;transform:rotate(-4deg);font-size:46px">again.</div>
+          <div data-hf-id="hf-nybm" class="f10-mark" id="f10-m3" style="left:880px;top:780px;transform:rotate(-5deg);font-size:110px">me.</div>
+          <div data-hf-id="hf-xubw" class="f10-mark" id="f10-m3s" style="left:900px;top:896px;transform:rotate(-5deg);font-size:36px">— the archive</div>
+        </div>
+
+        <div data-hf-id="hf-ovbx" class="hr-layer" id="f10-chrome" data-depth="0.2">
+          <div data-hf-id="hf-uq8y" class="f10-kicker" id="f10-kicker">SEC-0001 · SECURITY</div>
+          <div data-hf-id="hf-hic4" id="f10-count"><span data-hf-id="hf-xds1" id="f10-ck">DEFERRED</span><b data-hf-id="hf-fpus" id="f10-cv">×00</b></div>
+        </div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const T0 = 105.243, DUR = 12.697;
+          const L = (t) => +(t - T0).toFixed(3);
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const NS = "http://www.w3.org/2000/svg";
+          const sv = (tag, parent, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+
+          // lyrics.json L20–L22, word starts
+          const G2 = L(110.66), G3 = L(114.2);
+          const OPENED = L(107.765), PRIO = L(108.6), LOW = L(109.54);
+          const KICKS = HR_ENV.onsets.kick.map(([t]) => t).filter((t) => t > T0 && t < T0 + DUR).map(L);
+          const PUSHES = KICKS.filter((k) => k >= G2 - 0.02 && k < G3 - 0.2).slice(0, 8);
+          const TITLE = "Migrate to post-quantum crypto";
+
+          // ---- static build ---------------------------------------------------------------------------------
+          (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 512;
+            const x = c.getContext("2d", { willReadFrequently: true }), r = HR.rng(1001);
+            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 512, 512);
+            const img = x.getImageData(0, 0, 512, 512);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 9; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+            x.putImageData(img, 0, 0);
+            x.lineWidth = 0.7;
+            for (let k = 0; k < 140; k++) { const px = r() * 512, py = r() * 512, a = r() * Math.PI, l = 8 + r() * 20;
+              x.strokeStyle = "rgba(110,100,90,0.09)"; x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.35); x.stroke(); }
+            $("f10-paper").style.backgroundImage = `url(${c.toDataURL("image/png")})`;
+          })();
+
+          // the Gantt: 16 quarters 2021–2024 and a hatched Q-DAY column; leadership's bars ship, ours is shoved
+          const G = $("f10-gantt"), X0 = 330, QW = 82, ROWY = 92, RH = 74;
+          const qx = (q) => X0 + q * QW;
+          (() => {
+            const defs = sv("defs", G, {});
+            const pat = sv("pattern", defs, { id: "f10-hatch", width: 10, height: 10, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+            sv("rect", pat, { width: 3, height: 10, fill: "rgba(232,93,38,0.35)" });
+            for (let y = 0; y < 4; y++) {
+              sv("text", G, { x: qx(y * 4) + 8, y: 34, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 16, "letter-spacing": 2, fill: "#111111" }, String(2021 + y));
+              for (let q = 0; q < 4; q++) {
+                sv("text", G, { x: qx(y * 4 + q) + 8, y: 60, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 12, "letter-spacing": 1.5, fill: "#6E6A62" }, "Q" + (q + 1));
+                sv("line", G, { x1: qx(y * 4 + q), y1: 44, x2: qx(y * 4 + q), y2: 470, stroke: q ? "#E6E1D8" : "#CFC9BE", "stroke-width": q ? 1 : 1.5 });
+              }
+            }
+            sv("rect", G, { x: qx(16), y: 44, width: 1736 - qx(16) - 12, height: 426, fill: "url(#f10-hatch)" });
+            sv("line", G, { x1: qx(16), y1: 44, x2: qx(16), y2: 470, stroke: "#E85D26", "stroke-width": 2, "stroke-dasharray": "6 5" });
+            sv("text", G, { x: qx(16) + 12, y: 34, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 16, "letter-spacing": 2, fill: "#C8481A" }, "Q-DAY ?");
+            sv("line", G, { x1: 0, y1: 70, x2: 1736, y2: 70, stroke: "#CFC9BE", "stroke-width": 1.5 });
+            const rows = [["AI everything", 1, 15, true], ["Rebrand (rounder)", 2, 5, true], ["Kombucha on tap", 3, 4, true], ["SEC-0001 · post-quantum", 0, 1, false], ["Return to office", 6, 9, true]];
+            rows.forEach(([name, a, b, ship], i) => {
+              const y = ROWY + i * RH;
+              sv("text", G, { x: 24, y: y + 30, "font-family": ship ? "Barlow" : "IBM Plex Mono", "font-weight": 600, "font-size": ship ? 21 : 15,
+                "letter-spacing": ship ? 0 : 1.5, fill: ship ? "#6E6A62" : "#111111" }, name);
+              sv("line", G, { x1: 0, y1: y + RH - 12, x2: 1736, y2: y + RH - 12, stroke: "#EEEAE2", "stroke-width": 1 });
+              if (ship) {
+                sv("rect", G, { x: qx(a) + 4, y: y + 10, width: (b - a) * QW - 8, height: 30, fill: "#2a2a27" });
+                sv("text", G, { x: qx(b) - 12, y: y + 31, "text-anchor": "end", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 12, "letter-spacing": 1.5, fill: "#F0ECE5" }, "SHIPPED");
+              }
+            });
+          })();
+          const SECY = ROWY + 3 * RH;
+          const ghosts = sv("g", G, {});
+          const bar = sv("g", G, { id: "f10-bar" });
+          sv("rect", bar, { x: 4, y: SECY + 10, width: QW * 2 - 8, height: 30, fill: "#E85D26" });
+          sv("rect", bar, { x: 4, y: SECY + 10, width: QW * 2 - 8, height: 4, fill: "rgba(255,230,214,0.6)" });
+          sv("text", bar, { x: 14, y: SECY + 31, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 12, "letter-spacing": 1.5, fill: "#111111" }, "PQC MIGRATION");
+          PUSHES.forEach((_, i) => {
+            const g = sv("g", ghosts, { opacity: 0 });
+            sv("rect", g, { x: qx(i * 2) + 4, y: SECY + 10, width: QW * 2 - 8, height: 30, fill: "none", stroke: "rgba(232,93,38,0.6)", "stroke-width": 1.5, "stroke-dasharray": "5 4" });
+            sv("text", g, { x: qx(i * 2) + 12, y: SECY + 30, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 11, "letter-spacing": 1.4, fill: "rgba(200,72,26,0.9)" }, "DEFERRED");
+          });
+
+          // the thread: the ticket's history, bumped and bumped; then somebody's question
+          const thread = [["Q3 2021", "bumped to Q1, sorry", "B", "brad · vp velocity"], ["Q1 2022", "not this quarter", "B", "brad · vp velocity"],
+            ["Q4 2022", "after the rebrand", "R", "ruth · brand"], ["Q2 2023", "is this still relevant?", "B", "brad · vp velocity"],
+            ["Q4 2024", "who'd even store it?", "?", "somebody · vp"]];
+          const cms = thread.map(([when, say, av, who], i) => {
+            const c = el("div", "f10-cm", $("f10-cms"));
+            c.style.top = (110 + i * 128) + "px";
+            el("div", "f10-av", c, av);
+            el("div", "f10-who", c, who + " · " + when);
+            el("div", "f10-say", c, say);
+            return c;
+          });
+          cms[4].style.borderColor = "#111111"; cms[4].style.background = "#fff";
+
+          // marker strokes (pathLength 100, drawn on in render): the circle around LOW, the arrow to "store"
+          const MK = $("f10-marks");
+          const wob = (cx, cy, rx, ry, seed) => {
+            const r = HR.rng(seed); let d = "";
+            for (let k = 0; k <= 64; k++) { const a = -0.5 + (k / 64) * Math.PI * 2.15, j = 1 + (r() - 0.5) * 0.05;
+              d += (k ? "L" : "M") + (cx + Math.cos(a) * rx * j).toFixed(1) + " " + (cy + Math.sin(a) * ry * j).toFixed(1); }
+            return d;
+          };
+          const strokes = [
+            { d: wob(1441, 379, 136, 30, 31), t: LOW + 0.08, dur: 0.3 },
+            { d: "M890 840 C 820 830, 760 790, 744 742 M744 742 l -12 26 M744 742 l 24 14", t: L(117.45), dur: 0.22 },
+          ].map((s) => ({ ...s, p: sv("path", MK, { d: s.d, pathLength: 100, fill: "none", stroke: "#C8481A", "stroke-width": 5.5, "stroke-linecap": "round", "stroke-linejoin": "round", "stroke-dasharray": 100, "stroke-dashoffset": 100 }) }));
+
+          // lyrics
+          const tl = gsap.timeline({ paused: true });
+          const mk = (box, cls, words) => {
+            const row = el("div", "f10-row" + (cls ? " " + cls : ""), box);
+            return words.map(([w, t, hero, hot]) => { const s = el("span", "f10-w" + (hot ? " f10-hot" : ""), row, w); return { s, t: L(t), hero }; });
+          };
+          const W = [
+            ...mk($("f10-l1"), "", [["ticket", 107.0], ["opened,", 107.765]]),
+            ...mk($("f10-l1"), "", [["priority", 108.6]]),
+            ...mk($("f10-l1b"), "f10-big", [["low", 109.54, true]]),
+            ...mk($("f10-l2"), "", [["pushed", 110.66], ["to", 110.92], ["next", 111.14], ["quarter,", 111.56]]),
+            ...mk($("f10-l2"), "", [["four", 111.931], ["years", 112.5], ["in", 112.819], ["a", 113.048], ["row.", 113.22, false, true]]),
+            ...mk($("f10-l3"), "", [["somebody", 114.2], ["asked,", 115.747]]),
+            ...mk($("f10-l3"), "f10-serif", [["“who’d", 116.12], ["even", 116.6]]),
+            ...mk($("f10-l3"), "f10-serif", [["store", 116.944, true, true], ["it?”", 117.76]]),
+          ];
+          for (const { s, t, hero } of W) hero ? HR.hero(tl, s, t, { spread: 22, over: 1.18, pre: 0.12, sharp: true }) : HR.lead(tl, s, t);
+          const writes = [[$("f10-m1"), LOW + 0.3, 0.35], ...Array.from(document.querySelectorAll(".f10-again")).map((m, i) => [m, PUSHES[2 + i * 2] ?? PUSHES[PUSHES.length - 1], 0.22]),
+            [$("f10-m3"), L(117.28), 0.2], [$("f10-m3s"), L(117.52), 0.25]];
+
+          // groups: 0 ms cuts on "pushed" and "somebody"
+          tl.set("#f10-l1, #f10-l1b", { opacity: 1 }, 0); tl.set("#f10-l1, #f10-l1b", { opacity: 0 }, G2);
+          tl.set("#f10-l2", { opacity: 1 }, G2); tl.set("#f10-l2", { opacity: 0 }, G3);
+          tl.set("#f10-l3", { opacity: 1 }, G3);
+          tl.set("#f10-g1", { opacity: 1 }, 0); tl.set("#f10-g1", { opacity: 0 }, G2);
+          tl.set("#f10-g2", { opacity: 1 }, G2); tl.set("#f10-g2", { opacity: 0 }, G3);
+          tl.set("#f10-g3", { opacity: 1 }, G3);
+          tl.set("#f10-m1", { opacity: 1 }, 0); tl.set("#f10-m1", { opacity: 0 }, G2);
+          tl.set(".f10-again", { opacity: 1 }, G2); tl.set(".f10-again", { opacity: 0 }, G3);
+          tl.set(strokes[0].p, { opacity: 1 }, 0); tl.set(strokes[0].p, { opacity: 0 }, G2);
+
+          // ---- the camera ----------------------------------------------------------------------------------
+          const stage = HR.stage($("root"), { seed: 10 });
+          const cam = stage.cam; cam.focus = 0.7;
+          const B = { x: 24, z: 1.04 }, P = { z: 0, rot: 0 };
+          const seg = (o, from, to, a, b, ease) => tl.fromTo(o, from, { ...to, duration: Math.max(0.01, b - a), ease, immediateRender: false }, a);
+          const punches = [[OPENED, 0.02, 0.2], [LOW, 0.045, -0.5], ...PUSHES.map((p, i) => [p, 0.012, i % 2 ? 0.25 : -0.25]), [L(116.944), 0.035, -0.4]];
+          punches.forEach(([t, z, rot], i) => {
+            const next = i + 1 < punches.length ? punches[i + 1][0] : DUR;
+            tl.fromTo(P, { z: 0, rot: 0 }, { z, rot, duration: 0.05, ease: "power3.out", immediateRender: false }, t);
+            tl.fromTo(P, { z, rot }, { z: 0, rot: 0, duration: Math.min(0.5, next - t - 0.07), ease: "elastic.out(1, 0.5)", immediateRender: false }, t + 0.05);
+          });
+          seg(B, { x: 24, z: 1.04 }, { x: -10, z: 1.0 }, 0, G2, "sine.inOut");
+          seg(B, { x: -10, z: 1.0 }, { x: 18, z: 1.03 }, G2, G3, "sine.inOut");
+          seg(B, { x: 18, z: 1.03 }, { x: 0, z: 1.05 }, G3, DUR - 0.38, "sine.inOut");
+          seg(B, { x: 0, z: 1.05 }, { x: -30, z: 1.16 }, DUR - 0.38, DUR, "power3.in");
+
+          // ---- g1: the issue is filed, then stepped down to LOW ---------------------------------------------
+          const KEYS = Array.from({ length: TITLE.length }, (_, i) => 0.18 + i * ((1.5 - 0.18) / TITLE.length));
+          seg("#f10-create", { scale: 1 }, { scale: 0.9 }, OPENED - 0.2, OPENED - 0.12, "power2.out");
+          seg("#f10-modal", { opacity: 1, scale: 1, x: 0, y: 0 }, { opacity: 0, scale: 0.6, x: -140, y: -120 }, OPENED - 0.12, OPENED + 0.08, "power3.in");
+          seg("#f10-sec", { opacity: 0, y: -40, scale: 1.08 }, { opacity: 1, y: 0, scale: 1 }, OPENED, OPENED + 0.32, "back.out(1.6)");
+          seg("#f10-drop", { opacity: 0, y: -10 }, { opacity: 1, y: 0 }, PRIO, PRIO + 0.14, "power3.out");
+          const steps = [...KICKS.filter((k) => k > PRIO + 0.1 && k < LOW - 0.05), LOW].slice(-3);
+          steps.forEach((t, i) => seg("#f10-hl", { y: 46 * (i + (3 - steps.length)) }, { y: 46 * (i + 1 + (3 - steps.length)) }, t - 0.02, t + 0.06, "power3.out"));
+          tl.fromTo("#f10-pchip", { scale: 1.4 }, { scale: 1, duration: 0.3, ease: "back.out(2)", immediateRender: false }, LOW);
+
+          // ---- g2: the bar is shoved two quarters per kick; each shove leaves a DEFERRED ghost -----------------
+          gsap.set(bar, { x: qx(0) - 4 });
+          PUSHES.forEach((p, i) => {
+            const from = qx(i * 2) - 4, to = qx(i * 2 + 2) - 4;
+            tl.fromTo(bar, { x: from }, { x: to + 10, duration: 0.09, ease: "power3.in", immediateRender: false }, p - 0.07);
+            tl.fromTo(bar, { x: to + 10 }, { x: to, duration: Math.min(0.22, (PUSHES[i + 1] ?? G3) - p - 0.1), ease: "elastic.out(1, 0.5)", immediateRender: false }, p + 0.02);
+            tl.fromTo(ghosts.children[i], { opacity: 0 }, { opacity: 1, duration: 0.08, immediateRender: false }, p);
+          });
+
+          // ---- g3: the thread scrolls up to the question --------------------------------------------------------
+          seg("#f10-cms", { y: 220 }, { y: 0 }, G3, G3 + 1.2, "power3.out");
+          tl.fromTo(cms[4], { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out", immediateRender: false }, L(116.12) - 0.1);
+
+          // ---- per frame ---------------------------------------------------------------------------------
+          const ftext = $("f10-ftext"), fcaret = $("f10-fcaret"), pchip = $("f10-pchip"), cv = $("f10-cv"), ck = $("f10-ck");
+          function render() {
+            const t = tl.time(), T = t + T0;
+            cam.x = B.x; cam.z = B.z + P.z; cam.rot = P.rot;
+            stage.apply(T);
+            const n = KEYS.filter((k) => t >= k).length;
+            ftext.textContent = TITLE.slice(0, n);
+            fcaret.style.opacity = n < TITLE.length || Math.floor(t * 3.4) % 2 ? "1" : "0";
+            pchip.textContent = t >= LOW ? "low" : "—";
+            pchip.className = "f10-chip" + (t >= LOW ? " f10-hot" : "");
+            const pushes = PUSHES.filter((p) => t >= p).length;
+            if (t < G3) { ck.textContent = "DEFERRED"; cv.textContent = "×" + String(pushes).padStart(2, "0"); }
+            else { ck.textContent = "OPEN FOR"; cv.textContent = "1,461 DAYS"; }
+            for (const s of strokes) s.p.setAttribute("stroke-dashoffset", (100 * (1 - clamp01((t - s.t) / s.dur))).toFixed(1));
+            for (const [m, t0, d] of writes) m.style.clipPath = `inset(-30% ${(100 - 100 * clamp01((t - t0) / d)).toFixed(1)}% -40% -5%)`;
+          }
+          tl.eventCallback("onUpdate", render);
+          tl.seek(0);
+          render();
+          window.__timelines["10-ticket"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,278 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 7 — hook (45.487–48.491), v10. The hook is pressed into the archive's record sheet: "harvest now," as
+         textured ink impressions on the orange form, rubber stamps on the bare kicks, then a 0 ms flip to the dark
+         register on "decrypt" (the title card's cream + fire), and velocity into the drop. SYSTEM.md v4 reference.
+         v13 (SYSTEM.md V7), hook 1 of 3, the clean one: the whole hook on black. The record sheet is printed in faint cream,
+         "harvest now," is pressed in cream, the stamps land in fire (with motion blur on the slam), a light gathers
+         before each impression instead of a shadow. No orange stock, no register flip. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --cream-muted: #888880;
+          background: var(--ink); color: var(--cream);
+        }
+
+        /* ---- background plane: the record sheet printed on the orange stock ---- */
+        #f18-paper { position: absolute; inset: -60px; background-size: 512px 512px; }
+        #f18-light { position: absolute; left: -240px; top: 40px; width: 1700px; height: 1000px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232,93,38,0.1), rgba(232,93,38,0.03) 55%, rgba(232,93,38,0) 100%); }
+        #f18-form { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+
+        /* ---- midground plane: rubber stamps that land on the bare kicks ---- */
+        .f18-stamp { position: absolute; opacity: 0; color: var(--fire); }
+        .f18-stamp svg { display: block; width: 100%; height: 100%; overflow: visible; }
+        #f18-round { left: 1468px; top: 556px; width: 360px; height: 360px; }
+        #f18-copy { left: 1442px; top: 128px; width: 400px; height: 132px; }
+
+        /* ---- type plane: the hook ---- */
+        #f18-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 18px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
+        #f18-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
+          vertical-align: middle; margin-right: 16px; }
+        #f18-type { position: absolute; left: 5.5cqw; top: 15cqw; font-family: "Barlow"; font-weight: 900;
+          font-size: 12.2cqw; line-height: 0.9; letter-spacing: -0.045em; }
+        /* rows carry padding so the ink mask covers the slam's overscale and the spatter */
+        .f18-row { display: block; white-space: nowrap; padding: 0.22em 0.4em; margin: -0.22em -0.4em; }
+        #f18-r1 { color: var(--cream);
+          -webkit-mask-size: 420px 420px; mask-size: 420px 420px; }
+        #f18-r2 { color: var(--fire); margin-top: -0.18em; }
+        .f18-w { display: inline-block; position: relative; margin-right: 0.16em; isolation: isolate; }
+        .f18-shadow { position: absolute; left: -12%; right: -12%; top: -18%; bottom: -24%; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(240,236,229,0.14), rgba(240,236,229,0.05) 60%, rgba(240,236,229,0) 100%);
+          opacity: 0; }
+        .f18-dot { position: absolute; border-radius: 50%; background: currentColor; opacity: 0; }
+
+        /* ---- near plane: out-of-focus hex passing in front ---- */
+        .f18-bokeh { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--ink);
+          opacity: 0.03; filter: blur(16px); white-space: nowrap; }
+      </style>
+
+      <div data-hf-id="hf-2e7j" id="root" data-composition-id="18-hook" data-width="1920" data-height="1080" data-duration="3.004">
+        <div data-hf-id="hf-2fjf" class="hr-layer" id="f18-bg" data-depth="0.3" data-dof="4" data-layout-ignore>
+          <div data-hf-id="hf-mfyj" id="f18-paper"></div>
+          <div data-hf-id="hf-z0mt" id="f18-light"></div>
+          <svg data-hf-id="hf-1h8k" id="f18-form" viewBox="0 0 1920 1080"></svg>
+        </div>
+        <div data-hf-id="hf-oubd" class="hr-layer" id="f18-mid" data-depth="0.65" data-layout-ignore>
+          <div data-hf-id="hf-rd9l" class="f18-stamp" id="f18-round" data-hf-motion-blur='{"fps": 60}'><svg data-hf-id="hf-g8al" viewBox="-180 -180 360 360"></svg></div>
+          <div data-hf-id="hf-e1uk" class="f18-stamp" id="f18-copy" data-hf-motion-blur='{"fps": 60}'><svg data-hf-id="hf-0gdb" viewBox="0 0 400 132"></svg></div>
+        </div>
+        <div data-hf-id="hf-gp3n" class="hr-layer" id="f18-fg" data-depth="1">
+          <div data-hf-id="hf-gd06" id="f18-kicker">THE ARCHIVE RECORD</div>
+          <div data-hf-id="hf-j7vz" id="f18-type">
+            <span data-hf-id="hf-mtgq" class="f18-row" id="f18-r1"></span>
+            <span data-hf-id="hf-gnqx" class="f18-row" id="f18-r2"></span>
+          </div>
+        </div>
+        <div data-hf-id="hf-2vt4" class="hr-layer" id="f18-near" data-depth="1.7" data-layout-ignore></div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script>
+        (() => {
+          const T0 = 45.487, DUR = 3.004;
+          const L = (T) => +(T - T0).toFixed(3);
+          // the sung words (lyrics.json L9) and the bare kicks between them
+          const W = { harvest: L(45.487), now: L(46.375), decrypt: L(47.56), later: L(48.011) };
+          const ROUND = L(46.662), COPY = L(47.133), FLIP = W.decrypt;
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const NS = "http://www.w3.org/2000/svg";
+          const S = (parent, tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+
+          // ---- baked textures ----------------------------------------------------------------------------------
+          // orange stock: seeded tone noise and short fibres
+          (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 512;
+            const x = c.getContext("2d"), r = HR.rng(1801);
+            x.fillStyle = "#E85D26"; x.fillRect(0, 0, 512, 512);
+            const img = x.getImageData(0, 0, 512, 512);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 12; img.data[i] += v; img.data[i + 1] += v * 0.8; img.data[i + 2] += v * 0.6; }
+            x.putImageData(img, 0, 0);
+            x.lineWidth = 0.7;
+            for (let k = 0; k < 160; k++) { const px = r() * 512, py = r() * 512, a = r() * Math.PI, l = 8 + r() * 22;
+              x.strokeStyle = r() < 0.5 ? "rgba(120,40,10,0.10)" : "rgba(255,220,190,0.10)";
+              x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.35); x.stroke(); }
+            // v13: no orange stock; the hook sits on the black ground
+          })();
+          // ink: an alpha mask with pinholes and starved streaks, so the impression reads as pressed, not printed
+          const inkMask = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 420;
+            const x = c.getContext("2d"), r = HR.rng(1802);
+            x.fillStyle = "#000"; x.fillRect(0, 0, 420, 420);
+            x.globalCompositeOperation = "destination-out";
+            for (let k = 0; k < 700; k++) { x.fillStyle = `rgba(0,0,0,${(0.3 + r() * 0.45).toFixed(2)})`;
+              x.beginPath(); x.arc(r() * 420, r() * 420, 0.4 + r() * r() * 1.5, 0, Math.PI * 2); x.fill(); }
+            for (let k = 0; k < 26; k++) { x.fillStyle = `rgba(0,0,0,${(0.05 + r() * 0.1).toFixed(2)})`;
+              x.fillRect(r() * 420, r() * 420, 30 + r() * 140, 1 + r() * 3); }
+            return `url(${c.toDataURL("image/png")})`;
+          })();
+          $("f18-r1").style.webkitMaskImage = inkMask;
+          $("f18-r1").style.maskImage = inkMask;
+
+          // ---- the record sheet (ink at ~11 %, cream after the flip) -------------------------------------------
+          const form = $("f18-form");
+          const ink = S(form, "g", { fill: "none", stroke: "#F0ECE5", "stroke-width": 2, opacity: 0.1, id: "f18-forminner" });
+          for (let y = 40; y < 1080; y += 64) S(ink, "circle", { cx: 46, cy: y, r: 9 });
+          S(ink, "path", { d: "M86 0 V1080 M86 206 H1888 M86 952 H1888 M1440 206 V952" });
+          for (let y = 270; y < 952; y += 64) S(ink, "path", { d: `M120 ${y} H1408`, opacity: 0.35, "stroke-width": 1 });
+          const mono = (x, y, size, text, o = {}) => S(ink, "text", Object.assign({ x, y, fill: "#F0ECE5", stroke: "none",
+            "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": size, "letter-spacing": 2.4 }, o), text);
+          mono(118, 190, 15, "RETENTION: INDEFINITE · REASON: JUST IN CASE");
+          mono(1888, 190, 15, "CONSENT: IMPLIED", { "text-anchor": "end" });
+          const fields = [["SENDER", "A."], ["CAPTURED", "TUE 09 MAR 2021"], ["KEY EXCHANGE", "X25519"], ["SIZE", "2,048 B"],
+            ["STATUS", "SEALED · HELD"], ["RETENTION", "INDEFINITE"], ["READ AFTER", "Q-DAY"]];
+          fields.forEach(([k, v], i) => {
+            const y = 262 + i * 96;
+            mono(1472, y, 13, k);
+            mono(1472, y + 40, 25, v, { "font-weight": 600, "letter-spacing": 1.6 });
+            S(ink, "path", { d: `M1472 ${y + 58} H1868`, "stroke-width": 1 });
+          });
+          mono(118, 1000, 15, "COPIED 09 MAR 2021 14:02:11 UTC · THE SENDER WAS NOT NOTIFIED");
+          const bc = HR.rng(1803);
+          for (let x = 1560; x < 1880;) { const w = 2 + ((bc() * 4) | 0); S(ink, "rect", { x, y: 978, width: w, height: 44, fill: "#F0ECE5", stroke: "none" }); x += w + 2 + ((bc() * 5) | 0); }
+
+          // ---- stamps -------------------------------------------------------------------------------------------
+          (() => {
+            const g = $("f18-round").querySelector("svg");
+            S(g, "defs", {}).innerHTML = '<path id="f18-arc" d="M -128 0 A 128 128 0 1 1 128 0 A 128 128 0 1 1 -128 0" />';
+            const s = S(g, "g", { fill: "none", stroke: "currentColor", transform: "rotate(-14)" });
+            S(s, "circle", { r: 168, "stroke-width": 9 });
+            S(s, "circle", { r: 154, "stroke-width": 2.5 });
+            S(s, "circle", { r: 104, "stroke-width": 3 });
+            const t = S(s, "text", { fill: "currentColor", stroke: "none", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 25 });
+            S(t, "textPath", { href: "#f18-arc", textLength: 790, lengthAdjust: "spacing" }, "RETAINED · OBJ 0001 · INDEFINITE · HELD · ");
+            S(s, "text", { y: -18, fill: "currentColor", stroke: "none", "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 20, "letter-spacing": 4 }, "ARCHIVE");
+            S(s, "text", { y: 40, fill: "currentColor", stroke: "none", "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 68, "letter-spacing": -2 }, "0001");
+            S(s, "path", { d: "M-70 -6 H70", "stroke-width": 2.5 });
+          })();
+          (() => {
+            const g = $("f18-copy").querySelector("svg");
+            const s = S(g, "g", { fill: "none", stroke: "currentColor", transform: "rotate(5 200 66)" });
+            S(s, "rect", { x: 6, y: 6, width: 388, height: 120, rx: 10, "stroke-width": 7 });
+            S(s, "rect", { x: 18, y: 18, width: 364, height: 96, rx: 5, "stroke-width": 2 });
+            S(s, "text", { x: 200, y: 86, fill: "currentColor", stroke: "none", "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 64, "letter-spacing": 4 }, "COPY");
+            S(s, "text", { x: 200, y: 108, fill: "currentColor", stroke: "none", "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 4 }, "HELD · NOT READ");
+          })();
+          for (const id of ["f18-round", "f18-copy"]) { $(id).style.webkitMaskImage = inkMask; $(id).style.maskImage = inkMask; }
+
+          // near plane
+          const nr = HR.rng(1805);
+          for (let i = 0; i < 0; i++) {
+            const b = el("div", "f18-bokeh", $("f18-near"), HR.cipher(2 + (i % 2), 1810 + i));
+            Object.assign(b.style, { left: `${-80 + nr() * 1900}px`, top: `${-60 + nr() * 1080}px`, fontSize: `${200 + nr() * 160}px` });
+          }
+
+          // ---- the hook ------------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const words = {};
+          const mk = (row, key, text) => { const w = el("span", "f18-w", $(row), text); if (row === "f18-r1" && key === "harvest") el("span", "", $(row), " "); if (key === "decrypt") el("span", "", $(row), " "); words[key] = w; return w; };
+          mk("f18-r1", "harvest", "harvest"); mk("f18-r1", "now", "now,");
+          mk("f18-r2", "decrypt", "decrypt"); mk("f18-r2", "later", "later");
+          $("f18-r2").classList.add("hr-glow");
+
+          // "harvest" is cut on its own slam (the frame starts on the word); the rest gather and slam on their times
+          const hg = words.harvest._hrG = HR.glyphs(words.harvest);
+          tl.fromTo(hg, { opacity: 1, scale: 1.16 }, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.42)" }, 0);
+          tl.fromTo(hg, { filter: "blur(2px)" }, { filter: "blur(0px)", duration: 0.6, ease: "power2.out" }, 0);
+          HR.hero(tl, words.now, W.now, { pre: 0.11, spread: 12, over: 1.14, skew: false, sharp: true });
+          HR.hero(tl, words.decrypt, W.decrypt, { pre: 0.12, spread: 16, over: 1.16, skew: false, sharp: true });
+          HR.hero(tl, words.later, W.later, { pre: 0.12, spread: 22, over: 1.24, settle: 0.5, skew: false, sharp: true });
+
+          // the press: a shadow gathers over the spot just before each impression, and ink spits out on contact
+          const sr = HR.rng(1804);
+          const press = (w, t, n) => {
+            const sh = document.createElement("span"); sh.className = "f18-shadow"; w.prepend(sh);
+            if (t > 0.05) {
+              tl.fromTo(sh, { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.11, ease: "power2.in" }, t - 0.11);
+              tl.to(sh, { opacity: 0, duration: 0.05, ease: "none" }, t);
+            }
+            for (let i = 0; i < n; i++) {
+              const d = el("span", "f18-dot", w), side = sr() < 0.5 ? -1 : 1, s = 3 + sr() * sr() * 16;
+              Object.assign(d.style, { width: s + "px", height: s + "px", left: (side < 0 ? -1 - sr() * 5 : 99 + sr() * 5) + "%", top: (20 + sr() * 60) + "%" });
+              const dx = side * (8 + sr() * 30), dy = (sr() - 0.5) * 24;
+              tl.fromTo(d, { opacity: 0, x: -dx * 0.6, y: 0, scale: 0.3 }, { opacity: 0.9, x: 0, y: dy * 0.3, scale: 1, duration: 0.09, ease: "power3.out", immediateRender: false }, t);
+              tl.to(d, { x: dx * 0.25, y: dy * 0.4, duration: 0.6, ease: "power2.out" }, t + 0.09);
+            }
+          };
+          press(words.harvest, W.harvest, 7);
+          press(words.now, W.now, 6);
+          press(words.decrypt, W.decrypt, 5);
+          press(words.later, W.later, 8);
+
+          // impressions squash into the sheet
+          for (const [k, t] of [["harvest", W.harvest], ["now", W.now], ["decrypt", W.decrypt], ["later", W.later]]) {
+            tl.fromTo(words[k], { scaleY: 1, scaleX: 1 }, { scaleY: 0.93, scaleX: 1.025, duration: 0.05, ease: "power2.out", immediateRender: false }, t);
+            tl.fromTo(words[k], { scaleY: 0.93, scaleX: 1.025 }, { scaleY: 1, scaleX: 1, duration: 0.4, ease: "elastic.out(1, 0.45)", immediateRender: false }, t + 0.05);
+          }
+
+          // rubber stamps on the bare kicks: anticipation above, slam, a hair of rebound
+          const stamp = (id, t, rot) => {
+            tl.fromTo("#" + id, { opacity: 0, scale: 1.7, rotation: rot, filter: "blur(9px)" },
+              { opacity: 0.8, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.12, ease: "power4.in" }, t - 0.12);
+            tl.fromTo("#" + id, { scale: 1 }, { scale: 1.03, duration: 0.04, ease: "power2.out", immediateRender: false }, t);
+            tl.fromTo("#" + id, { scale: 1.03 }, { scale: 1, duration: 0.35, ease: "elastic.out(1, 0.5)", immediateRender: false }, t + 0.04);
+          };
+          stamp("f18-round", ROUND, -10);
+          stamp("f18-copy", COPY, 8);
+
+          // ---- the camera ----------------------------------------------------------------------------------------
+          const stage = HR.stage($("root"), { seed: 18, drift: 1 });
+          const cam = stage.cam;
+          cam.focus = 0.7;
+          tl.fromTo(cam, { x: 26, z: 1.035 }, { x: -18, z: 1.0, duration: FLIP, ease: "sine.inOut" }, 0);
+          const rolls = [[W.harvest, 0.035], [W.now, 0.03], [ROUND, 0.018], [COPY, 0.015]];
+          rolls.forEach(([t, k], i) => {
+            const next = i + 1 < rolls.length ? rolls[i + 1][0] : FLIP;
+            tl.to(cam, { rot: k * -14, duration: 0.05, ease: "power3.out" }, t);
+            tl.to(cam, { rot: 0, duration: Math.min(0.45, next - t - 0.06), ease: "elastic.out(1, 0.5)" }, t + 0.05);
+          });
+          // the flip: hard cut to the dark register, a lean in, then velocity into the drop's cut
+          tl.set(cam, { x: 0, y: -12, z: 1.05, focus: 0.25 }, FLIP);
+          tl.to(cam, { z: 1.02, y: 0, duration: W.later - FLIP, ease: "power2.out" }, FLIP);
+          tl.to(cam, { z: 1.075, rot: -0.6, duration: 0.06, ease: "power3.out" }, W.later);
+          tl.to(cam, { z: 1.05, rot: 0, duration: 0.3, ease: "elastic.out(1, 0.5)" }, W.later + 0.06);
+          tl.to(cam, { z: 1.2, x: 40, duration: DUR - (W.later + 0.36), ease: "power3.in" }, W.later + 0.36);
+          tl.fromTo("#f18-near", { x: 0 }, { x: -240, duration: DUR, ease: "none" }, 0);
+
+          // v13: no register flip on "decrypt"; the record sheet dims so the fire row owns the frame
+          tl.to("#f18-forminner", { opacity: 0.06, duration: 0.2, ease: "power2.out" }, FLIP);
+          tl.to(".f18-stamp", { opacity: 0.45, duration: 0.2, ease: "power2.out" }, FLIP);
+
+          // ---- per frame -----------------------------------------------------------------------------------------
+          const laterG = words.later._hrG;
+          laterG.forEach((g) => { g.dataset.ch = g.textContent; });
+          const lightEl = $("f18-light");
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            stage.apply(T);
+            HR.glow($("f18-r2"), T, 0.4, 0.9);
+            const rms = HR.band("rms", T);
+            lightEl.style.transform = `scale(${(0.94 + 0.12 * rms).toFixed(3)})`;
+            // the last instant before the drop: "later" starts falling back into ciphertext, glyph by glyph
+            const k = Math.max(0, (t - 2.86) / (DUR - 2.86)), step = Math.floor(t * 30);
+            laterG.forEach((g, i) => {
+              const hex = k > 0 && i >= 2 && (i - 1) / (laterG.length - 1) < k;
+              g.textContent = hex ? HR.HEX[(i * 5 + step * 7) % 16] : g.dataset.ch;
+              g.classList.toggle("hr-hex", hex);
+            });
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["18-hook"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

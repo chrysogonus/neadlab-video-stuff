@@ -1,0 +1,290 @@
+<!doctype html><html><head><meta charset="UTF-8"/></head><body><template>
+<style>
+@font-face{font-family:"Barlow";src:url("assets/fonts/barlow-400.woff2") format("woff2");font-weight:400}
+@font-face{font-family:"Barlow";src:url("assets/fonts/barlow-800.woff2") format("woff2");font-weight:800}
+@font-face{font-family:"Barlow";src:url("assets/fonts/barlow-900.woff2") format("woff2");font-weight:900}
+@font-face{font-family:"IBM Plex Mono";src:url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2");font-weight:500}
+@font-face{font-family:"Instrument Serif";src:url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2");font-style:italic;font-weight:400}
+#root{position:absolute;inset:0;overflow:hidden;container-type:size;background:#0A0A0A;color:#F0ECE5}
+#f23-gl,#f23-bloom{position:absolute;inset:0;width:100%;height:100%}
+#f23-bloom{mix-blend-mode:screen}
+#f23-stage{position:absolute;inset:0}
+#f23-now{position:absolute;left:5.5cqw;top:40cqh;font:900 18.5cqw/.86 "Barlow";letter-spacing:-.045em;color:#E85D26}
+#f23-lock{position:absolute;left:6cqw;top:28cqh;opacity:0;font:800 6.7cqw/.98 "Barlow";letter-spacing:-.035em}
+#f23-lock strong{font-size:12cqw;font-weight:900;display:block;margin-top:.5cqw;color:#E85D26}
+#f23-shield{position:absolute;inset:0;opacity:.88;background:linear-gradient(90deg,#0A0A0A 0%,rgba(10,10,10,.97) 37%,rgba(10,10,10,0) 67%)}
+#f23-pool{position:absolute;left:53cqw;top:8cqh;width:43cqw;height:86cqh;border-radius:50%;opacity:0;
+  background:radial-gradient(closest-side,rgba(240,236,229,.11),rgba(240,236,229,.04) 55%,rgba(240,236,229,0) 100%)}
+/* the letter: 13's paper (fibre, three-fold creases, raking light, deckled foot) and its seal, broken */
+#f23-letter{position:absolute;left:0;top:0;width:33cqw;height:62cqh;color:#111111;opacity:0;transform-origin:0 100%}
+#f23-receipt{position:absolute;left:0;right:0;top:-46px;height:46px;box-sizing:border-box;display:flex;align-items:center;gap:16px;padding:0 16px;
+  background:linear-gradient(180deg,#262624,#1f1f1d);border:1.5px solid #3a3a37;box-shadow:inset 0 1px 0 rgba(240,236,229,.24);font:500 16px/1 "IBM Plex Mono";color:#F0ECE5;white-space:nowrap}
+.f23-maildots{display:flex;gap:9px;margin-right:2px}
+.f23-maildots i{width:7px;height:7px;border-radius:50%;background:#505048}
+.f23-maildots i:first-child{background:#E85D26}
+#f23-address{color:#F0ECE5}
+#f23-address span{color:#888880}
+#f23-read{margin-left:auto;padding:7px 9px;border:1px solid #E85D26;color:#E85D26;font-size:13px;letter-spacing:.12em;box-shadow:inset 0 1px 0 rgba(246,140,92,.14)}
+.f23-shd{position:absolute;inset:0;background:#111111}
+#f23-shd1{opacity:.5;filter:blur(22px);transform:translate(14px,30px)}
+#f23-shd2{opacity:.4;filter:blur(3px);transform:translate(3px,5px)}
+#f23-paper{position:absolute;inset:0;background-color:#F0ECE5;background-size:512px 512px;overflow:hidden;padding:3cqw}
+#f23-panels,#f23-rake,#f23-edge,#f23-sweepbox{position:absolute;inset:0;pointer-events:none}
+.f23-crease{position:absolute;left:0;right:0;height:64px;background:linear-gradient(180deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.06) 40%,rgba(17,17,17,.17) 49.5%,rgba(255,255,255,.75) 51%,rgba(255,255,255,.18) 56%,rgba(17,17,17,0) 80%)}
+#f23-rake{background:linear-gradient(112deg,rgba(255,255,255,.2) 0%,rgba(255,255,255,0) 36%,rgba(17,17,17,0) 58%,rgba(17,17,17,.15) 100%)}
+#f23-edge{box-shadow:inset 0 2px 0 rgba(255,255,255,.85),inset 0 -5px 0 rgba(17,17,17,.14),inset 0 0 90px rgba(17,17,17,.10)}
+#f23-sweepbox{overflow:hidden}
+#f23-sweep{position:absolute;top:-20%;left:0;width:26%;height:140%;transform:skewX(-16deg) translateX(-200%);
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.34) 50%,rgba(255,255,255,0))}
+#f23-body{position:relative}
+.f23-small{display:flex;justify-content:space-between;font:500 16px/1.5 "IBM Plex Mono";letter-spacing:.12em;color:#5F5B54}
+.f23-hand{font:italic 400 28px/1.2 "Instrument Serif";color:#3A3834}
+#f23-letter .f23-copy{font:italic 400 4.3cqw/.95 "Instrument Serif";letter-spacing:-.015em;margin:.8cqw 0 1cqw}
+.f23-sig{font:italic 400 50px/1 "Instrument Serif";margin-top:6px}
+#f23-seal{position:absolute;right:3cqw;bottom:2.4cqw;width:9.4cqw;height:9.4cqw;overflow:visible;transform:rotate(7deg)}
+#f23-caption{position:absolute;left:6cqw;top:5.5cqh;font:500 18px "IBM Plex Mono";letter-spacing:.14em;color:#888880}
+
+#f23-lock{left:5.5cqw;top:28cqh;font-size:6.7cqw;opacity:1;line-height:1.02}
+#f23-lock strong{font-size:13cqw}
+#f23-counter{position:absolute;left:63cqw;top:83cqh;font:500 18px/1.5 "IBM Plex Mono";letter-spacing:.1em;color:#F0ECE5}
+#f23-counter b{font-weight:500;color:#E85D26;display:block;font-size:28px;letter-spacing:0}
+#f23-arch{position:absolute;inset:0;width:100%;height:100%;opacity:0}
+#f23-finalseal{position:absolute;left:1080px;top:350px;width:50px;height:50px;opacity:0;overflow:visible}
+#f23-fx{position:absolute;inset:0;pointer-events:none}
+#f23-pool{left:30cqw;top:22cqh;width:44cqw;height:70cqh;mix-blend-mode:screen}
+#f23-glowL{position:absolute;inset:0;background:linear-gradient(90deg,rgba(232,93,38,.34),rgba(232,93,38,.08) 30%,rgba(232,93,38,0) 55%)}
+.f23-hl{position:absolute;background:rgba(232,93,38,.27);border-radius:4px;transform-origin:0 50%;transform:scaleX(0);mix-blend-mode:multiply}
+#f23-stamp{position:absolute;left:14.8cqw;top:12.2cqw;opacity:0;transform-origin:50% 50%;text-align:center;color:#E85D26;mix-blend-mode:multiply}
+#f23-stamp b{display:block;font:900 6cqw/.92 "Barlow";letter-spacing:.03em;padding:.5cqw 1.5cqw .2cqw;border:.5cqw solid #E85D26;border-radius:.6cqw;background:rgba(232,93,38,.06)}
+#f23-stamp i{display:block;margin-top:.5cqw;font:500 15px/1 "IBM Plex Mono";font-style:normal;letter-spacing:.16em}
+</style>
+<div data-hf-id="hf-nxsq" id="root" data-composition-id="23-library" data-width="1920" data-height="1080" data-duration="9.135">
+<canvas data-hf-id="hf-is9q" id="f23-gl" width="1920" height="1080" data-layout-ignore></canvas>
+<div id="f23-fx" data-layout-ignore></div>
+<div data-hf-id="hf-cksg" id="f23-lock"><div data-hf-id="hf-8i1t">harvested then,</div><div data-hf-id="hf-xba0">decrypted</div><strong data-hf-id="hf-pni8" id="f23-lnow" class="hr-glow">now</strong></div>
+<div data-hf-id="hf-ul5e" id="f23-counter">BYTES READ<b data-hf-id="hf-5lad" id="f23-bytes">0</b></div>
+<div id="f23-pool" class="f23-poolbox" data-layout-ignore style="position:absolute;opacity:0;border-radius:50%;background:radial-gradient(closest-side,rgba(240,236,229,.20),rgba(240,236,229,.07) 55%,rgba(240,236,229,0) 100%)"></div>
+<div data-hf-id="hf-qbgk" id="f23-letter" data-layout-allow-overlap>
+ <div data-hf-id="hf-ano1" class="f23-shd" id="f23-shd1"></div><div data-hf-id="hf-gtdu" class="f23-shd" id="f23-shd2"></div>
+ <div data-hf-id="hf-rv5n" id="f23-receipt"><span data-hf-id="hf-nq4r" class="f23-maildots" aria-hidden="true"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i></span><span data-hf-id="hf-qkxe" id="f23-address">archive.nead<span data-hf-id="hf-10zh">/0001</span></span><span data-hf-id="hf-vwb1" id="f23-read">READ · 0 TIMES</span></div>
+ <div data-hf-id="hf-numx" id="f23-paper">
+  <div data-hf-id="hf-he98" id="f23-panels"></div><div data-hf-id="hf-rtim" id="f23-rake"></div><div data-hf-id="hf-890i" id="f23-sweepbox"><div data-hf-id="hf-axlv" id="f23-sweep"></div></div><div id="f23-glowL"></div><div data-hf-id="hf-5tza" id="f23-edge"></div>
+  <div data-hf-id="hf-5msl" id="f23-body">
+   <div data-hf-id="hf-hpg9" class="f23-small"><span data-hf-id="hf-6ja9">OBJ 0001 · OPENED</span><span data-hf-id="hf-g3ky">09.03.2021</span></div>
+   <div data-hf-id="hf-8u0o" class="f23-hand" style="margin-top:1.3cqw">my love,</div>
+   <div data-hf-id="hf-bu7p" class="f23-hand">the little green padlock says</div>
+   <div data-hf-id="hf-f32z" class="f23-copy"><div data-hf-id="hf-6kds">no one else</div><div data-hf-id="hf-h8c4">will ever</div><div data-hf-id="hf-ycql">read it.</div></div>
+   <div data-hf-id="hf-g5ga" class="f23-hand">always yours,</div>
+   <div data-hf-id="hf-oq6w" class="f23-sig">a.</div>
+  </div>
+ </div>
+ <div id="f23-stamp" data-layout-allow-overlap><b>READ</b><i>BY THE ARCHIVE</i></div>
+ <svg data-hf-id="hf-9w8e" id="f23-seal" class="hr-glowbox" viewBox="-64 -64 128 128">
+  <defs data-hf-id="hf-mh0t">
+   <radialGradient data-hf-id="hf-cpty" id="f23-wg" cx="0.38" cy="0.34" r="0.78"><stop data-hf-id="hf-9ji3" offset="0" stop-color="#F68C5C"/><stop data-hf-id="hf-ecoc" offset="0.42" stop-color="#E85D26"/><stop data-hf-id="hf-w92l" offset="0.82" stop-color="#C94A1C"/><stop data-hf-id="hf-830a" offset="1" stop-color="#A63B14"/></radialGradient>
+   <radialGradient data-hf-id="hf-tbnd" id="f23-wr" cx="0.5" cy="0.5" r="0.5"><stop data-hf-id="hf-7xzq" offset="0.82" stop-color="#B9431A"/><stop data-hf-id="hf-13mw" offset="1" stop-color="#8E3010"/></radialGradient>
+   <radialGradient data-hf-id="hf-ef7f" id="f23-wd" cx="0.5" cy="0.5" r="0.5"><stop data-hf-id="hf-dz0s" offset="0" stop-color="#7A2C0E"/><stop data-hf-id="hf-q2ae" offset="0.85" stop-color="#8E3010"/><stop data-hf-id="hf-7523" offset="1" stop-color="#5E220B"/></radialGradient>
+   <filter data-hf-id="hf-d3h9" id="f23-sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow data-hf-id="hf-6ldc" dx="1.2" dy="2.2" stdDeviation="1.1" flood-color="#111111" flood-opacity="0.6"/></filter>
+   <g data-hf-id="hf-mwyj" id="f23-sealg">
+    <path data-hf-id="hf-vvbj" id="f23-rim" fill="url(#f23-wr)"/>
+    <circle data-hf-id="hf-49qb" r="50" fill="url(#f23-wg)"/>
+    <circle data-hf-id="hf-cvyr" r="43.5" fill="none" stroke="rgba(255,206,176,0.38)" stroke-width="1.2" transform="translate(0.8 0.8)"/>
+    <circle data-hf-id="hf-ejau" r="41" fill="rgba(17,17,17,0.06)" stroke="rgba(17,17,17,0.30)" stroke-width="2.4"/>
+    <g data-hf-id="hf-t6p6" id="f23-beads"></g>
+    <text data-hf-id="hf-3vod" x="1.6" y="15.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(17,17,17,0.36)">a.</text>
+    <text data-hf-id="hf-rrqi" x="-1.1" y="12.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(255,214,188,0.5)">a.</text>
+    <text data-hf-id="hf-av18" x="0" y="13.8" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="#D4521E">a.</text>
+    <path data-hf-id="hf-yf3i" d="M-38 -24 A44 44 0 0 1 -8 -45" fill="none" stroke="rgba(255,236,224,0.6)" stroke-width="3.5" stroke-linecap="round"/>
+    <path data-hf-id="hf-4l3v" d="M30 34 A44 44 0 0 1 12 44" fill="none" stroke="rgba(255,236,224,0.22)" stroke-width="2" stroke-linecap="round"/>
+   </g>
+   <g data-hf-id="hf-nmrw" id="f23-clips"></g>
+  </defs>
+  <use data-hf-id="hf-0s5a" id="f23-residue" href="#f23-rimonly" fill="url(#f23-wd)" opacity="0.85"/>
+  <g data-hf-id="hf-6lss" id="f23-shards"></g>
+ </svg>
+</div>
+
+<svg data-hf-id="hf-jd9p" id="f23-arch" viewBox="0 0 1920 1080" data-layout-ignore></svg>
+<svg data-hf-id="hf-vyaj" id="f23-finalseal" viewBox="-64 -64 128 128" data-layout-ignore></svg>
+</div>
+<script src="assets/kit/env.js"></script><script src="assets/kit/hr-kit.js"></script><script src="assets/kit/archie.js"></script><script src="assets/kit/wow-kit.js"></script>
+<script type="module">
+import * as THREE from "./assets/vendor/three.module.js";
+import { createArchiveThreat, threatGLSL } from "./assets/kit/archive-threat.js";
+const T0=150.923,DUR=9.135,L=t=>+(t-T0).toFixed(3),clamp=x=>Math.max(0,Math.min(1,x));
+const $=id=>document.getElementById(id);
+await Promise.all([document.fonts.load('900 74px "Barlow"'),document.fonts.load('500 26px "IBM Plex Mono"'),document.fonts.load('italic 400 83px "Instrument Serif"')]);
+// ---- the letter: paper fibre (13's bake), folds, deckle, broken seal -----------------------------------------------
+const bake=(w,h,seed,fibres,amp,flecks)=>{
+  const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d'),r=HR.rng(seed);
+  x.fillStyle='#F0ECE5';x.fillRect(0,0,w,h);const img=x.getImageData(0,0,w,h);
+  for(let i=0;i<img.data.length;i+=4){const v=(r()-.5)*amp;img.data[i]+=v;img.data[i+1]+=v;img.data[i+2]+=v*.9}
+  x.putImageData(img,0,0);
+  for(let k=0;k<fibres;k++){const px=r()*w,py=r()*h,a=r()*Math.PI,l=8+r()*30,dx=Math.cos(a)*l,dy=Math.sin(a)*l*.4;
+    x.lineWidth=.7;x.strokeStyle='rgba(110,100,90,0.13)';x.beginPath();x.moveTo(px,py);x.quadraticCurveTo(px+dx*.5+(r()-.5)*6,py+dy*.5+(r()-.5)*6,px+dx,py+dy);x.stroke();
+    x.strokeStyle='rgba(255,255,250,0.38)';x.beginPath();x.moveTo(px,py-1);x.lineTo(px+dx,py+dy-1);x.stroke()}
+  for(let k=0;k<flecks;k++){x.fillStyle=r()<.2?'rgba(232,93,38,0.16)':'rgba(80,80,72,0.16)';x.beginPath();x.ellipse(r()*w,r()*h,.6+r()*1.2,.4+r()*.7,r()*3,0,Math.PI*2);x.fill()}
+  return c;
+};
+$('f23-paper').style.backgroundImage=`url(${bake(512,512,1313,340,16,60).toDataURL('image/png')})`;
+(()=>{const r=HR.rng(77),p=['0 0','100% 0'];for(let x=100;x>=0;x-=2.5)p.push(`${x}% calc(100% - ${(4+(r()-.5)*6).toFixed(1)}px)`);
+  const poly=`polygon(${p.join(',')})`;$('f23-paper').style.clipPath=poly;$('f23-shd2').style.clipPath=poly})();
+(()=>{const pn=$('f23-panels');
+  [[0,'linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,0) 60%,rgba(17,17,17,.05))'],[33.33,'linear-gradient(180deg,rgba(17,17,17,.07),rgba(17,17,17,.02) 50%,rgba(255,255,255,.05))'],[66.66,'linear-gradient(180deg,rgba(255,255,255,.06),rgba(17,17,17,.03))']]
+   .forEach(([top,bg])=>{const d=document.createElement('div');Object.assign(d.style,{position:'absolute',left:0,right:0,top:top+'%',height:'33.34%',background:bg});pn.appendChild(d)});
+  [33.33,66.66].forEach(y=>{const c=document.createElement('div');c.className='f23-crease';c.style.top=`calc(${y}% - 32px)`;pn.appendChild(c)});
+  const v=document.createElement('div');Object.assign(v.style,{position:'absolute',top:0,bottom:0,left:'61%',width:'54px',background:'linear-gradient(90deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.05) 48%,rgba(255,255,255,.4) 51%,rgba(17,17,17,0) 100%)'});pn.appendChild(v)})();
+// 13's seal, broken the same way (same seeds): a hand-poured rim, five shards with bevelled broken edges, wax crumbs
+(()=>{
+  const NS='http://www.w3.org/2000/svg',S=(tag,a,p)=>{const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
+  const pts=a=>a.map(([x,y])=>`${x.toFixed(2)} ${y.toFixed(2)}`),defs=$('f23-seal').querySelector('defs');
+  let d='';const drips=[[.6,7],[2.5,5],[4.4,8.5]];
+  for(let k=0;k<=120;k++){const a=k/120*Math.PI*2;let rr=55.5+1.8*Math.sin(7*a+.5)+1.2*Math.sin(13*a+2)+.7*Math.sin(23*a);
+    for(const[a0,h]of drips){const da=Math.atan2(Math.sin(a-a0),Math.cos(a-a0));rr+=h*Math.exp(-(da*da)/.012)}
+    d+=(k?'L':'M')+(Math.cos(a)*rr).toFixed(2)+' '+(Math.sin(a)*rr).toFixed(2)}
+  $('f23-rim').setAttribute('d',d+'Z');S('path',{id:'f23-rimonly',d:d+'Z'},defs);S('path',{d:d+'Z'},S('clipPath',{id:'f23-rimclip'},defs));
+  for(let i=0;i<30;i++){const a=i/30*Math.PI*2;S('circle',{cx:(Math.cos(a)*36.5).toFixed(2),cy:(Math.sin(a)*36.5).toFixed(2),r:1.35,fill:'rgba(17,17,17,0.26)'},$('f23-beads'))}
+  const O=[46,0],R=76,ENDS=[70,128,178,226,286].map(d=>d*Math.PI/180),cr=HR.rng(1336);
+  const cracks=ENDS.map(a=>{const E=[Math.cos(a)*R,Math.sin(a)*R],n=9,dx=E[0]-O[0],dy=E[1]-O[1],len=Math.hypot(dx,dy),nx=-dy/len,ny=dx/len,p=[];
+    for(let i=0;i<=n;i++){const u=i/n,j=i===0||i===n?0:(cr()-.5)*9*Math.sin(Math.PI*u)+(i%2?1.6:-1.6);p.push([O[0]+dx*u+nx*j,O[1]+dy*u+ny*j])}return p});
+  ENDS.forEach((a0,k)=>{const k2=(k+1)%ENDS.length;let a1=ENDS[k2];if(a1<=a0)a1+=Math.PI*2;
+    const arc=[];for(let i=0;i<=10;i++){const a=a0+(a1-a0)*i/10;arc.push([Math.cos(a)*R,Math.sin(a)*R])}
+    const poly=cracks[k].concat(arc,cracks[k2].slice().reverse());S('path',{d:'M'+pts(poly).join(' L')+'Z'},S('clipPath',{id:`f23-cp${k}`},$('f23-clips')));
+    const inner=poly.filter(([x,y])=>Math.hypot(x,y)<58),c=inner.reduce((s,[x,y])=>[s[0]+x/inner.length,s[1]+y/inner.length],[0,0]);
+    const face=p=>{const m=p[Math.floor(p.length/2)];return(-(m[0]-c[0])-(m[1]-c[1]))>0};
+    const outer=S('g',{filter:'url(#f23-sh)'},$('f23-shards')),g=S('g',{'clip-path':'url(#f23-rimclip)'},S('g',{'clip-path':`url(#f23-cp${k})`},outer));
+    S('use',{href:'#f23-sealg'},g);
+    for(const p of[cracks[k],cracks[k2]]){const lit=face(p);S('path',{d:'M'+pts(p).join(' L'),fill:'none',stroke:lit?'rgba(255,226,206,0.85)':'rgba(60,20,6,0.75)','stroke-width':lit?3.2:4.4,'stroke-linejoin':'round'},g)}
+    const m=Math.hypot(c[0]-20,c[1])||1,v=7+(k%2)*4;
+    outer.setAttribute('transform',`translate(${((c[0]-20)/m*v).toFixed(1)} ${(c[1]/m*v).toFixed(1)}) rotate(${(k%2?7:-6)+k}, ${c[0].toFixed(1)}, ${c[1].toFixed(1)})`)});
+  const r=HR.rng(2626);
+  for(let i=0;i<14;i++){const a=r()*Math.PI*2,dd=66+r()*34,x=Math.cos(a)*dd,y=Math.sin(a)*dd,s=1.5+r()*3.2;
+    const p=Array.from({length:5},(_,j)=>{const b=j/5*Math.PI*2+r()*.8,q=s*(.6+r()*.6);return[x+Math.cos(b)*q,y+Math.sin(b)*q]});
+    S('path',{d:'M'+pts(p).join(' L')+'Z',fill:r()<.5?'#C94A1C':'#E85D26',filter:'url(#f23-sh)'},$('f23-shards'))}
+})();
+
+
+// H4: same spherical lattice and lens as22. Two point passes, an ink core, no postprocessing.
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(43,1920/1080,.1,150);
+const renderer=new THREE.WebGLRenderer({canvas:$('f23-gl'),antialias:true,preserveDrawingBuffer:true});
+renderer.setPixelRatio(1);renderer.setSize(1920,1080,false);renderer.setClearColor('#0A0A0A',1);
+const pos=[],rows=[],hero=[];
+for(let r=0;r<97;r++)for(let c=0;c<193;c++){
+const lat=-Math.PI/2+r*Math.PI/96,lon=c*2*Math.PI/193;
+pos.push(12*Math.cos(lat)*Math.sin(lon),12*Math.sin(lat),12*Math.cos(lat)*Math.cos(lon));rows.push(r);hero.push(r===48&&c===0?1:0);
+}
+const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('aRow',new THREE.Float32BufferAttribute(rows,1));geo.setAttribute('aHero',new THREE.Float32BufferAttribute(hero,1));
+const uni={uTime:{value:0},uOff:{value:0},uBloom:{value:0},uPulse:{value:0},uThreatTime:{value:5.479}};
+const vs=`attribute float aRow,aHero;uniform float uTime,uOff,uBloom,uPulse,uThreatTime;varying vec3 vCol;varying float vA;
+${threatGLSL}
+void main(){vec4 mv=modelViewMatrix*vec4(archivePosition(position,uThreatTime),1.);float facing=smoothstep(-.05,.13,dot(normalize(position),normalize(cameraPosition-position)));
+float ang=acos(clamp(position.z/12.,-1.,1.));float wave=1.45+uTime*.65;float read=1.-smoothstep(wave-.035,wave+.035,ang);
+vCol=mix(vec3(.9098,.3647,.149),vec3(.9412,.9255,.898),read);
+vCol=archiveExposure(position,uThreatTime,vCol);
+float alive=max(aHero,1.-step(97.-uOff*98.,aRow));vA=alive*facing;
+float px=max(2.8,.045*1371./max(-mv.z,.1));gl_PointSize=px*(uBloom>.5?4.:1.);gl_Position=projectionMatrix*mv;}`;
+function material(bloom){return new THREE.ShaderMaterial({uniforms:{...uni,uBloom:{value:bloom?1:0}},transparent:true,depthWrite:false,blending:bloom?THREE.AdditiveBlending:THREE.NormalBlending,vertexShader:vs,fragmentShader:bloom?`varying vec3 vCol;varying float vA;void main(){float r=length(gl_PointCoord-.5)*2.;float a=vA*.19*exp(-r*r*5.)*(1.-smoothstep(.75,1.,r));gl_FragColor=vec4(vCol,a);}`:`varying vec3 vCol;varying float vA;void main(){float r=length(gl_PointCoord-.5)*2.;float a=vA*(1.-smoothstep(.55,1.,r));if(a<.004)discard;gl_FragColor=vec4(vCol,a);}`});}
+const core=new THREE.Mesh(new THREE.SphereGeometry(11.96,64,40),new THREE.MeshBasicMaterial({color:'#0A0A0A'}));scene.add(core);
+const bloom=new THREE.Points(geo,material(true)),sharp=new THREE.Points(geo,material(false));scene.add(bloom,sharp);
+// Sparse engraved latitude rings carry the structure without filling the ground.
+const lp=[];for(let r=1;r<96;r+=4)for(let c=0;c<193;c++){let i=(r*193+c)*3,j=(r*193+(c+1)%193)*3;lp.push(...pos.slice(i,i+3),...pos.slice(j,j+3));}
+const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(lp,3));const lm=new THREE.LineBasicMaterial({color:'#505048',transparent:true,opacity:.21});scene.add(new THREE.LineSegments(lg,lm));
+const threat=createArchiveThreat(THREE,scene);
+// One lamp leaves the globe and becomes the letter's broken wax seal, then15's thumbnail seal.
+const seal=$('f23-finalseal');for(const node of $('f23-seal').querySelector('defs').children)seal.appendChild(node.cloneNode(true));
+const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href','#f23-sealg');seal.appendChild(use);
+// The duplicated defs are not needed: refer to the original immutable seal definition by unique id.
+while(seal.firstChild!==use)seal.removeChild(seal.firstChild);
+const crack=document.createElementNS('http://www.w3.org/2000/svg','path');crack.setAttribute('d','M-5 -62 l16 28 -14 19 19 25 -11 25 16 22');crack.setAttribute('fill','none');crack.setAttribute('stroke','#111111');crack.setAttribute('stroke-width','5');seal.appendChild(crack);
+const tl=gsap.timeline({paused:true});const clock={t:0};tl.to(clock,{t:DUR,duration:DUR,ease:'none'},0);
+const ease=x=>{x=clamp(x);return x*x*(3-2*x)},lerp=(a,b,u)=>a+(b-a)*u;
+// ---- the camera is a pure function of time; the pull-back and the handoff pose (t=0: z 34, look 0,0,0) are unchanged.
+// After the text leaves, the whole shot slides right (a pure translation) so the globe sits at the left and lights the letter.
+const camAt=t=>{const pull=clamp(t/L(156.4)),S=22*ease((t-L(155.7))/.7);
+  return{x:.65*Math.sin(t*.42)+S,y:.25*Math.sin(t*.31),z:34+22*(1-Math.pow(1-pull,1.35)),lx:-6*ease(t/2.2)+S}};
+const scratch=new THREE.PerspectiveCamera(43,1920/1080,.1,150);
+const screenOf=(t,x,y,z)=>{const c=camAt(t);scratch.position.set(c.x,c.y,c.z);scratch.lookAt(c.lx,0,0);scratch.updateMatrixWorld();
+  const v=new THREE.Vector3(x,y,z).project(scratch);return{x:(v.x*.5+.5)*1920,y:(.5-v.y*.5)*1080}};
+const globeR=t=>16451/camAt(t).z;
+// ---- the hits of "now": every kick punches the globe and the words, rings leave the rim; snares add rays and sparks
+const fx=$('f23-fx'),KICKS=HR.onsetsIn('kick',T0+.3,156.35),SNARES=HR.onsetsIn('snare',T0+.3,156.35);
+const ring=(t,x,y,r0,r1,w,color,dur)=>{const el=document.createElement('div'),c=color==='cream'?'240,236,229':'232,93,38';
+  Object.assign(el.style,{position:'absolute',left:x-100+'px',top:y-100+'px',width:'200px',height:'200px',borderRadius:'50%',boxSizing:'border-box',opacity:0,
+    border:`${w}px solid rgba(${c},.9)`,boxShadow:`0 0 24px rgba(${c},.5)`});fx.appendChild(el);
+  tl.fromTo(el,{opacity:1,scale:r0/100},{scale:r1/100,opacity:0,borderWidth:.5,duration:dur,ease:'expo.out',immediateRender:false},t)};
+KICKS.forEach((tk,i)=>{const t=L(tk),c=screenOf(t,0,0,0),R=globeR(t),f=i/Math.max(1,KICKS.length-1);
+  WOW.punch(tl,$('f23-gl'),t,{s:1.025+.03*f,dur:.34});WOW.shake(tl,$('f23-gl'),t,{amp:3+7*f,dur:.26,seed:30+i,rot:.12});
+  WOW.punch(tl,$('f23-lock'),t,{s:1.035+.02*f,dur:.3});WOW.shake(tl,$('f23-lock'),t,{amp:3+4*f,dur:.22,seed:50+i,rot:.2});
+  WOW.punch(tl,$('f23-counter'),t,{s:1.08,dur:.3});
+  ring(t,c.x,c.y,R*.9,R*(1.45+.5*f),3+3*f,i%2?'cream':'fire',.6)});
+SNARES.forEach((tk,i)=>{const t=L(tk),c=screenOf(t,0,0,0),R=globeR(t),a=[-35,200,-150,20][i%4];
+  ring(t,c.x,c.y,R*.85,R*2.2,7,'fire',.7);
+  const h=WOW.rays(tl,fx,{x:c.x,y:c.y,t,n:14,r0:R*.95,r1:R*2,seed:200+i,color:'cream',dur:.45});
+  const rx=c.x+Math.cos(a*Math.PI/180)*R,ry=c.y+Math.sin(a*Math.PI/180)*R;
+  WOW.burst(tl,fx,{x:rx,y:ry,t,n:9,speed:620,size:[4,10],spread:80,aim:a,seed:300+i,dur:.8});
+  WOW.shake(tl,$('f23-gl'),t,{amp:9+i*2,dur:.34,seed:70+i,rot:.2});WOW.flash(tl,fx,t,{a:.04+.01*i,dur:.08})});
+// ---- Archie rolls in with the letter and reads it by the globe's light
+const archie=HR.archie($('f23-arch'),{id:'f23a',x:2300,y:1040,scale:.7,seed:23,pose:{...HR.archie.MOODS.curious,shR:80,elR:-30,clawR:.9,lookX:-1,lookY:-.2}});
+const ARM={shR:80,elR:-30,clawR:.9};
+archie.rollTo(tl,930,L(155.4),.95,'power2.out');
+archie.to(tl,{lookX:-1,lookY:-.1,turn:-.4},L(155.4),.2);
+archie.to(tl,{lookX:-.9,lookY:-.9,turn:-.3,...ARM},L(156.45),.12);       // eyes snap up to the letter
+archie.to(tl,{lookX:-.9,lookY:-1,turn:-.3,glow:1.1},L(157.1),.1);
+const LINES=[[157.2,157.45],[157.45,157.85],[157.85,158.1],[158.1,158.33],[158.33,158.58],[158.58,158.78]];
+LINES.forEach(([a,b],k)=>{const y=-1+.14*k;
+  archie.to(tl,{lookX:-1.3,lookY:y,turn:-.6},L(a),.06,'power3.out');                         // carriage return
+  archie.to(tl,{lookX:1.5,lookY:y+.08,turn:.55},L(a)+.06,b-a-.07,'none')});               // along the line
+archie.blink(tl,L(158.8));
+archie.to(tl,{...HR.archie.MOODS.surprised,lookX:.4,lookY:-.4,turn:0,...ARM},L(158.85),.06,'power3.out'); // the stamp lands
+archie.bump(tl,L(158.85),.09);
+archie.to(tl,{...HR.archie.MOODS.sad,lookX:.6,lookY:-.1,...ARM},L(159.12),.3,'power2.inOut');
+// ---- the letter: 13's paper, unfolded, held in Archie's claw; a marker follows his eyes line by line
+const paper=$('f23-paper'),body=$('f23-body'),letter=$('f23-letter'),hl=$('f23-panels');
+const lineEls=[...body.children].filter(e=>e.matches('.f23-hand')).concat([...body.querySelectorAll('.f23-copy>div')]);
+const order=[0,1,2,3,4,5].map(i=>[lineEls[0],lineEls[1],lineEls[2],lineEls[3],lineEls[4],lineEls[5]][i]);
+const bars=order.map(el=>{const m=document.createElement('span'),cs=getComputedStyle(el);
+  Object.assign(m.style,{position:'absolute',visibility:'hidden',whiteSpace:'nowrap',font:cs.font,letterSpacing:cs.letterSpacing});m.textContent=el.textContent;paper.appendChild(m);
+  const w=m.offsetWidth;m.remove();const b=document.createElement('div');b.className='f23-hl';
+  Object.assign(b.style,{left:body.offsetLeft+el.offsetLeft-6+'px',top:body.offsetTop+el.offsetTop+el.offsetHeight*.16+'px',width:w+14+'px',height:el.offsetHeight*.7+'px'});
+  hl.appendChild(b);return b});
+const LH=letter.offsetHeight;
+// the READ stamp lands on a kick; the receipt's counter flips with it
+const STAMP=L(158.85),st=$('f23-stamp');
+tl.fromTo(st,{opacity:0,scale:2.6,rotation:-18},{opacity:.92,scale:1,rotation:-8,duration:.1,ease:'power4.in',immediateRender:false},STAMP-.1);
+tl.fromTo(st,{scale:1},{scale:1,duration:.01,immediateRender:false},STAMP);
+const sx=letter.offsetWidth*.62,sy=letter.offsetHeight*.43;
+const sh=WOW.shock(tl,letter,{x:sx,y:sy,t:STAMP,r:700,n:2,w:7,color:'fire',dur:.6});sh.setAttribute('data-layout-ignore','');
+const sr=WOW.rays(tl,letter,{x:sx,y:sy,t:STAMP,n:22,r0:90,r1:900,seed:158,color:'cream',w:5,dur:.5});sr.setAttribute('data-layout-ignore','');
+const sb=WOW.burst(tl,letter,{x:sx,y:sy,t:STAMP,n:22,speed:1100,size:[5,14],seed:159,dur:.9});sb.setAttribute('data-layout-ignore','');
+WOW.flash(tl,fx,STAMP,{a:.4,dur:.2});
+WOW.shake(tl,letter,STAMP,{amp:16,dur:.45,seed:9,rot:1.2});WOW.punch(tl,$('f23-gl'),STAMP,{s:1.06,dur:.45});WOW.shake(tl,$('f23-gl'),STAMP,{amp:14,dur:.4,seed:19,rot:.3});
+WOW.shake(tl,letter,L(156.87),{amp:5,dur:.2,seed:4,rot:.4});WOW.shake(tl,letter,L(157.12),{amp:6,dur:.22,seed:5,rot:.4});
+// the letter leaves the globe's front lamp on 156.4 and unfolds in two steps as it reaches Archie's claw
+const flash=(t)=>{WOW.flash(tl,fx,t,{a:.35,dur:.2});const c=screenOf(t,0,0,12);ring(t,c.x,c.y,40,420,6,'fire',.5);
+  const h=WOW.rays(tl,fx,{x:c.x,y:c.y,t,n:16,r0:40,r1:800,seed:156,color:'cream',dur:.45})};flash(L(156.4));
+function render(){const t=tl.time(),T=T0+t,ramp=clamp(t/.4);
+const cs=camAt(t),kick=HR.hit('kick',T,.12)*ramp*(T<156.45?1:0);
+camera.position.set(cs.x,cs.y,cs.z-1.1*kick);camera.lookAt(cs.lx,0,0);camera.updateMatrixWorld();
+uni.uTime.value=t;uni.uPulse.value=kick;uni.uThreatTime.value=T-145.444;threat.update(T-145.444);const off=clamp((T-158.85)/.8);uni.uOff.value=Math.floor(off*12)/12;lm.opacity=.21*(1-off);
+sharp.visible=bloom.visible=T<159.45;renderer.render(scene,camera);
+//29 has already reached its held final word at this scene's start; no replayed word onsets.
+const lk=$('f23-lock'),out=ease((T-155.6)/.6);lk.style.opacity=1-out;lk.style.transform=`translate(${-300*out}px,${-8*t}px) scale(${1+.004*t})`;
+HR.glow($('f23-lnow'),T,.3+.3*HR.band('vocal',T),.65);
+$('f23-counter').style.opacity=(1-ease((T-155.6)/.4));$('f23-bytes').textContent=Math.floor(8796093022208).toLocaleString('en-US');
+archie.apply(T);const hand=archie.handAt('R');
+const ar=ease((T-156.4)/.5),leave=ease((T-159.3)/.35),spot0=screenOf(t,0,0,12);
+const gx=hand.x-10,gy=hand.y+8,u=ar,px=lerp(spot0.x-30,gx,1-Math.pow(1-u,3)),py=lerp(spot0.y+10,gy,1-Math.pow(1-u,3)),sc=lerp(.07,1.12,u);
+letter.style.opacity=T>=156.4?1-leave:0;
+letter.style.transform=`translate(${px}px,${py-LH+40*leave}px) rotate(${lerp(-28,-3,u)}deg) scale(${sc})`;
+const vis=.34+.33*ease((T-156.87)/.12)+.33*ease((T-157.12)/.15);
+letter.style.clipPath=vis>=1?'none':`inset(-80px -80px ${((1-vis)*100).toFixed(2)}% -80px)`;
+LINES.forEach(([a,b],k)=>{const p=clamp((T-a)/(b-a)),el=bars[k];el.style.transform=`scaleX(${p.toFixed(3)})`;el.style.boxShadow=p>0&&p<1?'inset -4px 0 0 rgba(232,93,38,.95)':'none'});
+$('f23-read').textContent=T>=158.85?'READ · 1 TIME':'READ · 0 TIMES';
+const pool=$('f23-pool');pool.style.opacity=ar*(1-leave)*(.6+.4*HR.hit('kick',T,.2));
+const a=ease((T-155.4)/.1)*(1-leave);$('f23-arch').style.opacity=a;
+// A descending row-front leaves exactly one surviving lamp. The final arc lands on15's thumbnail at its initial pose.
+const final=ease((T-159.28)/.7),spot=new THREE.Vector3(0,0,12).project(camera),sx=(spot.x*.5+.5)*1920-25,sy=(.5-spot.y*.5)*1080-25;seal.style.opacity=ease((T-159.1)/.2);seal.style.left=`${sx+(1093-sx)*final}px`;seal.style.top=`${sy+(356-sy)*final}px`;seal.style.transform=`scale(${.24+.76*final})`;
+WOW.draw(tl,T0);
+}
+tl.eventCallback('onUpdate',render);tl.seek(0);render();window.__timelines['23-library']=tl;
+</script></template></body></html>

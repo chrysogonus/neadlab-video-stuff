@@ -1,0 +1,841 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 6 — qubits (verse 2, 61.346–75.987), v8. The beat as counting: a lit chip stack grows one layer per
+         beat, the decade becomes a beam of light reaching the ninth tick on "here", the passwords re-type and
+         flicker while drawer 0001 sits lit and steady, and TRUE slams across two tags.
+         v12: g1 opens tight on the young stack and pulls back as it grows; g4 (73.0–75.987) is rebuilt as three
+         literal shots on an overlay (#f06x): "blueprint" draws itself on as a cream-on-ink plan of the vault, a
+         birthday cake of filing drawers lights a candle per beat, then both drop into drawer 0001, which slams shut
+         on "as" with the candles still glowing through the seam, and TRUE stamps down on each "true".
+         v13 (SYSTEM.md V7): black ground (no ghost cipher wall, drawer-wall backdrop or bokeh; g4's shot grounds go to
+         ink), fire washes cut to tight low glows, flat glowing heroes (no burnt-step extrusion). Small text: the
+         plinth reads LOGICAL QUBITS: WORKING ON IT, the decade line's footnote SOURCE: EXPERTS (2015), drawer 0001's
+         label COPY FILED 2021 · UNAFFECTED BY PASSWORD CHANGE. The MAIL / BANK / CLOUD fields are a plant (paid off
+         in 22). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        .f06-grp { position: absolute; inset: 0; opacity: 0; }
+        #f06-fg { transform-origin: 5.5% 16%; } /* every line hangs from the top-left pad corner */
+
+        /* ---- background plane: the fire light (v13: tight and low, no ground texture) ---- */
+        #f06-light { position: absolute; left: 0; top: 0; width: 900px; height: 700px; margin: -350px 0 0 -450px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.09), rgba(232, 93, 38, 0.025) 55%, rgba(232, 93, 38, 0) 100%); }
+
+        /* ---- chrome plane ---- */
+        .f06-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
+        .f06-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
+          vertical-align: middle; margin-right: 16px; }
+        .f06-label { position: absolute; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 15px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); white-space: nowrap; }
+
+        /* ---- type plane ---- */
+        .f06-line { position: absolute; left: 5.5cqw; top: 9cqw; width: 56cqw; font-family: "Barlow"; color: var(--cream);
+          display: flex; flex-direction: column; align-items: flex-start; gap: 0.6cqw; }
+        .f06-row { display: flex; flex-wrap: wrap; column-gap: 0.26em; font-weight: 800; font-size: 4.4cqw;
+          line-height: 1.04; letter-spacing: -0.02em; }
+        .f06-row.f06-big { font-weight: 900; font-size: 11.5cqw; line-height: 0.86; letter-spacing: -0.04em;
+          color: var(--fire); margin: 0.3cqw 0 0.5cqw -0.4cqw; transform-origin: 0 80%;
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 26px) rgba(232, 93, 38, 0.55), 0 0 calc(var(--hr-glow, 0.5) * 80px) rgba(232, 93, 38, 0.28); }
+        .f06-w { display: inline-block; position: relative; }
+
+        /* ---- g1: the chip stack ---- */
+        #f06-slight { position: absolute; left: 1390px; top: 700px; width: 820px; height: 640px; margin: -320px 0 0 -410px;
+          border-radius: 50%; background: radial-gradient(closest-side, rgba(232, 93, 38, 0.13), rgba(232, 93, 38, 0.04) 50%, rgba(232, 93, 38, 0) 100%); }
+        #f06-chips { position: absolute; inset: 0; }
+        .f06-chip { position: absolute; transform-origin: 50% 100%; }
+        .f06-chip svg { position: absolute; left: 0; top: 0; overflow: visible; }
+        .f06-year { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 22px; letter-spacing: 0.14em;
+          color: var(--cream-hint); white-space: nowrap; }
+        .f06-year::before { content: ""; display: inline-block; width: 34px; height: 1px; background: currentColor;
+          vertical-align: middle; margin-right: 14px; }
+
+        /* ---- g2: the decade beam ---- */
+        #f06-track { position: absolute; left: 108px; top: 840px; width: 1704px; height: 1px; background: var(--cream-hint);
+          transform-origin: 0 50%; }
+        .f06-tick { position: absolute; top: 822px; width: 2px; height: 36px; margin-left: -1px; background: var(--cream-muted);
+          transform-origin: 50% 100%; }
+        .f06-tick.f06-end { top: 810px; height: 48px; }
+        .f06-tnum { position: absolute; top: 872px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 14px;
+          letter-spacing: 0.14em; color: var(--cream-hint); transform: translateX(-50%); }
+        #f06-bglow { position: absolute; left: 108px; top: 826px; height: 28px; background: var(--fire); filter: blur(12px);
+          transform-origin: 0 50%; opacity: 0.6; }
+        #f06-beam { position: absolute; left: 108px; top: 838px; height: 5px; transform-origin: 0 50%;
+          background: linear-gradient(90deg, rgba(232, 93, 38, 0.15), rgba(232, 93, 38, 0.9) 60%, #E85D26 88%, #F0ECE5 100%); }
+        #f06-head { position: absolute; left: 108px; top: 840px; width: 0; height: 0; }
+        #f06-halo { position: absolute; left: -130px; top: -130px; width: 260px; height: 260px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(240, 236, 229, 0.55), rgba(232, 93, 38, 0.35) 30%, rgba(232, 93, 38, 0) 100%); }
+        #f06-streak { position: absolute; left: -420px; top: -1.5px; width: 840px; height: 3px;
+          background: linear-gradient(90deg, rgba(240, 236, 229, 0), rgba(240, 236, 229, 0.75) 50%, rgba(240, 236, 229, 0)); }
+        #f06-vstreak { position: absolute; left: -1px; top: -70px; width: 2px; height: 140px;
+          background: linear-gradient(180deg, rgba(240, 236, 229, 0), rgba(240, 236, 229, 0.6) 50%, rgba(240, 236, 229, 0)); }
+        #f06-dot { position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; background: var(--cream);
+          box-shadow: 0 0 10px 3px rgba(240, 236, 229, 0.8), 0 0 30px 10px rgba(232, 93, 38, 0.65); }
+        #f06-pillar { position: absolute; top: 560px; width: 8px; height: 560px; margin-left: -4px; transform-origin: 50% 50%;
+          background: linear-gradient(180deg, rgba(232, 93, 38, 0), rgba(240, 236, 229, 0.9) 50%, rgba(232, 93, 38, 0)); filter: blur(3px); opacity: 0; }
+        #f06-burst { position: absolute; top: 838px; width: 900px; height: 4px; margin-left: -450px; opacity: 0;
+          background: linear-gradient(90deg, rgba(232, 93, 38, 0), rgba(240, 236, 229, 0.9) 50%, rgba(232, 93, 38, 0)); }
+        #f06-bracket { position: absolute; left: 108px; top: 916px; width: 1704px; height: 18px;
+          border: 1px solid var(--cream-hint); border-top: none; transform-origin: 50% 0; }
+        #f06-src { left: 108px; top: 958px; }
+        #f06-bracket .f06-label { left: 50%; top: 4px; transform: translateX(-50%); background: var(--ink); padding: 0 18px;
+          color: var(--cream-muted); font-size: 16px; }
+
+        /* ---- g3: password fields vs drawer 0001 ---- */
+        .f06-field { position: absolute; left: 106px; width: 600px; height: 64px; overflow: hidden;
+          border: 1px solid #3a3a36; background: linear-gradient(180deg, #1b1b19, #141413);
+          box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.6), inset 0 -1px 0 rgba(240, 236, 229, 0.05); }
+        .f06-field .f06-label { left: 22px; top: 23px; font-size: 15px; }
+        .f06-dots { position: absolute; left: 150px; top: 25px; display: flex; gap: 11px; }
+        .f06-dot { display: block; width: 14px; height: 14px; border-radius: 50%; background: var(--cream); }
+        .f06-caret { position: absolute; top: 17px; width: 3px; height: 30px; background: var(--fire);
+          box-shadow: 0 0 8px 2px rgba(232, 93, 38, 0.7); }
+        .f06-scan { position: absolute; top: 0; bottom: 0; width: 120px; margin-left: -116px;
+          background: linear-gradient(90deg, rgba(232, 93, 38, 0), rgba(232, 93, 38, 0.14) 70%, rgba(240, 236, 229, 0.3) 97%, rgba(240, 236, 229, 0)); }
+        #f06-dlight { position: absolute; left: 1510px; top: 470px; width: 760px; height: 560px; margin: -280px 0 0 -380px;
+          border-radius: 50%; background: radial-gradient(closest-side, rgba(232, 93, 38, 0.09), rgba(232, 93, 38, 0) 100%); }
+        #f06-slot { position: absolute; left: 1214px; top: 284px; width: 592px; height: 372px; background: #0d0d0c;
+          box-shadow: inset 0 10px 24px rgba(0, 0, 0, 0.8); border: 1px solid #222220; }
+        #f06-drawer { position: absolute; left: 1230px; top: 300px; width: 560px; height: 340px;
+          border: 1px solid #7a3a20; background: linear-gradient(180deg, #22221f, #161614 70%, #131312);
+          box-shadow: inset 0 2px 0 rgba(240, 236, 229, 0.09), inset 0 -3px 0 rgba(0, 0, 0, 0.6), 0 26px 50px rgba(0, 0, 0, 0.55); }
+        #f06-drawer .f06-bev { position: absolute; inset: 14px; border: 1px solid rgba(240, 236, 229, 0.05);
+          box-shadow: inset 0 -1px 0 rgba(240, 236, 229, 0.04), inset 0 1px 0 rgba(0, 0, 0, 0.5); }
+        #f06-plate { position: absolute; left: 34px; top: 32px; width: 236px; height: 70px; background: #121211;
+          border: 1px solid #2c2c29; box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(240, 236, 229, 0.06); }
+        #f06-plate small { position: absolute; left: 16px; top: 11px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 12px;
+          letter-spacing: 0.14em; color: var(--cream-muted); }
+        #f06-plate b { position: absolute; left: 16px; top: 24px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 36px;
+          line-height: 1; letter-spacing: 0.14em; color: var(--fire);
+          text-shadow: 0 0 14px rgba(232, 93, 38, 0.55), 0 0 40px rgba(232, 93, 38, 0.25); }
+        #f06-lamp { position: absolute; right: 34px; top: 40px; width: 16px; height: 16px; border-radius: 50%; background: var(--fire);
+          box-shadow: 0 0 10px 3px rgba(232, 93, 38, 0.8), 0 0 36px 10px rgba(232, 93, 38, 0.35); }
+        #f06-dhex { position: absolute; left: 36px; top: 128px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 22px;
+          line-height: 36px; letter-spacing: 0.12em; color: var(--cream-hint); white-space: pre; }
+        #f06-handle { position: absolute; left: 50%; bottom: 30px; width: 170px; height: 12px; margin-left: -85px; border-radius: 3px;
+          background: linear-gradient(180deg, #5a5a54, #34342f 60%, #232320); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(240, 236, 229, 0.25); }
+
+        /* ---- g4: two tags, one stamp ---- */
+        #f06-tlight { position: absolute; left: 1460px; top: 500px; width: 1300px; height: 1000px; margin: -500px 0 0 -650px;
+          border-radius: 50%; background: radial-gradient(closest-side, rgba(232, 93, 38, 0.26), rgba(232, 93, 38, 0) 100%); }
+        .f06-tag { position: absolute; left: 1180px; width: 560px; height: 150px; border: 1px solid #3a3a36;
+          background: linear-gradient(180deg, #20201d, #161614); transform-origin: 0 50%; opacity: 0;
+          box-shadow: inset 0 1px 0 rgba(240, 236, 229, 0.08), inset 0 -2px 0 rgba(0, 0, 0, 0.55), 0 20px 40px rgba(0, 0, 0, 0.5); }
+        .f06-tag .f06-label { left: 30px; top: 22px; font-size: 14px; }
+        .f06-tag .f06-name { position: absolute; left: 30px; top: 50px; font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 46px; letter-spacing: 0.14em; color: var(--cream); }
+        .f06-tag .f06-thex { position: absolute; left: 30px; top: 114px; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 15px; letter-spacing: 0.14em; color: var(--cream-hint); white-space: nowrap; }
+        .f06-tag i { position: absolute; left: -1px; top: -1px; width: 36px; height: 3px; background: var(--fire); }
+        .f06-tag u { position: absolute; right: 26px; top: 24px; width: 11px; height: 11px; border-radius: 50%; background: var(--fire);
+          box-shadow: 0 0 8px 2px rgba(232, 93, 38, 0.75), 0 0 26px 6px rgba(232, 93, 38, 0.32); opacity: 0; }
+        #f06-stampos { position: absolute; left: 1460px; top: 500px; width: 0; height: 0; }
+        #f06-sshadow { position: absolute; left: -240px; top: -80px; width: 480px; height: 160px; background: rgba(0, 0, 0, 0.75);
+          filter: blur(22px); opacity: 0; }
+        #f06-stampwrap { position: absolute; left: -240px; top: -82px; width: 480px; height: 164px; opacity: 0; }
+        #f06-stamp { position: absolute; inset: 0; border: 9px double var(--fire); box-sizing: border-box; display: flex;
+          align-items: center; justify-content: center; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 108px;
+          line-height: 1; letter-spacing: 0.14em; padding-left: 0.14em; color: var(--fire); }
+        #f06-spokes { position: absolute; left: 0; top: 0; width: 0; height: 0; transform: rotate(-8deg) scaleY(0.42); }
+        .f06-spoke { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+        .f06-spoke i { position: absolute; display: block; left: -2.5px; width: 5px; background: var(--fire); transform-origin: 50% 100%; opacity: 0; }
+
+        /* ---- v12 g4: three literal shots over everything (blueprint, birthday, drawer 0001 + TRUE) ---- */
+        #f06x { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+        .f06x-s { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+        .f06x-cam { position: absolute; inset: 0; transform-origin: 62% 52%; }
+        .f06x-svg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+        #f06x-bp { transform: scale(0.86); transform-origin: 1860px 560px; }
+        .f06x-kick { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 16px;
+          letter-spacing: 0.16em; color: #888880; white-space: nowrap; }
+        .f06x-kick::before { content: ""; display: inline-block; width: 36px; height: 2px; background: var(--fire); vertical-align: middle; margin-right: 16px; }
+        .f06x-line { position: absolute; left: 5.5cqw; top: 9cqw; font-family: "Barlow"; color: var(--cream); display: flex; flex-direction: column;
+          align-items: flex-start; gap: 0.4cqw; }
+        .f06x-row { display: flex; column-gap: 0.26em; font-weight: 800; font-size: 4.6cqw; line-height: 1.04; letter-spacing: -0.02em; white-space: nowrap;
+          text-shadow: 0 4px 18px rgba(0, 0, 0, 0.55); }
+        .f06x-row.f06x-big { font-weight: 900; font-size: 13cqw; line-height: 0.86; letter-spacing: -0.04em; margin-left: -0.5cqw; color: var(--fire);
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 26px) rgba(232, 93, 38, 0.55), 0 0 calc(var(--hr-glow, 0.5) * 80px) rgba(232, 93, 38, 0.28); }
+        .f06x-w { display: inline-block; position: relative; }
+        .f06x-w.f06x-fire { color: var(--fire); }
+        #f06x-a { background: radial-gradient(ellipse 60% 70% at 65% 50%, #121416, #0A0A0A 70%); }
+        #f06x-b { background: radial-gradient(ellipse 50% 60% at 66% 60%, #17110e, #0A0A0A 70%); }
+        #f06x-c { background: radial-gradient(ellipse 60% 70% at 64% 52%, #141311, #0A0A0A 70%); }
+        .f06x-stamp { position: absolute; padding: 6px 30px 0; border: 12px solid var(--fire); border-radius: 22px; font-family: "Barlow"; font-weight: 900;
+          font-size: 230px; line-height: 0.95; letter-spacing: 0.02em; color: var(--fire); opacity: 0; white-space: nowrap;
+          filter: drop-shadow(0 0 calc(var(--hr-glow, 0.5) * 26px) rgba(232, 93, 38, 0.7)); }
+        .f06x-stamp small { position: absolute; left: 0; right: 0; bottom: -40px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 22px; letter-spacing: 0.32em; }
+        .f06x-ink { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--fire); opacity: 0; }
+      </style>
+
+      <div data-hf-id="hf-ba3y" id="root" data-composition-id="06-qubits" data-width="1920" data-height="1080" data-duration="14.641">
+        <svg data-hf-id="hf-p3r6" width="0" height="0" style="position: absolute" aria-hidden="true">
+          <defs data-hf-id="hf-mh0t">
+            <linearGradient data-hf-id="hf-7s2g" id="f06-gtop" x1="0" y1="1" x2="0.3" y2="0"><stop data-hf-id="hf-reei" offset="0" stop-color="#1c1c1a" /><stop data-hf-id="hf-g9qi" offset="1" stop-color="#2a2a27" /></linearGradient>
+            <linearGradient data-hf-id="hf-0gqn" id="f06-gfront" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-2iqq" offset="0" stop-color="#232320" /><stop data-hf-id="hf-xh8t" offset="1" stop-color="#121211" /></linearGradient>
+            <linearGradient data-hf-id="hf-qan9" id="f06-gside" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-8bhw" offset="0" stop-color="#151513" /><stop data-hf-id="hf-96vr" offset="1" stop-color="#0e0e0d" /></linearGradient>
+            <radialGradient data-hf-id="hf-xuqt" id="f06-gspill"><stop data-hf-id="hf-393l" offset="0" stop-color="#E85D26" stop-opacity="0.75" /><stop data-hf-id="hf-p64o" offset="0.45" stop-color="#E85D26" stop-opacity="0.22" /><stop data-hf-id="hf-3qcc" offset="1" stop-color="#E85D26" stop-opacity="0" /></radialGradient>
+            <linearGradient data-hf-id="hf-t5ai" id="f06-gpost" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-84vt" offset="0" stop-color="#4a4a45" /><stop data-hf-id="hf-bgit" offset="0.4" stop-color="#2c2c29" /><stop data-hf-id="hf-8abw" offset="1" stop-color="#1a1a18" /></linearGradient>
+          </defs>
+        </svg>
+
+        <div data-hf-id="hf-tkip" class="hr-layer" id="f06-bg" data-depth="0.3" data-dof="5" data-layout-ignore>
+          <div data-hf-id="hf-07nw" id="f06-light"></div>
+        </div>
+
+        <div data-hf-id="hf-n0tw" class="hr-layer" id="f06-mid" data-depth="0.65" data-layout-ignore>
+          <div data-hf-id="hf-7kjj" class="f06-grp f06-g1">
+            <div data-hf-id="hf-hcuh" id="f06-slight"></div>
+            <div data-hf-id="hf-d7b5" id="f06-chips"></div>
+            <div data-hf-id="hf-8c62" id="f06-years"></div>
+          </div>
+          <div data-hf-id="hf-ywno" class="f06-grp f06-g2">
+            <div data-hf-id="hf-b3kl" id="f06-track"></div>
+            <div data-hf-id="hf-hewm" id="f06-ticks"></div>
+            <div data-hf-id="hf-pub0" id="f06-bracket"><div data-hf-id="hf-3yz8" class="f06-label">A DECADE</div></div>
+            <div data-hf-id="hf-6ng7" class="f06-label" id="f06-src">SOURCE: EXPERTS (2015)</div>
+            <div data-hf-id="hf-0c30" id="f06-pillar"></div>
+            <div data-hf-id="hf-tfwa" id="f06-burst"></div>
+            <div data-hf-id="hf-pva1" id="f06-bglow"></div>
+            <div data-hf-id="hf-2yu5" id="f06-beam"></div>
+            <div data-hf-id="hf-0jta" id="f06-head"><div data-hf-id="hf-z6qi" id="f06-halo"></div><div data-hf-id="hf-jasu" id="f06-streak"></div><div data-hf-id="hf-pyyo" id="f06-vstreak"></div><div data-hf-id="hf-kvol" id="f06-dot"></div></div>
+          </div>
+          <div data-hf-id="hf-zobh" class="f06-grp f06-g3">
+            <div data-hf-id="hf-nymg" id="f06-dlight"></div>
+            <div data-hf-id="hf-ukn0" id="f06-slot"></div>
+            <div data-hf-id="hf-3yjr" id="f06-drawer">
+              <div data-hf-id="hf-coyw" class="f06-bev"></div>
+              <div data-hf-id="hf-x2dw" id="f06-plate"><small data-hf-id="hf-jkm1">OBJ</small><b data-hf-id="hf-caua">0001</b></div>
+              <div data-hf-id="hf-3032" id="f06-lamp"></div>
+              <div data-hf-id="hf-6m9f" id="f06-dhex"></div>
+              <div data-hf-id="hf-hafm" id="f06-handle"></div>
+            </div>
+            <div data-hf-id="hf-qth9" class="f06-label" style="left: 1230px; top: 676px">COPY FILED 2021 · UNAFFECTED BY PASSWORD CHANGE</div>
+            <div data-hf-id="hf-rw87" id="f06-fields"></div>
+          </div>
+          <div data-hf-id="hf-o3lo" class="f06-grp f06-g4" data-layout-allow-overlap>
+            <div data-hf-id="hf-ywrc" id="f06-tlight"></div>
+            <div data-hf-id="hf-sd0s" class="f06-tag" id="f06-tag1" style="top: 330px"><i data-hf-id="hf-wt6k"></i><u data-hf-id="hf-w5wo"></u><div data-hf-id="hf-osfv" class="f06-label">OBJ 0388</div><div data-hf-id="hf-zru7" class="f06-name">BLUEPRINT</div><div data-hf-id="hf-yd1m" class="f06-thex"></div></div>
+            <div data-hf-id="hf-hpko" class="f06-tag" id="f06-tag2" style="top: 520px"><i data-hf-id="hf-zeb8"></i><u data-hf-id="hf-0jxc"></u><div data-hf-id="hf-7za9" class="f06-label">OBJ 0412</div><div data-hf-id="hf-m2hx" class="f06-name">BIRTHDAY</div><div data-hf-id="hf-jrym" class="f06-thex"></div></div>
+            <div data-hf-id="hf-q0mz" id="f06-stampos">
+              <div data-hf-id="hf-y37r" id="f06-sshadow"></div>
+              <div data-hf-id="hf-d1sj" id="f06-spokes"></div>
+              <div data-hf-id="hf-54m5" id="f06-stampwrap" class="hr-glowbox"><div data-hf-id="hf-gfh9" id="f06-stamp">TRUE</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-vvca" class="hr-layer" id="f06-chrome" data-depth="0.2">
+          <div data-hf-id="hf-blq7" class="f06-grp f06-g1"><div data-hf-id="hf-0bc6" class="f06-kicker" id="f06-k1">HARDWARE · ONE LAYER A BEAT</div></div>
+          <div data-hf-id="hf-bsh8" class="f06-grp f06-g2"><div data-hf-id="hf-0koe" class="f06-kicker" id="f06-k2">THE FORECAST</div></div>
+          <div data-hf-id="hf-0rn5" class="f06-grp f06-g3"><div data-hf-id="hf-sjeo" class="f06-kicker" id="f06-k3">THE COPY IS UNCHANGED</div></div>
+          <div data-hf-id="hf-ig16" class="f06-grp f06-g4"><div data-hf-id="hf-m678" class="f06-kicker" id="f06-k4">COLD STORAGE · NO EXPIRY</div></div>
+        </div>
+
+        <div data-hf-id="hf-11zj" class="hr-layer" id="f06-fg" data-depth="0.8">
+          <div data-hf-id="hf-b7f6" class="f06-grp f06-g1"><div data-hf-id="hf-0c9v" class="f06-line" id="f06-l10"></div></div>
+          <div data-hf-id="hf-alk5" class="f06-grp f06-g2"><div data-hf-id="hf-fy58" class="f06-line" id="f06-l11" style="width: 78cqw"></div></div>
+          <div data-hf-id="hf-1yk8" class="f06-grp f06-g3"><div data-hf-id="hf-85lf" class="f06-line" id="f06-l12" style="width: 58cqw"></div></div>
+          <div data-hf-id="hf-v8mm" class="f06-grp f06-g4"><div data-hf-id="hf-roe0" class="f06-line" id="f06-l13"></div></div>
+        </div>
+        <div data-hf-id="hf-hne7" class="hr-layer" id="f06-near" data-depth="1.7" data-layout-ignore></div>
+        <div data-hf-id="hf-9mk5" id="f06x">
+          <div data-hf-id="hf-wsj4" class="f06x-s" id="f06x-a">
+            <div data-hf-id="hf-2kjh" class="f06x-cam" id="f06x-ca"><svg data-hf-id="hf-auw5" class="f06x-svg" id="f06x-bp" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg></div>
+            <div data-hf-id="hf-9kcq" class="f06x-kick">OBJ 0388 · BLUEPRINT · RETAINED</div>
+            <div data-hf-id="hf-7as3" class="f06x-line" id="f06x-la"></div>
+          </div>
+          <div data-hf-id="hf-5gez" class="f06x-s" id="f06x-b">
+            <div data-hf-id="hf-6ini" class="f06x-cam" id="f06x-cb"><svg data-hf-id="hf-57mr" class="f06x-svg" id="f06x-cake" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg></div>
+            <div data-hf-id="hf-hqpa" class="f06x-kick">OBJ 0412 · BIRTHDAY · RETAINED</div>
+            <div data-hf-id="hf-ymw8" class="f06x-line" id="f06x-lb"></div>
+          </div>
+          <div data-hf-id="hf-1iay" class="f06x-s" id="f06x-c">
+            <div data-hf-id="hf-agrj" class="f06x-cam" id="f06x-cc">
+              <svg data-hf-id="hf-vqx5" class="f06x-svg" id="f06x-dr" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg>
+              <div data-hf-id="hf-fhxh" class="f06x-stamp" id="f06x-st1" style="left: 900px; top: 400px" data-layout-allow-overlap>TRUE<small data-hf-id="hf-57qy">NO EXPIRY</small></div>
+              <div data-hf-id="hf-v8qe" class="f06x-stamp" id="f06x-st2" style="left: 1080px; top: 620px" data-layout-allow-overlap>TRUE<small data-hf-id="hf-fn8s">AS TRUE</small></div>
+              <div data-hf-id="hf-3vf2" id="f06x-inks" data-layout-ignore></div>
+            </div>
+            <div data-hf-id="hf-gwd3" class="f06x-kick">COLD STORAGE · NO EXPIRY</div>
+            <div data-hf-id="hf-zek1" class="f06x-line" id="f06x-lc"></div>
+          </div>
+        </div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const T0 = 61.346, DUR = 14.641, END = T0 + DUR; // frame span, track seconds
+          const L = (t) => +(t - T0).toFixed(3);
+          const C2 = 65.616, C3 = 69.04, C4 = 73.0; // group cuts (line starts)
+          const BEATS = [61.346, 61.799, 62.26, 62.721, 63.168, 63.633, 64.088, 64.544, 64.997, 65.456, 65.92, 66.373, 66.826,
+            67.284, 67.743, 68.201, 68.66, 69.119, 69.578, 70.031, 70.489, 70.948, 71.412, 71.864, 72.318, 72.778, 73.247,
+            73.704, 74.164, 74.616, 75.076, 75.533];
+          // words: [text, start, hero?]; the hero gets its own display row
+          const LINES = {
+            l10: [["They're", 62.02], ["stacking", 62.119], ["up", 62.8], ["the", 62.94], ["qubits,", 63.1, 1], ["a", 63.86],
+              ["few", 63.96], ["more", 64.3], ["every", 64.603], ["year", 65.0]],
+            l11: [["The", 65.616], ["experts", 65.98], ["said", 66.34], ["a", 66.66], ["decade,", 66.8], ["now", 67.26],
+              ["the", 67.52], ["decade's", 67.7], ["nearly", 68.195], ["here", 68.619, 1]],
+            l12: [["You", 69.04], ["changed", 69.233], ["all", 69.831], ["of", 70.101], ["your", 70.3], ["passwords,", 70.505, 1],
+              ["you", 71.18], ["think", 71.278], ["that", 71.62], ["sees", 71.762], ["you", 72.12], ["through", 72.3]],
+            l13: [["But", 73.0], ["a", 73.16], ["blueprint", 73.22], ["or", 73.78], ["a", 74.0], ["birthday", 74.14], ["stays", 74.496],
+              ["as", 74.88], ["true", 75.02, 1], ["as", 75.598], ["true", 75.96]],
+          };
+          const QUBITS = 63.1, HERE = 68.619, DECADE = 66.8, PASS = 70.505, TRUE = 75.02;
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const NS = "http://www.w3.org/2000/svg";
+          const sv = (tag, parent, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const env = (dt, decay) => (dt < 0 ? 0 : Math.exp(-dt / decay));
+
+          // ---- static build ---------------------------------------------------------------------------------
+          // v13: no ground texture (the ghost wall, the drawer-wall backdrop and the bokeh are gone)
+
+          // lyric lines: runs of lead words share a row, the hero word gets its own display row
+          function buildLine(key) {
+            const box = $("f06-" + key), words = [];
+            let row = null;
+            for (const [w, t, hero] of LINES[key]) {
+              if (hero || !row || row.classList.contains("f06-big")) row = el("div", "f06-row" + (hero ? " f06-big" : ""), box);
+              words.push({ s: el("span", "f06-w", row, w.toLowerCase()), t, hero: !!hero });
+            }
+            return words;
+          }
+          const lines = Object.fromEntries(Object.keys(LINES).map((k) => [k, buildLine(k)]));
+          $("f06-l12").querySelector(".f06-big").style.fontSize = "10cqw";
+          const heroRows = Array.from(document.querySelectorAll("#f06-fg .f06-big"));
+
+          // g1 — the chip stack: oblique slabs on posts, lit from their own fire cores. p(u, v) is a point on a top face.
+          const X0 = 1130, W = 380, DX = 140, DY = 64, TH = 16, POST = 34, GAP = TH + POST, BASE = 930;
+          const G1 = BEATS.filter((b) => b < C2);
+          const P = (u, v) => `${(u * W + v * DX).toFixed(1)},${(DY - v * DY).toFixed(1)}`;
+          const quad = (a, b, c, d) => `${P(...a)} ${P(...b)} ${P(...c)} ${P(...d)}`;
+          function slab(parent, i, plinth) {
+            const box = el("div", "f06-chip", parent);
+            const y = plinth ? BASE + GAP : BASE - i * GAP;
+            Object.assign(box.style, { left: X0 + "px", top: y - DY + "px", width: W + DX + "px", height: DY + TH + POST + "px" });
+            const s = sv("svg", box, { width: W + DX, height: DY + TH + POST, viewBox: `0 0 ${W + DX} ${DY + TH + POST}` });
+            const th = plinth ? 26 : TH;
+            if (!plinth) for (const [x, y0] of [[10, DY + TH], [W - 16, DY + TH], [W + DX - 16, TH]])
+              sv("rect", s, { x, y: y0, width: 8, height: POST, fill: "url(#f06-gpost)" });
+            sv("polygon", s, { points: `${P(1, 0)} ${P(1, 1)} ${W + DX},${th} ${W},${DY + th}`, fill: "url(#f06-gside)", stroke: "#2a2a27", "stroke-width": 1 });
+            sv("polygon", s, { points: `${P(0, 0)} ${P(1, 0)} ${W},${DY + th} 0,${DY + th}`, fill: "url(#f06-gfront)", stroke: "#2a2a27", "stroke-width": 1 });
+            sv("polygon", s, { points: quad([0, 0], [1, 0], [1, 1], [0, 1]), fill: "url(#f06-gtop)" });
+            // traces: from the core out to the edges, with pads
+            const tr = HR.rng(700 + i);
+            sv("polygon", s, { points: quad([0.06, 0.1], [0.94, 0.1], [0.94, 0.9], [0.06, 0.9]), fill: "none", stroke: "#34342f", "stroke-width": 1 });
+            if (!plinth) {
+              for (let k = 0; k < 7; k++) {
+                const u = 0.12 + k * 0.125, v1 = 0.14 + tr() * 0.06;
+                sv("polyline", s, { points: `${P(u, v1)} ${P(u, 0.3)} ${P(0.5 + (u - 0.5) * 0.25, 0.42)}`, fill: "none", stroke: "#3c3c37", "stroke-width": 1.2 });
+                sv("polygon", s, { points: quad([u - 0.01, v1 - 0.03], [u + 0.01, v1 - 0.03], [u + 0.01, v1 + 0.02], [u - 0.01, v1 + 0.02]), fill: "#5c5c55" });
+              }
+            }
+            // the light spill and the core (glowing group)
+            const spill = sv("ellipse", s, { cx: 0.5 * W + 0.27 * DX, cy: DY - 0.27 * DY, rx: 190, ry: 44, fill: "url(#f06-gspill)", opacity: 0.4 });
+            const core = sv("g", s, { class: "hr-glowbox" });
+            if (!plinth) {
+              sv("polygon", core, { points: quad([0.38, 0.1], [0.62, 0.1], [0.62, 0.46], [0.38, 0.46]), fill: "none", stroke: "#E85D26", "stroke-opacity": 0.45, "stroke-width": 1.5 });
+              sv("polygon", core, { points: quad([0.44, 0.17], [0.56, 0.17], [0.56, 0.39], [0.44, 0.39]), fill: "#E85D26" });
+              sv("rect", core, { x: W * 0.455, y: DY + 4, width: W * 0.09, height: TH - 8, fill: "#E85D26" });
+            }
+            const hot = plinth ? null : sv("polygon", s, { points: quad([0.475, 0.23], [0.525, 0.23], [0.525, 0.33], [0.475, 0.33]), fill: "#F0ECE5", opacity: 0 });
+            // edge light: the front lip catches the key light; the back-left edge a fainter rim
+            sv("line", s, { x1: 0, y1: DY, x2: W, y2: DY, stroke: "#F0ECE5", "stroke-opacity": 0.32, "stroke-width": 1.2 });
+            sv("line", s, { x1: 0, y1: DY, x2: DX, y2: 0, stroke: "#F0ECE5", "stroke-opacity": 0.14, "stroke-width": 1 });
+            // v13: the plinth's engraving is the small-text joke; it undoes the plinth's scaleX(1.2) so it reads true
+            const lab = sv("text", s, plinth
+              ? { x: 18, y: DY + th - 7, transform: "scale(0.8333 1)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 14, "letter-spacing": 2, fill: "#888880" }
+              : { x: 14, y: DY + th - 4, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 10, "letter-spacing": 2, fill: "#5c5c55" });
+            lab.textContent = plinth ? "LOGICAL QUBITS: WORKING ON IT" : "Q" + String(i + 1).padStart(2, "0") + " · " + HR.cipher(6, 80 + i);
+            return { box, core, hot, spill };
+          }
+          const plinth = slab($("f06-chips"), -1, true);
+          plinth.box.style.left = X0 - 40 + "px";
+          plinth.box.style.transform = "scaleX(1.2)";
+          const chips = G1.map((b, i) => Object.assign(slab($("f06-chips"), i, false), { b }));
+          const YEARS = ["2021", "2022", "2023", "2024", "2025"];
+          const years = YEARS.map((yr, j) => {
+            const e = el("div", "f06-year", $("f06-years"), yr);
+            Object.assign(e.style, { left: X0 + W + DX + 8 + "px", top: BASE - 2 * j * GAP - DY + 2 + "px" });
+            return { e, b: G1[2 * j] };
+          });
+
+          // g2 — the decade: ten ticks; the beam runs from tick 0 to tick 8
+          const TX = (i) => 108 + i * (1704 / 9);
+          const ticks = Array.from({ length: 10 }, (_, i) => {
+            const t = el("div", "f06-tick" + (i === 0 || i === 9 ? " f06-end" : ""), $("f06-ticks"));
+            t.style.left = TX(i) + "px";
+            const n = el("div", "f06-tnum", $("f06-ticks"), String(i + 1).padStart(2, "0"));
+            n.style.left = TX(i) + "px";
+            return { t, n };
+          });
+          const BEAMW = TX(8) - TX(0);
+          $("f06-beam").style.width = BEAMW + "px";
+          $("f06-bglow").style.width = BEAMW + "px";
+          $("f06-pillar").style.left = TX(8) + "px";
+          $("f06-burst").style.left = TX(8) + "px";
+
+          // g3 — three password fields; drawer 0001's label stays exactly as filed
+          const fields = ["MAIL", "BANK", "CLOUD"].map((name, f) => {
+            const box = el("div", "f06-field", $("f06-fields"));
+            box.style.top = (708 + f * 84) + "px";
+            const scan = el("div", "f06-scan", box);
+            el("div", "f06-label", box, name);
+            const dots = el("div", "f06-dots", box);
+            const ds = Array.from({ length: 16 }, () => el("i", "f06-dot", dots));
+            const caret = el("i", "f06-caret", box);
+            return { box, ds, caret, scan, f };
+          });
+          $("f06-dhex").textContent = Array.from({ length: 4 }, (_, i) => HR.cipher(20, 7001 + i).replace(/(.{4})/g, "$1 ")).join("\n");
+
+          // g4 — tag ciphertext, an inked stamp face (seeded speckle mask), the impact spokes
+          document.querySelectorAll("#f06-mid .f06-thex").forEach((n, i) => { n.textContent = HR.cipher(24, 8101 + i).replace(/(.{4})/g, "$1 "); });
+          (() => {
+            const c = document.createElement("canvas"); c.width = 480; c.height = 164;
+            const x = c.getContext("2d"), r = HR.rng(4242);
+            x.fillStyle = "#000"; x.fillRect(0, 0, 480, 164);
+            x.globalCompositeOperation = "destination-out";
+            for (let k = 0; k < 900; k++) { x.fillStyle = `rgba(0,0,0,${(0.25 + r() * 0.75).toFixed(2)})`; x.fillRect(r() * 480, r() * 164, 1 + r() * 2.5, 1 + r() * 2.5); }
+            for (let k = 0; k < 14; k++) { x.fillStyle = `rgba(0,0,0,${(0.15 + r() * 0.3).toFixed(2)})`; x.fillRect(r() * 480, r() * 164, 12 + r() * 50, 2 + r() * 4); }
+            const url = `url(${c.toDataURL("image/png")})`;
+            Object.assign($("f06-stamp").style, { webkitMaskImage: url, maskImage: url, webkitMaskSize: "100% 100%", maskSize: "100% 100%" });
+          })();
+          const spokes = [];
+          for (let i = 0; i < 18; i++) {
+            const s = el("div", "f06-spoke", $("f06-spokes"));
+            s.style.transform = `rotate(${(i / 18) * 360 + 7}deg)`;
+            const line = el("i", "", s), r0 = 290 + (i % 3) * 22, len = 60 + (i % 4) * 34;
+            line.style.top = -(r0 + len) + "px"; line.style.height = len + "px";
+            spokes.push(line);
+          }
+
+          // ---- timeline -------------------------------------------------------------------------------------
+          // ---- v12 g4: "but a blueprint or a birthday stays as true as true", three literal shots ---------------
+          const XA = 73.0, XB = 73.74, XC = 74.45, TRUE2 = 75.96;
+          const NSX = "http://www.w3.org/2000/svg";
+          const sx = (parent, tag, attrs, text) => { const e = document.createElementNS(NSX, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          // lyrics: lead words build, the hero slams
+          const xLine = (box, rows) => rows.flatMap(([words, big]) => {
+            const row = el("div", "f06x-row" + (big ? " f06x-big" : ""), $(box));
+            return words.map(([w, t, fire]) => ({ s: el("span", "f06x-w" + (fire ? " f06x-fire" : ""), row, w.toLowerCase()), t: L(t), big }));
+          });
+          const xa = xLine("f06x-la", [[[["But", 73.0], ["a", 73.16]]], [[["blueprint", 73.22]], true]]);
+          const xb = xLine("f06x-lb", [[[["or", 73.78], ["a", 74.0]]], [[["birthday", 74.14]], true]]);
+          const xc = xLine("f06x-lc", [[[["stays", 74.496], ["as", 74.88]]], [[["true", 75.02]], true], [[["as", 75.598], ["true", 75.96, 1]]]]);
+          const xBig = Array.from(document.querySelectorAll("#f06x .f06x-big"));
+
+          // shot A: the blueprint, cream hairlines on ink, drawing itself on
+          const bp = $("f06x-bp"), bpPaths = [];
+          (() => {
+            let g = "";
+            for (let x = 0; x <= 1920; x += 40) g += `M${x} 0V1080`;
+            for (let y = 0; y <= 1080; y += 40) g += `M0 ${y}H1920`;
+            sx(bp, "path", { d: g, stroke: "rgba(240,236,229,0.05)", "stroke-width": 1 });
+            let G = "";
+            for (let x = 0; x <= 1920; x += 200) G += `M${x} 0V1080`;
+            for (let y = 0; y <= 1080; y += 200) G += `M0 ${y}H1920`;
+            sx(bp, "path", { d: G, stroke: "rgba(240,236,229,0.1)", "stroke-width": 1.2 });
+            const P = (d, w, c = "#F0ECE5") => bpPaths.push(sx(bp, "path", { d, fill: "none", stroke: c, "stroke-width": w, pathLength: 100, "stroke-dasharray": 100, "stroke-dashoffset": 100, "stroke-linecap": "square" }));
+            // walls (double lines), interior walls, doors, windows
+            P("M860 200 H1760 V900 H860 Z", 6); P("M878 218 H1742 V882 H878 Z", 2);
+            P("M1240 218 V600", 5); P("M878 620 H1180 M1300 620 H1500 V882", 5); P("M1500 620 H1742", 5);
+            P("M1180 620 A120 120 0 0 1 1300 500", 1.5); P("M1240 480 A120 120 0 0 0 1360 600", 1.5);
+            P("M1060 200 H1180 M1060 190 H1180 M1060 210 H1180", 1.5); P("M1760 330 V470 M1770 330 V470 M1750 330 V470", 1.5);
+            P("M1380 900 H1460 M1380 910 H1460 M1380 890 H1460", 1.5);
+            // a stair and the vault in the archive room
+            for (let k = 0; k < 9; k++) P(`M${1540 + k * 22} 650 V860`, 1.2);
+            P("M1360 760 m-90 0 a90 90 0 1 0 180 0 a90 90 0 1 0 -180 0", 2.5); P("M1360 760 m-60 0 a60 60 0 1 0 120 0 a60 60 0 1 0 -120 0", 1.2);
+            // dimensions
+            P("M860 150 H1760 M860 138 V162 M1760 138 V162", 1.4); P("M810 200 V900 M798 200 H822 M798 900 H822", 1.4);
+            P("M860 940 H1240 M860 930 V950 M1240 930 V950", 1.2);
+            // title block
+            P("M1440 960 H1840 V1050 H1440 Z M1440 990 H1840 M1640 990 V1050", 1.6);
+            const T = (x, y, s, txt, o = {}) => sx(bp, "text", Object.assign({ x, y, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": s, "letter-spacing": 3, fill: "rgba(240,236,229,0.75)" }, o), txt);
+            T(1310, 140, 18, "9 000", { "text-anchor": "middle" }); T(770, 560, 18, "7 000", { transform: "rotate(-90 770 560)", "text-anchor": "middle" });
+            T(1050, 975, 15, "3 800", { "text-anchor": "middle" });
+            T(1000, 420, 20, "VAULT 00"); T(1300, 360, 20, "AISLE ∞"); T(940, 780, 20, "ARCHIVE"); T(1290, 880, 15, "DRAWER 0001", { fill: "#E85D26" });
+            T(1456, 982, 15, "OBJ 0388 · BLUEPRINT"); T(1456, 1032, 15, "REV 4 · 1:50"); T(1656, 1032, 15, "RET ∞", { fill: "#E85D26" });
+          })();
+          // shot B: a birthday cake made of filing drawers; the candles light one per beat
+          const cake = $("f06x-cake"), flames = [];
+          (() => {
+            sx(cake, "defs", {}).innerHTML =
+              '<linearGradient id="f06x-en" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7F3EC"/><stop offset=".55" stop-color="#E4DDD0"/><stop offset="1" stop-color="#B9B0A0"/></linearGradient>' +
+              '<linearGradient id="f06x-ch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".3" stop-color="#B8B4AA"/><stop offset=".6" stop-color="#5A574F"/><stop offset="1" stop-color="#9A968C"/></linearGradient>' +
+              '<radialGradient id="f06x-fl" cx=".5" cy=".65" r=".6"><stop offset="0" stop-color="#FFF6EC"/><stop offset=".35" stop-color="#FFC9A0"/><stop offset=".7" stop-color="#E85D26"/><stop offset="1" stop-color="#E85D26" stop-opacity="0"/></radialGradient>' +
+              '<radialGradient id="f06x-glow"><stop offset="0" stop-color="#FF9A62" stop-opacity=".55"/><stop offset="1" stop-color="#E85D26" stop-opacity="0"/></radialGradient>';
+            const CX = 1300;
+            sx(cake, "ellipse", { cx: CX + 20, cy: 930, rx: 430, ry: 40, fill: "rgba(0,0,0,0.55)" });
+            sx(cake, "ellipse", { cx: CX, cy: 905, rx: 400, ry: 34, fill: "#2a2825", stroke: "#0b0a09", "stroke-width": 4 });
+            sx(cake, "path", { d: `M${CX - 395} 900 A400 34 0 0 1 ${CX + 395} 900`, fill: "none", stroke: "rgba(240,236,229,0.35)", "stroke-width": 2 });
+            [[620, 170, 900, ["OBJ 0412", "BIRTHDAY"]], [470, 150, 730, ["∞", "KEEP"]], [320, 130, 580, ["0001", ""]]].forEach(([w, h, yb, labs], tier) => {
+              const x0 = CX - w / 2, y0 = yb - h;
+              sx(cake, "rect", { x: x0, y: y0, width: w, height: h, rx: 6, fill: "url(#f06x-en)", stroke: "#111111", "stroke-width": 3 });
+              sx(cake, "path", { d: `M${x0 + 6} ${y0 + 3} H${x0 + w - 6}`, stroke: "rgba(255,255,255,0.9)", "stroke-width": 2 });
+              const n = tier === 2 ? 1 : 2, dw = w / n;
+              for (let d = 0; d < n; d++) {
+                const dx = x0 + d * dw;
+                sx(cake, "rect", { x: dx + 12, y: y0 + 22, width: dw - 24, height: h - 34, rx: 4, fill: "none", stroke: "rgba(17,17,17,0.55)", "stroke-width": 2.5 });
+                const lab = labs[d] ?? "";
+                if (lab) {
+                  sx(cake, "rect", { x: dx + dw / 2 - 62, y: y0 + 40, width: 124, height: 36, rx: 2, fill: "#3A3833" });
+                  sx(cake, "rect", { x: dx + dw / 2 - 57, y: y0 + 44, width: 114, height: 28, fill: "#FBF8F2" });
+                  sx(cake, "text", { x: dx + dw / 2, y: y0 + 64, "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": lab.length > 4 ? 15 : 20, "letter-spacing": 1.5, fill: "#111111" }, lab);
+                }
+                sx(cake, "rect", { x: dx + dw / 2 - 40, y: y0 + h - 44, width: 80, height: 13, rx: 6, fill: "url(#f06x-ch)", stroke: "#111111", "stroke-width": 2 });
+              }
+              // fire icing dripping over each tier's top edge
+              let d = `M${x0 - 4} ${y0 - 2}`;
+              const r = HR.rng(700 + tier);
+              for (let x = x0; x < x0 + w; x += 36) { const dl = 10 + r() * 34; d += ` L${x + 6} ${y0 + 8} Q${x + 12} ${y0 + dl} ${x + 18} ${y0 + dl} Q${x + 24} ${y0 + dl} ${x + 28} ${y0 + 8}`; }
+              d += ` L${x0 + w + 4} ${y0 - 2} Z`;
+              sx(cake, "path", { d, fill: "#E85D26", stroke: "#7a2a0e", "stroke-width": 2 });
+              sx(cake, "path", { d: `M${x0} ${y0 + 2} H${x0 + w}`, stroke: "rgba(255,214,186,0.7)", "stroke-width": 2 });
+            });
+            // candles
+            [1190, 1263, 1337, 1410].forEach((x, k) => {
+              const y = 450;
+              sx(cake, "rect", { x: x - 10, y: y - 96, width: 20, height: 100, rx: 3, fill: "#F7F3EC", stroke: "#111111", "stroke-width": 2.5 });
+              for (let s = 0; s < 4; s++) sx(cake, "path", { d: `M${x - 10} ${y - 80 + s * 24} L${x + 10} ${y - 92 + s * 24}`, stroke: "#E85D26", "stroke-width": 5 });
+              sx(cake, "path", { d: `M${x} ${y - 96} V${y - 108}`, stroke: "#111111", "stroke-width": 3 });
+              const g = sx(cake, "g", { transform: `translate(${x} ${y - 112})`, opacity: 0 });
+              sx(g, "circle", { r: 90, fill: "url(#f06x-glow)" });
+              const f = sx(g, "path", { d: "M0 -58 C 18 -30 22 -10 0 4 C -22 -10 -18 -30 0 -58 Z", fill: "url(#f06x-fl)" });
+              sx(g, "path", { d: "M0 -26 C 7 -14 8 -4 0 2 C -8 -4 -7 -14 0 -26 Z", fill: "#FFF6EC" });
+              flames.push({ g, f, k });
+            });
+          })();
+          const LIGHT = [73.8, 74.0, 74.164, 74.33];
+          // shot C: drawer 0001 takes both, slams shut on "as"; the candles still burn inside; TRUE, twice
+          const dr = $("f06x-dr");
+          let drFront, drSlot, drLeak, drRoll, drCake;
+          (() => {
+            sx(dr, "defs", {}).innerHTML =
+              '<linearGradient id="f06x-df" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3833"/><stop offset=".4" stop-color="#26241f"/><stop offset="1" stop-color="#121110"/></linearGradient>' +
+              '<linearGradient id="f06x-leak" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC9A0" stop-opacity=".9"/><stop offset="1" stop-color="#E85D26" stop-opacity="0"/></linearGradient>';
+            // the cabinet around the drawer
+            sx(dr, "rect", { x: 760, y: 220, width: 1060, height: 760, rx: 10, fill: "#1a1917", stroke: "#0b0a09", "stroke-width": 4 });
+            sx(dr, "path", { d: "M766 226 H1814", stroke: "rgba(240,236,229,0.3)", "stroke-width": 2 });
+            drSlot = sx(dr, "rect", { x: 800, y: 300, width: 980, height: 120, fill: "#050404" });
+            drLeak = sx(dr, "rect", { x: 800, y: 380, width: 980, height: 70, fill: "url(#f06x-leak)", opacity: 0 });
+            // the two objects that fall in: a rolled blueprint and the little cake
+            drRoll = sx(dr, "g", {});
+            sx(drRoll, "rect", { x: -150, y: -22, width: 300, height: 44, rx: 22, fill: "#F0ECE5", stroke: "#111111", "stroke-width": 3 });
+            for (let k = 0; k < 6; k++) sx(drRoll, "path", { d: `M${-130 + k * 50} -22 V22`, stroke: "rgba(17,17,17,0.35)", "stroke-width": 1.5 });
+            sx(drRoll, "ellipse", { cx: 150, cy: 0, rx: 10, ry: 22, fill: "#d9d2c4", stroke: "#111111", "stroke-width": 2 });
+            drCake = sx(dr, "g", {});
+            sx(drCake, "rect", { x: -70, y: -40, width: 140, height: 60, rx: 4, fill: "#E4DDD0", stroke: "#111111", "stroke-width": 3 });
+            sx(drCake, "rect", { x: -48, y: -78, width: 96, height: 40, rx: 4, fill: "#E4DDD0", stroke: "#111111", "stroke-width": 3 });
+            sx(drCake, "path", { d: "M-70 -38 H70 M-48 -76 H48", stroke: "#E85D26", "stroke-width": 8 });
+            for (const x of [-30, -10, 10, 30]) { sx(drCake, "rect", { x: x - 3, y: -104, width: 6, height: 26, fill: "#F7F3EC", stroke: "#111111", "stroke-width": 1.5 });
+              sx(drCake, "path", { d: `M${x} -122 C ${x + 6} -114 ${x + 6} -108 ${x} -104 C ${x - 6} -108 ${x - 6} -114 ${x} -122 Z`, fill: "#FF9A62" }); }
+            // the drawer front (moves up to close the slot)
+            drFront = sx(dr, "g", {});
+            sx(drFront, "rect", { x: 790, y: 420, width: 1000, height: 520, rx: 8, fill: "url(#f06x-df)", stroke: "#0b0a09", "stroke-width": 4 });
+            sx(drFront, "path", { d: "M796 425 H1784", stroke: "rgba(240,236,229,0.4)", "stroke-width": 2.5 });
+            sx(drFront, "rect", { x: 1170, y: 480, width: 240, height: 96, rx: 3, fill: "#3A3833", stroke: "#0b0a09", "stroke-width": 2 });
+            sx(drFront, "rect", { x: 1180, y: 490, width: 220, height: 76, fill: "#FBF8F2" });
+            sx(drFront, "text", { x: 1290, y: 518, "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 18, "letter-spacing": 3, fill: "#5F5B54" }, "OBJ");
+            sx(drFront, "text", { x: 1290, y: 556, "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 40, "letter-spacing": 4, fill: "#111111" }, "0001");
+            sx(drFront, "rect", { x: 1170, y: 800, width: 240, height: 30, rx: 15, fill: "url(#f06x-ch)", stroke: "#111111", "stroke-width": 3 });
+            sx(drFront, "circle", { cx: 1720, cy: 470, r: 12, fill: "#E85D26" });
+            sx(drFront, "text", { x: 830, y: 910, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 16, "letter-spacing": 3, fill: "rgba(240,236,229,0.45)" }, "BLUEPRINT · BIRTHDAY · A. · RETENTION INDEFINITE");
+          })();
+          const SLAM = 74.88;
+          const sr6 = HR.rng(6606), inks = [[75.02, 1150, 520], [TRUE2, 1270, 680]].flatMap(([t0, cx, cy]) => Array.from({ length: 12 }, () => {
+            const d = el("i", "f06x-ink", $("f06x-inks")), a = sr6() * 6.2832, v = 120 + sr6() * 320;
+            Object.assign(d.style, { left: cx + "px", top: cy + "px" });
+            return { d, t0, dx: Math.cos(a) * v, dy: Math.sin(a) * v, s: 0.6 + sr6() * 2.2 };
+          }));
+          const tl = gsap.timeline({ paused: true });
+          const stage = HR.stage($("root"), { seed: 6 });
+          const cam = stage.cam;
+          const cb = { x: 0, y: 0, z: 1, focus: 0.45 }; // the deliberate camera
+          const pk = { z: 0, rot: 0 };                     // punches on the heroes, added on top
+          const fx = { flare: 0, tflare: 0 };
+
+          const GROUPS = [[1, T0, C2], [2, C2, C3], [3, C3, C4]]; // v12: g4 is the #f06x overlay
+          for (const [n, a, b] of GROUPS) {
+            const els = Array.from(document.querySelectorAll(".f06-g" + n));
+            tl.set(els, { opacity: 1 }, L(a));
+            if (b < END) tl.set(els, { opacity: 0 }, L(b));
+          }
+
+          // the camera: one move per line, a punch on each hero, the biggest on the TRUE stamp
+          tl.fromTo(cb, { x: 0, y: 0, z: 1 }, { x: 24, y: -26, z: 1.05, duration: C2 - T0, ease: "sine.inOut" }, 0);
+          tl.fromTo(cb, { x: -30, y: 0, z: 1.0 }, { x: 30, y: 0, z: 1.05, duration: HERE - C2, ease: "power1.in", immediateRender: false }, L(C2));
+          tl.fromTo(cb, { x: 30, z: 1.05 }, { x: 34, z: 1.055, duration: C3 - HERE, ease: "sine.out", immediateRender: false }, L(HERE));
+          tl.fromTo(cb, { x: 4, z: 1.0, focus: 0.45 }, { x: 40, z: 1.07, focus: 0.05, duration: C4 - C3, ease: "sine.inOut", immediateRender: false }, L(C3));
+          tl.fromTo(cb, { x: -10, z: 1.0, focus: 0.45 }, { x: 20, z: 1.035, duration: 75.65 - C4, ease: "sine.inOut", immediateRender: false }, L(C4));
+          // velocity into the cut to 07: the last third of a second leans toward the lens
+          tl.fromTo(cb, { z: 1.035 }, { z: 1.075, duration: END - 75.65, ease: "power3.in", immediateRender: false }, L(75.65));
+          const punch = (t, z, rot, settle) => {
+            tl.fromTo(pk, { z: 0, rot: 0 }, { z, rot, duration: 0.07, ease: "power3.out", immediateRender: false }, L(t));
+            tl.fromTo(pk, { z, rot }, { z: 0, rot: 0, duration: settle, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(t) + 0.07);
+          };
+          punch(QUBITS, 0.035, 0.3, 0.55);
+          punch(HERE, 0.05, -0.45, 0.6);
+          punch(PASS, 0.025, 0.25, 0.5);
+          punch(TRUE, 0.07, -0.55, 0.65);
+
+          // v12: g1 opens tight on the young stack and pulls back as it grows
+          tl.fromTo(document.querySelector("#f06-mid .f06-g1"), { scale: 1.5, x: -150, y: -220, transformOrigin: "1390px 880px" },
+            { scale: 1, x: 0, y: 0, duration: L(QUBITS) + 0.5, ease: "power2.inOut" }, 0);
+          // v12 g4: the three shots
+          tl.set("#f06x", { opacity: 1 }, L(XA));
+          [["#f06x-a", XA, XB], ["#f06x-b", XB, XC], ["#f06x-c", XC, END + 1]].forEach(([id, a, b]) => {
+            tl.set(id, { opacity: 1 }, L(a)); if (b < END) tl.set(id, { opacity: 0 }, L(b));
+          });
+          for (const w of [...xa, ...xb, ...xc]) w.big ? HR.hero(tl, w.s, w.t, { spread: 50, over: 1.26, sharp: true }) : HR.lead(tl, w.s, w.t);
+          for (const [id, t, rot] of [["#f06x-st1", 75.02, -8], ["#f06x-st2", TRUE2, 6]]) {
+            tl.fromTo(id, { opacity: 0, scale: 2.4, rotation: rot - 14 }, { opacity: 0.96, scale: 0.94, rotation: rot, duration: 0.12, ease: "power4.in", immediateRender: false }, L(t) - 0.12);
+            tl.fromTo(id, { scale: 0.94 }, { scale: 1, duration: 0.45, ease: "elastic.out(1, 0.4)", immediateRender: false }, L(t));
+          }
+
+          // lyrics: lead words build by glyph, heroes slam ("qubits," resolves out of hex and slams); lines leave
+          for (const ws of Object.values(lines)) for (const { s, t, hero } of ws) {
+            if (t === QUBITS) continue;
+            if (hero) HR.hero(tl, s, L(t), { spread: 40, over: 1.26 });
+            else HR.lead(tl, s, L(t), t === 75.96 ? { dur: 0.1, stagger: 0.008 } : {});
+          }
+          const qw = lines.l10.find((w) => w.hero).s;
+          HR.decrypt(tl, qw, L(QUBITS), { dur: 0.45, seed: 17 });
+          gsap.set(qw, { transformOrigin: "0% 80%" });
+          tl.fromTo(qw, { scale: 1.16, skewX: -6 }, { scale: 1, skewX: 0, duration: 0.6, ease: "elastic.out(1, 0.42)", immediateRender: false }, L(QUBITS));
+          HR.exit(tl, $("f06-l10"), L(C2) - 0.26);
+          HR.exit(tl, $("f06-l11"), L(C3) - 0.26);
+          HR.exit(tl, $("f06-l12"), L(C4) - 0.26);
+          [["f06-k1", T0], ["f06-k2", C2], ["f06-k3", C3], ["f06-k4", C4]].forEach(([id, t]) => HR.lead(tl, $(id), L(t), { dur: 0.4 }));
+
+          // g1 — a chip drops onto the stack on every beat: anticipation above (blurred), lands ON the beat, squashes;
+          // the stack below gives a little; the year tag steps every two beats
+          chips.forEach(({ box, b }, i) => {
+            if (i > 0) tl.fromTo(box, { y: -130, opacity: 0, filter: "blur(10px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power3.in" }, L(b) - 0.16);
+            tl.fromTo(box, { scaleY: 0.84, scaleX: 1.025 }, { scaleY: 1, scaleX: 1, duration: 0.45, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(b));
+            if (i > 0) {
+              tl.fromTo("#f06-chips", { y: 0 }, { y: 5, duration: 0.05, ease: "power2.out", immediateRender: false }, L(b));
+              tl.fromTo("#f06-chips", { y: 5 }, { y: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, L(b) + 0.05);
+            }
+          });
+          years.forEach(({ e, b }) => tl.fromTo(e, { x: 30, opacity: 0, filter: "blur(6px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, Math.max(0, L(b) - 0.03)));
+
+          // g2 — the line and its ticks draw in; the bracket opens on "decade,"; the flare on "here"
+          tl.fromTo("#f06-track", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, L(C2));
+          ticks.forEach(({ t, n }, i) => {
+            tl.fromTo(t, { scaleY: 0 }, { scaleY: 1, duration: 0.24, ease: "power3.out" }, L(C2) + 0.05 + i * 0.045);
+            tl.fromTo(n, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, L(C2) + 0.1 + i * 0.045);
+          });
+          tl.fromTo("#f06-bracket", { scaleY: 0, opacity: 0 }, { scaleY: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, L(DECADE) - 0.04);
+          HR.lead(tl, $("f06-src"), L(DECADE) + 0.2, { dur: 0.4 });
+          tl.fromTo("#f06-pillar", { opacity: 1, scaleY: 0.1 }, { scaleY: 1, duration: 0.18, ease: "expo.out", immediateRender: false }, L(HERE));
+          tl.fromTo("#f06-pillar", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power2.in", immediateRender: false }, L(HERE) + 0.12);
+          tl.fromTo("#f06-burst", { opacity: 1, scaleX: 0.1 }, { scaleX: 1.6, opacity: 0, duration: 0.55, ease: "power2.out", immediateRender: false }, L(HERE));
+          tl.fromTo(ticks[8].t, { scaleY: 1 }, { scaleY: 2.6, duration: 0.14, ease: "expo.out", immediateRender: false }, L(HERE));
+          tl.fromTo(ticks[8].t, { scaleY: 2.6 }, { scaleY: 1.8, duration: 0.4, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(HERE) + 0.14);
+          tl.fromTo(fx, { flare: 1 }, { flare: 0, duration: 0.8, ease: "power2.out", immediateRender: false }, L(HERE));
+
+          // g3 — the fields slide in; on "passwords," they shudder
+          fields.forEach(({ box }, f) => tl.fromTo(box, { x: -60, opacity: 0, filter: "blur(8px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "expo.out" }, L(C3) + f * 0.06));
+          tl.fromTo("#f06-fields", { x: 0 }, { x: 9, duration: 0.04, yoyo: true, repeat: 5, ease: "none", immediateRender: false }, L(70.489));
+
+          // g4 — the tags arrive on their words (lamp on); TRUE comes down: anticipation, slam ON "true", settle
+          [["#f06-tag1", 73.22], ["#f06-tag2", 74.14]].forEach(([id, t]) => {
+            tl.fromTo(id, { opacity: 0, x: 70, filter: "blur(10px)" }, { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.34, ease: "expo.out" }, L(t) - 0.04);
+            tl.set(id + " u", { opacity: 1 }, L(t) + 0.1);
+          });
+          tl.fromTo("#f06-stampwrap", { opacity: 0, scale: 1.9, rotation: -17, y: -60, filter: "blur(12px)" },
+            { opacity: 1, scale: 1, rotation: -8, y: 0, filter: "blur(0px)", duration: 0.2, ease: "power4.in" }, L(TRUE) - 0.2);
+          tl.fromTo("#f06-sshadow", { opacity: 0, scale: 1.35, x: 40, y: 50 }, { opacity: 0.85, scale: 1, x: 0, y: 6, rotation: -8, duration: 0.2, ease: "power4.in" }, L(TRUE) - 0.2);
+          tl.fromTo("#f06-sshadow", { opacity: 0.85 }, { opacity: 0, duration: 0.18, ease: "power2.out", immediateRender: false }, L(TRUE));
+          tl.fromTo("#f06-stampwrap", { scaleX: 1, scaleY: 1 }, { scaleX: 1.07, scaleY: 0.92, duration: 0.05, ease: "power2.out", immediateRender: false }, L(TRUE));
+          tl.fromTo("#f06-stampwrap", { scaleX: 1.07, scaleY: 0.92 }, { scaleX: 1, scaleY: 1, duration: 0.55, ease: "elastic.out(1, 0.4)", immediateRender: false }, L(TRUE) + 0.05);
+          [["#f06-tag1", 7], ["#f06-tag2", 10]].forEach(([id, d]) => {
+            tl.fromTo(id, { y: 0 }, { y: d, duration: 0.05, ease: "power2.out", immediateRender: false }, L(TRUE));
+            tl.fromTo(id, { y: d }, { y: 0, duration: 0.5, ease: "elastic.out(1, 0.4)", immediateRender: false }, L(TRUE) + 0.05);
+          });
+          spokes.forEach((s, i) => {
+            const t0 = L(TRUE) + (i % 4) * 0.01;
+            tl.fromTo(s, { opacity: 1, scaleY: 0, y: 0 }, { scaleY: 1, y: -24, duration: 0.18, ease: "power4.out", immediateRender: false }, t0);
+            tl.fromTo(s, { opacity: 1, y: -24 }, { opacity: 0, y: -60, duration: 0.4, ease: "power2.in", immediateRender: false }, t0 + 0.2);
+          });
+          tl.fromTo(fx, { tflare: 1 }, { tflare: 0, duration: 0.9, ease: "power2.out", immediateRender: false }, L(TRUE));
+
+          // ---- per-frame draw -------------------------------------------------------------------------------
+          const G3B = BEATS.filter((b) => b > C3 && b < C4);
+          const pwLen = (f, k) => 7 + Math.floor(HR.rng(f * 131 + k * 17 + 5)() * 9); // 7..15 dots
+          const light = $("f06-light"), slight = $("f06-slight"), dlight = $("f06-dlight"), tlight = $("f06-tlight");
+          const beam = $("f06-beam"), bglow = $("f06-bglow"), head = $("f06-head"), halo = $("f06-halo"), streak = $("f06-streak");
+          const stampwrap = $("f06-stampwrap");
+          const D2 = HERE - DECADE;
+          const crossT = (i) => DECADE + D2 * Math.sqrt(i / 8); // when the beam (p = u²) passes tick i
+          function render() {
+            const t = tl.time(), T = t + T0;
+            cam.x = cb.x; cam.y = cb.y; cam.z = cb.z + pk.z; cam.rot = pk.rot; cam.focus = cb.focus;
+            stage.apply(T);
+            HR.draw(tl);
+            const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.14), snare = HR.hit("snare", T, 0.08);
+
+            // type: heroes glow, pulse on kicks, nudge on snares
+            for (const r of heroRows) {
+              HR.glow(r, T, 0.35, 0.7);
+              r.style.transform = `translateX(${(snare * 1.2).toFixed(2)}px) scale(${(1 + 0.015 * kick).toFixed(4)})`;
+            }
+
+            // the fire light sits behind each group's subject and breathes with the bass
+            let lx = 1390, ly = 700, lo = 0.7;
+            if (T >= C2 && T < C3) { lx = 108 + BEAMW * beamP(T) * 0.65 + 300; ly = 820; lo = 0.4 + 0.6 * clamp01((T - DECADE) / D2) + 0.6 * fx.flare; }
+            else if (T >= C3 && T < C4) { lx = 1500; ly = 470; lo = 0.55; }
+            else if (T >= C4) { lx = 1460; ly = 520; lo = 0.6 + 0.8 * fx.tflare; }
+            light.style.left = lx.toFixed(1) + "px"; light.style.top = ly + "px";
+            light.style.opacity = (lo + 0.35 * bass).toFixed(3);
+
+            // g1 — each core flashes as its chip lands, a pulse runs down the stack, and the stack burns brighter as it grows
+            if (T < C2) {
+              const n = chips.filter((c) => T >= c.b - 1e-6).length;
+              let latest = 0;
+              chips.forEach((c, j) => {
+                const flash = env(T - c.b, 0.3);
+                let wave = 0;
+                for (let i = j + 1; i < chips.length; i++) wave = Math.max(wave, env(T - (chips[i].b + (i - j) * 0.035), 0.16));
+                const g = 0.3 + 0.55 * (n / chips.length) + 0.3 * bass + 1.3 * flash + 0.7 * wave;
+                c.core.style.setProperty("--hr-glow", g.toFixed(3));
+                c.hot.setAttribute("opacity", clamp01(flash * 1.1 + 0.5 * wave).toFixed(3));
+                c.spill.setAttribute("opacity", clamp01(0.25 + 0.35 * g).toFixed(3));
+                latest = Math.max(latest, flash);
+              });
+              plinth.spill.setAttribute("opacity", clamp01(0.2 + 0.05 * n + 0.3 * bass).toFixed(3));
+              slight.style.opacity = clamp01(0.3 + 0.55 * (n / chips.length) + 0.3 * bass + 0.35 * latest).toFixed(3);
+              slight.style.transform = `translateY(${(-n * 18).toFixed(1)}px) scale(${(0.85 + 0.03 * n + 0.04 * latest).toFixed(3)})`;
+              const cur = years.filter((y) => T >= y.b - 1e-6).length - 1;
+              years.forEach(({ e }, j) => {
+                const now = j === cur;
+                e.style.color = now ? "#E85D26" : j < cur ? "#888880" : "#505048";
+                e.classList.toggle("hr-glow", now);
+                if (now) HR.glow(e, T, 0.3, 0.6);
+              });
+            }
+
+            // g2 — the beam: a bright head drawing to the ninth tick on "here", ticks lighting as it passes
+            if (T >= C2 && T < C3) {
+              const p = beamP(T), lit = T >= DECADE;
+              beam.style.transform = `scaleX(${p.toFixed(4)})`;
+              bglow.style.transform = `scaleX(${p.toFixed(4)})`;
+              bglow.style.opacity = (lit ? 0.45 + 0.35 * bass + 0.5 * fx.flare : 0).toFixed(3);
+              head.style.transform = `translateX(${(BEAMW * p).toFixed(1)}px)`;
+              const ign = env(T - DECADE, 0.25);
+              head.style.opacity = lit ? "1" : (0.25 + 0.25 * HR.hit("kick", T, 0.2)).toFixed(3);
+              halo.style.transform = `scale(${(0.8 + 0.25 * bass + 0.6 * ign + 0.9 * fx.flare).toFixed(3)})`;
+              streak.style.transform = `scaleX(${(lit ? 0.7 + 0.5 * clamp01((T - DECADE) / D2) + 0.8 * fx.flare : 0.2).toFixed(3)})`;
+              streak.style.opacity = lit ? "1" : "0.3";
+              ticks.forEach(({ t: tk, n }, i) => {
+                const ct = crossT(i), passed = i <= 8 && T >= ct && lit;
+                const f = passed ? env(T - ct, 0.28) : 0;
+                tk.style.backgroundColor = passed ? "#E85D26" : i === 9 ? "#F0ECE5" : "#888880";
+                tk.style.boxShadow = passed ? `0 0 ${(6 + 22 * f).toFixed(1)}px rgba(232, 93, 38, ${(0.5 + 0.5 * f).toFixed(2)})` : "none";
+                n.style.color = passed ? "#E85D26" : i === 9 ? "#888880" : "#505048";
+                if (i !== 8) tk.style.transform = `scaleY(${(1 + 0.6 * f).toFixed(3)})`;
+              });
+            }
+
+            // g3 — the passwords re-type on every beat: a flicker, then a scanning cursor; drawer 0001 stays exactly as it is
+            if (T >= C3 && T < C4) {
+              const stepF = Math.floor(t * 60);
+              for (const { box, ds, caret, scan, f } of fields) {
+                let k = -1;
+                for (let i = 0; i < G3B.length; i++) if (T >= G3B[i] + f * 0.05) k = i;
+                const len = pwLen(f, k), dt = k < 0 ? 9 : T - G3B[k] - f * 0.05;
+                const shown = k < 0 ? len : Math.min(len, Math.floor(Math.max(0, dt - 0.08) / 0.026));
+                const flick = dt < 0.1;
+                ds.forEach((d, i) => { d.style.opacity = i < (flick ? pwLen(f, k - 1) : shown) ? (flick ? (stepF % 2 ? 0.25 : 0.9) : 1) : 0; });
+                caret.style.left = (150 + shown * 25 + 2) + "px";
+                caret.style.opacity = shown < len || Math.floor(t * 4) % 2 === 0 ? 1 : 0;
+                const sweep = k >= 0 && dt < 0.08 + len * 0.026 + 0.15;
+                scan.style.left = (150 + shown * 25) + "px";
+                scan.style.opacity = sweep ? "1" : "0";
+                const hotB = T >= PASS ? 0.75 + 0.25 * env(T - PASS, 0.4) : 0;
+                const fl = flick ? 1 : env(dt, 0.12) * 0.6;
+                box.style.borderColor = hotB || fl > 0.3 ? "#E85D26" : "#3a3a36";
+                box.style.boxShadow = `inset 0 3px 8px rgba(0, 0, 0, 0.6), 0 0 ${(4 + 20 * Math.max(fl, hotB * 0.6)).toFixed(1)}px rgba(232, 93, 38, ${(0.5 * Math.max(fl, hotB * 0.7)).toFixed(3)})`;
+              }
+              dlight.style.opacity = "1";
+            }
+
+            // g4 — the stamp's light: a flare on impact, then a slow bass breath
+            if (T >= C4) {
+              stampwrap.style.setProperty("--hr-glow", (0.4 + 0.5 * bass + 1.6 * fx.tflare).toFixed(3));
+              tlight.style.opacity = (0.55 + 0.3 * bass + 0.9 * fx.tflare).toFixed(3);
+              tlight.style.transform = `scale(${(0.9 + 0.08 * bass + 0.2 * fx.tflare).toFixed(3)})`;
+            }
+
+            // v12 g4: the three shots
+            if (T >= XA) {
+              for (const r of xBig) HR.glow(r, T, 0.35, 0.7);
+              const e3 = (x) => 1 - Math.pow(1 - clamp01(x), 3), shake = (t0, k) => { const d = T - t0; return d < 0 ? [0, 0] : [Math.sin(d * 90) * k * Math.exp(-d / 0.09), Math.cos(d * 77) * k * 0.7 * Math.exp(-d / 0.09)]; };
+              if (T < XB) {
+                const u = clamp01((T - XA) / (XB - XA));
+                $("f06x-bp").style.clipPath = `inset(0 0 ${(100 * (1 - e3((T - XA) / 0.24))).toFixed(1)}% 0)`;
+                bpPaths.forEach((p, i) => p.setAttribute("stroke-dashoffset", (100 * (1 - e3((T - XA - 0.04 - i * 0.016) / 0.32))).toFixed(1)));
+                const [kx, ky] = shake(73.22, 10);
+                $("f06x-ca").style.transform = `translate(${kx.toFixed(1)}px, ${ky.toFixed(1)}px) scale(${(1.1 - 0.08 * e3(u)).toFixed(4)}) rotate(${(-1.5 + 1.5 * e3(u)).toFixed(3)}deg)`;
+              } else if (T < XC) {
+                const u = clamp01((T - XB) / (XC - XB));
+                flames.forEach(({ g, f, k }) => {
+                  const on = clamp01((T - LIGHT[k]) / 0.06);
+                  g.setAttribute("opacity", on.toFixed(3));
+                  f.setAttribute("transform", `scale(${(1 + 0.08 * Math.sin(T * 23 + k)).toFixed(3)} ${(1 + 0.14 * Math.sin(T * 31 + k * 2) + 0.4 * Math.exp(-Math.max(0, T - LIGHT[k]) / 0.08)).toFixed(3)})`);
+                });
+                let kx = 0, ky = 0;
+                for (const l of LIGHT) { const [a, b2] = shake(l, 5); kx += a; ky += b2; }
+                $("f06x-cb").style.transform = `translate(${kx.toFixed(1)}px, ${ky.toFixed(1)}px) scale(${(1 + 0.07 * u).toFixed(4)})`;
+              } else {
+                const fall = (t0) => { const q = clamp01((T - t0) / 0.34); return -110 + 680 * q * q; };
+                drRoll.setAttribute("transform", `translate(1150 ${fall(XC).toFixed(1)}) rotate(${(-8 + 30 * clamp01((T - XC) / 0.32)).toFixed(1)})`);
+                drCake.setAttribute("transform", `translate(1440 ${fall(XC + 0.12).toFixed(1)}) rotate(${(6 - 14 * clamp01((T - XC - 0.12) / 0.32)).toFixed(1)})`);
+                const close = clamp01((T - (SLAM - 0.1)) / 0.1), cl = close * close * close, d = T - SLAM;
+                const bounce = d > 0 ? 10 * Math.exp(-d / 0.08) * Math.cos(d * 40) : 0;
+                drFront.setAttribute("transform", `translate(0 ${(-120 * cl + bounce).toFixed(1)})`);
+                const lit = T >= SLAM ? 0.55 + 0.25 * Math.sin(T * 17) + 0.15 * Math.sin(T * 29) : 0;
+                drLeak.setAttribute("y", "250"); drLeak.setAttribute("height", "52"); drLeak.setAttribute("opacity", lit.toFixed(3));
+                drLeak.setAttribute("transform", "scale(1 -1) translate(0 -552)");
+                let kx = 0, ky = 0;
+                for (const [t0, k] of [[SLAM, 14], [75.02, 22], [TRUE2, 18]]) { const [a, b2] = shake(t0, k); kx += a; ky += b2; }
+                const push = 1 + 0.05 * clamp01((T - XC) / (END - XC)) + 0.08 * Math.pow(clamp01((T - (END - 0.3)) / 0.3), 2);
+                $("f06x-cc").style.transform = `translate(${kx.toFixed(1)}px, ${ky.toFixed(1)}px) scale(${push.toFixed(4)})`;
+                for (const id of ["f06x-st1", "f06x-st2"]) $(id).style.setProperty("--hr-glow", (0.4 + 0.5 * bass).toFixed(3));
+                for (const k of inks) {
+                  const q = T - k.t0; if (q < 0) { k.d.style.opacity = "0"; continue; }
+                  const e = 1 - Math.exp(-q / 0.08);
+                  k.d.style.transform = `translate(${(k.dx * 0.35 * e).toFixed(1)}px, ${(k.dy * 0.35 * e + 300 * q * q).toFixed(1)}px) scale(${k.s.toFixed(2)})`;
+                  k.d.style.opacity = (0.9 * (1 - clamp01((q - 0.4) / 0.4))).toFixed(3);
+                }
+              }
+            }
+          }
+          function beamP(T) { const u = clamp01((T - DECADE) / D2); return u * u; }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["06-qubits"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

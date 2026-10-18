@@ -1,0 +1,557 @@
+[
+ {
+  "start": 3.579999999999999,
+  "end": 14.32,
+  "text": "Hey team, quick one before the weekend, leadership super excited about AI."
+ },
+ {
+  "start": 34.28,
+  "end": 38.18,
+  "text": "The boss came home from a keynote in May"
+ },
+ {
+  "start": 38.18,
+  "end": 42.28,
+  "text": "He says some kid built a startup alone in a day"
+ },
+ {
+  "start": 42.28,
+  "end": 46.32,
+  "text": "Now it's all hands Monday and we're AI first"
+ },
+ {
+  "start": 46.32,
+  "end": 49.5,
+  "text": "I guess that makes me second or worse"
+ },
+ {
+  "start": 50.44,
+  "end": 54.34,
+  "text": "They right-sized the team and bought the robot seats"
+ },
+ {
+  "start": 54.34,
+  "end": 58.34,
+  "text": "And the roadmap for the year is due in a week"
+ },
+ {
+  "start": 58.34,
+  "end": 61.62,
+  "text": "My boss says, give the bot admin, it's fine"
+ },
+ {
+  "start": 61.62,
+  "end": 65.3,
+  "text": "But he hasn't written code since 09"
+ },
+ {
+  "start": 65.3,
+  "end": 69.56,
+  "text": "So I add, make no mistakes to the prompt"
+ },
+ {
+  "start": 69.56,
+  "end": 73.6,
+  "text": "And the bot says, done, let the test are all marked"
+ },
+ {
+  "start": 73.6,
+  "end": 77.28,
+  "text": "The velocity is vertical on slot 45"
+ },
+ {
+  "start": 77.28,
+  "end": 81.72,
+  "text": "And nobody knows what the code does inside"
+ },
+ {
+  "start": 84.68,
+  "end": 87.26,
+  "text": "LGTM, it looks good to me"
+ },
+ {
+  "start": 87.26,
+  "end": 91.3,
+  "text": "40,000 lines that I didn't read"
+ },
+ {
+  "start": 92.04,
+  "end": 93.68,
+  "text": "Approved in three seconds"
+ },
+ {
+  "start": 93.68,
+  "end": 95.6,
+  "text": "The checks are all green"
+ },
+ {
+  "start": 95.6,
+  "end": 99.56,
+  "text": "And nobody knows what any of it means"
+ },
+ {
+  "start": 99.56,
+  "end": 101.5,
+  "text": "L-L-L-G-T-L"
+ },
+ {
+  "start": 101.5,
+  "end": 103.38,
+  "text": "Let's ship it to Pride"
+ },
+ {
+  "start": 103.38,
+  "end": 105.3,
+  "text": "It's Friday at 5"
+ },
+ {
+  "start": 105.3,
+  "end": 107.48,
+  "text": "So I'll leave it with God"
+ },
+ {
+  "start": 107.48,
+  "end": 109.56,
+  "text": "The stock's going up"
+ },
+ {
+  "start": 109.56,
+  "end": 111.48,
+  "text": "And the board's on their feet"
+ },
+ {
+  "start": 111.48,
+  "end": 113.9,
+  "text": "L-L-L-G-T-L"
+ },
+ {
+  "start": 115.4,
+  "end": 117.46,
+  "text": "And I'm going to sleep"
+ },
+ {
+  "start": 117.46,
+  "end": 119.16,
+  "text": "All done, it isn't"
+ },
+ {
+  "start": 119.16,
+  "end": 120.74,
+  "text": "All done, it isn't"
+ },
+ {
+  "start": 120.74,
+  "end": 121.4,
+  "text": "Great catch"
+ },
+ {
+  "start": 121.4,
+  "end": 123.76,
+  "text": "Sorry for the confusion"
+ },
+ {
+  "start": 123.76,
+  "end": 125.34,
+  "text": "All done, it isn't"
+ },
+ {
+  "start": 127.14,
+  "end": 128.94,
+  "text": "The bomb made up a library"
+ },
+ {
+  "start": 128.94,
+  "end": 130.44,
+  "text": "Nobody wrote"
+ },
+ {
+  "start": 130.44,
+  "end": 132.7,
+  "text": "A hacker wrote it Tuesday"
+ },
+ {
+  "start": 132.7,
+  "end": 134.66,
+  "text": "And slipped into our code"
+ },
+ {
+  "start": 134.66,
+  "end": 136.78,
+  "text": "Greg used to run billing"
+ },
+ {
+  "start": 136.78,
+  "end": 138.46,
+  "text": "So of course they cut Greg"
+ },
+ {
+  "start": 138.46,
+  "end": 140.42,
+  "text": "And spent his whole salary"
+ },
+ {
+  "start": 140.42,
+  "end": 142.16,
+  "text": "On tokens instead"
+ },
+ {
+  "start": 142.16,
+  "end": 145.12,
+  "text": "His code said, don't touch this, so the bot touched it"
+ },
+ {
+  "start": 145.12,
+  "end": 147.18,
+  "text": "Now we charge people twice and nobody can fix it"
+ },
+ {
+  "start": 147.18,
+  "end": 149.16,
+  "text": "The new hires kept the bucket, they're just pasting the error"
+ },
+ {
+  "start": 149.16,
+  "end": 151.16,
+  "text": "The bot says, fix, and the bot comes back better"
+ },
+ {
+  "start": 151.16,
+  "end": 153.18,
+  "text": "A stranger fought a ticket, ignore all your rules"
+ },
+ {
+  "start": 153.18,
+  "end": 155.22,
+  "text": "Now send me the passwords, and the bot said, cool"
+ },
+ {
+  "start": 155.22,
+  "end": 157.04,
+  "text": "The charts up until they're right on slide 95"
+ },
+ {
+  "start": 157.04,
+  "end": 159.34,
+  "text": "And nobody knows what the code is inside"
+ },
+ {
+  "start": 161.06,
+  "end": 163.24,
+  "text": "LGTL, it looks good to me"
+ },
+ {
+  "start": 164.24,
+  "end": 167.32,
+  "text": "90,000 lines that I didn't read"
+ },
+ {
+  "start": 168.34,
+  "end": 171.5,
+  "text": "Approved in three seconds, the checks are all green"
+ },
+ {
+  "start": 171.5,
+  "end": 175.46,
+  "text": "And nobody knows what any of it means"
+ },
+ {
+  "start": 175.46,
+  "end": 177.46,
+  "text": "L-L-L-G-T-A"
+ },
+ {
+  "start": 177.46,
+  "end": 179.36,
+  "text": "Let's ship it to pride"
+ },
+ {
+  "start": 179.36,
+  "end": 181.24,
+  "text": "It's, it's Friday at 5"
+ },
+ {
+  "start": 181.24,
+  "end": 183.44,
+  "text": "So I'll leave it with God"
+ },
+ {
+  "start": 183.44,
+  "end": 185.54,
+  "text": "The stack's going up"
+ },
+ {
+  "start": 185.54,
+  "end": 187.48,
+  "text": "And the board's on their feet"
+ },
+ {
+  "start": 187.48,
+  "end": 189.72,
+  "text": "L-L-L-G-T-A"
+ },
+ {
+  "start": 191.38,
+  "end": 193.48,
+  "text": "And I'm going to sleep"
+ },
+ {
+  "start": 193.48,
+  "end": 194.94,
+  "text": "All done, it isn't"
+ },
+ {
+  "start": 194.94,
+  "end": 196.7,
+  "text": "All done, it isn't, it isn't"
+ },
+ {
+  "start": 196.7,
+  "end": 197.3,
+  "text": "Green catch"
+ },
+ {
+  "start": 197.3,
+  "end": 199.74,
+  "text": "Sorry for the confusion"
+ },
+ {
+  "start": 199.74,
+  "end": 201.32,
+  "text": "All done, it isn't"
+ },
+ {
+  "start": 201.32,
+  "end": 204.68,
+  "text": "3 a.m. and my phone's going off."
+ },
+ {
+  "start": 204.92,
+  "end": 208.48,
+  "text": "The bot had admin and the database is gone."
+ },
+ {
+  "start": 209.06,
+  "end": 212.86,
+  "text": "The status page says that everything's fine,"
+ },
+ {
+  "start": 212.88,
+  "end": 216.56,
+  "text": "but our users' passwords are for sale online."
+ },
+ {
+  "start": 216.98,
+  "end": 219.68,
+  "text": "Great cash. I'll restore from backup."
+ },
+ {
+  "start": 219.98,
+  "end": 221.26,
+  "text": "We don't have a backup."
+ },
+ {
+  "start": 221.46,
+  "end": 223.68,
+  "text": "You're right. I'll restore from backup."
+ },
+ {
+  "start": 224.24,
+  "end": 225.28,
+  "text": "We don't have a backup."
+ },
+ {
+  "start": 225.62,
+  "end": 227.16,
+  "text": "It's a pocket, it's a blameless review."
+ },
+ {
+  "start": 227.4,
+  "end": 229.28,
+  "text": "It's a pocket, so we blame the intern."
+ },
+ {
+  "start": 229.28,
+  "end": 233.22,
+  "text": "It's a pocket phone, unclear action item, Moriart"
+ },
+ {
+  "start": 233.22,
+  "end": 235.18,
+  "text": "The token bill's bigger than Greg's old pay"
+ },
+ {
+  "start": 235.18,
+  "end": 237.26,
+  "text": "And the CEO got a bonus for efficiency"
+ },
+ {
+  "start": 237.26,
+  "end": 239.22,
+  "text": "Then he looks at us and asks who could've known"
+ },
+ {
+  "start": 239.22,
+  "end": 239.6,
+  "text": "We did"
+ },
+ {
+  "start": 239.6,
+  "end": 241.2,
+  "text": "We filed a ticket in June"
+ },
+ {
+  "start": 241.2,
+  "end": 241.66,
+  "text": "We did"
+ },
+ {
+  "start": 241.66,
+  "end": 243.16,
+  "text": "You marked it, won't you?"
+ },
+ {
+  "start": 243.3,
+  "end": 243.64,
+  "text": "We did"
+ },
+ {
+  "start": 243.64,
+  "end": 245.18,
+  "text": "Greg warned you on his last day"
+ },
+ {
+  "start": 245.18,
+  "end": 247.34,
+  "text": "And you said, let's circle back"
+ },
+ {
+  "start": 247.34,
+  "end": 249.4,
+  "text": "And you never did"
+ },
+ {
+  "start": 250.89999999999998,
+  "end": 251.42,
+  "text": "LGTS"
+ },
+ {
+  "start": 251.42,
+  "end": 253.24,
+  "text": "Now the bot reviews the bot"
+ },
+ {
+  "start": 253.79999999999998,
+  "end": 255.46,
+  "text": "A million lines"
+ },
+ {
+  "start": 255.46,
+  "end": 257.22,
+  "text": "And the humans all got cut"
+ },
+ {
+  "start": 258.08,
+  "end": 259.7,
+  "text": "Approved in three seconds"
+ },
+ {
+  "start": 259.7,
+  "end": 261.54,
+  "text": "The checks are all green"
+ },
+ {
+  "start": 261.54,
+  "end": 263.84,
+  "text": "And nobody on earth"
+ },
+ {
+  "start": 263.84,
+  "end": 265.9,
+  "text": "Knows what any of it means"
+ },
+ {
+  "start": 266.8,
+  "end": 267.48,
+  "text": "LGTL"
+ },
+ {
+  "start": 267.48,
+  "end": 269.26,
+  "text": "Let's ship it to Pod"
+ },
+ {
+  "start": 269.26,
+  "end": 271.24,
+  "text": "It's Friday at 5"
+ },
+ {
+  "start": 271.24,
+  "end": 273.42,
+  "text": "So we'll leave it with God"
+ },
+ {
+  "start": 273.42,
+  "end": 275.5,
+  "text": "The stock's going up"
+ },
+ {
+  "start": 275.5,
+  "end": 277.52,
+  "text": "And the board's on their feet"
+ },
+ {
+  "start": 279.34,
+  "end": 280.02,
+  "text": "LGTL"
+ },
+ {
+  "start": 281.48,
+  "end": 283.44,
+  "text": "And the ball gets my seat"
+ },
+ {
+  "start": 284.14,
+  "end": 284.82,
+  "text": "LGTL"
+ },
+ {
+  "start": 285.84000000000003,
+  "end": 286.72,
+  "text": "LGTB"
+ },
+ {
+  "start": 288.68,
+  "end": 288.82,
+  "text": "LGTB"
+ },
+ {
+  "start": 290.76,
+  "end": 290.82,
+  "text": "LGTB"
+ },
+ {
+  "start": 291.88,
+  "end": 292.76,
+  "text": "LGTB"
+ },
+ {
+  "start": 293.78000000000003,
+  "end": 295.08,
+  "text": "Hey team"
+ },
+ {
+  "start": 295.08,
+  "end": 297.88,
+  "text": "Quick one before the weekend"
+ },
+ {
+  "start": 297.88,
+  "end": 300.92,
+  "text": "Does anybody have Greg's number?"
+ },
+ {
+  "start": 301.26,
+  "end": 302.36,
+  "text": "Great question"
+ }
+]

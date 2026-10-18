@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- v14 proof: Archie's gesture sheet. Each new gesture in sequence, labelled, at about his size in the film
+         (~390 px tall). Not part of the film. Local time = track time (T0 = 0). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root { position: absolute; inset: 0; overflow: hidden; background: #0A0A0A; color: #F0ECE5; }
+        #ag-floor { position: absolute; left: 0; right: 0; top: 900px; bottom: 0; background: #121210; border-top: 1px solid #282826; }
+        #ag-svg { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; }
+        .ag-kick { position: absolute; left: 96px; top: 80px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 16px;
+          letter-spacing: 0.14em; color: #888880; }
+        #ag-name { position: absolute; left: 96px; top: 120px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 72px;
+          letter-spacing: 0.08em; color: #E85D26; }
+        #ag-call { position: absolute; left: 96px; top: 220px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 22px;
+          letter-spacing: 0.04em; color: #888880; }
+      </style>
+      <div data-hf-id="hf-ms0e" id="root" data-composition-id="archie-gestures" data-width="1920" data-height="1080" data-duration="17">
+        <div data-hf-id="hf-oqt9" id="ag-floor" data-layout-ignore></div>
+        <svg data-hf-id="hf-s7z9" id="ag-svg" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg>
+        <div data-hf-id="hf-r7ip" class="ag-kick">ARCHV-01 · GESTURE SHEET (v14, not in the film)</div>
+        <div data-hf-id="hf-8sfq" id="ag-name">stamp</div>
+        <div data-hf-id="hf-kulg" id="ag-call">archie.stamp(tl, at, { side: "R" })</div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/archie.js"></script>
+      <script>
+        (() => {
+          const $ = (id) => document.getElementById(id);
+          const NS = "http://www.w3.org/2000/svg";
+          const S = (parent, tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const svg = $("ag-svg");
+          const tl = gsap.timeline({ paused: true });
+          const G = 900; // ground line
+
+          // the stamp's paper on the floor, and its impression
+          const paper = S(svg, "g", {});
+          S(paper, "path", { d: "M1105 905 L1265 905 L1285 878 L1125 878 Z", fill: "#F0ECE5", stroke: "#111111", "stroke-width": 2 });
+          const mark = S(paper, "path", { d: "M1160 897 L1222 897 L1232 884 L1170 884 Z", fill: "#E85D26", opacity: 0 });
+
+          const a = HR.archie(svg, { id: "aga", x: 960, y: G, scale: 0.9, seed: 3 });
+          // a rubber stamp in the R claw (upright): handle knob at the grip, the block below
+          const st = a.hand("R", { upright: true });
+          S(st, "circle", { cy: -6, r: 12, fill: "#5A574F", stroke: "#111111", "stroke-width": 2.5 });
+          S(st, "rect", { x: -8, y: 0, width: 16, height: 34, fill: "#5A574F", stroke: "#111111", "stroke-width": 2.5 });
+          S(st, "rect", { x: -40, y: 32, width: 80, height: 26, rx: 3, fill: "#E85D26", stroke: "#111111", "stroke-width": 2.5 });
+          S(st, "rect", { x: -42, y: 58, width: 84, height: 9, fill: "#111111" });
+
+          // the puff cloud (drawn in render from headAt)
+          const cloud = S(svg, "g", { opacity: 0 });
+          const puffs = [[-30, 10, 26], [20, -6, 30], [0, 26, 22], [44, 22, 20], [-50, 34, 18]].map(([x, y, r]) => ({ x, y, r, c: S(cloud, "circle", { r, fill: "#C9C0B0", stroke: "#F0ECE5", "stroke-width": 2, "fill-opacity": 0.55 }) }));
+
+          // peekers: two more Archies, hidden until their peek
+          const b = HR.archie(svg, { id: "agb", x: 1820, y: G, scale: 0.9, seed: 5 });
+          const c = HR.archie(svg, { id: "agc", x: 960, y: 1080 + 40, scale: 0.9, seed: 7 });
+
+          const STEPS = [
+            [0.2, "stamp", 'archie.stamp(tl, at, { side: "R" })'],
+            [1.8, "startle", "archie.startle(tl, at)"],
+            [3.0, "doze", "archie.doze(tl, at, 2.2)"],
+            [5.6, "wake", "archie.wake(tl, at)"],
+            [6.6, "shiver", "archie.shiver(tl, at, 1.1)"],
+            [8.0, "puff", "archie.puff(tl, at)"],
+            [9.4, "swoon", "archie.swoon(tl, at)"],
+            [10.9, "smug", "archie.smug(tl, at)"],
+            [12.3, "tapTread", "archie.tapTread(tl, at, 4)"],
+            [13.6, "peek · right", 'archie.peek(tl, at, { from: "right" })'],
+            [15.3, "peek · bottom", 'archie.peek(tl, at, { from: "bottom" })'],
+          ];
+
+          // 1 stamp: slam on 1.0
+          a.stamp(tl, 1.0);
+          tl.set(mark, { opacity: 1 }, 1.0);
+          tl.set([st, paper], { opacity: 0 }, 1.75);
+          // 2 startle on 2.2
+          a.startle(tl, 2.2);
+          // 3 doze from 3.1 (catch on 3.9), asleep at 5.3
+          a.doze(tl, 3.1, 2.2, { nod: 3.9 });
+          // 4 wake on 5.7
+          a.wake(tl, 5.7);
+          a.mood(tl, "neutral", 6.3, 0.3);
+          // 5 shiver 6.7–7.8
+          a.shiver(tl, 6.7, 1.1);
+          // 6 puff: blow on 8.6
+          a.puff(tl, 8.6);
+          // 7 swoon on 9.5, back to neutral 10.6
+          a.swoon(tl, 9.5);
+          a.to(tl, { ...HR.archie.MOODS.neutral, shL: 8, elL: 10, shR: 8, elR: 10, clawL: 0.2, clawR: 0.2, sway: 0 }, 10.6, 0.3);
+          // 8 smug on 11.0
+          a.smug(tl, 11.0);
+          a.to(tl, { ...HR.archie.MOODS.focused, shL: 8, elL: 10, shR: 8, elR: 10, clawL: 0.2, clawR: 0.2, lookX: 0.6, lookY: -0.4 }, 12.1, 0.3);
+          // 9 tapTread: four slaps from 12.6
+          a.tapTread(tl, 12.6, 4);
+          tl.set(a.el, { opacity: 0 }, 13.6);
+          // 10 peek from the right
+          b.peek(tl, 13.7, { from: "right", dist: 420 });
+          tl.set(b.el, { opacity: 0 }, 15.3);
+          // 11 peek from the bottom
+          c.peek(tl, 15.4, { from: "bottom", dist: 560 });
+          tl.set({}, {}, 17);
+          // the paper lies where the stamp lands
+          tl.seek(1.0); a.apply(1.0);
+          const hit = a.handAt("R");
+          paper.setAttribute("transform", `translate(${(hit.x - 1195).toFixed(1)} 0)`);
+          tl.seek(0);
+
+          function render() {
+            const t = tl.time();
+            a.apply(t); b.apply(t); c.apply(t);
+            const i = STEPS.reduce((m, s, k) => (t >= s[0] ? k : m), 0);
+            $("ag-name").textContent = STEPS[i][1];
+            $("ag-call").textContent = STEPS[i][2];
+            // the puff cloud billows out of the head from the blow (8.6)
+            const q = (t - 8.6) / 0.7;
+            if (q > 0 && q < 1) {
+              const h = a.headAt();
+              cloud.setAttribute("opacity", (1 - q).toFixed(3));
+              for (const p of puffs) {
+                p.c.setAttribute("cx", (h.x + p.x * (0.5 + 1.6 * q)).toFixed(1));
+                p.c.setAttribute("cy", (h.y + 40 + p.y * (0.5 + 1.6 * q)).toFixed(1));
+                p.c.setAttribute("r", (p.r * (0.6 + 1.2 * q)).toFixed(1));
+              }
+            } else cloud.setAttribute("opacity", "0");
+          }
+          tl.eventCallback("onUpdate", render);
+          tl.seek(0); render();
+          window.__timelines["archie-gestures"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

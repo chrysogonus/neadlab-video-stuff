@@ -1,0 +1,234 @@
+<!doctype html>
+<html><head><meta charset="UTF-8" />
+<!-- v14: record 0001 opens, the read front spreads across the archive, and the camera
+     pulls continuously into 23's radius-12 globe. The exact endpoint is camera (0,0,34), FOV 43. -->
+</head><body><template>
+<style>
+@font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+@font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+@font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+#root { position:absolute; inset:0; overflow:hidden; container-type:size; --ink:#0A0A0A; --fire:#E85D26; --cream:#F0ECE5; background:var(--ink); color:var(--cream); }
+#f22-gl { position:absolute; left:0; top:0; width:100%; height:100%; display:block; }
+/* the records' light: the canvas, thresholded and blurred small, screened back over the wall (and a little past its edge) */
+#f22-bloom { position:absolute; left:37%; top:0; width:63%; height:100%; display:block; mix-blend-mode:screen; }
+#f22-type { transform-origin:5.5% 70%; }
+#f22-now { position:absolute; left:5.5cqw; top:84cqh; font-family:"Barlow"; font-weight:900; font-size:8.8cqw; line-height:.86; background:var(--ink); letter-spacing:-.045em; white-space:nowrap; transform-origin:0 70%; color:var(--fire); }
+#f22-chrome { position:absolute; left:5.5cqw; top:4.2cqw; font:500 16px "IBM Plex Mono"; letter-spacing:.14em; white-space:nowrap; color:#888880; }
+#f22-chrome::before { content:""; display:inline-block; width:36px; height:2px; background:currentColor; vertical-align:middle; margin-right:16px; }
+#f22-count { position:absolute; left:59cqw; top:79cqh; width:650px; height:164px; box-sizing:border-box; padding:16px 20px;
+background:linear-gradient(180deg,#282826,#1A1A18 30%,#111111); border:2px solid; border-color:#888880 #282826 #111111 #505048;
+box-shadow:inset 0 2px 0 rgba(240,236,229,.18),inset 0 -3px 0 rgba(0,0,0,.55),0 14px 26px rgba(0,0,0,.6); }
+#f22-clabel { font:500 20px "IBM Plex Mono"; letter-spacing:.14em; white-space:nowrap; color:var(--cream); }
+#f22-status { float:right; font-weight:600; color:var(--fire); }
+#f22-held { position:relative; display:inline-block; color:#A0A098; }
+#f22-strike { position:absolute; left:-3px; right:-3px; top:52%; height:3px; background:var(--fire); transform-origin:0 50%; }
+#f22-read { display:inline-block; margin-left:12px; font-weight:600; color:var(--fire); transform-origin:50% 60%; }
+#f22-dwin { position:absolute; left:20px; top:50px; height:82px; display:flex; padding:3px; background:var(--ink); border:1px solid #505048; }
+.f22-cell { position:relative; flex:none; width:40px; height:76px; overflow:hidden; background:#1A1A18; margin-left:2px; }
+.f22-cell:first-child { margin-left:0; }
+.f22-cell.f22-gap { margin-left:12px; }
+.f22-cell::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.65),transparent 24%,rgba(240,236,229,.04) 50%,transparent 76%,rgba(0,0,0,.65)); }
+.f22-col { position:absolute; left:0; top:0; width:40px; color:var(--fire); font-variant-numeric:tabular-nums; }
+.f22-col div { height:76px; line-height:76px; text-align:center; font:600 64px/76px "IBM Plex Mono"; letter-spacing:0; }
+.f22-bracket { position:absolute; top:46px; width:10px; height:91px; box-sizing:border-box; border:0 solid var(--fire); }
+#f22-bl { left:7px; border-width:3px 0 3px 3px; }
+#f22-br { right:7px; border-width:3px 3px 3px 0; }
+</style>
+<div data-hf-id="hf-7lt8" id="root" data-composition-id="22-breach" data-width="1920" data-height="1080" data-duration="5.479">
+<canvas data-hf-id="hf-uf4z" id="f22-gl" width="1920" height="1080" data-layout-ignore></canvas>
+
+<div data-hf-id="hf-zo24" class="hr-layer" id="f22-type" data-depth="0.8"><div data-hf-id="hf-zajy" id="f22-now" class="hr-glow">now</div></div>
+<div data-hf-id="hf-2mkv" class="hr-layer" data-depth="0.2">
+<div data-hf-id="hf-ys1n" id="f22-count"><div data-hf-id="hf-pkjr" id="f22-clabel">BYTES <span data-hf-id="hf-4a4n" id="f22-held">HELD<i data-hf-id="hf-k5v0" id="f22-strike"></i></span><span data-hf-id="hf-c27d" id="f22-read">READ</span> <span data-hf-id="hf-4x1d" id="f22-status">RISING</span></div><div data-hf-id="hf-4sod" id="f22-dwin" data-layout-ignore></div><i data-hf-id="hf-u48v" class="f22-bracket" id="f22-bl" data-layout-ignore></i><i data-hf-id="hf-bcf5" class="f22-bracket" id="f22-br" data-layout-ignore></i></div></div>
+</div>
+<script src="assets/kit/env.js"></script><script src="assets/kit/hr-kit.js"></script>
+<script type="module">
+import * as THREE from "./assets/vendor/three.module.js";
+import { createArchiveThreat, threatGLSL } from "./assets/kit/archive-threat.js";
+const T0=145.444,DUR=5.479,P1=1.835,P2=3.657;
+const $=id=>document.getElementById(id), clamp=x=>Math.max(0,Math.min(1,x));
+const smooth=(a,b,t)=>{const u=clamp((t-a)/(b-a));return u*u*(3-2*u);};
+await Promise.all([document.fonts.load("500 24px 'IBM Plex Mono'"),document.fonts.load("600 24px 'IBM Plex Mono'"),document.fonts.load("900 40px Barlow")]);
+// ---- the record atlas, baked once: 4 x 5 tiles of 512 x 320 -------------------------------------------------------
+// rows 0-1: eight sealed covers; rows 2-3: the same eight records opened; row 4 col 0: the inside of a cover.
+const TW=512,TH=320,atlas=document.createElement("canvas");atlas.width=TW*4;atlas.height=TH*5;
+const ctx=atlas.getContext("2d"),rng=HR.rng(2201);
+const REC=[["0001","A.","TUE 09 MAR 2021","X25519","2,048 B","a."],["0417","M.","FRI 14 MAY 2021","ECDHE P-256","6,912 B","m."],
+ ["1138","J.","MON 02 AUG 2021","RSA-3072","1,204 B","j."],["2046","K.","WED 17 NOV 2021","DH-2048","3,330 B","k."],
+ ["3301","R.","THU 03 FEB 2022","RSA-2048","880 B","r."],["4096","E.","SAT 21 MAY 2022","ECDHE X25519","12,288 B","e."],
+ ["5150","S.","TUE 06 SEP 2022","RSA-4096","2,610 B","s."],["7734","T.","FRI 13 JAN 2023","DH-1024","4,401 B","t."]];
+const mono=(t,x,y,size,fill,o={})=>{ctx.font=`${o.w||500} ${size}px 'IBM Plex Mono'`;ctx.letterSpacing=(o.ls??1.6)+"px";ctx.fillStyle=fill;ctx.textAlign=o.align||"left";ctx.fillText(t,x,y);ctx.textAlign="left";ctx.letterSpacing="0px";};
+function grain(x,y,w,h,amp,fibre){
+ const img=ctx.getImageData(x,y,w,h),d=img.data;
+ for(let i=0;i<d.length;i+=4){const v=(rng()-.5)*amp;d[i]+=v;d[i+1]+=v;d[i+2]+=v*.9;}
+ ctx.putImageData(img,x,y);
+ ctx.lineWidth=.6;ctx.strokeStyle=fibre;
+ for(let k=0;k<70;k++){const px=x+rng()*w,py=y+rng()*h,a=rng()*Math.PI,l=6+rng()*16;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px+Math.cos(a)*l,py+Math.sin(a)*l*.4);ctx.stroke();}
+}
+// postal barcode in fire ink (01's sorting code)
+function barcode(x,y,n,alpha,seed,rgb="232,93,38"){const r=HR.rng(seed);ctx.fillStyle=`rgba(${rgb},${alpha})`;for(let i=0;i<n;i++){const tall=r()<.5;ctx.fillRect(x+i*6,y+(tall?0:12),2.6,tall?34:22);}}
+// 01's seal: poured rim with drips, radial body, inner ring, bead ring, embossed initial, highlight arc
+function rim(R){ctx.beginPath();const drips=[[.6,7],[2.5,5],[4.4,8.5]];
+ for(let k=0;k<=96;k++){const a=k/96*Math.PI*2;let rr=55.5+1.8*Math.sin(7*a+.5)+1.2*Math.sin(13*a+2)+.7*Math.sin(23*a);
+  for(const [a0,h] of drips){const da=Math.atan2(Math.sin(a-a0),Math.cos(a-a0));rr+=h*Math.exp(-(da*da)/.012);}
+  ctx.lineTo(Math.cos(a)*rr*R/50,Math.sin(a)*rr*R/50);}ctx.closePath();}
+function seal(R,letter){
+ const g1=ctx.createRadialGradient(0,0,R*.9,0,0,R*1.25);g1.addColorStop(0,"#B9431A");g1.addColorStop(1,"#8E3010");
+ ctx.fillStyle=g1;rim(R);ctx.fill();
+ const g=ctx.createRadialGradient(-R*.24,-R*.32,0,-R*.24,-R*.32,R*1.56);
+ g.addColorStop(0,"#F68C5C");g.addColorStop(.42,"#E85D26");g.addColorStop(.82,"#C94A1C");g.addColorStop(1,"#A63B14");
+ ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,R,0,Math.PI*2);ctx.fill();
+ ctx.strokeStyle="rgba(255,206,176,.38)";ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(.8,.8,R*.87,0,Math.PI*2);ctx.stroke();
+ ctx.fillStyle="rgba(17,17,17,.06)";ctx.strokeStyle="rgba(17,17,17,.3)";ctx.lineWidth=2.4;ctx.beginPath();ctx.arc(0,0,R*.82,0,Math.PI*2);ctx.fill();ctx.stroke();
+ ctx.fillStyle="rgba(17,17,17,.26)";for(let i=0;i<30;i++){const a=i/30*Math.PI*2;ctx.beginPath();ctx.arc(Math.cos(a)*R*.73,Math.sin(a)*R*.73,1.35,0,Math.PI*2);ctx.fill();}
+ ctx.font=`900 ${R*.8}px Barlow`;ctx.textAlign="center";
+ ctx.fillStyle="rgba(17,17,17,.36)";ctx.fillText(letter,R*.032,R*.31);
+ ctx.fillStyle="rgba(255,214,188,.5)";ctx.fillText(letter,-R*.022,R*.25);
+ ctx.fillStyle="#D4521E";ctx.fillText(letter,0,R*.276);ctx.textAlign="left";
+ ctx.lineCap="round";ctx.strokeStyle="rgba(255,236,224,.6)";ctx.lineWidth=3.5;ctx.beginPath();ctx.arc(0,0,R*.88,Math.PI*1.08,Math.PI*1.45);ctx.stroke();
+ ctx.strokeStyle="rgba(255,236,224,.22)";ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,R*.88,Math.PI*.3,Math.PI*.42);ctx.stroke();ctx.lineCap="butt";
+}
+// the cracked seal: one jagged break, the halves forced apart, shards fallen out
+function crackedSeal(cx,cy,R,letter,seed){
+ const r=HR.rng(seed),pts=[];for(let k=0;k<=8;k++)pts.push([(r()-.5)*R*.34+(k%2?R*.08:-R*.08),-R*1.25+k*R*2.5/8]);
+ const half=(side,dx,dy,rot)=>{ctx.save();ctx.translate(cx+dx,cy+dy);ctx.rotate(rot);
+  ctx.beginPath();ctx.moveTo(side*R*1.4,-R*1.4);pts.forEach(([x,y])=>ctx.lineTo(x,y));ctx.lineTo(side*R*1.4,R*1.4);ctx.closePath();ctx.clip();
+  ctx.fillStyle="rgba(17,17,17,.22)";ctx.save();ctx.translate(3,5);rim(R);ctx.fill();ctx.restore();seal(R,letter);
+  ctx.strokeStyle="rgba(120,40,10,.85)";ctx.lineWidth=3;ctx.beginPath();pts.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();ctx.restore();};
+ half(-1,-5,-1,-.05);half(1,6,3,.07);
+ ctx.fillStyle="#C94A1C";for(let k=0;k<4;k++){const x=cx-R*.4+r()*R*.9,y=cy+R*1.15+r()*R*.25,s=3+r()*5;ctx.beginPath();ctx.moveTo(x,y-s);ctx.lineTo(x+s,y+s*.4);ctx.lineTo(x-s*.7,y+s*.6);ctx.closePath();ctx.fill();}
+}
+function header(x,y,label,num,ink,muted){
+ mono(label,x+30,y+42,12,muted);
+ ctx.font="900 44px Barlow";ctx.textAlign="right";ctx.fillStyle=ink;ctx.fillText(num,x+484,y+50);const w=ctx.measureText(num).width;ctx.textAlign="left";
+ mono("OBJ",x+478-w,y+42,12,muted,{align:"right"});
+ ctx.fillStyle=ink;ctx.fillRect(x+30,y+58,454,2);
+}
+for(let v=0;v<1;v++){
+ const [obj,from,cap,ci,size,ini]=REC[v];
+ // sealed cover
+ let x=(v%4)*TW,y=Math.floor(v/4)*TH;
+ ctx.fillStyle="#1A1A18";ctx.fillRect(x,y,TW,TH);grain(x,y,TW,TH,7,"rgba(136,136,128,.08)");
+ ctx.strokeStyle="#505048";ctx.lineWidth=2;ctx.strokeRect(x+10,y+10,TW-20,TH-20);ctx.strokeStyle="#282826";ctx.lineWidth=1;ctx.strokeRect(x+16.5,y+16.5,TW-33,TH-33);
+ header(x,y,"SEALED RECORD",obj,"#888880","#888880");
+ for(let row=0;row<5;row++)mono(HR.cipher(24,2200+v*9+row).replace(/(.{4})/g,"$1 ").trim(),x+30,y+90+row*25,16,"rgba(136,136,128,.78)",{ls:.4});
+ mono("RETENTION: INDEFINITE",x+30,y+226,11,"#888880",{ls:1.2});
+ barcode(x+30,y+240,42,.62,2300+v);
+ mono("HELD · NOT READ",x+484,y+296,11,"#888880",{align:"right",ls:1.4});
+ ctx.save();ctx.translate(x+420,y+168);ctx.fillStyle="rgba(0,0,0,.45)";ctx.save();ctx.translate(3,6);rim(46);ctx.fill();ctx.restore();seal(46,ini);ctx.restore();
+ // the same record, opened
+ y+=TH*2;
+ ctx.fillStyle="#F0ECE5";ctx.fillRect(x,y,TW,TH);grain(x,y,TW,TH,14,"rgba(110,100,90,.12)");
+ const sh=ctx.createLinearGradient(0,y,0,y+TH);sh.addColorStop(0,"rgba(17,17,17,0)");sh.addColorStop(1,"rgba(17,17,17,.07)");ctx.fillStyle=sh;ctx.fillRect(x,y,TW,TH);
+ ctx.strokeStyle="rgba(17,17,17,.3)";ctx.lineWidth=2;ctx.strokeRect(x+10,y+10,TW-20,TH-20);ctx.strokeStyle="rgba(17,17,17,.12)";ctx.lineWidth=1;ctx.strokeRect(x+16.5,y+16.5,TW-33,TH-33);
+ header(x,y,"OPENED RECORD",obj,"#111111","#5F5B54");
+ const field=(k,val,fx,fy,col="#111111")=>{mono(k,fx,fy,11,"#5F5B54",{ls:1.4});mono(val,fx,fy+22,17,col,{w:600,ls:.6});};
+ field("SENDER",from,x+30,y+84);field("CAPTURED",cap,x+130,y+84);
+ ctx.fillStyle="rgba(17,17,17,.2)";ctx.fillRect(x+30,y+116,330,1);ctx.fillRect(x+30,y+166,330,1);ctx.fillRect(x+30,y+216,330,1);
+ field("KEY EXCHANGE",ci,x+30,y+134);field("SIZE",size,x+210,y+134);
+ // v13 payoffs: 01's handshake footer with X25519 struck in fire, 06's re-typed passwords, the read date
+ mono("TLS 1.3 · X25519 · FORWARD SECRECY ✓",x+30,y+190,13,"#5F5B54",{w:600,ls:.6});
+ ctx.font="600 13px 'IBM Plex Mono'";ctx.letterSpacing=".6px";const sx=ctx.measureText("TLS 1.3 · ").width,sw=ctx.measureText("X25519").width;ctx.letterSpacing="0px";
+ ctx.fillStyle="#E85D26";ctx.fillRect(x+28+sx,y+184.5,sw+3,3);
+ mono("passwords changed ×14 · irrelevant",x+30,y+213,13,"#5F5B54",{w:600,ls:.6});
+ mono("READ: NOW",x+30,y+240,15,"#5F5B54",{w:600,ls:1.6});
+ barcode(x+30,y+252,42,.7,2300+v,"95,91,84");
+ // The lyric is physically printed on each opened record, carried by the existing atlas/instance surface.
+ ctx.font="900 96px Barlow";ctx.fillStyle="#E85D26";ctx.fillText("now",x+310,y+287);
+ crackedSeal(x+420,y+150,46,ini,2400+v);
+}
+// the inside of a cover: cream stock printed with a ciphertext security tint, the torn seal's footprint
+{const x=0,y=TH*4;ctx.fillStyle="#E4DFD7";ctx.fillRect(x,y,TW,TH);grain(x,y,TW,TH,12,"rgba(110,100,90,.12)");
+ for(let row=0;row<11;row++)mono(HR.cipher(40,2290+row),x+22,y+34+row*27,14,"rgba(136,136,128,.32)",{ls:.8});
+ ctx.strokeStyle="rgba(17,17,17,.22)";ctx.lineWidth=2;ctx.strokeRect(x+10,y+10,TW-20,TH-20);
+ ctx.fillStyle="rgba(201,74,28,.55)";ctx.save();ctx.translate(x+92,y+168);ctx.scale(-1,1);rim(30);ctx.fill();ctx.restore();
+ ctx.fillStyle="#E4DFD7";ctx.beginPath();ctx.arc(x+92,y+168,22,0,Math.PI*2);ctx.fill();
+ mono("INNER FLAP",x+484,y+296,11,"#5F5B54",{align:"right",ls:1.4});}
+const tex=new THREE.CanvasTexture(atlas);tex.generateMipmaps=true;tex.minFilter=THREE.LinearMipmapLinearFilter;tex.magFilter=THREE.LinearFilter;
+const canvas=$("f22-gl"),renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(1);renderer.setSize(1920,1080,false);renderer.setClearColor(0x0A0A0A,1);
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(43,1920/1080,.05,200);
+// One physical page on the front of the spherical archive: no cut changes its coordinate system.
+const hero=new THREE.Group();hero.position.z=12.025;scene.add(hero);
+function recordMaterial(open){return new THREE.ShaderMaterial({uniforms:{map:{value:tex}},side:THREE.DoubleSide,
+vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+fragmentShader:`uniform sampler2D map;varying vec2 vUv;void main(){gl_FragColor=texture2D(map,vec2(vUv.x*.25,(vUv.y+${open?2:4}.0)*.2));}`});}
+const page=new THREE.Mesh(new THREE.PlaneGeometry(3.8,2.375),recordMaterial(true));hero.add(page);
+const hinge=new THREE.Group();hinge.position.set(-1.9,0,.012);hero.add(hinge);
+const cover=new THREE.Mesh(new THREE.PlaneGeometry(3.8,2.375),recordMaterial(false));cover.position.x=1.9;hinge.add(cover);
+// Same latitude/longitude grid and camera endpoint as 23: one continuous pullback.
+const R=12,ROWS=97,COLS=193,positions=[],angles=[];
+for(let r=0;r<ROWS;r++){const lat=-Math.PI/2+r*Math.PI/96;for(let c=0;c<COLS;c++){
+const lon=c*2*Math.PI/COLS,x=R*Math.cos(lat)*Math.sin(lon),y=R*Math.sin(lat),z=R*Math.cos(lat)*Math.cos(lon);
+positions.push(x,y,z);angles.push(Math.acos(Math.max(-1,Math.min(1,z/R))));}}
+const geo=new THREE.BufferGeometry();geo.setAttribute("position",new THREE.Float32BufferAttribute(positions,3));geo.setAttribute("aAngle",new THREE.Float32BufferAttribute(angles,1));
+const uni={uFront:{value:0},uScale:{value:1371},uGain:{value:1},uThreatTime:{value:0}};
+const pointVS=`attribute float aAngle;uniform float uFront;uniform float uScale;uniform float uGain,uThreatTime;varying vec3 vColor;varying float vAlpha;
+${threatGLSL}
+void lamp(){vec4 mv=modelViewMatrix*vec4(archivePosition(position,uThreatTime),1.);float opened=1.-smoothstep(uFront-.035,uFront+.035,aAngle);
+vColor=mix(vec3(.9098,.3647,.149),vec3(.9412,.9255,.898),opened);
+vColor=archiveExposure(position,uThreatTime,vColor);
+float facing=smoothstep(-.05,.13,dot(normalize(position),normalize(cameraPosition-position)));
+vAlpha=facing*uGain;gl_Position=projectionMatrix*mv;gl_PointSize=max(2.8,.045*uScale/max(.1,-mv.z));}`;
+const sharpMat=new THREE.ShaderMaterial({uniforms:uni,transparent:true,depthWrite:false,vertexShader:pointVS+`void main(){lamp();}`,
+fragmentShader:`varying vec3 vColor;varying float vAlpha;void main(){float r=length(gl_PointCoord-.5)*2.;float a=(1.-smoothstep(.55,1.,r))*vAlpha;if(a<.004)discard;gl_FragColor=vec4(vColor,a);}`});
+const bloomMat=new THREE.ShaderMaterial({uniforms:uni,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,vertexShader:pointVS+`void main(){lamp();gl_PointSize*=4.;vAlpha*=.19;}`,
+fragmentShader:`varying vec3 vColor;varying float vAlpha;void main(){float r=length(gl_PointCoord-.5)*2.;float a=exp(-r*r*5.)*(1.-smoothstep(.75,1.,r))*vAlpha;gl_FragColor=vec4(vColor,a);}`});
+const bloom=new THREE.Points(geo,bloomMat),points=new THREE.Points(geo,sharpMat);bloom.frustumCulled=false;points.frustumCulled=false;scene.add(bloom,points);
+// Instanced record faces make the lamps an archive wall up close. Each turns on its hinge at the wavefront.
+const cardIndices=angles.map((_,i)=>i).filter(i=>Math.floor(i/COLS)%2===0&&(i%COLS)%3===0);
+const cardGeo=new THREE.PlaneGeometry(.32,.2);cardGeo.setAttribute("aAngle",new THREE.InstancedBufferAttribute(new Float32Array(cardIndices.map(i=>angles[i])),1));
+const cardUni={map:{value:tex},uFront:uni.uFront,uFade:{value:1}};
+const cardMat=new THREE.ShaderMaterial({uniforms:cardUni,transparent:true,depthWrite:false,side:THREE.DoubleSide,
+vertexShader:`attribute float aAngle;uniform float uFront;varying vec2 vUv;varying float vOpen;varying float vFacing;void main(){vec3 center=(modelMatrix*instanceMatrix*vec4(0.,0.,0.,1.)).xyz;vFacing=dot(normalize(center),normalize(cameraPosition-center));vUv=uv;vOpen=1.-smoothstep(uFront-.035,uFront+.035,aAngle);vec3 p=position;p.x*=max(.08,abs(1.-2.*vOpen));gl_Position=projectionMatrix*modelViewMatrix*instanceMatrix*vec4(p,1.);}`,
+fragmentShader:`uniform sampler2D map;uniform float uFade;varying vec2 vUv;varying float vOpen;varying float vFacing;void main(){if(vFacing<.08)discard;float row=step(.5,vOpen)*2.;vec3 col=texture2D(map,vec2(vUv.x*.25,(vUv.y+4.-row)*.2)).rgb;gl_FragColor=vec4(col,uFade);}`});
+const cards=new THREE.InstancedMesh(cardGeo,cardMat,cardIndices.length),matrix=new THREE.Matrix4(),pos=new THREE.Vector3(),normal=new THREE.Vector3(),q=new THREE.Quaternion(),axis=new THREE.Vector3(0,0,1),unit=new THREE.Vector3(1,1,1);
+for(let j=0;j<cardIndices.length;j++){const i=cardIndices[j];pos.fromArray(positions,i*3).multiplyScalar(.999);normal.copy(pos).normalize();q.setFromUnitVectors(axis,normal);matrix.compose(pos,q,unit);cards.setMatrixAt(j,matrix);}cards.instanceMatrix.needsUpdate=true;scene.add(cards);
+const lines=[];
+for(let r=1;r<96;r+=4){const lat=-Math.PI/2+r*Math.PI/96;for(let c=0;c<COLS;c++){
+for(const cc of [c,c+1]){const lon=cc*2*Math.PI/COLS;lines.push(11.995*Math.cos(lat)*Math.sin(lon),11.995*Math.sin(lat),11.995*Math.cos(lat)*Math.cos(lon));}}}
+const lineGeo=new THREE.BufferGeometry();lineGeo.setAttribute("position",new THREE.Float32BufferAttribute(lines,3));
+const threat=createArchiveThreat(THREE,scene);
+const rings=new THREE.LineSegments(lineGeo,new THREE.LineBasicMaterial({color:0x505048,transparent:true,opacity:.21}));scene.add(rings);
+// The same Plex/fire decimal drums as 04/12, continuing 12's last value. Story quantities, not capacity claims.
+const ND=13,DH=76,cols=[],cells=[];
+for(let d=0;d<ND;d++){
+ const cell=document.createElement("div");cell.className="f22-cell"+((ND-d)%3===0&&d>0?" f22-gap":"");
+ const col=document.createElement("div");col.className="f22-col";
+ for(const n of [0,1,2,3,4,5,6,7,8,9,0]){const digit=document.createElement("div");digit.textContent=String(n);col.appendChild(digit);}
+ cell.appendChild(col);$("f22-dwin").appendChild(cell);cols.push(col);cells.push(cell);
+}
+const START=4398046511104,PEAK=8796093022208;
+const COUNT_BEATS=[145.444,145.909,146.368,146.82,147.279,147.726,148.184,148.642,149.101];
+const COUNT_VALUES=[START,4800000000000,5300000000000,5850000000000,6500000000000,7100000000000,7700000000000,8250000000000,PEAK];
+function bytesAt(T){
+ let value=START;
+ for(let i=1;i<COUNT_BEATS.length;i++){
+  if(T<COUNT_BEATS[i])break;
+  const q=clamp((T-COUNT_BEATS[i])/.22),e=1-Math.pow(1-q,3);
+  value=COUNT_VALUES[i-1]+(COUNT_VALUES[i]-COUNT_VALUES[i-1])*e;
+ }
+ return value;
+}
+const tl=gsap.timeline({paused:true});const cam={z:16.6};
+// Multi-phase-camera + kinetic-beat-slam + counter rules: a readable payoff, then accelerating scale changes.
+tl.to(hinge.rotation,{y:-2.8,duration:.32,ease:"power3.out"},0);
+tl.to(cam,{z:16.8,duration:1.25,ease:"none"},0);
+tl.to(cam,{z:23.5,duration:1.5,ease:"power2.in"},1.25);
+tl.to(cam,{z:34,duration:DUR-2.75,ease:"none"},2.75);
+tl.fromTo("#f22-now",{scale:1.12},{scale:1,duration:.42,ease:"elastic.out(1,.5)"},0);
+tl.to("#f22-now",{opacity:0,duration:.2},1.15);
+tl.fromTo("#f22-strike",{scaleX:0},{scaleX:1,duration:.1,ease:"power2.out"},0);
+tl.fromTo("#f22-read",{opacity:0,scale:1.9},{opacity:1,scale:1,duration:.12,ease:"power3.in"},.1);
+tl.to("#f22-count",{opacity:0,duration:.18},DUR-.24);
+function render(){const t=tl.time(),T=T0+t;camera.position.set(0,0,cam.z);camera.lookAt(0,0,0);
+uni.uThreatTime.value=t;threat.update(t);
+uni.uFront.value=.015+1.435*smooth(.3,DUR,t);uni.uGain.value=.62+.38*smooth(.8,2.8,t);
+cardUni.uFade.value=1-smooth(22,28,cam.z);cards.visible=cam.z<28;hero.visible=t<3.3;hero.scale.setScalar(1-.9*smooth(1.4,3.3,t));
+const value=bytesAt(T),rate=Math.max(0,(value-bytesAt(T-.016))/.016),digits=String(Math.round(value)).length;
+for(let d=0;d<ND;d++){const place=Math.pow(10,ND-1-d),lower=value%place;
+const p=place===1?value%10:Math.floor(value/place)%10+clamp(lower-(place-1));cols[d].style.transform=`translateY(${(-p*DH).toFixed(2)}px)`;
+const blur=Math.min(2,Math.max(0,(rate/place-5)/8));cols[d].style.filter=blur<.05?"none":`blur(${blur.toFixed(1)}px)`;cells[d].style.opacity=d<ND-digits?"0.3":"1";}
+$("f22-status").textContent=T>=149.321?"PEAK":"RISING";renderer.render(scene,camera);}
+tl.eventCallback("onUpdate",render);tl.seek(0);render();window.__timelines["22-breach"]=tl;
+</script></template></body></html>

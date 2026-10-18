@@ -1,0 +1,117 @@
+# House style — the Neadlab look
+
+The look every NEAD video uses. harvest-remix (`projects/harvest-remix/video/`) proved the base, which the user
+approved as the model for future videos. Revision 2 (2026-10-17) raises it to the level of the two reference
+videos, "LGTM" and "i'm upping my p(doom)": the evidence and the reasons are in
+[REFERENCE-VIDEOS.md](REFERENCE-VIDEOS.md). Read both before planning a new song (music-to-video Step 3) and
+before writing its `SYSTEM.md`.
+
+## The look in one line
+
+**A world built from the song's subject, told in kinetic type: the lyric sits on or becomes that world's
+objects, one literal pun per line, with a deadpan layer of small text for the viewers who pause.** Black,
+restrained and lit by one accent; 3D only as line drawing.
+
+## What makes it
+
+1. **A world from the song's subject.** Find the song's world and stage every line inside it, through that
+   world's own documents and objects. LGTM is a company told through its Slack, pull requests, slides and
+   postmortem; p(doom) is plates from a scientific treatise. harvest-remix is an archive: mail, drawers, tickets,
+   a love letter. The song's one idea gets a typographic form inside that world (harvest-remix: ciphertext
+   against the sung plaintext). Nothing is decoration for its own sake.
+2. **One literal pun per line, and the lyric is on or is the object.**
+   - Before building, write down what each sung line literally shows. The joke is in how literally the image
+     takes the words: "right-sized" squashed narrower; "ship it to prod" as containers on a ship; "due in a week"
+     with the Gantt chart and the type both compressed.
+   - The lyric is typed into the form, rides the curve, wraps the object, is stamped, struck through, made of
+     tokens or containers. It is not a caption beside a prop.
+   - A recurring background (a drawer wall, a code wall) is a texture, not an idea: no more than three scenes.
+3. **Lyrics are poster typography,** never a karaoke strip.
+   - Lead rows sit at h2 size; every hero word gets its own display row, 11–17cqw, in the accent.
+   - Every sung word appears on its own aligned time (`lyrics.json`) and fills letter by letter in the accent; the
+     rest of the line waits dim or in outline. Legible on a phone (≥ 72 px).
+   - Layouts vary per line (stacked, compare panels, pull quote, lockup, word per cut, text on a path or
+     surface, full-bleed); neighbouring scenes never share one.
+4. **Three type voices.** One grotesk for the sung voice (big, tight, animated on width and weight where the font
+   allows), one mono for the machine (labels, data, forms, footnotes), one serif italic for the rare tender or
+   sacred line. Add a marker hand for the human heckle ("(it isn't)", "(sure.)") when the song suits it.
+5. **A deadpan small-text layer.** Under the big lyric runs tiny, precise, dry text that rewards pausing:
+   footnotes, form fields, labels, dictionary entries, review metrics, probability bars. It carries the wit and
+   the insider references a security engineer would screenshot ("0 of 312 files viewed"; "Rounded down, for
+   safety."). Every scene has some. It must be accurate: the jokes only land if the details are right.
+6. **Running devices that escalate and pay off.**
+   - **A counter that tells a story,** drawn inside the scene in its own form (a form field, a dial label, a
+     header strip, a chart axis), escalating across the film: p(doom)'s P(doom) 0.02 → 42 → NaN, LGTM's "HUMANS
+     WHO UNDERSTAND IT 4 → 2 → 1", harvest-remix's BYTES HELD.
+   - **Choruses repeat their set with the world changed:** the same scenes, with the state moved on (LGTM's
+     board fills with robots one chorus at a time).
+   - **At least two plants that pay off:** a detail shown early returns later with new meaning (a sticky-note
+     password that shows up in the leak).
+   - **A bookend:** the last scene returns to the first, changed. A loop back into frame 0 is best.
+   - **A recurring character only when the story needs one.** If there is one, it gets an arc, not just
+     appearances.
+7. **Restraint: black ground, one small accent.**
+   - Pick one `hyperframes-creative` frame preset per song and copy it verbatim as `frame.md`. One accent hue
+     only; harvest-remix uses `broadside`: ink, fire-orange and cream.
+   - The ground is near-black (ink about `#0A0A0A`) and mostly empty: **ground luma ≤ 0.05** (the 20th-percentile
+     luma of each frame, median over the film) and **at least 40 % of pixels darker than 0.09**. Texture lives on
+     objects, never on the ground.
+   - **The accent is light and pointer, never a ground:** about 5 % of the frame or less (median). It marks the
+     sung word, the spark, the number that matters.
+   - Two registers: the dark register, and a light **cream-paper** register for documents, forms and diagrams
+     (**10–20 % of frames**), cut between on downbeats. The accent keeps its colour on both.
+   - Check the figures on the render as described in REFERENCE-VIDEOS.md ("Measuring a render").
+8. **Everything moves, through one motion grammar** (the kit, `assets/kit/hr-kit.js`):
+   - words build glyph by glyph, hero words hit in three phases (anticipation, slam on the word, elastic
+     settle), lines leave;
+   - a camera move once per phrase, with micro-drift and a kick pulse; one element often transforms into the
+     next scene;
+   - **motion blur on whips, slams and fast zooms** (`hyperframes-animation`, `references/motion-blur.md`), so fast
+     type streaks instead of strobing.
+
+   Nothing holds dead.
+9. **Light: glow on the accent only.** The accent glows; bone type stays crisp. Film grain, a gentle vignette,
+   low chromatic aberration, and light leaks on the flips to the loud register (the finish layer,
+   `compositions/overlays/finish.html`). The ground stays black.
+10. **Objects are graphic and tactile; 3D is line drawing.**
+    - Cards, forms, seals, drawers, tickets and keys are drawn simply, in the palette, then given detail: paper
+      fibre, a rubber-stamp ink speckle, typewriter text. They read as things, not icons.
+    - 3D may be used anywhere, drawn as lines: hairline wireframes and engraving-style hatching that follows the
+      form, flat matte fills, fog to black. It reads as illustration, never as rendering.
+    - Build it lean for software WebGL: line and instanced geometry, simple materials, no post passes, driven
+      from the timeline.
+
+## What to avoid
+
+| Avoid | Why |
+|---|---|
+| **Complex or realistic 3D**: glass, ice, metal, fabric, photoreal props, physically lit hero objects, product-film materials | harvest-remix v1–v6 tried this in a custom three.js engine. Even with heavy effort (DOF, light shafts, refraction, reflections) it read as a generic CG demo, and it cost the most. Software WebGL here makes it worse. Line-drawn beats realistic, every time. |
+| Generated or stock imagery | User decision: everything is code-rendered. |
+| A second accent colour, gradients as grounds, the accent as a full-frame ground | Breaks the palette discipline; the accent stops pointing at anything. |
+| Floating corner HUD overlays, decorative sci-fi interface clutter | Generic, and laid on top of the picture. Counters belong inside the scene (item 6). |
+| Countdowns or ETAs that claim false precision about a real threat (Q-Day, breach dates) | Alarmist and inaccurate; the audience knows better. |
+| Hooded hackers, Matrix rain | Stock imagery that breaks the tone. |
+| A busy, mid-grey ground; texture everywhere | Kills the contrast that makes the type and the accent pop (harvest-remix v12: ground luma 0.078 against 0.047–0.063). |
+| The lyric as a caption beside a prop, one layout template | The lyric must be on or be the object (item 2). |
+| Words that pop in and freeze, static frames, plain hard cuts everywhere | This was v7's "meh". |
+| Full-frame light washes | Leaks are edge-weighted, at most 0.4 opacity. |
+
+## How to make one
+
+1. Run `./vid new`, `./vid analyze`, then `./vid video`. The last one installs the kit (`hr-kit.js`, `env.js`)
+   and the finish layer from `templates/hyperframes/`.
+2. Plan with `/music-to-video` Steps 2–3: the song's world, its idea and preset; a line table (each sung line
+   and its literal pun); the running devices (counter, plants and payoffs, the bookend, a character only if the
+   story needs one); the small-text jokes.
+3. Write the song's `SYSTEM.md`, using harvest-remix's as the model: the world, the tokens, the three voices,
+   the lyric rule and the kit rules.
+4. **Prove before scaling:**
+   - build two reference frames yourself, the opening and the first chorus with its hook. The default opening
+     is a narrative cold open with a designed YouTube thumbnail; a poster first frame is also fine;
+   - render `./vid proof <id> --to <end of the first drop>`;
+   - get the user's verdict before dispatching frame-workers.
+5. Dispatch frame-workers three at a time, each with `SYSTEM.md`, the two reference frames and `./vid snap`.
+   Review every contact sheet and motion strip yourself.
+6. Fill the finish layer's `LEAKS` and `FLASHES` with the song's flips and drops, then run `./vid assemble`,
+   `hyperframes check --no-browser-gpu`, the 60 fps render, and `./vid master`. Measure the render against
+   item 7's figures and design the thumbnail.

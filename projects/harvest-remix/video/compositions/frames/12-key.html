@@ -1,0 +1,758 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 12 — key (final chorus, 123.479–131.022), v11 rebuild: the escalated echo of 04. g1: the same machined
+         archive chronometer, but racing: the hands spin the years by (the YEAR drum rolls 2021 → 2026, the elapsed ring
+         closes) and slam to a stop on "time". Archie (v12) leans back beside it, head cocked, eyes on the clock: it
+         has all the time. "i waited for you," is the serif voice, past tense; "time" the Barlow hero. g2: BYTES HELD
+         again, bigger every time: a full-width 13-digit odometer continues beyond locked 08's final count, jumps to the
+         billions on the downbeat, and climbs into the trillions as a torrent of cables pours bytes in; the marker adds
+         "(and counting)"; "mine" slams it locked at 4398046511104 (4 TiB). No drawer wall.
+         v13 (SYSTEM.md V7): black ground matching 04 (ghost wall and bokeh go, the lit glyphs stay at 04's 0.6; warm
+         washes cut to 0.07/0.10), flat glowing heroes. Time has passed since 04: dust film on the clock glass and along the
+         bezel's top, dust motes drifting in the light, a cobweb strung from Archie's neck to his lid and to the clock rim
+         (its own layer, #f12-web; Archie untouched), the face engraved STILL HELD · NOT YET READ, the YEAR label at 14 px. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        .f12-group { position: absolute; inset: 0; opacity: 0; }
+        .f12-group.f12-on { opacity: 1; } /* g1 is on from the first frame */
+        #f12-fg { transform-origin: 5.5% 85%; } /* the type plane zooms around the lyric's corner, never off the pad */
+
+        /* ---- background plane: the ghost ciphertext wall, a few glyphs lit ---- */
+        #f12-wall { position: absolute; left: -120px; top: -50px; width: 2400px; opacity: 0.075;
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 26px; line-height: 64px;
+          letter-spacing: 0.14em; color: var(--cream); white-space: pre; }
+        .f12-lit { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 26px; line-height: 64px;
+          color: var(--fire); opacity: 0; text-shadow: 0 0 10px rgba(232, 93, 38, 0.8), 0 0 26px rgba(232, 93, 38, 0.35); }
+        #f12-light { position: absolute; left: -200px; top: 200px; width: 1400px; height: 1000px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.07), rgba(232, 93, 38, 0) 100%); }
+        #f12-clocklight { position: absolute; left: 610px; top: -105px; width: 1500px; height: 1300px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(240, 236, 229, 0.07), rgba(232, 93, 38, 0.05) 55%, rgba(232, 93, 38, 0) 100%); }
+        #f12-plight { position: absolute; left: 60px; top: -240px; width: 1800px; height: 940px; border-radius: 50%; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.1), rgba(232, 93, 38, 0.03) 55%, rgba(232, 93, 38, 0) 100%); }
+
+        #f12-structure { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #f12-clocksvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+        .f12-rib { fill: #1A1A18; stroke: #282826; stroke-width: 2; }
+        .f12-rim { fill: none; stroke: #F0ECE5; stroke-opacity: 0.15; stroke-width: 2; }
+
+        /* Archie, leaning back beside the clock */
+        #f12-arch { position: absolute; left: 915px; top: 665px; width: 304px; height: 385px; overflow: visible;
+          transform-origin: 50% 100%; transform: rotate(-4deg); }
+        /* v13: the cobweb, its own layer riding Archie's frame (same box, same sway) */
+        #f12-web { position: absolute; left: 915px; top: 665px; width: 304px; height: 385px; overflow: visible;
+          transform-origin: 50% 100%; transform: rotate(-4deg); pointer-events: none; }
+        #f12-motes { position: absolute; inset: 0; pointer-events: none; }
+        .f12-mote { position: absolute; left: 0; top: 0; border-radius: 50%; opacity: 0;
+          background: radial-gradient(circle, rgba(240, 236, 229, 0.95), rgba(240, 236, 229, 0.4) 40%, rgba(240, 236, 229, 0) 70%);
+          box-shadow: 0 0 10px rgba(240, 236, 229, 0.18); }
+
+        /* ---- machine plane (g2): the full-width BYTES HELD odometer and the torrent of intake cables ---- */
+        .f12-screw { position: absolute; width: 10px; height: 10px; border-radius: 50%;
+          background: radial-gradient(circle at 35% 30%, #888880, #505048 45%, #1A1A18);
+          box-shadow: 0 1px 0 rgba(240, 236, 229, 0.18), 0 -1px 1px rgba(0, 0, 0, 0.6); }
+        .f12-screw::after { content: ""; position: absolute; left: 1px; right: 1px; top: 4px; height: 2px; background: rgba(17, 17, 17, 0.85);
+          transform: rotate(var(--f12-a, 30deg)); }
+        #f12-plate { position: absolute; left: 44px; top: 118px; width: 1832px; height: 334px; box-sizing: border-box;
+          border: 2px solid; border-color: #888880 #282826 #111111 #505048;
+          background: linear-gradient(180deg, #232321, #1A1A18 30%, #141413);
+          box-shadow: inset 0 2px 0 rgba(240, 236, 229, 0.18), inset 0 -3px 0 rgba(0, 0, 0, 0.6), 0 30px 60px rgba(0, 0, 0, 0.65); }
+        #f12-plate .f12-rake { position: absolute; inset: 0; pointer-events: none;
+          background: linear-gradient(104deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 30%, rgba(17, 17, 17, 0) 62%, rgba(17, 17, 17, 0.25)); }
+        #f12-plabel { position: absolute; left: 30px; top: 14px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 22px;
+          letter-spacing: 0.14em; color: var(--cream-muted); white-space: nowrap; }
+        #f12-plabel b { font-weight: 600; color: var(--fire); }
+        .f12-pmicro { position: absolute; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; letter-spacing: 0.2em;
+          color: rgba(136, 136, 128, 0.85); white-space: nowrap; text-transform: uppercase; }
+        #f12-dwin { position: absolute; left: 18px; top: 50px; height: 240px; box-sizing: border-box;
+          border: 2px solid; border-color: #111111 #282826 #888880 #282826; background: #111111;
+          box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.9); display: flex; padding: 2px; }
+        .f12-cell { position: relative; flex: none; width: 128px; height: 232px; overflow: hidden; background: #1A1A18; margin-left: 4px; }
+        .f12-cell:first-child { margin-left: 0; }
+        .f12-cell.f12-gap { margin-left: 22px; }
+        .f12-cell::after { content: ""; position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0) 26%, rgba(240, 236, 229, 0.04) 50%, rgba(0, 0, 0, 0) 74%, rgba(0, 0, 0, 0.85)); }
+        .f12-col { position: absolute; left: 0; top: 0; width: 128px; color: var(--fire); }
+        .f12-col div { height: 232px; line-height: 232px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 210px; letter-spacing: 0; }
+        .f12-brk { position: absolute; top: 38px; width: 30px; height: 264px; box-sizing: border-box; border: 0 solid var(--fire); opacity: 0; }
+        #f12-brkl { left: 4px; border-width: 8px 0 8px 8px; transform-origin: 100% 50%; }
+        #f12-brkr { left: 1794px; border-width: 8px 8px 8px 0; transform-origin: 0 50%; }
+        #f12-stv { position: absolute; right: 28px; top: 8px; display: flex; align-items: center; gap: 12px; font-family: "IBM Plex Mono";
+          font-weight: 600; font-size: 28px; letter-spacing: 0.12em; color: var(--cream); white-space: nowrap; }
+        #f12-stv i { font-style: normal; font-weight: 500; font-size: 13px; letter-spacing: 0.2em; color: rgba(136, 136, 128, 0.85); margin-right: 6px; }
+        #f12-stdot { width: 14px; height: 14px; border-radius: 50%; background: var(--fire); flex: none; }
+        #f12-pad { width: 24px; height: 31px; flex: none; overflow: visible; display: none; }
+
+        #f12-wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+        /* ---- foreground: chrome and lyrics ---- */
+        .f12-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
+        .f12-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
+          vertical-align: middle; margin-right: 16px; }
+        .f12-chrome { position: absolute; right: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 16px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); white-space: nowrap; }
+        .f12-line { position: absolute; left: 5.5cqw; bottom: 5.5cqw; width: 60cqw; font-family: "Barlow"; color: var(--cream);
+          display: flex; flex-direction: column; align-items: flex-start; gap: 0.6cqw; }
+        .f12-row { display: flex; flex-wrap: wrap; column-gap: 0.26em; font-weight: 800; font-size: 4.8cqw;
+          line-height: 1.04; letter-spacing: -0.02em; }
+        .f12-row.f12-serif { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 6.1cqw;
+          line-height: 1.12; letter-spacing: 0; column-gap: 0.22em; margin-bottom: -0.3cqw; }
+        .f12-row.f12-big { font-weight: 900; font-size: 15cqw; line-height: 0.86; letter-spacing: -0.04em;
+          color: var(--fire); margin: 0.4cqw 0 0 -0.6cqw; transform-origin: 0 100%;
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 26px) rgba(232, 93, 38, 0.55), 0 0 calc(var(--hr-glow, 0.5) * 80px) rgba(232, 93, 38, 0.28); }
+        .f12-w { display: inline-block; position: relative; opacity: 0; }
+        .f12-dot { position: absolute; border-radius: 50%; background: var(--fire); opacity: 0; text-shadow: none; }
+        /* the archive's marker voice, drawn on left to right */
+        #f12-mark { position: absolute; left: 1336px; top: 470px; font-family: "Caveat Brush"; font-size: 70px; line-height: 1;
+          color: var(--fire); white-space: nowrap; transform: rotate(-4deg); transform-origin: 0 50%; clip-path: inset(-30% 100% -40% -5%);
+          text-shadow: 0 0 6px #0A0A0A, 0 0 14px #0A0A0A, 0 0 24px rgba(10, 10, 10, 0.9); }
+
+        .f12-bokeh { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--cream);
+          opacity: 0.035; filter: blur(14px); white-space: nowrap; }
+      </style>
+
+      <div data-hf-id="hf-fa4h" id="root" data-composition-id="12-key" data-width="1920" data-height="1080" data-duration="7.543">
+        <div data-hf-id="hf-s1r8" class="hr-layer" id="f12-bg" data-depth="0.35" data-dof="6" data-layout-ignore>
+          <div data-hf-id="hf-9ce7" id="f12-light"></div>
+          <div data-hf-id="hf-cxqd" id="f12-wall"></div>
+          <div data-hf-id="hf-5wc3" id="f12-lits"></div>
+          <div data-hf-id="hf-tj17" id="f12-clocklight"></div>
+          <div data-hf-id="hf-ea69" id="f12-plight"></div>
+        </div>
+        <div data-hf-id="hf-dupm" class="hr-layer" id="f12-mid" data-depth="0.6" data-layout-ignore>
+          <svg data-hf-id="hf-l9v7" id="f12-structure" viewBox="0 0 1920 1080"></svg>
+          <svg data-hf-id="hf-qoto" id="f12-clocksvg" viewBox="0 0 1920 1080">
+            <defs data-hf-id="hf-mh0t">
+              <linearGradient data-hf-id="hf-9qr9" id="f12-bz" x1="0.15" y1="0.1" x2="0.85" y2="0.95"><stop data-hf-id="hf-f9lk" stop-color="#888880" /><stop data-hf-id="hf-x270" offset="0.28" stop-color="#505048" /><stop data-hf-id="hf-xnfa" offset="0.62" stop-color="#282826" /><stop data-hf-id="hf-9w3h" offset="1" stop-color="#111111" /></linearGradient>
+              <linearGradient data-hf-id="hf-tj76" id="f12-ch" x1="0.85" y1="0.95" x2="0.15" y2="0.1"><stop data-hf-id="hf-fv2k" stop-color="#505048" /><stop data-hf-id="hf-y80e" offset="0.4" stop-color="#282826" /><stop data-hf-id="hf-04i9" offset="1" stop-color="#111111" /></linearGradient>
+              <radialGradient data-hf-id="hf-y5v8" id="f12-vig" cx="0.42" cy="0.38" r="0.62"><stop data-hf-id="hf-ngfv" offset="0.55" stop-color="#111111" stop-opacity="0" /><stop data-hf-id="hf-6u8o" offset="1" stop-color="#111111" stop-opacity="0.75" /></radialGradient>
+              <radialGradient data-hf-id="hf-kl1q" id="f12-cap" cx="0.35" cy="0.3" r="0.8"><stop data-hf-id="hf-bfzk" stop-color="#888880" /><stop data-hf-id="hf-yjs5" offset="0.5" stop-color="#505048" /><stop data-hf-id="hf-bl70" offset="1" stop-color="#1A1A18" /></radialGradient>
+              <linearGradient data-hf-id="hf-4lxw" id="f12-rake" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-72ti" stop-color="#FFFFFF" stop-opacity="0.07" /><stop data-hf-id="hf-on9z" offset="0.4" stop-color="#FFFFFF" stop-opacity="0" /><stop data-hf-id="hf-ev4v" offset="0.6" stop-color="#111111" stop-opacity="0" /><stop data-hf-id="hf-x8uz" offset="1" stop-color="#111111" stop-opacity="0.32" /></linearGradient>
+              <linearGradient data-hf-id="hf-9h9l" id="f12-glass" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-kn9q" stop-color="#F0ECE5" stop-opacity="0.07" /><stop data-hf-id="hf-qr10" offset="1" stop-color="#F0ECE5" stop-opacity="0" /></linearGradient>
+              <linearGradient data-hf-id="hf-3v5i" id="f12-drum" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-tn6m" stop-color="#000000" stop-opacity="0.9" /><stop data-hf-id="hf-tnq4" offset="0.32" stop-color="#000000" stop-opacity="0" /><stop data-hf-id="hf-qs21" offset="0.5" stop-color="#F0ECE5" stop-opacity="0.05" /><stop data-hf-id="hf-w54d" offset="0.68" stop-color="#000000" stop-opacity="0" /><stop data-hf-id="hf-tocf" offset="1" stop-color="#000000" stop-opacity="0.9" /></linearGradient>
+              <filter data-hf-id="hf-bozw" id="f12-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur data-hf-id="hf-8w1q" stdDeviation="22" /></filter>
+              <filter data-hf-id="hf-bkmb" id="f12-hsh" x="-30%" y="-10%" width="160%" height="120%"><feGaussianBlur data-hf-id="hf-5pp5" stdDeviation="7" /></filter>
+              <clipPath data-hf-id="hf-qm2o" id="f12-faceclip"><circle data-hf-id="hf-35wo" r="470" /></clipPath>
+              <clipPath data-hf-id="hf-ykr5" id="f12-glassclip"><circle data-hf-id="hf-aflg" r="562" /></clipPath>
+            </defs>
+            <g data-hf-id="hf-3eu1" id="f12-clock" transform="translate(1360 545) scale(0.72)"></g>
+          </svg>
+          <svg data-hf-id="hf-8s1a" id="f12-arch" viewBox="0 0 300 380" aria-hidden="true"></svg>
+          <svg data-hf-id="hf-w3b1" id="f12-web" viewBox="0 0 300 380" aria-hidden="true"></svg>
+          <div data-hf-id="hf-m0t5" id="f12-motes"></div>
+        </div>
+
+        <div data-hf-id="hf-6y7x" class="hr-layer" id="f12-mach" data-depth="0.4" data-layout-ignore>
+          <div data-hf-id="hf-3qra" id="f12-m2" class="f12-group">
+            <svg data-hf-id="hf-uqj2" id="f12-wires" viewBox="0 0 1920 1080"><defs data-hf-id="hf-vvwl" id="f12-wdefs"></defs><g data-hf-id="hf-vkup" id="f12-cables"></g><g data-hf-id="hf-983z" id="f12-pkts"></g></svg>
+            <div data-hf-id="hf-q5sf" id="f12-plate">
+              <div data-hf-id="hf-b1f8" id="f12-plabel">BYTES HELD <b data-hf-id="hf-cufq">·</b> OBJ 0001 + EVERYONE'S, EVERYTHING SINCE</div>
+              <div data-hf-id="hf-caui" id="f12-stv"><i data-hf-id="hf-xh0g">INTAKE</i><i data-hf-id="hf-gzxx" id="f12-stdot"></i><svg data-hf-id="hf-c8rn" id="f12-pad" viewBox="0 0 34 44"><path data-hf-id="hf-thnz" d="M8 20 V13 a9 9 0 0 1 18 0 V20" fill="none" stroke="#E85D26" stroke-width="5" /><rect data-hf-id="hf-4mau" x="2" y="19" width="30" height="24" fill="#E85D26" /><rect data-hf-id="hf-3ivi" x="15" y="26" width="4" height="9" fill="#111111" /></svg><span data-hf-id="hf-agz5" id="f12-stt">OPEN</span></div>
+              <div data-hf-id="hf-nif7" id="f12-dwin"></div>
+              <div data-hf-id="hf-teqs" class="f12-brk" id="f12-brkl"></div><div data-hf-id="hf-liiq" class="f12-brk" id="f12-brkr"></div>
+              <div data-hf-id="hf-j1md" class="f12-pmicro" style="left: 30px; top: 304px;">RET ∞ · READ AFTER Q-DAY · X25519</div>
+              <div data-hf-id="hf-kyg8" class="f12-pmicro" style="left: 760px; top: 304px;">RETENTION: INDEFINITE · REASON: JUST IN CASE</div>
+              <div data-hf-id="hf-ph8r" class="f12-pmicro" style="right: 30px; top: 304px;" id="f12-rate">RATE 0</div>
+              <div data-hf-id="hf-z9cj" class="f12-rake"></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-qkmp" class="hr-layer" id="f12-fg" data-depth="0.7">
+          <div data-hf-id="hf-551a" id="f12-g1" class="f12-group f12-on"><div data-hf-id="hf-1vu2" class="f12-line" id="f12-l24"></div></div>
+          <div data-hf-id="hf-7hio" id="f12-g2" class="f12-group"><div data-hf-id="hf-5ty3" class="f12-line" id="f12-l25"></div><div data-hf-id="hf-0wuv" id="f12-mark">(and counting)</div></div>
+        </div>
+        <div data-hf-id="hf-04rp" class="hr-layer" id="f12-chromel" data-depth="0.2">
+          <div data-hf-id="hf-7hqq" id="f12-c1" class="f12-group f12-on">
+            <div data-hf-id="hf-78oz" class="f12-kicker">STILL HELD</div>
+            <div data-hf-id="hf-uk69" class="f12-chrome">HELD SINCE TUE 09 MAR 2021 · 14:02</div>
+          </div>
+          <div data-hf-id="hf-3omc" id="f12-c2" class="f12-group"><div data-hf-id="hf-yjw2" class="f12-kicker">ALL AISLES · INTAKE</div></div>
+        </div>
+
+        <div data-hf-id="hf-co7y" class="hr-layer" id="f12-near" data-depth="1.7" data-layout-ignore></div>
+        <div class="hr-layer" id="f12-fx" data-depth="0.6" data-layout-ignore></div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/archie.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script>
+        (() => {
+          const T0 = 123.479, DUR = 7.543, END = T0 + DUR; // frame span, track seconds
+          const L = (t) => +(t - T0).toFixed(3);
+          const BARS = [123.479, 125.288, 127.105, 128.911, 130.734, END];
+          const BEATS = [123.479, 123.93, 124.388, 124.841, 125.288, 125.74, 126.199, 126.658, 127.105, 127.551, 128.01, 128.458, 128.911, 129.37, 129.828, 130.281, 130.734];
+          const TIME = 126.84, G2 = 128.253, JUMP = 128.911, MINE = 130.7;
+          // lyric rows: each row is a list of [word, start]; `big` marks the hero display row, `serif` the intimate voice
+          const LINES = {
+            l24: [{ serif: [["I", 123.928], ["waited", 124.34], ["for", 124.732], ["you,", 125.1]] }, [["I", 125.689], ["had", 126.14], ["the", 126.64]], { big: [["time", TIME]] }],
+            l25: [[["Every", G2], ["byte", 128.66], ["you", 129.12], ["ever", 129.5]], [["sent", 129.73], ["is", 130.309]], { big: [["mine", MINE]] }],
+          };
+          // the words that stream as bytes, each on its own cable of the torrent
+          const PKTS = [["every", G2, 4], ["byte", 128.66, 1], ["you", 129.12, 6], ["ever", 129.5, 2], ["sent", 129.73, 7], ["is", 130.309, 3]];
+          const FLY = 0.3;
+          const START = 4294967296, JV = 34359738368, PRE = 3.62e12, FINAL = 4398046511104; // locked 08's billions → 4 TiB
+          const MARK = 129.73;
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const NS = "http://www.w3.org/2000/svg";
+          const S = (parent, tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const P = (a, r) => [Math.sin(a * Math.PI / 180) * r, -Math.cos(a * Math.PI / 180) * r]; // clock angle (deg, clockwise from 12) → xy
+          const f1 = (v) => v.toFixed(1);
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const eo3 = (u) => 1 - Math.pow(1 - clamp01(u), 3);
+
+          // ---- static build: background ghost wall, lit glyphs, near bokeh -------------------------------------
+          const WALL = Array.from({ length: 19 }, (_, i) => HR.cipher(88, 1201 + i).replace(/(.{4})/g, "$1 ").trim());
+          // v13: the ghost wall itself is not drawn; its glyphs only exist where they light
+          const CW = 26 * 0.6 + 26 * 0.14; // mono advance + letter-spacing
+          const lr = HR.rng(121), lits = [];
+          for (let i = 0; i < 90; i++) {
+            const r = (lr() * 19) | 0, g = (lr() * 22) | 0, c = (lr() * 4) | 0, idx = g * 5 + c;
+            const u = el("span", "f12-lit", $("f12-lits"), WALL[r][idx]);
+            Object.assign(u.style, { left: (-120 + idx * CW).toFixed(1) + "px", top: (-50 + r * 64) + "px" });
+            lits.push({ u, order: lr(), flick: lr() < 0.2 });
+          }
+          const nr = HR.rng(1288);
+          for (let i = 0; i < 0; i++) {
+            const b = el("div", "f12-bokeh", $("f12-near"), HR.cipher(2 + (i % 2), 1500 + i));
+            Object.assign(b.style, { left: `${-100 + nr() * 2000}px`, top: `${-60 + nr() * 1000}px`, fontSize: `${200 + nr() * 160}px` });
+          }
+          // archive ribs behind the clock and the counter
+          [890, 1170, 1450, 1730].forEach((x) => {
+            S($("f12-structure"), "path", { d: `M${x} -80L${x + 68} -80L${x + 28} 1160L${x - 42} 1160Z`, fill: "#111111", opacity: 0.95 });
+            S($("f12-structure"), "path", { class: "f12-rib", d: `M${x - 12} -80L${x + 29} -80L${x - 12} 1160L${x - 54} 1160Z` });
+            S($("f12-structure"), "path", { class: "f12-rim", d: `M${x - 12} -80L${x - 54} 1160` });
+            [180, 480, 780].forEach((y) => S($("f12-structure"), "rect", { x: x - 19 - y / 30, y, width: 22, height: 44, fill: "#282826", stroke: "#505048", "stroke-width": 1 }));
+          });
+
+          // ---- the chronometer (04's, copied) ------------------------------------------------------------------
+          const sunray = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 940;
+            const x = c.getContext("2d"), r = HR.rng(4402);
+            x.fillStyle = "#1A1A18"; x.fillRect(0, 0, 940, 940);
+            x.lineWidth = 1.1;
+            for (let i = 0; i < 2200; i++) {
+              const a = (i / 2200) * Math.PI * 2 + (r() - 0.5) * 0.004, lite = r() < 0.5;
+              x.strokeStyle = lite ? `rgba(240,236,229,${(0.012 + r() * 0.04).toFixed(3)})` : `rgba(0,0,0,${(0.05 + r() * 0.12).toFixed(3)})`;
+              x.beginPath(); x.moveTo(470 + Math.cos(a) * 30, 470 + Math.sin(a) * 30); x.lineTo(470 + Math.cos(a) * 470, 470 + Math.sin(a) * 470); x.stroke();
+            }
+            const g = x.createConicGradient ? x.createConicGradient(-0.6, 470, 470) : null;
+            if (g) {
+              g.addColorStop(0, "rgba(240,236,229,0.07)"); g.addColorStop(0.12, "rgba(240,236,229,0)"); g.addColorStop(0.38, "rgba(240,236,229,0)");
+              g.addColorStop(0.5, "rgba(240,236,229,0.05)"); g.addColorStop(0.62, "rgba(240,236,229,0)"); g.addColorStop(0.88, "rgba(240,236,229,0)"); g.addColorStop(1, "rgba(240,236,229,0.07)");
+              x.fillStyle = g; x.fillRect(0, 0, 940, 940);
+            }
+            return c.toDataURL("image/png");
+          })();
+
+          const clk = $("f12-clock");
+          S(clk, "circle", { cx: 26, cy: 46, r: 610, fill: "#000000", opacity: 0.8, filter: "url(#f12-soft)" });
+          S(clk, "circle", { r: 600, fill: "url(#f12-bz)" });
+          const knurl = S(clk, "g", {});
+          for (let i = 0; i < 360; i++) {
+            const [x0, y0] = P(i, 585), [x1, y1] = P(i, 600);
+            S(knurl, "path", { d: `M${f1(x0)} ${f1(y0)}L${f1(x1)} ${f1(y1)}`, stroke: i % 2 ? "rgba(0,0,0,0.55)" : "rgba(240,236,229,0.13)", "stroke-width": 3 });
+          }
+          S(clk, "circle", { r: 584, fill: "none", stroke: "rgba(0,0,0,0.6)", "stroke-width": 2 });
+          S(clk, "path", { d: `M${P(232, 597).map(f1).join(" ")} A597 597 0 0 1 ${P(32, 597).map(f1).join(" ")}`, fill: "none", stroke: "rgba(240,236,229,0.42)", "stroke-width": 3, "stroke-linecap": "round" });
+          S(clk, "path", { d: `M${P(70, 597).map(f1).join(" ")} A597 597 0 0 1 ${P(200, 597).map(f1).join(" ")}`, fill: "none", stroke: "rgba(0,0,0,0.7)", "stroke-width": 4, "stroke-linecap": "round" });
+          S(clk, "circle", { r: 572, fill: "#111111" });
+          S(clk, "circle", { r: 562, fill: "url(#f12-ch)" });
+          S(clk, "path", { d: `M${P(60, 563).map(f1).join(" ")} A563 563 0 0 1 ${P(210, 563).map(f1).join(" ")}`, fill: "none", stroke: "rgba(240,236,229,0.3)", "stroke-width": 2 });
+          S(S(clk, "defs", {}), "path", { id: "f12-barc", d: `M${P(-62, 547).map(f1).join(" ")} A547 547 0 0 1 ${P(62, 547).map(f1).join(" ")}` });
+          const bt = S(clk, "text", { "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 5, fill: "rgba(240,236,229,0.42)", stroke: "rgba(0,0,0,0.5)", "stroke-width": 0.6, "paint-order": "stroke" });
+          S(bt, "textPath", { href: "#f12-barc", startOffset: "50%", "text-anchor": "middle" }, "ARCHIVE CLOCK · RETENTION INDEFINITE");
+          // the elapsed ring on the chamfer: it closes as the years go by
+          const arc = S(clk, "path", { fill: "none", stroke: "#E85D26", "stroke-width": 6, "stroke-linecap": "butt", class: "hr-glowbox" });
+          S(clk, "circle", { r: 540, fill: "#1A1A18" });
+          S(clk, "circle", { r: 540, fill: "none", stroke: "rgba(0,0,0,0.75)", "stroke-width": 3 });
+          const ticks = S(clk, "g", {});
+          for (let i = 0; i < 240; i++) {
+            if (i % 4 === 0) continue;
+            const [x0, y0] = P(i * 1.5, 536), [x1, y1] = P(i * 1.5, 531);
+            S(ticks, "path", { d: `M${f1(x0)} ${f1(y0)}L${f1(x1)} ${f1(y1)}`, stroke: "#505048", "stroke-width": 1 });
+          }
+          for (let i = 0; i < 60; i++) {
+            const big = i % 5 === 0, [x0, y0] = P(i * 6, 537), [x1, y1] = P(i * 6, big ? 508 : 524);
+            S(ticks, "path", { d: `M${f1(x0)} ${f1(y0)}L${f1(x1)} ${f1(y1)}`, stroke: big ? (i === 0 ? "#E85D26" : "rgba(240,236,229,0.82)") : "#888880", "stroke-width": big ? 5 : 1.8 });
+            if (big && i !== 15) {
+              const [tx, ty] = P(i * 6, 488);
+              S(ticks, "text", { x: f1(tx), y: f1(ty), "text-anchor": "middle", "dominant-baseline": "central", "font-family": "IBM Plex Mono", "font-weight": 600,
+                "font-size": 22, "letter-spacing": 1, fill: i === 0 ? "#E85D26" : "rgba(240,236,229,0.66)" }, String(i).padStart(2, "0"));
+            }
+          }
+          S(clk, "image", { href: sunray, x: -470, y: -470, width: 940, height: 940, "clip-path": "url(#f12-faceclip)" });
+          S(clk, "circle", { r: 470, fill: "url(#f12-vig)" });
+          S(clk, "circle", { r: 470, fill: "none", stroke: "rgba(0,0,0,0.8)", "stroke-width": 3 });
+          S(clk, "circle", { r: 466, fill: "none", stroke: "rgba(240,236,229,0.07)", "stroke-width": 1.5 });
+          const eng = (x, y, size, text, o = {}) => {
+            const sh = S(clk, "text", Object.assign({ x, y: y + 1.2, "text-anchor": "middle", fill: "rgba(0,0,0,0.75)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": size, "letter-spacing": size * 0.3 }, o), text);
+            const fr = S(clk, "text", Object.assign({ x, y, "text-anchor": "middle", fill: "rgba(240,236,229,0.55)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": size, "letter-spacing": size * 0.3 }, o), text);
+            return [sh, fr];
+          };
+          S(clk, "circle", { cy: -352, r: 21, fill: "#C94A1C" });
+          S(clk, "circle", { cy: -353, r: 18, fill: "#E85D26" });
+          S(clk, "circle", { cy: -353, r: 13.5, fill: "none", stroke: "rgba(17,17,17,0.3)", "stroke-width": 1.4 });
+          S(clk, "text", { y: -346.5, "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 18, fill: "#B9431A" }, "a.");
+          S(clk, "path", { d: "M-14 -360 A16 16 0 0 1 -4 -368", fill: "none", stroke: "rgba(255,236,224,0.55)", "stroke-width": 2, "stroke-linecap": "round" });
+          eng(0, -298, 17, "HN/DL", { "font-weight": 600, fill: "rgba(240,236,229,0.72)" });
+          eng(0, -272, 11, "NO APPOINTMENT NECESSARY");
+          eng(0, 268, 14, "STILL HELD · NOT YET READ", { "font-weight": 600 });
+          eng(0, 292, 10, "READ AFTER Q-DAY · RET ∞");
+          // the YEAR drum window at three o'clock (04's DAYS HELD window, now counting years)
+          const WX = 214, DW = 44, DG = 3, DH = 72;
+          S(clk, "rect", { x: WX - 12, y: -50, width: 4 * DW + 3 * DG + 24, height: 100, fill: "url(#f12-bz)" });
+          S(clk, "path", { d: `M${WX - 12} 50 V-50 H${WX + 4 * DW + 3 * DG + 12}`, fill: "none", stroke: "rgba(240,236,229,0.38)", "stroke-width": 1.5 });
+          S(clk, "rect", { x: WX - 3, y: -41, width: 4 * DW + 3 * DG + 6, height: 82, fill: "#111111" });
+          eng(WX + (4 * DW + 3 * DG) / 2, -64, 14, "YEAR", { "font-weight": 600 });
+          const yrsLab = eng(WX + (4 * DW + 3 * DG) / 2, 72, 10, "YEARS HELD · 00");
+          const drums = [];
+          for (let d = 0; d < 4; d++) {
+            const x = WX + d * (DW + DG);
+            const cp = S(clk, "clipPath", { id: "f12-dc" + d }); S(cp, "rect", { x, y: -37, width: DW, height: 74 });
+            const g = S(clk, "g", { "clip-path": `url(#f12-dc${d})` });
+            S(g, "rect", { x, y: -37, width: DW, height: 74, fill: "#1A1A18" });
+            const col = S(g, "g", {});
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0].forEach((n, k) => S(col, "text", { x: x + DW / 2, y: k * DH + 18, "text-anchor": "middle", "font-family": "IBM Plex Mono",
+              "font-weight": 600, "font-size": 50, fill: d === 3 ? "#E85D26" : "#F0ECE5" }, String(n)));
+            S(g, "rect", { x, y: -37, width: DW, height: 74, fill: "url(#f12-drum)" });
+            drums.push(col);
+          }
+          [2, 0, 2].forEach((n, d) => drums[d].setAttribute("transform", `translate(0 ${-n * DH})`));
+          S(clk, "path", { d: `M${WX - 3} 41 H${WX + 4 * DW + 3 * DG + 3} V-41`, fill: "none", stroke: "rgba(240,236,229,0.2)", "stroke-width": 1.5 });
+          S(clk, "path", { d: `M${WX - 3} 41 V-41 H${WX + 4 * DW + 3 * DG + 3}`, fill: "none", stroke: "rgba(0,0,0,0.9)", "stroke-width": 3 });
+
+          // the hands: faceted steel hour and minute, the fire second hand; each casts a soft shadow; while racing,
+          // the minute and second hands leave a smear of ghost hands behind them
+          const hourD = ["M0 -320 L-17 -40 L0 50 Z", "M0 -320 L17 -40 L0 50 Z"];
+          const minD = ["M0 -520 L-24 -46 L0 64 Z", "M0 -520 L24 -46 L0 64 Z"];
+          const secD = "M-2.6 150 L-1.6 -505 L0 -540 L1.6 -505 L2.6 150 Z";
+          const shadows = S(clk, "g", { opacity: 0.6 });
+          const shH = S(shadows, "path", { d: "M0 -320 L-17 -40 L0 50 L17 -40 Z", fill: "#000000", filter: "url(#f12-hsh)" });
+          const shM = S(shadows, "path", { d: "M0 -520 L-24 -46 L0 64 L24 -46 Z", fill: "#000000", filter: "url(#f12-hsh)" });
+          const shS = S(shadows, "g", { filter: "url(#f12-hsh)" });
+          S(shS, "path", { d: secD, fill: "#000000" }); S(shS, "circle", { cy: 112, r: 24, fill: "#000000" });
+          const ghostM = [0.3, 0.18, 0.1, 0.05].map((o) => ({ o, g: S(clk, "path", { d: "M0 -520 L-24 -46 L0 64 L24 -46 Z", fill: "#888880", opacity: 0 }) }));
+          const ghostS = [0.42, 0.28, 0.18, 0.1, 0.05].map((o) => ({ o, g: S(clk, "path", { d: secD, fill: "#E85D26", opacity: 0 }) }));
+          const handH = S(clk, "g", {});
+          S(handH, "path", { d: hourD[0], fill: "#888880" }); S(handH, "path", { d: hourD[1], fill: "#282826" });
+          S(handH, "path", { d: "M0 -318 L0 48", stroke: "rgba(240,236,229,0.55)", "stroke-width": 1.4 });
+          S(handH, "path", { d: "M0 -300 L-6 -170 L0 -150 L6 -170 Z", fill: "#111111" });
+          const handM = S(clk, "g", {});
+          S(handM, "path", { d: minD[0], fill: "#888880" }); S(handM, "path", { d: minD[1], fill: "#282826" });
+          S(handM, "path", { d: "M0 -518 L0 62", stroke: "rgba(240,236,229,0.6)", "stroke-width": 1.6 });
+          S(handM, "path", { d: "M-24 -46 L0 -520 L24 -46", fill: "none", stroke: "rgba(0,0,0,0.5)", "stroke-width": 1.5 });
+          S(handM, "path", { d: "M0 -500 L-7 -340 L0 -318 L7 -340 Z", fill: "#E85D26" });
+          const handS = S(clk, "g", { class: "hr-glowbox" });
+          S(handS, "path", { d: secD, fill: "#E85D26" });
+          S(handS, "circle", { cy: 112, r: 24, fill: "#E85D26" });
+          S(handS, "circle", { cy: 112, r: 15, fill: "none", stroke: "rgba(17,17,17,0.35)", "stroke-width": 2 });
+          S(handS, "path", { d: "M-15 104 A17 17 0 0 1 -4 96", fill: "none", stroke: "rgba(255,236,224,0.6)", "stroke-width": 2.5, "stroke-linecap": "round" });
+          S(handS, "path", { d: "M0 -540 L-6 -470 L6 -470 Z", fill: "#F0ECE5", opacity: 0.85 });
+          S(clk, "circle", { cy: 6, r: 48, fill: "#000000", opacity: 0.5, filter: "url(#f12-hsh)" });
+          S(clk, "circle", { r: 44, fill: "url(#f12-cap)", stroke: "rgba(0,0,0,0.55)", "stroke-width": 1.5 });
+          S(clk, "circle", { r: 30, fill: "#111111" });
+          S(clk, "circle", { r: 22, fill: "#E85D26" });
+          S(clk, "circle", { r: 7, fill: "#111111" });
+          S(clk, "path", { d: "M-32 -14 A35 35 0 0 1 -12 -33", fill: "none", stroke: "rgba(240,236,229,0.6)", "stroke-width": 3, "stroke-linecap": "round" });
+          const glass = S(clk, "g", { "clip-path": "url(#f12-glassclip)" });
+          S(glass, "path", { d: "M-620 -40 C-420 -120 -120 -360 60 -620 L-620 -620 Z", fill: "url(#f12-glass)" });
+          S(glass, "path", { d: "M-620 60 C-400 -30 -80 -300 120 -620", fill: "none", stroke: "rgba(240,236,229,0.05)", "stroke-width": 26 });
+          S(clk, "path", { d: `M${P(250, 556).map(f1).join(" ")} A556 556 0 0 1 ${P(330, 556).map(f1).join(" ")}`, fill: "none", stroke: "rgba(240,236,229,0.32)", "stroke-width": 2, "stroke-linecap": "round" });
+          S(clk, "circle", { r: 600, fill: "url(#f12-rake)" });
+          // v13: years of dust — a fine grey film and speckle on the glass, heavier where it settles low, and a fuzzy
+          // grey line along the top of the bezel
+          const dust = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 1220;
+            const x = c.getContext("2d"), r = HR.rng(1213), O = 610;
+            x.save(); x.beginPath(); x.arc(O, O, 562, 0, Math.PI * 2); x.clip();
+            for (let i = 0; i < 70; i++) {
+              const a = r() * Math.PI * 2, d = Math.sqrt(r()) * 560, bx = O + Math.cos(a) * d, by = O + Math.sin(a) * d;
+              const rr = 60 + r() * 160, g = x.createRadialGradient(bx, by, 0, bx, by, rr);
+              const k = 0.022 + 0.03 * clamp01((by - 300) / 900);
+              g.addColorStop(0, `rgba(190,186,178,${k.toFixed(3)})`); g.addColorStop(1, "rgba(190,186,178,0)");
+              x.fillStyle = g; x.fillRect(bx - rr, by - rr, rr * 2, rr * 2);
+            }
+            for (let i = 0; i < 5200; i++) {
+              const a = r() * Math.PI * 2, d = Math.sqrt(r()) * 562, px = O + Math.cos(a) * d, py = O + Math.sin(a) * d;
+              const big = r() < 0.03, rad = big ? 1.4 + r() * 1.4 : 0.45 + r() * 0.9;
+              const al = (big ? 0.28 : 0.1 + r() * 0.26) * (0.75 + 0.5 * clamp01((py - 200) / 900));
+              x.fillStyle = `rgba(206,202,194,${al.toFixed(3)})`;
+              x.beginPath(); x.arc(px, py, rad, 0, Math.PI * 2); x.fill();
+            }
+            x.lineWidth = 0.9; x.strokeStyle = "rgba(206,202,194,0.32)"; // a few fibres
+            for (let i = 0; i < 9; i++) {
+              const px = O + (r() - 0.5) * 860, py = O + (r() - 0.5) * 860, a = r() * Math.PI, l = 8 + r() * 16;
+              x.beginPath(); x.moveTo(px, py); x.quadraticCurveTo(px + Math.cos(a) * l * 0.6 + 4, py + Math.sin(a) * l * 0.6 - 4, px + Math.cos(a) * l, py + Math.sin(a) * l); x.stroke();
+            }
+            x.restore();
+            for (let i = 0; i < 2600; i++) { // dust settled on the top of the bezel
+              const deg = (r() - 0.5) * 150 * Math.sqrt(r()), a = (deg - 90) * Math.PI / 180, d = 588 + r() * 13 - Math.abs(deg) * 0.02;
+              const al = (0.18 + r() * 0.3) * (1 - Math.abs(deg) / 80);
+              x.fillStyle = `rgba(196,192,184,${Math.max(0, al).toFixed(3)})`;
+              x.beginPath(); x.arc(O + Math.cos(a) * d, O + Math.sin(a) * d, 0.6 + r() * 1.3, 0, Math.PI * 2); x.fill();
+            }
+            return c.toDataURL("image/png");
+          })();
+          S(clk, "image", { href: dust, x: -610, y: -610, width: 1220, height: 1220 });
+
+          // v13: dust motes drifting through the light over the clock
+          const MOTES = Array.from({ length: 7 }, (_, i) => {
+            const mr = HR.rng(7700 + i), z = 7 + mr() * 6;
+            const m = el("i", "f12-mote", $("f12-motes"));
+            Object.assign(m.style, { width: z + "px", height: z + "px" });
+            return { m, x0: 720 + mr() * 760, y0: 110 + mr() * 440, vx: 6 + mr() * 14, vy: 10 + mr() * 18, ph: mr() * 6.28, a: 0.45 + mr() * 0.35 };
+          });
+
+          // ---- Archie, leaned back beside the clock (v12: replaces the lamp-headed Archivist) ------------------
+          const archie = HR.archie($("f12-arch"), { id: "f12a", x: 150, y: 372, scale: 0.68, seed: 6 });
+          const AS = 304 / 300, AX = 915, AY = 665;
+
+          // v13: the cobweb (Archie's svg frame; Archie mounted at 150,372 ×0.68): a corner web from the neck tube to
+          // the lid's back corner, and a sagging pair of strands out to the clock's rim with a few cross threads
+          const wb = S($("f12-web"), "g", { fill: "none", stroke: "rgba(240,236,229,0.5)", "stroke-width": 0.6, "stroke-linecap": "round" });
+          const hub = [172, 190], frame = [[169, 168], [186, 171], [204, 177], [219, 184], [229, 191]];
+          S(wb, "path", { d: `M169 168 Q 203 170 229 191` });
+          frame.forEach(([fx, fy]) => S(wb, "path", { d: `M${hub[0]} ${hub[1]} L${fx} ${fy}` }));
+          [0.3, 0.5, 0.7, 0.88].forEach((k) => {
+            const pts = frame.map(([fx, fy]) => [hub[0] + (fx - hub[0]) * k, hub[1] + (fy - hub[1]) * k]);
+            S(wb, "path", { d: "M" + pts.map(([px, py], i) => (i ? `Q ${f1((pts[i - 1][0] + px) / 2 + 0.6)} ${f1((pts[i - 1][1] + py) / 2 + 1.4)} ` : "") + `${f1(px)} ${f1(py)}`).join(" ") });
+          });
+          const rim = [70, 95]; // v16: the clock is smaller and centred, so the web reaches its new rim
+          S(wb, "path", { d: `M147 172 Q 104 160 ${rim[0]} ${rim[1]}`, "stroke-opacity": 0.85 });
+          S(wb, "path", { d: `M84 191 Q 76 186 ${rim[0]} ${rim[1] + 4}`, "stroke-opacity": 0.75 });
+          [[0.25, 0.3], [0.5, 0.55], [0.75, 0.8]].forEach(([a, b]) => {
+            const q = (u, p0, c, p1) => (1 - u) * (1 - u) * p0 + 2 * u * (1 - u) * c + u * u * p1;
+            const ax = q(a, 147, 104, rim[0]), ay = q(a, 172, 160, rim[1]), bx = q(b, 84, 76, rim[0]), by = q(b, 191, 186, rim[1] + 4);
+            S(wb, "path", { d: `M${f1(ax)} ${f1(ay)} L${f1(bx)} ${f1(by)}`, "stroke-opacity": 0.6 });
+          });
+          const webEl = $("f12-web");
+          const CX = 1360, CY = 545, CK = 0.72; // the clock's centre and scale in the frame
+
+          // ---- the BYTES HELD odometer (g2): 13 digits, grouped in threes -------------------------------------
+          const ND = 13, cols = [], cells = [];
+          for (let d = 0; d < ND; d++) {
+            const cell = el("div", "f12-cell" + ((ND - d) % 3 === 0 && d > 0 ? " f12-gap" : ""), $("f12-dwin")), col = el("div", "f12-col hr-glow", cell);
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0].forEach((n) => el("div", "", col, String(n)));
+            cols.push(col); cells.push(cell);
+          }
+          [[8, 8, 30], [1810, 8, -20], [8, 312, 75], [1810, 312, 10], [900, 8, 55], [900, 312, -35]].forEach(([l, t, a]) => {
+            const s = el("i", "f12-screw", $("f12-plate")); Object.assign(s.style, { left: l + "px", top: t + "px" }); s.style.setProperty("--f12-a", a + "deg");
+          });
+
+          // the torrent: a fan of intake cables from the floor, one from the right wall, feeders from the ceiling
+          const CAB = [];
+          for (let i = 0; i < 9; i++) {
+            const x0 = 1170 + i * 96, xe = 1130 + i * 84;
+            CAB.push({ d: `M ${x0} 1140 C ${x0} 820 ${xe} 660 ${xe} 452`, w: 12 - (i % 3) * 2 });
+          }
+          CAB.push({ d: "M 1990 610 C 1890 610 1852 570 1852 452", w: 10 });
+          for (let j = 0; j < 6; j++) { const x = 760 + j * 200; CAB.push({ d: `M ${x} -30 V 118`, w: 8, top: true }); }
+          const hex = (w) => Array.from(w).map((ch) => ch.charCodeAt(0).toString(16).toUpperCase().padStart(2, "0")).join(" ");
+          const cg = $("f12-cables"), cr = HR.rng(1212);
+          const cables = CAB.map((c, i) => {
+            const id = "f12-cp" + i;
+            S($("f12-wdefs"), "path", { id, d: c.d });
+            S(cg, "path", { d: c.d, fill: "none", stroke: "#000000", "stroke-opacity": 0.6, "stroke-width": c.w + 4, transform: "translate(4 8)" });
+            S(cg, "path", { d: c.d, fill: "none", stroke: "#1A1A18", "stroke-width": c.w });
+            S(cg, "path", { d: c.d, fill: "none", stroke: "rgba(240,236,229,0.16)", "stroke-width": 1.5, transform: "translate(-2 -1)" });
+            const flow = S(cg, "path", { d: c.d, fill: "none", stroke: "#E85D26", "stroke-width": 3, "stroke-dasharray": `${10 + (i % 4) * 6} ${26 + (i % 3) * 10}`, class: "hr-glowbox", opacity: 0 });
+            let tp = null;
+            if (!c.top) {
+              const tx = S(cg, "text", { "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 18, "letter-spacing": 3, fill: "#505048", dy: -12 });
+              tp = S(tx, "textPath", { href: "#" + id, startOffset: "0%" }, Array.from({ length: 24 }, (_, k) => HR.cipher(2, 1700 + i * 31 + k)).join(" "));
+            }
+            return { flow, tp, on: G2 + 0.05 + cr() * 0.6, sp: 260 + cr() * 260, ph: cr() * 400 };
+          });
+          // capped plugs where the cables meet the plate
+          CAB.forEach((c) => {
+            const m = c.d.match(/(-?\d+) (-?\d+)$/) || c.d.match(/M (-?\d+) -30 V (\d+)/);
+            const x = c.top ? +c.d.split(" ")[1] : +m[1], y = c.top ? 104 : 452;
+            S(cg, "rect", { x: x - 20, y: y - (c.top ? 0 : 14), width: 40, height: 14, fill: "#282826", stroke: "#505048", "stroke-width": 1.5 });
+          });
+          const pkts = PKTS.map(([w, , ci]) => {
+            const tx = S($("f12-pkts"), "text", { "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 30, "letter-spacing": 2, fill: "#F0ECE5", stroke: "#111111", "stroke-width": 8, "paint-order": "stroke", dy: -16 });
+            return S(tx, "textPath", { href: "#f12-cp" + ci, startOffset: "0%", "text-anchor": "end" }, hex(w));
+          });
+
+          // ---- lyrics ------------------------------------------------------------------------------------------
+          function buildLine(key) {
+            const box = $("f12-" + key), words = [];
+            for (const row of LINES[key]) {
+              const big = !Array.isArray(row) && !!row.big, serif = !Array.isArray(row) && !!row.serif;
+              const r = el("div", "f12-row" + (big ? " f12-big hr-glow" : "") + (serif ? " f12-serif" : ""), box);
+              for (const [w, t] of big ? row.big : serif ? row.serif : row) words.push({ s: el("span", "f12-w", r, w.toLowerCase()), t, big, r });
+            }
+            return words;
+          }
+          const lines = Object.fromEntries(Object.keys(LINES).map((k) => [k, buildLine(k)]));
+
+          // ---- timeline -------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const stage = HR.stage($("root"), { seed: 12 });
+          const cam = stage.cam;
+          cam.focus = 0.5;
+          for (const id of ["f12-g1", "f12-c1"]) tl.set("#" + id, { opacity: 0 }, L(G2));
+          for (const id of ["f12-g2", "f12-c2", "f12-m2"]) tl.set("#" + id, { opacity: 1 }, L(G2));
+          tl.set(["#f12-clocksvg", "#f12-arch", "#f12-web", "#f12-motes"], { opacity: 0 }, L(G2));
+
+          // camera: trucks alternate per bar; a slow push per group with a punch on each hero (bigger on "mine")
+          const XS = [0, 50, -30, 60, -40, 20];
+          BARS.slice(0, -1).forEach((b, i) => {
+            tl.fromTo(cam, { x: XS[i] }, { x: XS[i + 1], duration: BARS[i + 1] - b, ease: "power2.inOut", immediateRender: i === 0 }, L(b));
+          });
+          const push = (a, hit, end, z0, k) => {
+            tl.fromTo(cam, { z: z0, rot: 0 }, { z: z0 + 0.04, rot: 0, duration: L(hit) - L(a), ease: "sine.inOut", immediateRender: a === T0 }, L(a));
+            tl.fromTo(cam, { z: z0 + 0.04, rot: 0 }, { z: z0 + 0.04 + 0.045 * k, rot: -0.5 * k, duration: 0.06, ease: "power3.out", immediateRender: false }, L(hit));
+            tl.fromTo(cam, { z: z0 + 0.04 + 0.045 * k, rot: -0.5 * k }, { z: z0 + 0.05, rot: 0, duration: Math.min(0.5, L(end) - L(hit) - 0.06), ease: "elastic.out(1, 0.5)", immediateRender: false }, L(hit) + 0.06);
+            const s = L(hit) + 0.56;
+            if (L(end) > s) tl.fromTo(cam, { z: z0 + 0.05 }, { z: z0 + 0.06, duration: L(end) - s, ease: "sine.inOut", immediateRender: false }, s);
+          };
+          push(T0, TIME, G2, 1, 1);
+          push(G2, MINE, END, 1, 1.7);
+
+          // the clock bucks when the hands slam to a stop on "time"
+          tl.fromTo("#f12-clocksvg", { y: 0 }, { y: 14, duration: 0.05, ease: "power2.out", immediateRender: false }, L(TIME));
+          tl.fromTo("#f12-clocksvg", { y: 14 }, { y: 0, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(TIME) + 0.05);
+
+          // Years asleep; the stopped clock wakes him, then he blows the years off.
+          archie.mood(tl, "asleep", 0, 0.01);
+          archie.to(tl, { sway: 1, zz: 1, idle: 0.35 }, 0.02, 0.01);
+          archie.wake(tl, L(TIME));
+          archie.startle(tl, L(TIME), { h: 42, air: 0.26 });
+          archie.puff(tl, L(TIME) + 0.62);
+          const dustPuff = Array.from({ length: 24 }, (_, i) => {
+            const r = HR.rng(14120 + i), m = el("i", "f12-mote", $("f12-motes"));
+            const z = 5 + r() * 14;
+            Object.assign(m.style, { width: z + "px", height: z + "px" });
+            return { m, vx: 150 + r() * 260, vy: -130 + r() * 180, x: 1000 + r() * 100, y: 810 + r() * 65 };
+          });
+
+          // lyrics: lead words build by glyph, hero words slam; the first line leaves before the second arrives
+          for (const ws of Object.values(lines)) for (const { s, t, big } of ws) {
+            big ? HR.hero(tl, s, L(t), { spread: 40, sharp: true }) : HR.lead(tl, s, L(t));
+            tl.set(s, { opacity: 1 }, L(t));
+          }
+          HR.exit(tl, $("f12-l24"), L(G2) - 0.26);
+
+          // hero slams squash and spit fire dots ("mine" harder, more dots)
+          const sr = HR.rng(1244);
+          for (const { s, t, big, r } of Object.values(lines).flat()) {
+            if (!big) continue;
+            const hard = t === MINE, sq = hard ? 0.9 : 0.93;
+            tl.fromTo(r, { scaleY: 1, scaleX: 1 }, { scaleY: sq, scaleX: hard ? 1.035 : 1.02, duration: 0.05, ease: "power2.out", immediateRender: false }, L(t));
+            tl.fromTo(r, { scaleY: sq, scaleX: hard ? 1.035 : 1.02 }, { scaleY: 1, scaleX: 1, duration: 0.45, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(t) + 0.05);
+            for (let i = 0; i < (hard ? 14 : 8); i++) {
+              const d = el("span", "f12-dot", s), side = i % 2 ? -1 : 1, z = 4 + sr() * sr() * (hard ? 22 : 16);
+              d.setAttribute("data-layout-ignore", "");
+              Object.assign(d.style, { width: z + "px", height: z + "px", left: (side < 0 ? -2 - sr() * 4 : 100 + sr() * 4) + "%", top: (25 + sr() * 55) + "%" });
+              const dx = side * (14 + sr() * (hard ? 80 : 50)), dy = (sr() - 0.5) * 40;
+              tl.fromTo(d, { opacity: 0, x: -dx * 0.5, y: 0, scale: 0.3 }, { opacity: 0.95, x: 0, y: dy * 0.3, scale: 1, duration: 0.09, ease: "power3.out", immediateRender: false }, L(t));
+              tl.fromTo(d, { opacity: 0.95, x: 0, y: dy * 0.3 }, { opacity: 0, x: dx * 0.4, y: dy + 30, duration: 0.7, ease: "power2.in", immediateRender: false }, L(t) + 0.09);
+            }
+          }
+          // "time" loosens on the downbeat
+          const timeG = lines.l24.find((w) => w.big).s._hrG;
+          tl.fromTo(timeG, { x: 0 }, { x: (i) => i * 20, duration: 1.0, ease: "power2.out", immediateRender: false }, L(127.105));
+
+
+          // v16 (V16.md §9): the years slam to a stop with a detonation; the intake slams shut the same way; the clock bobs on the kick
+          {
+            const fx = $("f12-fx"), SHK = ["f12-bg", "f12-mid", "f12-mach", "f12-fg"].map($);
+            const shakeAll = (t, amp, dur = 0.4) => SHK.forEach((e, i) => WOW.shake(tl, e, L(t), { amp, dur, seed: 21 + i * 5 }));
+            WOW.transition(tl, document.getElementById("el-12-key"), { in: "zoom", dur: 0.32 });
+            WOW.pulse(tl, $("f12-clocksvg"), { kind: "kick", amt: 0.018, y: 5 });
+            for (const b of [TIME - 0.5, TIME - 0.25, TIME - 0.12]) WOW.rays(tl, fx, { x: CX, y: CY, t: L(b), n: 10, r0: 300, r1: 900, seed: Math.round(b * 10), color: "fire", dur: 0.3 });
+            shakeAll(TIME, 24, 0.5);
+            WOW.punch(tl, document.getElementById("el-12-key"), L(TIME), { s: 1.05, dur: 0.45 });
+            WOW.shock(tl, fx, { x: CX, y: CY, t: L(TIME), r: 1500, n: 3, w: 8, color: "fire", dur: 0.7 });
+            WOW.rays(tl, fx, { x: CX, y: CY, t: L(TIME), n: 30, r0: 460, r1: 1400, seed: 126, color: "cream", dur: 0.55, w: 5 });
+            WOW.burst(tl, fx, { x: CX, y: CY, t: L(TIME), n: 36, speed: 1300, size: [6, 18], seed: 127, dur: 0.9 });
+            WOW.flash(tl, fx, L(TIME), { a: 0.5, dur: 0.18 });
+            [JUMP].forEach((b) => { shakeAll(b, 14, 0.35); WOW.shock(tl, fx, { x: 960, y: 540, t: L(b), r: 1100, n: 2, w: 6, color: "fire", dur: 0.55 }); WOW.rays(tl, fx, { x: 960, y: 540, t: L(b), n: 22, r0: 200, r1: 1100, seed: 129, color: "cream", dur: 0.45 }); });
+            shakeAll(MINE, 30, 0.55);
+            WOW.punch(tl, document.getElementById("el-12-key"), L(MINE), { s: 1.07, dur: 0.5 });
+            WOW.shock(tl, fx, { x: 960, y: 540, t: L(MINE), r: 1600, n: 3, w: 9, color: "fire", dur: 0.75 });
+            WOW.rays(tl, fx, { x: 960, y: 540, t: L(MINE), n: 34, r0: 150, r1: 1500, seed: 130, color: "cream", dur: 0.6, w: 6 });
+            WOW.burst(tl, fx, { x: 960, y: 540, t: L(MINE), n: 44, speed: 1500, size: [6, 20], seed: 131, dur: 1.0 });
+            WOW.flash(tl, fx, L(MINE), { a: 0.7, dur: 0.22 });
+            for (const b of BEATS.filter((x) => x > TIME + 0.4 && x < G2 - 0.2)) WOW.shock(tl, fx, { x: CX, y: CY, t: L(b), r: 700, n: 1, w: 3, color: "cream", dur: 0.5 });
+          }
+
+          // g2 — the plate thunks on every beat of the torrent, hardest on the downbeat jump into the billions
+          [128.458, JUMP, 129.37, 129.828, 130.281].forEach((b) => {
+            const k = b === JUMP ? 2 : 1;
+            tl.fromTo("#f12-plate", { y: 0 }, { y: 5 * k, duration: 0.04, ease: "power2.out", immediateRender: false }, L(b));
+            tl.fromTo("#f12-plate", { y: 5 * k }, { y: 0, duration: 0.36, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(b) + 0.04);
+          });
+          tl.fromTo("#f12-plight", { opacity: 0 }, { opacity: 0.8, duration: 0.4, ease: "power2.out" }, L(G2));
+          // "mine" locks it: the brackets clamp on, the plate slams, the digits flash cream, the torrent goes dark
+          tl.fromTo(".f12-brk", { opacity: 0, scaleX: 2.6 }, { opacity: 1, scaleX: 1, duration: 0.12, ease: "power4.in" }, L(MINE) - 0.1);
+          tl.fromTo("#f12-plate", { scale: 1, y: 0 }, { scale: 1.04, y: 10, duration: 0.05, ease: "power2.out", immediateRender: false }, L(MINE));
+          tl.fromTo("#f12-plate", { scale: 1.04, y: 10 }, { scale: 1, y: 0, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(MINE) + 0.05);
+          tl.fromTo(cols, { color: "#F0ECE5" }, { color: "#E85D26", duration: 0.28, ease: "power2.in", immediateRender: false }, L(MINE));
+          tl.fromTo("#f12-plight", { opacity: 0.8 }, { opacity: 1.6, duration: 0.05, ease: "power2.out", immediateRender: false }, L(MINE));
+          tl.fromTo("#f12-cables", { opacity: 1 }, { opacity: 0.3, duration: 0.14, ease: "power2.out", immediateRender: false }, L(MINE));
+          tl.fromTo("#f12-mid", { opacity: 1 }, { opacity: 0.3, duration: 0.12, ease: "power2.out", immediateRender: false }, L(MINE));
+
+          // ---- per-frame draw -------------------------------------------------------------------------------
+          // the race: each hand spins at a constant rate, brakes hard over the last 0.24 s and slams to a stop on
+          // "time" with a sprung bounce. The minute hand lands pointing at the hero word.
+          const TS = L(TIME), DEC = 0.24, T1 = TS - DEC;
+          const racer = (w, final, kick) => {
+            const rem = w * DEC / 3, total = w * T1 + rem, a0 = final - total;
+            const raw = (t) => t < T1 ? a0 + w * t : t < TS ? a0 + w * T1 + rem * eo3((t - T1) / DEC) : final;
+            return {
+              at: (t) => raw(t) + (t > TS ? kick * Math.sin((t - TS) * Math.PI * 2 * 2.4) * Math.exp(-(t - TS) * 6.5) : 0),
+              prog: (t) => clamp01((raw(t) - a0) / total),
+            };
+          };
+          const rM = racer(760, 260 + 360 * 7, 7), rH = racer(110, 321 + 360, 3), rS = racer(1900, 312 + 360 * 17, 10);
+          const sBeats = BEATS.filter((b) => b > TIME && b < G2);
+          const secAt = (t) => {
+            let a = rS.at(t);
+            const T = t + T0;
+            for (const b of sBeats) a += 12 * eo3((T - (b - 0.03)) / 0.12);
+            return a;
+          };
+          const heroes = Object.values(lines).flat().filter((w) => w.big).map((w) => w.r);
+          const lightEl = $("f12-light"), plightEl = $("f12-plight"), archEl = $("f12-arch");
+          const stt = $("f12-stt"), stdot = $("f12-stdot"), pad = $("f12-pad"), rateEl = $("f12-rate"), mark = $("f12-mark");
+          const rot = (g, a, dx = 0, dy = 0) => g.setAttribute("transform", `translate(${dx} ${dy}) rotate(${a.toFixed(3)})`);
+          const ang = (y, x) => Math.atan2(y, x) * 180 / Math.PI;
+          // the count: 4 GiB held, an exponential climb, the downbeat jump to 32 GiB, the torrent into the
+          // trillions; "mine" slams it to 4 TiB and holds
+          const k1 = Math.log(17179869184 / START) / (JUMP - G2), k2 = Math.log(PRE / JV) / (MINE - JUMP);
+          const bytesAt = (T) => {
+            if (T < G2) return START;
+            if (T < JUMP) return START * Math.exp(k1 * (T - G2));
+            if (T < MINE) { const base = JV * Math.exp(k2 * (T - JUMP)); return 17179869184 + (base - 17179869184) * eo3((T - JUMP) / 0.12); }
+            return FINAL - (FINAL - PRE) * (1 - eo3((T - MINE) / 0.14));
+          };
+          const rateStr = (r) => r >= 1e12 ? (r / 1e12).toFixed(1) + " TB/S" : r >= 1e9 ? (r / 1e9).toFixed(1) + " GB/S" : r >= 1e6 ? (r / 1e6).toFixed(1) + " MB/S" : (r / 1e3).toFixed(0) + " KB/S";
+          let lastDim = -1, lastYrs = "", lastBlur = [];
+          function render() {
+            const t = tl.time(), T = t + T0;
+            stage.apply(T);
+            HR.draw(tl);
+            WOW.draw(tl, 123.479);
+            // g1: the racing chronometer
+            if (T < G2) {
+              const h = rH.at(t), m = rM.at(t), s = secAt(t);
+              rot(handH, h); rot(handM, m); rot(handS, s);
+              rot(shH, h, 10, 16); rot(shM, m, 14, 22); rot(shS, s, 18, 28);
+              ghostM.forEach(({ o, g }, i) => { const a = rM.at(t - (i + 1) * 0.014); g.setAttribute("opacity", (o * clamp01(Math.abs(m - a) / 4)).toFixed(3)); rot(g, a); });
+              ghostS.forEach(({ o, g }, i) => { const a = rS.at(t - (i + 1) * 0.008); g.setAttribute("opacity", (o * clamp01(Math.abs(s - a) / 4)).toFixed(3)); rot(g, a); });
+              // the elapsed ring closes as the years go by; the YEAR drum clicks over 2021 → 2026
+              const pr = rM.prog(t), sw = 360 * pr;
+              if (sw < 0.5) arc.setAttribute("d", "");
+              else if (sw > 359.5) arc.setAttribute("d", `M0 -551 A551 551 0 1 1 0 551 A551 551 0 1 1 0 -551`);
+              else { const [bx, by] = P(sw, 551); arc.setAttribute("d", `M0 -551 A551 551 0 ${sw > 180 ? 1 : 0} 1 ${f1(bx)} ${f1(by)}`); }
+              HR.glow(arc, T, 0.2, 0.5); HR.glow(handS, T, 0.15, 0.4);
+              const yf = 5 * pr, yi = Math.min(5, Math.floor(yf + 1e-9)), pos = yi >= 5 ? 5 : yi + eo3((yf - yi - 0.62) / 0.38);
+              drums[3].setAttribute("transform", `translate(0 ${(-(1 + pos) * DH).toFixed(2)})`);
+              const yrs = "YEARS HELD · " + String(Math.round(pos)).padStart(2, "0");
+              if (yrs !== lastYrs) { yrsLab.forEach((n) => { n.textContent = yrs; }); lastYrs = yrs; }
+
+              // Archie: leaned back, eyes on the clock (drifting after the hour hand), head cocked, a lazy sway;
+              // a contented nod on "waited", a firmer one on "time"
+              const hx = AX + 157 * AS, hy = AY + 137 * AS;
+              const [tx, ty] = P(h, 320);
+              const dx = CX + tx * CK - hx, dy = CY + ty * CK - hy, dd = Math.hypot(dx, dy) || 1;
+              archie.s.lookX = dx / dd; archie.s.lookY = 0.8 * dy / dd; archie.s.turn = 0.3 * dx / dd;
+              const blow = t - L(TIME) - 0.62;
+              wb.setAttribute("transform", blow < 0 ? "" : `translate(${blow * 130} ${-blow * 70}) rotate(${blow * 90} 172 190)`);
+              wb.setAttribute("opacity", blow < 0 ? 1 : Math.max(0, 1 - blow / 0.5));
+              for (const p of dustPuff) {
+                p.m.style.transform = `translate(${p.x + p.vx * Math.max(0, blow)}px, ${p.y + p.vy * Math.max(0, blow) + 60 * blow * blow}px)`;
+                p.m.style.opacity = blow < 0 ? 0 : Math.max(0, 0.85 * (1 - blow / 0.9));
+              }
+              archEl.style.transform = `rotate(${(-4 + 0.6 * Math.sin(t * 0.9)).toFixed(2)}deg)`;
+              webEl.style.transform = archEl.style.transform;
+              for (const { m, x0, y0, vx, vy, ph, a } of MOTES) {
+                const mx = x0 + vx * t + 9 * Math.sin(t * 0.8 + ph), my = y0 + vy * t + 6 * Math.sin(t * 0.55 + ph * 1.7);
+                m.style.transform = `translate(${mx.toFixed(1)}px, ${my.toFixed(1)}px)`;
+                m.style.opacity = (a * (0.55 + 0.45 * Math.sin(t * 1.1 + ph))).toFixed(3);
+              }
+              archie.apply(T);
+            }
+
+            // g2: the torrent and the odometer
+            const v = bytesAt(T), r = Math.max(0, (v - bytesAt(T - 0.016)) / 0.016);
+            const locked = T >= MINE;
+            if (T >= G2) {
+              cables.forEach((c, i) => {
+                const on = clamp01((T - c.on) / 0.2);
+                const surge = 1 + 2.2 * clamp01((T - JUMP) / (MINE - JUMP));
+                const flowT = locked ? MINE - T0 : t;
+                c.flow.setAttribute("opacity", (on * (locked ? 0.35 : 1)).toFixed(3));
+                c.flow.setAttribute("stroke-dashoffset", (-(c.ph + flowT * c.sp * surge)).toFixed(1));
+                if (c.tp) c.tp.setAttribute("startOffset", (((flowT * 14 * surge + i * 7) % 50) - 50).toFixed(2) + "%");
+                HR.glow(c.flow, T, 0.4, 0.6);
+              });
+              PKTS.forEach(([, w], i) => {
+                const q = clamp01((T - w) / FLY), e = q * q * (3 - 2 * q);
+                pkts[i].setAttribute("startOffset", (T < w ? 0 : e * 125).toFixed(2) + "%");
+                pkts[i].parentNode.setAttribute("opacity", q >= 1 ? 0 : 1);
+              });
+              // each digit column rolls like a mechanical counter; fast columns smear; leading zeros sit dim
+              const n = Math.max(1, String(Math.floor(v)).length);
+              for (let d = 0; d < ND; d++) {
+                const place = Math.pow(10, ND - 1 - d);
+                let pos;
+                if (place === 1) pos = v % 10;
+                else { const lower = v % place; pos = Math.floor(v / place) % 10 + clamp01(lower - (place - 1)); }
+                cols[d].style.transform = `translateY(${(-pos * 232).toFixed(1)}px)`;
+                const bl = Math.min(7, Math.max(0, (r / place - 5) / 5)).toFixed(1);
+                if (bl !== lastBlur[d]) { cols[d].style.filter = bl === "0.0" ? "none" : `blur(${bl}px)`; lastBlur[d] = bl; }
+                HR.glow(cols[d], T, locked ? 0.6 : 0.3, 0.5);
+              }
+              if (n !== lastDim) { cells.forEach((c, d) => { c.style.opacity = d < ND - n ? "0.3" : "1"; }); lastDim = n; }
+              stt.textContent = locked ? "LOCKED" : "OPEN";
+              stt.style.color = locked ? "#E85D26" : "#F0ECE5";
+              stdot.style.display = locked ? "none" : "block";
+              stdot.style.opacity = (0.45 + 0.55 * Math.abs(Math.sin(t * 9))).toFixed(2);
+              pad.style.display = locked ? "block" : "none";
+              rateEl.textContent = locked ? "RATE — · HELD" : "RATE " + rateStr(r);
+              mark.style.clipPath = `inset(-30% ${(100 - 100 * clamp01((T - MARK) / 0.5)).toFixed(1)}% -40% -5%)`;
+            }
+
+            for (const hr of heroes) HR.glow(hr, T, 0.35, 0.8);
+            // the archive fills: more ghost glyphs light as the years pass, all of them once the torrent runs
+            const fill = T < G2 ? 0.15 + 0.3 * (T - T0) / (G2 - T0) : 0.45 + 0.55 * clamp01(Math.log10(Math.max(1, v / START)) / 7);
+            const hat = HR.hit("hat", T, 0.07);
+            for (const { u, order, flick } of lits) {
+              const on = order < fill;
+              u.style.opacity = on ? (flick ? (0.6 - 0.45 * hat).toFixed(2) : "0.6") : "0";
+            }
+            lightEl.style.opacity = ((0.6 + 0.5 * HR.band("bass", T)) * (locked ? 0.3 : 1)).toFixed(3);
+            plightEl.style.transform = `scale(${(0.96 + 0.08 * HR.band("bass", T)).toFixed(3)})`;
+          }
+          tl.eventCallback("onUpdate", render);
+          tl.seek(0); render();
+          window.__timelines["12-key"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

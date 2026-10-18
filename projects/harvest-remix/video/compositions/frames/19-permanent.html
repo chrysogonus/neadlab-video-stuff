@@ -1,0 +1,100 @@
+<!doctype html><html><head><meta charset="UTF-8"/></head><body><template>
+<style>
+@font-face{font-family:"Barlow";src:url("assets/fonts/barlow-800.woff2") format("woff2");font-weight:800}
+@font-face{font-family:"Barlow";src:url("assets/fonts/barlow-900.woff2") format("woff2");font-weight:900}
+@font-face{font-family:"IBM Plex Mono";src:url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2");font-weight:500}
+#root{position:absolute;inset:0;overflow:hidden;container-type:size;background:#111111;color:#F0ECE5;--ink:#111111;--fire:#E85D26;--cream:#F0ECE5}
+.f19-world{position:absolute;inset:0}
+.f19-art{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.f19-light{position:absolute;left:42%;top:-10%;width:75%;height:120%;background:radial-gradient(ellipse,rgba(232,93,38,.24),rgba(17,17,17,0) 68%)}
+.f19-lyrics{position:absolute;inset:0;transform-origin:8% 50%;pointer-events:none}
+.f19-line{position:absolute;left:6cqw;top:20cqh;width:51cqw;opacity:0;display:flex;flex-direction:column;gap:.65cqw;font-family:"Barlow";font-weight:800}
+.f19-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 .24em;font-size:4.25cqw;line-height:1.08;letter-spacing:-.025em}
+.f19-hero{font-size:11cqw;line-height:.95;font-weight:900;letter-spacing:-.045em;color:#E85D26;margin-left:-.2cqw}
+.f19-word{display:inline-block;position:relative}
+.f19-meta{position:absolute;left:6cqw;top:5.5cqh;font:500 18px "IBM Plex Mono";letter-spacing:.14em;color:#E85D26}
+.f19-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(17,17,17,.94),rgba(17,17,17,.6) 37%,transparent 67%)}
+
+</style>
+<div data-hf-id="hf-fy8i" id="root" data-composition-id="19-permanent" data-width="1920" data-height="1080" data-duration="6.947">
+<div data-hf-id="hf-oag0" id="f19-world" class="f19-world">
+<div data-hf-id="hf-kh8y" class="f19-light" data-layout-ignore></div>
+<svg data-hf-id="hf-2v52" id="f19-art" class="f19-art" viewBox="0 0 1920 1080" data-layout-ignore></svg>
+<div data-hf-id="hf-9gst" class="f19-shade" data-layout-ignore></div>
+<div data-hf-id="hf-x8f2" id="f19-lyrics" class="f19-lyrics"></div>
+<div data-hf-id="hf-vezj" class="f19-meta" data-layout-ignore>SOME THINGS DO NOT CHANGE</div>
+</div></div>
+<script src="assets/kit/env.js"></script><script src="assets/kit/hr-kit.js"></script>
+<script>(()=>{
+const T0=69.04,DUR=6.947,ID="19-permanent",PRE="f19";
+const world=document.getElementById(PRE+"-world"),art=document.getElementById(PRE+"-art"),type=document.getElementById(PRE+"-lyrics");
+const root=world.parentElement,tl=gsap.timeline({paused:true});
+const C={ink:"#111111",fire:"#E85D26",cream:"#F0ECE5",muted:"#888880",line:"#505048"};
+const L=t=>+(t-T0).toFixed(3),clamp=x=>Math.max(0,Math.min(1,x));
+const S=(tag,attrs={},parent=art)=>{const e=document.createElementNS("http://www.w3.org/2000/svg",tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);parent.appendChild(e);return e};
+const el=(tag,cls,parent,text)=>{const e=document.createElement(tag);e.className=cls;parent.appendChild(e);if(text!=null)e.textContent=text;return e};
+const txt=(text,x,y,size=16,fill=C.muted,parent=art)=>{const e=S("text",{x,y,fill,"font-family":"IBM Plex Mono","font-size":size,"letter-spacing":2},parent);e.textContent=text;return e};
+const lines=[{"i": 12, "section": "Verse 2", "text": "You changed all of your passwords, you think that sees you through", "start": 69.04, "end": 73, "words": [{"w": "You", "start": 69.04, "end": 69.233}, {"w": "changed", "start": 69.233, "end": 69.831}, {"w": "all", "start": 69.831, "end": 70.101}, {"w": "of", "start": 70.101, "end": 70.3}, {"w": "your", "start": 70.3, "end": 70.505}, {"w": "passwords,", "start": 70.505, "end": 71.18}, {"w": "you", "start": 71.18, "end": 71.278}, {"w": "think", "start": 71.278, "end": 71.62}, {"w": "that", "start": 71.62, "end": 71.762}, {"w": "sees", "start": 71.762, "end": 72.12}, {"w": "you", "start": 72.12, "end": 72.3}, {"w": "through", "start": 72.3, "end": 73}]}, {"i": 13, "section": "Verse 2", "text": "But a blueprint or a birthday stays as true as true", "start": 73, "end": 76.46, "words": [{"w": "But", "start": 73, "end": 73.16}, {"w": "a", "start": 73.16, "end": 73.22}, {"w": "blueprint", "start": 73.22, "end": 73.78}, {"w": "or", "start": 73.78, "end": 74}, {"w": "a", "start": 74, "end": 74.14}, {"w": "birthday", "start": 74.14, "end": 74.496}, {"w": "stays", "start": 74.496, "end": 74.88}, {"w": "as", "start": 74.88, "end": 75.02}, {"w": "true", "start": 75.02, "end": 75.598}, {"w": "as", "start": 75.598, "end": 75.96}, {"w": "true", "start": 75.96, "end": 76.46}]}],spec=[{"hero": 5, "heroSize": "9cqw"}, {"hero": 8, "heroSize": "11cqw", "rows": [[0, 1, 2, 3, 4], [5, 6, 7], [8], [9, 10]]}],words=[];
+for(let j=0;j<lines.length;j++){
+const line=lines[j],cfg=spec[j]||{},box=el("div",PRE+"-line",type);if(cfg.top)box.style.top=cfg.top;if(cfg.width)box.style.width=cfg.width;
+const hi=cfg.hero??-1;const rows=cfg.rows||[line.words.map((_,i)=>i).filter(i=>i<hi||hi<0),...(hi>=0?[[hi],line.words.map((_,i)=>i).filter(i=>i>hi)]:[])];
+for(const row of rows){if(!row.length)continue;const isHero=row.length===1&&row[0]===hi;const re=el("div",PRE+"-row"+(isHero?" "+PRE+"-hero":""),box);if(cfg.size)re.style.fontSize=cfg.size;if(isHero&&cfg.heroSize)re.style.fontSize=cfg.heroSize;
+for(const wi of row){const w=line.words[wi],we=el("span",PRE+"-word",re,w.w.toLowerCase());words.push(we);(wi===hi?HR.hero:HR.lead)(tl,we,Math.max(0,L(w.start)),wi===hi?{spread:18,over:1.13,pre:.09,skew:false}:{dur:.23});}}
+tl.set(box,{opacity:1},Math.max(0,L(line.start)));if(j+1<lines.length)tl.set(box,{opacity:0},L(lines[j+1].start));
+}
+const motion={p:0};tl.fromTo(motion,{p:0},{p:1,duration:DUR,ease:"none"},0);
+
+const ribbons=[],docs=S('g'),a=S('g',{},docs),b=S('g',{},docs);
+for(let i=0;i<4;i++){const g=S('g');S('path',{d:`M960 ${260+i*125} H1900 v80 H960Z`,fill:C.ink,stroke:C.fire,'stroke-width':2},g);const tx=txt('• • • • • • • • •',1000,315+i*125,34,C.cream,g);ribbons.push({g,tx});}
+const page=(g,x,y,w,h)=>{
+S('path',{d:`M${x+12} ${y+12} h${w} v${h} h-${w}Z`,fill:'#505048'},g);
+S('path',{d:`M${x+5} ${y+5} h${w} v${h} h-${w}Z`,fill:C.muted},g);
+S('rect',{x,y,width:w,height:h,fill:C.cream,stroke:C.muted,'stroke-width':2},g);
+S('path',{d:`M${x+w-36} ${y} V${y+36} H${x+w}Z`,fill:C.muted,'fill-opacity':.18,stroke:C.muted,'stroke-width':1},g);
+S('path',{d:`M${x+2} ${y+2} H${x+w-38} M${x+2} ${y+2} V${y+h-2}`,fill:'none',stroke:C.cream,'stroke-width':2},g);
+S('path',{d:`M${x+w*.49} ${y+45} V${y+h-32}`,stroke:C.muted,'stroke-width':1,opacity:.18},g);
+S('path',{d:`M${x+w*.49+2} ${y+45} V${y+h-32}`,stroke:C.cream,'stroke-width':2,opacity:.8},g);
+};
+page(a,1110,165,650,740);
+for(let i=0;i<12;i++)S('path',{d:`M${1135+i*52} 200 V870 M1140 ${205+i*58} H1725`,stroke:C.muted,'stroke-width':1,opacity:.16},a);
+// One crafted architectural sheet: a structural section/elevation above its floorplan.
+const elevation=S('g',{fill:'none',stroke:C.ink,'stroke-width':2.5},a);
+S('path',{d:'M1150 530 H1720 M1160 510 V294 L1420 230 L1700 294 V510 M1160 294 H1700 M1190 286 L1420 250 L1670 286 M1160 294 L1420 250 L1700 294'},elevation);
+for(let level=0;level<4;level++){
+ const y=326+level*46;
+ S('path',{d:`M1160 ${y} H1700 M1160 ${y+8} H1700`,'stroke-width':1.6},elevation);
+ for(let bay=0;bay<7;bay++){
+  const x=1184+bay*70;
+  S('rect',{x,y:y+16,width:43,height:23,'stroke-width':1.4},elevation);
+  S('path',{d:`M${x+21.5} ${y+16} V${y+39}`,stroke:C.muted,'stroke-width':1},elevation);
+ }
+}
+for(let bay=0;bay<8;bay++){const x=1174+bay*73;S('path',{d:`M${x} 298 V510 M${x+8} 298 V510`,'stroke-width':1.6},elevation);}
+// Stair section and hatched structural cuts add depth without decorative micro-lines.
+S('path',{d:'M1534 510 v-12 h15 v-12 h15 v-12 h15 v-12 h15 v-12 h15 v-12 h15 v-12 h15 v-12 h15 v-12 h15',stroke:C.fire,'stroke-width':3},elevation);
+S('path',{d:'M1150 515 H1720 V530 H1150 Z M1680 298 H1700 V510 H1680 Z',fill:C.ink,'fill-opacity':.06},elevation);
+for(let x=1150;x<1720;x+=16)S('path',{d:`M${x} 530 l15 -15`,stroke:C.ink,'stroke-width':1},a);
+for(let y=300;y<500;y+=15)S('path',{d:`M1680 ${y+14} l20 -14`,stroke:C.ink,'stroke-width':1},a);
+const plan=S('g',{fill:'none',stroke:C.ink,'stroke-width':4},a);
+S('path',{d:'M1155 585 H1700 V766 H1155 Z M1298 585 V766 M1465 585 V694 M1465 733 V766 M1298 678 H1355 M1395 678 H1550 M1590 678 H1700'},plan);
+S('path',{d:'M1163 593 H1692 V758 H1163 Z M1306 593 V758 M1457 593 V670',stroke:C.muted,'stroke-width':1.4},plan);
+// Doors, stair treads and window bays remain subordinate to the structural outlines.
+S('path',{d:'M1355 678 V638 A40 40 0 0 1 1395 678 M1550 678 V638 A40 40 0 0 1 1590 678 M1465 694 H1504 A39 39 0 0 1 1465 733',stroke:C.muted,'stroke-width':1.5},plan);
+for(let step=0;step<8;step++)S('path',{d:`M1190 ${610+step*16} H1256`,stroke:C.ink,'stroke-width':1.3},plan);
+for(const x of [1330,1390,1510,1570,1630])S('path',{d:`M${x} 581 h37 M${x} 589 h37`,stroke:C.fire,'stroke-width':2},plan);
+const dims=S('g',{fill:'none',stroke:C.fire,'stroke-width':1.7},a);
+for(const y of [218,797]){
+ S('path',{d:`M1145 ${y} H1720 M1145 ${y-9} v18 M1720 ${y-9} v18`},dims);
+ for(const x of [1145,1298,1465,1720])S('path',{d:`M${x-5} ${y+5} l10 -10`},dims);
+}
+S('path',{d:'M1730 294 V766 M1722 294 H1738 M1722 530 H1738 M1722 585 H1738 M1722 766 H1738'},dims);
+txt('BLUEPRINT',1150,850,26,C.ink,a);
+page(b,1225,280,530,570);S('rect',{x:1245,y:300,width:490,height:530,fill:'none',stroke:C.muted,'stroke-width':2,opacity:.55},b);S('rect',{x:1248,y:303,width:484,height:524,fill:'none',stroke:C.cream,'stroke-width':2},b);S('path',{d:'M1265 425 H1715 M1265 777 H1715',stroke:C.cream,'stroke-width':3},b);S('path',{d:'M1265 427 H1715 M1265 779 H1715',stroke:C.muted,'stroke-width':1,opacity:.5},b);S('rect',{x:1255,y:320,width:470,height:90,fill:C.fire},b);txt('BIRTHDAY',1290,377,42,C.ink,b);
+for(let k=0;k<5;k++)S('path',{d:`M1270 ${460+k*57} H1710`,stroke:C.muted,'stroke-width':2},b);
+S('circle',{cx:1490,cy:615,r:108,fill:'none',stroke:C.fire,'stroke-width':9},b);txt('TRUE',1395,634,67,C.ink,b);txt('OBJ 0001',1280,805,22,C.ink,b);
+
+function render(){const t=tl.time(),T=T0+t;HR.draw(tl);world.style.transform=`translate3d(${Math.sin(T*.33)*3}px,${Math.cos(T*.27)*2}px,0) scale(${1+HR.hit("kick",T,.13)*.006})`;
+const d=T>=73;docs.setAttribute('opacity',d?1:0);a.setAttribute('transform',`translate(${T>=74.14?-120:0} 0) rotate(-4 1430 540)`);b.setAttribute('opacity',T>=74.14?1:0);b.setAttribute('transform',`translate(${clamp((74.14-T)/.3)*300} 0) rotate(7 1490 540)`);ribbons.forEach(({g,tx},i)=>{g.setAttribute('opacity',d?0:1);g.setAttribute('transform',`translate(${Math.sin(t*1.2+i)*65} 0)`);tx.textContent='• '.repeat(6+((Math.floor(t*2)+i*3)%6));});
+}
+tl.eventCallback("onUpdate",render);tl.seek(0);render();window.__timelines[ID]=tl;
+})();</script></template></body></html>

@@ -13,3 +13,18 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 projects/*/work/
+
+# HyperFrames projects (projects/*/video/): the regenerated master copy, renders and the CLI's working files
+projects/*/video/assets/bgm.mp3
+projects/*/video/renders/
+projects/*/video/snapshots/
+projects/*/video/.hyperframes/
+projects/*/video/backups/
+projects/*/video/.thumbnails/
+projects/*/video/.waveform-cache/
+
+# downloaded reference videos (the analysis sheets beside them stay)
+successful-videos-reference/*.mp4
+
+# Claude Code session state
+.claude/scheduled_tasks.lock

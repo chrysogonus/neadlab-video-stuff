@@ -1,0 +1,295 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 9 — dark (instrumental break, 99.756–105.243), v11. Mosca's inequality, drawn as a timeline on a dark
+         blueprint under a cream formula plate. x + y > z assembles on the beats (serif italic variables, Barlow 900
+         operators): x (shelf life, 25 years) and y (migration, 5–10 years) stack end to end from 2021; z (Q-DAY) drops
+         in at "a decade", the marker crosses it out and writes "sooner", z is shoved earlier and the overrun lights
+         fire: the harvest window, "(this part is mine)". A cream sheet slides over the frame into 10's cream cut.
+         v10's version (lamp searching a drawer wall): backups/v10-sources/compositions/frames/09-dark.html
+         v13 (SYSTEM.md V7): ink #0A0A0A; the blueprint grid and the cool wash are gone, and the big heat wash is now a
+         tight 0.12 glow under the harvest window only. The cream card, the chart and the marker are unchanged
+         (the card's ">" is fire a hair deeper, #E25A24, to clear 3:1 on the paper). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --muted: #888880; --paper-ink: #5F5B54;
+          background: var(--ink); color: var(--cream);
+        }
+        .f09-mono { font-family: "IBM Plex Mono"; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+
+        /* ---- background: black; a tight fire light under the window (v13) ---- */
+        #f09-heat { position: absolute; left: 400px; top: 520px; width: 1290px; height: 420px; border-radius: 50%; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232,93,38,0.12), rgba(232,93,38,0.04) 60%, rgba(232,93,38,0)); }
+
+        /* ---- the formula plate: cream paper ---- */
+        #f09-plate { position: absolute; left: 100px; top: 54px; width: 1720px; height: 382px; background-color: var(--cream);
+          background-size: 512px 512px; color: var(--ink);
+          box-shadow: 0 34px 70px rgba(0,0,0,0.55), 0 6px 14px rgba(0,0,0,0.4), inset 0 1px 0 #fff; }
+        #f09-phead { position: absolute; left: 40px; right: 40px; top: 22px; display: flex; justify-content: space-between;
+          font-size: 20px; color: var(--paper-ink); border-bottom: 1.5px solid #CFC9BE; padding-bottom: 12px; }
+        #f09-phead b { font-weight: 600; color: var(--ink); }
+        #f09-phead b::before { content: ""; display: inline-block; width: 30px; height: 2px; background: var(--fire); vertical-align: middle; margin-right: 14px; }
+        .f09-formula { position: absolute; left: 50px; top: 62px; height: 290px; display: flex; align-items: baseline; column-gap: 46px; white-space: nowrap; }
+        .f09-v { display: inline-block; font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 300px; line-height: 0.86; letter-spacing: -0.02em; }
+        .f09-op { display: inline-block; font-family: "Barlow"; font-weight: 900; font-size: 230px; line-height: 0.86; }
+        .f09-ghost { opacity: 0.07; }
+        .f09-gt { color: #E25A24; text-shadow: 4px 5px 0 rgba(17,17,17,0.12); }
+        #f09-legend { position: absolute; left: 1150px; top: 104px; width: 540px; }
+        .f09-lg { position: relative; height: 82px; padding-left: 62px; opacity: 0; }
+        #f09-lx { opacity: 1; }
+        .f09-lg i { position: absolute; left: 0; top: -14px; font-family: "Instrument Serif"; font-style: italic; font-size: 72px; line-height: 1; color: var(--ink); }
+        .f09-lg div { font-size: 21px; color: var(--ink); font-weight: 600; line-height: 1.35; }
+        .f09-lg div + div { font-weight: 500; color: var(--paper-ink); }
+
+        /* ---- the chart (mid plane) ---- */
+        #f09-axis { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+        .f09-bar { position: absolute; top: 610px; height: 90px; transform-origin: 0 50%; }
+        #f09-xb { left: 160px; width: 1050px; background: var(--cream); color: var(--ink);
+          box-shadow: inset 0 3px 0 #fff, inset 0 -4px 0 rgba(17,17,17,0.12); }
+        #f09-yb { left: 1210px; width: 420px; background: #2A2A27; color: var(--cream);
+          box-shadow: inset 0 0 0 2px var(--cream), inset 0 3px 0 rgba(255,255,255,0.18); }
+        #f09-lane { position: absolute; left: 160px; top: 610px; width: 1470px; height: 90px; border: 2px dashed rgba(240,236,229,0.16); }
+        #f09-yb::after { content: ""; position: absolute; left: 210px; right: 0; top: 0; bottom: 0;
+          background: repeating-linear-gradient(135deg, rgba(240,236,229,0.22) 0 3px, transparent 3px 12px); box-shadow: inset 2px 0 0 rgba(240,236,229,0.5); }
+        .f09-bt { position: absolute; left: 22px; top: 30px; font-size: 25px; font-weight: 600; letter-spacing: 0.08em; }
+        .f09-bt em { font-family: "Instrument Serif"; font-style: italic; font-size: 46px; letter-spacing: 0; text-transform: none; vertical-align: -6px; margin-right: 8px; }
+        #f09-xsub { position: absolute; left: 160px; top: 718px; font-size: 21px; color: var(--cream); opacity: 0; }
+        #f09-xsub span { color: var(--muted); }
+
+        #f09-win { position: absolute; left: 454px; top: 548px; width: 1176px; height: 352px;
+          background: repeating-linear-gradient(135deg, rgba(232,93,38,0.26) 0 3px, rgba(232,93,38,0.07) 3px 14px);
+          box-shadow: inset 3px 0 0 var(--fire); }
+        #f09-tint { position: absolute; left: 454px; top: 610px; width: 1176px; height: 90px; background: rgba(232,93,38,0.62); mix-blend-mode: normal; }
+        #f09-band { position: absolute; left: 454px; top: 760px; width: 1176px; height: 84px; background: var(--fire); color: var(--ink);
+          display: flex; align-items: center; gap: 28px; padding-left: 26px; white-space: nowrap; }
+        #f09-band b { font-family: "Barlow"; font-weight: 900; font-size: 52px; letter-spacing: -0.02em; text-transform: lowercase; }
+        #f09-band span { font-size: 21px; font-weight: 600; }
+
+        #f09-z { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+        #f09-zl { position: absolute; left: -2px; top: 476px; width: 4px; height: 432px;
+          background: repeating-linear-gradient(180deg, var(--cream) 0 14px, transparent 14px 22px); }
+        #f09-zdot { position: absolute; left: -11px; top: 466px; width: 22px; height: 22px; border-radius: 50%; background: var(--fire); }
+        #f09-zlab { position: absolute; left: 22px; top: 472px; }
+        #f09-zlab .f09-zt { font-size: 28px; font-weight: 600; color: var(--cream); line-height: 1.25; }
+        #f09-zlab .f09-zt em { font-family: "Instrument Serif"; font-style: italic; font-size: 48px; letter-spacing: 0; text-transform: none; vertical-align: -6px; margin-right: 8px; color: var(--fire); }
+        #f09-zlab .f09-zd { font-size: 24px; color: var(--muted); line-height: 1.3; }
+        #f09-zsv { position: absolute; left: 0; top: 0; width: 600px; height: 600px; overflow: visible; }
+
+        /* the archive's marker (fire on ink) */
+        .f09-mark { position: absolute; font-family: "Caveat Brush"; font-weight: 400; line-height: 1; color: var(--fire); white-space: nowrap; clip-path: inset(-30% 100% -40% -5%); }
+        #f09-marks { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+
+        /* ---- chrome ---- */
+        #f09-kicker { position: absolute; left: 5.5cqw; top: 1000px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 20px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+        #f09-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: var(--fire); vertical-align: middle; margin-right: 16px; }
+
+        /* ---- the hand-off: a cream sheet slides over, 10's ground ---- */
+        #f09-wipe { position: absolute; left: 0; top: -40px; width: 2100px; height: 1160px; background-color: var(--cream);
+          box-shadow: -40px 0 80px rgba(0,0,0,0.5), -6px 0 0 rgba(255,255,255,0.6); }
+        #f09-wipe::after { content: ""; position: absolute; inset: 0; opacity: 0.5;
+          background-image: radial-gradient(circle, rgba(17,17,17,0.13) 1.2px, transparent 1.6px); background-size: 32px 32px; }
+      </style>
+
+      <div data-hf-id="hf-cer9" id="root" data-composition-id="09-dark" data-width="1920" data-height="1080" data-duration="5.487">
+        <div data-hf-id="hf-pcsy" class="hr-layer" id="f09-bg" data-depth="0.3" data-dof="3" data-layout-ignore>
+          <div data-hf-id="hf-985e" id="f09-heat" class="f09-heat"></div>
+        </div>
+
+        <div data-hf-id="hf-abkb" class="hr-layer" id="f09-mid" data-depth="0.65" data-layout-ignore>
+          <div data-hf-id="hf-l3iz" id="f09-win" style="clip-path: inset(0 100% 0 0)"></div>
+          <svg data-hf-id="hf-egcn" id="f09-axis" viewBox="0 0 1920 1080"></svg>
+          <div data-hf-id="hf-2ufx" class="f09-mono" id="f09-xsub">x is <span data-hf-id="hf-jzwf">love letters · medical records · blueprints</span></div>
+          <div data-hf-id="hf-2slj" id="f09-lane"></div>
+          <div data-hf-id="hf-1ff4" class="f09-bar f09-mono" id="f09-xb"><div data-hf-id="hf-55m0" class="f09-bt"><em data-hf-id="hf-a0hp">x</em>example shelf life · 25 years</div></div>
+          <div data-hf-id="hf-5uh3" class="f09-bar f09-mono" id="f09-yb"><div data-hf-id="hf-z63w" class="f09-bt"><em data-hf-id="hf-aesq">y</em>example migration · 5–10 yrs</div></div>
+          <div data-hf-id="hf-ap4e" id="f09-tint" style="clip-path: inset(0 100% 0 0)"></div>
+          <div data-hf-id="hf-lcnt" id="f09-band" class="f09-mono hr-glowbox" style="clip-path: inset(0 100% 0 0)"><b data-hf-id="hf-hzgq">harvest window</b><span data-hf-id="hf-cbml">readable while it should still be secret</span></div>
+          <div data-hf-id="hf-agos" id="f09-z" style="opacity:0">
+            <div data-hf-id="hf-id5n" id="f09-zl"></div>
+            <div data-hf-id="hf-atj2" id="f09-zdot" class="hr-glowbox"></div>
+            <div data-hf-id="hf-yqfc" id="f09-zlab" class="f09-mono">
+              <div data-hf-id="hf-ugdq" class="f09-zt"><em data-hf-id="hf-at3r">z</em>q-day</div>
+              <div data-hf-id="hf-3q8i" class="f09-zd">in a decade</div>
+            </div>
+            <svg data-hf-id="hf-6mua" id="f09-zsv" viewBox="0 0 600 600"></svg>
+            <div data-hf-id="hf-eko8" class="f09-mark" id="f09-soon" style="left:226px;top:506px;font-size:76px;transform:rotate(-7deg)">sooner</div>
+          </div>
+          <svg data-hf-id="hf-uxd6" id="f09-marks" viewBox="0 0 1920 1080"></svg>
+          <div data-hf-id="hf-zpw0" class="f09-mark" id="f09-mine" style="left:1236px;top:466px;font-size:66px;transform:rotate(-4deg)">(this part is mine)</div>
+        </div>
+
+        <div data-hf-id="hf-1j4s" class="hr-layer" id="f09-pl" data-depth="0.85">
+          <div data-hf-id="hf-g2pv" id="f09-plate">
+            <div data-hf-id="hf-115f" id="f09-phead" class="f09-mono"><div data-hf-id="hf-s1k9"><b data-hf-id="hf-g8kr">Mosca's inequality</b>&nbsp;· M. Mosca, 2015</div><div data-hf-id="hf-zej1">if it holds: worry.</div></div>
+            <div data-hf-id="hf-1pyo" class="f09-formula f09-ghost" aria-hidden="true">
+              <span data-hf-id="hf-5m5n" class="f09-v">x</span><span data-hf-id="hf-gmnt" class="f09-op">+</span><span data-hf-id="hf-60go" class="f09-v">y</span><span data-hf-id="hf-92ua" class="f09-op">&gt;</span><span data-hf-id="hf-4tjl" class="f09-v">z</span>
+            </div>
+            <div data-hf-id="hf-9qhu" id="f09-formula" class="f09-formula">
+              <span data-hf-id="hf-3hj7" class="f09-v" id="f09-fx">x</span><span data-hf-id="hf-smqx" class="f09-op" id="f09-fp">+</span><span data-hf-id="hf-ja57" class="f09-v" id="f09-fy">y</span><span data-hf-id="hf-2ra8" class="f09-op f09-gt" id="f09-fg">&gt;</span><span data-hf-id="hf-t337" class="f09-v" id="f09-fz">z</span>
+            </div>
+            <div data-hf-id="hf-d4uo" id="f09-legend" class="f09-mono">
+              <div data-hf-id="hf-2fjt" class="f09-lg" id="f09-lx"><i data-hf-id="hf-j79o">x</i><div data-hf-id="hf-429x">how long it must stay secret</div><div data-hf-id="hf-fexc">shelf life of the data</div></div>
+              <div data-hf-id="hf-1nw0" class="f09-lg" id="f09-ly"><i data-hf-id="hf-isyn">y</i><div data-hf-id="hf-kijs">how long migration takes</div><div data-hf-id="hf-fc6e">to post-quantum crypto</div></div>
+              <div data-hf-id="hf-cjdn" class="f09-lg" id="f09-lz"><i data-hf-id="hf-ienm">z</i><div data-hf-id="hf-ehxd">until shor's algorithm</div><div data-hf-id="hf-30lz">breaks rsa-2048</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-h713" class="hr-layer" id="f09-chrome" data-depth="0.2">
+          <div data-hf-id="hf-fsb2" id="f09-kicker">Fig. 1 · illustrative scenario, not a forecast</div>
+        </div>
+
+        <div data-hf-id="hf-ch0p" id="f09-wipe" data-layout-ignore></div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const T0 = 99.756, DUR = 5.487;
+          const L = (t) => +(t - T0).toFixed(3);
+          const $ = (id) => document.getElementById(id);
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const NS = "http://www.w3.org/2000/svg";
+          const sv = (tag, parent, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+
+          // the music (env.js): downbeats 99.756 / 101.588 / 103.405; kicks and snares inside the break
+          const PLUS = L(100.448), Y = L(100.797), KB = L(100.965), D1 = L(101.588), STRIKE = L(102.489);
+          const D2 = L(103.399), K4 = L(103.984), S4 = L(104.317), K5 = L(104.506);
+          const WIPE = DUR - 0.34;
+
+          // the chart's scale: 42 px a year from 2021
+          const X = (yr) => 160 + (yr - 2021) * 42;
+          const Z0 = 2031, Z1 = 2028;   // "in a decade", then sooner
+
+          // ---- static build ---------------------------------------------------------------------------------------
+          (() => {   // paper fibre for the plate and the wipe sheet
+            const c = document.createElement("canvas"); c.width = c.height = 512;
+            const x = c.getContext("2d", { willReadFrequently: true }), r = HR.rng(909);
+            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 512, 512);
+            const img = x.getImageData(0, 0, 512, 512);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 9; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+            x.putImageData(img, 0, 0);
+            x.lineWidth = 0.7;
+            for (let k = 0; k < 140; k++) { const px = r() * 512, py = r() * 512, a = r() * Math.PI, l = 8 + r() * 20;
+              x.strokeStyle = "rgba(110,100,90,0.09)"; x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.35); x.stroke(); }
+            const url = `url(${c.toDataURL("image/png")})`;
+            $("f09-plate").style.backgroundImage = url;
+            $("f09-wipe").style.backgroundImage = url;
+          })();
+
+          // the axis: a tick a year 2021–2061, labels every five, faint verticals up into the chart
+          const AX = $("f09-axis");
+          sv("line", AX, { x1: 120, y1: 900, x2: 1880, y2: 900, stroke: "#F0ECE5", "stroke-width": 2.5 });
+          for (let yr = 2021; yr <= 2061; yr++) {
+            const x = X(yr), major = (yr - 2021) % 5 === 0;
+            if (yr === 2026) { sv("line", AX, { x1: x, y1: 900, x2: x, y2: 918, stroke: "#F0ECE5", "stroke-width": 2 }); continue; }
+            sv("line", AX, { x1: x, y1: 900, x2: x, y2: major ? 918 : 909, stroke: major ? "#F0ECE5" : "#888880", "stroke-width": major ? 2 : 1.2 });
+            if (major) {
+              sv("line", AX, { x1: x, y1: 540, x2: x, y2: 900, stroke: "rgba(240,236,229,0.08)", "stroke-width": 1.2 });
+              sv("text", AX, { x, y: 950, "text-anchor": yr === 2021 ? "start" : "middle", "font-family": "IBM Plex Mono", "font-weight": yr === 2021 ? 600 : 500,
+                "font-size": 22, "letter-spacing": 2, fill: yr === 2021 ? "#E85D26" : "#888880" }, yr === 2021 ? "2021 · SENT" : String(yr));
+            }
+          }
+          sv("path", AX, { d: "M1880 900 l -16 -9 v 18 z", fill: "#F0ECE5" });
+
+          // marker strokes (pathLength 100, drawn on in render): the strike through "a decade", the arrow to the window
+          const MK = $("f09-marks"), ZS = $("f09-zsv");
+          const r = HR.rng(99);
+          const wav = (x0, x1, y, amp) => { let d = ""; for (let k = 0; k <= 12; k++) { const x = x0 + (x1 - x0) * k / 12; d += (k ? "L" : "M") + x.toFixed(1) + " " + (y + (r() - 0.5) * amp - k * 0.6).toFixed(1); } return d; };
+          const pathOf = (parent, d, w) => sv("path", parent, { d, pathLength: 100, fill: "none", stroke: "#E85D26", "stroke-width": w, "stroke-linecap": "round", "stroke-linejoin": "round", "stroke-dasharray": 100, "stroke-dashoffset": 100 });
+          const strokes = [
+            { p: pathOf(ZS, wav(64, 214, 548, 5), 6), t: STRIKE - 0.04, dur: 0.16 },
+            { p: pathOf(ZS, wav(60, 218, 541, 4), 4.5), t: STRIKE + 0.1, dur: 0.12 },
+            { p: pathOf(MK, "M1700 548 C 1748 600, 1730 700, 1650 746 M1650 746 l 30 -2 M1650 746 l 10 -28", 5.5), t: K4 - 0.02, dur: 0.24 },
+          ];
+
+          // ---- timeline ---------------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const S = { xb: 0.3, yb: 0, zy: -520, zx: Z0, fire: 0, sq: 1, wipe: 0, heat: 0 };
+          const seg = (o, from, to, a, b, ease) => tl.fromTo(o, from, { ...to, duration: Math.max(0.01, b - a), ease, immediateRender: false }, a);
+
+          // the formula assembles on the beats: x on the downbeat cut, + and y on the kicks, > on the bar, z on the last
+          tl.fromTo("#f09-fx", { scale: 1.32, yPercent: -6 }, { scale: 1, yPercent: 0, duration: 0.6, ease: "elastic.out(1, 0.45)", immediateRender: false }, 0);
+          for (const [id, t] of [["f09-fp", PLUS], ["f09-fy", Y], ["f09-fg", D1], ["f09-fz", D2]])
+            HR.hero(tl, $(id), t, { spread: 0, over: 1.3, pre: 0.1, sharp: true });
+          seg("#f09-ly", { opacity: 0, x: -24 }, { opacity: 1, x: 0 }, Y + 0.08, Y + 0.4, "power3.out");
+          seg("#f09-lz", { opacity: 0, x: -24 }, { opacity: 1, x: 0 }, D1 + 0.08, D1 + 0.4, "power3.out");
+
+          // x shoots 25 years from 2021; y stacks 5–10 more on its end
+          seg(S, { xb: 0.3 }, { xb: 1 }, 0, 0.42, "expo.out");
+          seg("#f09-xsub", { opacity: 0, y: -12 }, { opacity: 1, y: 0 }, 0.3, 0.6, "power3.out");
+          seg(S, { yb: 0 }, { yb: 1 }, Y - 0.03, Y + 0.32, "expo.out");
+          // bars squash on their kicks
+          for (const t of [0, Y, KB]) { seg(S, { sq: 1 }, { sq: 0.86 }, t - 0.02, t + 0.03, "power2.out"); seg(S, { sq: 0.86 }, { sq: 1 }, t + 0.03, t + 0.4, "elastic.out(1, 0.4)"); }
+
+          // z drops in on the bar at "a decade"
+          tl.set("#f09-z", { opacity: 1 }, D1 - 0.16);
+          seg(S, { zy: -520 }, { zy: 0 }, D1 - 0.16, D1, "power4.in");
+          seg(S, { zy: 0 }, { zy: -18 }, D1, D1 + 0.08, "power2.out");
+          seg(S, { zy: -18 }, { zy: 0 }, D1 + 0.08, D1 + 0.3, "bounce.out");
+          // the marker: strike on the snare, "sooner" after; z is shoved earlier on the downbeat and the overrun catches fire
+          const writes = [[$("f09-soon"), STRIKE + 0.24, 0.42], [$("f09-mine"), K4 + 0.18, 0.5]];
+          seg(S, { zx: Z0 }, { zx: Z1 - 0.35 }, D2 - 0.09, D2, "power3.in");
+          seg(S, { zx: Z1 - 0.35 }, { zx: Z1 }, D2, D2 + 0.4, "elastic.out(1, 0.5)");
+          seg(S, { fire: 0 }, { fire: 1 }, D2 + 0.02, D2 + 0.42, "expo.out");
+          seg(S, { heat: 0 }, { heat: 1 }, D2, D2 + 0.5, "power2.out");
+          for (const t of [K4, K5]) { seg("#f09-band", { scaleY: 1 }, { scaleY: 0.88 }, t - 0.02, t + 0.03, "power2.out"); seg("#f09-band", { scaleY: 0.88 }, { scaleY: 1 }, t + 0.03, t + 0.4, "elastic.out(1, 0.4)"); }
+
+          // the hand-off: a cream sheet slides over from the right, accelerating into 10's cut
+          seg(S, { wipe: 0 }, { wipe: 1 }, WIPE, DUR, "power3.in");
+
+          // ---- the camera ----------------------------------------------------------------------------------------
+          const stage = HR.stage($("root"), { seed: 9 });
+          const cam = stage.cam; cam.focus = 0.75;
+          const B = { x: 36, z: 1.0 }, P = { z: 0, rot: 0 };
+          const punches = [[0, 0.03, -0.3], [PLUS, 0.012, 0.2], [Y, 0.015, -0.2], [D1, 0.03, 0.35], [D2, 0.05, -0.5], [K4, 0.012, 0.2], [K5, 0.02, -0.25]];
+          punches.forEach(([t, z, rot], i) => {
+            const next = i + 1 < punches.length ? punches[i + 1][0] : DUR;
+            tl.fromTo(P, { z: 0, rot: 0 }, { z, rot, duration: 0.05, ease: "power3.out", immediateRender: false }, t);
+            tl.fromTo(P, { z, rot }, { z: 0, rot: 0, duration: Math.min(0.5, next - t - 0.07), ease: "elastic.out(1, 0.5)", immediateRender: false }, t + 0.05);
+          });
+          seg(B, { x: 36, z: 1.0 }, { x: -16, z: 1.035 }, 0, D2, "sine.inOut");
+          seg(B, { x: -16, z: 1.035 }, { x: 24, z: 1.06 }, D2, DUR, "sine.inOut");
+
+          // ---- per frame ---------------------------------------------------------------------------------------------
+          const xb = $("f09-xb"), yb = $("f09-yb"), zg = $("f09-z"), win = $("f09-win"), tint = $("f09-tint"), band = $("f09-band");
+          const heat = $("f09-heat"), wipe = $("f09-wipe"), zdot = $("f09-zdot"), fx = $("f09-fx");
+          function render() {
+            const t = tl.time(), T = t + T0;
+            cam.x = B.x; cam.z = B.z + P.z; cam.rot = P.rot;
+            stage.apply(T);
+            xb.style.transform = `scaleY(${S.sq.toFixed(4)})`; xb.style.clipPath = `inset(-20px ${(100 * (1 - S.xb)).toFixed(2)}% -20px 0)`;
+            yb.style.transform = `scaleY(${S.sq.toFixed(4)})`; yb.style.clipPath = `inset(-20px ${(100 * (1 - S.yb)).toFixed(2)}% -20px 0)`;
+            zg.style.transform = `translate(${X(S.zx).toFixed(1)}px, ${S.zy.toFixed(1)}px)`;
+            const clip = `inset(0 ${(100 * (1 - S.fire)).toFixed(2)}% 0 0)`;
+            win.style.clipPath = clip; tint.style.clipPath = clip; band.style.clipPath = clip;
+            heat.style.opacity = (S.heat * (0.7 + 0.5 * HR.band("bass", T))).toFixed(3);
+            HR.glow(band, T, 0.3, 0.6); HR.glow(zdot, T);
+            band.style.translate = `${(HR.hit("snare", T, 0.08) * 1.5).toFixed(2)}px 0`;
+            fx.style.translate = `0 ${(-HR.hit("snare", T, 0.08) * 2).toFixed(2)}px`;
+            wipe.style.transform = `translateX(${(1940 * (1 - S.wipe)).toFixed(1)}px)`;
+            for (const s of strokes) s.p.setAttribute("stroke-dashoffset", (100 * (1 - clamp01((t - s.t) / s.dur))).toFixed(1));
+            for (const [m, t0, d] of writes) m.style.clipPath = `inset(-30% ${(100 - 100 * clamp01((t - t0) / d)).toFixed(1)}% -40% -5%)`;
+          }
+          tl.eventCallback("onUpdate", render);
+          tl.seek(0);
+          render();
+          window.__timelines["09-dark"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
