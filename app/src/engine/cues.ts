@@ -46,8 +46,8 @@ export interface CueDef {
 /** Where a timeline entry starts. */
 export type Cut =
   | { at: 'zero' }
-  /** On the downbeat with this index. */
-  | { at: 'bar'; bar: number }
+  /** On the downbeat with this index (or `beats` grid beats after it: a cut held past a hit). */
+  | { at: 'bar'; bar: number; beats?: number }
   /** At the first word of a cue (a phrase boundary). */
   | { at: 'word'; cue: string }
   /** On the last beat at or before a cue's first word; if the previous line is still being sung there, at the phrase boundary. */
@@ -192,7 +192,7 @@ function cutTime(cut: Cut, cues: Map<string, ResolvedCue>, ly: Lyrics, au: Audio
   const lastBeatAtOrBefore = (t: number) => au.timeOfBeat(Math.floor(au.beatAt(t + 0.02)));
   switch (cut.at) {
     case 'zero': return 0;
-    case 'bar': return au.downbeats[cut.bar]!;
+    case 'bar': return cut.beats ? au.timeOfBeat(Math.round(au.beatAt(au.downbeats[cut.bar]!)) + cut.beats) : au.downbeats[cut.bar]!;
     case 'word': return cues.get(cut.cue)!.start;
     case 'end': return cues.get(cut.cue)!.end;
     case 'beat': {

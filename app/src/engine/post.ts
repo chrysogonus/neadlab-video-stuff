@@ -41,6 +41,9 @@ export interface PostParams {
   sat: number;
   /** Letterbox bar height as a fraction of the frame (each, top and bottom): left black and untouched by post (the lyrics drawn in it stay crisp). */
   bars: number;
+  /** Output dither strength (1 = a half-step of uniform noise; more adds triangular noise, stronger in the shadows,
+   * so smooth dark gradients survive 8-bit encoding without banding). */
+  dither: number;
   /** Anamorphic streaks: highlights drawn out sideways into long thin flares (0 = off), and their tint. */
   streak: number;
   streakTint: [number, number, number];
@@ -73,6 +76,7 @@ export const DEFAULT_POST: PostParams = {
   lift: [0, 0, 0],
   sat: 1,
   bars: 0,
+  dither: 1,
   streak: 0,
   streakTint: [0.55, 0.75, 1.0],
 };
@@ -153,7 +157,7 @@ ${SCALE === 1 ? `        c += texture(src, vUv + texel * vec2(-1, -1)).rgb; c +=
     this.final = new FSPass(/* glsl */ `
       uniform sampler2D src; uniform sampler2D bloomTex; uniform sampler2D streakTex; uniform float streak; uniform vec3 streakTint; uniform sampler2D haloTex; uniform sampler2D hudTex;
       uniform float exposure, bloom, halation, ca, grain, vignette, hud, fade, flash, time, zoom, invert;
-      uniform vec2 shake; uniform vec2 res; uniform vec3 gain, lift; uniform float satur, bars;
+      uniform vec2 shake; uniform vec2 res; uniform vec3 gain, lift; uniform float satur, bars, dither;
       ${SHOULDER_GLSL}
       void main() {
         vec2 uv = (vUv - 0.5) / zoom + 0.5 - shake / res;
@@ -193,6 +197,7 @@ ${SCALE === 1 ? `        float g1 = hash12(gl_FragCoord.xy + fract(time * 13.37)
         float amt = grain * (0.55 + 1.2 * lm * (1.0 - lm));
         s += (g1 * 0.6 + g2 * 0.4) * amt;
         s += (hash12(gl_FragCoord.xy * 1.37 + time) - 0.5) / 255.0; // dither
+        if (dither > 1.0) s += (dither - 1.0) * (hash12(gl_FragCoord.xy * 2.71 + time * 1.31) + hash12(gl_FragCoord.xy * 0.73 + time * 0.77) - 1.0) * mix(1.6, 0.6, lm) / 255.0;
         // the letterbox: plain black with what was drawn in it (the lyrics), no bloom, grain or vignette
         float inBar = step(vUv.y, bars) + step(1.0 - bars, vUv.y);
         if (inBar > 0.0) s = toSRGB(sat(shoulder(texture(src, vUv).rgb)));
@@ -203,7 +208,7 @@ ${SCALE === 1 ? `        float g1 = hash12(gl_FragCoord.xy + fract(time * 13.37)
       vignette: { value: 0.3 }, hud: { value: 1 }, fade: { value: 0 }, flash: { value: 0 }, time: { value: 0 },
       zoom: { value: 1 }, invert: { value: 0 }, shake: { value: new THREE.Vector2() }, res: { value: new THREE.Vector2(W, H) },
       streakTex: { value: null }, streak: { value: 0 }, streakTint: { value: new THREE.Vector3(1, 1, 1) },
-      gain: { value: new THREE.Vector3(1, 1, 1) }, lift: { value: new THREE.Vector3() }, satur: { value: 1 }, bars: { value: 0 },
+      gain: { value: new THREE.Vector3(1, 1, 1) }, lift: { value: new THREE.Vector3() }, satur: { value: 1 }, bars: { value: 0 }, dither: { value: 1 },
     });
   }
 
@@ -267,6 +272,7 @@ ${SCALE === 1 ? `        float g1 = hash12(gl_FragCoord.xy + fract(time * 13.37)
     (f.lift!.value as THREE.Vector3).set(...p.lift);
     f.satur!.value = p.sat;
     f.bars!.value = p.bars;
+    f.dither!.value = p.dither;
     this.final.render(renderer, out);
   }
 }

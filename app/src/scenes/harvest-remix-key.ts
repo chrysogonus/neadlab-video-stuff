@@ -1,14 +1,14 @@
 // Harvest Now, Decrypt Later (Banger Remix): the key. "The fridge hums low, the key falls out": under the
 // chandelier, the gold package of its chip seen from below in its own light, cold vapour curling around it. On
 // "hums" the rig shivers and the chip's lit qubits stream down out of it and gather into the outline of a toothed
-// key; on the anchor ("falls") the key is solid gold and drops, turning, in slow motion through the vapour toward a
-// frosted padlock waiting below, the camera tilting down after it.
+// key; on the anchor ("falls") the key is solid gold (a turned key: ring bow, collars, a toothed bit) and drops,
+// turning, in slow motion through the vapour toward a frosted padlock waiting below, the camera tilting down after it.
 import * as THREE from 'three';
 import type { Frame } from '../engine/scene';
 import type { SceneSchema } from '../engine/schema';
 import { clamp, ease, hexToLinear, lerp, mulberry32, prog } from '../engine/util';
 import { LibScene, hit } from './_lib';
-import { Stage, keyShape, backdrop, camKeys, colors, depthAlpha, dust, envProbe, lin, padlock, fitOf } from './harvest-remix-kit';
+import { Stage, backdrop, camKeys, colors, depthAlpha, dust, envProbe, goldKey, keyInside, lin, padlock, fitOf } from './harvest-remix-kit';
 
 export const schema: SceneSchema = {
   description: 'Under the chandelier\'s gold chip in its own light, vapour curling: on "hums" the rig shivers and the lit qubits stream out and gather into a toothed key; on the anchor the key turns solid gold and falls in slow motion through the vapour toward a frosted padlock below. Harvest remix.',
@@ -84,19 +84,11 @@ export default class HarvestRemixKey extends LibScene<Record<string, never>, C> 
     sc.add(this.rig);
 
     // the qubits: dots on the chip's underside, which become the key
-    const [bow, shaft] = keyShape();
     const keyPts: THREE.Vector3[] = [];
     const rnd = mulberry32(5);
-    const inside = (x: number, y: number) => {
-      const d = Math.hypot(x, y);
-      if (d < 0.11 && d > 0.06) return true;
-      if (Math.abs(x) < 0.026 && y < -0.1 && y > -0.53) return true;
-      if (x > 0 && x < 0.09 && y < -0.38 && y > -0.53) return (Math.floor((-0.38 - y) / 0.034) % 2) === 0;
-      return false;
-    };
     while (keyPts.length < NG * NG) {
-      const x = (rnd() - 0.5) * 0.24, y = 0.12 - rnd() * 0.66;
-      if (inside(x, y)) keyPts.push(new THREE.Vector3(x, y, 0));
+      const x = (rnd() - 0.5) * 0.32, y = 0.16 - rnd() * 0.76;
+      if (keyInside(x, y)) keyPts.push(new THREE.Vector3(x, y, (rnd() - 0.5) * 0.03));
     }
     const dm = new THREE.MeshBasicMaterial({ color: 0xffffff });
     depthAlpha(dm, {}, 'hr-key-dot', false);
@@ -108,13 +100,9 @@ export default class HarvestRemixKey extends LibScene<Record<string, never>, C> 
     }
     sc.add(this.dots);
     // the solid key
-    this.keyMat = new THREE.MeshPhysicalMaterial({ color: lin('#FFC86E'), metalness: 1, roughness: 0.2, envMapIntensity: 1.5, transparent: false });
+    this.keyMat = new THREE.MeshPhysicalMaterial({ color: lin('#FFC86E'), metalness: 1, roughness: 0.16, envMapIntensity: 2.0, clearcoat: 0.6, clearcoatRoughness: 0.1 });
     this.keyU = depthAlpha(this.keyMat, { uRimCol: { value: lin(c.accent) } }, 'hr-key-key');
-    for (const sh of [bow, shaft]) {
-      const g = new THREE.ExtrudeGeometry(sh!, { depth: 0.022, bevelEnabled: true, bevelThickness: 0.006, bevelSize: 0.005, bevelSegments: 3, curveSegments: 48 });
-      g.translate(0, 0, -0.011);
-      this.key.add(new THREE.Mesh(g, this.keyMat));
-    }
+    this.key.add(goldKey(this.keyMat));
     this.key.visible = false;
     sc.add(this.key);
 
@@ -169,9 +157,9 @@ export default class HarvestRemixKey extends LibScene<Record<string, never>, C> 
     const t = f.t, r = this.ctx.renderer, S = this.S, E = this.E, c = this.c, a = f.a;
     const k = this.keyAt(t);
     const cm = camKeys(t, [
-      { t: S, c: [0.5, 1.75, 2.6], g: [0, CHIP_Y - 0.1, 0], fov: 34, ap: 22 },
-      { t: this.aFall, c: [0.25, 1.85, 2.05], g: [0, KEY_Y - 0.15, 0], fov: 34, ap: 26, e: ease.inOutQuad },
-      { t: E + 0.3, c: [0.2, 1.35, 2.1], g: [0, Math.min(KEY_Y - 0.2, k.y - 0.1), 0], fov: 34, ap: 26, e: ease.linear },
+      { t: S, c: [0.45, 2.05, 2.0], g: [0, CHIP_Y - 0.15, 0], fov: 34, ap: 22 },
+      { t: this.aFall, c: [0.22, 2.05, 1.5], g: [0, KEY_Y - 0.31, 0], fov: 34, ap: 30, e: ease.inOutQuad },
+      { t: E + 0.3, c: [0.18, 1.55, 1.6], g: [0, Math.min(KEY_Y - 0.31, k.y - 0.31), 0], fov: 34, ap: 30, e: ease.linear },
     ]);
     const focus = this.st.look(cm.c, cm.g, cm.fov);
 
@@ -222,7 +210,6 @@ export default class HarvestRemixKey extends LibScene<Record<string, never>, C> 
     });
     return {
       bloom: 0.75, bloomThreshold: 0.85, bloomRadius: 0.6, halation: 0.12, ca: 0.22, grain: 0.016, vignette: 0.48, hud: 0,
-      shake: [hum * 6 * Math.sin(t * 40), hum * 4 * Math.cos(t * 37)] as [number, number],
       gain: [1.06, 1.0, 0.9] as [number, number, number], lift: [0.004, 0.003, 0.004] as [number, number, number], sat: 1.12,
     };
   }

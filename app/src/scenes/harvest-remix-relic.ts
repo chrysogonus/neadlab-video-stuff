@@ -4,6 +4,9 @@
 // the next named word ("birthday") the second: a cake with candles and a date. Each hangs a paper tag with the
 // cue's `tag` ("valid: forever"). The blocks are transmissive three.js glass (they refract what is frozen in them);
 // bubbles hang in the ice; ice dust drifts in the beam.
+// Phase `single` ("I don't have to break you"): the copy of the Tuesday letter frozen in one slab of ice, intact,
+// lowered on two steel cables through a shaft of cold light into a steel cradle; on the anchor it settles with its
+// whole weight, frost blooming out along its base and ice dust puffing up into the light. No force: kept whole.
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import type { Frame } from '../engine/scene';
@@ -11,13 +14,15 @@ import type { SceneSchema } from '../engine/schema';
 import { F, font } from '../engine/type';
 import { ease, hexToLinear, mulberry32, prog } from '../engine/util';
 import { LibScene, hit } from './_lib';
-import { Stage, backdrop, camKeys, colors, depthAlpha, dust, envProbe, lin, fitOf } from './harvest-remix-kit';
+import { Stage, backdrop, camKeys, colors, depthAlpha, dust, envProbe, envelopeProp, frostGrowth, iceCracks, iceMaterial, iceSlab, lin, fitOf } from './harvest-remix-kit';
 
 export const schema: SceneSchema = {
   description: 'Two blocks of clear ice hanging in a shaft of cold light: on the anchor a building\'s floor plan glows frozen in the first, on the next named word a birthday cake with a date in the second; paper tags read the cue\'s tag. Harvest remix.',
   kinds: ['song'],
   lyrics: 'layer',
-  entry: {},
+  entry: {
+    phase: { type: 'string', enum: ['pair', 'single'], default: 'pair', description: 'pair: the blueprint and the birthday; single: the copy in its slab, set down in a cradle' },
+  },
   cue: {
     tag: { type: 'string', default: 'valid: forever', description: 'the text on the tags' },
     second: { type: 'string', default: 'birthday', description: 'the word of the line on which the second block lights' },
@@ -100,21 +105,6 @@ function drawing(kind: 'plan' | 'cake') {
   return t;
 }
 
-/** Fractures in ice: a few long branching hairlines (white on black, for a cutout). */
-function cracks(seed: number) {
-  const N = 512, cv = document.createElement('canvas'); cv.width = N; cv.height = N;
-  const c = cv.getContext('2d')!, rnd = mulberry32(seed);
-  c.fillStyle = '#000'; c.fillRect(0, 0, N, N);
-  c.strokeStyle = '#fff'; c.lineCap = 'round';
-  const branch = (x: number, y: number, a: number, len: number, w: number, d: number) => {
-    c.lineWidth = w; c.beginPath(); c.moveTo(x, y);
-    for (let k = 0; k < len; k += 6) { a += (rnd() - 0.5) * 0.5; x += Math.cos(a) * 6; y += Math.sin(a) * 6; c.lineTo(x, y); if (d > 0 && rnd() < 0.06) { c.stroke(); branch(x, y, a + (rnd() < 0.5 ? 1 : -1) * (0.5 + rnd() * 0.6), len * 0.4, w * 0.7, d - 1); c.lineWidth = w; c.beginPath(); c.moveTo(x, y); } }
-    c.stroke();
-  };
-  for (let k = 0; k < 3; k++) branch(rnd() * N, rnd() * N, rnd() * 6.28, 200 + rnd() * 200, 2.2, 2);
-  const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.NoColorSpace; return t;
-}
-
 function tagTexture(s: string) {
   const cv = document.createElement('canvas'); cv.width = 512; cv.height = 200;
   const c = cv.getContext('2d')!;
@@ -127,7 +117,10 @@ function tagTexture(s: string) {
 
 interface Block { g: THREE.Group; art: THREE.MeshBasicMaterial; spot: THREE.SpotLight; at: number }
 
-export default class HarvestRemixRelic extends LibScene<Record<string, never>, C> {
+const SL: [number, number, number] = [1.12, 0.83, 0.46]; // the single slab
+const REST = 1.2; // the slab's centre at rest in the cradle
+
+export default class HarvestRemixRelic extends LibScene<{ phase: 'pair' | 'single' }, C> {
   static schema = schema;
   private st = new Stage(32, 0.03, 100);
   private blocks: Block[] = [];
@@ -135,12 +128,16 @@ export default class HarvestRemixRelic extends LibScene<Record<string, never>, C
   private motes!: ReturnType<typeof dust>;
   private S = 0; private E = 0;
   private c = colors(this.ctx.style, 'frost');
+  // single
+  private slab = new THREE.Group(); private cables: THREE.Mesh[] = []; private aSet = 0;
+  private bloomM!: THREE.MeshBasicMaterial; private shaft = new THREE.SpotLight(0xffffff, 0, 12, 0.3, 0.6, 1.2);
 
   override setup() {
     this.st.fit = fitOf(this.ctx.style);
     this.S = this.ctx.start; this.E = this.ctx.end;
     const cue = this.cues[0];
     this.c = colors(this.ctx.style, cue?.def.palette ?? 'frost');
+    if (this.P.phase === 'single') { this.single(); return; }
     const p = cue ? this.cp(cue) : { tag: 'valid: forever', second: 'birthday' };
     const a1 = cue?.at ?? this.S + 0.3;
     const a2 = cue?.line?.words.find((w) => w.w.toLowerCase().startsWith(p.second))?.start ?? a1 + 0.9;
@@ -181,7 +178,7 @@ export default class HarvestRemixRelic extends LibScene<Record<string, never>, C
       plane.rotation.y = 0.12 * (i ? -1 : 1);
       g.add(plane);
       // cracks and feathered fractures frozen in the ice: white hairlines on two planes at angles
-      const crk = new THREE.MeshBasicMaterial({ alphaMap: cracks(31 + i * 7), alphaTest: 0.5, color: lin('#CFEFFF', 0.35), side: THREE.DoubleSide });
+      const crk = new THREE.MeshBasicMaterial({ alphaMap: iceCracks(31 + i * 7), alphaTest: 0.5, color: lin('#CFEFFF', 0.35), side: THREE.DoubleSide });
       depthAlpha(crk, {}, 'hr-relic-crack', false);
       for (let k = 0; k < 2; k++) {
         const cp = new THREE.Mesh(new THREE.PlaneGeometry(BS * 0.9, BS * 1.05), crk);
@@ -222,9 +219,115 @@ export default class HarvestRemixRelic extends LibScene<Record<string, never>, C
     sc.add(this.motes.pts);
   }
 
+  /** The copy in its slab over a steel cradle, two cables holding it, a shaft of cold light from above. */
+  private single() {
+    const r = this.ctx.renderer, sc = this.st.scene, c = this.c;
+    this.aSet = this.cues[0]?.at ?? this.S + 0.9;
+    sc.environment = envProbe(r, lin(c.bg, 0.4), [
+      { w: 3, h: 3, p: [0, 9, 1], at: [0, 0, 0], c: lin('#DDEEFF', 9) },
+      { w: 14, h: 4, p: [0, 1, -8], at: [0, 0, 0], c: lin(c.deep, 0.9) },
+      { w: 4, h: 6, p: [-7, 1, 3], at: [0, 0, 0], c: lin(c.ice, 0.6) },
+    ]);
+    this.back = backdrop();
+    (this.back.u.uTop!.value as THREE.Color).copy(lin(c.bg, 1.3));
+    (this.back.u.uBot!.value as THREE.Color).copy(lin(c.bg, 0.5));
+    (this.back.u.uGlowC!.value as THREE.Color).copy(lin(c.deep, 0.35));
+    this.back.u.uGlow!.value = 2.2; this.back.u.uGlowR!.value = 0.32; (this.back.u.uGlowP!.value as THREE.Vector2).set(0.5, 0.55);
+    sc.add(this.back.mesh);
+    // the slab and the frozen copy in it, frosted over
+    const ice = iceMaterial('hr-relic-slab', { rough: 0.1, atten: 1.3, rim: 0.85 });
+    const slab = iceSlab(SL[0], SL[1], SL[2], 4, ice.m);
+    this.slab.add(slab.g);
+    const copy = envelopeProp(0.8, c, { pale: true, key: 'hr-relic-copy' });
+    this.slab.add(copy.g);
+    const fm = new THREE.MeshBasicMaterial({ alphaMap: frostGrowth(512, [[0, 128, 0.1, 230], [0, 384, -0.1, 230], [512, 128, Math.PI - 0.1, 230], [512, 384, Math.PI + 0.1, 230], [256, 512, -Math.PI / 2, 150]], 9, 1.5), alphaTest: 0.35, color: lin('#E6F6FF', 0.55) });
+    depthAlpha(fm, {}, 'hr-relic-cfrost', false);
+    const fr = new THREE.Mesh(new THREE.PlaneGeometry(0.82, 0.52), fm);
+    fr.position.z = 0.024; copy.g.add(fr);
+    // the cables, from the slab's top corners up out of frame
+    const steel = new THREE.MeshStandardMaterial({ color: lin('#AFC0D0'), metalness: 1, roughness: 0.3 });
+    depthAlpha(steel, {}, 'hr-relic-steel');
+    for (const x of [-SL[0] * 0.36, SL[0] * 0.36]) {
+      const cab = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, 6, 8), steel);
+      cab.position.set(x, SL[1] / 2 + 3, 0);
+      this.slab.add(cab); this.cables.push(cab);
+    }
+    sc.add(this.slab);
+    // the cradle: a steel saddle lined with frosted rubber
+    const cradle = new THREE.Group();
+    const base = new THREE.Mesh(new THREE.BoxGeometry(SL[0] * 1.1, 0.06, SL[2] * 1.9), steel);
+    base.position.y = REST - SL[1] / 2 - 0.05;
+    cradle.add(base);
+    for (const z of [-1, 1]) {
+      const lip = new THREE.Mesh(new THREE.BoxGeometry(SL[0] * 1.1, 0.16, 0.035), steel);
+      lip.position.set(0, REST - SL[1] / 2 + 0.04, z * (SL[2] / 2 + 0.04));
+      cradle.add(lip);
+    }
+    const rubber = new THREE.MeshStandardMaterial({ color: lin('#1A2230'), roughness: 0.9 });
+    depthAlpha(rubber, {}, 'hr-relic-rubber');
+    const pad = new THREE.Mesh(new THREE.BoxGeometry(SL[0] * 1.02, 0.02, SL[2] * 1.2), rubber);
+    pad.position.y = REST - SL[1] / 2 - 0.012;
+    cradle.add(pad);
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.08, 2.4, 16), steel);
+    leg.position.y = REST - SL[1] / 2 - 1.28;
+    cradle.add(leg);
+    sc.add(cradle);
+    // the frost that blooms out along the base on the set-down
+    this.bloomM = new THREE.MeshBasicMaterial({ alphaMap: frostGrowth(512, Array.from({ length: 14 }, (_, i) => [256 + (i - 6.5) * 30, 256, i % 2 ? Math.PI / 2 : -Math.PI / 2, 120 + (i % 3) * 40] as [number, number, number, number]), 5, 2), alphaTest: 1, color: lin('#E6F6FF', 0.7) });
+    depthAlpha(this.bloomM, {}, 'hr-relic-bloom', false);
+    const bloom = new THREE.Mesh(new THREE.PlaneGeometry(SL[0] * 1.3, SL[2] * 2.4), this.bloomM);
+    bloom.rotation.x = -Math.PI / 2; bloom.position.y = REST - SL[1] / 2 - 0.0005;
+    sc.add(bloom);
+    this.shaft.position.set(0.2, 6, 1.0); this.shaft.target.position.set(0, REST, 0);
+    this.shaft.color.copy(lin('#E6F4FF'));
+    sc.add(this.shaft, this.shaft.target);
+    sc.add(new THREE.HemisphereLight(lin('#BFD8FF'), lin(c.bg), 0.18));
+    this.motes = dust(600, [4, 3.5, 3], 3);
+    (this.motes.u.uCol!.value as THREE.Color).copy(lin(c.ice, 1.3));
+    this.motes.u.uSize!.value = 7;
+    this.motes.pts.position.y = REST + 0.6;
+    sc.add(this.motes.pts);
+  }
+
+  private renderSingle(f: Frame, out: THREE.WebGLRenderTarget) {
+    const t = f.t, r = this.ctx.renderer, S = this.S, E = this.E, c = this.c, a = this.aSet;
+    const cm = camKeys(t, [
+      { t: S, c: [0.55, REST + 0.7, 2.75], g: [0, REST + 0.3, 0], fov: 32, ap: 14 },
+      { t: a + 0.2, c: [0.32, REST + 0.36, 2.25], g: [0, REST - 0.02, 0], fov: 32, ap: 18, e: ease.inOutQuad },
+      { t: E + 0.3, c: [0.1, REST + 0.2, 1.8], g: [0, REST - 0.04, 0], fov: 32, ap: 20, e: ease.outQuad },
+    ]);
+    const focus = this.st.look(cm.c, cm.g, cm.fov);
+    // lowered slowly, the last inch eased, then the whole weight settles (a small damped give)
+    const down = ease.inOutQuad(prog(t, S - 0.6, a));
+    const give = t > a ? -0.012 * Math.exp(-(t - a) * 9) * Math.sin((t - a) * 34) : 0;
+    this.slab.position.y = REST + 0.95 * (1 - down) + give;
+    this.slab.rotation.y = 0.25 * Math.sin((t - S) * 0.4) * (1 - ease.outCubic(prog(t, a - 0.3, a + 0.6))) - 0.18;
+    // the cables go slack: they sag a touch and dim
+    for (const cab of this.cables) cab.scale.x = cab.scale.z = 1 - 0.2 * prog(t, a, a + 0.4);
+    this.bloomM.alphaTest = 1 - 0.95 * ease.outCubic(prog(t, a, a + 0.9));
+    this.bloomM.visible = t >= a;
+    this.shaft.intensity = 70 + 40 * hit(t, a, 0.3);
+    this.motes.u.uTime!.value = t;
+    this.motes.u.uAmt!.value = 0.8 + 2.2 * hit(t, a, 0.6);
+    this.back.u.uTime!.value = t;
+    this.st.time = t;
+    this.st.beams = [{ p: [0.2, 6, 1.0], d: [-0.2, REST - 6, -1.0], angle: 0.24, color: lin(c.ice, 0.55 + 0.4 * hit(t, a, 0.4)), range: 9 }];
+    this.st.fog = { density: 0.1, noise: 0.5, haze: 0, maxDist: 14 };
+    this.st.render(r, out, {
+      focus, ap: cm.ap, clear: [0, 0, 0],
+      rays: { uv: this.st.uv([0.2, 6, 1]), amt: 0.9, thr: 0.8, len: 0.85, decay: 0.975, rad: 0.9, tint: lin(c.ice, 0.8) },
+      lens: 0.06, lensCol: lin(c.ice, 0.5),
+    });
+    return {
+      bloom: 0.75, bloomThreshold: 0.85, bloomRadius: 0.6, halation: 0.03, ca: 0.22, grain: 0.016, vignette: 0.48, hud: 0,
+      gain: [0.93, 1.0, 1.1] as [number, number, number], lift: [0, 0.004, 0.012] as [number, number, number], sat: 1.1,
+    };
+  }
+
   override draw() {}
 
   override render(f: Frame, out: THREE.WebGLRenderTarget) {
+    if (this.P.phase === 'single') return this.renderSingle(f, out);
     const t = f.t, r = this.ctx.renderer, S = this.S, E = this.E, c = this.c;
     const b1 = this.blocks[0]!, b2 = this.blocks[1]!;
     const cm = camKeys(t, [

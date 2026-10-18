@@ -63,7 +63,7 @@ line ends.
 |---|---|---:|---:|---:|---|---|
 `;
   for (const e of entries) {
-    const cut = e.def.cut.at === 'zero' ? 'song start' : e.def.cut.at === 'bar' ? `downbeat ${e.def.cut.bar}` : `${e.def.cut.at} ${(e.def.cut as { cue: string }).cue}`;
+    const cut = e.def.cut.at === 'zero' ? 'song start' : e.def.cut.at === 'bar' ? `downbeat ${e.def.cut.bar}${e.def.cut.beats ? ` + ${e.def.cut.beats} beat${e.def.cut.beats > 1 ? 's' : ''}` : ''}` : `${e.def.cut.at} ${(e.def.cut as { cue: string }).cue}`;
     md += `| \`${e.def.id}\` | \`${e.def.file}\`${e.def.params ? ` ${JSON.stringify(e.def.params)}` : ''} | ${s(e.start)} | ${s(e.end)} | ${s(e.end - e.start)} | ${cut} | ${bar(e.start)}–${bar(e.end)} |\n`;
   }
   for (const e of entries) {

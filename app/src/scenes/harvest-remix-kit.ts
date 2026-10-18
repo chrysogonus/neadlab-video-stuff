@@ -658,12 +658,15 @@ export function postmarkTexture(date: string, ink = '#2B3A55') {
   return tex;
 }
 
+/** The letter's one line that has to read on first viewing (a paragraph of its own; the reading holds on it). */
+export const PAYOFF = 'No one else will ever read it.';
 /** The Tuesday letter's words (fiction: no real person's data). */
 export const LETTER = {
   greeting: 'My love,',
   body: [
-    'I am writing this the old way, because some things should be sealed by hand. The little green padlock says no one else will ever read it, and tonight I choose to believe it.',
-    'I keep thinking of the station in the rain, the umbrella that gave up, and how you laughed anyway. I have never been so happy to be soaked.',
+    'I am writing this the old way, because some things should be sealed by hand. The little green padlock says',
+    PAYOFF,
+    'and tonight I choose to believe it. I keep thinking of the station in the rain, the umbrella that gave up, and how you laughed anyway.',
     'Whatever happens, wherever this finds you, I meant every word. Keep it somewhere safe.',
   ],
   closing: 'Always yours,',
@@ -680,16 +683,18 @@ export const NOTES = [
  * Handwriting: paragraphs in Caveat, word-wrapped to maxW from (x, y) with line height lh; each word sits a little
  * off the line and the ink varies. Returns the y after the last line.
  */
-export function handwrite(c: CanvasRenderingContext2D, paras: string[], x: number, y: number, maxW: number, size: number, lh: number, ink: string, seed: number, indent = 0) {
+export function handwrite(c: CanvasRenderingContext2D, paras: string[], x: number, y: number, maxW: number, size: number, lh: number, ink: string, seed: number, indent = 0, marks?: { text: string; y: number; x0: number; x1: number }[]) {
   const rnd = mulberry32(seed);
   c.save();
   c.font = font(F.hand(), size); c.textAlign = 'left'; c.textBaseline = 'alphabetic'; c.fillStyle = ink;
   const space = c.measureText(' ').width;
   for (const para of paras) {
     let cx = x + indent;
+    const mk = { text: para, y, x0: cx, x1: cx };
     for (const word of para.split(' ')) {
       const ww = c.measureText(word).width;
       if (cx + ww > x + maxW && cx > x) { cx = x; y += lh; }
+      if (y === mk.y) mk.x1 = cx + ww;
       c.save();
       c.translate(cx, y + (rnd() - 0.5) * size * 0.06);
       c.rotate((rnd() - 0.5) * 0.03);
@@ -698,6 +703,7 @@ export function handwrite(c: CanvasRenderingContext2D, paras: string[], x: numbe
       c.restore();
       cx += ww + space * (0.9 + rnd() * 0.3);
     }
+    marks?.push(mk);
     y += lh * 1.35;
   }
   c.restore();
@@ -709,6 +715,7 @@ export function handwrite(c: CanvasRenderingContext2D, paras: string[], x: numbe
  * a closing and a signature, on faint rules (the text sits on them).
  */
 export function drawLetter(c: CanvasRenderingContext2D, w: number, h: number, o: { date: string; greeting: string; body: string[]; closing: string; sign: string; ink: string; seed: number; size?: number }) {
+  const marks: { text: string; y: number; x0: number; x1: number }[] = [];
   const size = o.size ?? w * 0.052, lh = size * 1.18, m = w * 0.085;
   c.save();
   c.strokeStyle = 'rgba(70,110,170,0.13)'; c.lineWidth = Math.max(1, w * 0.0015);
@@ -720,9 +727,14 @@ export function drawLetter(c: CanvasRenderingContext2D, w: number, h: number, o:
   c.restore();
   let y = h * 0.2;
   y = handwrite(c, [o.greeting], m, y, w - 2 * m, size, lh, o.ink, o.seed);
-  y = handwrite(c, o.body, m, y, w - 2 * m, size, lh, o.ink, o.seed + 1, size * 1.2);
-  if (o.closing) y = handwrite(c, [o.closing], w * 0.5, y, w * 0.45, size, lh, o.ink, o.seed + 2) - lh * 0.35;
-  handwrite(c, [o.sign], w * 0.56, y, w * 0.4, size * 1.25, lh, o.ink, o.seed + 3);
+  // the body, its payoff line (a paragraph of its own) a size larger
+  for (const [i, para] of o.body.entries()) {
+    const big = para === PAYOFF ? 1.22 : 1;
+    y = handwrite(c, [para], m, y + (big > 1 ? lh * 0.15 : 0), w - 2 * m, size * big, lh * big, o.ink, o.seed + 1 + i * 17, size * 1.2, marks);
+  }
+  if (o.closing) y = handwrite(c, [o.closing], w * 0.5, y, w * 0.45, size, lh, o.ink, o.seed + 2, 0, marks) - lh * 0.35;
+  handwrite(c, [o.sign], w * 0.56, y, w * 0.4, size * 1.25, lh, o.ink, o.seed + 3, 0, marks);
+  return marks;
 }
 
 /** The letter: cream paper with fibres, the Tuesday letter handwritten in blue-black ink. */
@@ -741,10 +753,12 @@ export function letterTexture(date: string, opts: { w?: number; seed?: number; i
   const vg = c.createRadialGradient(w / 2, h / 2, h * 0.25, w / 2, h / 2, h * 0.75);
   vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(110,80,40,0.12)');
   c.fillStyle = vg; c.fillRect(0, 0, w, h);
-  drawLetter(c, w, h, { date, ...LETTER, ink: opts.ink ?? '#22324F', seed: opts.seed ?? 11 });
+  const marks = drawLetter(c, w, h, { date, ...LETTER, ink: opts.ink ?? '#22324F', seed: opts.seed ?? 11 });
   const tex = new THREE.CanvasTexture(cv);
   tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = 8;
+  tex.anisotropy = 16;
+  // where the lines are on the page (fractions of its width and height; y is the baseline), for a camera to find them
+  tex.userData.marks = marks.map((k) => ({ text: k.text, y: k.y / h, x0: k.x0 / w, x1: k.x1 / w }));
   return tex;
 }
 
@@ -817,4 +831,160 @@ export function keyShape() {
   for (const d of teeth) { shaft.lineTo(w + d, y); y -= 0.028; shaft.lineTo(w + d, y); shaft.lineTo(w, y); y -= 0.006; }
   shaft.lineTo(w, -R - L); shaft.lineTo(-w, -R - L); shaft.lineTo(-w, -R * 0.9);
   return [s, shaft];
+}
+
+// ------------------------------------------------------------------ ice, frost that grows, the small envelope
+
+/** Clear ice: transmissive glass with a cold rim (writes its depth to alpha). */
+export function iceMaterial(key = 'hr-ice', o: { rough?: number; atten?: number; rim?: number } = {}) {
+  const m = new THREE.MeshPhysicalMaterial({
+    color: lin('#F2FAFF'), metalness: 0, roughness: o.rough ?? 0.06, transmission: 1, thickness: 0.8, ior: 1.31,
+    attenuationColor: lin('#A8DDF5'), attenuationDistance: o.atten ?? 2.4, clearcoat: 1, clearcoatRoughness: 0.08, envMapIntensity: 1.4, specularIntensity: 1,
+  });
+  const u = depthAlpha(m, { uRimCol: { value: lin('#DDF3FF') }, uRim: { value: o.rim ?? 0.32 } }, key);
+  return { m, u };
+}
+
+/** Fractures in ice: a few long branching hairlines (white on black, for a cutout). */
+export function iceCracks(seed: number) {
+  const N = 512, cv = document.createElement('canvas'); cv.width = N; cv.height = N;
+  const c = cv.getContext('2d')!, rnd = mulberry32(seed);
+  c.fillStyle = '#000'; c.fillRect(0, 0, N, N);
+  c.strokeStyle = '#fff'; c.lineCap = 'round';
+  const branch = (x: number, y: number, a: number, len: number, w: number, d: number) => {
+    c.lineWidth = w; c.beginPath(); c.moveTo(x, y);
+    for (let k = 0; k < len; k += 6) { a += (rnd() - 0.5) * 0.5; x += Math.cos(a) * 6; y += Math.sin(a) * 6; c.lineTo(x, y); if (d > 0 && rnd() < 0.06) { c.stroke(); branch(x, y, a + (rnd() < 0.5 ? 1 : -1) * (0.5 + rnd() * 0.6), len * 0.4, w * 0.7, d - 1); c.lineWidth = w; c.beginPath(); c.moveTo(x, y); } }
+    c.stroke();
+  };
+  for (let k = 0; k < 3; k++) branch(rnd() * N, rnd() * N, rnd() * 6.28, 200 + rnd() * 200, 2.2, 2);
+  const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.NoColorSpace; return t;
+}
+
+/**
+ * A slab of clear ice (w × h × d), a little out of true as cut ice is, with two fracture planes and bubbles frozen
+ * in it. `block` is the transmissive mesh (its material may be clipped to grow it); the extras ride in `g`.
+ */
+export function iceSlab(w: number, h: number, d: number, seed: number, mat?: THREE.Material) {
+  const g = new THREE.Group(), rnd = mulberry32(seed);
+  const geo = new RoundedBoxGeometry(w, h, d, 5, Math.min(w, h, d) * 0.1);
+  const pp = geo.getAttribute('position');
+  for (let k = 0; k < pp.count; k++) pp.setXYZ(k, pp.getX(k) * (1 + 0.025 * Math.sin(pp.getY(k) * 5 / h + seed)), pp.getY(k), pp.getZ(k) * (1 + 0.04 * Math.sin(pp.getX(k) * 4 / w + seed * 2)));
+  geo.computeVertexNormals();
+  const block = new THREE.Mesh(geo, mat ?? iceMaterial('hr-slab-ice').m);
+  g.add(block);
+  const crk = new THREE.MeshBasicMaterial({ alphaMap: iceCracks(seed * 7 + 3), alphaTest: 0.5, color: lin('#CFEFFF', 0.3), side: THREE.DoubleSide });
+  depthAlpha(crk, {}, 'hr-slab-crack', false);
+  const extras = new THREE.Group();
+  for (let k = 0; k < 2; k++) {
+    const cp = new THREE.Mesh(new THREE.PlaneGeometry(w * 0.85, h * 0.9), crk);
+    cp.rotation.set(0.3 * (k ? 1 : -1), 0.9 + k * 1.3 + seed, 0.2); cp.position.z = (k ? 0.3 : -0.32) * d;
+    extras.add(cp);
+  }
+  const bub = new THREE.MeshBasicMaterial({ color: lin('#DFF4FF', 0.6) });
+  depthAlpha(bub, {}, 'hr-slab-bubble', false);
+  const s = Math.min(w, h, d);
+  for (let k = 0; k < 50; k++) {
+    const b = new THREE.Mesh(new THREE.SphereGeometry(s * (0.004 + rnd() * 0.012), 8, 6), bub);
+    b.position.set((rnd() - 0.5) * w * 0.85, (rnd() - 0.5) * h * 0.85, (rnd() - 0.5) * d * 0.7);
+    extras.add(b);
+  }
+  g.add(extras);
+  return { g, block, extras };
+}
+
+/**
+ * Frost that grows: dendrites from the given seeds (canvas px: x, y, angle, length) whose brightness falls with
+ * the distance grown along them, so an alphaMap with `alphaTest = 1 - grow` reveals them as they grow (0 → 1).
+ * White on black, n × n.
+ */
+export function frostGrowth(n: number, seeds: [number, number, number, number][], seed = 1, lw = 2) {
+  const cv = document.createElement('canvas'); cv.width = n; cv.height = n;
+  const c = cv.getContext('2d')!, rnd = mulberry32(seed);
+  c.fillStyle = '#000'; c.fillRect(0, 0, n, n);
+  c.lineCap = 'round';
+  const maxS = Math.max(...seeds.map((q) => q[3])) * 1.05;
+  const grow = (x: number, y: number, a: number, len: number, lvl: number, s0: number, w: number) => {
+    let s = s0, next = 10 + rnd() * 14, alt = rnd() < 0.5 ? 1 : -1;
+    const st = 3, steps = Math.max(1, Math.round(len / st));
+    for (let i = 0; i < steps; i++) {
+      a += (rnd() - 0.5) * 0.16;
+      const nx = x + Math.cos(a) * st, ny = y + Math.sin(a) * st;
+      const v = Math.round(255 * Math.max(0.02, 1 - s / maxS));
+      c.strokeStyle = `rgb(${v},${v},${v})`; c.lineWidth = w;
+      c.beginPath(); c.moveTo(x, y); c.lineTo(nx, ny); c.stroke();
+      x = nx; y = ny; s += st;
+      if (lvl > 0 && i * st > next) {
+        next += 9 + rnd() * 16;
+        grow(x, y, a + alt * (0.75 + rnd() * 0.5), (len - i * st) * (0.3 + rnd() * 0.35), lvl - 1, s, w * 0.7);
+        alt = -alt;
+      }
+    }
+  };
+  for (const [x, y, a, len] of seeds) grow(x, y, a, len, 3, 0, lw);
+  const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.NoColorSpace; t.anisotropy = 8;
+  return t;
+}
+
+/**
+ * A small sealed envelope (w wide, lying in its x–y plane, face +z): cream paper with the flap's folds, a round red
+ * wax seal at the flap's tip and a little glass padlock set in it. `pale` makes it the frosted copy: bleached paper
+ * with a cold glow and a colourless lock. (Opaque: the stage keeps depth in alpha, so blending cannot use it.)
+ */
+export function envelopeProp(w: number, c: { wax: string; green: string }, o: { pale?: boolean; key?: string } = {}) {
+  const g = new THREE.Group(), h = w / 1.6, key = o.key ?? 'hr-envp';
+  const tex = envelopeTexture('', { w: 512, postmark: false, seed: 8 });
+  const paper = paperMaterial(tex, o.pale ? 0xc9dcec : 0xffffff);
+  if (o.pale) { paper.emissive = lin('#9FD8F5'); paper.emissiveMap = tex; paper.emissiveIntensity = 0.12; }
+  const pu = depthAlpha(paper, {}, `${key}-paper`);
+  const back = new THREE.MeshStandardMaterial({ color: o.pale ? 0xc8d8e6 : 0xe8dcc6, roughness: 0.85 });
+  depthAlpha(back, {}, `${key}-back`);
+  const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, w * 0.012), [back, back, back, back, paper, back]);
+  g.add(body);
+  const waxM = new THREE.MeshPhysicalMaterial({ color: o.pale ? lin('#C8D6E4') : lin(c.wax), roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.12 });
+  depthAlpha(waxM, {}, `${key}-wax`);
+  const seal = new THREE.Mesh(new THREE.CylinderGeometry(h * 0.17, h * 0.18, w * 0.012, 40), waxM);
+  seal.rotation.x = Math.PI / 2; seal.position.set(0, -h * 0.08, w * 0.01);
+  g.add(seal);
+  const glass = new THREE.MeshPhysicalMaterial({
+    color: o.pale ? lin('#E6F2FA') : lin(c.green), roughness: o.pale ? 0.45 : 0.1, metalness: 0, emissive: o.pale ? lin('#000000') : lin(c.green), emissiveIntensity: o.pale ? 0 : 1.6,
+  });
+  const gu = depthAlpha(glass, {}, `${key}-lock`);
+  const chrome = new THREE.MeshStandardMaterial({ color: o.pale ? 0xd6e2ea : 0xdfe6ea, metalness: 1, roughness: 0.25 });
+  depthAlpha(chrome, {}, `${key}-chrome`);
+  const lock = padlock(h * 0.16, glass, chrome);
+  lock.g.position.set(0, -h * 0.09, w * 0.02);
+  g.add(lock.g);
+  return { g, body, paper, pu, glass, gu, lock, h };
+}
+
+/**
+ * A turned gold key (bow up at the origin, the shaft down along -y, `L` long): a ring bow with a quatrefoil inside,
+ * collars where it meets the shaft and halfway down, a round shaft, a bit with teeth cut in it. `keyInside` tells
+ * whether a point of its front silhouette (x, y) is on it (for particles that gather into it).
+ */
+export const KEY_L = 0.62;
+export function goldKey(mat: THREE.Material) {
+  const g = new THREE.Group();
+  const add = (geo: THREE.BufferGeometry, x = 0, y = 0, z = 0, rx = 0, ry = 0, rz = 0) => {
+    const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.rotation.set(rx, ry, rz); g.add(m); return m;
+  };
+  add(new THREE.TorusGeometry(0.13, 0.022, 20, 72));
+  for (let k = 0; k < 4; k++) { const a = (k / 4) * Math.PI * 2 + Math.PI / 4; add(new THREE.TorusGeometry(0.045, 0.009, 12, 40), Math.cos(a) * 0.05, Math.sin(a) * 0.05); }
+  add(new THREE.SphereGeometry(0.018, 16, 12));
+  const ring = (y: number, r: number, h: number) => add(new THREE.CylinderGeometry(r, r, h, 40), 0, y);
+  ring(-0.155, 0.036, 0.03); ring(-0.185, 0.03, 0.012); ring(-0.33, 0.032, 0.016);
+  add(new THREE.CylinderGeometry(0.024, 0.026, 0.43, 32), 0, -0.36);
+  add(new THREE.SphereGeometry(0.026, 20, 12), 0, -0.575);
+  // the bit: a plate off the shaft's end with three teeth of different depths
+  add(new THREE.BoxGeometry(0.045, 0.1, 0.016), 0.034, -0.52);
+  for (const [k, w] of [[0, 0.035], [1, 0.02], [2, 0.045]] as [number, number][]) add(new THREE.BoxGeometry(w, 0.022, 0.016), 0.056 + w / 2, -0.485 - k * 0.034);
+  return g;
+}
+export function keyInside(x: number, y: number) {
+  const d = Math.hypot(x, y);
+  if (d < 0.152 && d > 0.108) return true;
+  if (Math.abs(x) < 0.026 && y < -0.14 && y > -0.58) return true;
+  if (x > 0.01 && x < 0.057 && y < -0.47 && y > -0.57) return true;
+  for (const [k, w] of [[0, 0.035], [1, 0.02], [2, 0.045]] as [number, number][]) if (x > 0.056 && x < 0.056 + w && Math.abs(y - (-0.485 - k * 0.034)) < 0.011) return true;
+  return false;
 }

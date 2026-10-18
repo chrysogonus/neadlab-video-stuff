@@ -1,8 +1,9 @@
 // Harvest Now, Decrypt Later (Banger Remix): the vault door. A vast round door of machined steel set in a frosted
 // wall, its locking wheel and ring of bolts, the archive's light behind it. Phases (entry `phase`):
 // - `shut` (prechorus 1, "keep"): the door stands open, a shaft of cold light pouring out through it into the haze;
-//   it swings shut, the shaft narrowing to nothing, and on the cue's anchor the bolts drive home and the wheel
-//   spins; frost blooms across its face.
+//   it swings shut by the cue's anchor, the shaft narrowing to nothing; then the bolts drive home round the rim a
+//   group on each snare of the fill from the anchor on, the wheel turning a step with each; frost blooms across its
+//   face on the last.
 // - `open` (final chorus, dawn): the sealed door in frost; the wheel turns, the bolts draw back, and the door swings
 //   open into the sunrise, gold light flooding out.
 import * as THREE from 'three';
@@ -53,6 +54,8 @@ export default class HarvestRemixDoor extends LibScene<P> {
   private inner!: THREE.MeshBasicMaterial;
   private motes!: ReturnType<typeof dust>;
   private S = 0; private E = 0; private aAt = 0;
+  /** shut: the snares of the fill from the anchor on, one group of bolts driven home on each. */
+  private hits: number[] = [];
   private c = colors(this.ctx.style, 'frost');
   private get ph() { return this.P.phase; }
 
@@ -60,6 +63,8 @@ export default class HarvestRemixDoor extends LibScene<P> {
     this.st.fit = fitOf(this.ctx.style);
     this.S = this.ctx.start; this.E = this.ctx.end;
     this.aAt = this.cues[0]?.at ?? this.S + 1.8;
+    this.hits = this.ctx.audio.events('snare', this.aAt - 0.08, this.E + 0.05).map(([x]) => x);
+    if (!this.hits.length) this.hits = [this.aAt];
     const dawn = this.ph === 'open';
     this.c = colors(this.ctx.style, dawn ? 'dawn' : 'frost');
     const r = this.ctx.renderer, sc = this.st.scene, c = this.c;
@@ -206,17 +211,20 @@ export default class HarvestRemixDoor extends LibScene<P> {
     const focus = this.st.look(cm.c, cm.g, cm.fov);
     const sw = this.swing(t);
     this.hinge.rotation.y = -sw;
-    // bolts drive in on the anchor (shut) / draw back before the swing (open); the wheel spins with them
-    const bolt = shut ? ease.outBack(prog(t, a, a + 0.25)) : 1 - ease.inOutCubic(prog(t, S + 0.15, S + 0.8));
+    // bolts drive home round the rim a group per snare of the fill (shut) / draw back before the swing (open); the
+    // wheel turns a step with each group
+    const hs = this.hits, last = hs.at(-1)!;
     for (const [i, b] of this.bolts.entries()) {
+      const hb = hs[Math.min(hs.length - 1, Math.floor((i * hs.length) / NB))]!;
+      const bolt = shut ? ease.outBack(prog(t, hb, hb + 0.12)) : 1 - ease.inOutCubic(prog(t, S + 0.15, S + 0.8));
       const th = (i / NB) * Math.PI * 2, rr = R - 0.15 + 0.32 * bolt;
       b.position.set(Math.cos(th) * rr, Math.sin(th) * rr, 0);
     }
-    this.wheel.rotation.z = shut ? 2.4 * ease.outCubic(prog(t, a, a + 0.6)) : -2.8 * ease.inOutCubic(prog(t, S, S + 0.85));
-    const thump = shut ? hit(t, a, 0.08) : 0;
+    this.wheel.rotation.z = shut ? hs.reduce((sum, h) => sum + (2.4 / hs.length) * ease.outCubic(prog(t, h, h + 0.18)), 0) : -2.8 * ease.inOutCubic(prog(t, S, S + 0.85));
+    const thump = shut ? Math.max(...hs.map((h) => hit(t, h, 0.06))) : 0;
     this.hinge.position.x = -R + 0.01 * thump;
     // frost blooms after the seal (shut); sealed frost sheds as it opens
-    this.frostMat.opacity = shut ? 0.55 * ease.outCubic(prog(t, a + 0.05, a + 1.4)) : 0.5 * (1 - ease.inQuad(prog(t, S + 0.4, S + 1.4)));
+    this.frostMat.opacity = shut ? 0.12 * ease.outCubic(prog(t, a, last)) + 0.43 * ease.outCubic(prog(t, last, last + 0.45)) : 0.5 * (1 - ease.inQuad(prog(t, S + 0.4, S + 1.4)));
     // the light through the opening: as wide as the door stands open
     const open = clamp(Math.sin(sw) * 1.3);
     const lc = shut ? lin('#CFE8FF') : lin('#FFC890');
@@ -230,7 +238,6 @@ export default class HarvestRemixDoor extends LibScene<P> {
     this.st.render(r, out, { focus, ap: cm.ap, clear: [0, 0, 0] });
     return {
       bloom: 0.7, bloomThreshold: 0.85, bloomRadius: 0.7, halation: shut ? 0 : 0.08, ca: 0.15, grain: 0.016, vignette: 0.5, hud: 0,
-      shake: [thump * 9, thump * 12] as [number, number],
       gain: (shut ? [0.92, 1.0, 1.1] : [1.08, 1.0, 0.88]) as [number, number, number], lift: (shut ? [0, 0.003, 0.01] : [0.01, 0.005, 0]) as [number, number, number], sat: 1.1,
       streak: 0.45, streakTint: (shut ? [0.6, 0.8, 1.0] : [1.0, 0.8, 0.55]) as [number, number, number],
     };

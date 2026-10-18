@@ -34,7 +34,9 @@ export function sheetTimeline(sheet: CueSheet, style: Style): MakeTimeline {
       file: e.def.file,
       load: scene(e.def.file),
       start: e.start,
-      end: e.end,
+      // a `tail` (seconds) keeps the entry on screen past the next one's cut: an overlap the next scene composites
+      // itself (e.g. shatters this one's last frame), or the engine crossfades
+      end: e.end + Math.max(0, Number(e.def.params?.tail ?? 0)),
       params: { ...e.def.params, cues: e.cues, ...(e.def.params?.plan ? { plan: resolvePlan(e.def.id, e.def.params.plan as PlanDef, byId, cues) } : {}) },
     }));
   };

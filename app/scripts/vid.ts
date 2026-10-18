@@ -12,6 +12,11 @@
 //                                            the whole video, with no hand edits: analyze, then the model steps
 //                                            (see MODEL STEPS below; --only: just those), then render (--draft:
 //                                            1 sample, fast x264)
+//   ./vid video <id>                         the HyperFrames project for the music-to-video skill (see HYPERFRAMES)
+//   ./vid assemble <id>                      its index.html: the skill's assembler, plus compositions/overlays/ on top
+//   ./vid snap <id> [<frame_id>] --at <t,...> stills at track seconds, of the project or of one frame on its own
+//   ./vid proof <id> --to <s>                a 60 fps proof render of the project's first <s> seconds
+//   ./vid master <id>                        its render with the master's audio -> out/<id>.mp4
 // A step runs when an output is missing or its inputs' contents changed since it last ran (hashes in
 // work/steps.json). A step with no record whose outputs all exist is adopted as current: committed data
 // (a fresh clone, a migrated project) is never recomputed just because it has no record. Steps listed in
@@ -166,6 +171,196 @@ function render(pid: string, extra: string[]) {
   const r = Bun.spawnSync(['bun', 'scripts/render.ts', 'video', '--project', pid, ...args],
     { cwd: path.join(ROOT, 'app'), stdout: 'inherit', stderr: 'inherit' });
   if (r.exitCode !== 0) throw new Error(`render failed (exit ${r.exitCode})`);
+}
+
+// ------------------------------------------------------------------ HYPERFRAMES
+// New videos are HyperFrames projects (AGENTS.md), projects/<id>/video/, built with the music-to-video skill. This
+// stage hands the skill what it cannot measure itself, next to its own analysis:
+//   assets/bgm.mp3   the master (320k; regenerated, not committed)
+//   audiomap.json    the skill's analyzer on bgm.mp3 (its one beat/energy map)
+//   lyrics.json      the aligned lyrics (data/lyrics.json): every sung line and word with its time, and its section
+// It scaffolds the project once and refreshes those three files on every run; the brief, storyboard and frames
+// are never touched. `./vid master` swaps the render's lossy audio for the master's (AAC 320k) for the upload.
+const HF = ['npx', '--yes', 'hyperframes@0.8.164'];
+const ANALYZER = path.join(ROOT, '.agents', 'skills', 'music-to-video', 'scripts', 'analyze-beatgrid.py');
+
+function video(pid: string) {
+  const p = project(pid), dir = path.join(ROOT, 'projects', pid), vdir = path.join(dir, 'video');
+  const json = JSON.parse(readFileSync(path.join(dir, 'project.json'), 'utf8'));
+  const lyrics = path.join(dir, 'data', 'lyrics.json');
+  if (!existsSync(lyrics)) throw new Error(`projects/${pid}/data/lyrics.json is missing; run ./vid analyze ${pid} first`);
+  if (!existsSync(path.join(vdir, 'hyperframes.json'))) {
+    const r = Bun.spawnSync([...HF, 'init', vdir, '--non-interactive', '--example=blank', '--skill=music-to-video'], { stdout: 'inherit', stderr: 'inherit' });
+    if (r.exitCode !== 0) throw new Error(`hyperframes init failed (exit ${r.exitCode})`);
+  }
+  for (const d of ['assets', 'renders']) mkdirSync(path.join(vdir, d), { recursive: true });
+  const bgm = path.join(vdir, 'assets', 'bgm.mp3');
+  ffmpeg(['-i', path.join(dir, json.audio), '-c:a', 'libmp3lame', '-b:a', '320k', bgm]);
+  const ms = (t: number) => Math.round(t * 1000) / 1000;
+  const audiomap = path.join(vdir, 'audiomap.json');
+  python(ANALYZER, [bgm, '-o', audiomap]);
+  // The skill's constant grid lands ~35 ms after the beat on our songs (harvest-remix: every hand-checked hit), and
+  // Suno tempos drift; our tracked grid (data/audio.json) is the one we trust, so it replaces the skill's and the
+  // phrase edges snap to it. Energy, onsets, rolls and silences stay the skill's.
+  const am = JSON.parse(readFileSync(audiomap, 'utf8'));
+  const ours = JSON.parse(readFileSync(path.join(dir, 'data', 'audio.json'), 'utf8')) as { bpm: number; beats: number[]; downbeats: number[] };
+  const toDownbeat = (t: number) => ours.downbeats.reduce((a, b) => (Math.abs(b - t) < Math.abs(a - t) ? b : a));
+  am.grid = { beats_sec: ours.beats, downbeats_sec: ours.downbeats, source: `projects/${pid}/data/audio.json (tracked grid, ./vid analyze)` };
+  am.tempo.bpm = Math.round(ours.bpm * 10) / 10;
+  am.tempo.n_beats = ours.beats.length;
+  am.tempo.n_bars = ours.downbeats.length;
+  for (const ph of am.phrases) { ph.start = toDownbeat(ph.start); ph.end = toDownbeat(ph.end); }
+  writeFileSync(audiomap, JSON.stringify(am, null, 1) + '\n');
+  // the music as data for the compositions (assets/kit/env.js, window.HR_ENV): band envelopes at 50 Hz (0..1) and
+  // the drum onsets [t, strength], so frames can breathe with the track without a render-time fetch
+  const full = JSON.parse(readFileSync(path.join(dir, 'data', 'audio.json'), 'utf8')) as Record<string, any>;
+  const step = Math.round(full.fps / 50), q = (x: number) => Math.round(x * 100) / 100;
+  const env = {
+    fps: 50,
+    bands: Object.fromEntries(['rms', 'bass', 'drums', 'vocal', 'high'].map((k) => [k, (full[k] as number[]).filter((_, i) => i % step === 0).map(q)])),
+    onsets: Object.fromEntries(['kick', 'snare', 'hat'].map((k) => [k, (full.onsets[k] as [number, number][]).map(([t, s]) => [ms(t), q(s)])])),
+    downbeats: ours.downbeats,
+  };
+  // the house-style kit and finish layer (docs/HOUSE-STYLE.md): installed once from templates/hyperframes/, never
+  // overwritten — a project keeps the copy it was made with
+  const tpl = path.join(ROOT, 'templates', 'hyperframes');
+  for (const f of ['assets/kit/hr-kit.js', 'compositions/overlays/finish.html']) {
+    const dst = path.join(vdir, f);
+    if (existsSync(dst)) continue;
+    mkdirSync(path.dirname(dst), { recursive: true });
+    const text = readFileSync(path.join(tpl, f), 'utf8');
+    writeFileSync(dst, f.endsWith('finish.html') ? text.replace('data-duration="0"', `data-duration="${am.audio.duration_sec}"`) : text);
+    console.log(`installed ${f} (house style)`);
+  }
+  mkdirSync(path.join(vdir, 'assets', 'kit'), { recursive: true });
+  writeFileSync(path.join(vdir, 'assets', 'kit', 'env.js'), `// generated by ./vid video from data/audio.json\nwindow.HR_ENV = ${JSON.stringify(env)};\n`);
+
+  const { lines } = JSON.parse(readFileSync(lyrics, 'utf8')) as { lines: { text: string; start: number; end: number; words: { w: string; start: number; end: number }[] }[] };
+  const sections = JSON.parse(readFileSync(path.join(dir, 'data', 'sections.json'), 'utf8')) as { name: string; first_line: number; n_lines: number }[];
+  const section = (i: number) => sections.find((s) => i >= s.first_line && i < s.first_line + s.n_lines)?.name ?? null;
+  writeFileSync(path.join(vdir, 'lyrics.json'), JSON.stringify({
+    title: p.title,
+    note: `aligned to the vocal by ./vid analyze (projects/${pid}/data/lyrics.json); track seconds, the audiomap's clock`,
+    lines: lines.map((l, i) => ({ i, section: section(i), text: l.text, start: ms(l.start), end: ms(l.end),
+      words: l.words.map((w) => ({ w: w.w, start: ms(w.start), end: ms(w.end) })) })),
+  }, null, 1) + '\n');
+  console.log(`projects/${pid}/video/: bgm.mp3, audiomap.json, lyrics.json (${lines.length} lines) current; build it with the music-to-video skill (AGENTS.md)`);
+}
+
+/**
+ * The playable project: the skill's assembler (frames + bgm from STORYBOARD.md), then every
+ * compositions/overlays/<id>.html mounted above the frames for the whole film (the finish layer: grain, light).
+ */
+function assemble(pid: string) {
+  const vdir = path.join(ROOT, 'projects', pid, 'video');
+  const r = Bun.spawnSync(['node', path.join(ROOT, '.agents', 'skills', 'music-to-video', 'scripts', 'assemble-index.mjs'),
+    '--storyboard', path.join(vdir, 'STORYBOARD.md'), '--hyperframes', vdir, '--audiomap', path.join(vdir, 'audiomap.json')],
+    { stdout: 'inherit', stderr: 'inherit' });
+  if (r.exitCode !== 0) throw new Error(`assemble-index failed (exit ${r.exitCode})`);
+  const dir = path.join(vdir, 'compositions', 'overlays');
+  const overlays = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.html')).sort() : [];
+  if (!overlays.length) return;
+  const index = path.join(vdir, 'index.html');
+  let html = readFileSync(index, 'utf8');
+  const total = html.match(/data-composition-id="main"[\s\S]*?data-duration="([\d.]+)"/)?.[1];
+  if (!total) throw new Error('index.html: no root duration');
+  const clips = overlays.map((f, i) => {
+    const id = f.replace(/\.html$/, '');
+    return `      <div id="el-${id}" class="frame" data-composition-id="${id}" data-composition-src="compositions/overlays/${f}"\n` +
+      `        data-start="0" data-duration="${total}" data-track-index="${2 + i}"></div>\n`;
+  }).join('');
+  const close = html.lastIndexOf('</div>', html.indexOf('<script>', html.indexOf('data-composition-id="main"')));
+  const at = html.lastIndexOf('\n', close) + 1; // the root's closing line
+  html = html.slice(0, at) + clips + html.slice(at);
+  writeFileSync(index, html);
+  console.log(`overlays: ${overlays.join(', ')}`);
+}
+
+/** A working copy of a HyperFrames project in `dir`: assets linked (large), compositions copied — the bundler reads a
+ *  symlinked compositions/ as empty files. */
+function linkProject(vdir: string, dir: string) {
+  Bun.spawnSync(['ln', '-s', path.join(vdir, 'assets'), path.join(dir, 'assets')]);
+  Bun.spawnSync(['cp', '-r', path.join(vdir, 'compositions'), path.join(dir, 'compositions')]);
+}
+
+/**
+ * Stills at track seconds: of the assembled project, or of one frame (`frame` = its file stem, e.g. 02-sent) mounted
+ * on its own at its STORYBOARD.md span — so a frame-worker can look at its frame before the others exist.
+ * Software WebGL (SwiftShader): headless Chrome gets no GPU context under WSL.
+ */
+function snap(pid: string, frame: string | undefined, at: string | undefined) {
+  if (!at) throw new Error('usage: ./vid snap <id> [<frame_id>] --at <track seconds,...>');
+  const vdir = path.join(ROOT, 'projects', pid, 'video');
+  let dir = vdir, start = 0;
+  if (frame) {
+    const sb = readFileSync(path.join(vdir, 'STORYBOARD.md'), 'utf8');
+    const m = sb.match(new RegExp(`src:\\s*compositions/frames/${frame}\\.html[\\s\\S]*?span_sec:\\s*\\[\\s*([\\d.]+)\\s*,\\s*([\\d.]+)\\s*\\]`));
+    if (!m) throw new Error(`no frame ${frame} with a span_sec in projects/${pid}/video/STORYBOARD.md`);
+    start = Number(m[1]);
+    const dur = Math.round((Number(m[2]) - start) * 1000) / 1000;
+    dir = path.join(vdir, '.hyperframes', 'solo', frame);
+    rmSync(dir, { recursive: true, force: true });
+    mkdirSync(dir, { recursive: true });
+    linkProject(vdir, dir);
+    writeFileSync(path.join(dir, 'index.html'), `<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>* { margin: 0; padding: 0; box-sizing: border-box; } html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; } .frame { position: absolute; inset: 0; width: 100%; height: 100%; }</style>
+</head><body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="${dur}" data-width="1920" data-height="1080">
+<div id="el-${frame}" class="frame" data-composition-id="${frame}" data-composition-src="compositions/frames/${frame}.html" data-start="0" data-duration="${dur}" data-track-index="1"></div>
+</div>
+<script>window.__timelines["main"] = gsap.timeline({ paused: true });</script>
+</body></html>
+`);
+  }
+  const times = at.split(',').map((t) => Math.round((Number(t) - start) * 1000) / 1000);
+  const out = path.join(vdir, 'snapshots', frame ?? 'all');
+  const r = Bun.spawnSync([...HF, 'snapshot', dir, '--at', times.join(','), '--no-end', '--keep', '-o', out, '--no-browser-gpu', '--describe', 'false'],
+    { stdout: 'inherit', stderr: 'inherit' });
+  if (r.exitCode !== 0) throw new Error(`hyperframes snapshot failed (exit ${r.exitCode})`);
+  const stills = times.map((t) => path.join(out, `at-${t}s.png`));
+  for (const [i, t] of at.split(',').entries()) console.log(`track ${t}s -> ${path.relative(ROOT, stills[i]!)}`);
+  // one contact sheet in the order asked, three across
+  const list = path.join(out, 'sheet.txt');
+  writeFileSync(list, stills.map((f) => `file '${f}'\nduration 1\n`).join(''));
+  ffmpeg(['-f', 'concat', '-safe', '0', '-i', list, '-vf', `scale=640:-1,tile=3x${Math.ceil(stills.length / 3)}:padding=6`, '-frames:v', '1', path.join(out, 'sheet.png')]);
+  console.log(`sheet: ${path.relative(ROOT, path.join(out, 'sheet.png'))}`);
+}
+
+/**
+ * A proof clip: the assembled project cut at --to (track seconds) — later frames dropped, clips and audio trimmed —
+ * rendered at 60 fps to video/renders/proof.mp4. HyperFrames renders whole compositions only, so the cut is a copy.
+ */
+function proof(pid: string, to: number) {
+  const vdir = path.join(ROOT, 'projects', pid, 'video'), dir = path.join(vdir, '.hyperframes', 'proof');
+  rmSync(dir, { recursive: true, force: true });
+  mkdirSync(dir, { recursive: true });
+  linkProject(vdir, dir);
+  const html = readFileSync(path.join(vdir, 'index.html'), 'utf8').replace(/<(div|audio)\b[^>]*?data-start="([\d.]+)"[^>]*?data-duration="([\d.]+)"[^>]*>(?:<\/\1>)?/gs,
+    (tag, _k, start, dur) => {
+      const a = Number(start), b = a + Number(dur);
+      if (tag.includes('data-composition-id="main"')) return tag.replace(`data-duration="${dur}"`, `data-duration="${to}"`);
+      if (a >= to) return '';
+      return b > to ? tag.replace(`data-duration="${dur}"`, `data-duration="${Math.round((to - a) * 1000) / 1000}"`) : tag;
+    });
+  writeFileSync(path.join(dir, 'index.html'), html);
+  const out = path.join(vdir, 'renders', 'proof.mp4');
+  const r = Bun.spawnSync([...HF, 'render', dir, '-q', 'delivery', '--fps', '60', '--no-browser-gpu', '-o', out], { stdout: 'inherit', stderr: 'inherit' });
+  if (r.exitCode !== 0) throw new Error(`proof render failed (exit ${r.exitCode})`);
+  console.log(path.relative(ROOT, out));
+}
+
+function master(pid: string) {
+  const dir = path.join(ROOT, 'projects', pid), json = JSON.parse(readFileSync(path.join(dir, 'project.json'), 'utf8'));
+  const src = path.join(dir, 'video', 'renders', 'video.mp4');
+  if (!existsSync(src)) throw new Error(`projects/${pid}/video/renders/video.mp4 is missing; render the HyperFrames project first`);
+  mkdirSync(path.join(ROOT, 'out'), { recursive: true });
+  const out = path.join(ROOT, 'out', `${pid}.mp4`);
+  ffmpeg(['-i', src, '-i', path.join(dir, json.audio), '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '320k',
+    '-shortest', '-movflags', '+faststart', out]);
+  console.log(`out/${pid}.mp4`);
 }
 
 // ------------------------------------------------------------------ MODEL STEPS
@@ -356,11 +551,16 @@ try {
     process.exit(r.exitCode);
   }
   else if (cmd === 'new') create(id!);
-  else if (!id) throw new Error('usage: ./vid check | new|analyze|status|render|run|make <id> (see app/scripts/vid.ts)');
+  else if (!id) throw new Error('usage: ./vid check | new|analyze|status|render|run|make|video|assemble|snap|proof|master <id> (see app/scripts/vid.ts)');
   else if (cmd === 'analyze') analyze(id, opt('force')?.split(',') ?? []);
   else if (cmd === 'status') status(id);
   else if (cmd === 'render') render(id, argv.slice(2));
   else if (cmd === 'run') { analyze(id); render(id, []); }
+  else if (cmd === 'video') video(id);
+  else if (cmd === 'assemble') assemble(id);
+  else if (cmd === 'snap') snap(id, argv[2]?.startsWith('--') ? undefined : argv[2], opt('at'));
+  else if (cmd === 'proof') proof(id, Number(opt('to')));
+  else if (cmd === 'master') master(id);
   else if (cmd === 'make') await make(id, opt('force')?.split(',') ?? [], argv.includes('--draft'), !argv.includes('--no-render'), opt('only')?.split(','));
   else throw new Error(`unknown command '${cmd}'`);
 } catch (e) {

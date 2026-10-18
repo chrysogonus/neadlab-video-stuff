@@ -4,18 +4,25 @@
 // - `seal` (intro into verse 1): a red wax drop falls onto the flap's tip and spreads; a brass seal stamp descends
 //   and presses into it on the instrumental cue's anchor (the wax squeezes out at the rim), lifts, and leaves the
 //   padlock sigil; then the camera pulls back to the whole envelope and a postmark slams onto its corner with the
-//   date on the sung anchor ("Tuesday,").
-// - `open` (final chorus, "I said sooner or later", dawn): the same envelope in warm sunrise light; the seal
-//   cracks in two, the flap lifts, the letter slides out and unfolds flat on the anchor: ruled lines of ink, the
-//   date in serif italic.
+//   date on the sung anchor ("Tuesday,"). With two instrumental cues (the opening), the first is the drop: a stick
+//   of wax melting at the top of frame lets one drop fall in slow motion onto the flap on its anchor, the title
+//   fades up, and frost creeps across the envelope's paper toward the hot wax, stopping just short of the seal;
+//   the second is the stamp (it presses on its
+//   anchor, holds and lifts by its end, the sigil glowing faintly green as it clears). `shot` picks the camera of
+//   one entry of that passage: wax, stamp or postmark.
+// - `open` (final chorus, "…you were on about / I said sooner or later", dawn): the collector's desk; a reading lamp
+//   clicks on as the shot cuts in on the wax seal; the seal snaps, the flap lifts, the letter slides out and opens
+//   flat in about a second; then the camera holds still on one short line, "No one else will ever read it.", until
+//   the anchor ("later"), and only then drifts down the page to the signature.
 import * as THREE from 'three';
 import type { Frame } from '../engine/scene';
 import type { SceneSchema } from '../engine/schema';
-import { clamp, ease, lerp, mulberry32, prog } from '../engine/util';
-import { F, font } from '../engine/type';
+import { clamp, ease, lerp, mulberry32, prog, smoothstep } from '../engine/util';
+import { F, font, measure } from '../engine/type';
+import { Layer2D, W, H } from '../engine/gl';
 import { LibScene, hit } from './_lib';
 import {
-  Stage, camKeys, colors, depthAlpha, dust, envProbe, envelopeTexture, letterTexture, lin, paperMaterial, postmarkTexture, sealBump, woodTexture,
+  PAYOFF, Stage, camKeys, colors, dendrite, depthAlpha, dust, envProbe, envelopeTexture, letterTexture, lin, paperMaterial, postmarkTexture, sealBump, woodTexture,
   type CamKey, type V3, fitOf } from './harvest-remix-kit';
 
 export const schema: SceneSchema = {
@@ -26,18 +33,44 @@ export const schema: SceneSchema = {
     phase: { type: 'string', enum: ['seal', 'open'], default: 'seal', description: 'seal: the wax pressed, the postmark; open: the seal breaks and the letter unfolds' },
     date: { type: 'string', default: 'TUE 2021-03-09', description: 'the postmark date' },
     letterDate: { type: 'string', default: 'Tuesday, 9 March 2021', description: 'the date at the top of the letter' },
+    shot: { type: 'string', enum: ['', 'wax', 'stamp', 'postmark'], default: '', description: 'seal over several entries: which camera this entry is (empty: one continuous shot)' },
   },
-  cue: {},
+  cue: {
+    title: { type: 'string', default: '', description: 'seal, the drop cue: the title faded up over the shot from its anchor' },
+    credit: { type: 'string', default: '', description: 'the credit under the title' },
+  },
   example: { entry: { phase: 'seal' }, cues: [{}, {}] },
 };
 
 type Phase = 'seal' | 'open';
-interface P { phase: Phase; date: string; letterDate: string }
+interface P { phase: Phase; date: string; letterDate: string; shot: '' | 'wax' | 'stamp' | 'postmark' }
+interface C { title: string; credit: string }
 
 const EW = 3.2, ED = 2.0, ET = 0.03; // the envelope (x by z, thickness)
 const TIP: V3 = [0, ET / 2 + 0.004, 0.16]; // the flap's tip, where the seal sits
 const SR = 0.34; // the seal's radius
 const LW = 1.9, LH = LW * 1.3; // the letter
+const LETTER_Y = 0.65, LETTER_Z = -0.3; // where the opened letter lies (flat, its top toward -z)
+const OPEN_T = 1.05; // seconds from the cut until the letter lies open
+const FX0 = -1.58, FX1 = -0.25, FZ0 = -0.97, FZ1 = 0.97; // the frost's patch: the envelope's left half, up to the seal
+const STIP: V3 = [0.02, 0.36, 0.12]; // where the melting stick's tip hangs over the flap (the opening)
+
+/** The padlock of the seal's impression (sealBump's layout) as an outline and keyhole, white on black: the sigil's glow. */
+function sigilMask(n = 512) {
+  const cv = document.createElement('canvas'); cv.width = n; cv.height = n;
+  const c = cv.getContext('2d')!;
+  c.fillStyle = '#000'; c.fillRect(0, 0, n, n);
+  // light leaking round the relief: the sigil's outline, soft
+  c.filter = 'blur(5px)';
+  c.strokeStyle = '#fff'; c.lineWidth = n * 0.014;
+  c.beginPath(); c.roundRect(n * 0.37, n * 0.47, n * 0.26, n * 0.2, n * 0.03); c.stroke();
+  c.lineWidth = n * 0.05;
+  c.beginPath(); c.arc(n / 2, n * 0.47, n * 0.08, Math.PI, 0); c.stroke();
+  c.fillStyle = '#fff';
+  c.beginPath(); c.arc(n / 2, n * 0.545, n * 0.03, 0, Math.PI * 2); c.fill();
+  c.filter = 'none';
+  const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.NoColorSpace; return t;
+}
 
 /** The front of another letter: a stamp, a postmark over it, an address in the hand. */
 function addressTexture() {
@@ -62,7 +95,7 @@ function addressTexture() {
   const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
 }
 
-export default class HarvestRemixLetter extends LibScene<P> {
+export default class HarvestRemixLetter extends LibScene<P, C> {
   static schema = schema;
   private st = new Stage(32, 0.03, 100);
   private flap = new THREE.Group(); // pivots on the envelope's top edge
@@ -78,6 +111,14 @@ export default class HarvestRemixLetter extends LibScene<P> {
 
   private S = 0; private E = 0;
   private aPress = 1e9; private aPost = 1e9; private cWord = 1e9; // seal
+  private aLand = -1; private tLift0 = 1e9; private tLift1 = 1e9; // seal, the opening: the drop lands; the stamp lifts
+  private title = ''; private credit = '';
+  private over = new Layer2D();
+  private drip = new THREE.Group(); // the melting stick the drop falls from (the opening)
+  private frost: THREE.Mesh | null = null; private frostU: Record<string, THREE.IUniform> = {};
+  // open: the reading lamp; where the payoff line and the signature are on the page (fractions)
+  private lamp = new THREE.SpotLight(0xffc888, 0, 9, 0.55, 0.7, 1.4);
+  private payoff = { x: 0.4, y: 0.4 }; private signY = 0.85;
   private aLater = 1e9; // open
   private c = colors(this.ctx.style, 'frost');
   private get ph() { return this.P.phase; }
@@ -85,11 +126,17 @@ export default class HarvestRemixLetter extends LibScene<P> {
   override setup() {
     this.st.fit = fitOf(this.ctx.style);
     this.S = this.ctx.start; this.E = this.ctx.end;
-    const span = this.cues.find((c) => !c.line), sung = this.cues.find((c) => c.line);
+    const spans = this.cues.filter((c) => !c.line), sung = this.cues.find((c) => c.line), span = spans.at(-1);
     if (this.ph === 'seal') {
       this.aPress = span?.at ?? this.S + 3.7;
       this.aPost = sung?.at ?? this.aPress + 1.8;
       this.cWord = sung?.start ?? this.aPress + 0.4;
+      if (spans.length > 1) {
+        const drop = spans[0]!;
+        this.aLand = drop.at;
+        this.tLift1 = span!.end; this.tLift0 = this.tLift1 - 0.54;
+        const p = this.cp(drop); this.title = p.title; this.credit = p.credit;
+      }
     } else this.aLater = sung?.at ?? this.S + 2.1;
     this.c = colors(this.ctx.style, (sung ?? span)?.def.palette ?? 'frost');
     this.build();
@@ -180,7 +227,7 @@ export default class HarvestRemixLetter extends LibScene<P> {
 
     if (this.ph === 'seal') {
       // the brass stamp: a disc with the sigil, a waisted neck, a turned wooden handle
-      const brass = new THREE.MeshPhysicalMaterial({ color: lin('#D8AE62'), metalness: 1, roughness: 0.28, envMapIntensity: 1.3 });
+      const brass = new THREE.MeshPhysicalMaterial({ color: lin('#D8AE62'), metalness: 1, roughness: 0.32, envMapIntensity: this.aLand >= 0 ? 2.6 : 1.3 });
       const wood = new THREE.MeshPhysicalMaterial({ color: lin('#3A2214'), metalness: 0, roughness: 0.45, clearcoat: 0.8, clearcoatRoughness: 0.2 });
       depthAlpha(brass, {}, 'hr-let-brass'); depthAlpha(wood, {}, 'hr-let-wood');
       const prof = (pts: [number, number][]) => new THREE.LatheGeometry(pts.map(([x, y]) => new THREE.Vector2(x, y)), 64);
@@ -200,9 +247,18 @@ export default class HarvestRemixLetter extends LibScene<P> {
       this.pmark.position.set(0.68, ET / 2 + 0.003, 0.5);
       this.pmark.renderOrder = 10;
       sc.add(this.pmark);
+      if (this.aLand >= 0) this.opening(sc);
     } else {
       // the letter: three panels folded in three, unfolding about the middle one
-      const tex = letterTexture(this.P.letterDate, { seed: 11 });
+      const tex = letterTexture(this.P.letterDate, { seed: 11, w: 2048 });
+      const marks = (tex.userData.marks ?? []) as { text: string; y: number; x0: number; x1: number }[];
+      const pm = marks.find((k) => k.text === PAYOFF);
+      if (pm) this.payoff = { x: (pm.x0 + pm.x1) / 2, y: pm.y };
+      this.signY = marks.at(-1)?.y ?? 0.85;
+      this.lamp.position.set(-1.5, 2.7, -1.6);
+      this.lamp.target.position.set(0, 0.6, -0.4);
+      this.lamp.castShadow = true; this.lamp.shadow.mapSize.set(1024, 1024);
+      sc.add(this.lamp, this.lamp.target);
       const h3 = LH / 3;
       for (let i = 0; i < 3; i++) {
         const g = new THREE.PlaneGeometry(LW, h3);
@@ -248,7 +304,17 @@ export default class HarvestRemixLetter extends LibScene<P> {
   // ------------------------------------------------------------------ the frame
 
   private cam(t: number) {
-    const S = this.S, E = this.E;
+    const S = this.S, E = this.E, shot = this.P.shot;
+    // the opening, one camera per entry: wide-ish over the desk (the frost has room at the left), low from the side
+    // for the stamp, then over the envelope pulling back for the postmark
+    if (shot === 'wax') return camKeys(t, [
+      { t: 0, c: [-1.15, 0.95, 1.55], g: [-0.42, 0.02, 0.18], fov: 34, ap: 14 },
+      { t: this.aPress, c: [-0.5, 0.6, 0.98], g: [-0.12, 0.04, 0.16], fov: 30, ap: 20, e: ease.inOutQuad },
+    ]);
+    if (shot === 'stamp') return camKeys(t, [
+      { t: this.aPress, c: [1.15, 0.2, 0.86], g: [0, 0.16, 0.16], fov: 30, ap: 30 },
+      { t: this.tLift1 + 0.2, c: [1.0, 0.24, 0.78], g: [0, 0.12, 0.16], fov: 30, ap: 30, e: ease.linear },
+    ]);
     const ks: CamKey[] = this.ph === 'seal'
       ? [
           { t: S, c: [0.55, 1.25, 1.35], g: [0, 0, 0.12], fov: 30, ap: 26 },
@@ -257,13 +323,72 @@ export default class HarvestRemixLetter extends LibScene<P> {
           { t: this.aPost - 0.15, c: [0.9, 3.4, 3.3], g: [0.2, 0, -0.05], fov: 30, ap: 12, e: ease.inOutCubic },
           { t: E + 0.3, c: [0.6, 3.2, 3.0], g: [0.15, 0, -0.05], fov: 30, ap: 12, e: ease.linear },
         ]
-      : [
-          { t: S, c: [0.35, 1.2, 1.15], g: [0, 0, 0.12], fov: 30, ap: 26 },
-          { t: S + 0.65, c: [0.3, 1.5, 1.4], g: [0, 0, 0.05], fov: 30, ap: 22, e: ease.inOutQuad },
-          { t: this.aLater, c: [0.15, 4.6, 0.75], g: [0, 0.5, -0.5], fov: 30, ap: 12, e: ease.inOutCubic },
-          { t: E + 0.3, c: [0.08, 4.4, 0.65], g: [0, 0.5, -0.5], fov: 30, ap: 12, e: ease.linear },
-        ];
+      : (() => {
+          // the cut lands on the seal (matching the keyhole), rises as the letter opens, then holds on the line
+          const at = (fx: number, fy: number): V3 => [-LW / 2 + LW * fx, LETTER_Y, LETTER_Z - LH / 2 + LH * fy];
+          const P = at(this.payoff.x, this.payoff.y - 0.012), G = at(0.55, this.signY - 0.03), set = S + OPEN_T;
+          return [
+            { t: S, c: [0.03, 0.8, TIP[2] + 0.22], g: [0, 0, TIP[2]], fov: 30, ap: 20 },
+            { t: set, c: [P[0], P[1] + 0.82, P[2] + 0.82], g: P, fov: 30, ap: 52, e: ease.inOutCubic },
+            { t: this.aLater, c: [P[0], P[1] + 0.81, P[2] + 0.8], g: P, fov: 30, ap: 52, e: ease.linear },
+            { t: E + 0.3, c: [G[0], G[1] + 1.2, G[2] + 0.7], g: G, fov: 30, ap: 34, e: ease.inOutCubic },
+          ] as CamKey[];
+        })();
     return camKeys(t, ks);
+  }
+
+  /**
+   * The opening's props: the stick of wax melting over the flap (the drop falls from its tip), the frost that creeps
+   * across the desk from the left toward the letter (dendrites revealed by a front that advances in x), and the
+   * sigil's faint green glow (an emissive mask on the wax).
+   */
+  private opening(sc: THREE.Scene) {
+    const waxM = new THREE.MeshPhysicalMaterial({ color: lin(this.c.wax), roughness: 0.3, clearcoat: 0.8, clearcoatRoughness: 0.1 });
+    depthAlpha(waxM, {}, 'hr-let-stick');
+    const stick = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 1.4, 6), waxM);
+    stick.position.y = 0.7;
+    const melt = new THREE.MeshPhysicalMaterial({ color: lin(this.c.wax), roughness: 0.12, clearcoat: 1, clearcoatRoughness: 0.05, emissive: lin('#FF3A1A'), emissiveIntensity: 0.35 });
+    depthAlpha(melt, {}, 'hr-let-melt');
+    const tip = new THREE.Mesh(new THREE.SphereGeometry(0.075, 24, 12, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), melt);
+    tip.scale.y = 1.4;
+    stick.castShadow = tip.castShadow = true;
+    this.drip.add(stick, tip);
+    sc.add(this.drip);
+
+    // frost dendrites from the left edge of the canvas (= toward the letter), white on black
+    const n = 1024, cv = document.createElement('canvas'); cv.width = n; cv.height = n;
+    const c = cv.getContext('2d')!;
+    c.fillStyle = '#000'; c.fillRect(0, 0, n, n);
+    c.strokeStyle = 'rgba(255,255,255,0.9)'; c.lineCap = 'round';
+    const rnd = mulberry32(303);
+    for (let i = 0; i < 13; i++) dendrite(c, rnd, 0, (i + rnd()) / 13 * n, (rnd() - 0.5) * 0.8, n * (0.6 + rnd() * 0.45), 3, 2.2);
+    for (let i = 0; i < 14; i++) dendrite(c, rnd, rnd() * n * 0.5, rnd() * n, (rnd() - 0.5) * 1.0, n * (0.12 + rnd() * 0.22), 2, 1.3);
+    const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.NoColorSpace; tex.anisotropy = 8;
+    const fm = new THREE.MeshStandardMaterial({ color: lin('#EAF6FF', 0.8), map: tex, roughness: 0.22, metalness: 0, emissive: lin(this.c.ice), emissiveMap: tex, emissiveIntensity: 0.06, envMapIntensity: 1.4 });
+    this.frostU = depthAlpha(fm, { uReach: { value: 0 } }, 'hr-let-frost');
+    const before = fm.onBeforeCompile;
+    fm.onBeforeCompile = (sh, rr) => {
+      before.call(fm, sh, rr);
+      sh.fragmentShader = sh.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform float uReach;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+  float frontK = uReach + 0.06 * sin(vMapUv.y * 11.0 + 0.7) + 0.035 * sin(vMapUv.y * 37.0) + 0.02 * sin(vMapUv.y * 91.0 + 1.3);
+  // thinner toward the front: only the strongest crystals lead it
+  float lead = smoothstep(frontK - 0.16, frontK, vMapUv.x);
+  if (sampledDiffuseColor.r < mix(0.1, 0.6, lead) || vMapUv.x > frontK) discard;
+  diffuseColor.rgb *= 0.6 + 0.4 * smoothstep(frontK, frontK - 0.08, vMapUv.x);`);
+    };
+    this.frost = new THREE.Mesh(new THREE.PlaneGeometry(FX1 - FX0, FZ1 - FZ0), fm);
+    this.frost.rotation.x = -Math.PI / 2;
+    this.frost.position.set((FX0 + FX1) / 2, ET / 2 + 0.0042, (FZ0 + FZ1) / 2);
+    this.frost.receiveShadow = true;
+    this.frost.renderOrder = 5;
+    sc.add(this.frost);
+
+    // the sigil's glow: the padlock of the seal's bump map, as an emissive mask
+    this.waxMat.emissiveMap = sigilMask();
+    this.waxMat.emissive = lin(this.c.green);
+    this.waxMat.emissiveIntensity = 0;
   }
 
   /** On the desk beside it: a fountain pen, a stick of the red sealing wax, another letter half under the first. */
@@ -305,30 +430,49 @@ export default class HarvestRemixLetter extends LibScene<P> {
     // the wax: a drop falls and spreads, then the stamp presses it flat into the seal (seal); sealed (open)
     let pressed = 1, shake = 0;
     this.blob.visible = false;
+    const open = ph === 'seal' && this.aLand >= 0; // the opening: the drop from the melting stick, the frost
     if (ph === 'seal') {
-      const tDrop = Math.min(S + 0.2, this.aPress - 1.5), tLand = tDrop + 0.4;
+      const tLand = open ? this.aLand : Math.min(S + 0.2, this.aPress - 1.5) + 0.4;
+      const tDrop = tLand - (open ? 0.42 : 0.4);
       const fall = prog(t, tDrop, tLand, ease.inQuad);
       const spread = ease.outCubic(prog(t, tLand, tLand + 0.6));
       const squash = t > tLand ? 0.25 * Math.exp(-(t - tLand) * 7) * Math.sin((t - tLand) * 30) : 0;
       pressed = ease.outCubic(prog(t, this.aPress - 0.05, this.aPress + 0.12));
-      const bh = lerp(0.14, 0.07, spread) * (1 - squash), bw = lerp(0.1, 0.22, spread) * (1 + squash * 0.5);
+      const bh = lerp(open ? 0.1 : 0.14, 0.07, spread) * (1 - squash), bw = lerp(open ? 0.065 : 0.1, 0.22, spread) * (1 + squash * 0.5);
       this.blob.visible = t >= tDrop && pressed < 1;
       this.blob.scale.set(bw * (1 + 0.5 * pressed), bh * (1 - 0.8 * pressed), bw * (1 + 0.5 * pressed));
-      this.blob.position.set(TIP[0], lerp(1.6, TIP[1] + bh * 0.4, fall), TIP[2]);
-      // the stamp: hovers, descends, presses on the anchor, lifts away
-      const down = ease.inOutCubic(prog(t, this.aPress - 1.15, this.aPress - 0.3)) * 0.7 + ease.inQuad(prog(t, this.aPress - 0.3, this.aPress)) * 0.3;
-      const lift = ease.inOutCubic(prog(t, this.aPress + 0.45, this.aPress + 1.2));
+      this.blob.position.set(TIP[0], lerp(open ? STIP[1] - 0.09 : 1.6, TIP[1] + bh * 0.4, fall), TIP[2]);
+      if (open) {
+        // the drop gathers at the stick's tip, swells and lets go (slow motion); the stick rises out of frame after
+        const grow = ease.inOutQuad(prog(t, tLand - 1.25, tDrop));
+        if (t < tDrop) {
+          const rr = lerp(0.012, 0.06, grow);
+          this.blob.visible = grow > 0;
+          this.blob.scale.set(rr, rr * (1.2 + 0.5 * grow), rr);
+          this.blob.position.set(STIP[0], STIP[1] - 0.06 - rr * 0.9 * (1 + 0.5 * grow), STIP[2]);
+        }
+        const up = ease.inOutCubic(prog(t, tLand + 0.7, tLand + 2.2)) * 2.6;
+        this.drip.position.set(STIP[0] + 0.35 * up, STIP[1] + up, STIP[2] - 0.25 * up);
+        this.drip.rotation.set(-0.55, 0, -0.5);
+        this.drip.visible = up < 2.5;
+      }
+      // the stamp: hovers, descends, presses on the anchor, lifts away (the opening: it holds through the fill and
+      // lifts by the end of the stamp cue)
+      const down = open
+        ? ease.inOutCubic(prog(t, this.aPress - 1.9, this.aPress - 0.6)) * 0.75 + ease.inQuad(prog(t, this.aPress - 0.32, this.aPress)) * 0.25
+        : ease.inOutCubic(prog(t, this.aPress - 1.15, this.aPress - 0.3)) * 0.7 + ease.inQuad(prog(t, this.aPress - 0.3, this.aPress)) * 0.3;
+      const lift = open ? ease.inOutCubic(prog(t, this.tLift0, this.tLift1)) : ease.inOutCubic(prog(t, this.aPress + 0.45, this.aPress + 1.2));
       const y = TIP[1] + 0.05 + lerp(2.2, 0, down) + 2.6 * lift;
       this.stamp.position.set(TIP[0] + 0.25 * lift, y - 0.04 * hit(t, this.aPress, 0.08), TIP[2] - 0.2 * lift);
       this.stamp.rotation.set(0, 0.6 * (1 - down) + 0.3 * lift, 0.15 * lift);
       this.stamp.visible = y < 4;
-      shake = hit(t, this.aPress, 0.09) * 6 + hit(t, this.aPost, 0.07) * 4;
+      shake = open ? 0 : hit(t, this.aPress, 0.09) * 6 + hit(t, this.aPost, 0.07) * 4;
     }
     const sealS = ph === 'seal' ? lerp(0.3, 1, pressed) : 1;
     this.sealNear.visible = this.sealFar.visible = pressed > 0;
     // the seal: whole (seal), cracking in two along the flap's edge (open)
-    const crack = ph === 'open' ? ease.outCubic(prog(t, S + 0.3, S + 0.55)) : 0;
-    const flapA = ph === 'open' ? 2.05 * ease.inOutCubic(prog(t, S + 0.55, S + 1.25)) : 0;
+    const crack = ph === 'open' ? ease.outCubic(prog(t, S + 0.03, S + 0.2)) : 0;
+    const flapA = ph === 'open' ? 2.05 * ease.inOutCubic(prog(t, S + 0.12, S + 0.5)) : 0;
     this.flap.rotation.x = -flapA;
     this.sealNear.position.set(TIP[0] + 0.03 * crack, TIP[1] - 0.002, TIP[2] + 0.035 * crack);
     this.sealNear.rotation.set(0.08 * crack, Math.PI / 2, 0);
@@ -339,6 +483,13 @@ export default class HarvestRemixLetter extends LibScene<P> {
     this.sealFar.rotation.set(-0.06 * crack, Math.PI / 2, 0);
     this.sealFar.scale.set(sealS, 1, sealS);
     (this.waxMat as THREE.MeshPhysicalMaterial).bumpScale = 3 * pressed;
+    if (open) {
+      // the sigil glows faintly green as the stamp clears it, for a moment
+      const g = smoothstep(this.tLift0 + 0.25, this.tLift1, t) * (1 - ease.inOutQuad(prog(t, this.tLift1 + 0.1, this.tLift1 + 0.75)));
+      this.waxMat.emissiveIntensity = 0.9 * g;
+      // the frost's front: creeps in with the pad from the drop on, stops just short of the paper by the lift
+      this.frostU.uReach!.value = 0.08 + 0.69 * ease.outQuad(prog(t, this.aLand - 1.2, this.aPress - 0.2)) + 0.06 * ease.outCubic(prog(t, this.aPress - 0.2, this.tLift1));
+    }
 
     // the postmark (seal): lands on the anchor with a settle
     if (this.pmark) {
@@ -353,17 +504,18 @@ export default class HarvestRemixLetter extends LibScene<P> {
 
     // the letter (open): slides out from under the flap, lifts and unfolds flat on the anchor
     if (ph === 'open') {
-      const out0 = S + 1.0, out1 = S + 1.55;
+      // out of the envelope and open in about a second; it settles flat (a small snap) when the camera arrives
+      const out0 = S + 0.28, out1 = S + 0.62, done = S + OPEN_T;
       const slide = ease.inOutCubic(prog(t, out0, out1));
-      const unf = ease.inOutCubic(prog(t, out1 - 0.05, this.aLater));
-      this.letter.visible = t >= S + 0.7;
-      const up = ease.inOutCubic(prog(t, out1 - 0.1, this.aLater));
-      this.letter.position.set(0, lerp(ET / 2 + 0.006, 0.4, slide) + 0.25 * up, lerp(-0.45, -1.3, slide) + 1.0 * up);
-      this.letter.rotation.set(-Math.PI / 2 + lerp(0, 0.18, slide) * (1 - unf), 0, lerp(0.04, -0.03, unf));
-      const snap = t > this.aLater ? 0.06 * Math.exp(-(t - this.aLater) * 9) * Math.sin((t - this.aLater) * 26) : 0;
+      const unf = ease.inOutCubic(prog(t, out1 - 0.05, done));
+      this.letter.visible = t >= S + 0.25;
+      const up = ease.inOutCubic(prog(t, out1 - 0.1, done));
+      this.letter.position.set(0, lerp(ET / 2 + 0.006, 0.4, slide) + (LETTER_Y - 0.4) * up, lerp(-0.45, -1.3, slide) + (LETTER_Z + 1.3) * up);
+      this.letter.rotation.set(-Math.PI / 2 + lerp(0, 0.18, slide) * (1 - unf), 0, 0);
+      const snap = t > done ? 0.04 * Math.exp(-(t - done) * 9) * Math.sin((t - done) * 26) : 0;
       // folded: top panel over the middle (+π), bottom panel under it (−π); the bottom opens first
-      const bot = Math.PI * 0.97 * (1 - ease.inOutCubic(prog(t, out1 - 0.05, lerp(out1, this.aLater, 0.55))));
-      const top = Math.PI * 0.98 * (1 - ease.inOutCubic(prog(t, lerp(out1, this.aLater, 0.4), this.aLater))) + snap;
+      const bot = Math.PI * 0.97 * (1 - ease.inOutCubic(prog(t, out1 - 0.05, lerp(out1, done, 0.55))));
+      const top = Math.PI * 0.98 * (1 - ease.inOutCubic(prog(t, lerp(out1, done, 0.4), done))) + snap;
       this.panels[0]!.rotation.x = -top;
       this.panels[2]!.rotation.x = bot;
       const sc = lerp(0.5, 1, slide);
@@ -372,9 +524,13 @@ export default class HarvestRemixLetter extends LibScene<P> {
 
     // light
     const a = f.a;
-    this.sun.intensity = (ph === 'open' ? 40 : 26) * (0.92 + 0.12 * a.rms);
-    this.fill.intensity = ph === 'open' ? 0.35 : 0.18;
-    this.st.scene.environmentIntensity = ph === 'open' ? 0.55 : 0.4;
+    // the reading lamp clicks on as the shot cuts in (open)
+    this.lamp.intensity = ph === 'open' && t >= S + 0.04 ? 16 * (t < S + 0.1 ? 0.6 : 1) * (0.97 + 0.03 * Math.sin(t * 2.1)) : 0;
+    this.sun.intensity = (ph === 'open' ? 7 : open ? 38 : 26) * (0.92 + 0.12 * a.rms) * (open ? lerp(0.12, 1, ease.inOutQuad(prog(t, 0.3, this.aLand + 0.2))) : 1);
+    if (open) { this.sun.angle = 0.36; this.sun.penumbra = 0.85; }
+    // the opening is lit by the raking light alone: the paper falls into shadow away from its pool
+    this.fill.intensity = ph === 'open' ? 0.12 : open ? 0.07 : 0.18;
+    this.st.scene.environmentIntensity = (ph === 'open' ? 0.28 : open ? 0.2 : 0.4) * (open ? lerp(0.15, 1, ease.inOutQuad(prog(t, 0.3, this.aLand + 0.6))) : 1);
     this.motes.u.uTime!.value = t;
 
     this.st.time = t;
@@ -387,13 +543,36 @@ export default class HarvestRemixLetter extends LibScene<P> {
       lensCol: lin(c.ice, 0.5),
     });
 
+    // the title over the drop, cinema-style: wide letter-spaced caps, the credit under it
+    if (open && this.title) {
+      const ta = ease.inOutQuad(prog(t, this.aLand, this.aLand + 1.0)) * (1 - ease.inOutQuad(prog(t, this.aPress - 1.7, this.aPress - 0.95)));
+      if (ta > 0) {
+        this.over.clear();
+        const o = this.over.ctx;
+        const fam = F.archivo(125, 300), size = 46, track = size * 0.5;
+        o.globalAlpha = ta;
+        o.font = font(fam, size); o.letterSpacing = `${track}px`; o.textAlign = 'center'; o.textBaseline = 'middle';
+        o.fillStyle = '#EAF2FA';
+        const tw = measure(this.title, fam, size, track);
+        const ty = H / 2 - 262;
+        o.fillText(this.title, W / 2 + track / 2, ty);
+        o.fillStyle = 'rgba(234,242,250,0.35)';
+        o.fillRect(W / 2 - tw * 0.18, ty + 44, tw * 0.36, 1.5);
+        o.font = font(F.archivo(125, 500), 22); o.letterSpacing = '14px'; o.fillStyle = '#9FB4C8';
+        o.fillText(this.credit, W / 2 + 7, ty + 82);
+        o.letterSpacing = '0px'; o.globalAlpha = 1;
+        this.ctx.comp.draw(r, this.over.upload(), out, { mode: 'normal' });
+      }
+    }
+
     const warm = ph === 'open';
     return {
-      bloom: 0.55, bloomThreshold: 0.9, bloomRadius: 0.6, halation: warm ? 0.15 : 0.05, ca: 0.22, grain: 0.016, vignette: 0.45, hud: 0,
+      bloom: warm ? 0.3 : 0.55, bloomThreshold: warm ? 1.1 : 0.9, bloomRadius: 0.6, halation: warm ? 0.06 : 0.05, ca: 0.22, grain: 0.016, vignette: 0.45, hud: 0,
       shake: [shake * 0.6, shake] as [number, number],
-      gain: (warm ? [1.08, 1.0, 0.86] : [0.92, 1.0, 1.1]) as [number, number, number],
+      gain: (warm ? [1.04, 1.0, 0.9] : [0.92, 1.0, 1.1]) as [number, number, number],
       lift: (warm ? [0.012, 0.006, 0] : [0, 0.004, 0.014]) as [number, number, number], sat: warm ? 1.15 : 1.08,
       exposure: clamp(1, 0, 2),
+      fade: open ? 1 - ease.outQuad(prog(t, 0, 0.9)) : 0,
     };
   }
 }

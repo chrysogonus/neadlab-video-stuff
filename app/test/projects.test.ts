@@ -131,7 +131,8 @@ describe('all project cue sheets (technical validity)', () => {
         expect(Number.isFinite(entry.start) && Number.isFinite(entry.end)).toBe(true);
         expect(entry.end).toBeGreaterThan(entry.start);
       }
-      for (let i = 1; i < timeline.length; i++) expect(timeline[i]!.start).toBe(timeline[i - 1]!.end);
+      // each entry starts where the one before ends, less that one's declared `tail` (an overlap it hands over)
+      for (let i = 1; i < timeline.length; i++) expect(timeline[i]!.start).toBeCloseTo(timeline[i - 1]!.end - Number(sheet.entries[i - 1]!.params?.tail ?? 0), 9);
     });
   }
 });

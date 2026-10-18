@@ -15,7 +15,13 @@
 // (bridge: a pullback from one drawer front to the city grid, a hanging tag swinging in); `thaw` (final chorus: a
 // wall of daylight rolls down the aisle and the room turns into an ink drawing on paper, padlocks spring open in a
 // chain, drawer 0001 opens and its letter unfolds, every drawer opens, pages unfold on every rack, the camera rises
-// over the white city, and the light drains to a point).
+// over the white city, and the light drains to a point); `reveal` (final chorus, over "Harvested then, decrypted
+// now" and the drop: the cold aisle, frozen; in the near-silent bar before "decrypted" everything holds, and on the
+// word a thin line of sunlight opens at the far end; on the drop the sunrise rushes down the aisle toward the
+// camera, every drawer bursting open and every padlock springing as it passes, steam rolling up behind it; the
+// pages lift out of the drawers and hang in the air, each with its broken red seal, and the camera glides on down
+// the aisle through them; with `shot: room`, a cut above the racks: the whole hall hung with glowing pages, gold
+// scan lines sweeping them on the kicks).
 //
 // Rendering: the racks, trays (the drawers near the camera, which slide), strip lights, floor, cards (envelopes and
 // pages, from a Canvas2D atlas) and plates (tag, counters, wall tag, Canvas2D textures) are three.js meshes with
@@ -37,7 +43,8 @@ export const schema: SceneSchema = {
   kinds: ['song'],
   lyrics: 'layer',
   entry: {
-    phase: { type: 'string', enum: ['keep', 'harvest', 'gauge', 'petabytes', 'thaw'], default: 'keep', description: 'keep: the first drawer filed and shut; harvest: the archive filling; gauge: the storage gauge over the aisle rolling up; petabytes: the pullback to the city grid; thaw: daylight, every lock open' },
+    phase: { type: 'string', enum: ['keep', 'harvest', 'gauge', 'petabytes', 'thaw', 'reveal'], default: 'keep', description: 'keep: the first drawer filed and shut; harvest: the archive filling; gauge: the storage gauge over the aisle rolling up; petabytes: the pullback to the city grid; thaw: daylight, every lock open; reveal: the hush, the sunrise rushing down the aisle on the drop, the pages hung in the air' },
+    shot: { type: 'string', enum: ['', 'room', 'slam', 'count'], default: '', description: 'reveal: room is the cut above the racks to the hall of hanging pages; harvest: slam (low along one wall, its drawers slamming toward the camera on the 8th notes) or count (close on a rack-end counter spinning up)' },
     tag: { type: 'string', default: '0001 · TUE 2021-03-09', description: 'the tag of drawer 0001 (its date heads the unfolded letter in the thaw)' },
     wallTag: { type: 'string', default: '', description: 'petabytes: the hanging tag that swings into view' },
     title: { type: 'string', default: 'Cold storage · used', description: 'gauge: the kicker over the reading' },
@@ -55,7 +62,7 @@ export const schema: SceneSchema = {
   example: { entry: { phase: 'harvest' }, cues: [{ count: '00412' }, { count: '01930' }, { count: '08811' }] },
 };
 
-interface P { phase: 'keep' | 'harvest' | 'gauge' | 'petabytes' | 'thaw'; tag: string; wallTag: string; title: string; unit: string; decimals: number }
+interface P { phase: 'keep' | 'harvest' | 'gauge' | 'petabytes' | 'thaw' | 'reveal'; shot: '' | 'room' | 'slam' | 'count'; tag: string; wallTag: string; title: string; unit: string; decimals: number }
 interface C { drawer: string; tag: string; count: string; wallTag: string; value: number; label: string }
 
 type V3 = [number, number, number];
@@ -630,6 +637,8 @@ void main() {
   if (vFx.z < 0.999 && hash12(FRAG_PX + fract(uTime * 7.0) * 113.0) > vFx.z) discard;
   float th = max(thawAt(-vW.z), vFx.y);
   vec3 col = light(vW, n, tx, 0.25, th) + tx * uAmb * 2.0 * (1.0 - th);
+  // glow: a page lit through like a lantern, brighter as it is read (reveal)
+  col += tx * uSunC * vFx.w * 0.6;
   if (vFx.x > -1.0) {
     // the glint: one bright streak across the padlock
     vec2 dl = (vUv - vec2(0.5, 0.56)) * vec2(1.6, 1.0);
@@ -693,6 +702,8 @@ function grow(out: number[], rnd: () => number, u: number, v: number, a: number,
 interface Tray { x: number; y: number; z: number; s: number; nx: number; wall: number; b: number; col: number; row: number; h1: number; h2: number; h3: number; h4: number }
 interface Drop { tray: number; tc: number; t0: number; spin: number }
 interface Page { c: V3; ang: number; kind: number; at: number; seed: number }
+/** reveal: a page that lifts out of a near drawer and hangs in the aisle (how far out, how high, its turn). */
+interface Hang { tray: number; kind: number; out: number; dy: number; ang: number; seed: number }
 interface Plate { mesh: THREE.Mesh; cv: HTMLCanvasElement; c: CanvasRenderingContext2D; tex: THREE.CanvasTexture; mat: THREE.RawShaderMaterial; last: string; w: number; h: number }
 
 export default class HarvestRemixVault extends LibScene<P, C> {
@@ -725,6 +736,17 @@ export default class HarvestRemixVault extends LibScene<P, C> {
   private wallText = '';
   private dateLine = '';
   private aDecr = 0;
+  // reveal: the hush, the drop, the cut to the room; the sunlight front (it starts at s = F0 and runs at V m/s)
+  private tHush = 0; private tNow = 0; private tRoom = 0; private F0 = 62; private V = 70;
+  private hang: Hang[] = [];
+  private slit = new FSPass(/* glsl */ `
+    uniform vec2 uP; uniform float uW, uAmt; uniform vec3 uCol;
+    void main() {
+      vec2 d = (vUv - uP) * vec2(${(W / H).toFixed(4)}, 1.0);
+      float core = exp(-abs(d.x) / max(uW, 1e-5)), halo = exp(-abs(d.x) / max(uW * 12.0, 1e-5)) * 0.12;
+      float a = uAmt * (core + halo) * exp(-pow(max(abs(d.y) - 0.07, 0.0) / 0.03, 2.0));
+      fragColor = vec4(uCol * a, 0.0);
+    }`, { uP: { value: new THREE.Vector2(0.5, 0.5) }, uW: { value: 0.002 }, uAmt: { value: 0 }, uCol: { value: new THREE.Vector3(1, 0.8, 0.55) } });
   private pageAt = { c: [0, 0, 0] as V3, r: [1, 0, 0] as V3, u: [0, 1, 0] as V3 };
   private drainAt = 0;
   private fin = new Finisher();
@@ -771,7 +793,15 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     this.buildPlates();
     if (this.ph === 'harvest') this.planDrops();
     if (this.ph === 'thaw') this.planThaw();
+    if (this.ph === 'reveal') this.planReveal();
+    const sm = this.slit.mat;
+    sm.blending = THREE.CustomBlending; sm.transparent = true;
+    sm.blendEquation = THREE.AddEquation; sm.blendSrc = THREE.OneFactor; sm.blendDst = THREE.OneFactor;
+    sm.blendSrcAlpha = THREE.ZeroFactor; sm.blendDstAlpha = THREE.OneFactor;
   }
+
+  /** thaw and reveal share the sunrise look (the cold palette before the sun, the day after). */
+  private get thawLike() { return this.ph === 'thaw' || this.ph === 'reveal'; }
 
   /** The cue's anchor (or a fallback a little into the entry). */
   private at(i: number, fb: number) { return this.a[i] ?? fb; }
@@ -921,7 +951,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     cv.width = 4 * T; cv.height = 2 * T;
     const c = cv.getContext('2d')!;
     const pals = this.ctx.style.palettes, first = Object.values(pals)[0]!;
-    const cold = look(this.ph === 'thaw' ? pals.frost ?? first : pals[this.cues[0]?.def.palette ?? ''] ?? first);
+    const cold = look(this.thawLike ? pals.frost ?? first : pals[this.cues[0]?.def.palette ?? ''] ?? first);
     const day = look(pals[this.cues.at(-1)?.def.palette ?? ''] ?? pals.plain ?? first);
     const frostCol = coldOf(cold);
     c.fillStyle = cold.bg; c.fillRect(0, 0, cv.width, cv.height);
@@ -1048,7 +1078,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
   }
 
   private buildPlates() {
-    if (this.ph === 'keep' || this.ph === 'thaw') this.plate('tag', 1024, 140, 0.9);
+    if (this.ph === 'keep' || this.thawLike) this.plate('tag', 1024, 140, 0.9);
     if (this.ph === 'harvest') {
       const p = this.plate('count', 720, 270, 1);
       // the same reading on the near rack ends (blocks 0 and 1, both walls of aisle 0)
@@ -1131,6 +1161,36 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     this.pageAt = { c: add(cam.c, mul(f, 1.05)), r, u };
   }
 
+  /** When the sunrise front reaches s along the aisle (reveal). */
+  private frontAt(s: number) { return this.tNow + Math.max(0, this.F0 - s) / this.V; }
+
+  private planReveal() {
+    const line = this.cues.find((c) => c.line), spans = this.cues.filter((c) => !c.line), au = this.ctx.audio;
+    this.aDecr = line?.line?.words.find((w) => /^decrypt/i.test(w.w))?.start ?? this.S + 3.6;
+    this.tHush = au.downbeats.filter((d) => d <= this.aDecr + 0.01).at(-1) ?? this.aDecr - 0.6;
+    this.tNow = spans[0]?.at ?? this.aDecr + 1.2;
+    this.tRoom = spans[1]?.at ?? this.tNow + 3.66;
+    // the front crosses from the far end to just behind the camera (s ≈ -2.4) in two beats
+    this.V = (this.F0 + 2.4) / (2 * this.beat);
+    const rnd = mulberry32(606);
+    // pages that lift out of the near drawers and hang in the aisle
+    for (let i = 0; i < NTRAY; i++) {
+      const tr = this.trays[i]!;
+      if (i === this.hero || tr.s > 34 || tr.s < -1 || rnd() > 0.38 - tr.s * 0.005) continue;
+      this.hang.push({ tray: i, kind: 3 + Math.floor(rnd() * 5), out: 0.3 + rnd() * 0.55, dy: 0.15 + rnd() * 0.9, ang: (rnd() - 0.5) * 0.7, seed: rnd() });
+    }
+    // and the whole hall's, hung in the air over the racks (the room)
+    for (let n = -16; n < 26; n++) for (let b = -3; b <= 10; b++) {
+      const xc = (n + 0.5) * P;
+      for (let k = 0; k < 6; k++) {
+        const s = b * BP + (k + 0.5) * (BL / 6) + (rnd() - 0.5) * 0.5, x = xc + (rnd() - 0.5) * 0.3;
+        const d = Math.hypot(x, s);
+        if (rnd() > 1.2 - d / 110) continue;
+        this.pages.push({ c: [x, RH + 0.5 + rnd() * 2.6, -s], ang: (rnd() - 0.5) * 0.5, kind: 3 + Math.floor(rnd() * 5), at: this.frontAt(s) + 0.25 + rnd() * 0.4, seed: rnd() });
+      }
+    }
+  }
+
   // ------------------------------------------------------------------ cameras
 
   private camKeys(t: number, ks: { t: number; c: V3; g: V3; fov?: number; e?: (x: number) => number }[]) {
@@ -1142,9 +1202,21 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     };
   }
 
+  /** keep's moments: the glint (first cue) and the shut (second); with one cue there is no glint, it shuts on it. */
+  private keepAt() {
+    const S = this.S, one = this.cues.length < 2;
+    return { aBreak: one ? -1e9 : this.at(0, S + 1.1), aKeep: one ? this.at(0, S + 1) : this.at(1, S + 4.7), c5: one ? S : this.st(1, S + 3.7), one };
+  }
+
   private camKeep(t: number) {
-    const S = this.S, E = this.E, aBreak = this.at(0, S + 1.1), c5 = this.st(1, S + 3.7);
+    const S = this.S, E = this.E, { aBreak, aKeep, c5, one } = this.keepAt();
     const io = ease.inOutCubic;
+    if (one) return this.camKeys(t, [
+      { t: S, c: [0.05, 2.25, 0.75], g: [1.0, 1.5, -1.25] },
+      { t: aKeep, c: [0.46, 2.0, -0.55], g: [1.04, 1.55, -1.2], e: ease.inOutQuad },
+      { t: aKeep + 0.9, c: [0.3, 1.72, -0.12], g: [1.0, 1.4, -2.3], e: io },
+      { t: E, c: [0.2, 1.72, 0.15], g: [0.82, 1.4, -3.0], e: ease.linear },
+    ]);
     return this.camKeys(t, [
       { t: S, c: [0.0, 2.3, 1.1], g: [1.0, 1.5, -1.25] },
       { t: aBreak, c: [0.38, 2.05, -0.3], g: [1.02, 1.55, -1.15], e: ease.inOutQuad },
@@ -1156,6 +1228,15 @@ export default class HarvestRemixVault extends LibScene<P, C> {
 
   private camHarvest(t: number): { c: V3; g: V3; fov: number } {
     const S = this.S, c8 = this.st(2, S + 7.9), aLater = this.at(2, S + 10.8);
+    // a bar of the drop: low along the right-hand wall as its drawers slam; or close on a rack-end counter
+    if (this.P.shot === 'slam') return this.camKeys(t, [
+      { t: S, c: [0.5, 0.62, 1.4], g: [1.25, 1.0, -11] },
+      { t: this.E, c: [0.48, 0.7, 0.2], g: [1.25, 1.05, -11], e: ease.linear },
+    ]);
+    if (this.P.shot === 'count') return this.camKeys(t, [
+      { t: S, c: [0.8, 1.86, 1.55], g: [1.8, 1.95, 0] },
+      { t: this.E, c: [1.38, 1.94, 0.82], g: [1.8, 1.95, 0], e: ease.outCubic },
+    ]);
     const base = (tt: number): { c: V3; g: V3; fov: number } => {
       // hold back a moment so both rack-end counters read whole, then glide in past them
       const hold = S + 1.2;
@@ -1215,8 +1296,27 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     ]);
   }
 
+  private camReveal(t: number): { c: V3; g: V3; fov: number } {
+    const S = this.S, E = this.E, tH = this.tHush, tN = this.tNow, tR = this.tRoom;
+    if (this.P.shot === 'room') return this.camKeys(t, [
+      { t: tR, c: [-0.7, 3.9, 3.0], g: [0.8, 1.6, -6] },
+      { t: tR + 1.3, c: [-3.2, 8.8, 5.6], g: [3, 0.8, -12], e: ease.inOutCubic },
+      { t: E + 0.3, c: [-12.5, 18.5, 8.6], g: [6, 0, -16], e: ease.inOutQuad },
+    ]);
+    // creep down the aisle, hold through the hush, lean in as the light hits, then glide on down the aisle through
+    // the hanging pages
+    return this.camKeys(t, [
+      { t: S, c: [0, 1.62, 4.6], g: [0, 1.5, -40] },
+      { t: tH, c: [0, 1.62, 2.7], g: [0, 1.5, -40], e: ease.outQuad },
+      { t: tN, c: [0, 1.62, 2.66], g: [0, 1.5, -40], e: ease.linear },
+      { t: tN + 2 * this.beat + 0.3, c: [0, 1.68, 1.7], g: [0, 1.54, -40], e: ease.outCubic },
+      { t: tR + 0.3, c: [0.05, 1.82, -7.5], g: [0.2, 1.75, -40], e: ease.inOutQuad },
+    ]);
+  }
+
   private camAt(t: number) {
     switch (this.ph) {
+      case 'reveal': return this.camReveal(t);
       case 'keep': return this.camKeep(t);
       case 'harvest': return this.camHarvest(t);
       case 'gauge': return this.camGauge(t);
@@ -1255,7 +1355,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     r.render(this.scene, this.cam);
     // the light in the air: the strip lights' cones down the aisle (cold), the sunrise pouring up it (thaw)
     this.vl.time = t;
-    const cz = cam.c[2], warmV = this.ph === 'thaw';
+    const cz = cam.c[2], warmV = this.thawLike;
     const stripC = warmV ? new THREE.Color(1.0, 0.72, 0.42).multiplyScalar(0.3 * th) : new THREE.Color(0.55, 0.78, 1.0).multiplyScalar(this.ph === 'keep' ? 0.45 : 0.3);
     this.vl.beams = [0, 1, 2, 3].map((k) => ({ p: [0, 3.6, cz - 2 - k * 4.5] as [number, number, number], d: [0, -1, -0.15] as [number, number, number], angle: 0.42, color: stripC, range: 6 }));
     if (warmV) this.vl.beams = [{ p: [0, 2, cz - 60], d: [0, -0.05, 1], angle: 0.35, color: new THREE.Color(1.0, 0.7, 0.4).multiplyScalar(0.25 * th), range: 70 }];
@@ -1263,7 +1363,15 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     this.vl.render(r, this.rt, this.cam, true);
     // the light: down the aisle from its far end (the sunrise, thaw; the cold strip lights otherwise)
     const far = new THREE.Vector3(cam.g[0] + (cam.g[0] - cam.c[0]) * 30, 1.6, cam.g[2] + (cam.g[2] - cam.c[2]) * 30).project(this.cam);
-    const thaw = this.ph === 'thaw';
+    const thaw = this.thawLike;
+    // reveal: on "decrypted" a thin line of sunlight opens at the far end, like a door cracked open; it bursts on the drop
+    if (this.ph === 'reveal' && t > this.aDecr - 0.05 && t < this.tNow + 0.4) {
+      const u = this.slit.u, o = ease.outCubic(prog(t, this.aDecr - 0.05, this.aDecr + 0.35));
+      (u.uP!.value as THREE.Vector2).set(far.x * 0.5 + 0.5, far.y * 0.5 + 0.5 + 0.02);
+      u.uW!.value = lerp(0.0004, 0.0022, o) + 0.05 * ease.inQuad(prog(t, this.tNow - 0.02, this.tNow + 0.25));
+      u.uAmt!.value = 26 * o * (1 - ease.inQuad(prog(t, this.tNow - 0.05, this.tNow + 0.2)));
+      this.slit.render(r, this.rt);
+    }
     this.fin.apply(r, this.rt.texture, out, {
       rays: { uv: [far.x * 0.5 + 0.5, far.y * 0.5 + 0.5], amt: thaw ? 0.3 + 0.9 * th : 0.55, thr: thaw ? 0.85 : 0.6, len: 0.85, decay: 0.975, rad: thaw ? 0.9 : 0.6,
         tint: thaw ? linC('#FFC98A', 1) : linC((this.ctx.style.palettes.frost ?? {}).ice ?? '#8BE9FF', 0.8) },
@@ -1271,7 +1379,8 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     });
     if (thaw && th > 0.01) {
       this.steam.u.uTime!.value = t;
-      this.steam.u.uAmt!.value = 0.09 * th * (1 - 0.6 * smoothstep(this.aDecr + 2, this.aDecr + 6, t));
+      this.steam.u.uAmt!.value = this.ph === 'reveal' ? 0.05 * th * (1 - 0.6 * smoothstep(this.tRoom, this.tRoom + 2.5, t))
+        : 0.09 * th * (1 - 0.6 * smoothstep(this.aDecr + 2, this.aDecr + 6, t));
       this.steam.render(r, out);
     }
 
@@ -1283,11 +1392,17 @@ export default class HarvestRemixVault extends LibScene<P, C> {
       this.drain.render(r, out);
     }
     const day = th;
+    // reveal: the front washing over the lens
+    const wash = this.ph === 'reveal' ? hitAt(t, this.tNow + 2 * this.beat, 0.22) : 0;
+    // reveal: keep the burst from smearing into a full-width streak; the room's pages glow against deeper shadow
+    const burst = this.ph === 'reveal' ? smoothstep(this.tNow - 0.1, this.tNow, t) * (1 - smoothstep(this.tNow + 0.4, this.tNow + 1.0, t)) : 0;
+    const room = this.ph === 'reveal' && this.P.shot === 'room' ? 1 : 0;
     return {
-      bloom: lerp(0.65, 0.2, day), bloomThreshold: lerp(0.72, 1.15, day), streak: lerp(0.32, 0.1, day), bloomRadius: 0.6, halation: 0.08 * day, ca: lerp(0.25, 0.15, day),
+      flash: 0.45 * wash,
+      bloom: lerp(0.65, 0.2, day) + 0.25 * room, bloomThreshold: lerp(0.72, 1.15, day) - 0.15 * room, streak: lerp(0.32, 0.1, day) * (1 - 0.85 * burst), bloomRadius: 0.6, halation: 0.08 * day, ca: lerp(0.25, 0.15, day),
       grain: 0.016, vignette: lerp(0.42, 0.32, day), hud: 0,
       gain: (thaw ? [1.06 + 0.04 * day, 1.0, 0.86] : this.ph === 'keep' ? [0.92, 1.0, 1.1] : [1.03, 1.0, 0.96]) as [number, number, number],
-      lift: (thaw ? [0.01 * day, 0.004 * day, 0] : [0, 0.003, 0.01]) as [number, number, number], sat: thaw ? 1.05 : 1.1,
+      lift: (room ? [-0.03, -0.035, -0.03] : thaw ? [0.01 * day, 0.004 * day, 0] : [0, 0.003, 0.01]) as [number, number, number], sat: thaw ? 1.05 : 1.1,
     };
   }
 
@@ -1314,7 +1429,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     const vec = (n: string, c: [number, number, number]) => (U[n]!.value as THREE.Vector3).set(...c);
     const lin = hexToLinear;
     const pals = this.ctx.style.palettes;
-    const ck = this.ph === 'thaw' ? look(pals.frost ?? Object.values(pals)[0]!) : k;
+    const ck = this.thawLike ? look(pals.frost ?? Object.values(pals)[0]!) : k;
     const warm = this.ph === 'harvest' || this.ph === 'gauge' || this.ph === 'petabytes';
     const ice = coldOf(ck);
     vec('uSteel', lin(mixHex(mixHex(ck.bg, ck.dim, 0.55), ice, 0.1)));
@@ -1325,8 +1440,8 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     const fogC = lin(ck.bg), si = lin(ice);
     vec('uFogC', [fogC[0] + si[0] * 0.004, fogC[1] + si[1] * 0.004, fogC[2] + si[2] * 0.004]);
     vec('uMistC', [si[0] * 0.07, si[1] * 0.07, si[2] * 0.07]);
-    const dk = this.ph === 'thaw' ? k : ck;
-    if (this.ph === 'thaw') {
+    const dk = this.thawLike ? k : ck;
+    if (this.thawLike) {
       // sunrise: the racks' metal turns warm brushed aluminium in the sun; the sunlight low and gold; a hot gold haze
       // down the aisle toward the sun
       const sc = lin('#FFC08A');
@@ -1341,7 +1456,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     let dayAtCam = 0;
 
     if (this.ph === 'keep') {
-      const S = this.S, aBreak = this.at(0, S + 1.1), aKeep = this.at(1, S + 4.7);
+      const S = this.S, { aBreak, aKeep, one } = this.keepAt();
       // one bay lit (a fluorescent flicker on), then the aisle bay by bay after the drawer shuts
       for (let i = 0; i < NSEG; i++) {
         const on = i === 0 || i === NBAY ? S - 0.02 + (i ? 0.3 : 0) : aKeep + 0.45 + (i - 1) * this.beat * 0.75;
@@ -1360,7 +1475,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
       this.heroEnv(open < 0.05);
       // the envelope slides down into the open drawer and lies flat; glints on the first anchor
       const fr = this.inTray(this.hero, open, ENV[1]);
-      const land = this.ctx.audio.beats.find((b) => b > S + 0.65) ?? S + 0.9;
+      const land = one ? aKeep - 0.4 : this.ctx.audio.beats.find((b) => b > S + 0.65) ?? S + 0.9;
       const fall = ease.inQuad(prog(t, S + 0.05, land));
       const settle = t > land ? 0.05 * Math.exp(-(t - land) * 10) * Math.sin((t - land) * 28) : 0;
       const tilt = lerp(0.55, 0, fall) + settle;
@@ -1375,6 +1490,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     } else if (this.ph === 'harvest') this.stateHarvest(t, f, seg);
     else if (this.ph === 'gauge') this.stateGauge(t, seg, k);
     else if (this.ph === 'petabytes') this.statePetabytes(t, k, seg);
+    else if (this.ph === 'reveal') dayAtCam = this.stateReveal(t, seg, camC, k);
     else dayAtCam = this.stateThaw(t, f, seg, camC, k);
     return dayAtCam;
   }
@@ -1382,6 +1498,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
   private stateHarvest(t: number, _f: Frame, seg: Float32Array) {
     const S = this.S, aTime = this.at(0, S + 3.3), aMine = this.at(1, S + 7.1), aLater = this.at(2, S + 10.8);
     const set = (n: string, v: number) => { this.U[n]!.value = v; };
+    if (this.P.shot === 'slam' || this.P.shot === 'count') { this.stateBar(t, seg); return; }
     seg.fill(1);
     set('uSegLo', 1); set('uSegHi', 1); set('uOther', 1);
     set('uLampAll', 1 + 1.4 * pulse(t, aMine, 0.35)); set('uFill', 0.93); set('uFrostAll', 1); set('uFarOpen', 0); set('uLockT', 1e5); set('uFront', 1e5);
@@ -1435,6 +1552,36 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     } else val = lerp(n1, n2, ease.outQuart(prog(t, this.st(2, aMine + 0.8) + 0.2, aLater)));
     const p = this.plates.count!, ak = this.lookAt(t), shown = Math.floor(val);
     this.paint(p, `${shown}`, (c, w, h) => drawCounter(c, w, h, shown, this.font('mono'), ak));
+  }
+
+  /** harvest, one bar of the drop: the right wall's near drawers slam on the 8th notes, far to near (slam); a
+   * rack-end counter spins up to the cue's count (count). */
+  private stateBar(t: number, seg: Float32Array) {
+    const S = this.S, E = this.E, slam = this.P.shot === 'slam', e8 = this.beat / 2;
+    const set = (n: string, v: number) => { this.U[n]!.value = v; };
+    seg.fill(1);
+    set('uSegLo', 1); set('uSegHi', 1); set('uOther', 1);
+    set('uLampAll', 1); set('uFill', 0.93); set('uFrostAll', 1); set('uFarOpen', 0); set('uLockT', 1e5); set('uFront', 1e5);
+    set('uFogDen', 0.032); set('uFogDenDay', 0.032); set('uMist', 0.38); set('uAmb', 0.03);
+    const st = this.trayAttr.iSt!, ex = this.trayAttr.iEx!;
+    for (let i = 0; i < NTRAY; i++) {
+      const tr = this.trays[i]!;
+      let open = 0, lamp = 1;
+      if (slam && tr.nx < 0 && tr.s > -1 && tr.s < 14) {
+        const tw = S + e8 * Math.round(((14 - tr.s) / 15 * (E - S - 0.3) + 0.1) / e8) + 0.01 * tr.h2;
+        open = trayShut(t, 0.3 + 0.08 * tr.h3, tw);
+        lamp = t < tw ? 0.12 : flick(t, tw);
+      }
+      st.setXYZW(i, open, lamp * (0.85 + 0.15 * Math.sin(t * 2.3 + tr.h4 * 50)), 1, 0);
+      ex.setX(i, 0);
+    }
+    const p = this.plates.count;
+    if (p) {
+      const to = this.counts[0] || 8811, from = Math.round(to * 0.22);
+      const shown = Math.floor(lerp(from, to, ease.outQuart(prog(t, S + 0.05, E - 0.3))));
+      const ak = this.lookAt(t);
+      this.paint(p, `${shown}`, (c, w, h) => drawCounter(c, w, h, shown, this.font('mono'), ak));
+    }
   }
 
   private stateGauge(t: number, seg: Float32Array, k: Look) {
@@ -1577,6 +1724,67 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     return clamp((camS - front) / 5 + 0.5);
   }
 
+  private stateReveal(t: number, seg: Float32Array, camC: V3, k: Look) {
+    const S = this.S, tN = this.tNow, tH = this.tHush, tR = this.tRoom;
+    const set = (n: string, v: number) => { this.U[n]!.value = v; };
+    // the cold aisle before the drop (its strips dim a little in the hush); the sunrise front after
+    const hush = smoothstep(tH - 0.05, tH + 0.3, t) * (1 - smoothstep(tN, tN + 0.1, t));
+    seg.fill(1 - 0.35 * hush);
+    set('uSegLo', 1 - 0.35 * hush); set('uSegHi', 1); set('uOther', 1 - 0.3 * hush);
+    const front = t < tN ? 1e5 : this.F0 - this.V * (t - tN);
+    set('uFront', front);
+    set('uLampAll', t < tN ? 0.8 : 0.5); set('uFill', 0.95); set('uFrostAll', 1); set('uLockT', S - 10);
+    set('uFarOpen', smoothstep(tN + 0.3, tN + 1.2, t));
+    set('uFogDen', 0.06); set('uFogDenDay', lerp(0.02, 0.0028, smoothstep(tN + 0.6, tR + 1.5, t))); set('uMist', t < tN ? 0.5 : 0.35); set('uAmb', 0.02);
+    const st = this.trayAttr.iSt!, ex = this.trayAttr.iEx!;
+    const hangs = new Set(this.hang.map((h) => h.tray));
+    for (let i = 0; i < NTRAY; i++) {
+      const tr = this.trays[i]!, ot = this.frontAt(tr.s) + 0.04 * tr.h2;
+      const open = (i === this.hero ? 0.45 : 0.28 + 0.16 * tr.h3) * ease.outBack(prog(t, ot, ot + 0.26));
+      const lock = smoothstep(ot, ot + 0.16, t);
+      const tile = i === this.hero || (hangs.has(i) && t > ot + 0.15) ? -1 : 3 + Math.floor(tr.h4 * 5);
+      st.setXYZW(i, open, 0.55, 1, lock);
+      ex.setX(i, t > ot ? tile : -1);
+    }
+    this.heroEnv(t < this.frontAt(this.trays[this.hero]!.s)); // the copy is gone: drawer 0001 opens empty
+    // the near pages lift out and hang in the aisle, facing the camera, swaying in the rising air
+    const up: V3 = [0, 1, 0];
+    for (const h of this.hang) {
+      const tr = this.trays[h.tray]!, ot = this.frontAt(tr.s) + 0.04 * tr.h2;
+      const q = ease.outCubic(prog(t, ot + 0.12, ot + 1.1));
+      if (q <= 0) continue;
+      const fr = this.inTray(h.tray, 0.3, PAGE[1]);
+      // out into the aisle, but clear of its middle, where the camera passes
+      const end: V3 = [tr.x + tr.nx * Math.min(0.45 + h.out, A - 0.45), tr.y + h.dy, tr.z];
+      const c = mix3(fr.c, end, q);
+      c[1] += 0.03 * Math.sin(t * 1.3 + h.seed * 20) * q;
+      const toCam = norm([camC[0] - c[0], 0, camC[2] - c[2]]);
+      const a = h.ang * q + 0.12 * Math.sin(t * 0.9 + h.seed * 30) * q;
+      const face = norm([toCam[0] * Math.cos(a) - toCam[2] * Math.sin(a), 0, toCam[0] * Math.sin(a) + toCam[2] * Math.cos(a)]);
+      const right = norm(cross(up, face));
+      const sc = lerp(0.6, 1, q);
+      this.card(c, mul(right, PAGE[0] / 2 * sc), mul(up, PAGE[1] / 2 * sc), h.kind, [0, 0, 1, 1], [-10, 1, 1, 0.6 * q]);
+    }
+    // the hall's pages, hung over the racks; read by gold scan lines sweeping across on the kicks (room)
+    const kicks = this.kicks.filter((x) => x >= tR - 0.05 && x <= t);
+    for (const pg of this.pages) {
+      if (t < pg.at) continue;
+      const q = ease.outCubic(prog(t, pg.at, pg.at + 0.9));
+      const c: V3 = [pg.c[0], lerp(RH + 0.05, pg.c[1], q) + 0.06 * Math.sin(t * 0.8 + pg.seed * 40), pg.c[2]];
+      const toCam = norm([camC[0] - c[0], 0, camC[2] - c[2]]);
+      const right = norm(cross(up, toCam));
+      let read = 0;
+      for (const kk of kicks) { const wx = -22 + (t - kk) * 46; read += Math.exp(-Math.pow((c[0] - wx) / 1.3, 2)) * Math.exp(-(t - kk) * 0.7); }
+      this.card(c, mul(right, PAGE[0] * lerp(0.4, 1, q)), mul(up, PAGE[1] * lerp(0.4, 1, q)), pg.kind, [0, 0, 1, 1], [-10, 1, 1, 1.1 * q + 5 * read]);
+    }
+    // drawer 0001's tag
+    const p = this.plates.tag!;
+    this.paint(p, 'day', (c, w, h) => drawTag(c, w, h, this.tagText, this.font('mono'), k.type, mixHex(k.bg, '#ffffff', 0.4)));
+    (p.mat.uniforms.uDayP!.value as number) = 0;
+    this.placeTag(this.hero, 0.45 * ease.outBack(prog(t, this.frontAt(this.trays[this.hero]!.s), this.frontAt(this.trays[this.hero]!.s) + 0.26)));
+    return t < tN ? 0 : clamp((-camC[2] - front) / 5 + 0.5);
+  }
+
   /** Whether drawer 0001's envelope shows behind its glass (not while it lies in the open tray or is lifted out). */
   private heroEnv(show: boolean) {
     const s = 0.001 + hash(this.hero, 15);
@@ -1592,7 +1800,7 @@ export default class HarvestRemixVault extends LibScene<P, C> {
     this.place(p, c, [0, 0, -t.nx], [0, 1, 0], 0.376, 0.376 * 140 / 1024);
   }
 
-  /** Push a card: centre, half-extent axes, atlas tile, sub-rect of the tile, fx (glint t, day, alpha, -). */
+  /** Push a card: centre, half-extent axes, atlas tile, sub-rect of the tile, fx (glint t, day, alpha, glow). */
   private card(c: V3, u: V3, v: V3, tile: number, r: [number, number, number, number] = [0, 0, 1, 1], fx: [number, number, number, number] = [-10, 0, 1, 0]) {
     if (this.nCard >= NCARD) return;
     const i = this.nCard++, a = this.cardAttr;
@@ -1625,6 +1833,7 @@ function trayShut(t: number, o: number, tw: number) {
   return Math.max(-0.004, -0.012 * Math.exp(-a * 16) * Math.sin(a * 40));
 }
 const pulse = (t: number, t0: number, hl: number) => (t < t0 ? 0 : Math.pow(0.5, (t - t0) / hl));
+const hitAt = pulse;
 
 /** The cold colour of a look: the bluer of accent and accent2. */
 function coldOf(k: Look) {
@@ -1783,12 +1992,14 @@ function drawPage(c: CanvasRenderingContext2D, w: number, h: number, kind: 'lett
     if (o.mono) { c.font = font(o.mono, 22); c.textAlign = 'center'; c.fillText('12 · 06 · 1987', 0, 130); }
     c.restore();
   }
-  // the broken seal in a corner
-  const sx = w - 48, sy = h - 46;
-  c.fillStyle = o.red;
+  // the broken seal in a corner: two halves of red wax pulled apart (large, so it reads from far: opened mail)
+  const sx = w - 62, sy = h - 60;
   for (const side of [-1, 1]) {
-    c.save(); c.translate(sx + side * 4, sy + side * 2); c.rotate(side * 0.2);
-    c.beginPath(); c.arc(0, 0, 20, side > 0 ? -Math.PI / 2 : Math.PI / 2, side > 0 ? Math.PI / 2 : Math.PI * 1.5); c.closePath(); c.fill();
+    c.save(); c.translate(sx + side * 7, sy + side * 3); c.rotate(side * 0.25);
+    const g = c.createRadialGradient(-6, -8, 2, 0, 0, 34);
+    g.addColorStop(0, mixHex(o.red, '#ffffff', 0.25)); g.addColorStop(0.6, o.red); g.addColorStop(1, mixHex(o.red, '#000000', 0.45));
+    c.fillStyle = g;
+    c.beginPath(); c.arc(0, 0, 32, side > 0 ? -Math.PI / 2 : Math.PI / 2, side > 0 ? Math.PI / 2 : Math.PI * 1.5); c.closePath(); c.fill();
     c.restore();
   }
 }

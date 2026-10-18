@@ -5,9 +5,14 @@
 //   light breathes up and a ring of green light runs off it.
 // - `macro` (verse 1, "padlock"): the padlock set in the red wax seal on the Tuesday envelope, extreme close-up,
 //   shallow focus. It is dark and its shackle stands up; on the anchor the shackle drops home (click) and the
-//   glass lights green, a ring of green light running out across the wax.
+//   glass lights green, a ring of green light running out across the wax. With a `tooltip`, it opens under the
+//   lock on the line's word "said"; on "done" the camera whips aside and the letter is gone, sent.
 // - `crack` (chorus 2, "decrypt"): a frosted padlock in gold light, gold lamps out of focus behind; frost thickens
 //   across it; on the anchor a crack runs through its body with a bright tick of gold light from inside.
+// - `unlock` (final chorus, "So that's what you were on about"): the frosted padlock set in frosted red wax on the
+//   face of the copy's slab of ice; the gold key slides into the keyhole and turns on "what", the frost on the lock
+//   clears and its shackle springs; on the next downbeat (the hit) the slab cleaves in two, gold light pouring out of
+//   the split, shards and frost dust thrown off. The keyhole stays centred for the match cut to the wax seal.
 // - `secure` (outro): the green padlock again, clean lens; on the anchor it clicks and a small browser tooltip
 //   "Connection secure" opens under it; then one last thread of frost reaches in from the lower-left corner.
 import * as THREE from 'three';
@@ -18,7 +23,7 @@ import { LineBatch } from '../engine/lines';
 import { clamp, ease, hexToLinear, lerp, mulberry32, prog, smoothstep } from '../engine/util';
 import { font, measure } from '../engine/type';
 import { LibScene, W, H, hit } from './_lib';
-import { Stage, keyShape, backdrop, camKeys, colors, depthAlpha, dust, envProbe, envelopeTexture, lin, padlock, paperMaterial, type CamKey, type Padlock, fitOf } from './harvest-remix-kit';
+import { Stage, backdrop, camKeys, colors, depthAlpha, dust, envProbe, envelopeTexture, goldKey, iceMaterial, iceSlab, lin, padlock, paperMaterial, type CamKey, type Padlock, fitOf } from './harvest-remix-kit';
 
 export const schema: SceneSchema = {
   description: 'A glass padlock in three.js, lit from inside: open (intro, green, frost growing on the lens), macro (set in the red wax seal, it clicks shut and lights green on the anchor), crack (frosted, in gold light, a crack runs through it on the anchor), secure (outro: clicks, a "Connection secure" tooltip, a last thread of frost). Harvest remix.',
@@ -28,7 +33,7 @@ export const schema: SceneSchema = {
     phase: { type: 'string', enum: ['open', 'macro', 'crack', 'unlock', 'secure'], default: 'open', description: 'which shot of the padlock (unlock: the gold key turns in the frosted lock and the shackle springs)' },
   },
   cue: {
-    tooltip: { type: 'string', default: '', description: 'secure: the browser tooltip that opens under the lock on the anchor' },
+    tooltip: { type: 'string', default: '', description: 'the browser tooltip that opens under the lock (secure: on the anchor; macro: on the word "said")' },
   },
   example: { entry: { phase: 'open' }, cues: [{}] },
 };
@@ -63,6 +68,10 @@ export default class HarvestRemixPadlock extends LibScene<P, C> {
 
   private S = 0; private E = 0;
   private aAt = 1e9; // the cue's anchor
+  private tipAt = 1e9; private goneAt = 1e9; // macro: the tooltip opens ("said"); the letter leaves ("done")
+  private tWhat = 1e9; private tCleave = 1e9; // unlock: the key turns ("what"); the slab cleaves (the hit)
+  private halves: THREE.Group[] = []; private shards!: THREE.InstancedMesh; private shardV: THREE.Vector3[] = [];
+  private split = new THREE.PointLight(0xffc070, 0, 6, 1.5);
   private downbeats: number[] = [];
   private tip = '';
   private c = colors(this.ctx.style, 'frost');
@@ -77,6 +86,14 @@ export default class HarvestRemixPadlock extends LibScene<P, C> {
     this.downbeats = au.downbeats.filter((d) => d > S - 0.01 && d < E);
     const tc = this.cues.find((c) => this.cp(c).tooltip);
     this.tip = (tc && this.cp(tc).tooltip) || (this.ph === 'secure' ? 'Connection secure' : '');
+    const words = this.cues[0]?.line?.words ?? [];
+    const word = (w: string) => words.find((x) => x.w.toLowerCase().replace(/[^a-z]/g, '') === w)?.start;
+    this.tipAt = this.ph === 'macro' ? word('said') ?? 1e9 : this.aAt + 0.05;
+    if (this.ph === 'macro') this.goneAt = word('done') ?? 1e9;
+    if (this.ph === 'unlock') {
+      this.tWhat = word('what') ?? S + 0.8;
+      this.tCleave = au.downbeats.find((d) => d > this.tWhat + 0.45) ?? this.tWhat + 1;
+    }
     this.c = colors(this.ctx.style, this.ph === 'unlock' ? 'amber' : this.cues[0]?.def.palette ?? 'frost');
     this.build();
   }
@@ -162,7 +179,7 @@ export default class HarvestRemixPadlock extends LibScene<P, C> {
       sc.add(rim);
       const paper = paperMaterial(envelopeTexture('TUE 2021-03-09', { seed: 3 }));
       depthAlpha(paper, {}, 'hr-pad-paper');
-      const sheet = new THREE.Mesh(new THREE.PlaneGeometry(9.6, 6), paper);
+      const sheet = new THREE.Mesh(new THREE.PlaneGeometry(16, 8), paper);
       sheet.position.set(1.2, 1.4, -0.36);
       sc.add(sheet);
       this.ring.position.z = -0.17;
@@ -210,21 +227,38 @@ export default class HarvestRemixPadlock extends LibScene<P, C> {
       cm.blendSrcAlpha = THREE.ZeroFactor; cm.blendDstAlpha = THREE.OneFactor;
     }
 
-    // the key (unlock): gold, its shaft into the keyhole, turned about the lock's axis
+    // the key (unlock): the turned gold key, its shaft into the keyhole, turned about the lock's axis; behind the lock
+    // the copy's slab of ice (two halves meeting on a fracture) with the frosted wax of the seal on its face
     if (ph === 'unlock') {
-      const goldM = new THREE.MeshPhysicalMaterial({ color: lin('#FFC86E'), metalness: 1, roughness: 0.2, envMapIntensity: 1.5 });
+      const goldM = new THREE.MeshPhysicalMaterial({ color: lin('#FFC86E'), metalness: 1, roughness: 0.16, envMapIntensity: 2.0, clearcoat: 0.6 });
       depthAlpha(goldM, { uRimCol: { value: lin(c.accent) }, uRim: { value: 0.6 } }, 'hr-pad-key');
-      const inner = new THREE.Group();
-      for (const sh of keyShape()) {
-        const g = new THREE.ExtrudeGeometry(sh!, { depth: 0.022, bevelEnabled: true, bevelThickness: 0.006, bevelSize: 0.005, bevelSegments: 3, curveSegments: 48 });
-        g.translate(0, 0, -0.011);
-        inner.add(new THREE.Mesh(g, goldM));
-      }
+      const inner = goldKey(goldM);
       inner.rotation.x = Math.PI / 2; // the shaft (−y) points into the lock (−z)
-      inner.scale.setScalar(1.1);
+      inner.scale.setScalar(0.9);
       this.keyG.add(inner);
-      this.keyG.position.set(0, -0.005, 0.6);
+      this.keyG.position.set(0, 0.04, 0.6);
       this.lock.g.add(this.keyG);
+      const ice = iceMaterial('hr-pad-slab', { rough: 0.1, atten: 1.6, rim: 0.7 });
+      for (const side of [-1, 1]) {
+        const h = iceSlab(1.7, 2.6, 0.9, side > 0 ? 3 : 8, ice.m);
+        h.g.position.set(side * 0.86, -0.1, -0.68);
+        const hg = new THREE.Group(); hg.add(h.g);
+        sc.add(hg); this.halves.push(hg);
+      }
+      const wax = new THREE.MeshPhysicalMaterial({ color: lin('#6E1424'), roughness: 0.45, clearcoat: 0.6, clearcoatRoughness: 0.35, sheen: 0.6, sheenColor: lin('#CFE8FF') });
+      depthAlpha(wax, {}, 'hr-pad-fwax');
+      const disc = new THREE.Mesh(new THREE.CylinderGeometry(0.78, 0.82, 0.08, 96), wax);
+      disc.rotation.x = Math.PI / 2; disc.position.z = -0.2;
+      this.halves[0]!.add(disc); // the seal goes with the left half when it splits
+      const shardM = new THREE.MeshPhysicalMaterial({ color: lin('#DFF2FF'), roughness: 0.08, metalness: 0, envMapIntensity: 2.2, emissive: lin(c.ice), emissiveIntensity: 0.12, clearcoat: 1 });
+      depthAlpha(shardM, {}, 'hr-pad-shard');
+      this.shards = new THREE.InstancedMesh(new THREE.TetrahedronGeometry(0.026, 0), shardM, 60);
+      const rs = mulberry32(77);
+      for (let i = 0; i < 60; i++) this.shardV.push(new THREE.Vector3((rs() - 0.5) * 3, rs() * 2.4 - 0.6, 0.3 + rs() * 1.6));
+      this.shards.visible = false;
+      sc.add(this.shards);
+      this.split.position.set(0, 0, -0.6);
+      sc.add(this.split);
     }
 
     // ice dust in the light around the lock
@@ -270,8 +304,10 @@ export default class HarvestRemixPadlock extends LibScene<P, C> {
         ]
       : this.ph === 'unlock'
         ? [
-            { t: S, c: [0.9, 0.2, 2.2], g: [0.05, 0.05, 0.2], fov: 30, ap: 26 },
-            { t: E + 0.3, c: [0.55, 0.3, 2.9], g: [0, 0.2, 0.05], fov: 30, ap: 22, e: ease.inOutQuad },
+            { t: S, c: [1.45, 0.4, 2.0], g: [0.05, 0.0, 0.25], fov: 30, ap: 22 },
+            { t: this.tWhat + 0.2, c: [1.15, 0.3, 2.15], g: [0.03, 0.0, 0.22], fov: 30, ap: 24, e: ease.inOutQuad },
+            { t: this.tCleave, c: [0.35, 0.1, 2.5], g: [0, -0.02, 0.18], fov: 30, ap: 22, e: ease.inOutCubic },
+            { t: E + 0.3, c: [0.0, 0.0, 1.7], g: [0, -0.02, 0.18], fov: 30, ap: 24, e: ease.outCubic },
           ]
       : this.ph === 'crack'
         ? [
@@ -283,6 +319,12 @@ export default class HarvestRemixPadlock extends LibScene<P, C> {
             { t: S, c: [-1.3, 0.1, 4.0], g: [0, -0.12, 0], fov: 30, ap: 16 },
             { t: E + 0.3, c: [0.45, 0.0, 3.5], g: [0, -0.14, 0], fov: 30, ap: 18, e: ease.linear },
           ];
+    if (this.ph === 'macro' && this.goneAt < E) {
+      // "done": a whip aside, the letter leaving frame to the right, sent
+      const at = camKeys(this.goneAt, ks), k = ks.filter((q) => q.t < this.goneAt);
+      return camKeys(t, [...k, { t: this.goneAt, c: at.c, g: at.g, fov: at.fov, ap: at.ap, e: ease.linear },
+        { t: E + 0.04, c: [at.c[0] - 4.2, at.c[1] + 0.3, at.c[2]], g: [at.g[0] - 4.2, at.g[1] + 0.3, at.g[2]], fov: at.fov, ap: at.ap, e: ease.inCubic }]);
+    }
     return camKeys(t, ks);
   }
 
@@ -304,12 +346,33 @@ export default class HarvestRemixPadlock extends LibScene<P, C> {
     const seat = ph === 'macro' ? 0.16 * (1 - ease.inQuad(prog(t, this.aAt - 0.12, this.aAt))) : 0;
     sh.position.y = this.lock.h / 2 - BW * 0.32 * 0.75 + seat - 0.012 * click;
     if (ph === 'unlock') {
-      const S = this.S, ins = ease.inOutCubic(prog(t, S + 0.05, S + 0.55)), turn = ease.inOutCubic(prog(t, S + 0.65, S + 0.95));
-      this.keyG.position.z = 0.18 + lerp(0.62, 0.27, ins) * 0.7 + 0.1;
+      // slides in, turns a quarter on "what", the shackle springs; on the hit the slab cleaves and the halves part
+      const S = this.S, w = this.tWhat, ins = ease.inOutCubic(prog(t, S + 0.02, w - 0.38)), turn = ease.inOutCubic(prog(t, w - 0.3, w));
+      this.keyG.position.z = lerp(0.95, 0.42, ins);
       this.keyG.rotation.z = Math.PI / 2 - turn * Math.PI / 2;
-      const pop = ease.outBack(prog(t, S + 0.95, S + 1.2));
+      const pop = ease.outBack(prog(t, w + 0.02, w + 0.24));
       sh.position.y = this.lock.h / 2 - BW * 0.32 * 0.75 + 0.2 * pop;
-      sh.rotation.y = -0.9 * ease.outCubic(prog(t, S + 1.05, S + 1.6));
+      sh.rotation.y = -0.9 * ease.outCubic(prog(t, w + 0.1, w + 0.6));
+      g.rotation.set(0, 0, 0);
+      const cl = ease.outCubic(prog(t, this.tCleave, this.tCleave + 0.4));
+      for (const [i, hg] of this.halves.entries()) {
+        const side = i ? 1 : -1;
+        hg.position.set(side * 0.55 * cl, -0.08 * cl, -0.15 * cl);
+        hg.rotation.set(0, side * 0.32 * cl, side * -0.05 * cl);
+      }
+      // the shards and the gold light out of the split
+      this.shards.visible = t >= this.tCleave;
+      const dt = Math.max(0, t - this.tCleave), m4 = new THREE.Matrix4(), q4 = new THREE.Quaternion(), e4 = new THREE.Euler(), one = new THREE.Vector3(1, 1, 1);
+      for (let i = 0; i < this.shardV.length; i++) {
+        const v = this.shardV[i]!, p = new THREE.Vector3(v.x * dt * 0.9, v.y * dt * 0.8 - 1.2 * dt * dt, -0.4 + v.z * dt * 0.7);
+        e4.set(dt * (3 + i % 5), dt * (2 + i % 3), 0); q4.setFromEuler(e4);
+        m4.compose(p, q4, one.setScalar(0.6 + (i % 7) * 0.12)); this.shards.setMatrixAt(i, m4);
+      }
+      this.shards.instanceMatrix.needsUpdate = true;
+      this.split.intensity = 40 * cl * (1 - 0.5 * prog(t, this.tCleave + 0.4, this.E));
+      // the frost on the lock clears as the key turns
+      const glass = this.lock.body.material as THREE.MeshPhysicalMaterial;
+      glass.roughness = lerp(0.5, 0.08, ease.inOutQuad(prog(t, w - 0.1, w + 0.25)));
     }
 
     // light: the core and the glass glow, breathing with the loudness; the ring on the anchor
@@ -324,7 +387,7 @@ export default class HarvestRemixPadlock extends LibScene<P, C> {
     const rp = prog(t, this.aAt, this.aAt + 0.9, ease.outCubic);
     const rs = ph === 'macro' ? lerp(0.6, 4, rp) : lerp(0.7, 3.2, rp);
     this.ring.scale.set(rs, rs, rs);
-    this.ring.visible = t >= this.aAt && rp < 1 && ph !== 'crack';
+    this.ring.visible = t >= this.aAt && rp < 1 && ph !== 'crack' && ph !== 'unlock';
     this.ringMat.color.setRGB(green[0] * 4 * (1 - rp), green[1] * 4 * (1 - rp), green[2] * 4 * (1 - rp));
     if (ph !== 'macro') this.ring.quaternion.copy(this.st.cam.quaternion);
 
@@ -389,25 +452,27 @@ export default class HarvestRemixPadlock extends LibScene<P, C> {
       lens, lensMotif: ph === 'open', lensCol: gold ? lin(c.accent2, 0.7) : lin(c.ice, 0.6),
     });
 
-    // the tooltip and the last thread of frost (secure)
-    if (ph === 'secure') {
+    // the tooltip (macro, secure) and the last thread of frost (secure)
+    if (ph === 'secure' || (ph === 'macro' && this.tip)) {
       this.over.clear();
       const o = this.over.ctx;
-      const tp = prog(t, this.aAt + 0.05, this.aAt + 0.3, ease.outCubic);
+      const tp = prog(t, this.tipAt, this.tipAt + 0.25, ease.outCubic);
       if (tp > 0 && this.tip) {
-        const fam = this.font('body'), size = 30;
+        const fam = this.font('body'), size = ph === 'macro' ? 34 : 30;
         const lp = this.st.uv([0, -this.lock.h / 2 - 0.12, 0]);
-        const x = lp[0] * W, y = (1 - lp[1]) * H + 14 + 8 * (1 - tp);
+        // under the lock, kept inside the picture band
+        const band = this.ctx.style.aspect ? (H + W / this.ctx.style.aspect) / 2 : H;
+        const x = lp[0] * W, y = Math.min((1 - lp[1]) * H + 14, band - 96) + 8 * (1 - tp);
         const tw = measure(this.tip, fam, size) + 40;
         o.globalAlpha = tp;
         o.fillStyle = 'rgba(14,22,34,0.92)';
-        o.beginPath(); o.roundRect(x - tw / 2, y, tw, 54, 10); o.fill();
+        o.beginPath(); o.roundRect(x - tw / 2, y, tw, size + 24, 10); o.fill();
         o.strokeStyle = 'rgba(140,200,230,0.35)'; o.lineWidth = 1.5; o.stroke();
         o.font = font(fam, size); o.textAlign = 'center'; o.textBaseline = 'middle';
-        o.fillStyle = c.type; o.fillText(this.tip, x, y + 28);
+        o.fillStyle = c.type; o.fillText(this.tip, x, y + (size + 24) / 2);
         o.globalAlpha = 1;
       }
-      const grown = Math.max(0, (t - this.aAt - 1.0) * 260);
+      const grown = ph === 'secure' ? Math.max(0, (t - this.aAt - 1.0) * 260) : 0;
       if (grown > 0) {
         o.lineCap = 'round';
         o.strokeStyle = 'rgba(190,235,255,0.75)';
