@@ -1,0 +1,832 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 13 — reading (134.514–143.604), v11. The collector reads your letter. 01's envelope and sculpted seal; the
+         key drives into the wax ON "were" (135.94), turns, and the seal cracks in relief: hairlines run from the keyway,
+         complete ON the hit (136.19) and the shards split (shaded, bevelled, shadowed), then burst on the next kick
+         (136.548). The camera pushes through into the letter itself: folded paper under raking light, set by hand, its
+         ciphertext flipping into plaintext; "no one else will ever read it." resolves ON 137.54 and holds in a pool of
+         light. "i said sooner or later" is written on the page in the archive’s marker hand; Archie (v12) reads it by the light of his eyes.
+         v13 (SYSTEM.md V7): black ground (#0A0A0A) around the card and the paper: no ciphertext wall, harvested ghost copies
+         or bokeh; the warm pool behind the card is tight and low (alpha 0.12). Paper, letter, seal, Archie, marker unchanged.
+         Check fixes: the g2 kicker is ink on the paper and turns cream as the room dims; the card's date line at 01's 0.72;
+         the dimmed letter body is marked data-layout-allow-occlusion (the room light covers it on purpose).
+         v17 (V17.md §13): two shots. (A) 134.514–137.54 the sealed envelope centred and large under one slow push into the
+         seal; the sung line is the poster ("so that's what you" over it, "were on about" under it, "about" the fire hero).
+         The key seats on "were", turns from "on" to the kick 136.548 (the fractures run out on it), the seal splits on
+         "about" (a thin ring, a soft punch). pushIn into (B) 137.54–143.604: the letter on warm cream paper, full bleed (no
+         desk, no black band, no grey room-dim); the sung lines are the biggest type on the page, the letter's sentence is
+         secondary; Archie reads from the bottom-right corner, clear of the letter's text, and stamps READ on the
+         downbeat 141.739. glideL in from 21; hard cut (with the fire swell) into 14. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        .f13-grp { position: absolute; inset: 0; opacity: 0; }
+        #f13-g1, #f13-a, #f13-push { transform-origin: 960px 525px; } /* shot A pushes into the seal */
+        #f13-paperL { transform-origin: 30% 55%; }
+        #f13-type { transform-origin: 12% 70%; } /* the lyric plane zooms around the sung zone, never off the pad */
+        #f13-typeA { transform-origin: 50% 50%; }
+        #f13-push { position: absolute; inset: 0; }
+        /* shot A: the sung line as the poster around the envelope */
+        .f13-rowA { position: absolute; left: 0; right: 0; display: flex; justify-content: center; align-items: baseline;
+          column-gap: 0.26em; white-space: nowrap; font-family: "Barlow"; font-weight: 700; font-size: 4.6cqw; line-height: 1.04;
+          letter-spacing: -0.01em; color: var(--cream); }
+        #f13-r1 { top: 38px; }
+        #f13-r2 { bottom: 6px; }
+        .f13-hw { display: inline-block; transform-origin: 50% 70%; }
+        .f13-about { font-weight: 900; font-size: 9.6cqw; line-height: 1; letter-spacing: -0.025em; color: var(--fire); }
+
+        /* ---- background plane: ghost ciphertext wall, harvested copies, the warm light behind the card ---- */
+        #f13-wall { position: absolute; left: -120px; top: -40px; width: 2400px; opacity: 0.065;
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 26px; line-height: 64px;
+          letter-spacing: 0.14em; color: var(--cream); white-space: pre; }
+        #f13-light { position: absolute; left: 360px; top: 105px; width: 1200px; height: 840px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.12), rgba(232, 93, 38, 0.035) 55%, rgba(232, 93, 38, 0) 100%); }
+        .f13-ghost { position: absolute; width: 576px; height: 360px; background-color: #F0ECE5; background-size: 288px 180px;
+          filter: brightness(0.24) blur(3px); opacity: 0.42; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+        .f13-ghost svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+        /* ---- g1 midground: the sealed card (01's object) and the key ---- */
+        #f13-cardpos { position: absolute; left: 485px; top: 228px; width: 576px; height: 360px; transform: scale(1.65); transform-origin: 0 0; }
+        #f13-cardpos::before { content: ""; position: absolute; left: 3%; right: 3%; bottom: -40px; height: 62px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(0,0,0,0.55), rgba(0,0,0,0)); }
+        #f13-card { position: absolute; inset: 0; background-color: var(--cream); background-size: 288px 180px;
+          box-shadow: inset 0 2px 0 rgba(240,236,229,.9), inset 0 -3px 0 rgba(110,100,90,.35), 0 40px 80px rgba(0,0,0,.5), 0 6px 14px rgba(0,0,0,.35), 18px 16px 65px rgba(232,93,38,.12); }
+        .f13-flap { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #f13-crake { position: absolute; inset: 0;
+          background: linear-gradient(118deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 36%, rgba(17,17,17,0) 58%, rgba(17,17,17,0.13)); }
+        #f13-cardhex { position: absolute; left: 40px; top: 36px; width: 360px; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 20px; line-height: 31px; letter-spacing: 0.08em; color: #5F5B54; white-space: pre; }
+        /* v20: the card fills the frame, so its status label is printed on the card's top-right corner (ink on paper) */
+        #f13-obj { position: absolute; right: 24px; top: 18px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 11px;
+          letter-spacing: 0.2em; text-transform: uppercase; color: rgba(17, 17, 17, 0.62); white-space: nowrap; }
+        #f13-sealpos { position: absolute; left: 288px; top: 180px; width: 0; height: 0; }
+        #f13-seal { position: absolute; left: -72px; top: -72px; width: 144px; height: 144px; overflow: visible; }
+        .f13-shard { transform-box: fill-box; transform-origin: 50% 50%; }
+        .f13-crumb { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; opacity: 0;
+          background: linear-gradient(135deg, #F68C5C, #E85D26 45%, #A63B14); }
+        #f13-keyclip { position: absolute; inset: 0; clip-path: polygon(1056px -200px, 2400px -200px, 2400px 1300px, 1056px 1300px); }
+        #f13-keywrap { position: absolute; left: 1068px; top: 458px; width: 440px; height: 137.5px;
+          filter: drop-shadow(0 22px 18px rgba(0, 0, 0, 0.5)); }
+        #f13-keyturn { position: absolute; inset: 0; transform-origin: 50% 48.6%; }
+        #f13-key { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+        /* ---- g2: the letter as paper, lying on the desk ---- */
+        #f13-sheet { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 600px 400px; }
+        #f13-paper { position: absolute; left: -80px; top: -80px; width: 2080px; height: 1240px; background-color: var(--cream);
+          background-size: 512px 512px; overflow: hidden; }
+        #f13-panels { position: absolute; inset: 0; }
+        .f13-crease { position: absolute; left: 0; right: 0; height: 64px; }
+        #f13-rake { position: absolute; inset: 0;
+          background: linear-gradient(104deg, rgba(232, 93, 38, 0.10) 0%, rgba(232, 93, 38, 0.03) 28%, rgba(196, 120, 60, 0) 48%, rgba(196, 120, 60, 0.10) 100%); }
+        #f13-sun { position: absolute; left: -500px; top: -300px; width: 1500px; height: 1300px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(255, 214, 160, 0.30), rgba(232, 93, 38, 0.06) 60%, rgba(232, 93, 38, 0) 100%); }
+        #f13-stain { position: absolute; left: 1580px; top: 210px; width: 260px; height: 250px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0) 62%, rgba(232, 93, 38, 0.13) 80%, rgba(232, 93, 38, 0.05) 90%, rgba(232, 93, 38, 0) 100%); }
+        #f13-edge { position: absolute; inset: 0; box-shadow: inset 0 0 260px rgba(176, 104, 48, 0.16); } /* warm falloff, never grey */
+        .f13-meta { position: absolute; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 14px; letter-spacing: 0.16em;
+          color: #5F5B54; white-space: nowrap; }
+        .f13-ln { position: absolute; left: 5.5cqw; white-space: nowrap; font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 32px;
+          line-height: 39px; color: var(--ink); perspective: 420px; }
+        .f13-sig { font-weight: 400; font-size: 46px; line-height: 50px; }
+        .f13-big { font-weight: 400; font-size: 4.3cqw; line-height: 1; letter-spacing: -0.03em; color: var(--ink);
+          margin-left: -0.3cqw; perspective: 1100px; }
+        .f13-g { display: inline-block; position: relative; transform-origin: 50% 58%; }
+        .f13-plain { display: inline-block; }
+        .f13-g i { position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); display: none; font-style: normal;
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 0.66em; line-height: 1; letter-spacing: 0;
+          color: rgba(17, 17, 17, 0.5); }
+        .f13-big .f13-g i { font-weight: 600; font-size: 0.6em; color: rgba(17, 17, 17, 0.42); }
+        .f13-g.f13-enc .f13-plain { opacity: 0; }
+        .f13-g.f13-enc i { display: block; }
+        .f13-g.f13-fl i { color: var(--fire); }
+        #f13-seal2 { position: absolute; left: 1600px; top: 160px; width: 220px; height: 220px; overflow: visible; transform: rotate(7deg); }
+
+        /* ---- chrome (low depth) and lyrics ---- */
+        .f13-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
+        .f13-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
+          vertical-align: middle; margin-right: 16px; }
+        #f13-kick3 { color: #111111; font-weight: 600; } /* chrome on cream paper is ink (10-ticket) */
+        #f13-kick3::before { background: var(--fire); }
+        .f13-lyr { position: absolute; left: 5.5cqw; bottom: 5.5cqw; display: flex; column-gap: 0.26em; white-space: nowrap;
+          font-family: "Barlow"; font-weight: 600; font-size: 3.75cqw; line-height: 1.04; margin-bottom: -0.22em; letter-spacing: -0.01em; color: var(--cream); }
+        #f13-l28 { display: block; left: 230px; top: 556px; bottom: auto;
+          font-family: "Caveat Brush"; font-weight: 400; color: #C8481A; transform: rotate(-2deg); }
+        .f13-row { display: flex; column-gap: 0.26em; white-space: nowrap; }
+        .f13-r1 { font-size: 6cqw; font-weight: 400; margin-bottom: -0.08em; }
+        .f13-r2 { font-size: 11cqw; transform-origin: 0% 60%; font-weight: 400; line-height: 0.94; letter-spacing: -0.02em; column-gap: 0.18em; }
+        #f13-l29 { left: 230px; top: 650px; bottom: auto; font-size: 8.5cqw; font-weight: 800;
+          letter-spacing: -0.03em; column-gap: 0.22em; color: var(--ink); }
+        #f13-actor { transform-origin: 88% 90%; }
+        #f13-arch { position: absolute; left: 1545px; top: 628px; width: 330px; height: 418px;
+          overflow: visible; transform-origin: 50% 100%; }
+        #f13-beam { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: 0; filter: blur(16px); }
+        #f13-markpath { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; }
+        .f13-w { display: inline-block; position: relative; padding-bottom: 0.22em; } /* room for descenders under the rise mask */
+
+        /* ---- near plane: out-of-focus glyphs passing in front ---- */
+        .f13-bokeh { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--cream);
+          opacity: 0.035; filter: blur(14px); white-space: nowrap; }
+      </style>
+
+      <div data-hf-id="hf-d7js" id="root" data-composition-id="13-reading" data-width="1920" data-height="1080" data-duration="9.09">
+        <div data-hf-id="hf-7k83" class="hr-layer" id="f13-bg" data-depth="0.3" data-dof="5" data-layout-ignore>
+          <div data-hf-id="hf-zhma" id="f13-wall"></div>
+          <div data-hf-id="hf-o1ti" id="f13-ghosts"></div>
+          <div data-hf-id="hf-urhq" id="f13-light"></div>
+        </div>
+
+        <!-- g1: the sealed card meets the key -->
+        <div data-hf-id="hf-unwb" class="hr-layer" id="f13-mid" data-depth="0.65" data-layout-allow-overlap>
+          <div data-hf-id="hf-3ttp" class="f13-grp" id="f13-g1">
+            <div data-hf-id="hf-rroa" id="f13-push">
+              <div data-hf-id="hf-iu0a" id="f13-cardpos">
+                <div data-hf-id="hf-pxe4" id="f13-card">
+                  <svg data-hf-id="hf-k7e3" class="f13-flap" viewBox="0 0 576 360" preserveAspectRatio="none">
+                    <defs data-hf-id="hf-mh0t">
+                      <linearGradient data-hf-id="hf-3on9" id="f13-gtop" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-aa8g" offset="0" stop-color="#111" stop-opacity="0.015" /><stop data-hf-id="hf-6b9g" offset="1" stop-color="#111" stop-opacity="0.085" /></linearGradient>
+                      <linearGradient data-hf-id="hf-tbc9" id="f13-gbot" x1="0" y1="1" x2="0" y2="0"><stop data-hf-id="hf-frap" offset="0" stop-color="#111" stop-opacity="0.07" /><stop data-hf-id="hf-up33" offset="1" stop-color="#111" stop-opacity="0" /></linearGradient>
+                      <linearGradient data-hf-id="hf-2a98" id="f13-gl" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-ezmw" offset="0" stop-color="#111" stop-opacity="0.06" /><stop data-hf-id="hf-8olb" offset="1" stop-color="#111" stop-opacity="0" /></linearGradient>
+                      <linearGradient data-hf-id="hf-dmdg" id="f13-gr" x1="1" y1="0" x2="0" y2="0"><stop data-hf-id="hf-4366" offset="0" stop-color="#111" stop-opacity="0.075" /><stop data-hf-id="hf-8aaa" offset="1" stop-color="#111" stop-opacity="0" /></linearGradient>
+                      <filter data-hf-id="hf-mihh" id="f13-soft" x="-10%" y="-10%" width="120%" height="140%"><feGaussianBlur data-hf-id="hf-ehxa" stdDeviation="3.5" /></filter>
+                    </defs>
+                    <path data-hf-id="hf-y28y" d="M0 0 L250 190 L0 360 Z" fill="url(#f13-gl)" />
+                    <path data-hf-id="hf-xxc6" d="M576 0 L326 190 L576 360 Z" fill="url(#f13-gr)" />
+                    <path data-hf-id="hf-35zi" d="M0 360 L246 174 Q288 150 330 174 L576 360 Z" fill="url(#f13-gbot)" />
+                    <path data-hf-id="hf-buc3" d="M0 360 L246 174 Q288 150 330 174 L576 360" fill="none" stroke="rgba(17,17,17,0.10)" stroke-width="1.5" />
+                    <path data-hf-id="hf-2371" d="M2 360 L248 178 M574 360 L328 178" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
+                    <path data-hf-id="hf-syhi" d="M0 2 L288 190 L576 2" fill="none" stroke="rgba(17,17,17,0.30)" stroke-width="7" filter="url(#f13-soft)" />
+                    <path data-hf-id="hf-4tlu" d="M0 0 L288 180 L576 0 Z" fill="url(#f13-gtop)" />
+                    <path data-hf-id="hf-gflj" d="M0 0 L288 180 L576 0" fill="none" stroke="rgba(17,17,17,0.24)" stroke-width="1.6" />
+                    <path data-hf-id="hf-x8q3" d="M8 0 L288 173 L568 0" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1" />
+                    <path data-hf-id="hf-iwmt" d="M0 1.2 H576" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" />
+                    <text data-hf-id="hf-z7pc" x="26" y="340" font-family="IBM Plex Mono" font-weight="500" font-size="11" letter-spacing="2.2" fill="rgba(17,17,17,0.72)">A. · TUE 09.03.2021 · 14:02</text>
+                    <g data-hf-id="hf-8pp4" id="f13-sort"></g>
+                  </svg>
+                  <div data-hf-id="hf-gpam" id="f13-crake"></div>
+                  <div data-hf-id="hf-iy4r" id="f13-cardhex"></div>
+                  <div data-hf-id="hf-0btl" id="f13-sealpos">
+                    <svg data-hf-id="hf-e7h9" id="f13-seal" class="hr-glowbox" viewBox="-64 -64 128 128">
+                      <defs data-hf-id="hf-vl9d">
+                        <radialGradient data-hf-id="hf-1x9j" id="f13-wg" cx="0.38" cy="0.34" r="0.78"><stop data-hf-id="hf-9ji3" offset="0" stop-color="#F68C5C" /><stop data-hf-id="hf-ecoc" offset="0.42" stop-color="#E85D26" /><stop data-hf-id="hf-w92l" offset="0.82" stop-color="#C94A1C" /><stop data-hf-id="hf-830a" offset="1" stop-color="#A63B14" /></radialGradient>
+                        <radialGradient data-hf-id="hf-wc72" id="f13-wr" cx="0.5" cy="0.5" r="0.5"><stop data-hf-id="hf-7xzq" offset="0.82" stop-color="#B9431A" /><stop data-hf-id="hf-13mw" offset="1" stop-color="#8E3010" /></radialGradient>
+                        <radialGradient data-hf-id="hf-ygoc" id="f13-wd" cx="0.5" cy="0.5" r="0.5"><stop data-hf-id="hf-dz0s" offset="0" stop-color="#7A2C0E" /><stop data-hf-id="hf-q2ae" offset="0.85" stop-color="#8E3010" /><stop data-hf-id="hf-7523" offset="1" stop-color="#5E220B" /></radialGradient>
+                        <filter data-hf-id="hf-beos" id="f13-shd" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow data-hf-id="hf-6ldc" dx="1.2" dy="2.2" stdDeviation="1.1" flood-color="#111111" flood-opacity="0.6" /></filter>
+                        <g data-hf-id="hf-bskq" id="f13-sealg">
+                          <path data-hf-id="hf-gmm1" id="f13-rim" fill="url(#f13-wr)" />
+                          <circle data-hf-id="hf-wr30" r="50" fill="url(#f13-wg)" />
+                          <circle data-hf-id="hf-cvyr" r="43.5" fill="none" stroke="rgba(255,206,176,0.38)" stroke-width="1.2" transform="translate(0.8 0.8)" />
+                          <circle data-hf-id="hf-ejau" r="41" fill="rgba(17,17,17,0.06)" stroke="rgba(17,17,17,0.30)" stroke-width="2.4" />
+                          <g data-hf-id="hf-4og3" id="f13-beads"></g>
+                          <text data-hf-id="hf-3vod" x="1.6" y="15.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(17,17,17,0.36)">a.</text>
+                          <text data-hf-id="hf-rrqi" x="-1.1" y="12.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(255,214,188,0.5)">a.</text>
+                          <text data-hf-id="hf-av18" x="0" y="13.8" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="#D4521E">a.</text>
+                          <path data-hf-id="hf-yf3i" d="M-38 -24 A44 44 0 0 1 -8 -45" fill="none" stroke="rgba(255,236,224,0.6)" stroke-width="3.5" stroke-linecap="round" />
+                          <path data-hf-id="hf-4l3v" d="M30 34 A44 44 0 0 1 12 44" fill="none" stroke="rgba(255,236,224,0.22)" stroke-width="2" stroke-linecap="round" />
+                        </g>
+                        <g data-hf-id="hf-z4jl" id="f13-clips"></g>
+                      </defs>
+                      <use data-hf-id="hf-ovch" id="f13-residue" href="#f13-rimonly" opacity="0" />
+                      <g data-hf-id="hf-wl59" id="f13-whole">
+                        <use data-hf-id="hf-3qqz" href="#f13-sealg" />
+                        <!-- the keyway: a dark slot in the rim where the blade goes in -->
+                        <path data-hf-id="hf-n5ou" d="M40 -6 L58 -7.5 L58 7.5 L40 6 Z" fill="#5E220B" />
+                        <path data-hf-id="hf-dj8w" d="M40 -6 L58 -7.5" fill="none" stroke="rgba(17,17,17,0.5)" stroke-width="1.4" />
+                        <path data-hf-id="hf-sia6" d="M40 6 L58 7.5" fill="none" stroke="rgba(255,214,188,0.45)" stroke-width="1" />
+                        <g data-hf-id="hf-skck" id="f13-cracks" clip-path="url(#f13-rimclip)"></g>
+                      </g>
+                      <g data-hf-id="hf-zl23" id="f13-shards" opacity="0"></g>
+                    </svg>
+                    <div data-hf-id="hf-9vgi" id="f13-crumbs"></div>
+                  </div>
+                </div>
+                <div data-hf-id="hf-gmow" id="f13-obj">SEALED · TLS 1.3</div>
+              </div>
+              <div data-hf-id="hf-zq8x" id="f13-keyclip">
+                <div data-hf-id="hf-ev3r" id="f13-keywrap">
+                  <div data-hf-id="hf-7a4u" id="f13-keyturn">
+                    <svg data-hf-id="hf-7itt" id="f13-key" class="hr-glowbox" viewBox="0 0 230 72">
+                      <defs data-hf-id="hf-ws6g">
+                        <path data-hf-id="hf-p4di" id="f13-keyp" fill-rule="evenodd"
+                          d="M0 0 H72 V72 H0 Z M22 25 V47 H48 V25 Z M72 26 H230 V44 H218 V58 H204 V44 H188 V54 H172 V44 H156 V60 H140 V44 H72 Z" />
+                        <clipPath data-hf-id="hf-8lvr" id="f13-kclip"><use data-hf-id="hf-h6so" href="#f13-keyp" /></clipPath>
+                        <linearGradient data-hf-id="hf-sddr" id="f13-kg" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-m2xi" offset="0" stop-color="#FFFFFF" stop-opacity="0.5" /><stop data-hf-id="hf-tqd3" offset="0.35" stop-color="#FFFFFF" stop-opacity="0" /><stop data-hf-id="hf-n156" offset="0.7" stop-color="#111111" stop-opacity="0.06" /><stop data-hf-id="hf-e3kq" offset="1" stop-color="#111111" stop-opacity="0.24" /></linearGradient>
+                      </defs>
+                      <g data-hf-id="hf-vpnm" transform="translate(230 0) scale(-1 1)">
+                        <use data-hf-id="hf-qd29" href="#f13-keyp" fill="#888880" transform="translate(0 4)" />
+                        <use data-hf-id="hf-477t" href="#f13-keyp" fill="#F0ECE5" />
+                        <g data-hf-id="hf-mmut" clip-path="url(#f13-kclip)">
+                          <rect data-hf-id="hf-341g" x="0" y="0" width="230" height="72" fill="url(#f13-kg)" />
+                          <!-- the blade's ridge: a groove milled along the shaft, lit edge above, shade below -->
+                          <path data-hf-id="hf-5mly" d="M78 33 H226" stroke="rgba(17,17,17,0.22)" stroke-width="2.2" />
+                          <path data-hf-id="hf-hk5i" d="M78 35.4 H226" stroke="rgba(255,255,255,0.7)" stroke-width="1" />
+                          <path data-hf-id="hf-qnr7" d="M18 21 H52 V51" fill="none" stroke="rgba(17,17,17,0.3)" stroke-width="2" />
+                          <path data-hf-id="hf-q4xi" d="M18 51 H52" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" />
+                          <circle data-hf-id="hf-de55" cx="10" cy="10" r="2.2" fill="rgba(17,17,17,0.35)" /><circle data-hf-id="hf-u3zs" cx="62" cy="10" r="2.2" fill="rgba(17,17,17,0.35)" />
+                          <circle data-hf-id="hf-qeo0" cx="10" cy="62" r="2.2" fill="rgba(17,17,17,0.35)" /><circle data-hf-id="hf-79kd" cx="62" cy="62" r="2.2" fill="rgba(17,17,17,0.35)" />
+                          <rect data-hf-id="hf-7ago" id="f13-glint" x="-40" y="-20" width="18" height="112" fill="#E85D26" opacity="0" transform="skewX(-24)" />
+                          <rect data-hf-id="hf-lakg" id="f13-kshade" x="0" y="0" width="230" height="72" fill="#111111" opacity="0" />
+                        </g>
+                        <use data-hf-id="hf-d8ia" href="#f13-keyp" fill="none" stroke="#111111" stroke-width="1.6" stroke-linejoin="miter" />
+                      </g>
+                      <text data-hf-id="hf-buvy" id="f13-ktext" x="30" y="41.4" font-family="IBM Plex Mono" font-weight="600" font-size="7.4" letter-spacing="1.4" fill="rgba(17,17,17,0.5)">X25519 · RECORDED KEY EXCHANGE</text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- shot A's sung line: the poster around the envelope (rides the push into the seal) -->
+        <div class="hr-layer" id="f13-typeA" data-depth="0.25">
+          <div class="f13-grp" id="f13-a">
+            <div id="f13-fxA" data-layout-ignore style="position: absolute; inset: 0; pointer-events: none"></div>
+            <div class="f13-rowA" id="f13-r1"></div>
+            <div class="f13-rowA" id="f13-r2"></div>
+          </div>
+        </div>
+
+        <!-- g2: the letter fills the frame -->
+        <div data-hf-id="hf-qvpi" class="hr-layer" id="f13-paperL" data-depth="0.7" data-layout-allow-overlap>
+          <div data-hf-id="hf-7rxq" class="f13-grp" id="f13-g2">
+            <div data-hf-id="hf-sd77" id="f13-sheet">
+              <div data-hf-id="hf-zby0" id="f13-paper">
+                <div data-hf-id="hf-7bkf" id="f13-panels"></div>
+                <div data-hf-id="hf-3l2g" id="f13-sun"></div>
+                <div data-hf-id="hf-lny9" id="f13-rake"></div>
+                <div data-hf-id="hf-j0jh" id="f13-stain"></div>
+                <div data-hf-id="hf-4e5h" id="f13-edge"></div>
+              </div>
+              <div data-hf-id="hf-dz7h" class="f13-meta" data-layout-allow-occlusion style="left: 1400px; top: 84px">TUE 09.03.2021 · 14:02 · P. 1/1</div>
+              <div data-hf-id="hf-gyg6" id="f13-letter"></div>
+              <svg data-hf-id="hf-7xhb" id="f13-seal2" class="hr-glowbox" viewBox="-64 -64 128 128">
+                <use data-hf-id="hf-l53l" href="#f13-rimonly" fill="url(#f13-wd)" opacity="0.85" />
+                <g data-hf-id="hf-9fnr" id="f13-shards2"></g>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-z7bj" class="hr-layer" id="f13-actor" data-depth="0.65" data-layout-ignore>
+          <svg data-hf-id="hf-37zj" id="f13-beam" viewBox="0 0 1920 1080" aria-hidden="true">
+            <defs data-hf-id="hf-wdvf"><linearGradient data-hf-id="hf-opy8" id="f13-beamg" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-795j" offset="0" stop-color="#E85D26" stop-opacity="0"/><stop data-hf-id="hf-qr10" offset="1" stop-color="#E85D26" stop-opacity="0.16"/></linearGradient></defs>
+            <polygon data-hf-id="hf-pdqw" points="1690,770 190,520 150,1000 1640,830" fill="url(#f13-beamg)" />
+          </svg>
+            <svg data-hf-id="hf-8645" id="f13-arch" viewBox="0 0 300 380" aria-hidden="true"></svg>
+        </div>
+
+        <div data-hf-id="hf-ffeo" class="hr-layer" id="f13-chrome" data-depth="0.2">
+          <div data-hf-id="hf-17bv" class="f13-kicker" id="f13-kick1">STILL SEALED</div>
+          <div data-hf-id="hf-os4l" class="f13-kicker" id="f13-kick2" style="opacity: 0">THE SEAL IS BROKEN</div>
+          <div data-hf-id="hf-wq5s" class="f13-kicker" id="f13-kick3" style="opacity: 0">OPENED · READ</div>
+        </div>
+        <div data-hf-id="hf-0xe2" class="hr-layer" id="f13-type" data-depth="0.75">
+                    <svg data-hf-id="hf-a0qp" id="f13-markpath" viewBox="0 0 1920 1080" data-layout-ignore aria-hidden="true">
+            <path data-hf-id="hf-9ris" id="f13-marker" d="M214 618 C120 618 62 560 62 460 C62 380 70 336 98 322 M98 322 l-19 -5 M98 322 l-10 17" fill="none" stroke="#C8481A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" pathLength="100" />
+          </svg>
+          <div data-hf-id="hf-im5h" class="f13-lyr" id="f13-l28">
+            <div data-hf-id="hf-qhyl" class="f13-row f13-r1" id="f13-l28a"></div>
+            <div data-hf-id="hf-wzpx" class="f13-row f13-r2" id="f13-l28b"></div>
+          </div>
+          <div data-hf-id="hf-huho" class="f13-lyr" id="f13-l29"></div>
+        </div>
+        <div data-hf-id="hf-08tp" class="hr-layer" id="f13-near" data-depth="1.7" data-layout-ignore></div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/archie.js"></script>
+      <script>
+        (() => {
+          const T0 = 134.514, DUR = 9.09; // frame span, track seconds
+          const L = (t) => +(t - T0).toFixed(3);
+          // shot A: the key seats ON "were", turns from "on" to the kick 136.548 (fractures run out), the seal splits ON "about";
+          // shot B (the letter) from "I" 137.54, the line start
+          const IN = L(135.94), ON = L(136.215), K2 = L(136.548), ABOUT = L(136.72), SHOT = L(137.54), DOWN = L(138.018);
+          const LYRICS = {
+            r1: [["So", 134.514], ["that's", 134.8], ["what", 135.203], ["you", 135.68]],
+            r2: [["were", 135.94], ["on", 136.215], ["about", 136.72]],
+            l28a: [["I", 137.54], ["said", 137.637]],
+            l28b: [["sooner", 138.78], ["or", 139.48], ["later", 139.64]],
+            l29: [["Harvested", 140.675], ["then,", 141.96]],
+          };
+          // the letter, as written; top = y of the line box (px); big = the display sentence (on its own still plane)
+          const LETTER = [
+            { text: "my love,", top: 146 },
+            { text: "i am writing this the old way, because some things should be sealed by hand.", top: 192 },
+            { text: "the little green padlock says", top: 231 },
+            { text: "no one else will ever read it.", top: 276, big: true },
+            { text: "and tonight i choose to believe it. i keep thinking of the station in the rain,", top: 374 },
+            { text: "the umbrella that gave up, and how you laughed anyway.", top: 413 },
+            { text: "whatever happens, wherever this finds you, i meant every word. keep it somewhere safe.", top: 452 },
+            { text: "always yours,", top: 400, left: 1400 },
+            { text: "a.", top: 442, left: 1404, sig: true },
+          ];
+          const NS = "http://www.w3.org/2000/svg";
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const S = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+          const pts = (a) => a.map(([x, y]) => `${x.toFixed(2)} ${y.toFixed(2)}`);
+
+          // ---- static build ---------------------------------------------------------------------------------
+          // v13: no ciphertext wall on the ground
+
+          // paper fibre, baked once (seeded): the card's tile (01's) and a larger sheet tile with long fibres and flecks
+          const bake = (w, h, seed, fibres, amp, flecks) => {
+            const c = document.createElement("canvas"); c.width = w; c.height = h;
+            const x = c.getContext("2d"), r = HR.rng(seed);
+            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, w, h);
+            const img = x.getImageData(0, 0, w, h);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * amp; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+            x.putImageData(img, 0, 0);
+            for (let k = 0; k < fibres; k++) {
+              const px = r() * w, py = r() * h, a = r() * Math.PI, l = 8 + r() * 30, dx = Math.cos(a) * l, dy = Math.sin(a) * l * 0.4;
+              x.lineWidth = 0.7; x.strokeStyle = "rgba(110,100,90,0.13)";
+              x.beginPath(); x.moveTo(px, py); x.quadraticCurveTo(px + dx * 0.5 + (r() - 0.5) * 6, py + dy * 0.5 + (r() - 0.5) * 6, px + dx, py + dy); x.stroke();
+              x.strokeStyle = "rgba(255,255,250,0.38)"; // the raking light catches the fibre's top edge
+              x.beginPath(); x.moveTo(px, py - 1); x.lineTo(px + dx, py + dy - 1); x.stroke();
+            }
+            for (let k = 0; k < flecks; k++) {
+              x.fillStyle = r() < 0.2 ? "rgba(232,93,38,0.16)" : "rgba(80,80,72,0.16)";
+              x.beginPath(); x.ellipse(r() * w, r() * h, 0.6 + r() * 1.2, 0.4 + r() * 0.7, r() * 3, 0, Math.PI * 2); x.fill();
+            }
+            return `url(${c.toDataURL("image/png")})`;
+          };
+          const cardTile = bake(288, 180, 404, 70, 14, 0);
+          $("f13-card").style.backgroundImage = cardTile;
+          $("f13-paper").style.backgroundImage = bake(512, 512, 1313, 340, 16, 60);
+          // the letter was folded in three: panels tilt to the light differently, each crease a valley with a lit lip
+          (() => {
+            const panels = $("f13-panels");
+            [[0, 445, "linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 60%, rgba(17,17,17,0.05))"],
+             [445, 460, "linear-gradient(180deg, rgba(17,17,17,0.07), rgba(17,17,17,0.02) 50%, rgba(255,255,255,0.05))"],
+             [905, 335, "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(17,17,17,0.03))"]].forEach(([top, h, bg]) => {
+              const d = el("div", "", panels); Object.assign(d.style, { position: "absolute", left: 0, right: 0, top: top + "px", height: h + "px", background: bg });
+            });
+            [445, 905].forEach((y) => {
+              const c = el("div", "f13-crease", panels);
+              c.style.top = (y - 32) + "px";
+              c.style.background = "linear-gradient(180deg, rgba(17,17,17,0) 0%, rgba(17,17,17,0.06) 40%, rgba(17,17,17,0.17) 49.5%, rgba(255,255,255,0.75) 51%, rgba(255,255,255,0.18) 56%, rgba(17,17,17,0) 80%)";
+            });
+            // a soft vertical crease where it was pressed into the envelope
+            const v = el("div", "", panels);
+            Object.assign(v.style, { position: "absolute", top: 0, bottom: 0, left: "1300px", width: "70px",
+              background: "linear-gradient(90deg, rgba(17,17,17,0) 0%, rgba(17,17,17,0.05) 48%, rgba(255,255,255,0.4) 51%, rgba(17,17,17,0) 100%)" });
+          })();
+
+          // harvested copies behind (01's), out of focus
+          [].forEach(([l, tp, rot]) => { // v13: no ghost copies on the ground
+            const g = el("div", "f13-ghost", $("f13-ghosts"));
+            Object.assign(g.style, { left: l + "px", top: tp + "px", transform: `rotate(${rot}deg)`, backgroundImage: cardTile });
+            g.innerHTML = '<svg viewBox="0 0 576 360" preserveAspectRatio="none"><path d="M0 0 L288 180 L576 0 Z" fill="rgba(17,17,17,0.09)"/><path d="M0 0 L288 180 L576 0" fill="none" stroke="rgba(17,17,17,0.35)" stroke-width="3"/><circle cx="288" cy="180" r="34" fill="#E85D26"/></svg>';
+          });
+
+          // 01's postal sorting barcode (fire ink)
+          (() => {
+            const g = $("f13-sort"), r = HR.rng(611);
+            for (let x = 330, i = 0; i < 46; i++, x += 4.9) {
+              const tall = r() < 0.5;
+              S("rect", { x: x.toFixed(1), y: tall ? 326 : 334, width: 2.2, height: tall ? 20 : 12, fill: "rgba(232,93,38,0.78)" }, g);
+            }
+          })();
+
+          // 01's seal: a hand-poured rim (wobble and three drips) and a pressed bead ring
+          const defs = $("f13-seal").querySelector("defs");
+          (() => {
+            let d = "";
+            const drips = [[0.6, 7], [2.5, 5], [4.4, 8.5]];
+            for (let k = 0; k <= 120; k++) {
+              const a = (k / 120) * Math.PI * 2;
+              let rr = 55.5 + 1.8 * Math.sin(7 * a + 0.5) + 1.2 * Math.sin(13 * a + 2) + 0.7 * Math.sin(23 * a);
+              for (const [a0, h] of drips) { const da = Math.atan2(Math.sin(a - a0), Math.cos(a - a0)); rr += h * Math.exp(-(da * da) / 0.012); }
+              d += (k ? "L" : "M") + (Math.cos(a) * rr).toFixed(2) + " " + (Math.sin(a) * rr).toFixed(2);
+            }
+            $("f13-rim").setAttribute("d", d + "Z");
+            S("path", { id: "f13-rimonly", d: d + "Z" }, defs);
+            S("path", { d: d + "Z" }, S("clipPath", { id: "f13-rimclip" }, defs));
+            for (let i = 0; i < 30; i++) {
+              const a = (i / 30) * Math.PI * 2;
+              S("circle", { cx: (Math.cos(a) * 36.5).toFixed(2), cy: (Math.sin(a) * 36.5).toFixed(2), r: 1.35, fill: "rgba(17,17,17,0.26)" }, $("f13-beads"));
+            }
+          })();
+          $("f13-residue").setAttribute("fill", "url(#f13-wd)");
+
+          // the crack: five jagged fractures run from the keyway (O, in the rim) across the wax; they cut it into five shards
+          const O = [46, 0], R = 76;
+          const ENDS = [70, 128, 178, 226, 286].map((d) => (d * Math.PI) / 180);
+          const cr = HR.rng(1336);
+          const cracks = ENDS.map((a) => {
+            const E = [Math.cos(a) * R, Math.sin(a) * R], n = 9, dx = E[0] - O[0], dy = E[1] - O[1], len = Math.hypot(dx, dy);
+            const nx = -dy / len, ny = dx / len, p = [];
+            for (let i = 0; i <= n; i++) {
+              const u = i / n, j = i === 0 || i === n ? 0 : (cr() - 0.5) * 9 * Math.sin(Math.PI * u) + (i % 2 ? 1.6 : -1.6);
+              p.push([O[0] + dx * u + nx * j, O[1] + dy * u + ny * j]);
+            }
+            return p;
+          });
+          const crackPaths = [];
+          cracks.forEach((p, k) => {
+            const d = "M" + pts(p).join(" L");
+            const lo = S("path", { d, fill: "none", stroke: "rgba(255,214,188,0.55)", "stroke-width": 1.1, transform: "translate(0.7 0.9)", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, $("f13-cracks"));
+            const hi = S("path", { d, fill: "none", stroke: "rgba(46,16,5,0.9)", "stroke-width": 1.7, "stroke-linejoin": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, $("f13-cracks"));
+            crackPaths.push([hi, lo]);
+          });
+          // hairline branches off the main fractures (they never separate)
+          const branches = [[0, 4, -0.9, 14], [1, 5, 0.8, 12], [2, 3, -0.7, 16], [3, 6, 0.9, 11], [4, 5, -0.8, 13]].map(([k, i, turn, l]) => {
+            const [x, y] = cracks[k][i], [x2, y2] = cracks[k][i + 1], a = Math.atan2(y2 - y, x2 - x) + turn;
+            const m = [x + Math.cos(a) * l * 0.5 + (cr() - 0.5) * 3, y + Math.sin(a) * l * 0.5 + (cr() - 0.5) * 3];
+            return S("path", { d: `M${x.toFixed(2)} ${y.toFixed(2)} L${m[0].toFixed(2)} ${m[1].toFixed(2)} L${(x + Math.cos(a) * l).toFixed(2)} ${(y + Math.sin(a) * l).toFixed(2)}`,
+              fill: "none", stroke: "rgba(46,16,5,0.7)", "stroke-width": 1, pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, $("f13-cracks"));
+          });
+          // shard polygons: crack k out, the arc to crack k+1, crack k+1 back; each shard is the seal clipped to it, with a
+          // bevel along both broken edges (lit where the edge faces the top-left light, shaded where it faces away)
+          const shardDefs = ENDS.map((a0, k) => {
+            const k2 = (k + 1) % ENDS.length;
+            let a1 = ENDS[k2]; if (a1 <= a0) a1 += Math.PI * 2;
+            const arc = []; for (let i = 0; i <= 10; i++) { const a = a0 + ((a1 - a0) * i) / 10; arc.push([Math.cos(a) * R, Math.sin(a) * R]); }
+            const poly = cracks[k].concat(arc, cracks[k2].slice().reverse());
+            S("path", {}, S("clipPath", { id: `f13-cp${k}` }, $("f13-clips"))).setAttribute("d", "M" + pts(poly).join(" L") + "Z");
+            // centroid of the shard's wax (the part inside the rim), for the burst direction
+            const inner = poly.filter(([x, y]) => Math.hypot(x, y) < 58);
+            const c = inner.reduce((s, [x, y]) => [s[0] + x / inner.length, s[1] + y / inner.length], [0, 0]);
+            const face = (p) => { const m = p[Math.floor(p.length / 2)], nx = m[0] - c[0], ny = m[1] - c[1]; return (-nx - ny) > 0; };
+            return { k, k2, c, edges: [[cracks[k], face(cracks[k])], [cracks[k2], face(cracks[k2])]] };
+          });
+          const buildShards = (parent) => shardDefs.map(({ k, edges }) => {
+            const outer = S("g", { class: "f13-shard", filter: "url(#f13-shd)" }, parent);
+            const g = S("g", { "clip-path": "url(#f13-rimclip)" }, S("g", { "clip-path": `url(#f13-cp${k})` }, outer));
+            S("use", { href: "#f13-sealg" }, g);
+            for (const [p, lit] of edges) {
+              const d = "M" + pts(p).join(" L");
+              S("path", { d, fill: "none", stroke: lit ? "rgba(255,226,206,0.85)" : "rgba(60,20,6,0.75)", "stroke-width": lit ? 3.2 : 4.4, "stroke-linejoin": "round" }, g);
+            }
+            return outer;
+          });
+          const shards = buildShards($("f13-shards"));
+          // on the page: the same seal, broken open and lying in pieces
+          const shards2 = buildShards($("f13-shards2"));
+          shards2.forEach((s, i) => {
+            const { c } = shardDefs[i], m = Math.hypot(c[0] - 20, c[1]) || 1, v = 7 + (i % 2) * 4;
+            s.setAttribute("transform", `translate(${(((c[0] - 20) / m) * v).toFixed(1)} ${((c[1] / m) * v).toFixed(1)}) rotate(${(i % 2 ? 7 : -6) + i}, ${c[0].toFixed(1)}, ${c[1].toFixed(1)})`);
+          });
+          // crumbs of wax on the page around the broken seal
+          (() => {
+            const g = $("f13-shards2"), r = HR.rng(2626);
+            for (let i = 0; i < 14; i++) {
+              const a = r() * Math.PI * 2, d = 66 + r() * 34, x = Math.cos(a) * d, y = Math.sin(a) * d, s = 1.5 + r() * 3.2;
+              const p = Array.from({ length: 5 }, (_, j) => { const b = (j / 5) * Math.PI * 2 + r() * 0.8, q = s * (0.6 + r() * 0.6); return [x + Math.cos(b) * q, y + Math.sin(b) * q]; });
+              S("path", { d: "M" + pts(p).join(" L") + "Z", fill: r() < 0.5 ? "#C94A1C" : "#E85D26", filter: "url(#f13-shd)" }, g);
+            }
+          })();
+
+          // near plane: a few huge out-of-focus hex glyphs
+          const nr = HR.rng(131);
+          for (let i = 0; i < 0; i++) { // v13: no bokeh
+            const b = el("div", "f13-bokeh", $("f13-near"), HR.cipher(2 + (i % 2), 610 + i));
+            Object.assign(b.style, { left: `${-100 + nr() * 2000}px`, top: `${-60 + nr() * 1000}px`, fontSize: `${200 + nr() * 160}px` });
+          }
+
+          // wax crumbs for the crack: little faceted chips, spat out of the fractures
+          const cb = HR.rng(1337);
+          const crumbs = Array.from({ length: 26 }, (_, i) => {
+            const d = el("div", "f13-crumb", $("f13-crumbs"));
+            d.style.clipPath = `polygon(${Array.from({ length: 5 }, (_, j) => { const b = (j / 5) * Math.PI * 2 + cb() * 0.9, q = 30 + cb() * 20; return `${(50 + Math.cos(b) * q).toFixed(0)}% ${(50 + Math.sin(b) * q).toFixed(0)}%`; }).join(", ")})`;
+            const a = Math.PI + (cb() - 0.5) * 3.4, v = 50 + cb() * 140, s = 0.4 + cb() * 1.0;
+            return { d, dx: Math.cos(a) * v, dy: Math.sin(a) * v * 0.8 - 30, s, burst: i >= 9, x0: 20 + cb() * 14, y0: (cb() - 0.5) * 30 };
+          });
+
+          // the letter: one span per glyph (the plaintext reserves the width; an <i> carries the hex face). The hand:
+          // each body glyph sits a hair off the baseline, leans a little, and takes a little more or less ink
+          const glyphs = [];
+          const bodyRows = LETTER.map((d, i) => i).filter((i) => !LETTER[i].big);
+          const bigTotal = LETTER.filter((d) => d.big).reduce((n, d) => n + d.text.replace(/ /g, "").length, 0);
+          let bigK = 0;
+          const gr = HR.rng(4242), hand = HR.rng(5151);
+          LETTER.forEach((d, r) => {
+            const ln = el("div", "f13-ln" + (d.big ? " f13-big" : "") + (d.sig ? " f13-sig" : ""), $("f13-letter"));
+            ln.style.top = d.top + "px";
+            if (d.left) ln.style.left = d.left + "px";
+            const chars = Array.from(d.text);
+            const rank = bodyRows.indexOf(r);
+            chars.forEach((ch, c) => {
+              if (ch === " ") { ln.appendChild(document.createTextNode(" ")); return; }
+              const g = el("span", "f13-g", ln);
+              const p = el("span", "f13-plain", g, ch);
+              if (!d.big) p.setAttribute("data-layout-allow-occlusion", ""); // the room light dims the body on purpose
+              if (d.big) p.style.transform = `translateY(${((hand() - 0.5) * 3).toFixed(1)}px)`;
+              else {
+                p.style.transform = `translateY(${((hand() - 0.5) * 2.6 + Math.sin(c * 0.21 + r) * 0.9).toFixed(1)}px) rotate(${((hand() - 0.5) * 3.2).toFixed(1)}deg)`;
+                p.style.color = `rgba(17,17,17,${(0.74 + hand() * 0.2).toFixed(2)})`;
+              }
+              const x = el("i", "", g);
+              let t, fd;
+              if (d.big) { t = L(137.66) + (bigK / (bigTotal - 1)) * (DOWN - L(137.66)); fd = 0.22; bigK++; } // the last glyph lands ON the downbeat 138.018
+              else { t = SHOT + 0.2 + (rank / (bodyRows.length - 1)) * 0.36 + (c / 86) * 0.1; fd = 0.16; } // top to bottom, 137.58–138.2
+              glyphs.push({ g, x, t, fd, big: !!d.big, seed: Math.floor(gr() * 9973), st: "", hx: "", rot: "" });
+            });
+          });
+          const bodyG = glyphs.filter((q) => !q.big);
+
+          const AS = (tag, parent, attrs, text) => { const e = S(tag, attrs, parent); if (text != null) e.textContent = text; return e; };
+
+          // ---- Archie reads the letter (v12: replaces the lamp-headed Archivist); his eyes light the page
+          const archie = HR.archie($("f13-arch"), { id: "f13a", x: 150, y: 372, scale: 0.68, seed: 8 });
+
+          const stampProp = AS("g", archie.hand("L", { upright: true }), { opacity: 0 });
+          AS("rect", stampProp, { x: -12, y: -26, width: 24, height: 32, rx: 5, fill: "#888880", stroke: "#111111", "stroke-width": 2 });
+          AS("rect", stampProp, { x: -50, y: 5, width: 100, height: 27, fill: "#0A0A0A", stroke: "#888880", "stroke-width": 2 });
+          AS("text", stampProp, { x: 0, y: 25, "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-size": 20, fill: "#F0ECE5" }, "READ");
+          const clothArm = AS("path", $("f13-arch"), { fill: "none", stroke: "#888880", "stroke-width": 8, opacity: 0 });
+          const cloth = AS("path", $("f13-arch"), { d: "M-25 -16 L20 -24 L32 14 L-15 25 Z", fill: "#F0ECE5", stroke: "#888880", "stroke-width": 2, opacity: 0 });
+          const readImpression = el("div", "f13-read-stamp", $("f13-g2"), "READ");
+          readImpression.setAttribute("data-layout-ignore", "");
+          Object.assign(readImpression.style, { position: "absolute", left: "1250px", top: "880px", font: '600 62px "IBM Plex Mono"', color: "#E85D26", border: "4px solid #E85D26", padding: "1px 12px", opacity: 0 });
+
+          // lyric lines: one span per word, lowercased
+          const lyr = {};
+          for (const key of Object.keys(LYRICS)) lyr[key] = LYRICS[key].map(([w, t]) => {
+            if (w === "about") { const hw = el("span", "f13-hw", $("f13-r2")); return [el("span", "f13-w f13-about hr-glow", hw, w), L(t), hw]; }
+            return [el("span", "f13-w", $("f13-" + key), w.toLowerCase()), L(t)];
+          });
+          lyr.l28b[2][0].id = "f13-later";
+          lyr.l29[0][0].style.color = "var(--fire)"; // "harvested": the accent keeps its colour on the cream page
+
+          // ---- timeline -------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          // Archie (shot B), authored in time order: he swoons on the downbeat after "I", wipes a lens, stamps READ on the
+          // downbeat 141.739
+          archie.mood(tl, "curious", 0, 0.01);
+          archie.swoon(tl, DOWN);
+          const WIPE = L(139.1), STAMP = L(141.739);
+          tl.set(cloth, { opacity: 1 }, WIPE);
+          archie.to(tl, { shL: 156, elL: -70, lidL: 0.9, lidR: 0.3, sway: 0 }, WIPE, 0.22, "power2.inOut");
+          archie.to(tl, { shL: 169, elL: -80 }, WIPE + 0.23, 0.13, "sine.inOut");
+          archie.to(tl, { shL: 156, elL: -65 }, WIPE + 0.37, 0.13, "sine.inOut");
+          archie.to(tl, { shL: 8, elL: 10, lidL: 0.2, lidR: 0.2 }, WIPE + 0.54, 0.25, "power2.inOut");
+          tl.set(cloth, { opacity: 0 }, WIPE + 0.8);
+          tl.set(stampProp, { opacity: 1 }, STAMP - 0.45);
+          archie.stamp(tl, STAMP, { side: "L" });
+          gsap.set(readImpression, { rotation: -8 });
+          tl.set(readImpression, { opacity: 1 }, STAMP);
+          tl.fromTo(readImpression, { scale: 1.14 }, { scale: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, STAMP);
+          tl.set(stampProp, { opacity: 0 }, STAMP + 0.9);
+          const stage = HR.stage($("root"), { seed: 13, drift: 0.7, pulse: 0 });
+          const cam = stage.cam;
+          tl.set(["#f13-g1", "#f13-a"], { opacity: 1 }, 0);
+          tl.set(["#f13-g1", "#f13-a", "#f13-light"], { opacity: 0 }, SHOT);
+          tl.set("#f13-g2", { opacity: 1 }, SHOT);
+          tl.set("#f13-kick1", { opacity: 0 }, ABOUT);
+          tl.set("#f13-kick2", { opacity: 1 }, ABOUT);
+          tl.set("#f13-kick2", { opacity: 0 }, SHOT);
+          tl.set("#f13-kick3", { opacity: 1 }, SHOT);
+
+          // the carriers: shot A is one slow push into the seal over the whole line; shot B a slow push and pan over the page
+          // v20: the envelope and key fill the frame (≥ 40 %): the push group starts at 1.15 and pushes on to 1.21 into the seal
+          tl.fromTo("#f13-push", { scale: 1.15, rotation: -0.4 }, { scale: 1.21, rotation: 0.3, duration: SHOT, ease: "sine.inOut" }, 0);
+          tl.fromTo(cam, { x: 24 }, { x: -12, duration: SHOT, ease: "sine.inOut" }, 0);
+          // v20 shot B: the camera drifts along the handwriting, left to right with the pen, and on to Archie's READ;
+          // one continuous eased move, a slow push under it; the letter stays inside the frame
+          tl.fromTo(cam, { x: -70 }, { x: 60, duration: DUR - SHOT, ease: "none", immediateRender: false }, SHOT);
+          tl.fromTo(cam, { z: 1.06 }, { z: 1.14, duration: DUR - SHOT, ease: "none", immediateRender: false }, SHOT);
+          // the switches: glideL in from 21-fridge; pushIn through the seal into the letter; a hard cut into 14
+          const host = document.getElementById("el-13-reading") || $("root");
+          WOW.transition(tl, host, { in: "glideL", dur: 0.46 });
+          WOW.transition(tl, $("f13-g1"), { out: "pushIn", dur: 0.46, total: SHOT });
+          WOW.transition(tl, $("f13-a"), { out: "pushIn", dur: 0.46, total: SHOT });
+          WOW.transition(tl, $("f13-g2"), { in: "pushIn", dur: 0.46, start: SHOT });
+
+          // g1 — the key glides in from the right and seats in the keyway ON "were"
+          tl.fromTo("#f13-keywrap", { x: 600, rotation: -3 }, { x: 24, rotation: 0, duration: IN - 0.16, ease: "power2.out" }, 0);
+          tl.fromTo("#f13-keywrap", { x: 24 }, { x: -48, duration: 0.2, ease: "power2.inOut", immediateRender: false }, IN - 0.16);
+          tl.fromTo("#f13-card", { x: 0 }, { x: -3, duration: 0.06, ease: "power2.out" }, IN);
+          tl.fromTo("#f13-card", { x: -3 }, { x: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, IN + 0.06);
+          // v20: ON "on" (kick 136.19) the key starts to turn against the wax and stalls a third of the way; ON the kick
+          // 136.548 the fractures run out and it shudders; ON "about" it snaps through the rest of its half turn and the
+          // seal splits. KT.s is the blade's scaleY (1 → −1 = a half turn about the shaft); render() shades it edge-on.
+          const KT = { s: 1 };
+          tl.fromTo(KT, { s: 1 }, { s: 0.42, duration: K2 - ON, ease: "power2.out" }, ON);
+          tl.fromTo(KT, { s: 0.42 }, { s: 0.5, duration: 0.05, ease: "power2.out", immediateRender: false }, K2);
+          tl.fromTo(KT, { s: 0.5 }, { s: 0.38, duration: ABOUT - 0.12 - K2 - 0.05, ease: "sine.inOut", immediateRender: false }, K2 + 0.05);
+          tl.fromTo(KT, { s: 0.38 }, { s: -1.06, duration: 0.12, ease: "power3.in", immediateRender: false }, ABOUT - 0.12);
+          tl.fromTo(KT, { s: -1.06 }, { s: -1, duration: 0.3, ease: "power2.out", immediateRender: false }, ABOUT);
+          tl.fromTo("#f13-seal", { rotation: 0 }, { rotation: -3.5, duration: K2 - ON, ease: "power2.in" }, ON);
+          crackPaths[2].forEach((p) => tl.fromTo(p, { strokeDashoffset: 1 }, { strokeDashoffset: 0.55, duration: K2 - ON - 0.07, ease: "power1.in" }, ON + 0.03));
+          // ON the kick: every fracture runs out to the rim, the seal eases back, a glint runs along the key
+          crackPaths.forEach((pp, k) => pp.forEach((p) => tl.fromTo(p, { strokeDashoffset: k === 2 ? 0.55 : 1 }, { strokeDashoffset: 0, duration: 0.08, ease: "expo.out", immediateRender: false }, K2 - 0.04 + (k === 2 ? 0 : 0.012 * Math.abs(k - 2)))));
+          branches.forEach((p, i) => tl.fromTo(p, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.08, ease: "power2.out" }, K2 + 0.01 + i * 0.008));
+          tl.fromTo("#f13-seal", { rotation: -3.5 }, { rotation: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, K2);
+          tl.fromTo("#f13-card", { y: 0 }, { y: 4, duration: 0.06, ease: "power2.out" }, K2);
+          tl.fromTo("#f13-card", { y: 4 }, { y: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, K2 + 0.06);
+          tl.fromTo("#f13-glint", { x: -40, opacity: 0.85 }, { x: 290, opacity: 0.85, duration: 0.42, ease: "power2.inOut", immediateRender: false }, K2);
+          tl.set("#f13-glint", { opacity: 0 }, K2 + 0.42);
+          // ON "about": the seal splits; its shards part, then drift apart as the camera pushes through
+          tl.set("#f13-whole", { opacity: 0 }, ABOUT);
+          tl.set(["#f13-shards", "#f13-residue"], { opacity: 1 }, ABOUT);
+          shards.forEach((s, i) => {
+            const { c } = shardDefs[i], m = Math.hypot(c[0] - O[0] * 0.4, c[1]) || 1, ux = (c[0] - O[0] * 0.4) / m, uy = c[1] / m;
+            const r1 = (i % 2 ? 1 : -1) * (2 + i * 0.4), r2 = (i % 2 ? 1 : -1) * (8 + i * 2), v2 = 13 + (i % 3) * 4;
+            tl.fromTo(s, { x: 0, y: 0, rotation: 0 }, { x: ux * 3.4, y: uy * 3.4, rotation: r1, duration: 0.08, ease: "power3.out", immediateRender: false }, ABOUT);
+            tl.fromTo(s, { x: ux * 3.4, y: uy * 3.4, rotation: r1 }, { x: ux * v2, y: uy * v2 + 2, rotation: r2, duration: SHOT - ABOUT - 0.08, ease: "power2.out", immediateRender: false }, ABOUT + 0.08);
+          });
+          tl.fromTo("#f13-keywrap", { x: -48 }, { x: -33, duration: 0.5, ease: "power2.out", immediateRender: false }, ABOUT);
+          crumbs.forEach(({ d, dx, dy, s, burst, x0, y0 }, i) => {
+            const t0 = (burst ? ABOUT : K2 + 0.03) + (i % 3) * 0.01, dur = burst ? 0.7 : 0.5;
+            tl.fromTo(d, { opacity: 1, x: x0, rotation: 0, scale: s }, { x: x0 + dx, rotation: (i % 2 ? 1 : -1) * 200, duration: dur, ease: "power2.out", immediateRender: false }, t0);
+            tl.fromTo(d, { y: y0 }, { y: y0 + dy, duration: dur * 0.4, ease: "power2.out", immediateRender: false }, t0);
+            tl.fromTo(d, { y: y0 + dy }, { y: y0 + dy + 110, opacity: 0, scale: s * 0.5, duration: dur * 0.6, ease: "power2.in", immediateRender: false }, t0 + dur * 0.4);
+          });
+          WOW.punch(tl, $("f13-g1"), ABOUT, { s: 1.035, dur: 0.6 });
+          // v20: the split throws wax chips off the seal (mechanical; was a flat ring)
+          WOW.burst(tl, $("f13-fxA"), { x: 960, y: 525, t: ABOUT, n: 22, speed: 900, size: [5, 13], spread: 300, aim: -90, gravity: 1500, dur: 0.85, cream: 0.12, seed: 1372 });
+
+          // g2 — the page: the warm light drifts across it, Archie rolls in from the right edge, his eyes light the sung zone
+          tl.fromTo("#f13-sun", { x: 0, y: 0 }, { x: 700, y: 140, duration: DUR - SHOT, ease: "sine.inOut" }, SHOT);
+          tl.fromTo("#f13-arch", { x: 470, rotation: 3 }, { x: 0, rotation: 0, duration: 0.8, ease: "power3.out" }, SHOT + 0.06);
+          tl.fromTo("#f13-beam", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out", immediateRender: false }, SHOT + 0.5);
+          // the late kicks rock the broken seal on the page
+          [L(141.732), L(142.229)].forEach((t, k) => {
+            const r = 7 + (k ? -1.6 : 1.4);
+            tl.fromTo("#f13-seal2", { rotation: 7 }, { rotation: r, duration: 0.06, ease: "power2.out", immediateRender: false }, t);
+            tl.fromTo("#f13-seal2", { rotation: r }, { rotation: 7, duration: 0.45, ease: "power2.out", immediateRender: false }, t + 0.06);
+          });
+
+          // lyrics, shot A: soft rises on each word's time; "about" settles in fire with a soft punch (the ring is the seal's)
+          for (const [s, t] of lyr.r1.concat(lyr.r2.slice(0, 2))) WOW.word(tl, s, t, { kind: "rise" });
+          {
+            const [ab, abT, abW] = lyr.r2[2];
+            WOW.word(tl, ab, abT, { kind: "settle", dur: 0.5 });
+            WOW.punch(tl, abW, abT, { s: 1.05, dur: 0.6 });
+          }
+          // shot B: the marker writes "i said", "sooner" and "later" land as the display row; "harvested then," builds
+          for (const [s, t] of lyr.l29) HR.lead(tl, s, t);
+          for (const [s, t] of lyr.l28a) HR.lead(tl, s, t, { from: 0, stagger: 0.003, dur: 0.12 });
+          HR.hero(tl, lyr.l28b[0][0], lyr.l28b[0][1], { spread: 0, pre: 0.04, over: 1.02, skew: false, sharp: true });
+          HR.lead(tl, lyr.l28b[1][0], lyr.l28b[1][1], { from: 0, stagger: 0.003, dur: 0.12 });
+          HR.hero(tl, lyr.l28b[2][0], lyr.l28b[2][1], { spread: 0, pre: 0.04, over: 1.02, skew: false, sharp: true });
+          {
+            const lt = lyr.l28b[2][0], fxB = el("div", "", $("f13-type"));
+            fxB.setAttribute("data-layout-ignore", ""); Object.assign(fxB.style, { position: "absolute", inset: "0", pointerEvents: "none" });
+            $("f13-type").insertBefore(fxB, $("f13-type").firstChild); // behind the words
+            WOW.punch(tl, $("f13-l28b"), lyr.l28b[2][1], { s: 1.04, dur: 0.6 });
+          }
+          // v20: on the downbeat 139.888 the marker slashes a swash under "sooner or later" (was a flat ring on "later")
+          const SWASH = L(139.888), rowB = $("f13-l28b");
+          const swSvg = document.createElementNS(NS, "svg");
+          swSvg.setAttribute("data-layout-ignore", ""); swSvg.setAttribute("aria-hidden", "true");
+          {
+            const w = rowB.offsetWidth, y0 = rowB.offsetTop + rowB.offsetHeight * 0.9;
+            Object.assign(swSvg.style, { position: "absolute", left: "0px", top: (y0 - 30) + "px", width: (w + 60) + "px", height: "70px", overflow: "visible", pointerEvents: "none" });
+            swSvg.setAttribute("viewBox", `0 0 ${w + 60} 70`);
+            S("path", { id: "f13-swash", d: `M14 40 C ${w * 0.25} 52, ${w * 0.55} 26, ${w * 0.82} 34 S ${w + 20} 46, ${w + 44} 20`, fill: "none", stroke: "#C8481A",
+              "stroke-width": 9, "stroke-linecap": "round", pathLength: 100, "stroke-dasharray": 100, "stroke-dashoffset": 100 }, swSvg);
+            $("f13-l28").appendChild(swSvg);
+          }
+          HR.exit(tl, $("f13-l28"), L(140.675) - 0.3, { stagger: 0.004, dur: 0.22 });
+
+          // v16: the last 0.15 s swell to fire; 14-now opens on the same fire (0.35) and the seal breaks on "decrypted"
+          const swell = el("div", "", document.getElementById("el-13-reading"));
+          swell.setAttribute("data-layout-ignore", "");
+          Object.assign(swell.style, { position: "absolute", inset: "0", opacity: 0, pointerEvents: "none", background: "radial-gradient(ellipse at 81% 50%, #E85D26 0%, #E85D26 60%, #B9431A 100%)" });
+          tl.fromTo(swell, { opacity: 0 }, { opacity: 0.35, duration: 0.15, ease: "power2.in", immediateRender: false }, DUR - 0.15);
+
+          // ---- per-frame draw -------------------------------------------------------------------------------
+          const HATS = HR.onsetsIn("hat", T0 + DOWN + 0.3, T0 + DUR);
+          const cardHex = $("f13-cardhex"), sealEl = $("f13-seal"), seal2 = $("f13-seal2"), keyEl = $("f13-key"), lightEl = $("f13-light");
+          const objEl = $("f13-obj"), marker = $("f13-marker"), archEl = $("f13-arch");
+          const clamp01 = (v) => Math.max(0, Math.min(1, v));
+          const markerWords = lyr.l28a.concat(lyr.l28b);
+          // v20: the marker writes in real time: each word's glyphs are written left to right in turn at a pen's pace
+          // (narrow glyphs quicker), starting ON the word's time ("later" is a fast slash, done by the downbeat 139.888)
+          const WRITE = { i: 0.09, said: 0.42, sooner: 0.5, or: 0.14, later: 0.24 };
+          const WIDE = { m: 1.4, w: 1.3, i: 0.55, r: 0.75, s: 0.85, o: 0.95 };
+          const pen = [];
+          for (const [word, at] of markerWords) {
+            word.style.clipPath = "none";
+            const gs = Array.from(word.querySelectorAll(".hr-g")), units = gs.map((g) => WIDE[g.textContent] ?? 1);
+            const k = (WRITE[word.textContent.trim()] ?? 0.3) / units.reduce((a, b) => a + b, 0);
+            let tt = at;
+            gs.forEach((g, i) => { pen.push({ g, t: tt, d: units[i] * k * 0.92 }); tt += units[i] * k; });
+          }
+          const swash = $("f13-swash");
+          // v20: Archie leans in on the hits (additive on his pose in render, a pure function of time): the double hat
+          // into the downbeat, the downbeat 139.888, the kick 142.229 and the hat 143.131
+          const LEANS = [[137.889, 0.7], [139.888, 1], [142.229, 0.8], [143.131, 1]].map(([h, a]) => [L(h), a]);
+          const leanAt = (t) => LEANS.reduce((v, [h, a]) => {
+            const u = t - h + 0.06;
+            return v + (u <= 0 ? 0 : u < 0.16 ? a * (1 - Math.pow(1 - u / 0.16, 3)) : a * Math.exp(-(u - 0.16) / 0.55));
+          }, 0);
+          const smooth = (u) => u * u * (3 - 2 * u);
+          function render() {
+            const t = tl.time(), T = t + T0, step = Math.floor(t * 15);
+            // a small kick pulse on the envelope shot only: the page never moves with the music
+            const k = t < SHOT ? HR.hit("kick", T, 0.14) * 0.012 : 0;
+            cam.z += k; stage.apply(T); cam.z -= k;
+            WOW.draw(tl, T0);
+            HR.draw(tl);
+
+            // light: the warm pool behind the card breathes and flares on the crack; the seal and key catch it
+            const flare = Math.max(t >= K2 ? 0.7 * Math.exp(-(t - K2) / 0.22) : 0, t >= ABOUT ? Math.exp(-(t - ABOUT) / 0.4) : 0);
+            const rms = HR.band("rms", T);
+            lightEl.style.transform = `scale(${(0.94 + 0.12 * rms + 0.12 * flare).toFixed(3)})`;
+            if (t < SHOT) lightEl.style.opacity = (0.7 + 0.4 * rms + 0.6 * flare).toFixed(3);
+            HR.glow(sealEl, T, 0.4 + 1.4 * flare, 0.7);
+            HR.glow(seal2, T, 0.25, 0.5);
+            keyEl.style.setProperty("--hr-glow", (0.08 + 1.3 * flare + 0.15 * HR.band("bass", T)).toFixed(3));
+            // The reference’s draw-on treatment: path and word masks are pure functions of timeline time.
+            const ap = clamp01((t - SHOT) / 0.3);
+            marker.style.strokeDasharray = "100";
+            marker.style.strokeDashoffset = (100 * (1 - ap)).toFixed(2);
+            marker.style.opacity = (1 - clamp01((t - (L(140.675) - 0.3)) / 0.22)).toFixed(3);
+            for (const { g, t: t0, d } of pen) {   // a glyph is written left to right; its overhangs show once it is done
+              const p = clamp01((t - t0) / d);
+              const cp = p <= 0 ? "inset(0 100% 0 0)" : p >= 1 ? "none" : `inset(-45% ${(130 - 160 * smooth(p)).toFixed(1)}% -50% -30%)`;
+              if (g._cp !== cp) { g.style.clipPath = cp; g._cp = cp; }
+            }
+            swash.setAttribute("stroke-dashoffset", (100 * (1 - smooth(clamp01((t - SWASH + 0.03) / 0.2)))).toFixed(1));
+            swSvg.style.opacity = marker.style.opacity;
+            archie.s.lookX = -0.85; archie.s.lookY = 0.3; archie.s.turn = -0.45; // he reads leftwards, across the page
+            // his eye-light on the sung zone breathes with the song, and flares as he leans in
+            const lean = leanAt(t);
+            $("f13-beam").style.filter = `blur(16px) brightness(${(0.85 + 0.3 * rms + 0.35 * lean).toFixed(3)})`;
+
+            if (t >= SHOT - 0.1) {
+              // the lean: neck out, head dipped toward the page, the upper body tipped left, pupils wide; restored after
+              const a = archie.s, d = { neck: 0.32 * lean, tilt: -9 * lean, rot: -5 * lean, pupil: 0.3 * lean, lookY: 0.25 * lean };
+              for (const key in d) a[key] += d[key];
+              archie.apply(T);
+              for (const key in d) a[key] -= d[key];
+            }
+            // the key's half turn about its shaft: shaded edge-on, the engraving only on its near face
+            const ks = KT.s;
+            $("f13-keyturn").style.transform = `scaleY(${ks.toFixed(4)})`;
+            $("f13-kshade").setAttribute("opacity", (0.5 * clamp01(1 - Math.abs(ks))).toFixed(3));
+            $("f13-ktext").setAttribute("opacity", ks > 0 ? 1 : 0);
+            const wiping = t >= WIPE && t < WIPE + 0.8;
+            const grip = archie.handAt("L"), lens = archie.headAt();
+            const reach = clamp01((t - WIPE) / 0.2) * (1 - clamp01((t - WIPE - 0.54) / 0.24));
+            const wx = grip.x + (lens.x - 25 - grip.x) * reach + (wiping ? 6 * Math.sin((t - WIPE) * 32) : 0);
+            const wy = grip.y + (lens.y - grip.y) * reach;
+            cloth.setAttribute("transform", `translate(${wx} ${wy}) scale(0.55)`);
+            clothArm.setAttribute("d", `M${grip.x} ${grip.y} L${wx} ${wy}`);
+            clothArm.setAttribute("opacity", wiping ? 1 : 0);
+
+            // the card's ciphertext body: a few rows scramble, hats flick more
+            const objText = t >= ABOUT ? "THE SEAL IS BROKEN" : "SEALED · TLS 1.3";
+            if (objEl.textContent !== objText) objEl.textContent = objText;
+            if (t < SHOT) cardHex.textContent = Array.from({ length: 7 }, (_, i) =>
+              HR.cipher(16, 977 + i * 31 + (i % 3 === 0 || HR.hit("hat", T, 0.08) > 0.4 ? step * 1000 : 0)).replace(/(.{4})/g, "$1 ")).join("\n");
+
+            // the decrypt: each glyph flips over in X (hex face away, plaintext face in), resolving ON its time
+            let flick = null;
+            for (let h = HATS.length - 1; h >= 0; h--) if (HATS[h] <= T) { if (T - HATS[h] < 0.09) flick = HR.rng(Math.round(HATS[h] * 1000)); break; }
+            const fset = new Set();
+            if (flick) for (let n = 0; n < 4; n++) fset.add((flick() * bodyG.length) | 0);
+            bodyG.forEach((q, i) => { q.fk = fset.has(i); });
+            for (const q of glyphs) {
+              const p = (t - (q.t - q.fd)) / q.fd;
+              let st, rot = 0;
+              if (p <= 0) st = "enc";
+              else if (p < 0.5) { const u = p / 0.5; st = "fl"; rot = 90 * u * u; }
+              else if (p < 1) { const u = (p - 0.5) / 0.5; st = "pt"; rot = -90 * (1 - u) * (1 - u); }
+              else st = q.fk ? "enc" : "pt";
+              if (st !== q.st) {
+                q.g.classList.toggle("f13-enc", st !== "pt");
+                q.g.classList.toggle("f13-fl", st === "fl");
+                q.st = st;
+              }
+              if (st !== "pt") {
+                const hx = HR.HEX[(q.seed + step * 7 + (st === "fl" ? Math.floor(t * 30) * 5 : 0)) % 16];
+                if (hx !== q.hx) { q.x.textContent = hx; q.hx = hx; }
+              }
+              const rs = rot ? `rotateX(${rot.toFixed(1)}deg)` : "";
+              if (rs !== q.rot) { q.g.style.transform = rs; q.rot = rs; }
+            }
+          }
+          tl.eventCallback("onUpdate", render);
+          tl.seek(0);
+          render();
+          window.__timelines["13-reading"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

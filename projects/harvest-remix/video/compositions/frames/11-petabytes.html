@@ -1,0 +1,442 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 11 — petabytes (117.94–123.479). CINEMATIC HIT 2: one lamp becomes a planet of lamps, then the rush back in. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-700.woff2") format("woff2"); font-weight: 700; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #111111; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+
+        /* midground: the archive, three.js */
+        #f11-gl { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+
+        /* the tag that follows lamp 0001 */
+        #f11-tag { position: absolute; left: 0; top: 0; display: flex; align-items: center; will-change: transform; }
+        #f11-lead { display: block; width: 64px; height: 1px; background: var(--fire); }
+        #f11-tagtext { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 18px; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--cream); background: var(--ink); border: 1px solid var(--fire);
+          padding: 7px 10px 6px 12px; white-space: nowrap; }
+
+        /* foreground: the lyric, lower left, on its own staged plane */
+        #f11-type { transform-origin: 5.5% 85%; }
+        .f11-line { position: absolute; left: 5.5cqw; bottom: 5cqw; width: 78cqw; font-family: "Barlow";
+          color: var(--cream); display: flex; flex-direction: column; align-items: flex-start; gap: 0.9cqw; }
+        .f11-row { display: flex; flex-wrap: wrap; column-gap: 0.24em; font-weight: 800; font-size: 7cqw;
+          line-height: 0.92; letter-spacing: -0.03em;
+          text-shadow: 2px 2px 0 #1A1A18, 4px 4px 0 #151514, 6px 6px 0 #111111, 10px 14px 18px rgba(17, 17, 17, 0.7); }
+        .f11-row .hr-clip { clip-path: inset(-0.6em -0.4em -0.3em -0.4em); }
+        .f11-row.f11-big { font-weight: 900; font-size: 14cqw; line-height: 0.84; letter-spacing: -0.045em;
+          margin-left: -0.6cqw; margin-bottom: 0.4cqw; transform-origin: 0% 100%;
+          text-shadow: 3px 3px 0 #505048, 6px 6px 0 #3a3a36, 9px 9px 0 #282826, 12px 12px 0 #1A1A18, 15px 15px 0 #111111,
+            22px 28px 34px rgba(17, 17, 17, 0.75), 0 0 calc(var(--hr-glow, 0.5) * 30px) rgba(240, 236, 229, 0.16); }
+        .f11-w { display: inline-block; position: relative; }
+      </style>
+
+      <div data-hf-id="hf-y3vn" id="root" data-composition-id="11-petabytes" data-width="1920" data-height="1080" data-duration="5.539">
+        <canvas data-hf-id="hf-7b9x" id="f11-gl" width="1920" height="1080" data-layout-ignore></canvas>
+        <div data-hf-id="hf-29io" id="f11-tag"><i data-hf-id="hf-ewce" id="f11-lead"></i><span data-hf-id="hf-vi2g" id="f11-tagtext">DRAWER 0001</span></div>
+        <div data-hf-id="hf-yh1a" class="hr-layer" id="f11-type" data-depth="0.8"><div data-hf-id="hf-0z85" class="f11-line" id="f11-l23"></div></div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+
+        const T0 = 117.94, DUR = 5.539;
+        const L = (t) => +(t - T0).toFixed(3); // track -> frame-local seconds
+        const $ = (id) => document.getElementById(id);
+        const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+
+        // ---- the lyric (L23), each word on its own start --------------------
+        const ROWS = [
+          { big: true, words: [["Petabytes,", 117.94]] },
+          { words: [["darling.", 118.88]] },
+          { words: [["I", 119.8], ["adore", 119.92], ["it.", 120.5]] },
+        ];
+        const spans = [];
+        for (const r of ROWS) {
+          const row = el("div", "f11-row" + (r.big ? " f11-big" : ""), $("f11-l23"));
+          for (const [w, t] of r.words) spans.push([el("span", "f11-w", row, w.toLowerCase()), t, row]);
+        }
+
+        // ---- the archive: one Points system + the drawer hairlines ---------
+        const R = 100, ROW = 1.0, COL = 1.5, NR = Math.round((Math.PI * R) / ROW);
+        const BAND = 17, ON = 14;          // floors: 14 rows of drawers, a 3-row gap
+        const I0 = 160;                    // drawer 0001's row (mid-band), column 0
+        const latOf = (i) => ((i + 0.5 - NR / 2) * ROW) / R;
+        const colsOf = (lat) => Math.max(1, Math.round((2 * Math.PI * R * Math.cos(lat)) / COL));
+        const onSphere = (r, lat, lon, out) => out.push(r * Math.cos(lat) * Math.sin(lon), r * Math.sin(lat), r * Math.cos(lat) * Math.cos(lon));
+        const P0 = new THREE.Vector3(0, R * Math.sin(latOf(I0)), R * Math.cos(latOf(I0)));
+        const N0 = P0.clone().normalize();
+
+        const pos = [], size = [], kind = [], seed = [];
+        let sid = 1;
+        const add = (k, s) => { size.push(s); kind.push(k); seed.push((sid++ * 0.61803398875) % 1); };
+        // outer shell, in floors
+        for (let i = 0; i < NR; i++) {
+          if (i % BAND >= ON) continue;
+          const lat = latOf(i), n = colsOf(lat);
+          for (let j = 0; j < n; j++) { onSphere(R, lat, (j / n) * Math.PI * 2, pos); add(i === I0 && j === 0 ? 3 : 0, i === I0 && j === 0 ? 0.3 : 0.3); }
+        }
+        // inner shell, seen through the gaps between floors
+        const R2 = 74, NR2 = Math.round((Math.PI * R2) / 1.4);
+        for (let i = 0; i < NR2; i++) {
+          const lat = ((i + 0.5 - NR2 / 2) * 1.4) / R2, n = Math.max(1, Math.round((2 * Math.PI * R2 * Math.cos(lat)) / 1.8));
+          for (let j = 0; j < n; j++) { onSphere(R2, lat, ((j + 0.5 * (i % 2)) / n) * Math.PI * 2, pos); add(1, 0.36); }
+        }
+        // two rings of lamps
+        function ring(r0, r1, step, colStep, rx, rz, s) {
+          const m = new THREE.Matrix4().makeRotationX(rx).multiply(new THREE.Matrix4().makeRotationZ(rz));
+          const v = new THREE.Vector3();
+          for (let r = r0; r <= r1 + 1e-6; r += step) {
+            const n = Math.round((2 * Math.PI * r) / colStep);
+            for (let j = 0; j < n; j++) {
+              const a = (j / n) * Math.PI * 2;
+              v.set(r * Math.cos(a), 0, r * Math.sin(a)).applyMatrix4(m);
+              pos.push(v.x, v.y, v.z); add(2, s);
+            }
+          }
+        }
+        ring(124, 150, 1.6, 1.6, -0.55, -0.16, 0.42);
+        ring(166, 172, 1.5, 1.5, 1.2, 0.5, 0.42);
+
+        const COUNT = size.length;
+        const dist = new Float32Array(COUNT);
+        for (let k = 0; k < COUNT; k++) dist[k] = Math.hypot(pos[3 * k] - P0.x, pos[3 * k + 1] - P0.y, pos[3 * k + 2] - P0.z);
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+        geo.setAttribute("aSize", new THREE.Float32BufferAttribute(size, 1));
+        geo.setAttribute("aKind", new THREE.Float32BufferAttribute(kind, 1));
+        geo.setAttribute("aSeed", new THREE.Float32BufferAttribute(seed, 1));
+        geo.setAttribute("aDist", new THREE.BufferAttribute(dist, 1));
+
+        const HALO = 2.3, BLOOM = 4.0;
+        const WAVE_A = 0.45, WAVE_K = 5.0; // ignition front: radius = A * e^(K t), from lamp 0001 outward
+        const uni = {
+          f11_uTime: { value: 0 }, f11_uScale: { value: 1000 }, f11_uPulse: { value: 0 }, f11_uGrow: { value: 1 },
+        };
+        // one lamp model, shared by the core pass and the bloom pass
+        const LAMP_VS = `
+            attribute float aSize; attribute float aKind; attribute float aSeed; attribute float aDist;
+            uniform float f11_uTime; uniform float f11_uScale; uniform float f11_uPulse; uniform float f11_uGrow;
+            varying vec3 vCol; varying float vA; varying float vPx;
+            void lamp(out vec3 col, out float a, out float px, out float lit) {
+              vec4 mv = modelViewMatrix * vec4(position, 1.0);
+              float depth = max(-mv.z, 0.01);
+              float tLit = log(max(aDist, ${WAVE_A.toFixed(3)}) / ${WAVE_A.toFixed(3)}) / ${WAVE_K.toFixed(3)};
+              float age = f11_uTime - tLit;
+              lit = step(0.0, age);
+              float facing = 1.0;
+              if (aKind < 1.5 || aKind > 2.5) {
+                vec3 n = normalize(position);
+                vec3 v = normalize(cameraPosition - position);
+                facing = smoothstep(-0.25, 0.08, dot(n, v));
+              }
+              float bright = mix(0.2, 1.0, facing) * (aKind > 0.5 && aKind < 1.5 ? 0.5 : 1.0);
+              vec3 fire = vec3(0.9098, 0.3647, 0.1490);
+              vec3 cream = vec3(0.9412, 0.9255, 0.8980);
+              vec3 hint = vec3(0.3137, 0.3137, 0.2824);
+              float flash = lit * (1.0 - smoothstep(0.0, 0.16, age)) * step(aKind, 2.5);
+              float h = fract(sin(aSeed * 917.13 + floor(f11_uTime * 15.0) * 0.731) * 43758.5453);
+              float blink = lit * step(0.996, h) * step(aSize * f11_uScale / depth, 6.0);
+              col = mix(mix(hint, fire, lit), cream, blink);
+              float s = aSize * f11_uGrow * mix(0.4, 1.0, lit) * (1.0 + 0.6 * flash + 0.3 * f11_uPulse * lit);
+              px = s * f11_uScale / depth;
+              a = mix(0.4, 1.0, lit) * bright;
+              if (aKind > 1.5 && aKind < 2.5) a *= smoothstep(2.0, 12.0, depth);
+              gl_Position = projectionMatrix * mv;
+              // the lyric sits lower-left: lamps behind it step down so the type reads
+              vec2 ndc = gl_Position.xy / gl_Position.w;
+              a *= 1.0 - 0.55 * smoothstep(0.0, 0.3, min(0.5 - ndc.x, -0.08 - ndc.y));
+            }`;
+        const mat = new THREE.ShaderMaterial({
+          uniforms: uni, transparent: true, depthWrite: false, depthTest: true,
+          vertexShader: LAMP_VS + `
+            void main() {
+              vec3 col; float a, px, lit; lamp(col, a, px, lit);
+              if (px < 2.8) { a *= pow(px / 2.8, 0.3); px = 2.8; }
+              vCol = col; vA = a; vPx = px;
+              gl_PointSize = min(px * ${HALO.toFixed(2)}, 1000.0);
+            }`,
+          fragmentShader: `
+            varying vec3 vCol; varying float vA; varying float vPx;
+            void main() {
+              float r = length(gl_PointCoord - 0.5) * 2.0 * ${HALO.toFixed(2)};
+              float fw = 1.0 / max(vPx, 1.0);
+              float core = 1.0 - smoothstep(1.0 - fw, 1.0 + fw, r);
+              float glow = 0.3 * exp(-2.4 * max(r - 1.0, 0.0)) * (1.0 - smoothstep(${(HALO - 0.3).toFixed(2)}, ${HALO.toFixed(2)}, r));
+              float a = vA * max(core, glow);
+              if (a < 0.004) discard;
+              gl_FragColor = vec4(vCol, a);
+            }`,
+        });
+        // bloom: a wide, faint additive halo behind every lit lamp; drawer 0001 the brightest
+        uni.f11_uBloom = { value: 0 };
+        const bloomMat = new THREE.ShaderMaterial({
+          uniforms: uni, transparent: true, depthWrite: false, depthTest: true, blending: THREE.AdditiveBlending,
+          vertexShader: LAMP_VS + `
+            uniform float f11_uBloom;
+            void main() {
+              vec3 col; float a, px, lit; lamp(col, a, px, lit);
+              float hero = step(2.5, aKind);
+              if (px < 2.8) a *= mix(pow(px / 2.8, 0.6), 1.0, hero);
+              vA = a * lit * f11_uBloom * mix(1.0, 7.0, hero);
+              vPx = min(max(px * mix(${BLOOM.toFixed(1)}, 9.0, hero), mix(7.0, 90.0, hero)), 720.0);
+              gl_PointSize = vA < 0.002 ? 0.0 : vPx;
+            }`,
+          fragmentShader: `
+            varying float vA;
+            void main() {
+              float r = length(gl_PointCoord - 0.5) * 2.0;
+              float g = exp(-r * r * 4.5) * (1.0 - smoothstep(0.75, 1.0, r));
+              gl_FragColor = vec4(0.9098, 0.3647, 0.1490, vA * g);
+            }`,
+        });
+        const bloom = new THREE.Points(geo, bloomMat);
+        bloom.frustumCulled = false;
+        const points = new THREE.Points(geo, mat);
+        points.frustumCulled = false;
+
+        // drawer hairlines around 0001 (seen only up close)
+        const lpos = [], lcol = [];
+        const hint = new THREE.Color(0x505048), fire = new THREE.Color(0xe85d26);
+        const INSET = 0.08;
+        for (let i = I0 - 22; i <= I0 + 22; i++) {
+          if (i % BAND >= ON) continue;
+          const lat = latOf(i), n = colsOf(lat), dLon = (Math.PI * 2) / n;
+          const la = lat - 0.5 * ROW / R + INSET / R, lb = lat + 0.5 * ROW / R - INSET / R;
+          for (let j = -26; j <= 26; j++) {
+            const lon = j * dLon, ia = INSET / (R * Math.cos(lat));
+            const a0 = lon - dLon / 2 + ia, a1 = lon + dLon / 2 - ia;
+            const c = []; onSphere(R, la, a0, c); onSphere(R, la, a1, c); onSphere(R, lb, a1, c); onSphere(R, lb, a0, c);
+            const col = i === I0 && j === 0 ? fire : hint;
+            for (const [p, q] of [[0, 1], [1, 2], [2, 3], [3, 0]]) {
+              lpos.push(c[3 * p], c[3 * p + 1], c[3 * p + 2], c[3 * q], c[3 * q + 1], c[3 * q + 2]);
+              lcol.push(col.r, col.g, col.b, col.r, col.g, col.b);
+            }
+          }
+        }
+        const lgeo = new THREE.BufferGeometry();
+        lgeo.setAttribute("position", new THREE.Float32BufferAttribute(lpos, 3));
+        lgeo.setAttribute("color", new THREE.Float32BufferAttribute(lcol, 3));
+        const lmat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 1, depthWrite: false });
+        const lines = new THREE.LineSegments(lgeo, lmat);
+        lines.frustumCulled = false;
+
+        // solid ink: each floor of drawers is a band of the outer shell; the inner core hides the far side
+        const inkMat = new THREE.MeshBasicMaterial({ color: 0x111111 });
+        const solids = [new THREE.Mesh(new THREE.SphereGeometry(R2 - 0.6, 64, 40), inkMat)];
+        for (let b = 0; b * BAND < NR; b++) {
+          const i0 = b * BAND, i1 = Math.min(NR, i0 + ON);
+          const th0 = Math.PI / 2 - (latOf(i1 - 1) + 0.5 * ROW / R), th1 = Math.PI / 2 - (latOf(i0) - 0.5 * ROW / R);
+          solids.push(new THREE.Mesh(new THREE.SphereGeometry(R - 0.3, 160, 4, 0, Math.PI * 2, th0, th1 - th0), inkMat));
+        }
+
+        // depth haze: a camera-facing fire halo through the core, hidden by the planet, glowing around its limb
+        const HS = 300;
+        const hazeMat = new THREE.ShaderMaterial({
+          uniforms: { f11_uHaze: { value: 0 } }, transparent: true, depthWrite: false, depthTest: true,
+          blending: THREE.AdditiveBlending,
+          vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+          fragmentShader: `
+            uniform float f11_uHaze; varying vec2 vUv;
+            void main() {
+              float r = length(vUv - 0.5) * ${(2 * HS).toFixed(1)};
+              float e = max(r - ${(R * 0.97).toFixed(1)}, 0.0);
+              float a = f11_uHaze * (0.5 * exp(-e / 16.0) + 0.22 * exp(-e / 70.0)) * (1.0 - smoothstep(${(HS * 0.75).toFixed(1)}, ${HS.toFixed(1)}, r));
+              gl_FragColor = vec4(0.9098, 0.3647, 0.1490, a);
+            }`,
+        });
+        const haze = new THREE.Mesh(new THREE.PlaneGeometry(2 * HS, 2 * HS), hazeMat);
+        haze.frustumCulled = false;
+
+        // the rush: each lamp smears from where it was a shutter ago to where it is now (a quad, lamp-wide)
+        const sPos = new Float32Array(COUNT * 12), sCorner = new Float32Array(COUNT * 8), sSize = new Float32Array(COUNT * 4), sKind = new Float32Array(COUNT * 4);
+        const sIdx = new Uint32Array(COUNT * 6);
+        for (let k = 0; k < COUNT; k++) {
+          for (let c = 0; c < 4; c++) {
+            const v = 4 * k + c;
+            sPos[3 * v] = pos[3 * k]; sPos[3 * v + 1] = pos[3 * k + 1]; sPos[3 * v + 2] = pos[3 * k + 2];
+            sCorner[2 * v] = c >> 1; sCorner[2 * v + 1] = c & 1 ? 1 : -1;
+            sSize[v] = size[k]; sKind[v] = kind[k];
+          }
+          sIdx.set([4 * k, 4 * k + 1, 4 * k + 2, 4 * k + 1, 4 * k + 3, 4 * k + 2], 6 * k);
+        }
+        const sgeo = new THREE.BufferGeometry();
+        sgeo.setAttribute("position", new THREE.BufferAttribute(sPos, 3));
+        sgeo.setAttribute("aCorner", new THREE.BufferAttribute(sCorner, 2));
+        sgeo.setAttribute("aSize", new THREE.BufferAttribute(sSize, 1));
+        sgeo.setAttribute("aKind", new THREE.BufferAttribute(sKind, 1));
+        sgeo.setIndex(new THREE.BufferAttribute(sIdx, 1));
+        uni.f11_uPrevVP = { value: new THREE.Matrix4() };
+        uni.f11_uStreak = { value: 0 };
+        const streakMat = new THREE.ShaderMaterial({
+          uniforms: uni, transparent: true, depthWrite: false, depthTest: true,
+          vertexShader: `
+            attribute vec2 aCorner; attribute float aSize; attribute float aKind;
+            uniform mat4 f11_uPrevVP; uniform float f11_uStreak; uniform float f11_uScale; uniform float f11_uGrow;
+            varying float vA; varying float vS;
+            void main() {
+              vec4 cur = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              vec4 prv = f11_uPrevVP * vec4(position, 1.0);
+              vec2 hp = cur.xy / max(cur.w, 0.01) * vec2(960.0, 540.0), tp = prv.xy / max(prv.w, 0.01) * vec2(960.0, 540.0);
+              vec2 dv = hp - tp; float len = length(dv);
+              vec2 side = len > 0.001 ? vec2(-dv.y, dv.x) / len : vec2(0.0, 1.0);
+              float facing = 1.0;
+              if (aKind < 1.5 || aKind > 2.5) facing = smoothstep(0.0, 0.2, dot(normalize(position), normalize(cameraPosition - position)));
+              float a = f11_uStreak * facing * smoothstep(5.0, 30.0, len) * step(0.5, cur.w) * step(0.5, prv.w);
+              if (aKind > 1.5 && aKind < 2.5) a *= smoothstep(2.0, 12.0, cur.w);
+              if (aKind > 0.5 && aKind < 1.5) a *= 0.5;
+              vec2 ndc = cur.xy / max(cur.w, 0.01);
+              a *= 1.0 - 0.55 * smoothstep(0.0, 0.3, min(0.5 - ndc.x, -0.08 - ndc.y));
+              float w = clamp(aSize * f11_uGrow * f11_uScale / max(cur.w, 0.01), 1.5, 260.0) * 0.8;
+              // the smear trails behind the lamp's disc, never across it
+              vec4 p = aCorner.x > 0.5 ? prv : cur;
+              vec2 back = len > 0.001 ? -dv / len * min(0.62 * w, len) : vec2(0.0);
+              p.xy += (side * aCorner.y * 0.5 * w + back) / vec2(960.0, 540.0) * p.w;
+              vA = a * (1.0 - aCorner.x); vS = aCorner.y;
+              gl_Position = a < 0.002 ? vec4(2.0, 2.0, 2.0, 1.0) : p;
+            }`,
+          fragmentShader: `
+            varying float vA; varying float vS;
+            void main() {
+              float a = vA * 0.7 * (1.0 - vS * vS);
+              if (a < 0.004) discard;
+              gl_FragColor = vec4(0.9098, 0.3647, 0.1490, a);
+            }`,
+        });
+        const streaks = new THREE.Mesh(sgeo, streakMat);
+        streaks.frustumCulled = false;
+
+        haze.renderOrder = 1; lines.renderOrder = 2; bloom.renderOrder = 3; streaks.renderOrder = 4; points.renderOrder = 5;
+        const scene = new THREE.Scene();
+        scene.add(...solids, haze, lines, bloom, streaks, points);
+        const canvas = $("f11-gl");
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+        renderer.setPixelRatio(1);
+        renderer.setSize(1920, 1080, false);
+        renderer.setClearColor(0x111111, 1);
+        const camera = new THREE.PerspectiveCamera(40, 1920 / 1080, 0.05, 2000);
+        // v15 framing: hold the globe inward and below the top edge; the lyric keeps its lower-left anchor.
+        const SX = 0.63, SY = 0.44;
+        camera.setViewOffset(1920, 1080, -(SX - 0.5) * 1920, (0.5 - SY) * 1080, 1920, 1080);
+
+        // ---- the camera, a function of time ---------------------------------
+        const ease2out = (u) => 1 - (1 - u) * (1 - u);
+        const ease2in = (u) => u * u;
+        const clamp01 = (x) => Math.min(1, Math.max(0, x));
+        const smooth = (a, b, x) => { const u = clamp01((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+        const D_NEAR = Math.log(2.6), D_FAR = Math.log(400);
+        const T_OUT = 2.75, T_RUSH = L(121.638), T_HIT = L(123.449);
+        const D_HOLD = D_FAR + (T_RUSH - T_OUT) * 0.05;
+        function logDist(t) {
+          if (t <= T_OUT) return D_NEAR + (D_FAR - D_NEAR) * ease2out(t / T_OUT);
+          if (t <= T_RUSH) return D_FAR + (t - T_OUT) * 0.05;
+          if (t < T_HIT) return D_HOLD + (D_NEAR - D_HOLD) * ease2in((t - T_RUSH) / (T_HIT - T_RUSH));
+          return D_NEAR;
+        }
+        const ROLL = [121.638, 121.865, 122.093, 122.32, 122.543, 122.998, 123.148, 123.449].map(L);
+        function pulse(t) { let p = 0; for (const h of ROLL) if (t >= h) p = Math.max(p, Math.exp(-(t - h) * 9)); return p; }
+
+        const tgt = new THREE.Vector3(), dir = new THREE.Vector3(), tmp = new THREE.Vector3();
+        const lat0 = latOf(I0);
+        // d is the altitude above drawer 0001's floor; the camera never enters the archive
+        function placeCamera(t) {
+          const ld = logDist(t), d = Math.exp(ld);
+          const k = smooth(Math.log(8), Math.log(220), ld);    // 0 at the drawer, 1 at the planet
+          const kt = smooth(Math.log(20), Math.log(220), ld);   // look-at slides from 0001 to the core
+          const az = (AZ + DRIFT * t) * k, el = lat0 + EL * k;
+          dir.set(Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el));
+          tgt.copy(P0).multiplyScalar(1 - kt);
+          camera.position.copy(dir).multiplyScalar(R + d);
+          camera.fov = 44 - 7 * k;
+          camera.near = Math.max(0.05, d * 0.25);
+          camera.far = R + d + 400;
+          camera.updateProjectionMatrix();
+          camera.lookAt(tgt);
+          camera.updateMatrixWorld();
+          uni.f11_uGrow.value = 1 + 0.7 * k;
+          return d;
+        }
+        const AZ = 0.36, EL = -0.3, DRIFT = -0.035;
+        const SHUTTER = 1.6 / 60; // streak length: the camera's path over ~1.6 frames
+
+        // ---- timeline -----------------------------------------------------
+        const tl = gsap.timeline({ paused: true });
+        const clock = { t: 0 }; // spans the frame so tl.time() runs 0 … DUR
+        tl.fromTo(clock, { t: 0 }, { t: DUR, duration: DUR, ease: "none" }, 0);
+        // the lyric through the kit. "petabytes," IS the cut: no room for anticipation, so the slam's first frame is
+        // already huge and smeared, and the kit's elastic settle lands it. The rest build glyph by glyph on their times.
+        const stage = HR.stage($("root"), { seed: 11 });
+        const [heroS, , heroRow] = spans[0];
+        const n0 = tl.getChildren(false).length;
+        const heroG = HR.hero(tl, heroS, 0, { over: 1.3, settle: 0.7 });
+        tl.remove(tl.getChildren(false)[n0]); // the anticipation would start before the frame does
+        tl.fromTo(heroG, { x: (i) => i * 9, yPercent: 0, opacity: 1 }, { x: 0, yPercent: 0, opacity: 1, duration: 0.18, ease: "expo.out" }, 0);
+        tl.fromTo(heroRow, { scaleX: 1.16, scaleY: 1.08, filter: "blur(6px)" }, { scaleX: 1, scaleY: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out", immediateRender: false }, 0);
+        for (const [s, t] of spans.slice(1)) HR.lead(tl, s, L(t));
+        // one deliberate move for the type: a slow push across the line, an accelerating push on the snare roll
+        const cam = stage.cam;
+        tl.fromTo(cam, { z: 1.0 }, { z: 1.05, duration: T_RUSH, ease: "sine.inOut" }, 0);
+        tl.fromTo(cam, { z: 1.05 }, { z: 1.08, duration: T_HIT - T_RUSH, ease: "power3.in", immediateRender: false }, T_RUSH);
+        tl.fromTo(cam, { z: 1.08 }, { z: 1.04, duration: DUR - T_HIT, ease: "power2.out", immediateRender: false }, T_HIT);
+        const tag = $("f11-tag"), lead = $("f11-lead");
+        function render() {
+          const t = tl.time(), T = t + T0;
+          // the rush: the camera a shutter ago, for the streaks; none on the arrival frame
+          const rushing = t > T_RUSH && t < T_HIT;
+          streaks.visible = rushing;
+          if (rushing) {
+            placeCamera(Math.max(T_RUSH, t - SHUTTER));
+            uni.f11_uPrevVP.value.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+            uni.f11_uStreak.value = smooth(T_RUSH, T_RUSH + 0.5, t);
+          }
+          const d = placeCamera(t);
+          const kick = HR.hit("kick", T, 0.12), snare = HR.hit("snare", T, 0.1), bass = HR.band("bass", T);
+          uni.f11_uTime.value = t;
+          uni.f11_uPulse.value = Math.max(pulse(t), 0.8 * snare, 0.6 * kick);
+          uni.f11_uScale.value = 540 / Math.tan((camera.fov * Math.PI) / 360);
+          uni.f11_uBloom.value = 0.08 * (1 + 0.6 * bass + 0.8 * kick + 1.0 * snare);
+          const kp = smooth(Math.log(20), Math.log(200), Math.log(d)); // how much of the planet is in view
+          hazeMat.uniforms.f11_uHaze.value = kp * (0.38 + 0.3 * bass + 0.25 * kick);
+          haze.quaternion.copy(camera.quaternion);
+          lmat.opacity = 1 - smooth(Math.log(10), Math.log(55), Math.log(d));
+          lines.visible = lmat.opacity > 0.01;
+          renderer.render(scene, camera);
+
+          stage.apply(T);
+          HR.glow(heroRow, T, 0.3, 0.6);
+          heroRow.style.translate = `${(snare * 1.2).toFixed(2)}px 0`;
+
+          // tag follows lamp 0001
+          tmp.copy(P0).project(camera);
+          const x = (tmp.x * 0.5 + 0.5) * 1920, y = (0.5 - tmp.y * 0.5) * 1080;
+          const depth = camera.position.distanceTo(P0);
+          const rad = (0.2 * uni.f11_uScale.value) / depth;
+          const facing = N0.dot(tmp.copy(camera.position).sub(P0)) > 0;
+          tag.style.opacity = facing ? 1 : 0;
+          tag.style.transform = `translate(${(x + rad + 10).toFixed(1)}px, ${(y - 17).toFixed(1)}px)`;
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines["11-petabytes"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

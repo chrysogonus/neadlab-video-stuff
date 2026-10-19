@@ -1,0 +1,1293 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 5 — harvest (the first drop, 48.491–61.346). CINEMATIC HIT 1: the archive as a machine of light.
+         One three.js canvas, five downbeat shots followed by one continuous archive descent; "harvest" strobes over the vocal chops.
+         v13 (SYSTEM.md V7): ink #0A0A0A (#root, the clear colour and the shader's INK, so the fog falls to the new
+         black); "harvest" stays flat fire with hr-glow (no extrusion). The drawer corridor is the subject and stays.
+         The counter's rate tag is solid --cream-muted; its rolling drum is a mechanism (data-layout-ignore, as 04/12). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-700.woff2") format("woff2"); font-weight: 700; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f05-gl { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; }
+
+        /* the in-world drawer tag (macro shot only) */
+        #f05-tag { position: absolute; left: 0; top: 0; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 40px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; opacity: 0;
+          transform-origin: 0 0; }
+
+        /* the only type: "harvest", strobing in fire-orange display; each flash slams in with a 1-frame fire/cream fringe */
+        #f05-strobe { position: absolute; left: 5.5cqw; opacity: 0; transform-origin: 0 70%; }
+        .f05-w { font-family: "Barlow"; font-weight: 900; font-size: 15cqw; line-height: 0.88; letter-spacing: -0.04em;
+          color: var(--fire); white-space: nowrap; }
+        #f05-word { position: relative; }
+        .f05-fr { position: absolute; left: 0; top: 0; opacity: 0; }
+        #f05-frc { color: var(--cream); }
+
+        /* BYTES HELD (V5 motif): 04's odometer, compact, pinned top-right as chrome; it races on every beat of the drop */
+        #f05-odo { position: absolute; right: 5.5cqw; top: 4.2cqw; width: 654px; height: 140px; box-sizing: border-box;
+          border: 2px solid; border-color: #888880 #282826 #111111 #505048; opacity: 0;
+          background: linear-gradient(180deg, #232321, #1A1A18 30%, #141413);
+          box-shadow: inset 0 2px 0 rgba(240, 236, 229, 0.18), inset 0 -3px 0 rgba(0, 0, 0, 0.6), 0 20px 40px rgba(0, 0, 0, 0.65); }
+        #f05-olabel { position: absolute; left: 16px; top: 9px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 16px;
+          letter-spacing: 0.14em; color: var(--cream-muted); white-space: nowrap; }
+        #f05-olabel b { font-weight: 600; color: var(--fire); }
+        #f05-orate { position: absolute; right: 16px; top: 11px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px;
+          letter-spacing: 0.2em; color: var(--cream-muted); white-space: nowrap; }
+        #f05-odwin { position: absolute; left: 14px; top: 40px; height: 88px; box-sizing: border-box; display: flex; gap: 3px; padding: 4px;
+          border: 2px solid; border-color: #111111 #282826 #888880 #282826; background: #111111; box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.9); }
+        .f05-cell { position: relative; flex: none; width: 42px; height: 76px; overflow: hidden; background: #1A1A18; }
+        .f05-cell.f05-gap { margin-left: 10px; }
+        .f05-cell::after { content: ""; position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0) 28%, rgba(240, 236, 229, 0.04) 50%, rgba(0, 0, 0, 0) 72%, rgba(0, 0, 0, 0.85)); }
+        .f05-col { position: absolute; left: 0; top: 0; width: 42px; }
+        .f05-col div { height: 76px; line-height: 76px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 64px; letter-spacing: 0; color: var(--fire); }
+      </style>
+
+      <div data-hf-id="hf-jx1l" id="root" data-composition-id="05-harvest" data-width="1920" data-height="1080" data-duration="12.855">
+        <canvas data-hf-id="hf-fql1" id="f05-gl" width="1920" height="1080" data-layout-allow-overflow></canvas>
+        <div id="f05-fx" data-layout-ignore style="position:absolute;inset:0;pointer-events:none"></div>
+        <div data-hf-id="hf-vxh4" id="f05-tag" data-layout-allow-overlap>0001</div>
+        <div data-hf-id="hf-h1rm" id="f05-strobe">
+          <div data-hf-id="hf-m8sy" id="f05-frc" class="f05-w f05-fr" data-layout-ignore>harvest</div>
+          <div data-hf-id="hf-341l" id="f05-frf" class="f05-w f05-fr" data-layout-ignore>harvest</div>
+          <div data-hf-id="hf-u3me" id="f05-word" class="f05-w hr-glow">harvest</div>
+        </div>
+        <div data-hf-id="hf-nr9b" id="f05-odo">
+          <div data-hf-id="hf-425z" id="f05-olabel">BYTES HELD <b data-hf-id="hf-cufq">·</b> HARVESTING</div>
+          <div data-hf-id="hf-dwvb" id="f05-orate">COPIES, NOT CONSENT</div>
+          <div data-hf-id="hf-y9y2" id="f05-odwin" data-layout-ignore></div>
+        </div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+
+        const T0 = 48.491, DUR = 12.855;
+        const L = (t) => +(t - T0).toFixed(3); // track -> frame-local seconds
+
+        // ---- the grid: every cut is a downbeat; declared once, read everywhere --------------------------
+        const CUTS = [48.491, 50.338, 52.181, 54.016, 55.847, 57.684, 59.512].map(L);
+        const BEATS = [48.491, 48.961, 49.421, 49.88, 50.338, 50.798, 51.255, 51.714, 52.181, 52.64, 53.098, 53.554,
+          54.016, 54.471, 54.93, 55.389, 55.847, 56.307, 56.764, 57.224, 57.684, 58.149, 58.601, 59.054, 59.512,
+          59.976, 60.432, 60.887].map(L);
+        const BP = 0.459; // beat period
+        const shotAt = (t) => { let s = 0; while (s + 1 < CUTS.length && t >= CUTS[s + 1]) s++; return s; };
+        const beatOf = (s, k) => BEATS[BEATS.indexOf(CUTS[s]) + k]; // k-th beat of shot s
+
+        // ---- "harvest" strobe: vocal-chop onsets (audio.json onsets.vocal, strength >= 0.3, plus the burst tails)
+        const BURSTS = [
+          [53.713, 53.947, 54.252, 54.471, 54.676],
+          [55.404, 55.693],
+          [57.015, 57.13, 57.469, 57.953],
+          [58.582, 58.881, 59.31, 59.43],
+          [60.842, 61.226],
+        ];
+        // v17: a flash only where the music hits (snapped to a kick/snare/downbeat within 0.12 s; the rest dropped,
+        // and none into the 06 cut); each holds until the next flash (≤ 0.42 s) and then fades out instead of switching off
+        const FLASHES = [...new Set(BURSTS.flat().map((t) => { const e = WOW.on(t); return e !== t && e < 61.2 ? L(e) : null; }).filter((x) => x !== null))].sort((a, b) => a - b);
+
+        // ---- deterministic helpers -------------------------------------------------------------------------
+        const rng = (seed) => () => { seed |= 0; seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+        const clamp01 = (x) => Math.min(1, Math.max(0, x));
+        const smooth = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
+        const out3 = (x) => 1 - Math.pow(1 - clamp01(x), 3);
+        const in2 = (x) => clamp01(x) * clamp01(x);
+        const lerp = (a, b, k) => a + (b - a) * k;
+        const NEVER = 1e6, ALWAYS = -1e6;
+        const TAU = Math.PI * 2;
+
+        // ---- renderer ------------------------------------------------------------------------------------
+        const canvas = document.getElementById("f05-gl");
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true, alpha: true });
+        renderer.setPixelRatio(1);
+        renderer.setSize(1920, 1080, false);
+        renderer.setClearColor(0x0a0a0a, 0); // #root's ink shows through; the shader fogs to the same ink
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(70, 1920 / 1080, 0.05, 400);
+
+        // One small shader: drawers, lines of light, cards, and solid archive structure.
+        // colors are the brand tokens in sRGB, written straight to the framebuffer
+        const uniforms = { uHeroBend: { value: 1 }, uTime: { value: 0 }, uFogNear: { value: 10 }, uFogFar: { value: 100 }, uDim: { value: 1 }, uPulse: { value: 0 }, uHat: { value: 0 } };
+        const material = new THREE.ShaderMaterial({
+          uniforms,
+          vertexShader: `
+            attribute vec4 aData;
+            uniform float uTime, uHeroBend;
+            varying vec3 vN; varying vec3 vWN; varying vec2 vUv; varying vec4 vD; varying float vDepth; varying vec3 vWP; varying float vSl;
+            void main() {
+              vN = normal; vWN = mat3(instanceMatrix) * normal; vUv = uv; vD = aData;
+              vec3 pos = position; vSl = 0.0;
+              if (aData.x > 1.5 && aData.x < 2.5) {
+                // v17: the paper bows a little (flutters in flight); vSl = the face's slope, shaded two-tone in the fragment
+                float b = (0.07 + 0.06 * sin(uTime * (2.0 + 2.5 * fract(aData.z * 13.0)) + aData.z * 40.0)) * (gl_InstanceID == 0 ? uHeroBend : 1.0);
+                float xn = pos.x / 0.8;
+                pos.z += b * (1.0 - xn * xn) - 0.03 * b * (pos.y / 0.5) * (pos.y / 0.5);
+                vSl = -2.0 * b * xn / 0.8;
+              }
+              vWP = (instanceMatrix * vec4(pos, 1.0)).xyz;
+              vec4 mv = modelViewMatrix * instanceMatrix * vec4(pos, 1.0);
+              vDepth = -mv.z;
+              gl_Position = projectionMatrix * mv;
+            }`,
+          fragmentShader: `
+            precision highp float;
+            uniform float uTime, uFogNear, uFogFar, uDim, uPulse, uHat;
+            varying vec3 vN; varying vec3 vWN; varying vec2 vUv; varying vec4 vD; varying float vDepth; varying vec3 vWP; varying float vSl;
+            const vec3 INK = vec3(0.0392, 0.0392, 0.0392); // #0A0A0A: the fog falls to the ground ink
+            const vec3 INKALT = vec3(0.102, 0.102, 0.094);
+            const vec3 FIRE = vec3(0.910, 0.365, 0.149);
+            const vec3 CREAM = vec3(0.941, 0.925, 0.898);
+            const vec3 MUTED = vec3(0.533, 0.533, 0.502);
+            const vec3 HINT = vec3(0.314, 0.314, 0.282);
+            const vec3 BORDER = vec3(0.157, 0.157, 0.149);
+            float hash(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+            float rect(vec2 p, vec2 c, vec2 h) { vec2 d = abs(p - c) - h; float m = max(d.x, d.y); float aa = max(fwidth(m), 1e-5);
+              return 1.0 - smoothstep(-aa * 0.5, aa * 0.5, m); }
+            float hair(float d, float wmin) { float aa = max(fwidth(d), 1e-5); float w = max(wmin, aa * 1.1);
+              return 1.0 - smoothstep(w - aa * 0.5, w + aa * 0.5, d); }
+            float seg(vec2 p, vec2 a, vec2 b) { vec2 pa = p - a, ba = b - a; float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+              return length(pa - ba * h); }
+            void main() {
+              float kind = vD.x;
+              vec3 col;
+              float fogK = 1.0;
+              float age = uTime - vD.y;
+              float lit = step(0.0, age);
+              if (kind < 0.5) {
+                // ---- drawer: ink box, cream hairline edges, a fire-orange lamp on its front
+                vec3 n = abs(vN);
+                bool front = vN.z > 0.5;
+                vec2 fs = n.y > 0.5 ? vec2(1.6, 1.6) : vec2(1.6, 1.0);
+                vec2 p = vUv * fs;
+                float d = min(min(p.x, fs.x - p.x), min(p.y, fs.y - p.y));
+                if (front) {
+                  float detail = 1.0 - smoothstep(0.004, 0.011, fwidth(p.x));
+                  // A broad recessed panel under raking light (brighter top-left), a raised upper lip, a lower shadow.
+                  float panel = rect(p, vec2(0.8, 0.5), vec2(0.725, 0.425));
+                  col = mix(BORDER, INKALT * (0.66 + 0.2 * p.y - 0.04 * p.x), panel);
+                  float rim = hair(abs(d - 0.055), 0.019);
+                  col = mix(col, HINT, 0.55 * rim);
+                  col = mix(col, MUTED, 0.24 * rect(p, vec2(0.8, 0.955), vec2(0.735, 0.023)));
+                  col = mix(col, INK, rect(p, vec2(0.8, 0.075), vec2(0.71, 0.023)));
+                  vec2 lc = vec2(1.40, 0.80);
+                  // some lamps stutter on the hats
+                  float fl = 1.0 - 0.72 * uHat * step(0.6, fract(vD.z * 7.13));
+                  float on = lit * fl;
+                  vec3 lamp = mix(CREAM, FIRE, smoothstep(0.0, 0.3, age));
+                  lamp = mix(lamp, CREAM, 0.25 * uPulse);
+                  // the pull: a recessed slot, a lit lip above it, two screws
+                  col = mix(col, INK, rect(p, vec2(0.8, 0.185), vec2(0.19, 0.03)));
+                  col = mix(col, MUTED, 0.7 * rect(p, vec2(0.8, 0.226), vec2(0.19, 0.01)));
+                  col = mix(col, HINT, 0.8 * rect(p, vec2(0.8, 0.158), vec2(0.17, 0.005)));
+                  for (int i = 0; i < 2; i++) {
+                    vec2 sc = vec2(i == 0 ? 0.55 : 1.05, 0.19);
+                    float sr = length(p - sc), saa = max(fwidth(sr), 1e-5);
+                    col = mix(col, HINT, 1.0 - smoothstep(0.017 - saa, 0.017 + saa, sr));
+                    col = mix(col, MUTED, detail * (1.0 - smoothstep(0.007 - saa, 0.007 + saa, length(p - sc - vec2(-0.005, 0.005)))));
+                  }
+                  if (vD.w < 0.5) {
+                    // the label card in its holder: dim paper, two rows of ciphertext, warmed by the lamp
+                    vec2 cc = vec2(0.40, 0.72);
+                    col = mix(col, HINT * 0.9, rect(p, cc, vec2(0.272, 0.102)));
+                    vec3 paper = mix(INKALT, MUTED, 0.36 + 0.3 * on) + FIRE * 0.07 * on;
+                    col = mix(col, paper, rect(p, cc - vec2(0.0, 0.01), vec2(0.255, 0.082)));
+                    col = mix(col, INK, 0.45 * rect(p, cc + vec2(0.0, 0.066), vec2(0.255, 0.008)));
+                    if (detail > 0.0) {
+                      vec2 q = (p - vec2(0.17, 0.705)) / vec2(0.042, 0.048);
+                      if (q.x >= 0.0 && q.x < 11.0 && q.y >= 0.0 && q.y < 1.0) {
+                        vec2 cell = floor(q);
+                        float ink = step(0.22, hash(cell + vec2(vD.z * 31.0, 7.0))) * step(0.5, mod(cell.x + 1.0, 4.0));
+                        col = mix(col, INK, detail * 0.75 * ink * rect(fract(q), vec2(0.5), vec2(0.3, 0.36)));
+                      }
+                      vec2 q2 = (p - vec2(0.17, 0.655)) / vec2(0.042, 0.03);
+                      if (q2.x >= 0.0 && q2.x < 6.0 && q2.y >= 0.0 && q2.y < 1.0) {
+                        float ink = step(0.35, hash(floor(q2) + vec2(vD.z * 17.0, 3.0)));
+                        col = mix(col, FIRE * 0.8, detail * 0.8 * ink * rect(fract(q2), vec2(0.5), vec2(0.42, 0.3)));
+                      }
+                    }
+                  } else {
+                    // the open slot of drawer 0001
+                    float sl = rect(p, vec2(0.8, 0.5), vec2(0.56, 0.045));
+                    col = mix(col, INK, sl);
+                    vec2 sd = abs(p - vec2(0.8, 0.5)) - vec2(0.56, 0.045);
+                    col = mix(col, MUTED, hair(abs(max(sd.x, sd.y)), 0.004));
+                    col = mix(col, FIRE, lit * 0.55 * rect(p, vec2(0.8, 0.5), vec2(0.54, 0.012)));
+                  }
+                  col += FIRE * on * (0.16 + 0.08 * uPulse) * exp(-length(p - lc) * 2.6);
+                  col = mix(col, INK, rect(p, lc, vec2(0.092)));
+                  col = mix(col, HINT, 0.65 * hair(abs(max(abs(p.x-lc.x), abs(p.y-lc.y)) - 0.083), 0.006));
+                  col = mix(col, lit > 0.5 ? mix(BORDER, lamp, 0.28 + 0.72 * fl) : BORDER, rect(p, lc, vec2(0.065)));
+                  col = mix(col, CREAM, 0.55 * on * detail * rect(p, lc + vec2(-0.03, 0.03), vec2(0.012)));
+                  col = mix(col, vD.w > 0.5 && vD.w < 1.5 ? FIRE : MUTED, hair(d, 0.012));
+                } else {
+                  col = n.y > 0.5 ? INKALT : INK;
+                  col = mix(col, n.y > 0.5 ? HINT : BORDER, hair(d, 0.012));
+                }
+              } else if (kind < 1.5) {
+                // ---- a line of light
+                col = vD.z > 0.5 ? CREAM : FIRE;
+                col = mix(BORDER, col, lit);
+                // packets of light run along the line into the archive (vD.w = speed; head leads, tail fades)
+                float pk = vD.w != 0.0 ? smoothstep(0.8, 1.0, 1.0 - fract(dot(vWP, vec3(1.0)) * 0.04 + uTime * vD.w)) : 0.0;
+                col = mix(col, CREAM, lit * max(0.2 * uPulse, 0.9 * pk));
+                fogK = 0.75;
+              } else if (kind > 2.5) {
+                // Structural ribs have real box depth; broad face light replaces wireframe outlines.
+                float face = 0.13 + 0.30 * max(dot(normalize(vWN), normalize(vec3(-0.5, 0.8, 0.35))), 0.0);
+                col = mix(INKALT, HINT, face * (0.65 + 0.55 * vD.z));
+                float edge = min(min(vUv.x, 1.0-vUv.x), min(vUv.y, 1.0-vUv.y));
+                col = mix(col, MUTED, 0.16 * (1.0-smoothstep(0.015,0.045,edge)));
+              } else {
+                // ---- an envelope (01's design): shaded flaps, fold highlights, ciphertext, the sculpted fire seal;
+                // its back is the address side: postmark, address rows, a fire stamp and a sorting barcode.
+                // vD.w = aspect (1 = standard, 1.22 = long, 0.84 = square card)
+                if (abs(vN.z) > 0.5) {
+                  float W = 0.8 * vD.w, H = 0.5;
+                  vec2 p = (vUv - 0.5) * vec2(1.6 * vD.w, 1.0);
+                  float detail = 1.0 - smoothstep(0.0025, 0.008, fwidth(p.x));
+                  // paper under raking light, with a little fibre up close
+                  col = CREAM * (0.985 + 0.05 * (p.y / H) - 0.035 * (p.x / W));
+                  col *= 1.0 - 0.035 * detail * hash(floor(p * 160.0) + vD.z * 9.0);
+                  // v17 two-tone: the half bowing toward the light is lit, the other half falls into its own shade,
+                  // and the rim darkens where the paper curls away (a soft contact shadow round the edge)
+                  float sl = vSl * sign(vN.z);
+                  col *= clamp(1.0 + 1.1 * sl, 0.62, 1.12);
+                  float ed = min(min(vUv.x, 1.0 - vUv.x), min(vUv.y, 1.0 - vUv.y));
+                  col *= 1.0 - 0.22 * (1.0 - smoothstep(0.0, 0.06, ed));
+                  if (vN.z > 0.5) {
+                    float ax = abs(p.x) / W;
+                    float eT = p.y - H * ax;                    // > 0: the top flap
+                    float eB = p.y - (-H + (H + 0.03) * (1.0 - ax)); // < 0: the bottom flap
+                    if (eT > 0.0) col *= 1.0 - 0.07 * (1.0 - p.y / H);
+                    else if (eB < 0.0) col *= 1.0 - 0.06 * (1.0 + p.y / H) * 0.6 - 0.02;
+                    else col *= 1.0 - 0.06 * ax;
+                    // ciphertext body, upper left, glyph cells of mono hex (scrambles on its rows)
+                    if (detail > 0.0) {
+                      vec2 q = (p - vec2(-W + 0.09, 0.08)) / vec2(0.036, 0.062);
+                      if (q.x >= 0.0 && q.x < 15.0 && q.y >= 0.0 && q.y < 5.0) {
+                        vec2 cell = floor(q);
+                        if (mod(cell.x, 5.0) < 3.5) {
+                          float scr = mod(cell.y, 2.0) < 0.5 ? floor(uTime * 15.0) : 0.0;
+                          vec2 g = floor(fract(q) * vec2(3.0, 5.0));
+                          float on = step(0.3, hash(cell * 7.0 + g + vec2(vD.z * 13.0 + scr, scr * 0.37)));
+                          float inG = rect(fract(q), vec2(0.5), vec2(0.36, 0.38));
+                          col = mix(col, vec3(0.373, 0.357, 0.329), detail * 0.85 * on * inG);
+                        }
+                      }
+                    }
+                    // flap edges: a soft shadow under the top flap, its fold line, a paper highlight just inside
+                    float sT = eT * 0.85;
+                    col *= 1.0 - 0.16 * step(sT, 0.0) * exp(sT * 32.0);
+                    col = mix(col, INK, 0.26 * hair(abs(sT), 0.0028));
+                    col = mix(col, vec3(1.0), 0.45 * detail * hair(abs(sT - 0.009), 0.002));
+                    col = mix(col, INK, 0.12 * hair(abs(eB * 0.85), 0.0025));
+                    col = mix(col, vec3(1.0), 0.35 * detail * hair(abs(eB * 0.85 + 0.007), 0.002));
+                    col = mix(col, vec3(1.0), 0.6 * detail * step(H - 0.012, p.y));
+                    // the sorting barcode, fire ink, along the bottom right
+                    vec2 bq = (p - vec2(W - 0.52, -H + 0.05)) / vec2(0.0145, 0.05);
+                    if (bq.x >= 0.0 && bq.x < 30.0 && bq.y >= 0.0 && bq.y < 1.0) {
+                      float h = hash(vec2(floor(bq.x), vD.z * 5.0));
+                      col = mix(col, FIRE, detail * 0.85 * step(fract(bq.x), 0.45) * step(h < 0.5 ? 0.5 : 0.0, bq.y));
+                    }
+                    // the seal: drip-lobed rim, radial wax, inner ring, bead ring, embossed "a.", a highlight arc
+                    vec2 c = p - vec2(0.0, 0.01);
+                    float r = length(c), ang = atan(c.y, c.x);
+                    float aa = max(fwidth(r), 1e-5);
+                    float rim = 0.152 * (1.0 + 0.06 * sin(ang * 5.0 + vD.z * 20.0) + 0.035 * sin(ang * 11.0 + vD.z * 9.0));
+                    col *= 1.0 - 0.22 * (1.0 - smoothstep(rim, rim + 0.035, length(c + vec2(-0.012, 0.02))));
+                    float rimM = 1.0 - smoothstep(rim - aa, rim + aa, r);
+                    col = mix(col, mix(vec3(0.725, 0.263, 0.102), vec3(0.557, 0.188, 0.063), smoothstep(0.1, rim, r)), rimM);
+                    float disc = 1.0 - smoothstep(0.125 - aa, 0.125 + aa, r);
+                    float gr = length(c - vec2(-0.03, 0.035)) / 0.16;
+                    vec3 wax = mix(vec3(0.965, 0.549, 0.361), FIRE, smoothstep(0.0, 0.45, gr));
+                    wax = mix(wax, vec3(0.788, 0.29, 0.11), smoothstep(0.45, 0.85, gr));
+                    wax = mix(wax, vec3(0.651, 0.231, 0.078), smoothstep(0.85, 1.1, gr));
+                    col = mix(col, wax, disc);
+                    if (detail > 0.0) {
+                      col = mix(col, INK, detail * 0.3 * disc * hair(abs(r - 0.1), 0.004));
+                      col = mix(col, vec3(1.0, 0.81, 0.69), detail * 0.35 * disc * hair(abs(length(c - vec2(0.003, -0.003)) - 0.108), 0.0025));
+                      vec2 bp = vec2(fract(ang / 6.2832 * 22.0) - 0.5, (r - 0.088) / 0.0062);
+                      col = mix(col, vec3(0.6, 0.2, 0.07), detail * 0.55 * disc * (1.0 - smoothstep(0.6, 0.9, length(bp * vec2(2.2, 0.55)))));
+                      // "a.": a ring with its stem, then the dot; shadow below right, light above left
+                      for (int k = 0; k < 3; k++) {
+                        vec2 o = k == 0 ? vec2(0.004, -0.004) : k == 1 ? vec2(-0.003, 0.003) : vec2(0.0);
+                        vec2 e = c - vec2(-0.01, -0.006) - o;
+                        float g = min(abs(length(e) - 0.03) - 0.009, max(abs(e.x - 0.03) - 0.009, abs(e.y - 0.004) - 0.043));
+                        g = min(g, length(e - vec2(0.068, -0.03)) - 0.012);
+                        float m = 1.0 - smoothstep(-aa, aa, g);
+                        vec3 ec = k == 0 ? vec3(0.42, 0.14, 0.05) : k == 1 ? vec3(1.0, 0.84, 0.74) : vec3(0.831, 0.322, 0.118);
+                        col = mix(col, ec, detail * disc * m * (k == 2 ? 1.0 : 0.5));
+                      }
+                      float arc = hair(abs(r - 0.112), 0.006) * smoothstep(1.7, 2.1, ang) * (1.0 - smoothstep(2.6, 3.0, ang));
+                      col = mix(col, vec3(1.0, 0.925, 0.878), detail * 0.6 * disc * arc);
+                    }
+                  } else {
+                    // the address side
+                    if (detail > 0.0) {
+                      vec2 aq = (p - vec2(-W * 0.35, -0.2)) / vec2(0.034, 0.075);
+                      if (aq.x >= 0.0 && aq.x < 20.0 && aq.y >= 0.0 && aq.y < 4.0) {
+                        vec2 cell = floor(aq);
+                        float len = 20.0 - 6.0 * hash(vec2(cell.y, vD.z * 3.0)) - (cell.y == 0.0 ? 6.0 : 0.0);
+                        float on = step(cell.x, len) * step(0.18, hash(cell + vD.z * 11.0));
+                        col = mix(col, vec3(0.373, 0.357, 0.329), detail * 0.8 * on * rect(fract(aq), vec2(0.5), vec2(0.34, 0.3)));
+                      }
+                      // postmark: two rings and three cancel waves, muted ink
+                      vec2 pm = p - vec2(W - 0.42, H - 0.2);
+                      float pr = length(pm);
+                      col = mix(col, MUTED, detail * 0.7 * (hair(abs(pr - 0.1), 0.004) + hair(abs(pr - 0.072), 0.003)));
+                      for (int k = 0; k < 3; k++) {
+                        float wy = pm.y + 0.04 * float(k - 1) - 0.012 * sin(pm.x * 40.0);
+                        col = mix(col, MUTED, detail * 0.6 * hair(abs(wy), 0.003) * step(0.1, pm.x) * step(pm.x, 0.36));
+                      }
+                    }
+                    // the fire stamp, perforated edge
+                    vec2 sp = p - vec2(W - 0.14, H - 0.15);
+                    float st = rect(sp, vec2(0.0), vec2(0.075, 0.095));
+                    vec2 pf = abs(sp) - vec2(0.075, 0.095);
+                    float perf = step(0.5, fract((abs(sp.x) > abs(sp.y) * 0.79 ? sp.y : sp.x) * 55.0)) * step(-0.012, max(pf.x, pf.y));
+                    col = mix(col, FIRE, st * (1.0 - 0.8 * perf * detail));
+                    col = mix(col, CREAM, 0.8 * detail * hair(abs(max(abs(sp.x) - 0.052, abs(sp.y) - 0.07)), 0.003));
+                    col = mix(col, vec3(0.65, 0.23, 0.08), detail * rect(sp, vec2(0.0, -0.01), vec2(0.022, 0.03)));
+                    vec2 bq = (p - vec2(-W + 0.08, -H + 0.05)) / vec2(0.0145, 0.05);
+                    if (bq.x >= 0.0 && bq.x < 34.0 && bq.y >= 0.0 && bq.y < 1.0) {
+                      float h = hash(vec2(floor(bq.x), vD.z * 5.0 + 1.0));
+                      col = mix(col, FIRE, detail * 0.85 * step(fract(bq.x), 0.45) * step(h < 0.5 ? 0.5 : 0.0, bq.y));
+                    }
+                  }
+                } else {
+                  col = mix(HINT, MUTED, step(0.0, vN.y + vN.x * 0.3)); // the paper's thickness: lit top edge, shaded lower edge
+                }
+              }
+              float f = smoothstep(uFogNear, uFogFar, vDepth) * fogK;
+              col = mix(col, INK, f);
+              col = mix(INK, col, uDim);
+              gl_FragColor = vec4(col, 1.0);
+            }`,
+        });
+
+        // ---- two instanced systems: the archive (drawers + lines of light) and the cards ----------------
+        const MAXI = 16000, MAXC = 1600;
+        const archive = new THREE.InstancedMesh(new THREE.BoxGeometry(1.6, 1.0, 1.6), material, MAXI);
+        const aData = new THREE.InstancedBufferAttribute(new Float32Array(MAXI * 4), 4);
+        archive.geometry.setAttribute("aData", aData);
+        archive.frustumCulled = false;
+        archive.count = 0;
+        scene.add(archive);
+
+        const cards = new THREE.InstancedMesh(new THREE.BoxGeometry(1.6, 1.0, 0.04, 10, 4, 1), material, MAXC);
+        const cData = new THREE.InstancedBufferAttribute(new Float32Array(MAXC * 4), 4);
+        const CR = []; { const r = rng(905); for (let i = 0; i < MAXC; i++) { CR.push([r(), r(), r(), r(), r(), r()]); cData.array.set([2, ALWAYS, r(), 0], i * 4); } }
+        // envelope variety: size (a few big ones), format (standard / long / square card), paper flutter
+        const CX = []; { const r = rng(906); for (let i = 0; i < MAXC; i++) {
+          const v = r(), f = r();
+          const x = { sz: v < 0.72 ? 0.78 + 0.34 * r() : 1.12 + 0.5 * r(), asp: f < 0.6 ? 1 : f < 0.84 ? 1.22 : 0.84,
+            fa: r() < 0.45 ? 0.18 + 0.4 * r() : 0, ff: 8 + 9 * r(), fp: r() * TAU };
+          if (i === 0) { x.sz = 1; x.asp = 1; x.fa = 0; } // object 0001 keeps its format
+          CX.push(x); cData.array[i * 4 + 3] = x.asp; } }
+        cards.geometry.setAttribute("aData", cData);
+        cards.frustumCulled = false;
+        cards.count = 0;
+        scene.add(cards);
+
+        // ---- light: one additive pass of soft quads, no post-processing --------------------------------------
+        // Each instance is a glow from A to B (a capsule; A = B is a round sprite), width w, faded by fog.
+        // kind 0 = lamp bloom (streaks along the camera's motion), 1 = beam glow facing the camera,
+        // 2 = beam glow lying flat on the floor (light pooled), 3 = haze, 4 = card trail (fades A -> B).
+        // gN.x = packet speed along a line of light (as the line itself), gN.y = lamp seed (hat flicker)
+        const GS = 14, MAXG = 6600, MAXTR = 1500; // floats per glow; static glows per layout; dynamic trails
+        const glowUniforms = { uTime: uniforms.uTime, uFogNear: uniforms.uFogNear, uFogFar: uniforms.uFogFar, uDim: uniforms.uDim,
+          uPulse: uniforms.uPulse, uHat: uniforms.uHat, uHaze: { value: 1 }, uStreak: { value: 0 }, uVel: { value: new THREE.Vector3() } };
+        const glowMat = new THREE.ShaderMaterial({
+          uniforms: glowUniforms, transparent: true, depthWrite: false, depthTest: true, side: THREE.DoubleSide,
+          blending: THREE.CustomBlending, blendEquation: THREE.AddEquation,
+          blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+          vertexShader: `
+            attribute vec3 gA, gB; attribute vec4 gN, gC;
+            uniform float uTime, uStreak, uHat; uniform vec3 uVel;
+            varying float vS, vT, vU, vLen, vW, vAmt, vKind, vCream, vDepth, vPk;
+            void main() {
+              float kind = gN.w;
+              vKind = kind; vCream = gC.z; vW = gC.x;
+              vPk = 0.0;
+              float age = uTime - gC.y;
+              if (age < 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); return; }
+              vAmt = gC.w * (kind < 2.5 ? 1.0 + 1.6 * exp(-age * 7.0) : 1.0); // a lamp flares as it ignites
+              if (kind < 0.5) vAmt *= 1.0 - 0.72 * uHat * step(0.6, fract(gN.y * 7.13)); // the lamp's own hat stutter
+              vec3 B = kind < 0.5 ? gA + uVel * uStreak : gB;
+              vec3 a = (viewMatrix * vec4(gA, 1.0)).xyz, b = (viewMatrix * vec4(B, 1.0)).xyz;
+              vec3 d = b - a; float len = length(d);
+              vec3 dir = vec3(1.0, 0.0, 0.0), side = vec3(0.0, 1.0, 0.0);
+              if (len > 1e-4) {
+                dir = d / len;
+                vec3 s = kind > 1.5 && kind < 2.5 ? cross(dir, (viewMatrix * vec4(0.0, 1.0, 0.0, 0.0)).xyz) : cross(dir, a - dir * dot(a, dir));
+                float sl = length(s);
+                if (sl > 1e-6) side = s / sl;
+              } else len = 0.0;
+              vLen = len; vU = position.x + 0.5;
+              if (gN.x != 0.0) vPk = dot(mix(gA, B, vU), vec3(1.0)) * 0.04 + uTime * gN.x;
+              vS = position.x * (len + vW); vT = position.y * vW;
+              vec3 p = mix(a, b, vU) + dir * (position.x * vW) + side * (position.y * vW);
+              vDepth = -p.z;
+              gl_Position = projectionMatrix * vec4(p, 1.0);
+            }`,
+          fragmentShader: `
+            precision highp float;
+            uniform float uFogNear, uFogFar, uDim, uPulse, uHaze;
+            varying float vS, vT, vU, vLen, vW, vAmt, vKind, vCream, vDepth, vPk;
+            const vec3 FIRE = vec3(0.910, 0.365, 0.149);
+            const vec3 CREAM = vec3(0.941, 0.925, 0.898);
+            void main() {
+              float dx = max(abs(vS) - vLen * 0.5, 0.0) / (vW * 0.5), dy = vT / (vW * 0.5);
+              float r = length(vec2(dx, dy));
+              if (r >= 1.0) discard;
+              float g = vKind > 2.5 && vKind < 3.5 ? pow(1.0 - r, 2.2) : 0.55 * exp(-r * r * 10.0) + 0.45 * (1.0 - r) * (1.0 - r);
+              float a = g * vAmt;
+              if (vKind < 2.5) a *= 1.0 + 0.9 * uPulse + (vPk != 0.0 ? 2.4 * smoothstep(0.8, 1.0, 1.0 - fract(vPk)) : 0.0);
+              else if (vKind < 3.5) a *= uHaze * smoothstep(0.8, 6.0, vDepth);
+              else a *= pow(1.0 - vU, 1.6);
+              a *= (1.0 - (vKind > 2.5 && vKind < 3.5 ? 0.5 : 0.9) * smoothstep(uFogNear, uFogFar, vDepth)) * uDim; // haze is the fog's own light
+              gl_FragColor = vec4(mix(FIRE, CREAM, vCream) * a, a);
+            }`,
+        });
+        const gBuf = new THREE.InstancedInterleavedBuffer(new Float32Array((MAXG + MAXTR) * GS), GS, 1);
+        const gGeo = new THREE.InstancedBufferGeometry().copy(new THREE.PlaneGeometry(1, 1));
+        gGeo.setAttribute("gA", new THREE.InterleavedBufferAttribute(gBuf, 3, 0));
+        gGeo.setAttribute("gB", new THREE.InterleavedBufferAttribute(gBuf, 3, 3));
+        gGeo.setAttribute("gN", new THREE.InterleavedBufferAttribute(gBuf, 4, 6));
+        gGeo.setAttribute("gC", new THREE.InterleavedBufferAttribute(gBuf, 4, 10));
+        gGeo.instanceCount = 0;
+        const glow = new THREE.Mesh(gGeo, glowMat);
+        glow.frustumCulled = false;
+        glow.renderOrder = 2;
+        scene.add(glow);
+
+        const dummy = new THREE.Object3D();
+        const tmpM = new THREE.Matrix4(), tmpV = new THREE.Vector3();
+        function layout() {
+          const m = new Float32Array(MAXI * 16), d = new Float32Array(MAXI * 4), g = new Float32Array(MAXG * GS);
+          const o = { m, d, n: 0, g, gn: 0 };
+          o.push = (x, y, z, rx, ry, rz, sx, sy, sz, kind, lamp, seed, flag) => {
+            if (o.n >= MAXI) return;
+            dummy.position.set(x, y, z); dummy.rotation.set(rx, ry, rz, "XYZ"); dummy.scale.set(sx, sy, sz); dummy.updateMatrix();
+            dummy.matrix.toArray(m, o.n * 16); d.set([kind, lamp, seed, flag], o.n * 4); o.n++;
+          };
+          // a glow: A, B, plane normal (flat kind), kind, width, ignition time, cream?, strength
+          o.glow = (A, B, N, kind, w, on, cream, amt) => {
+            if (o.gn >= MAXG) return;
+            g.set([A[0], A[1], A[2], B[0], B[1], B[2], N[0], N[1], N[2], kind, w, on, cream, amt], o.gn * GS); o.gn++;
+          };
+          // bloom on the lamp of instance i (front face, upper right), lifted off the face so the drawer does not cut it
+          o.lamp = (i, on, w = 0.95, amt = 0.34) => {
+            tmpV.set(0.6, 0.3, 1.02).applyMatrix4(tmpM.fromArray(m, i * 16));
+            const A = [tmpV.x, tmpV.y, tmpV.z];
+            o.glow(A, A, [0, d[i * 4 + 2], 0], 0, w, on, 0, amt);
+          };
+          o.drawer = (x, y, z, rx, ry, lamp, seed, flag = 0) => {
+            o.push(x, y, z, rx, ry, 0, 1, 1, 1, 0, lamp, seed, flag);
+            if (lamp < NEVER) o.lamp(o.n - 1, lamp, flag ? 1.25 : 0.82, flag ? 0.48 : 0.28);
+          };
+          // Plain structural boxes share the archive pool and consume no random values.
+          o.solid = (x, y, z, w, h, depth, shade = 0.4, ry = 0) =>
+            o.push(x, y, z, 0, ry, 0, w / 1.6, h, depth / 1.6, 3, ALWAYS, shade, 0);
+          // a line of light: centre, axis length, thickness, cream?, ignition time; it glows (pooled flat on the floor);
+          // spd > 0 runs packets of light toward -z / -y, spd < 0 toward +x
+          o.beam = (x, y, z, axis, len, th, cream = 0, on = ALWAYS, gw = Math.max(0.5, th * 11), gamt = 0.42, spd = 0) => {
+            const s = [th / 1.6, th / 1.0, th / 1.6], e = [0, 0, 0];
+            if (axis === "x") { s[0] = len / 1.6; e[0] = len / 2; } else if (axis === "y") { s[1] = len; e[1] = len / 2; } else { s[2] = len / 1.6; e[2] = len / 2; }
+            o.push(x, y, z, 0, 0, 0, s[0], s[1], s[2], 1, on, cream, spd);
+            const flat = y < 0.2, lift = flat ? 0.02 : 0;
+            o.glow([x - e[0], y - e[1] + lift, z - e[2]], [x + e[0], y + e[1] + lift, z + e[2]], [spd, 0, 0], flat ? 2 : 1, gw, on, cream, gamt);
+          };
+          // haze: a big soft sprite of fire light in the air
+          o.haze = (x, y, z, w, amt = 0.05, on = ALWAYS, cream = 0) => o.glow([x, y, z], [x, y, z], [0, 0, 0], 3, w, on, cream, amt);
+          // a mist sheet: a long soft band of light lying flat at height y (low fog layers)
+          o.mist = (A, B, w, amt = 0.04, cream = 0) => o.glow(A, B, [0, 0, 0], 2, w, ALWAYS, cream, amt);
+          return o;
+        }
+        // beat-quantized ignition: a drawer lights on beat k (0..3) of its shot
+        const onBeat = (s, k) => beatOf(s, Math.min(3, Math.max(0, k)));
+
+        // corridor (shots 1 and 6): two walls, floor and ceiling of drawers down -z
+        function corridor(seed, lampFn) {
+          const o = layout(), r = rng(seed);
+          const HW = 3.45, ROWS = 8, COLS = 150;
+          for (let i = 0; i < COLS; i++) {
+            const z = 6 - i * 1.72;
+            for (let k = 0; k < ROWS; k++) for (const s of [-1, 1]) o.drawer(s * (HW + 0.8), 0.55 + k * 1.1, z, 0, -s * Math.PI / 2, lampFn(r(), i, 1), r());
+          }
+          for (let j = 0; j < 233; j++) {
+            const z = 6 - j * 1.1;
+            for (const x of [-2.58, -0.86, 0.86, 2.58]) {
+              o.drawer(x, -0.8, z, -Math.PI / 2, 0, lampFn(r(), j, 0.4), r());
+              o.drawer(x, ROWS * 1.1 + 0.85, z, Math.PI / 2, 0, lampFn(r(), j, 0.25), r());
+            }
+          }
+          // Repeated portal frames and raised intake rails give the rushing corridor a physical cadence.
+          for (let z = 4; z > -250; z -= 12) {
+            for (const side of [-1, 1]) {
+              o.solid(side * 3.40, 4.4, z, 0.22, 8.8, 0.48, 0.5);
+              o.solid(side * 3.13, 8.48, z, 0.62, 0.48, 0.56, 0.5);
+            }
+            o.solid(0, 8.72, z, 6.9, 0.28, 0.52, 0.65);
+          }
+          for (const side of [-1, 1]) {
+            o.solid(side * 3.12, 0.10, -124, 0.25, 0.20, 260, 0.6);
+            o.solid(side * 3.12, 6.33, -124, 0.20, 0.18, 260, 0.4);
+          }
+          o.beam(-3.4, 0.04, -124, "z", 260, 0.06, 0, ALWAYS, 0.66, 0.42, 0.9); o.beam(3.4, 0.04, -124, "z", 260, 0.06, 0, ALWAYS, 0.66, 0.42, 0.9);
+          o.beam(0, 6.3, -124, "z", 260, 0.04, 0, ALWAYS, 0.5, 0.42, 1.3);
+          o.beam(-3.4, ROWS * 1.1, -124, "z", 260, 0.035, 1, ALWAYS, 0.5, 0.42, 0.7); o.beam(3.4, ROWS * 1.1, -124, "z", 260, 0.035, 1, ALWAYS, 0.5, 0.42, 0.7);
+          // air: soft fire-lit haze hanging along the corridor axis
+          for (let z = 4; z > -250; z -= 8) o.haze((r() - 0.5) * 2.4, 2.6 + r() * 3.2, z, 8 + r() * 5, 0.045 + r() * 0.03);
+          // lines of light: a rail on each wall at the third seam, a lit strip under every portal, a cross line on the floor
+          for (const side of [-1, 1]) o.beam(side * 3.37, 3.3, -124, "z", 260, 0.03, 0, ALWAYS, 0.42, 0.3, 1.05);
+          for (let z = 4; z > -250; z -= 12) {
+            o.beam(0, 8.56, z + 0.3, "x", 6.2, 0.05, 1, ALWAYS, 0.7, 0.26);
+            o.beam(0, 0.03, z, "x", 6.8, 0.04, 0, ALWAYS, 1.1, 0.2);
+          }
+          // fog in layers: low mist sheets pooled on the floor, a paler cooler layer under the ceiling
+          for (let z = 2; z > -250; z -= 9) o.mist([-3.1, 0.35 + r() * 0.5, z], [3.1, 0.35 + r() * 0.5, z - 3], 3.6 + r() * 2, 0.035 + r() * 0.02, 0.3);
+          for (let z = 0; z > -250; z -= 14) o.haze((r() - 0.5) * 3, 7.6 + r() * 0.6, z, 6 + r() * 3, 0.03, ALWAYS, 1);
+          return o;
+        }
+
+        // shaft (shots 2 and 7): a well of inward-facing drawers, set into a floor of drawers
+        const SR = 8.5, SN = 30, SROWS = 46;
+        function shaft(seed, lampFn, rimFn, ringOn, deepOn) {
+          const o = layout(), r = rng(seed);
+          for (let k = 0; k < SROWS; k++) for (let j = 0; j < SN; j++) {
+            const a = (j + (k % 2) * 0) / SN * TAU, rr = SR + 0.8;
+            o.drawer(rr * Math.cos(a), -0.55 - k * 1.1, rr * Math.sin(a), 0, Math.atan2(-Math.cos(a), -Math.sin(a)), lampFn(r(), k, j), r());
+          }
+          for (let xi = -20; xi <= 20; xi++) for (let zi = -31; zi <= 31; zi++) {
+            const x = xi * 1.72, z = zi * 1.1, d = Math.hypot(x, z);
+            if (d < SR + 1.4 || d > 36) continue;
+            o.drawer(x, -0.8, z, -Math.PI / 2, 0, rimFn(r(), d), r());
+          }
+          for (let j = 0; j < 10; j++) {
+            const a = (j + 0.5) / SN * TAU * 3, rr = SR - 0.12;
+            o.beam(rr * Math.cos(a), -26, rr * Math.sin(a), "y", 52, 0.06, j % 2, ALWAYS, 0.66, 0.42, 0.85);
+          }
+          // Deep radial piers continue down the shaft; a stepped mouth supports the light rings.
+          for (let j = 0; j < 10; j++) {
+            const a = (j + 0.5) / 10 * TAU;
+            o.solid((SR + 0.04) * Math.cos(a), -25.6, (SR + 0.04) * Math.sin(a), 0.42, 52, 0.62, 0.5, -a);
+          }
+          for (let j = 0; j < 64; j++) {
+            const a = (j + 0.5) / 64 * TAU, rr = SR + 0.78;
+            o.solid(rr * Math.cos(a), -0.12, rr * Math.sin(a), 0.84, 0.48, TAU * rr / 64 * 1.02, 0.6, -a);
+          }
+          // The existing cream and fire rings retain their exact ignition anchors.
+          for (const [rad, th, cream, on, gw, gamt] of [[SR + 0.75, 0.42, 0, ringOn, 2.2, 0.3], [SR + 2.6, 0.12, 1, ALWAYS, 0.8, 0.16]]) {
+            const N = 64, len = TAU * rad / N * 1.04;
+            for (let j = 0; j < N; j++) { const a = (j + 0.5) / N * TAU, a0 = j / N * TAU, a1 = (j + 1) / N * TAU;
+              o.push(rad * Math.cos(a), 0.06, rad * Math.sin(a), 0, -a, 0, th / 1.6, 0.08, len / 1.6, 1, on, cream, 0);
+              o.glow([rad * Math.cos(a0), 0.1, rad * Math.sin(a0)], [rad * Math.cos(a1), 0.1, rad * Math.sin(a1)], [0, 0, 0], 2, gw, on, cream, gamt); }
+          }
+          // air down the well
+          for (let k = 0; k < 9; k++) o.haze((r() - 0.5) * 3, -3 - k * 5.5, (r() - 0.5) * 3, 13 + r() * 4, 0.04 + r() * 0.025);
+          // rings of light set into the drawer faces down the well: the depth reads as rungs, igniting in turn
+          for (let k = 0; k < 4; k++) {
+            const y = -5.5 - k * 8.8, N = 30, rad = SR - 0.03, len = TAU * rad / N * 1.02, on = deepOn(k);
+            for (let j = 0; j < N; j++) { const a = (j + 0.5) / N * TAU, a0 = j / N * TAU, a1 = (j + 1) / N * TAU;
+              o.push(rad * Math.cos(a), y, rad * Math.sin(a), 0, -a, 0, 0.05 / 1.6, 0.05, len / 1.6, 1, on, k % 2 ? 0 : 1, 0);
+              o.glow([rad * Math.cos(a0), y, rad * Math.sin(a0)], [rad * Math.cos(a1), y, rad * Math.sin(a1)], [0, 0, 0], 1, 0.6, on, k % 2 ? 0 : 1, 0.2); }
+          }
+          return o;
+        }
+
+        // the long wall (shot 3)
+        const WX0 = -20;
+        function wall(seed, lampFn) {
+          const o = layout(), r = rng(seed);
+          for (let i = 0; i < 91; i++) for (let k = 0; k < 14; k++) o.drawer(WX0 + i * 1.72, 0.55 + k * 1.1, -0.8, 0, 0, lampFn(r(), i, k), r());
+          for (let i = 0; i < 91; i++) for (let j = 0; j < 12; j++) o.drawer(WX0 + i * 1.72, -0.8, 0.6 + j * 1.1, -Math.PI / 2, 0, r() < 0.05 ? ALWAYS : NEVER, r());
+          // Appended after every original drawer: shot 3's column-ignition indices stay fixed.
+          for (let i = 0; i <= 91; i += 4) {
+            o.solid(WX0 - 0.86 + i * 1.72, 7.7, 0.12, 0.20, 15.7, 0.32, 0.6);
+          }
+          for (const y of [4.37, 8.77, 13.17]) o.solid(58, y, 0.10, 158, 0.18, 0.30, 0.45);
+          for (const y of [1.82, 3.08]) o.solid(60, y, 3.2, 200, 0.18, 0.28, 0.65);
+          o.beam(60, 2.7, 3.2, "x", 200, 0.05, 0, ALWAYS, 0.55, 0.42, -1.0);
+          o.beam(60, 0.03, 0.08, "x", 200, 0.04, 1, ALWAYS, 0.5, 0.42, -0.7);
+          for (let x = WX0; x < 150; x += 7) o.haze(x + r() * 3, 2.5 + r() * 4, 1.2 + r() * 1.5, 9 + r() * 4, 0.04 + r() * 0.025);
+          // a lit rail along the top of the wall, low mist pooled at its foot
+          o.beam(60, 15.95, 0.2, "x", 200, 0.04, 1, ALWAYS, 0.6, 0.3, -0.6);
+          for (let x = WX0; x < 150; x += 10) o.mist([x, 0.4 + r() * 0.4, 1.5 + r() * 2], [x + 9, 0.4 + r() * 0.4, 1.5 + r() * 2], 3 + r() * 2, 0.04, 0.3);
+          return o;
+        }
+
+        // the city (shot 4): two ranks of large drawer towers either side of one avenue of light, receding into fog
+        const AVE = 4.4, CSX = 2.4, CSY = 1.5, CW = 1.6 * CSX, CP = CW + 1.4; // half avenue; tower drawer scale; tower pitch
+        const STREET_Z = [], SL = []; // SL: the drawers that slam shut on the river (zd, side, ym, ts, idx)
+        const SLOPEN = 1.25, SLS = 1.05, SLX = AVE + 0.6 + 0.84 - 0.03; // pull-out, scale, closed centre |x|
+        function city(seed, lampFn) {
+          const o = layout(), r = rng(seed), rs = rng(777);
+          for (let j = 0; j < 28; j++) {
+            const z = 8 - j * CP;
+            if (j % 5 === 4) { STREET_Z.push(z); continue; } // a cross street
+            for (const side of [-1, 1]) for (let i = 0; i < 4; i++) {
+              const x = side * (AVE + 0.6 + CW / 2 + i * CP);
+              const h = 2 + Math.floor(Math.pow(r(), 1.5) * (4 + 8 * (1 - i / 4)));
+              for (let k = 0; k < h; k++) {
+                const lamp = lampFn(r(), z);
+                o.push(x, CSY * (0.5 + k * 1.08), z, 0, 0, 0, CSX, CSY, CSX, 0, lamp, r(), 0);
+                if (lamp < NEVER) o.lamp(o.n - 1, lamp, 2.2, 0.3);
+              }
+              const roof = CSY * (h * 1.08 - 0.08);
+              // Heavy caps, parapets and corner piers turn stacks into legible tower silhouettes.
+              o.solid(x, roof + 0.18, z, CW + 0.46, 0.36, CW + 0.46, 0.65);
+              for (const side of [-1, 1]) {
+                o.solid(x + side * CW * 0.48, roof + 0.48, z, 0.24, 0.40, CW + 0.48, 0.5);
+                o.solid(x, roof + 0.48, z + side * CW * 0.48, CW - 0.40, 0.40, 0.24, 0.5);
+                o.solid(x + side * CW * 0.47, roof * 0.5, z + CW * 0.5 + 0.05, 0.22, roof, 0.24, 0.35);
+              }
+              o.solid(x, roof + 0.72, z, 1.05, 0.74, 1.7, 0.45);
+              // drawers on the avenue face of the inner towers: they pull out, take an envelope, slam shut and light
+              if (i === 0) for (let k = 0; k < Math.min(3, h); k++) for (const c of [-1, 1]) {
+                const zd = z + c * 0.95, ym = CSY * (0.5 + k * 1.08), ts = L(WOW.on(T0 + onBeat(3, Math.floor(rs() * 4)), { kinds: ["kick"] })); rs(); // v17: shut ON a real kick (rs() keeps the seeded sequence)
+                SL.push({ zd, side, ym, ts, idx: o.n });
+                o.push(side * SLX, ym, zd, 0, -side * Math.PI / 2, 0, SLS, SLS, SLS, 0, ts + 0.02, rs(), 2);
+                o.lamp(o.n - 1, ts + 0.02, 0.9, 0.3);
+              }
+              // a cream line of light along the cap's front edge: every tower top reads against the fog
+              o.beam(x, roof + 0.37, z + (CW + 0.46) / 2 + 0.02, "x", CW + 0.46, 0.035, 1, ALWAYS, 0.5, 0.16);
+            }
+          }
+          o.beam(0, 0.03, -60, "z", 150, 0.14, 0, ALWAYS, 8.4, 0.6, 0.9);          // the avenue: a fire line with light pooled wide
+          for (const s of [-1, 1]) o.beam(s * AVE, 0.03, -60, "z", 150, 0.05, 1, ALWAYS, 0.9, 0.22, 0.7);
+          for (const z of STREET_Z) o.beam(0, 0.03, z, "x", 70, 0.06, 1, ALWAYS, 1.6, 0.2, -0.8);
+          o.glow([0, 3.5, 12], [0, 3.5, -140], [0, 0, 0], 3, 16, ALWAYS, 0, 0.05); // the air over the avenue
+          for (let k = 0; k < 6; k++) o.haze((r() - 0.5) * 40, 6 + r() * 6, -40 - k * 16, 34 + r() * 10, 0.05);
+          o.haze(0, 3, -100, 60, 0.1); // where the avenue goes: light in the fog
+          // the horizon: a long band of light in the far fog, so the skyline stands against it
+          o.glow([-140, 6, -128], [140, 6, -128], [0, 0, 0], 3, 46, ALWAYS, 0.2, 0.15);
+          // fog in layers: mist pooled in the cross streets, banks hanging between the tower rows
+          for (const z of STREET_Z) o.mist([-40, 0.8, z], [40, 0.8, z], 4, 0.07, 0.3);
+          for (let k = 0; k < 6; k++) o.mist([-70, 7 + k * 0.9, -12 - k * 19], [70, 7 + k * 0.9, -12 - k * 19], 12, 0.03, 0.15);
+          return o;
+        }
+
+        // the macro wall around drawer 0001 (shot 5)
+        function macro(seed, igniteAt) {
+          const o = layout(), r = rng(seed);
+          for (let i = -7; i <= 7; i++) for (let k = -6; k <= 6; k++) {
+            const hero = i === 0 && k === 0, d = Math.hypot(i, k);
+            const lamp = hero ? igniteAt : r() < 0.22 ? ALWAYS : r() < 0.7 ? igniteAt + d * 0.045 : NEVER;
+            o.drawer(i * 1.72, k * 1.1, -0.8, 0, 0, lamp, r(), hero ? 1 : 0);
+          }
+          // Raised perimeter lips leave the actual slot and its incoming card path open.
+          for (let i = -7; i <= 7; i++) for (let k = -6; k <= 6; k++) {
+            const x=i*1.72,y=k*1.1;
+            for (const side of [-1,1]) {
+              o.solid(x+side*0.775,y,0.045,0.085,1.035,0.16,i===0&&k===0?0.8:0.3);
+              o.solid(x,y+side*0.47,0.045,1.465,0.085,0.16,i===0&&k===0?0.8:0.3);
+            }
+          }
+          return o;
+        }
+
+        // ---- v19: the carriers are sized by the measured drums (a speed weight, integrated, so position stays a pure
+        // function of time): the macro pull-back after the filing, and the fall down the well -----------------------------
+        const drumAvg = (T) => { let s = 0; for (let i = -2; i <= 2; i++) s += HR.band("drums", T + i * 0.1); return s / 5; };
+        const drumW = (T) => 0.5 + 0.5 * drumAvg(T) + 0.4 * HR.band("drums", T);
+        const TT = DUR - CUTS[5]; // the last shot's length
+        // the well: the camera falls from WY0 to the height of drawer 0001's lamp, braking from lt 1.4 to WLAND
+        const WR = 4.0, WN = 14, WROWS = 40, WK1 = 32, WROW = (k) => -0.55 - k * 1.1; // face radius, drawers per ring, rows, 0001's row
+        const W1Y = WROW(WK1), W1Z = -(WR + 0.8), WOPEN = 0.45; // drawer 0001's centre (closed), how far it stands out
+        const WLAND = 2.9, WY0 = -2.0, WYL = W1Y + 0.3, FN = 600, fallTab = new Float32Array(FN + 1);
+        { let acc = 0; for (let i = 1; i <= FN; i++) { const lt = (i - 0.5) / FN * WLAND;
+            acc += drumW(T0 + CUTS[5] + lt) * (1 - smooth((lt - 1.4) / (WLAND - 1.4))); fallTab[i] = acc; }
+          for (let i = 1; i <= FN; i++) fallTab[i] /= acc; }
+        const camY = (lt) => { const x = clamp01(lt / WLAND) * FN, i = Math.min(FN - 1, Math.floor(x)); return lerp(WY0, WYL, lerp(fallTab[i], fallTab[i + 1], x - i)); };
+        const fallAt = (y) => { for (let i = 0; i <= FN; i++) if (lerp(WY0, WYL, fallTab[i]) <= y) return i / FN * WLAND; return WLAND; };
+        // the macro pull-back: from lt 0.75 (the card going straight in) to the cut, ~3 units, eased in
+        const PN = 400, pullTab = new Float32Array(PN + 1), PSPAN = CUTS[5] - CUTS[4];
+        { let acc = 0; for (let i = 1; i <= PN; i++) { const lt = (i - 0.5) / PN * PSPAN; acc += drumW(T0 + CUTS[4] + lt) * smooth((lt - 0.75) / 0.35) * PSPAN / PN; pullTab[i] = acc; } }
+        const pullAt = (lt) => { const x = clamp01(lt / PSPAN) * PN, i = Math.min(PN - 1, Math.floor(x)); return 3.5 * lerp(pullTab[i], pullTab[i + 1], x - i); };
+        const HB = BEATS.filter((b) => b >= CUTS[5] - 1e-6).map((b) => b - CUTS[5]); // the last shot's local beats
+        const WSHUT = L(60.894) - CUTS[5]; // shot-local: 0001 shuts on the 60.894 kick
+        const shut = (lt) => { if (lt < WSHUT) return in2((lt - (WSHUT - 0.3)) / 0.3); const d = lt - WSHUT; return 1 - 0.06 * Math.exp(-d * 14) * Math.abs(Math.sin(d * 40)); };
+        const LAMP1 = L(WOW.on(T0 + DUR - 0.23, { kinds: ["hat"] })); // 0001's lamp lights on the 61.107 hat, as the latch seats
+
+        // the well (shot 6): a narrow shaft of inward-facing drawers, lit all the way down. Lamps light in waves on the
+        // beats just ahead of the fall. Instance 0 is drawer 0001 (closed pose here; updateWell pulls it out until it shuts).
+        function well(seed) {
+          const o = layout(), r = rng(seed);
+          o.drawer(0, W1Y, W1Z, 0, 0, LAMP1, 0.5, 1);
+          for (let k = 0; k < WROWS; k++) {
+            const near = fallAt(WROW(k) + 11), wave = HB.find((b) => b >= near - 0.05) ?? HB[HB.length - 1];
+            for (let j = 0; j < WN; j++) {
+              if (k === WK1 && j === 0) continue;
+              const a = j / WN * TAU - Math.PI / 2, rr = WR + 0.8, v = r();
+              const lamp = v < 0.4 ? ALWAYS : v < 0.8 ? CUTS[5] + wave + 0.025 * ((j + 7) % WN) : NEVER;
+              o.drawer(rr * Math.cos(a), WROW(k), rr * Math.sin(a), 0, Math.atan2(-Math.cos(a), -Math.sin(a)), lamp, r());
+            }
+          }
+          const H = WROWS * 1.1, yMid = -H / 2;
+          for (let j = 1; j < WN - 1; j += 2) { const a = (j + 0.5) / WN * TAU - Math.PI / 2; o.solid((WR + 0.04) * Math.cos(a), yMid, (WR + 0.04) * Math.sin(a), 0.42, H, 0.36, 0.5, -a); }
+          // ledges every eight rows (none just over 0001), each with a line of light (cream and fire in turn)
+          for (let k = 4; k < WROWS; k += 8) {
+            const y = WROW(k) + 0.55, N = WN * 2, rad = WR - 0.03, len = TAU * rad / N * 1.02;
+            for (let j = 0; j < N; j++) { const a = (j + 0.5) / N * TAU, a0 = j / N * TAU, a1 = (j + 1) / N * TAU;
+              o.push(rad * Math.cos(a), y, rad * Math.sin(a), 0, -a, 0, 0.05 / 1.6, 0.05, len / 1.6, 1, ALWAYS, (k >> 3) % 2 ? 0 : 1, 0);
+              o.glow([rad * Math.cos(a0), y, rad * Math.sin(a0)], [rad * Math.cos(a1), y, rad * Math.sin(a1)], [0, 0, 0], 1, 0.6, ALWAYS, (k >> 3) % 2 ? 0 : 1, 0.2); }
+          }
+          // the floor at the foot: drawers face up, most of them lit
+          const yF = WROW(WROWS - 1) - 0.55 - 0.8;
+          for (let xi = -2; xi <= 2; xi++) for (let zi = -3; zi <= 3; zi++) {
+            const x = xi * 1.72, z = zi * 1.1;
+            if (Math.hypot(x, z) < WR - 0.5) o.drawer(x, yF, z, -Math.PI / 2, 0, r() < 0.7 ? ALWAYS : NEVER, r());
+          }
+          for (let y = -2; y > -44; y -= 4.5) o.haze((r() - 0.5) * 2.2, y, (r() - 0.5) * 2.2, 7 + r() * 3, 0.045 + r() * 0.02);
+          return o;
+        }
+
+        // ---- the seven shot layouts ----------------------------------------------------------------------
+        const S1 = corridor(11, (v, i, p) => v < 0.14 * p ? ALWAYS : v < 0.5 * p ? onBeat(0, Math.floor(((v / p) - 0.14) / 0.09)) : NEVER);
+        const S2 = shaft(21, (v, k) => v < 0.1 ? ALWAYS : v < 0.5 ? CUTS[1] + 0.12 + k * 0.034 : NEVER,
+          (v, d) => v < 0.07 ? ALWAYS : (d < SR + 3.5 && v < 0.6) ? onBeat(1, 2) : NEVER, onBeat(1, 2), (k) => onBeat(1, k));
+        const S3 = wall(31, (v, i, k) => v < 0.07 ? ALWAYS : NEVER); // columns ignite per beat, patched below
+        // lamps ignite in kick waves that sweep away down the avenue (0.35 ms per unit of depth)
+        const S4 = city(41, (v, z) => v < 0.04 ? ALWAYS : v < 0.62 ? onBeat(3, Math.floor((v - 0.04) / 0.58 * 4)) + (8 - z) * 0.0035 : NEVER);
+        const S5 = macro(51, beatOf(4, 3));
+        const S6 = well(61);
+        const LAYOUTS = [S1, S2, S3, S4, S5, S6];
+
+        // shot 3 — lamps igniting one column per beat: the column centred in frame on that beat, top to bottom
+        const S3AHEAD = 8;
+        const s3Cam = (lt) => ({ x: 2 + 5.2 * lt });
+        for (let b = 0; b < 4; b++) {
+          const tb = beatOf(2, b), col = Math.round((s3Cam(tb - CUTS[2]).x + S3AHEAD - WX0) / 1.72);
+          for (const c of [col, col + 1]) for (let k = 0; k < 14; k++) {
+            const on = tb + (13 - k) * 0.018 + (c - col) * 0.06;
+            S3.d[(c * 14 + k) * 4 + 1] = on;
+            S3.lamp(c * 14 + k, on);
+          }
+        }
+
+        let current = -1;
+        function useLayout(s) {
+          if (s === current) return;
+          current = s;
+          const o = LAYOUTS[s];
+          archive.instanceMatrix.array.set(o.m.subarray(0, o.n * 16));
+          aData.array.set(o.d.subarray(0, o.n * 4));
+          archive.count = o.n;
+          archive.instanceMatrix.needsUpdate = true;
+          aData.needsUpdate = true;
+          gBuf.array.set(o.g.subarray(0, o.gn * GS));
+        }
+
+        // ---- cards ---------------------------------------------------------------------------------------
+        const cm = cards.instanceMatrix.array;
+        function card(n, x, y, z, rx, ry, rz, s, order = "XYZ") {
+          dummy.position.set(x, y, z); dummy.rotation.set(rx, ry, rz, order); dummy.scale.set(s * CX[n].asp, s, s); dummy.updateMatrix();
+          dummy.matrix.toArray(cm, n * 16);
+        }
+        const wrap = (v, m) => ((v % m) + m) % m;
+
+        function corridorCards(lt, n, v) {
+          for (let i = 0; i < n; i++) {
+            const a = CR[i], st = a[0] < 0.6 ? 0 : a[0] < 0.8 ? 1 : 2;
+            const x = st === 0 ? (a[1] - 0.5) * 1.6 : st === 1 ? -2.9 + a[1] * 0.5 : 2.9 - a[1] * 0.5;
+            const y = st === 0 ? 5.85 - a[2] * 0.6 : 0.45 + a[2] * 0.5;
+            const z = 10 - wrap(a[3] * 230 + v * lt, 230);
+            const w = Math.sin(lt * 3 + a[5] * 10), c = CX[i], fl = c.fa * Math.sin(lt * c.ff + c.fp);
+            card(i, x + 0.12 * w, y + 0.1 * Math.cos(lt * 2.4 + a[4] * 9), z,
+              -0.3 + 0.6 * a[4] + 0.5 * w + fl, 0.5 * Math.sin(lt * 1.7 + a[5] * 9), (a[4] - 0.5) * 0.8 + 0.5 * fl, 0.42 * c.sz);
+          }
+          cards.count = n;
+        }
+        function shaftCards(lt, n, close, ceil = 1e9) {
+          for (let i = 0; i < n; i++) {
+            const a = CR[i];
+            const y = 12 - wrap(a[3] * 74 + (16 + 14 * close) * lt, 74);
+            const th = a[0] * TAU + (0.9 + 2.6 * close) * lt + y * 0.09;
+            const rr = (1.6 + a[1] * 6.0) * (1 - 0.94 * close);
+            const c = CX[i], fl = c.fa * Math.sin(lt * c.ff + c.fp);
+            card(i, rr * Math.cos(th), y, rr * Math.sin(th), -Math.PI / 2 + 0.5 * Math.sin(lt * 2 + a[4] * 7) + fl, -th, 0.3 * (a[5] - 0.5) + 0.4 * fl, y > ceil ? 0 : 0.55 * c.sz, "YXZ");
+          }
+          cards.count = n;
+        }
+
+        // ---- the river (shot 4): thousands of code-drawn envelopes, moved analytically in the vertex shader ------
+        // free: the stream down the avenue; street: tributaries from the cross streets that turn into it;
+        // special: one per slam drawer, it leaves the stream, hops into the open drawer's slot and the drawer slams shut.
+        const NFREE = 6200, NSTREET = 1700;
+        const rR = [], rP = [], rK = [];
+        {
+          const r = rng(4242);
+          for (let i = 0; i < NFREE; i++) { rR.push(r(), r(), r(), r()); rP.push(0, 0, 0, 0); rK.push(0); }
+          for (let i = 0; i < NSTREET; i++) {
+            const zs = STREET_Z[i % STREET_Z.length], side = Math.floor(i / STREET_Z.length) % 2 ? 1 : -1;
+            rR.push(r(), r(), r(), r()); rP.push(zs, side, 38 + zs + 116, 28 + 10 * r()); rK.push(2);
+          }
+          for (const sl of SL) { rR.push(r(), r(), r(), r()); rP.push(sl.zd, sl.side * (SLX - SLS * 0.84 - SLOPEN - 0.02), sl.ym, sl.ts - 0.09); rK.push(1); }
+        }
+        const RN = rK.length;
+        const rg = new THREE.InstancedBufferGeometry().copy(new THREE.PlaneGeometry(1, 1, 6, 1));
+        rg.setAttribute("aR", new THREE.InstancedBufferAttribute(new Float32Array(rR), 4));
+        rg.setAttribute("aP", new THREE.InstancedBufferAttribute(new Float32Array(rP), 4));
+        rg.setAttribute("aK", new THREE.InstancedBufferAttribute(new Float32Array(rK), 1));
+        rg.instanceCount = RN;
+        const ru = { rT: { value: 0 }, rCam: { value: new THREE.Vector3() }, uFogNear: uniforms.uFogNear, uFogFar: uniforms.uFogFar, uDim: uniforms.uDim };
+        const riverMat = new THREE.ShaderMaterial({ uniforms: ru, side: THREE.DoubleSide,
+          vertexShader: `
+            attribute vec4 aR; attribute vec4 aP; attribute float aK;
+            uniform float rT; uniform vec3 rCam;
+            varying vec2 vUv; varying float vShade, vDepth, vWarm, vHot, vSeed, vSl;
+            float gS = 99.0;
+            float sm(float a) { return 0.5 * (a + sqrt(a * a + 6.0)); }
+            vec3 pathAt(float t) {
+              if (aK < 0.5) {
+                float v = 30.0 + 12.0 * aR.w;
+                float z = 24.0 - mod(aR.z * 140.0 + v * t, 140.0);
+                return vec3((aR.x - 0.5) * 6.4 + 0.3 * sin(t * 2.0 + aR.z * 30.0), 0.1 + aR.y * aR.y * 1.8 + 0.12 * sin(t * 3.0 + aR.x * 17.0), z);
+              } else if (aK < 1.5) {
+                float ta = aP.w, a = pow(clamp((t - (ta - 0.3)) / 0.3, 0.0, 1.0), 2.0);
+                float lane = (aR.x - 0.5) * 5.0, y0 = 0.15 + aR.y * aR.y * 2.0;
+                vec3 p = vec3(mix(lane, aP.y, a), mix(y0, aP.z, a), aP.x + 34.0 * (ta - t) * (1.0 - a));
+                if (t > ta) p = vec3(aP.y + sign(aP.y) * (t - ta) * 9.0, aP.z, aP.x);
+                return p;
+              }
+              float s = mod(aR.z * aP.z + aP.w * t, aP.z);
+              gS = s;
+              float turned = smoothstep(32.0, 44.0, s), off = aR.x - 0.5;
+              return vec3(aP.y * sm(38.0 - s) + off * 5.0 * turned, 0.15 + aR.y * aR.y * 1.3, aP.x - sm(s - 38.0) + off * 2.4 * (1.0 - turned));
+            }
+            void main() {
+              float t = rT, ta = aP.w;
+              bool special = aK > 0.5 && aK < 1.5;
+              if (special && t > ta + 0.17) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); return; }
+              vec3 p0 = pathAt(t);
+              float s0 = gS;
+              vec3 vel = (pathAt(t + 0.02) - p0) / 0.02;
+              if (length(vel) > 120.0 || length(vel) < 0.5) vel = vec3(0.0, 0.0, -30.0);
+              vec3 f = normalize(vel);
+              vec3 R = normalize(cross(vec3(0.0, 1.0, 0.0), f + vec3(0.0, 0.0001, 0.0)));
+              vec3 xd = -R, N0 = cross(f, R);
+              float ph = aR.w * 6.2832 + t * (1.0 + 3.0 * aR.x) * (aR.z > 0.5 ? 1.0 : -1.0);
+              if (special) ph = mix(ph, 0.0, pow(clamp((t - (ta - 0.3)) / 0.3, 0.0, 1.0), 2.0)); // it levels out as it enters
+              vec3 xr = xd * cos(ph) + N0 * sin(ph), Nr = N0 * cos(ph) - xd * sin(ph);
+              float sz = 0.5 + 0.45 * fract(aR.x * 7.7 + aR.y * 3.1);
+              float fade = aK > 1.5 ? smoothstep(0.0, 6.0, s0) : 1.0;
+              float st = 1.0 + min(1.6, length(vel - rCam) * 0.03); // stretched along the flow by its speed past the lens
+              float bw = (0.06 + 0.05 * sin(t * (3.0 + 3.0 * aR.y) + aR.z * 40.0)) * sz; // v17: the paper bows as it flies
+              vec3 wp = p0 + (xr * position.x * 0.62 * sz + f * position.y * 0.40 * sz * st + Nr * bw * (1.0 - 4.0 * position.x * position.x)) * fade;
+              vSl = -8.0 * bw * position.x;
+              vec4 mv = viewMatrix * vec4(wp, 1.0);
+              vDepth = -mv.z; gl_Position = projectionMatrix * mv;
+              vUv = uv; vSeed = aR.z;
+              vShade = 0.38 + 0.62 * abs(dot(Nr, normalize(vec3(-0.4, 0.9, 0.5))));
+              vWarm = 1.0 - smoothstep(0.0, 1.8, p0.y);
+              vHot = special ? 0.0 : step(0.94, fract(aR.y * 13.7 + aR.z * 5.3));
+            }`,
+          fragmentShader: `
+            precision highp float;
+            uniform float uFogNear, uFogFar, uDim;
+            varying vec2 vUv; varying float vShade, vDepth, vWarm, vHot, vSeed, vSl;
+            const vec3 INK = vec3(0.0392); const vec3 FIRE = vec3(0.910, 0.365, 0.149); const vec3 CREAM = vec3(0.941, 0.925, 0.898);
+            void main() {
+              vec2 q = vUv;
+              float edge = min(min(q.x, 1.0 - q.x), min(q.y, 1.0 - q.y));
+              float dflap = abs(q.y - (0.5 + abs(q.x - 0.5)));
+              vec3 col = CREAM * vShade * mix(0.32, 0.8, fract(vSeed * 9.0));
+              col = mix(col, col * vec3(1.0, 0.62, 0.38), 0.7 * vWarm); // lit from below by the river of fire
+              col = mix(col, FIRE * (0.45 + 0.55 * vShade), vHot);
+              col *= 1.0 - 0.5 * (1.0 - smoothstep(0.012, 0.035, dflap));
+              col *= 1.0 - 0.35 * (1.0 - smoothstep(0.0, 0.05, edge));
+              col *= clamp(1.0 + 1.4 * vSl * (gl_FrontFacing ? 1.0 : -1.0), 0.6, 1.15); // two-tone across the bow
+              if (gl_FrontFacing) {
+                float sr = length((q - 0.5) * vec2(0.62, 0.40));
+                col = mix(col, FIRE, 1.0 - smoothstep(0.045, 0.06, sr));
+              } else {
+                float ln = step(0.5, fract(q.y * 7.0)) * step(0.25, q.x) * step(q.x, 0.75) * step(0.3, q.y) * step(q.y, 0.5);
+                col = mix(col, vec3(0.36, 0.34, 0.31), 0.5 * ln);
+              }
+              col = mix(col, INK, smoothstep(uFogNear, uFogFar, vDepth));
+              col = mix(INK, col, uDim);
+              gl_FragColor = vec4(col, 1.0);
+            }` });
+        const river = new THREE.Mesh(rg, riverMat); river.frustumCulled = false; river.visible = false; scene.add(river);
+
+        // the slam drawers (the last instances of the city layout): pull out, wait for the envelope, slam shut with a rebound
+        const slamOpen = (lt, ts) => {
+          const o1 = ts - 0.42;
+          if (lt < o1) return 0;
+          if (lt < ts) return SLOPEN * out3((lt - o1) / 0.14);
+          const ph = (lt - ts) / 0.09;
+          if (ph < 1) return SLOPEN * (1 - ph * ph);
+          return 0.1 * Math.exp(-(lt - ts - 0.09) * 16) * Math.max(0, Math.sin((lt - ts - 0.09) * 45));
+        };
+        function updateHarvest(lt) {
+          river.visible = true;
+          ru.rT.value = lt;
+          for (const sl of SL) {
+            dummy.position.set(sl.side * (SLX - slamOpen(lt, sl.ts)), sl.ym, sl.zd);
+            dummy.rotation.set(0, -sl.side * Math.PI / 2, 0); dummy.scale.set(SLS, SLS, SLS); dummy.updateMatrix();
+            archive.setMatrixAt(sl.idx, dummy.matrix);
+          }
+          archive.instanceMatrix.needsUpdate = true;
+        }
+
+        // ---- the hero envelope (OBJ 0001) in the last shot: v19, it falls just ahead of the lens, big (≥ 35 % of the frame),
+        // drifting a little round the centre; each beat pushes it a touch deeper (a soft swell); end-over-end flips on the
+        // shot's first four beats; then it levels out and slides into drawer 0001's slot
+        function heroRel(lt) {
+          let J = 0;
+          for (const b of HB) { const d = lt - b; if (d >= 0) J = Math.max(J, (1 - Math.exp(-d / 0.06)) * Math.exp(-d / 0.3)); }
+          return { f: 1.5 + 0.22 * J, r: 0.16 * Math.sin(lt * 1.7 + 0.4), u: 0.1 * Math.sin(lt * 1.3 + 1.1) };
+        }
+        const hq = new THREE.Quaternion(), hq2 = new THREE.Quaternion(), hM = new THREE.Matrix4(), hE = new THREE.Euler(), hS = new THREE.Vector3(), hD = new THREE.Vector3();
+        const AX = new THREE.Vector3(1, 0, 0), AY = new THREE.Vector3(0, 1, 0), AZ = new THREE.Vector3(0, 0, 1);
+        let heroBend = 1;
+        function heroPose(lt, P, fwd, right, upc, arrive) {
+          const k = 1 - arrive;
+          // orientation: face up (toward the falling lens), a slow turn in the frame plane, a little wobble, the beat flips
+          hq.setFromEuler(hE.set(-Math.PI / 2, 0, 0));
+          let flip = 0;
+          HB.forEach((b, i) => { const d = lt - b; if (d >= 0 && i < 4) flip += smooth(d / 0.34); });
+          hq.premultiply(hq2.setFromAxisAngle(AZ, k * 0.14 * Math.sin(lt * 4.1)));
+          hq.premultiply(hq2.setFromAxisAngle(AX, Math.PI * flip));
+          hq.premultiply(hq2.setFromAxisAngle(AY, k * (0.25 + 0.5 * Math.sin(lt * 0.9))));
+          const s0 = lerp(1.1, 0.625, smooth(arrive)); // filed at the macro shot's size (it fits the slot)
+          heroBend = k;
+          hM.compose(P, hq, hS.set(s0, s0, s0));
+          // stretch along the velocity past the lens
+          const a = heroRel(lt + 0.01), b = heroRel(lt - 0.01);
+          hD.set(0, 0, 0).addScaledVector(fwd, (a.f - b.f) / 0.02).addScaledVector(right, (a.r - b.r) / 0.02).addScaledVector(upc, (a.u - b.u) / 0.02);
+          const sp = hD.length(), ks = Math.min(1.5, sp * 0.045) * k;
+          if (sp > 1e-3) hD.divideScalar(sp);
+          const e = hM.elements;
+          for (let c = 0; c < 3; c++) { const dp = hD.x * e[c * 4] + hD.y * e[c * 4 + 1] + hD.z * e[c * 4 + 2]; e[c * 4] += ks * dp * hD.x; e[c * 4 + 1] += ks * dp * hD.y; e[c * 4 + 2] += ks * dp * hD.z; }
+          hM.toArray(cm, 0);
+        }
+        // the other copies fall down the well with it, slower than the lens, so they stream up past it (cards 1..n)
+        function wellCards(lt, y, vis) {
+          const n = 150;
+          for (let i = 1; i <= n; i++) {
+            const a = CR[i], c = CX[i], fl = c.fa * Math.sin(lt * c.ff + c.fp);
+            const rr = 1.75 + a[1] * 1.85, th = a[0] * TAU + (0.35 + 0.5 * a[5]) * lt;
+            const dep = 0.6 + wrap(a[3] * 32 - (5 + 9 * a[2]) * lt, 32);
+            card(i, rr * Math.cos(th), y - dep, rr * Math.sin(th), -Math.PI / 2 + 0.45 * Math.sin(lt * 2.1 + a[4] * 7) + fl, -th,
+              0.3 * (a[5] - 0.5) + 0.4 * fl, 0.42 * c.sz * vis, "YXZ");
+          }
+          return n + 1;
+        }
+
+        // ---- the shots: one bold camera idea per bar --------------------------------------------------------
+        const V = (x, y, z) => new THREE.Vector3(x, y, z);
+        const SHOTS = [
+          // 1 — 48.491: rushing down the corridor on the drop; it catches 04's push at full speed (~5x) and brakes into the run
+          (lt) => {
+            const z = 4 - (26 * lt + 5 * lt * lt + 118 * 0.26 * (1 - Math.exp(-lt / 0.26)));
+            corridorCards(lt, 520, 56);
+            return { pos: V(0, 3.0, z), at: V(0, 3.6, z - 30), up: V(0, 1, 0), roll: 0.06 * Math.sin(lt * 1.6 + 0.4) - 0.07 * Math.exp(-lt / 0.2),
+              fov: 72, fog: [8, 120] };
+          },
+          // 2 — 50.338: straight down the shaft as the cards spiral in
+          (lt) => {
+            shaftCards(lt, 620, 0);
+            const ph = 0.5 + 0.42 * lt;
+            return { pos: V(0, 3.5 - 3.2 * lt, 0), at: V(0, -60, 0), up: V(Math.cos(ph), 0, Math.sin(ph)), roll: 0, fov: 80, fog: [6, 58] };
+          },
+          // 3 — 52.181: tracking along the wall, a column of lamps igniting on every beat
+          (lt) => {
+            const x = s3Cam(lt).x;
+            for (let i = 0; i < 220; i++) {
+              const a = CR[i], c = CX[i], fl = c.fa * Math.sin(lt * c.ff + c.fp);
+              card(i, WX0 + wrap(a[3] * 120 + 15 * lt, 120), 2.45 + (a[1] - 0.5) * 0.7, 3.2 + (a[2] - 0.5) * 1.6,
+                0.5 * Math.sin(lt * 2.2 + a[4] * 8) + fl, 0.6 * Math.sin(lt * 1.3 + a[5] * 8), (a[4] - 0.5) * 0.5 + 0.5 * fl, 0.42 * c.sz);
+            }
+            cards.count = 220;
+            return { pos: V(x, 4.2, 6.5), at: V(x + S3AHEAD, 5.4, 0), up: V(0, 1, 0), roll: 0.04, fov: 60, fog: [6, 46] };
+          },
+          // 4 — 54.016: the harvest. The camera flies low down the river of envelopes, drawers slamming shut on every kick,
+          // then rises over the lit city.
+          (lt) => {
+            cards.count = 0;
+            const rise = smooth((lt - 0.7) / 1.1);
+            return { pos: V(0.55 * Math.sin(lt * 3.1) * (1 - rise), lerp(2.5, 30, rise), 14 - 24 * lt - 12 * rise),
+              at: V(0, lerp(0.9, 0, rise), 14 - 24 * lt - 12 * rise - lerp(28, 40, rise)), up: V(0, 1, 0),
+              roll: 0.07 * Math.sin(lt * 4.2) * (1 - rise), fov: lerp(74, 56, rise), fog: [lerp(10, 22, rise), lerp(80, 115, rise)] };
+          },
+          // 5 — 55.847: macro — one card slides into slot 0001
+          (lt) => {
+            const k1 = 0.46, k2 = 0.77, k3 = beatOf(4, 2) - CUTS[4];
+            let p, r;
+            if (lt < k1) { const e = out3(lt / k1); p = [lerp(1.9, 0.28, e), lerp(-0.95, 0.34, e), lerp(2.0, 1.3, e)]; r = [lerp(-0.25, -0.38, e), lerp(-0.8, -0.14, e), lerp(0.45, 0.07, e)]; }
+            else if (lt < k2) { const e = smooth((lt - k1) / (k2 - k1)); p = [lerp(0.28, 0, e), lerp(0.34, 0, e), lerp(1.3, 0.62, e)]; r = [lerp(-0.38, -Math.PI / 2, e), lerp(-0.14, 0, e), lerp(0.07, 0, e)]; }
+            else { const e = in2((lt - k2) / (k3 - k2)); p = [0, 0, lerp(0.62, -0.95, e)]; r = [-Math.PI / 2, 0, 0]; }
+            card(0, p[0], p[1], p[2], r[0], r[1], r[2], 0.625);
+            cards.count = 1;
+            const e = smooth(lt / (CUTS[5] - CUTS[4]));
+            // v19: once the card is going in, the camera pulls back off the wall and trucks right (speed by the drums),
+            // so the lamps' ripple from 0001 lights a wall that keeps moving
+            const pb = pullAt(lt), at = V(0.02 + 0.22 * pb, -0.06 + 0.05 * pb, 0);
+            const pos = V(lerp(0.62, 0.3, e), lerp(1.0, 0.72, e), lerp(3.0, 2.3, e));
+            pos.addScaledVector(pos.clone().sub(V(0.02, -0.06, 0)).normalize(), pb).add(V(0.3 * pb, 0.08 * pb, 0));
+            return { pos, at, up: V(0, 1, 0), roll: 0, fov: 38, fog: [3.5 + pb, 13 + pb] };
+          },
+          // 6 — 57.684–61.346: v19, down the well of drawers with the letter just below the lens, then the camera levels out
+          // in front of drawer 0001, the letter slides into its slot and the drawer shuts on the 60.894 kick.
+          (lt) => {
+            const q = smooth((lt - 1.6) / 1.3), kx = smooth((lt - 1.6) / 1.5);
+            const dx = 1 - clamp01((lt - 1.6) / (TT - 1.6)), dist = 1.55 + 1.65 * dx * (0.6 + 0.4 * dx); // from 0001's closed face; still pushing at the cut
+            const y = camY(lt);
+            const pos = V(lerp(0.32 * Math.sin(lt * 1.3), 0.48, kx), y + 0.12 * kx, lerp(0.28 * Math.sin(lt * 1.1 + 2), -WR + dist, kx));
+            const lamp = V(0.6, W1Y + 0.3, -WR); // 0001's lamp, closed
+            const fwd = V(0, -1, 0).lerp(lamp.clone().sub(pos).normalize(), q).normalize();
+            const up = V(0, q, q - 1).normalize();
+            const right = fwd.clone().cross(up).normalize(), upc = right.clone().cross(fwd);
+            const arrive = smooth((lt - 1.7) / 0.9), slip = smooth((lt - 2.45) / 0.47);
+            const face = -WR + WOPEN * (1 - shut(lt));
+            const filed = V(0, W1Y, lerp(face + 0.9, face - 1.3, slip));
+            const h = heroRel(lt);
+            const carried = pos.clone().addScaledVector(fwd, h.f).addScaledVector(right, h.r).addScaledVector(upc, h.u).lerp(filed, arrive);
+            heroPose(lt, carried, fwd, right, upc, arrive);
+            cards.count = wellCards(lt, y, 1 - smooth((lt - 2.0) / 0.8));
+            return { pos, at: pos.clone().add(fwd), up, roll: 1.3 * Math.pow(1 - clamp01(lt / WLAND), 2), fov: lerp(62, 46, q), fog: [5, 34] };
+          },
+        ];
+
+        // v19: drawer 0001 stands out of the well's wall until it shuts on the kick (its lamp ignites at LAMP1, from the layout)
+        function updateWell(s, lt) {
+          if (s !== 5) return;
+          dummy.position.set(0, W1Y, W1Z + WOPEN * (1 - shut(lt))); dummy.rotation.set(0, 0, 0); dummy.scale.set(1, 1, 1); dummy.updateMatrix();
+          archive.setMatrixAt(0, dummy.matrix); archive.instanceMatrix.needsUpdate = true;
+        }
+
+        // ---- the strobe word and the drawer tag ------------------------------------------------------------
+        const strobeEl = document.getElementById("f05-strobe");
+        const word = document.getElementById("f05-word");
+        const frc = document.getElementById("f05-frc"), frf = document.getElementById("f05-frf");
+        const tag = document.getElementById("f05-tag");
+        // the flash showing at t: its index in its burst and its age, or null
+        const FHOLD = (f) => f >= CUTS[5] ? 0.3 : 0.42; // shorter in the singularity, where the envelope circles under it
+        function strobe(t) {
+          let j = -1; while (j + 1 < FLASHES.length && t >= FLASHES[j + 1]) j++;
+          if (j < 0) return null;
+          const f = FLASHES[j], end = Math.min(j + 1 < FLASHES.length ? FLASHES[j + 1] : 1e9, f + FHOLD(f), DUR - 0.5); // gone before the match cut
+          const a = t < end ? 1 : 1 - smooth((t - end) / 0.16);
+          return a > 0.003 ? { j, age: t - f, a } : null;
+        }
+        const tagPoint = V(-0.62, 0.27, 0.001), tagWell = V(0, 0, 0);
+        // which half each flash sits in: alternating, except in the well, where it takes the half (top/bottom) the falling
+        // envelope's centre sits in least over the flash's hold (projected through the shot's own camera; early samples weigh most)
+        const fCam = new THREE.PerspectiveCamera(70, 1920 / 1080, 0.05, 400), fP = new THREE.Vector3();
+        const heroNdc = (lt) => {
+          const sh = SHOTS[5](lt);
+          fCam.position.copy(sh.pos); fCam.up.copy(sh.up); fCam.lookAt(sh.at); if (sh.roll) fCam.rotateZ(sh.roll);
+          fCam.fov = sh.fov; fCam.updateProjectionMatrix(); fCam.updateMatrixWorld();
+          return fP.set(cm[12], cm[13], cm[14]).project(fCam);
+        };
+        const FSIDE = FLASHES.map((f, j) => {
+          if (f < CUTS[5]) return j % 2 === 1;
+          const hold = Math.min(j + 1 < FLASHES.length ? FLASHES[j + 1] - f : 1, FHOLD(f)) + 0.16;
+          let up = 0, dn = 0;
+          for (let k = 0; k <= 12; k++) {
+            const p = heroNdc(f - CUTS[5] + (k / 12) * hold), w = 1.5 - k / 12;
+            if (p.y > 0.05) up += w; if (p.y < -0.05) dn += w;
+          }
+          return up <= dn;
+        });
+        const proj = new THREE.Vector3();
+
+        // ---- BYTES HELD: continues from 04's 256-byte lock and reaches locked 08's opening 1,000 bytes ----
+        const ODIG = 13, OV0 = 256, OV1 = 1000;
+        const OVALS = BEATS.map((_, k) => Math.round(OV0 * Math.pow(OV1 / OV0, k / (BEATS.length - 1))));
+        const odo = document.getElementById("f05-odo"), ocols = [], ocells = [];
+        for (let d = 0; d < ODIG; d++) {
+          const cell = document.createElement("div"); cell.className = "f05-cell" + (d > 0 && (ODIG - d) % 3 === 0 ? " f05-gap" : "");
+          const col = document.createElement("div"); col.className = "f05-col hr-glow";
+          for (const n of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) { const x = document.createElement("div"); x.textContent = n; col.appendChild(x); }
+          cell.appendChild(col); document.getElementById("f05-odwin").appendChild(cell); ocols.push(col); ocells.push(cell);
+        }
+        // the count at frame time t: 04's value held until the first beat lands, then an eased roll to each beat's value
+        const bytesAt = (t) => {
+          let k = 0; while (k + 1 < BEATS.length && t >= BEATS[k + 1]) k++;
+          return lerp(k ? OVALS[k - 1] : OV0, OVALS[k], out3((t - BEATS[k]) / 0.16));
+        };
+        let oDim = -1;
+        function drawOdo(t, T) {
+          // whips in from the right on the drop, rides as chrome, whips out into 06
+          const xin = 760 * Math.pow(1 - clamp01(t / 0.46), 2), xout = 760 * in2((t - (DUR - 0.46)) / 0.46); // v17: glides, one beat each way
+          const kick = HR.hit("kick", T, 0.13);
+          odo.style.opacity = 1;
+          odo.style.transform = `translateX(${(xin + xout).toFixed(1)}px) scale(${(1 + 0.02 * kick).toFixed(4)})`;
+          const v = bytesAt(t);
+          for (let d = 0; d < ODIG; d++) {
+            const place = Math.pow(10, ODIG - 1 - d);
+            const pos = place === 1 ? v % 10 : Math.floor(v / place) % 10 + clamp01(v % place - (place - 1));
+            ocols[d].style.transform = `translateY(${(-pos * 76).toFixed(1)}px)`;
+            HR.glow(ocols[d], T, 0.3, 0.5);
+          }
+          const n = String(Math.floor(v)).length;
+          if (n !== oDim) { ocells.forEach((c, d) => { c.style.opacity = d < ODIG - n ? "0.3" : "1"; }); oDim = n; }
+        }
+
+        // ---- per-frame draw, from the timeline's own time -----------------------------------------------------
+        const clock = { t: 0 };
+        const tl = gsap.timeline({ paused: true });
+        tl.to(clock, { t: DUR, duration: DUR, ease: "none" }, 0);
+
+        // ---- WOW: kick punches and shakes on the downbeats (HITS in finish.html) and on the in-between beats of the two big shots ----
+        const fx = document.getElementById("f05-fx");
+        const HITS = [50.338, 52.181, 54.016, 55.847, 57.684, 59.512].map(L);
+        HITS.forEach((t, k) => {
+          WOW.punch(tl, canvas, t, { s: 1.055, dur: 0.38 });
+          WOW.shake(tl, canvas, t, { amp: 8, dur: 0.3, seed: 20 + k });
+          if (t < CUTS[4]) WOW.shock(tl, fx, { x: 960, y: 540, t, r: 1300, n: 1, w: 5, color: k % 2 ? "cream" : "fire", dur: 0.5 }); // v19: no flat rings over the macro and the well
+          WOW.flash(tl, fx, t, { a: 0.1, dur: 0.12 });
+        });
+        BEATS.forEach((b, k) => {
+          if (b < 0.01 || HITS.some((h) => Math.abs(h - b) < 0.01) || !((b >= CUTS[3] && b < CUTS[4]) || b >= CUTS[5])) return;
+          const kb = L(WOW.on(T0 + b, { kinds: ["kick"] }));
+          WOW.punch(tl, canvas, kb, { s: 1.03, dur: 0.3 });
+          WOW.shake(tl, canvas, kb, { amp: 4, dur: 0.3, seed: 40 + k });
+        });
+
+        // v17 switch in from 18: the kit's pushIn over one beat (the camera's dive through 18's envelope carries on in 3D)
+        WOW.transition(tl, document.getElementById("el-05-harvest"), { in: "pushIn", dur: 0.46 });
+
+        // motion blur, cheaply: every card is stretched along its velocity relative to the lens and drags a faint light trail
+        const DT = 1 / 60, SHUTTER = 0.012, TRAIL = 0.05;
+        const prevP = new Float32Array(MAXC * 3), camVel = new THREE.Vector3();
+        function sampleCards(n) { for (let i = 0; i < n; i++) { prevP[i * 3] = cm[i * 16 + 12]; prevP[i * 3 + 1] = cm[i * 16 + 13]; prevP[i * 3 + 2] = cm[i * 16 + 14]; } }
+        function blurCards(n, dt, skip0) {
+          const cp = camVel, g = gBuf.array;
+          let tn = 0;
+          for (let i = skip0 ? 1 : 0; i < n; i++) { // the hero envelope (shot 6) stretches and trails itself
+            const o = i * 16;
+            // relative velocity (world units / s); a wrap-around jump is not motion
+            let vx = (cm[o + 12] - prevP[i * 3]) / dt, vy = (cm[o + 13] - prevP[i * 3 + 1]) / dt, vz = (cm[o + 14] - prevP[i * 3 + 2]) / dt;
+            if (vx * vx + vy * vy + vz * vz > 200 * 200) continue;
+            vx -= cp.x; vy -= cp.y; vz -= cp.z;
+            const sp = Math.hypot(vx, vy, vz);
+            if (sp < 4) continue;
+            const ux = vx / sp, uy = vy / sp, uz = vz / sp;
+            const sc = Math.hypot(cm[o], cm[o + 1], cm[o + 2]); // the card's scale
+            if (sc < 0.01) continue;
+            const k = Math.min(1.9, 1 + (sp * SHUTTER) / (1.6 * sc)) - 1;
+            for (let c = 0; c < 3; c++) { // stretch each basis vector along the velocity
+              const e = o + c * 4, dp = ux * cm[e] + uy * cm[e + 1] + uz * cm[e + 2];
+              cm[e] += k * dp * ux; cm[e + 1] += k * dp * uy; cm[e + 2] += k * dp * uz;
+            }
+            if (tn < MAXTR && sp > 8) {
+              const x = cm[o + 12], y = cm[o + 13], z = cm[o + 14], L = Math.min(sp * TRAIL, 3.2);
+              g.set([x, y, z, x - ux * L, y - uy * L, z - uz * L, 0, 0, 0, 4, 0.8 * sc, ALWAYS, 1, 0.11], (glowStatic + tn) * GS);
+              tn++;
+            }
+          }
+          return tn;
+        }
+        let glowStatic = 0;
+
+        function render() {
+          const t = Math.min(DUR - 1e-4, Math.max(0, tl.time()));
+          const T = t + T0;
+          const s = Math.min(5, shotAt(t)), lt = t - CUTS[s];
+          useLayout(s);
+          glowStatic = LAYOUTS[s].gn;
+          // sample the shot one frame away (back, or ahead on a shot's first frame) for velocities
+          const dt = lt < DT ? -DT : DT;
+          const ref = SHOTS[s](lt - dt); sampleCards(cards.count);
+          const shot = SHOTS[s](lt);
+          camVel.copy(shot.pos).sub(ref.pos).divideScalar(dt);
+          camera.position.copy(shot.pos);
+          camera.up.copy(shot.up);
+          camera.lookAt(shot.at);
+          if (shot.roll) camera.rotateZ(shot.roll);
+          camera.fov = shot.fov;
+          camera.clearViewOffset();
+          if (s === 5) {
+            const end = smooth((lt - 1.6) / (TT - 1.6));
+            // Match 06's first chip core, after that composition's opening camera transform.
+            camera.setViewOffset(1920, 1080, -234 * end, -168 * end, 1920, 1080);
+          }
+          camera.updateProjectionMatrix();
+          camera.updateMatrixWorld();
+          const trails = blurCards(cards.count, dt, s === 5);
+          uniforms.uHeroBend.value = s === 4 ? 0 : s === 5 ? heroBend : 1;
+          if (s === 3) updateHarvest(lt); else river.visible = false;
+          cards.instanceMatrix.needsUpdate = true;
+          gGeo.instanceCount = glowStatic + trails;
+          gBuf.needsUpdate = true;
+
+          const hit = strobe(t);
+          uniforms.uTime.value = t;
+          uniforms.uFogNear.value = shot.fog[0];
+          uniforms.uFogFar.value = shot.fog[1];
+          uniforms.uPulse.value = HR.hit("kick", T, 0.13);
+          uniforms.uHat.value = HR.hit("hat", T, 0.07);
+          uniforms.uDim.value = hit ? 1 - 0.38 * hit.a : 1;
+          glowUniforms.uHaze.value = 0.75 + 0.6 * HR.band("bass", T);
+          glowUniforms.uVel.value.copy(camVel);
+          glowUniforms.uStreak.value = 1 / 120 + (s === 0 ? 0.02 * Math.exp(-lt / 0.22) : 0);
+
+
+          // "harvest": a tiny scale slam on each flash, a 1-frame fire/cream fringe, then crisp and held
+          strobeEl.style.opacity = hit ? hit.a.toFixed(3) : 0;
+          if (hit) {
+            const top = FSIDE[hit.j];
+            strobeEl.style.top = top ? "4.5cqw" : "auto"; strobeEl.style.bottom = top ? "auto" : "4.5cqw";
+            const slam = hit.age < 0.07 ? 0.08 * Math.pow(1 - hit.age / 0.07, 2) : 0;
+            const nudge = HR.hit("snare", T, 0.08);
+            strobeEl.style.transform = `translateX(${nudge.toFixed(2)}px) scale(${(1 + slam).toFixed(4)})`;
+            const fr = hit.age < DT ? 1 : 0;
+            frc.style.opacity = fr; frf.style.opacity = fr;
+            frc.style.transform = "translate(-3px, -1px)"; frf.style.transform = "translate(3px, 1px)";
+            HR.glow(word, T, 0.12, 0.22);
+          }
+
+          const tagA = hit ? 1 - hit.a : 1;
+          // the tag rides drawer 0001's face: the macro wall's, then (v19) the well's once the camera faces it
+          const tagK = s === 4 ? tagA : s === 5 ? tagA * smooth((lt - 2.4) / 0.25) : 0;
+          if (tagK > 0.01) {
+            const tp = s === 4 ? tagPoint : tagWell.set(-0.62, W1Y + 0.27, -WR + WOPEN * (1 - shut(lt)) + 0.001);
+            proj.copy(tp).project(camera);
+            const dist = camera.position.distanceTo(tp);
+            const ppu = 1080 / (2 * dist * Math.tan((camera.fov * Math.PI) / 360));
+            const fs = 0.085 * ppu;
+            tag.style.opacity = tagK.toFixed(3);
+            tag.style.fontSize = fs.toFixed(2) + "px";
+            tag.style.transform = `translate(${((proj.x + 1) / 2 * 1920).toFixed(1)}px, ${((1 - proj.y) / 2 * 1080 - fs).toFixed(1)}px)`;
+          } else tag.style.opacity = 0;
+          drawOdo(t, T);
+
+          updateWell(s, lt);
+          WOW.draw(tl, T0);
+          renderer.render(scene, camera);
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        tl.seek(0);
+        window.__timelines["05-harvest"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

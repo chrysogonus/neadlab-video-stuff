@@ -1,0 +1,379 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 7 — hook (45.487–48.491), v10. The hook is pressed into the archive's record sheet: "harvest now," as
+         textured ink impressions on the orange form, rubber stamps on the bare kicks, then a 0 ms flip to the dark
+         register on "decrypt" (the title card's cream + fire), and velocity into the drop. SYSTEM.md v4 reference.
+         v13 (SYSTEM.md V7), hook 1 of 3, the clean one: the whole hook on black. The record sheet is printed in faint cream,
+         "harvest now," is pressed in cream, the stamps land in fire (with motion blur on the slam), a light gathers
+         before each impression instead of a shadow. No orange stock, no register flip.
+         v17 (V17.md): one continuous push-in while the line builds (no rolls, no hard camera set on "decrypt"); "decrypt later"
+         waits as cipher glyphs and resolves on each word; the ghost record folds into the sealed envelope, the seal lands on
+         "later", and the camera dives through it (pullOut in from 17, pushIn out into 05). No ink dots.
+         v20 (V20.md #11): hold → hit. The cipher is captured one block per hit (hat 45.946, hat 46.432, kick 47.133): the
+         block rolls, then holds still in cream until its word resolves it; a deadpan counter under it. The ARCHIVE stamp
+         slams on the 46.195 snare (motion blur on the slam, ink flecks, a sheet recoil); the record folds on the 46.662
+         downbeat, the flap closes and COPY lands on the 47.133 kick. The camera steps on each hit (eased 0.4 s). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --cream-muted: #888880;
+          background: var(--ink); color: var(--cream);
+        }
+
+        /* ---- background plane: the record sheet printed on the orange stock ---- */
+        #f18-paper { position: absolute; inset: -60px; background-size: 512px 512px; }
+        #f18-light { position: absolute; left: -240px; top: 40px; width: 1700px; height: 1000px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232,93,38,0.1), rgba(232,93,38,0.03) 55%, rgba(232,93,38,0) 100%); }
+        #f18-form { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+
+        /* ---- midground plane: rubber stamps that land on the bare kicks ---- */
+        .f18-stamp { position: absolute; opacity: 0; color: var(--fire); }
+        .f18-stamp svg { display: block; width: 100%; height: 100%; overflow: visible; }
+        #f18-round { left: 1420px; top: 600px; width: 360px; height: 360px; }
+        #f18-copy { left: 150px; top: 790px; width: 400px; height: 132px; }
+
+        /* ---- type plane: the hook ---- */
+        #f18-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 18px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #F27A4C; /* v17: lifted fire, ≥ 4.5:1 over the light pool */ white-space: nowrap; }
+        #f18-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
+          vertical-align: middle; margin-right: 16px; }
+        #f18-type { position: absolute; left: 0; right: 0; top: 112px; text-align: center; font-family: "Barlow"; font-weight: 900;
+          font-size: 12.2cqw; line-height: 0.9; letter-spacing: -0.045em; }
+        /* rows carry padding so the ink mask covers the slam's overscale and the spatter */
+        .f18-row { display: block; white-space: nowrap; padding: 0.22em 0.4em; margin: -0.22em -0.4em; }
+        #f18-r1 { color: var(--cream);
+          -webkit-mask-size: 420px 420px; mask-size: 420px 420px; }
+        #f18-r2 { color: var(--fire); margin-top: -0.18em; }
+        .f18-w { display: inline-block; position: relative; margin-right: 0.16em; isolation: isolate; }
+        .f18-shadow { position: absolute; left: -12%; right: -12%; top: -18%; bottom: -24%; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(240,236,229,0.14), rgba(240,236,229,0.05) 60%, rgba(240,236,229,0) 100%);
+          opacity: 0; }
+        .f18-c { display: inline-block; position: relative; }
+        .f18-c > b { font-weight: inherit; }
+        .f18-x { position: absolute; left: 50%; top: 0.3em; transform: translateX(-50%); font-family: "IBM Plex Mono";
+          font-weight: 600; font-size: 0.74em; letter-spacing: 0; -webkit-text-stroke: 0.03em currentColor; opacity: 0; }
+        /* v20: the capture counter under the cipher */
+        #f18-held { position: absolute; left: 0; right: 0; top: 632px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 22px; letter-spacing: 0.16em; color: var(--cream-muted); white-space: nowrap; }
+        #f18-held b { color: var(--cream); font-weight: 600; }
+        /* the sealed envelope the record folds into, and its wax seal */
+        #f18-env { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+        #f18-sealpos { position: absolute; left: 960px; top: 780px; width: 0; height: 0; }
+        #f18-seal { position: absolute; left: -105px; top: -105px; width: 210px; height: 210px; opacity: 0; overflow: visible; }
+
+        /* ---- near plane: out-of-focus hex passing in front ---- */
+        .f18-bokeh { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--ink);
+          opacity: 0.03; filter: blur(16px); white-space: nowrap; }
+      </style>
+
+      <div data-hf-id="hf-2e7j" id="root" data-composition-id="18-hook" data-width="1920" data-height="1080" data-duration="3.004">
+        <div data-hf-id="hf-2fjf" class="hr-layer" id="f18-bg" data-depth="0.6" data-layout-ignore>
+          <div data-hf-id="hf-mfyj" id="f18-paper"></div>
+          <div data-hf-id="hf-z0mt" id="f18-light"></div>
+          <svg data-hf-id="hf-1h8k" id="f18-form" viewBox="0 0 1920 1080"></svg>
+          <svg data-hf-id="hf-f18e" id="f18-env" viewBox="0 0 1920 1080"></svg>
+        </div>
+        <div data-hf-id="hf-oubd" class="hr-layer" id="f18-mid" data-depth="0.85" data-layout-ignore>
+          <div data-hf-id="hf-f18p" id="f18-sealpos"><svg data-hf-id="hf-f18s" id="f18-seal" class="hr-glowbox" viewBox="-64 -64 128 128"></svg></div>
+          <div data-hf-id="hf-rd9l" class="f18-stamp" id="f18-round" data-hf-motion-blur='{"fps": 60}'><svg data-hf-id="hf-g8al" viewBox="-180 -180 360 360"></svg></div>
+          <div data-hf-id="hf-e1uk" class="f18-stamp" id="f18-copy" data-hf-motion-blur='{"fps": 60}'><svg data-hf-id="hf-0gdb" viewBox="0 0 400 132"></svg></div>
+        </div>
+        <div data-hf-id="hf-gp3n" class="hr-layer" id="f18-fg" data-depth="1">
+          <div data-hf-id="hf-gd06" id="f18-kicker">THE ARCHIVE RECORD</div>
+          <div data-hf-id="hf-j7vz" id="f18-type">
+            <span data-hf-id="hf-mtgq" class="f18-row" id="f18-r1"></span>
+            <span data-hf-id="hf-gnqx" class="f18-row" id="f18-r2"></span>
+          </div>
+          <div id="f18-held"></div>
+        </div>
+        <div data-hf-id="hf-2vt4" class="hr-layer" id="f18-near" data-depth="1.7" data-layout-ignore></div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script>
+        (() => {
+          const T0 = 45.487, DUR = 3.004;
+          const L = (T) => +(T - T0).toFixed(3);
+          // the sung words (lyrics.json L9) and the bare kicks between them
+          const W = { harvest: L(45.487), now: L(46.375), decrypt: L(47.56), later: L(48.011) };
+          // v20: the hits (env.js): hats capture cipher blocks, the snare stamps ARCHIVE, the downbeat folds, the kick stamps COPY
+          const HAT1 = L(45.946), ROUND = L(46.195), HAT2 = L(46.432), DOWN = L(46.662), COPY = L(47.133);
+          const LOCKS = [HAT1, HAT2, COPY];   // block i of the cipher is captured on LOCKS[i]
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const NS = "http://www.w3.org/2000/svg";
+          const S = (parent, tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+
+          // ---- baked textures ----------------------------------------------------------------------------------
+          // orange stock: seeded tone noise and short fibres
+          (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 512;
+            const x = c.getContext("2d"), r = HR.rng(1801);
+            x.fillStyle = "#E85D26"; x.fillRect(0, 0, 512, 512);
+            const img = x.getImageData(0, 0, 512, 512);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 12; img.data[i] += v; img.data[i + 1] += v * 0.8; img.data[i + 2] += v * 0.6; }
+            x.putImageData(img, 0, 0);
+            x.lineWidth = 0.7;
+            for (let k = 0; k < 160; k++) { const px = r() * 512, py = r() * 512, a = r() * Math.PI, l = 8 + r() * 22;
+              x.strokeStyle = r() < 0.5 ? "rgba(120,40,10,0.10)" : "rgba(255,220,190,0.10)";
+              x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.35); x.stroke(); }
+            // v13: no orange stock; the hook sits on the black ground
+          })();
+          // ink: an alpha mask with pinholes and starved streaks, so the impression reads as pressed, not printed
+          const inkMask = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 420;
+            const x = c.getContext("2d"), r = HR.rng(1802);
+            x.fillStyle = "#000"; x.fillRect(0, 0, 420, 420);
+            x.globalCompositeOperation = "destination-out";
+            for (let k = 0; k < 700; k++) { x.fillStyle = `rgba(0,0,0,${(0.3 + r() * 0.45).toFixed(2)})`;
+              x.beginPath(); x.arc(r() * 420, r() * 420, 0.4 + r() * r() * 1.5, 0, Math.PI * 2); x.fill(); }
+            for (let k = 0; k < 26; k++) { x.fillStyle = `rgba(0,0,0,${(0.05 + r() * 0.1).toFixed(2)})`;
+              x.fillRect(r() * 420, r() * 420, 30 + r() * 140, 1 + r() * 3); }
+            return `url(${c.toDataURL("image/png")})`;
+          })();
+          $("f18-r1").style.webkitMaskImage = inkMask;
+          $("f18-r1").style.maskImage = inkMask;
+
+          // ---- the record sheet (ink at ~11 %, cream after the flip) -------------------------------------------
+          const form = $("f18-form");
+          const ink = S(form, "g", { fill: "none", stroke: "#F0ECE5", "stroke-width": 2, opacity: 0.1, id: "f18-forminner" });
+          for (let y = 40; y < 1080; y += 64) S(ink, "circle", { cx: 46, cy: y, r: 9 });
+          S(ink, "path", { d: "M86 0 V1080 M86 206 H1888 M86 952 H1888 M1440 206 V952" });
+          for (let y = 270; y < 952; y += 64) S(ink, "path", { d: `M120 ${y} H1408`, opacity: 0.35, "stroke-width": 1 });
+          const mono = (x, y, size, text, o = {}) => S(ink, "text", Object.assign({ x, y, fill: "#F0ECE5", stroke: "none",
+            "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": size, "letter-spacing": 2.4 }, o), text);
+          mono(118, 190, 15, "RETENTION: INDEFINITE · REASON: JUST IN CASE");
+          mono(1888, 190, 15, "CONSENT: IMPLIED", { "text-anchor": "end" });
+          const fields = [["SENDER", "A."], ["CAPTURED", "TUE 09 MAR 2021"], ["KEY EXCHANGE", "X25519"], ["SIZE", "2,048 B"],
+            ["STATUS", "SEALED · HELD"], ["RETENTION", "INDEFINITE"], ["READ AFTER", "Q-DAY"]];
+          fields.forEach(([k, v], i) => {
+            const y = 262 + i * 96;
+            mono(1472, y, 13, k);
+            mono(1472, y + 40, 25, v, { "font-weight": 600, "letter-spacing": 1.6 });
+            S(ink, "path", { d: `M1472 ${y + 58} H1868`, "stroke-width": 1 });
+          });
+          mono(118, 1000, 15, "COPIED 09 MAR 2021 14:02:11 UTC · THE SENDER WAS NOT NOTIFIED");
+          const bc = HR.rng(1803);
+          for (let x = 1560; x < 1880;) { const w = 2 + ((bc() * 4) | 0); S(ink, "rect", { x, y: 978, width: w, height: 44, fill: "#F0ECE5", stroke: "none" }); x += w + 2 + ((bc() * 5) | 0); }
+
+          // ---- stamps -------------------------------------------------------------------------------------------
+          (() => {
+            const g = $("f18-round").querySelector("svg");
+            S(g, "defs", {}).innerHTML = '<path id="f18-arc" d="M -128 0 A 128 128 0 1 1 128 0 A 128 128 0 1 1 -128 0" />';
+            const s = S(g, "g", { fill: "none", stroke: "currentColor", transform: "rotate(-14)" });
+            S(s, "circle", { r: 168, "stroke-width": 9 });
+            S(s, "circle", { r: 154, "stroke-width": 2.5 });
+            S(s, "circle", { r: 104, "stroke-width": 3 });
+            const t = S(s, "text", { fill: "currentColor", stroke: "none", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 25 });
+            S(t, "textPath", { href: "#f18-arc", textLength: 790, lengthAdjust: "spacing" }, "RETAINED · OBJ 0001 · INDEFINITE · HELD · ");
+            S(s, "text", { y: -18, fill: "currentColor", stroke: "none", "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 20, "letter-spacing": 4 }, "ARCHIVE");
+            S(s, "text", { y: 40, fill: "currentColor", stroke: "none", "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 68, "letter-spacing": -2 }, "0001");
+            S(s, "path", { d: "M-70 -6 H70", "stroke-width": 2.5 });
+          })();
+          (() => {
+            const g = $("f18-copy").querySelector("svg");
+            const s = S(g, "g", { fill: "none", stroke: "currentColor", transform: "rotate(5 200 66)" });
+            S(s, "rect", { x: 6, y: 6, width: 388, height: 120, rx: 10, "stroke-width": 7 });
+            S(s, "rect", { x: 18, y: 18, width: 364, height: 96, rx: 5, "stroke-width": 2 });
+            S(s, "text", { x: 200, y: 86, fill: "currentColor", stroke: "none", "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 64, "letter-spacing": 4 }, "COPY");
+            S(s, "text", { x: 200, y: 108, fill: "currentColor", stroke: "none", "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 4 }, "HELD · NOT READ");
+          })();
+          for (const id of ["f18-round", "f18-copy"]) { $(id).style.webkitMaskImage = inkMask; $(id).style.maskImage = inkMask; }
+
+          // near plane
+          const nr = HR.rng(1805);
+          for (let i = 0; i < 0; i++) {
+            const b = el("div", "f18-bokeh", $("f18-near"), HR.cipher(2 + (i % 2), 1810 + i));
+            Object.assign(b.style, { left: `${-80 + nr() * 1900}px`, top: `${-60 + nr() * 1080}px`, fontSize: `${200 + nr() * 160}px` });
+          }
+
+          // ---- the envelope the record folds into (v17) -----------------------------------------------------------
+          const env = $("f18-env");
+          const eg = S(env, "g", { fill: "none", stroke: "#F0ECE5", "stroke-linejoin": "round", opacity: 0 });
+          const draw = (d, o) => S(eg, "path", Object.assign({ d, pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, o));
+          const TIP = { x: 960, y: 780 };
+          S(eg, "rect", { x: 86, y: 206, width: 1802, height: 746, fill: "rgba(240,236,229,0.025)", stroke: "rgba(240,236,229,0.32)", "stroke-width": 2 });
+          const folds = [draw("M86 952 L860 600", { stroke: "rgba(240,236,229,0.22)", "stroke-width": 2 }),
+            draw("M1888 952 L1060 600", { stroke: "rgba(240,236,229,0.22)", "stroke-width": 2 })];
+          const flapFill = S(eg, "path", { d: `M86 206 L${TIP.x} ${TIP.y} L1888 206 Z`, fill: "#121211", stroke: "none", opacity: 0 });
+          const flap = draw(`M86 206 L${TIP.x} ${TIP.y} L1888 206`, { stroke: "rgba(240,236,229,0.5)", "stroke-width": 2.5 });
+          // the wax seal on the flap's point (01's design, the sender's "a.")
+          (() => {
+            const g = $("f18-seal");
+            S(g, "defs").innerHTML = '<radialGradient id="f18-wg" cx="0.38" cy="0.34" r="0.78"><stop offset="0" stop-color="#F68C5C"/><stop offset="0.42" stop-color="#E85D26"/><stop offset="0.82" stop-color="#C94A1C"/><stop offset="1" stop-color="#A63B14"/></radialGradient>';
+            let d = "";
+            for (let k = 0; k <= 120; k++) {
+              const q = (k / 120) * Math.PI * 2;
+              let rr = 55.5 + 1.8 * Math.sin(7 * q + 0.5) + 1.2 * Math.sin(13 * q + 2) + 0.7 * Math.sin(23 * q);
+              for (const [a0, h] of [[0.6, 7], [2.5, 5], [4.4, 8.5]]) { const da = Math.atan2(Math.sin(q - a0), Math.cos(q - a0)); rr += h * Math.exp(-(da * da) / 0.012); }
+              d += (k ? "L" : "M") + (Math.cos(q) * rr).toFixed(2) + " " + (Math.sin(q) * rr).toFixed(2);
+            }
+            S(g, "path", { d: d + "Z", fill: "#A63B14" });
+            S(g, "circle", { r: 50, fill: "url(#f18-wg)" });
+            S(g, "circle", { r: 41, fill: "rgba(17,17,17,0.06)", stroke: "rgba(17,17,17,0.3)", "stroke-width": 2.4 });
+            S(g, "text", { x: 1.6, y: 15.4, "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 40, fill: "rgba(17,17,17,0.36)" }, "a.");
+            S(g, "text", { x: 0, y: 13.8, "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 40, fill: "#D4521E" }, "a.");
+            S(g, "path", { d: "M-38 -24 A44 44 0 0 1 -8 -45", stroke: "rgba(255,236,224,0.6)", "stroke-width": 3.5, "stroke-linecap": "round", fill: "none" });
+          })();
+
+          // ---- the hook ------------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const words = {};
+          const mk = (row, key, text) => { const w = el("span", "f18-w", $(row), text); if (row === "f18-r1" && key === "harvest") el("span", "", $(row), " "); if (key === "decrypt") el("span", "", $(row), " "); words[key] = w; return w; };
+          mk("f18-r1", "harvest", "harvest"); mk("f18-r1", "now", "now,");
+          $("f18-r2").classList.add("hr-glow");
+          // "decrypt later" waits on the sheet as cipher: each letter carries a hex glyph until its word is sung
+          const chars = [];
+          [["decrypt", W.decrypt, 0.012], ["later", W.later, 0.01]].forEach(([key, t, each], wi) => {
+            const w = el("span", "f18-w", $("f18-r2")); words[key] = w;
+            if (wi === 0) el("span", "", $("f18-r2"), " ");
+            [...key].forEach((ch, i) => {
+              const c = el("span", "f18-c", w), b = el("b", "", c, ch), x = el("span", "f18-x", c, "0");
+              const adv = { d: 0.57, e: 0.54, c: 0.49, r: 0.38, y: 0.52, p: 0.57, t: 0.37, l: 0.27, a: 0.54 }[ch];
+              x.style.transform = `translateX(-50%) scaleX(${Math.max(0.62, Math.min(1, (adv + 0.02) / 0.444))})`;
+              b.style.display = "inline-block";
+              const grp = key === "later" ? 2 : i < 4 ? 0 : 1;
+              chars.push({ b, x, c, at: t - 0.05 + i * each, word: key, i, grp, lock: LOCKS[grp] + (key === "later" ? i : i % 4) * 0.018,
+                base: x.style.transform });
+            });
+          });
+          // resolve: each letter flips from hex on its slot time and pops into place (the word is readable on its time)
+          for (const c of chars) tl.fromTo(c.b, { scale: 1.28 }, { scale: 1, duration: 0.32, ease: "power3.out", immediateRender: false }, c.at);
+          // v20: a captured block jumps up and drops back into its slot (each glyph a hair after the last)
+          for (const c of chars) tl.fromTo(c.c, { y: -46, scale: 1.18 }, { y: 0, scale: 1, duration: 0.34, ease: "back.out(2.4)", immediateRender: false }, c.lock);
+
+          // "harvest" is cut on its own slam (the frame starts on the word); "now," gathers and slams on its time
+          const hg = words.harvest._hrG = HR.glyphs(words.harvest);
+          tl.fromTo(hg, { opacity: 1, scale: 1.16 }, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.42)" }, 0);
+          tl.fromTo(hg, { filter: "blur(2px)" }, { filter: "blur(0px)", duration: 0.6, ease: "power2.out" }, 0);
+          HR.hero(tl, words.now, W.now, { pre: 0.11, spread: 12, over: 1.14, skew: false, sharp: true });
+
+          // the press: a light gathers over the spot just before each impression
+          const press = (w, t) => {
+            const sh = document.createElement("span"); sh.className = "f18-shadow"; w.prepend(sh);
+            if (t > 0.05) {
+              tl.fromTo(sh, { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.11, ease: "power2.in" }, t - 0.11);
+              tl.to(sh, { opacity: 0, duration: 0.05, ease: "none" }, t);
+            }
+          };
+          for (const k of ["harvest", "now", "decrypt", "later"]) press(words[k], W[k]);
+
+          // impressions squash into the sheet
+          for (const [k, t] of [["harvest", W.harvest], ["now", W.now], ["decrypt", W.decrypt], ["later", W.later]]) {
+            tl.fromTo(words[k], { scaleY: 1, scaleX: 1 }, { scaleY: 0.93, scaleX: 1.025, duration: 0.05, ease: "power2.out", immediateRender: false }, t);
+            tl.fromTo(words[k], { scaleY: 0.93, scaleX: 1.025 }, { scaleY: 1, scaleX: 1, duration: 0.4, ease: "elastic.out(1, 0.45)", immediateRender: false }, t + 0.05);
+          }
+
+          // rubber stamps on the downbeat and the kick: anticipation above, slam, a hair of rebound
+          const stamp = (id, t, rot) => {
+            tl.fromTo("#" + id, { opacity: 0, scale: 1.7, rotation: rot, filter: "blur(9px)" },
+              { opacity: 0.8, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.12, ease: "power4.in" }, t - 0.12);
+            tl.fromTo("#" + id, { scale: 1 }, { scale: 1.03, duration: 0.04, ease: "power2.out", immediateRender: false }, t);
+            tl.fromTo("#" + id, { scale: 1.03 }, { scale: 1, duration: 0.35, ease: "elastic.out(1, 0.5)", immediateRender: false }, t + 0.04);
+          };
+          stamp("f18-round", ROUND, -10);
+          stamp("f18-copy", COPY, 8);
+          // v20: the slam is mechanical: ink flecks off the stamp's rim, the sheet recoils under it (≤ 6 px, 11 Hz)
+          WOW.burst(tl, $("f18-mid"), { x: 1600, y: 780, t: ROUND, n: 18, speed: 620, size: [3, 9], gravity: 900, dur: 0.6, cream: 0.15, seed: 1861 });
+          WOW.burst(tl, $("f18-mid"), { x: 350, y: 856, t: COPY, n: 12, speed: 520, size: [3, 8], gravity: 900, dur: 0.55, cream: 0.15, seed: 1862 });
+          WOW.shake(tl, $("f18-form"), ROUND, { amp: 6, dur: 0.32, rot: 0.15, seed: 18 });
+          WOW.shake(tl, $("f18-form"), COPY, { amp: 5, dur: 0.3, rot: 0.12, seed: 19 });
+          WOW.punch(tl, $("f18-type"), ROUND, { s: 1.025, dur: 0.35 });
+
+          // the record folds into the envelope: from the downbeat stamp to "decrypt" the sheet's print fades and the folds draw
+          // v20: the folds snap in on the 46.662 downbeat, the flap draws down and closes on the 47.133 kick
+          const FOLD = W.decrypt - DOWN;
+          tl.fromTo("#f18-forminner", { opacity: 0.1 }, { opacity: 0, duration: FOLD, ease: "sine.inOut", immediateRender: false }, DOWN);
+          tl.fromTo(eg, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out", immediateRender: false }, DOWN);
+          tl.fromTo(folds, { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.3, ease: "power3.out", immediateRender: false }, DOWN);
+          tl.fromTo(flap, { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: COPY - DOWN, ease: "power2.in", immediateRender: false }, DOWN);
+          tl.fromTo(flapFill, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, COPY);
+          tl.to(".f18-stamp", { opacity: 0.55, duration: 0.3, ease: "power2.out" }, W.decrypt);
+          // the seal presses onto the flap's point on "later": the hero accent (chorus), a ring and a few rays from the seal
+          tl.fromTo("#f18-seal", { opacity: 0, scale: 1.7 }, { opacity: 1, scale: 1, duration: 0.12, ease: "power4.in", immediateRender: false }, W.later - 0.12);
+          tl.fromTo("#f18-seal", { scale: 1 }, { scale: 1.06, duration: 0.05, ease: "power2.out", immediateRender: false }, W.later);
+          tl.fromTo("#f18-seal", { scale: 1.06 }, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.5)", immediateRender: false }, W.later + 0.05);
+          WOW.shock(tl, $("f18-sealpos"), { x: 0, y: 0, t: W.later, r: 1100, n: 2, w: 6, color: "fire", dur: 0.6 });
+          WOW.rays(tl, $("f18-sealpos"), { x: 0, y: 0, t: W.later, n: 16, r0: 120, r1: 900, seed: 18, color: "cream", dur: 0.45 });
+          WOW.punch(tl, $("f18-type"), W.later, { s: 1.04, dur: 0.4 });
+
+          // ---- the camera: one continuous push (a pure function of time), then the dive into the seal ----------------
+          const stage = HR.stage($("root"), { seed: 18, drift: 1 });
+          const cam = stage.cam;
+          cam.focus = 1;
+          const DIVE = 2.62; // after "later" has held for 0.1 s; quadratic start, so the speed never jumps
+          // v20: on top of the slow push, the camera steps on each hit (smoothstep over 0.4 s: no jolts), alternating sides
+          const STEPS = [[HAT1, 0.012, -40, -0.5], [ROUND, 0.016, 52, 0.7], [HAT2, 0.012, -46, -0.6], [DOWN, 0.016, 44, 0.6], [COPY, 0.016, -50, -0.7], [W.decrypt, 0.01, 30, 0.3]];
+          const sm = (u) => { u = Math.max(0, Math.min(1, u)); return u * u * (3 - 2 * u); };
+          const camAt = (t) => {
+            const u = Math.max(0, (t - DIVE) / (DUR - DIVE));
+            let dz = 0, dx = 0, dr = 0;
+            for (const [a, z, x, r] of STEPS) { const k = sm((t - a) / 0.4); dz += z * k; dx += x * k; dr += r * k; }
+            const keep = 1 - u * u;   // the steps hand over to the dive, so the frame's last instant is v19's
+            cam.rot = dr * keep;
+            cam.z = 1 + 0.075 * (t / DUR) + dz * keep + 0.45 * u * u;
+            cam.y = (cam.z - 1) * (TIP.y - 540); // keeps the seal fixed in frame while the camera closes on it
+            cam.x = 24 - 48 * (t / DUR) + dx * keep;
+          };
+          tl.fromTo("#f18-near", { x: 0 }, { x: -240, duration: DUR, ease: "none" }, 0);
+          const host = document.getElementById("el-18-hook");
+          // the pullOut in pivots on the line (so "harvest" stays in frame), the dive out on the seal; the host is
+          // unscaled between the two switches, so the pivot changes invisibly at mid-frame
+          const pivot = (t) => { host.style.transformOrigin = t < DUR / 2 ? "50% 22%" : `${(TIP.x / 19.2).toFixed(1)}% ${(TIP.y / 10.8).toFixed(1)}%`; };
+          WOW.transition(tl, host, { in: "pullOut", out: "pushIn", dur: 0.46, total: DUR });
+
+          // ---- per frame -----------------------------------------------------------------------------------------
+          const h18 = (a, b) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
+          const lightEl = $("f18-light"), held = $("f18-held");
+          const heldTxt = (t) => {
+            const n = LOCKS.filter((a) => t >= a).length;
+            if (t >= W.later) return "HELD <b>3/3</b> BLOCKS · KEY: <b>LATER</b>";
+            if (t >= W.decrypt) return "HELD <b>3/3</b> BLOCKS · KEY: <b>NOT YET</b>";
+            return n ? `HELD <b>${n}/3</b> BLOCKS · READ: <b>0 B</b>` : "CIPHERTEXT · 2,048 B · READ: <b>0 B</b>";
+          };
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            camAt(t); pivot(t);
+            stage.apply(T);
+            WOW.draw(tl); HR.draw(tl);
+            HR.glow($("f18-r2"), T, 0.4, 0.9);
+            HR.glow($("f18-seal"), T, 0.4, 0.8);
+            const rms = HR.band("rms", T);
+            lightEl.style.transform = `scale(${(0.94 + 0.12 * rms).toFixed(3)})`;
+            // cipher until each letter's slot time; the last instant before the drop, "later" falls back into hex
+            const back = Math.max(0, (t - 2.86) / (DUR - 2.86)), hat = HR.hit("hat", T, 0.08);
+            const lit = Math.min(1, 0.62 + 0.2 * Math.min(1, t / W.decrypt) + 0.18 * hat); // v17: ≥ 3:1 at its dimmest
+            chars.forEach((c, n) => {
+              const lg = c.word === "later" && c.i >= 2 && back > 0 && (c.i - 1) / 4 < back;
+              const hex = t < c.at || lg;
+              c.b.style.opacity = hex ? 0 : 1;
+              c.x.style.opacity = hex ? (lg ? 1 : lit).toFixed(3) : 0;
+              // v20: an uncaptured glyph flickers; a captured one rolls fast for 0.22 s, then holds its byte in cream
+              const dl = t - c.lock, kept = dl >= 0.22 && !lg, roll = dl >= 0 && dl < 0.22 && !lg;
+              if (hex) c.x.textContent = kept ? HR.HEX[(h18(n + 3, 91) * 16) | 0]
+                : HR.HEX[(h18(n + 7, Math.floor(t * (roll ? 30 : 5 + (n % 3)) + n * 0.37) + (hat > 0.5 ? 1 : 0)) * 16) | 0];
+              c.x.style.color = kept || roll ? "#F0ECE5" : "";
+              if (kept || roll) c.x.style.opacity = hex ? (roll ? 1 : 0.92) : 0;
+              c.x.style.textShadow = roll ? "0 0 18px rgba(240,236,229,0.8)" : "";
+            });
+            held.innerHTML = heldTxt(t);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["18-hook"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

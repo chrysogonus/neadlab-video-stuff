@@ -1,0 +1,985 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 7 — later (pre-chorus, 75.987–85.147), v9. g1: the post-quantum lattice packs as glowing nodes wired
+         with light in a wave, locks on "math" with a pulse, then is filed into a paper card stamped LATER and shoved
+         aside. g2: the kick roll is a word-per-kick cut — one excuse per kick, alternating register, accelerating —
+         resolving on "later." locked in ink on orange, accelerating into chorus 2.
+         v13 (SYSTEM.md V7): g1 on black (#0A0A0A): no ciphertext wall, spec-sheet ghost or bokeh; the lattice's light is a
+         tight warm pool (alpha 0.12) behind it. The cream sprint board (g2) and its SEC-0001 ticket are unchanged.
+         v17 (V17.md): the lattice is a true 3D object on one canvas, frame-filling, orbiting slowly from the first instant,
+         packing on the kicks; the camera pulls back onto the card as it prints. Soft word entrances, one ring on "math",
+         no punches or nudges in g1 except the stamp; glideL in from 06; the board's kick roll is unchanged. -->
+
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f07-world { position: absolute; inset: 0; }
+        #f07-type { transform-origin: 5.5% 16%; }  /* the lyric's top-left anchor */
+        #f07-exp { transform-origin: 5.5% 90%; }   /* the excuses sit bottom-left */
+
+        /* ---- background plane: ciphertext wall and light ---- */
+        #f07-wallbox { position: absolute; left: -160px; top: -60px; }
+        #f07-wall { width: 2600px; opacity: 0.07; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 26px;
+          line-height: 64px; letter-spacing: 0.14em; color: var(--cream); white-space: pre; }
+        .f07-light { position: absolute; border-radius: 50%; }
+        #f07-light { left: 560px; top: 60px; width: 1360px; height: 1040px;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.12), rgba(232, 93, 38, 0.035) 55%, rgba(232, 93, 38, 0) 100%); }
+
+        /* ---- midground: the lattice and its file card ---- */
+        #f07-filepos { position: absolute; left: 1040px; top: 245px; width: 800px; height: 640px; transform-origin: 50% 50%; }
+        #f07-file { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        #f07-card { position: absolute; left: -36px; top: -76px; width: 872px; height: 856px; background-color: var(--cream);
+          background-size: 436px 270px; opacity: 0;
+          box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55), 0 6px 14px rgba(0, 0, 0, 0.35); }
+        #f07-card .f07-ph { position: absolute; top: 16px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 15px;
+          letter-spacing: 0.14em; color: rgba(17, 17, 17, 0.55); white-space: nowrap; }
+        #f07-card .f07-rule { position: absolute; left: 26px; right: 26px; top: 44px; height: 1px; background: rgba(17, 17, 17, 0.2); }
+        #f07-card .f07-foot { position: absolute; left: 26px; top: 54px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px;
+          letter-spacing: 0.1em; color: #8a857c; white-space: nowrap; }
+        /* paper detail: raking light, a fold crease, punched holes, a typed field band and a fire-ink barcode */
+        #f07-card .f07-rake { position: absolute; inset: 0;
+          background: linear-gradient(118deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 34%, rgba(17,17,17,0) 58%, rgba(60,40,20,0.13) 100%); }
+        #f07-card .f07-crease { position: absolute; top: 0; bottom: 0; left: 61%; width: 2px;
+          background: linear-gradient(90deg, rgba(17,17,17,0.08), rgba(255,255,255,0.5)); }
+        #f07-card .f07-hole { position: absolute; left: 16px; width: 24px; height: 24px; border-radius: 50%; background: #161615;
+          box-shadow: inset 0 3px 4px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.6); }
+        #f07-card .f07-band { position: absolute; left: 26px; right: 26px; top: 732px; height: 104px; border-top: 2px solid rgba(17,17,17,0.55); }
+        #f07-card .f07-fld { position: absolute; top: 14px; font-family: "IBM Plex Mono"; white-space: nowrap; }
+        #f07-card .f07-fld i { display: block; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: 0.16em; color: #6a655c; }
+        #f07-card .f07-fld b { display: block; margin-top: 6px; font-weight: 600; font-size: 19px; letter-spacing: 0.06em; color: #111111; }
+        #f07-card .f07-bar { position: absolute; right: 0; top: 16px; width: 170px; height: 52px; }
+        #f07-card .f07-barn { position: absolute; right: 0; top: 74px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 11px;
+          letter-spacing: 0.2em; color: #6a655c; }
+        /* v17: the lattice is one canvas in frame coordinates (the wrap undoes #f07-filepos's offset), re-projected every
+           frame; its labels are DOM tags placed on the projected points */
+        #f07-latwrap { position: absolute; left: -1040px; top: -245px; width: 1920px; height: 1080px; }
+        #f07-lc { position: absolute; left: -60px; top: -60px; width: 2040px; height: 1200px; } /* v21: 60 px bleed */
+        .f07-node { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+        .f07-lab { position: absolute; left: 14px; top: -30px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 14px;
+          letter-spacing: 0.06em; color: rgba(240, 236, 229, 0.7); white-space: nowrap; }
+        .f07-route-node .f07-lab { color: #E85D26; }
+        .f07-blab { position: absolute; left: 0; top: 0; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 17px; letter-spacing: 0.1em;
+          color: #E85D26; white-space: nowrap; opacity: 0; }
+        #f07-lockt { position: absolute; left: 0; top: 0; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 14px; letter-spacing: 0.16em;
+          color: var(--ink); background: var(--fire); padding: 5px 10px 4px; white-space: nowrap; opacity: 0; }
+        .f07-printed .f07-lab { color: #5F5B54; }
+        .f07-printed .f07-route-node .f07-lab, .f07-printed .f07-blab { color: #C24A1C; }
+        .f07-printed #f07-lockt { background: #C24A1C; color: var(--cream); }
+        #f07-stamp { position: absolute; left: 352px; top: 540px; width: 460px; height: 184px; color: var(--fire);
+          transform-origin: 50% 50%; opacity: 0; -webkit-mask-size: 420px 420px; mask-size: 420px 420px; }
+        #f07-stamp svg, .f07-pst svg { display: block; width: 100%; height: 100%; overflow: visible; }
+        .f07-dot { position: absolute; border-radius: 50%; background: var(--fire); opacity: 0; }
+
+        /* ---- the spec sheet behind g1 (background plane, ~14 %) ---- */
+        #f07-spec { position: absolute; left: 70px; top: 520px; width: 980px; height: 560px; opacity: 0; overflow: visible; } /* v13: no ground texture */
+
+        /* ---- g2: the sprint board on cream paper (10-ticket's register) ---- */
+        #f07-g2bg, #f07-board, #f07-ml { opacity: 0; }
+        #f07-paper { position: absolute; inset: -60px; background-color: var(--cream); background-size: 512px 512px; }
+        #f07-dots { position: absolute; inset: -60px; opacity: 0.5;
+          background-image: radial-gradient(circle, rgba(17,17,17,0.13) 1.2px, transparent 1.6px); background-size: 32px 32px; }
+        #f07-sun { position: absolute; left: -200px; top: -300px; width: 1600px; height: 1200px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(255,255,255,0.55), rgba(255,255,255,0)); }
+        #f07-win { position: absolute; left: 92px; top: 290px; width: 1736px; height: 300px; background: #F4F1EB; border: 1.5px solid #CFC9BE;
+          box-shadow: 0 30px 60px rgba(60,50,40,0.18), 0 4px 10px rgba(60,50,40,0.12), inset 0 1px 0 #fff; overflow: hidden; }
+        .f07-tbar { position: absolute; left: 0; right: 0; top: 0; height: 40px; background: #E6E1D8; border-bottom: 1.5px solid #CFC9BE;
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 14px; letter-spacing: 0.12em; color: #6E6A62;
+          display: flex; align-items: center; padding-left: 92px; white-space: nowrap; z-index: 2; }
+        .f07-tbar i { position: absolute; top: 14px; width: 12px; height: 12px; border-radius: 50%; background: #CFC9BE; }
+        .f07-tbar b { font-weight: 600; color: var(--ink); }
+        #f07-trk { position: absolute; left: 0; top: 40px; height: 260px; }
+        .f07-col { position: absolute; top: 0; width: 300px; height: 260px; border-right: 1.5px solid #E6E1D8; }
+        .f07-ch { position: absolute; left: 20px; right: 20px; top: 16px; height: 44px; border-bottom: 1.5px solid #CFC9BE;
+          font-family: "IBM Plex Mono"; white-space: nowrap; }
+        .f07-ch b { display: block; font-weight: 600; font-size: 15px; letter-spacing: 0.16em; color: #6E6A62; }
+        .f07-ch i { display: block; margin-top: 4px; font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: 0.14em; color: #8F8A80; }
+        .f07-ch u { position: absolute; left: 0; bottom: -2.5px; width: 100%; height: 4px; background: var(--fire); transform-origin: 0 50%; transform: scaleX(0); text-decoration: none; }
+        .f07-col.f07-on .f07-ch b { color: var(--ink); }
+        .f07-col.f07-end { background: repeating-linear-gradient(45deg, rgba(232,93,38,0.16) 0 3px, transparent 3px 10px); }
+        .f07-col.f07-end .f07-ch b { color: #C8481A; }
+        .f07-fill { position: absolute; left: 20px; width: 260px; height: 74px; background: #FBF9F5; border: 1.5px solid #CFC9BE;
+          box-shadow: 0 3px 0 rgba(60,50,40,0.06); padding: 10px 12px; box-sizing: border-box; }
+        .f07-fill .f07-cid { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 11px; letter-spacing: 0.12em; color: #8F8A80; white-space: nowrap; }
+        .f07-fill .f07-ct { font-family: "Barlow"; font-weight: 600; font-size: 18px; line-height: 1.1; color: #6E6A62; margin-top: 4px; white-space: nowrap; }
+        .f07-slot { position: absolute; left: 20px; top: 76px; width: 260px; height: 84px; box-sizing: border-box;
+          border: 1.5px dashed rgba(200,72,26,0.55); opacity: 0; }
+        #f07-task { position: absolute; left: 20px; top: 76px; width: 260px; height: 84px; box-sizing: border-box; background: #fff;
+          border: 1.5px solid var(--ink); border-left: 6px solid var(--fire); padding: 10px 12px 0 14px; z-index: 1;
+          box-shadow: 0 10px 22px rgba(60,50,40,0.18); transform-origin: 50% 50%; }
+        #f07-task .f07-cid { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 11px; letter-spacing: 0.12em; color: #6E6A62; white-space: nowrap; }
+        #f07-task .f07-ct { font-family: "Barlow"; font-weight: 600; font-size: 21px; line-height: 1.1; color: var(--ink); margin-top: 5px; white-space: nowrap; }
+        #f07-task .f07-due { position: absolute; right: 10px; top: 8px; padding: 1px 6px; border: 1.5px solid var(--fire); font-family: "IBM Plex Mono";
+          font-weight: 600; font-size: 10px; letter-spacing: 0.12em; color: #C8481A; white-space: nowrap; }
+        .f07-mark { position: absolute; font-family: "Caveat Brush"; line-height: 1; color: #C8481A; white-space: nowrap; }
+
+        /* ---- type plane: the sung lines ---- */
+        .f07-line { position: absolute; left: 5.5cqw; top: 9cqw; width: 80cqw; font-family: "Barlow"; color: var(--cream);
+          display: flex; flex-direction: column; align-items: flex-start; gap: 0.6cqw; transform-origin: 0 0; }
+        .f07-row { display: flex; flex-wrap: nowrap; column-gap: 0.26em; font-weight: 800; font-size: 4.4cqw; line-height: 1.04;
+          letter-spacing: -0.02em; white-space: nowrap; }
+        .f07-row.f07-big { font-weight: 900; font-size: 11.5cqw; line-height: 0.86; letter-spacing: -0.04em; margin: 0.3cqw 0 0 -0.4cqw; }
+        #f07-l14 .f07-row.f07-big { font-size: 13.6cqw; } /* v21: "new math" spans ≥ 60 % of the width */
+        #f07-roll-lyric { position: absolute; left: 5.5cqw; top: 8cqw; font-family: "Barlow"; font-weight: 800; font-size: 4cqw; line-height: 1.1; letter-spacing: -0.025em; white-space: nowrap; color: var(--ink); opacity: 0; }
+        .f07-w { display: inline-block; position: relative; }
+        .f07-fire { color: var(--fire); }
+        .f07-heavy { font-weight: 900; }
+
+        /* ---- excuse plane (g2) ---- */
+        .f07-ex { position: absolute; left: 5.5cqw; bottom: 5.5cqw; font-family: "Barlow"; font-weight: 900; line-height: 0.8;
+          letter-spacing: -0.04em; white-space: nowrap; visibility: hidden; transform-origin: 0 100%; }
+        .f07-exi { color: var(--ink); text-shadow: 0.012em 0.014em 0 rgba(17, 17, 17, 0.12); }
+        .f07-exf { color: var(--fire); text-shadow: 0.012em 0.014em 0 rgba(120, 40, 10, 0.2); }
+        #f07-final { --d: 0; color: var(--ink);
+          text-shadow: calc(var(--d) * 0.012em) calc(var(--d) * 0.014em) 0 rgba(17, 17, 17, 0.13); }
+        #f07-final .f07-dotf { color: var(--fire); }
+        #f07-final .hr-g { transform-origin: 50% 100%; }
+
+        /* ---- chrome plane ---- */
+        .f07-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 16px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
+        .f07-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
+          vertical-align: middle; margin-right: 16px; }
+        #f07-count { position: absolute; right: 5.5cqw; top: 3.4cqw; display: flex; align-items: baseline; gap: 18px;
+          font-family: "IBM Plex Mono"; text-transform: uppercase; white-space: nowrap; }
+        #f07-count span { font-weight: 500; font-size: 16px; letter-spacing: 0.14em; color: var(--cream-muted); }
+        #f07-num { display: inline-block; font-weight: 600; font-size: 44px; letter-spacing: 0.08em; color: var(--fire);
+          transform-origin: 100% 70%; }
+
+        .f07-bokeh { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--cream);
+          opacity: 0.035; filter: blur(14px); white-space: nowrap; }
+      </style>
+
+      <div data-hf-id="hf-ff61" id="root" data-composition-id="07-later" data-width="1920" data-height="1080" data-duration="9.16">
+        <div data-hf-id="hf-u8tl" id="f07-world">
+          <div data-hf-id="hf-x70i" class="hr-layer" id="f07-bg" data-depth="0.3" data-dof="5" data-layout-ignore>
+            <div data-hf-id="hf-ircm" id="f07-wallbox"><div data-hf-id="hf-z5c7" id="f07-wall"></div></div>
+            <div data-hf-id="hf-iz76" class="f07-light" id="f07-light"></div>
+            <svg data-hf-id="hf-fgyq" id="f07-spec" viewBox="0 0 980 560"></svg>
+          </div>
+          <div data-hf-id="hf-3eoi" class="hr-layer" id="f07-g2bg" data-depth="0.3" data-dof="2" data-layout-ignore>
+            <div data-hf-id="hf-vwoz" id="f07-paper"></div><div data-hf-id="hf-ylnf" id="f07-dots"></div><div data-hf-id="hf-m3jn" id="f07-sun"></div>
+          </div>
+          <div data-hf-id="hf-ia19" class="hr-layer" id="f07-mid" data-depth="0.65" data-layout-ignore>
+            <div data-hf-id="hf-elhl" id="f07-filepos">
+              <div data-hf-id="hf-i8zt" id="f07-file">
+                <div data-hf-id="hf-64r9" id="f07-card">
+                  <div data-hf-id="hf-jc40" class="f07-ph" style="left: 26px">THE NEW MATH</div>
+                  <div data-hf-id="hf-dvm2" class="f07-ph" style="right: 26px">MIGRATION · DEFERRED</div>
+                  <div data-hf-id="hf-okt8" class="f07-rule"></div>
+                  <div data-hf-id="hf-6fa2" class="f07-foot" id="f07-foot"></div>
+                  <div data-hf-id="hf-d3z7" class="f07-crease"></div>
+                  <div data-hf-id="hf-t3vq" class="f07-hole" style="top: 300px"></div><div data-hf-id="hf-rwrn" class="f07-hole" style="top: 600px"></div>
+                  <div data-hf-id="hf-39jm" class="f07-band" id="f07-band"></div>
+                  <div data-hf-id="hf-gwg5" class="f07-rake"></div>
+                </div>
+                <div data-hf-id="hf-8hng" id="f07-latwrap">
+                  <canvas data-hf-id="hf-iz29" id="f07-lc" width="2040" height="1200"></canvas>
+                  <div data-hf-id="hf-zv2m" id="f07-nodes"></div>
+                  <div data-hf-id="hf-vsvs" id="f07-lfx"></div>
+                </div>
+                <div data-hf-id="hf-2vck" id="f07-stamp"><svg data-hf-id="hf-19oe" viewBox="0 0 460 184"></svg></div>
+              </div>
+            </div>
+          </div>
+          <div data-hf-id="hf-g3ae" class="hr-layer" id="f07-board" data-depth="0.6" data-layout-ignore>
+            <div data-hf-id="hf-704b" id="f07-win">
+              <div data-hf-id="hf-3ci8" id="f07-trk"></div>
+              <div data-hf-id="hf-6s8r" class="f07-tbar"><i data-hf-id="hf-vsyi" style="left:22px;background:#E85D26"></i><i data-hf-id="hf-qtum" style="left:42px"></i><i data-hf-id="hf-tz2o" style="left:62px"></i>nead planner · <b data-hf-id="hf-oh0b">&nbsp;SECURITY</b>&nbsp;· sprint board · drag to reschedule</div>
+            </div>
+          </div>
+          <div data-hf-id="hf-xj1b" class="hr-layer" id="f07-exp" data-depth="0.9" data-layout-allow-overlap></div>
+          <div data-hf-id="hf-rfnt" class="hr-layer" id="f07-type" data-depth="0.8">
+            <div data-hf-id="hf-japc" class="f07-line" id="f07-l13"></div>
+            <div data-hf-id="hf-fclb" class="f07-line" id="f07-l14"></div>
+            <div data-hf-id="hf-beha" class="f07-line" id="f07-l15"></div><div data-hf-id="hf-kyzb" id="f07-roll-lyric">you said you'd get around to that</div>
+          </div>
+          <div data-hf-id="hf-sj6d" class="hr-layer" id="f07-chrome" data-depth="0.2">
+            <div data-hf-id="hf-vctk" class="f07-kicker" id="f07-kick">THE NEW MATH</div>
+            <div data-hf-id="hf-v5b8" id="f07-count"><span data-hf-id="hf-ohik" id="f07-clabel">NODES</span><b data-hf-id="hf-fpog" id="f07-num">00</b></div>
+          </div>
+          <div data-hf-id="hf-q1yd" class="hr-layer" id="f07-ml" data-depth="0.2" data-layout-ignore>
+            <div data-hf-id="hf-2epn" class="f07-mark" id="f07-sure" style="right:5.5cqw;top:122px;font-size:60px;transform:rotate(-5deg)">(sure.)</div>
+          </div>
+          <div data-hf-id="hf-ywqg" class="hr-layer" id="f07-near" data-depth="1.7" data-layout-ignore></div>
+        </div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script>
+        (() => {
+          const T0 = 75.987, DUR = 9.16;
+          const L = (t) => +(t - T0).toFixed(3);
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const SVGNS = "http://www.w3.org/2000/svg";
+          const sv = (tag, attrs, parent) => { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+
+          // ---- music and lyrics (track seconds) -------------------------------------------------------------
+          const KICKS = [81.463, 81.714, 81.954, 82.179, 82.401, 82.64, 82.87, 83.079, 83.319, 83.478, 83.632,
+            83.78, 83.933, 84.087, 84.237, 84.544, 84.696, 84.853, 85.142];
+          const K = KICKS.map(L);
+          const G2 = K[0], LOCK = K[17];
+          const MATH = L(78.72), CARD = L(79.84), STAMP = L(80.92), SHOVE = L(81.26);
+          // v21 (W3): the loose points drop onto the folder's page in waves, one wave per kick
+          const LANDS = [76.335, 76.678, 76.911, 77.143, 77.376, 77.598].map(L);
+          const HANDED = L(76.84), POP = L(77.7), PRE = L(78.52), STAMP2 = L(78.959), FOLD_OUT = L(79.0), FOLD_GONE = L(79.45);
+          // rows: [display?, [[word, start, cls], ...]]
+          const L13 = [[false, [["as", 74.88], ["true", 75.02], ["as", 75.598], ["true", 75.96]]]]; // carried tail of L13, already sung
+          const L14 = [[false, [["They", 76.46], ["handed", 76.84], ["you", 77.384], ["the", 77.58]]],
+            [true, [["new", 77.7], ["math", 78.72, "f07-fire hr-glow"]]]];
+          const L15 = [[false, [["You", 79.84], ["said", 79.968], ["you'd", 80.34], ["get", 80.54]]],
+            [true, [["around", 80.92, "f07-fire f07-heavy hr-glow"]]], [false, [["to", 81.26], ["that", 81.46]]]];
+          const EXCUSES = ["later", "next sprint", "q3", "next year", "after launch", "monday", "later", "next sprint", "q3",
+            "next year", "after launch", "monday", "next sprint", "q3", "next year", "after launch", "monday"]; // K0..K16, then "later."
+
+          // ---- static build ---------------------------------------------------------------------------------
+          // v13: no ciphertext wall on the ground
+          $("f07-foot").textContent = HR.cipher(48, 77).replace(/(.{4})/g, "$1 ");
+          const nr = HR.rng(707);
+          for (let i = 0; i < 0; i++) { // v13: no bokeh
+            const b = el("div", "f07-bokeh", $("f07-near"), HR.cipher(2 + (i % 2), 520 + i));
+            Object.assign(b.style, { left: `${-100 + nr() * 2000}px`, top: `${-60 + nr() * 1000}px`, fontSize: `${200 + nr() * 160}px` });
+          }
+          // paper fibre for the file card, baked once
+          (() => {
+            const c = document.createElement("canvas"); c.width = 436; c.height = 270;
+            const x = c.getContext("2d"), r = HR.rng(4407);
+            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 436, 270);
+            const img = x.getImageData(0, 0, 436, 270);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 14; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+            x.putImageData(img, 0, 0);
+            x.strokeStyle = "rgba(110,100,90,0.10)"; x.lineWidth = 0.6;
+            for (let k = 0; k < 110; k++) { const px = r() * 436, py = r() * 270, a = r() * Math.PI, l = 6 + r() * 16;
+              x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.4); x.stroke(); }
+            $("f07-card").style.backgroundImage = `url(${c.toDataURL("image/png")})`;
+          })();
+          // ink: 18's alpha mask with pinholes and starved streaks, so every impression reads pressed, not printed
+          const inkMask = (seed) => {
+            const c = document.createElement("canvas"); c.width = c.height = 420;
+            const x = c.getContext("2d"), r = HR.rng(seed);
+            x.fillStyle = "#000"; x.fillRect(0, 0, 420, 420);
+            x.globalCompositeOperation = "destination-out";
+            for (let k = 0; k < 760; k++) { x.fillStyle = `rgba(0,0,0,${(0.3 + r() * 0.5).toFixed(2)})`;
+              x.beginPath(); x.arc(r() * 420, r() * 420, 0.4 + r() * r() * 1.7, 0, Math.PI * 2); x.fill(); }
+            for (let k = 0; k < 30; k++) { x.fillStyle = `rgba(0,0,0,${(0.06 + r() * 0.14).toFixed(2)})`;
+              x.fillRect(r() * 420, r() * 420, 30 + r() * 140, 1 + r() * 3); }
+            return `url(${c.toDataURL("image/png")})`;
+          };
+          const MASKS = [inkMask(7091), inkMask(7092), inkMask(7093)];
+          const masked = (e, i) => { e.style.webkitMaskImage = MASKS[i % 3]; e.style.maskImage = MASKS[i % 3]; };
+          const S = (parent, tag, attrs, text) => { const e = sv(tag, attrs, parent); if (text != null) e.textContent = text; return e; };
+          const MONO = { fill: "currentColor", stroke: "none", "font-family": "IBM Plex Mono", "font-weight": 600 };
+          const BAR = { fill: "currentColor", stroke: "none", "font-family": "Barlow", "font-weight": 900 };
+          // a rubber stamp: double rule, the word, an engraved line of the story's facts
+          const rectStamp = (g, w, h, word, sub, size, sm = false) => {
+            const s = S(g, "g", { fill: "none", stroke: "currentColor" });
+            S(s, "rect", { x: 5, y: 5, width: w - 10, height: h - 10, rx: 9, "stroke-width": 8 });
+            S(s, "rect", { x: 17, y: 17, width: w - 34, height: h - 34, rx: 4, "stroke-width": 2.2 });
+            const wy = sm ? h * 0.56 : h * 0.6, ry = sm ? h * 0.66 : h * 0.7;
+            S(s, "text", { ...BAR, x: w / 2, y: wy, "text-anchor": "middle", "font-size": size, "letter-spacing": 5 }, word);
+            S(s, "path", { d: `M34 ${ry} H${w - 34}`, "stroke-width": 2 });
+            S(s, "text", { ...MONO, x: w / 2, y: ry + (sm ? 16 : 22), "text-anchor": "middle", "font-size": sm ? 12 : 14, "letter-spacing": 3.5 }, sub);
+          };
+          const roundStamp = (g, d, word, top, bottom) => {
+            const c = d / 2, s = S(g, "g", { fill: "none", stroke: "currentColor" });
+            S(s, "circle", { cx: c, cy: c, r: c - 6, "stroke-width": 8 });
+            S(s, "circle", { cx: c, cy: c, r: c - 20, "stroke-width": 2.2 });
+            S(s, "text", { ...MONO, x: c, y: c - d * 0.16, "text-anchor": "middle", "font-size": d * 0.062, "letter-spacing": 2.5 }, top);
+            S(s, "text", { ...BAR, x: c, y: c + d * 0.08, "text-anchor": "middle", "font-size": d * 0.25, "letter-spacing": 1 }, word);
+            S(s, "path", { d: `M${c - d * 0.3} ${c + d * 0.15} H${c + d * 0.3}`, "stroke-width": 2 });
+            S(s, "text", { ...MONO, x: c, y: c + d * 0.27, "text-anchor": "middle", "font-size": d * 0.06, "letter-spacing": 2 }, bottom);
+          };
+          rectStamp($("f07-stamp").querySelector("svg"), 460, 184, "LATER", "DEFERRED · NO DATE SET", 92);
+          masked($("f07-stamp"), 0);
+
+          // the card's typed field band and its fire-ink barcode
+          (() => {
+            const band = $("f07-band");
+            [["RECEIVED", "13 AUG 2024", 0], ["RE", "FIPS 203 · ML-KEM", 190], ["ACTION", "MIGRATE", 450], ["DUE", "—", 590]].forEach(([k, v, x]) => {
+              const f = el("div", "f07-fld", band); f.style.left = x + "px"; el("i", "", f, k); el("b", "", f, v);
+            });
+            const bar = sv("svg", { class: "f07-bar", viewBox: "0 0 170 52" }, band), br = HR.rng(7140);
+            for (let x = 0; x < 168;) { const w = 1 + ((br() * 4) | 0); sv("rect", { x, y: 0, width: w, height: 52, fill: "#E85D26" }, bar); x += w + 1 + ((br() * 4) | 0); }
+            el("div", "f07-barn", band, "RECEIVED · ML-KEM");
+          })();
+
+          // the spec sheet behind g1: the standard you were handed, as a printed form out of focus
+          (() => {
+            const g = S($("f07-spec"), "g", { fill: "none", stroke: "#F0ECE5", "stroke-width": 2 });
+            const T = (x, y, size, text, o = {}) => S(g, "text", { x, y, fill: "#F0ECE5", stroke: "none", "font-family": "IBM Plex Mono",
+              "font-weight": 500, "font-size": size, "letter-spacing": 2, ...o }, text);
+            for (let y = 30; y < 560; y += 62) S(g, "circle", { cx: 22, cy: y, r: 8 });
+            S(g, "path", { d: "M56 0 V560 M56 92 H980 M640 92 V560" });
+            T(80, 40, 20, "FIPS 203 · MODULE-LATTICE-BASED KEM STANDARD");
+            T(80, 74, 16, "PUBLISHED 13 AUG 2024 · NIST · ML-KEM-512 / 768 / 1024");
+            for (let y = 150; y < 560; y += 46) S(g, "path", { d: `M84 ${y} H612`, opacity: 0.4, "stroke-width": 1 });
+            [["REPLACES", "RSA-2048 · ECDH"], ["PARAMETER SET", "ML-KEM-768"], ["ASSIGNED TO", "YOU"], ["STATUS", "NOT STARTED"]].forEach(([k, v], i) => {
+              T(664, 140 + i * 100, 13, k); T(664, 176 + i * 100, 24, v, { "font-weight": 600 });
+              S(g, "path", { d: `M664 ${192 + i * 100} H960`, "stroke-width": 1 });
+            });
+            const cr = HR.rng(7150);
+            for (let i = 0; i < 8; i++) T(84, 140 + i * 46, 18, HR.cipher(36, 7151 + i).replace(/(.{4})/g, "$1 "), { opacity: 0.5 + cr() * 0.3 });
+          })();
+
+          // lyric lines
+          function buildLine(id, rows) {
+            const box = $(id), words = [];
+            for (const [big, ws] of rows) {
+              const row = el("div", "f07-row" + (big ? " f07-big" : ""), box);
+              for (const [w, t, cls] of ws) words.push({ s: el("span", "f07-w" + (cls ? " " + cls : ""), row, w.toLowerCase()), t: L(t), hero: !!cls });
+            }
+            return words;
+          }
+          const l13 = buildLine("f07-l13", L13), l14 = buildLine("f07-l14", L14), l15 = buildLine("f07-l15", L15);
+
+          // The lattice volume (v17): a 5 x 5 x 4 module lattice on a skewed basis B1..B3, a true 3D object drawn as lines
+          // on one canvas and re-projected every frame: it fills the frame and orbits slowly, then the camera pulls back
+          // onto the paper card and the light goes out (printed). Every node point is engraved with its integer
+          // coordinates; the lit route runs from the origin to (4,4,3). All geometry is index-derived.
+          // v21 (W3): the lattice is handed over printed flat on a page of a cream folder (FIPS 203) that slides in on
+          // "handed"; its points drop onto the page one wave per kick; on "new" it pops up off the page like a pop-up
+          // book; on "math" the skewed basis snaps square (a cube, sparks off the joints) and DEFERRED is stamped on the
+          // page; the folder is pulled away as the v20 card rises and the cube prints onto it.
+          const SI = 5, SK = 4;
+          const BAS = [[1, 0.08, 0], [0.34, 0, 1], [-0.24, 0.92, 0.2]];
+          const CUBE = [[1, 0, 0], [0, 0, 1], [0, 4 / 3, 0]];
+          const centreOf = (B) => [0, 1, 2].map((a) => 2 * B[0][a] + 2 * B[1][a] + 1.5 * B[2][a]);
+          const C0 = centreOf(BAS);
+          const homeB = (B, C, i, j, k) => [0, 1, 2].map((a) => i * B[0][a] + j * B[1][a] + k * B[2][a] - C[a]);
+          const home = (i, j, k) => homeB(BAS, C0, i, j, k);
+          const idx = (i, j, k) => (k * SI + j) * SI + i;
+          const routeCoords = [[0,0,0],[1,0,0],[1,1,0],[2,1,0],[2,1,1],[2,2,1],[3,2,1],[3,3,1],[3,3,2],[4,3,2],[4,4,2],[4,4,3]];
+          const routeIdx = new Map(routeCoords.map((q, n) => [q.join(','), n]));
+          const RSTART = L(77.7), RSTEP = (MATH - 0.06 - RSTART) / (routeCoords.length - 1);
+          const nodes = [], lr = HR.rng(7171), H0 = home(0, 0, 0);
+          for (let k = 0; k < SK; k++) for (let j = 0; j < SI; j++) for (let i = 0; i < SI; i++) {
+            const h = home(i, j, k), key = [i, j, k].join(','), onR = routeIdx.has(key);
+            const wave = Math.min(LANDS.length - 1, Math.floor((i + j + (SK - 1 - k)) * LANDS.length / 12));
+            // before it packs, every point floats loose: the lattice spread 12 % wider plus a seeded offset
+            const st = h.map((v) => v * 1.12 + (lr() - 0.5) * 0.5);
+            let lab = null;
+            if (onR || (k === 0 && (i + j) % 2 === 0) || (k === SK - 1 && i === SI - 1 && j % 2 === 0)) {
+              lab = el("div", "f07-node" + (onR ? " f07-route-node" : ""), $("f07-nodes"));
+              el("span", "f07-lab", lab, `(${i},${j},${k})`);
+            }
+            nodes.push({ i, j, k, h, st, onR, lab, land: LANDS[wave], flick: (i + j + k) % 5 === 0,
+              lit: onR ? RSTART + routeIdx.get(key) * RSTEP : null,
+              front: MATH + Math.hypot(h[0] - H0[0], h[1] - H0[1], h[2] - H0[2]) * 0.05,
+              x: 0, y: 0, ps: 1, z: 0, fog: 1, m: 1 });
+          }
+          const edges = [];
+          for (let k = 0; k < SK; k++) for (let j = 0; j < SI; j++) for (let i = 0; i < SI; i++) {
+            const a = nodes[idx(i, j, k)], add = (b, brace) => edges.push({ a, b, brace, at: Math.max(a.land, b.land) });
+            if (i < SI - 1) add(nodes[idx(i + 1, j, k)], false);
+            if (j < SI - 1) add(nodes[idx(i, j + 1, k)], false);
+            if (k < SK - 1) add(nodes[idx(i, j, k + 1)], false);
+            if (i < SI - 1 && j < SI - 1 && (i + j + k) % 2 === 0) add(nodes[idx(i + 1, j + 1, k)], true);
+          }
+          const route = routeCoords.map((q) => nodes[idx(...q)]);
+          const ORIGIN = nodes[0], BTIPS = [nodes[idx(SI - 1, 0, 0)], nodes[idx(0, SI - 1, 0)], nodes[idx(0, 0, SK - 1)]];
+          const blabs = BTIPS.map((_, n) => el("div", "f07-blab", $("f07-nodes"), "B" + (n + 1)));
+          const END = nodes[idx(SI - 1, SI - 1, SK - 1)], lockt = el("div", "", $("f07-nodes"), "LOCKED");
+          lockt.id = "f07-lockt";
+          // the halo sprite: cream core into fire, added with 'lighter'
+          const HALO = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 128;
+            const x = c.getContext("2d"), g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+            g.addColorStop(0, "rgba(240,236,229,0.85)"); g.addColorStop(0.3, "rgba(232,93,38,0.45)"); g.addColorStop(1, "rgba(232,93,38,0)");
+            x.fillStyle = g; x.fillRect(0, 0, 128, 128); return c;
+          })();
+
+          // the view, a pure function of local time: a slow orbit that eases to rest as the card arrives; the fit moves
+          // from the frame-filling lattice to the card's printed area (frame px)
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const lerp = (a, b, u) => a + (b - a) * u;
+          const sIO = (u) => 0.5 - 0.5 * Math.cos(Math.PI * u), sOut = (u) => Math.sin(u * Math.PI / 2);
+          const BIG = { cx: 1250, cy: 640, s: 176 }, ONCARD = { cx: 1452, cy: 548, s: 108 };
+          // v21: the camera looks down on the desk (negative pitch = from above). Keys: the loose cloud at the first
+          // instant; the folder on the desk by "handed"; craned low to see the pop-up stand by "math"; the card fit.
+          const VK = [
+            { yaw: -0.95, pitch: -0.5, cx: 1250, cy: 640, s: 176 },
+            { yaw: -0.34, pitch: -1.0, cx: 1130, cy: 620, s: 124 },
+            { yaw: -0.16, pitch: -0.52, cx: 1210, cy: 690, s: 150 },
+            { yaw: -0.1, pitch: -0.36, cx: ONCARD.cx, cy: ONCARD.cy, s: ONCARD.s },
+          ];
+          function view(t) {
+            const a = sIO(clamp01(t / (HANDED + 0.2))), b = sIO(clamp01((t - (HANDED + 0.1)) / (MATH + 0.15 - (HANDED + 0.1)))); // v21: one continuous crane down
+            const c = sIO(clamp01((t - FOLD_OUT) / (CARD - 0.12 - FOLD_OUT)));
+            const o = {};
+            for (const k of ["yaw", "pitch", "cx", "cy", "s"]) o[k] = lerp(lerp(lerp(VK[0][k], VK[1][k], a), VK[2][k], b), VK[3][k], c);
+            o.yaw += 0.1 * Math.sin(Math.PI * clamp01(t / CARD)); // a slow creep around the folder, gone by the card
+            return o;
+          }
+          // the lock: the skewed basis is squeezed from the kick before "math", then snaps square on "math"
+          const backOut = (u, c1 = 1.70158) => { const x = u - 1; return 1 + (c1 + 1) * x * x * x + c1 * x * x; };
+          function basisAt(t) {
+            const u = t < MATH ? 0 : backOut(clamp01((t - MATH) / 0.16), 2.4);
+            const sq = t < MATH ? 1 - 0.07 * sIO(clamp01((t - PRE) / (MATH - PRE))) : 1 - 0.07 * Math.max(0, 1 - (t - MATH) / 0.08);
+            const B = BAS.map((r, a) => r.map((v, c) => (v + (CUBE[a][c] - v) * u) * sq));
+            return { B, C: centreOf(B) };
+          }
+          // the folder: slid in from the far right, landing on "handed"; pulled off to the left as the card rises
+          const YP = -2.25;
+          const foIn = (t) => { const e = 1 - Math.pow(1 - clamp01(t / HANDED), 3); return [9 * (1 - e), 0, 7 * (1 - e)]; };
+          const foOut = (t) => { const u = clamp01((t - FOLD_OUT) / (FOLD_GONE - FOLD_OUT)), e = u * u * u; return [-17 * e, 0, -5 * e]; };
+          const popE = (t, k) => (t < POP ? 0 : backOut(clamp01((t - POP - (SK - 1 - k) * 0.03) / 0.32), 1.4));
+          const DCAM = 9;
+          function project(p, v, n) {
+            const cy = Math.cos(v.yaw), sy = Math.sin(v.yaw), cp = Math.cos(v.pitch), sp = Math.sin(v.pitch);
+            const x1 = p[0] * cy + p[2] * sy, z1 = -p[0] * sy + p[2] * cy;
+            const y2 = p[1] * cp - z1 * sp, z2 = p[1] * sp + z1 * cp, ps = DCAM / (DCAM + z2);
+            n.x = v.cx + x1 * ps * v.s; n.y = v.cy - y2 * ps * v.s; n.ps = ps * v.s / BIG.s; n.z = z2;
+            n.fog = Math.max(0.22, Math.min(1, 0.6 - z2 / 6));
+          }
+          // where a node is at local time t: loose → packed, one continuous ease that lands on its wave's kick
+          // v21: loose → printed flat on the page (riding the folder in) → popped up → squared (the basis of the moment)
+          const pos = (n, t, BC) => {
+            const fo = foIn(t), flat = [n.h[0] + fo[0], YP + 0.02, n.h[2] + fo[2]];
+            n.flat = flat;
+            if (t < n.land) { const s0 = Math.max(0, n.land - 0.5), e = sIO(clamp01((t - s0) / (n.land - s0))); return [0, 1, 2].map((a) => lerp(n.st[a], flat[a], e)); }
+            const p = popE(t, n.k), hb = homeB(BC.B, BC.C, n.i, n.j, n.k);
+            return [0, 1, 2].map((a) => lerp(flat[a], hb[a], p));
+          };
+          // the lyric's corner: lattice lines fade there so the sung line stays the most legible thing on screen
+          const smooth = (a, b, x) => { const u = clamp01((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+          const textMask = (x, y, lp) => 1 - 0.86 * lp * (1 - smooth(0.5, 1.15, Math.hypot((x - 620) / 760, (y - 400) / 270))); // v21: the bigger hero row
+
+          // g2: the sprint board. The ticket is dragged one column per kick; every column is the excuse it lands on.
+          // Before it: DONE and THIS SPRINT; after the roll: the hatched LATER. column. The years climb each lap.
+          (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 512;
+            const x = c.getContext("2d", { willReadFrequently: true }), r = HR.rng(1007);
+            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 512, 512);
+            const img = x.getImageData(0, 0, 512, 512);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 9; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+            x.putImageData(img, 0, 0);
+            x.lineWidth = 0.7;
+            for (let k = 0; k < 140; k++) { const px = r() * 512, py = r() * 512, a = r() * Math.PI, l = 8 + r() * 20;
+              x.strokeStyle = "rgba(110,100,90,0.09)"; x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.35); x.stroke(); }
+            $("f07-paper").style.backgroundImage = `url(${c.toDataURL("image/png")})`;
+          })();
+          const COLW = 300, START = 1, REST = 2; // the card settles in the board's third visible column
+          const SUB = { "later": (n) => "NO DATE", "next sprint": (n) => "SPRINT " + (13 + n * 14), "q3": (n) => "JUL–SEP " + (2021 + n),
+            "next year": (n) => String(2022 + n), "after launch": (n) => "LAUNCH TBD", "monday": (n) => "MON · " + ["14 JUN 2021", "06 JUN 2022", "05 JUN 2023"][n] };
+          const FILL = [["OFC-0003", "Ping-pong table ✓"], ["AI-0001", "AI chatbot for billing"], ["BRD-0007", "New logo (rounder)"], ["OFC-0012", "Kombucha on tap"],
+            ["AI-0004", "AI for the AI chatbot"], ["BRD-0011", "Logo (less round)"], ["OFC-0019", "Nap pods"], ["AI-0009", "Put AI in the footer"]];
+          const COLS = [["DONE", "SPRINT 11"], ["THIS SPRINT", "SPRINT 12 · MAR 2021"]];
+          const seen = {};
+          EXCUSES.forEach((w) => { const n = seen[w] = (seen[w] ?? -1) + 1; COLS.push([w.toUpperCase(), SUB[w](Math.min(n, 2))]); });
+          COLS.push(["LATER.", "NO DATE · NO OWNER"]);
+          const cols = COLS.map(([h, sub], i) => {
+            const c = el("div", "f07-col" + (i === COLS.length - 1 ? " f07-end" : ""), $("f07-trk"));
+            c.style.left = i * COLW + "px";
+            if (i === COLS.length - 1) c.style.width = 4 * COLW + "px"; // LATER. runs off the board
+            const ch = el("div", "f07-ch", c); el("b", "", ch, h); el("i", "", ch, sub);
+            const u = el("u", "", ch);
+            if (i !== START && i < COLS.length - 1 && (i % 3 !== 1)) {
+              const [id, t] = FILL[i % FILL.length], f = el("div", "f07-fill", c);
+              f.style.top = "172px"; el("div", "f07-cid", f, id); el("div", "f07-ct", f, t); // the top row is the ticket's lane
+            }
+            const slot = el("div", "f07-slot", c);
+            return { c, u, slot };
+          });
+          $("f07-trk").style.width = (COLS.length + 3) * COLW + "px";
+          const task = el("div", "", $("f07-trk")); task.id = "f07-task";
+          el("div", "f07-cid", task, "SEC-0001 · MIGRATION");
+          el("div", "f07-ct", task, "Migrate to post-quantum");
+          const due = el("span", "f07-due", task, "DUE —");
+
+          // the excuses: one per kick, fitted to the measure; the last kick locks "later."
+          const ADV = { a: 0.53, c: 0.47, d: 0.56, e: 0.53, f: 0.33, h: 0.56, i: 0.26, l: 0.26, m: 0.85, n: 0.56, o: 0.55, p: 0.56,
+            q: 0.56, r: 0.37, s: 0.46, t: 0.36, u: 0.56, x: 0.51, y: 0.5, 3: 0.55, " ": 0.2, ".": 0.25 };
+          const fit = (w, cap) => Math.min(cap, 74 / [...w].reduce((s, c) => s + (ADV[c] ?? 0.55) - 0.04, 0));
+          const excuses = EXCUSES.map((w, k) => {
+            const e = el("div", "f07-ex " + (k % 4 === 2 ? "f07-exf" : "f07-exi"), $("f07-exp"), w);
+            e.style.fontSize = fit(w, w === "q3" ? 21 : 24).toFixed(2) + "cqw"; // digits stand cap-high
+            if (/[ypq]/.test(w)) e.style.bottom = "calc(5.5cqw + 0.14em)"; // descenders clear the pad
+            return e;
+          });
+          const fin = el("div", "f07-ex", $("f07-exp"), "later."); fin.id = "f07-final";
+          fin.style.fontSize = fit("later.", 25).toFixed(2) + "cqw";
+          const finG = HR.glyphs(fin);
+          finG[finG.length - 1].classList.add("f07-dotf"); // the fire full stop
+
+          // ---- timeline -------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const stage = HR.stage($("root"), { seed: 7 });
+          const cam = stage.cam;
+          const host = document.getElementById("el-07-later");
+          const A = { x: -14, y: 0, z: 1, rot: 0, focus: 0.35 }; // the phrase camera
+          const N = { x: 0, y: 0, z: 0, rot: 0 };                // hit nudges on top
+          const seg = (at, dur, ease, from, to) => tl.fromTo(A, from, { ...to, duration: dur, ease, immediateRender: false }, at);
+          const nudge = (at, from, dur = 0.2) => tl.fromTo(N, from, { x: 0, y: 0, z: 0, rot: 0, duration: dur, ease: "power3.out", immediateRender: false }, at);
+
+          // the camera (v17): g1 is one slow continuous push while the lattice orbits (no punch on "math", the light
+          // does that); the shove leans into the cut. On the roll: a fresh frame, an accelerating push, a nudge per
+          // kick, a punch on the lock and the acceleration into chorus 2.
+          seg(0, CARD, "sine.inOut", { x: -14, z: 1, focus: 0.35 }, { x: 22, z: 1.06, focus: 0.2 });
+          seg(CARD, G2 - CARD, "power2.in", { z: 1.06, x: 22, focus: 0.2 }, { z: 1.09, x: 34, focus: 0.3 });
+          seg(G2, 0.001, "none", { z: 1.09, x: 34, y: 0, rot: 0, focus: 0.3 }, { z: 1.0, x: 0, y: 0, rot: 0, focus: 0.5 });
+          seg(G2 + 0.001, LOCK - G2 - 0.001, "power2.in", { z: 1.0 }, { z: 1.065 });
+          seg(LOCK, DUR - LOCK, "power3.in", { z: 1.065 }, { z: 1.11 });
+          nudge(STAMP, { y: 4, z: 0.008, rot: 0.2 }, 0.45);
+          // v21 (W3): the folder's arrival, each wave landing on its kick, the pop-up, the lock and the DEFERRED stamp
+          nudge(HANDED, { y: 5, z: 0.012, rot: -0.15 }, 0.35);
+          LANDS.slice(1).forEach((k, i) => nudge(k, { y: 2.5, z: 0.005, rot: (i % 2 ? 0.08 : -0.08) }, 0.18));
+          nudge(POP, { y: -6, z: 0.018 }, 0.4);
+          nudge(MATH, { z: 0.03, rot: 0.35, y: 5 }, 0.32);
+          nudge(STAMP2, { y: 6, z: 0.012, rot: -0.2 }, 0.3);
+          K.slice(0, 17).forEach((k, i) => {
+            const s = i % 2 ? -1 : 1, a = Math.min(1, i / 14);
+            nudge(k, { x: s * (7 + 9 * a), rot: s * (0.25 + 0.3 * a), z: 0.014 + 0.012 * a }, Math.min(0.2, K[i + 1] - k));
+          });
+          nudge(LOCK, { z: 0.05, rot: -0.6, y: 6 }, 0.28);
+          tl.fromTo("#f07-wall", { x: 0 }, { x: -130, duration: G2, ease: "none" }, 0);
+          tl.fromTo("#f07-near", { x: 0 }, { x: -260, duration: DUR, ease: "none" }, 0);
+          // in from 06: glideL, the frame already composed; out to 08: a hard cut on the chorus downbeat
+          WOW.transition(tl, host, { in: "glideL", dur: 0.46 });
+
+          // ---- lyrics -----------------------------------------------------------------------------------------
+          // a line leaves softly: it sinks and fades (v17: no blur snap)
+          const softExit = (line, at) => tl.fromTo(line, { y: 0, opacity: 1, filter: "blur(0px)" },
+            { y: 26, opacity: 0, filter: "blur(4px)", duration: 0.3, ease: "power2.in", immediateRender: false }, at);
+          // the carried tail of L13 is on screen at the cut; its last "true" is still rising
+          const lastTrue = l13[3].s, ltG = lastTrue._hrG = HR.glyphs(lastTrue);
+          lastTrue.classList.add("hr-clip");
+          tl.fromTo(ltG, { yPercent: 45, opacity: 0.55, filter: "blur(3px)" }, { yPercent: 0, opacity: 1, filter: "blur(0px)", duration: 0.3, ease: "power3.out", stagger: 0.012 }, 0);
+          softExit($("f07-l13"), L(76.46) - 0.4);
+          tl.set("#f07-l13", { opacity: 0 }, L(76.46));
+          // lead words glide up softly; the hero words ("math", "around") settle in on their own word times, their weight
+          // comes from the light (the lattice locks on "math", LATER is stamped on "around")
+          for (const w of l14.concat(l15)) WOW.word(tl, w.s, w.t, w.hero ? { kind: "settle", dur: w.s === l14[5].s ? 0.2 : undefined } : { kind: "rise" }); // v21: "math" lands with the lock
+          softExit($("f07-l14"), L(79.84) - 0.4);
+          tl.set("#f07-l14", { opacity: 0 }, L(79.84));
+          tl.fromTo("#f07-l14", { scale: 1 }, { scale: 1.035, duration: L(79.84) - L(76.46), ease: "none" }, L(76.46));
+          tl.fromTo("#f07-l15", { scale: 1 }, { scale: 1.03, duration: G2 - L(79.84), ease: "none" }, L(79.84));
+
+          // ---- g1: the lattice packs in a wave on the kicks, wired with light (drawn in render()) ----------------
+          // on "math": the basis is named, the end point reads LOCKED, one ring runs out from it, the light flares
+          const lit = { glow: 1, crisp: 1, route: 1 };
+          tl.fromTo(lit, { glow: 1.9, crisp: 1.35, route: 2 }, { glow: 1, crisp: 1, route: 1, duration: 0.9, ease: "power2.out", immediateRender: false }, MATH);
+          tl.fromTo(lockt, { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, MATH);
+          tl.fromTo(blabs, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", stagger: 0.06, immediateRender: false }, MATH);
+          // v21: no flat ring; the lock is mechanical (the basis snaps square, sparks off the joints, drawn in render())
+          const flare = { o: 1 };
+          tl.fromTo(flare, { o: 1.5 }, { o: 1, duration: 0.9, ease: "power2.out", immediateRender: false }, MATH);
+          tl.fromTo("#f07-file", { rotation: 0, x: 0 }, { rotation: -1.2, x: -14, duration: L(80.54) - MATH - 0.5, ease: "sine.inOut", immediateRender: false }, MATH + 0.5);
+
+          // ---- g1: filed. The camera pulls back onto a paper card that rises under the lattice on "you said", and the
+          // lattice prints onto it; it shrinks on "get"; LATER is stamped on "around"; it is shoved aside on "to" ---
+          tl.set("#f07-card", { opacity: 1 }, CARD - 0.75);
+          tl.fromTo("#f07-card", { y: 980, rotation: 4, filter: "blur(3px)" }, { y: 0, rotation: 0, filter: "blur(0px)", duration: 0.75, ease: "sine.out" }, CARD - 0.75);
+          tl.set("#f07-file", { className: "f07-printed" }, CARD);
+          tl.fromTo("#f07-filepos", { x: 0, y: 0, scale: 1, rotation: 0 }, { x: 10, y: 70, scale: 0.74, rotation: -4, duration: STAMP - 0.14 - L(80.54), ease: "power3.inOut", immediateRender: false }, L(80.54));
+          tl.set("#f07-stamp", { opacity: 0 }, 0);
+          tl.fromTo("#f07-stamp", { opacity: 0, scale: 1.7, rotation: -14, filter: "blur(5px)" }, { opacity: 1, scale: 1, rotation: -8, filter: "blur(0px)", duration: 0.16, ease: "power3.in", immediateRender: false }, STAMP - 0.16);
+          tl.fromTo("#f07-stamp", { scaleX: 1, scaleY: 1 }, { scaleX: 1.05, scaleY: 0.93, duration: 0.06, ease: "power2.out", immediateRender: false }, STAMP);
+          tl.fromTo("#f07-stamp", { scaleX: 1.05, scaleY: 0.93 }, { scaleX: 1, scaleY: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, STAMP + 0.06);
+          const dr = HR.rng(7170);
+          for (let i = 0; i < 9; i++) {
+            // outside the stamp's mask box, on the card: 352/540 is the stamp's corner, 460 x 184 its size
+            const d = el("span", "f07-dot", $("f07-file")), side = dr() < 0.5 ? -1 : 1, sz = 3 + dr() * dr() * 15;
+            Object.assign(d.style, { width: sz + "px", height: sz + "px", left: (352 + (side < 0 ? -8 - dr() * 18 : 466 + dr() * 18)).toFixed(0) + "px", top: (540 + 184 * (0.15 + dr() * 0.7)).toFixed(0) + "px" });
+            const dx = side * (10 + dr() * 34), dy = (dr() - 0.5) * 30;
+            tl.fromTo(d, { opacity: 0, x: -dx * 0.6, y: 0, scale: 0.3 }, { opacity: 0.9, x: 0, y: dy * 0.3, scale: 1, duration: 0.09, ease: "power3.out", immediateRender: false }, STAMP);
+            tl.to(d, { x: dx * 0.25, y: dy * 0.4, duration: 0.5, ease: "power2.out" }, STAMP + 0.09);
+          }
+          tl.fromTo("#f07-file", { y: 0, rotation: -1.2 }, { y: 6, rotation: -1.8, duration: 0.07, ease: "power2.out", immediateRender: false }, STAMP);
+          tl.fromTo("#f07-file", { y: 6, rotation: -1.8 }, { y: 0, rotation: -1.2, duration: 0.45, ease: "power3.out", immediateRender: false }, STAMP + 0.07);
+          tl.fromTo("#f07-filepos", { x: 10, rotation: -4, filter: "blur(0px)" }, { x: 1150, rotation: 9, filter: "blur(7px)", duration: 0.3, ease: "power3.in", immediateRender: false }, SHOVE - 0.04);
+          tl.set("#f07-mid", { opacity: 0 }, G2);
+
+          tl.set("#f07-l15", { opacity: 0 }, G2);
+          tl.set("#f07-spec", { opacity: 0 }, G2);
+          // g2 cuts to the cream register on the first kick: the dark world goes, the board comes up
+          tl.set("#f07-bg, #f07-near", { opacity: 0 }, G2);
+          tl.set("#f07-g2bg, #f07-board, #f07-ml", { opacity: 1 }, G2);
+          // the drag: on every kick the ticket is lifted and dropped one column on (landing ON the kick), then the
+          // board glides left to bring it back, so the backlog streams past without end
+          const colX = (c) => c * COLW + 20, trkX = (c) => -(c - REST) * COLW;
+          gsap.set(task, { x: colX(START + 1) - 20 }); gsap.set("#f07-trk", { x: trkX(START + 1) });
+          K.slice(1, 18).forEach((at, i) => {
+            const k = i + 1, c = START + 1 + k, gap = (K[k + 1] ?? DUR) - at, pre = Math.min(0.07, (at - K[k - 1]) * 0.45);
+            tl.fromTo(task, { x: colX(c - 1) - 20, rotation: 0, y: 0 }, { x: colX(c) - 20, rotation: 2.5, y: -10, duration: pre, ease: "power3.in", immediateRender: false }, at - pre);
+            tl.fromTo(task, { rotation: 2.5, y: -10, scaleX: 1.05, scaleY: 0.9 }, { rotation: 0, y: 0, scaleX: 1, scaleY: 1, duration: Math.min(0.24, gap - 0.075), ease: "elastic.out(1, 0.5)", immediateRender: false }, at);
+            tl.fromTo("#f07-trk", { x: trkX(c - 1) }, { x: trkX(c), duration: gap * 0.85, ease: "power2.inOut", immediateRender: false }, at);
+          });
+          tl.fromTo(task, { scaleX: 1.05, scaleY: 0.9 }, { scaleX: 1, scaleY: 1, duration: 0.2, ease: "elastic.out(1, 0.5)", immediateRender: false }, G2);
+          tl.set("#f07-roll-lyric", { opacity: 1 }, G2);
+
+          // ---- g2: the excuse roll, one word per kick: the column the ticket was just dropped in ---------------------
+          // every excuse is dragged in from the left, the way the ticket goes; alternate kicks lean the other way
+          const ENTER = [
+            (e, at, d) => tl.fromTo(e, { x: -140, skewX: 12 }, { x: 0, skewX: 0, duration: d, ease: "expo.out", immediateRender: false }, at),
+            (e, at, d) => tl.fromTo(e, { x: -90, scale: 1.12, rotation: -1.5 }, { x: 0, scale: 1, rotation: 0, duration: d, ease: "power4.out", immediateRender: false }, at),
+          ];
+          excuses.forEach((e, k) => {
+            const at = K[k], gap = K[k + 1] - at, d = Math.min(0.17, gap * 0.75);
+            ENTER[k % ENTER.length](e, at, d);
+            // motion blur on the flip only: two frames at 60 fps, a non-overshooting ease, crisp once landed
+            tl.fromTo(e, { filter: "blur(8px)" }, { filter: "blur(0px)", duration: 0.034, ease: "power1.out", immediateRender: false }, at);
+            tl.fromTo(e, { scale: 1 }, { scale: 1.035, duration: gap - d, ease: "none", immediateRender: false }, at + d); // it keeps coming
+          });
+          // the lock: "later." slams ON the last kick before the chorus, glyphs settle in a wave, the extrusion grows
+          tl.fromTo(fin, { scale: 1.2 }, { scale: 1, duration: 0.1, ease: "power4.out", immediateRender: false }, LOCK);
+          tl.fromTo(fin, { filter: "blur(8px)" }, { filter: "blur(0px)", duration: 0.034, ease: "power1.out", immediateRender: false }, LOCK);
+          finG.forEach((g, i) => {
+            tl.fromTo(g, { y: -28 - i * 4 }, { y: 0, duration: 0.42, ease: "elastic.out(1, 0.45)", immediateRender: false }, LOCK + i * 0.014);
+          });
+          tl.fromTo(fin, { "--d": 0 }, { "--d": 1, duration: 0.18, ease: "power3.out", immediateRender: false }, LOCK + 0.02);
+          const SURE = K[8]; // the archive's one note on this board, written beside the count
+          K.slice(0, 18).forEach((k) => tl.fromTo("#f07-num", { scale: 1.22 }, { scale: 1, duration: 0.14, ease: "power3.out", immediateRender: false }, k));
+          LANDS.forEach((t) => tl.fromTo("#f07-num", { scale: 1.2 }, { scale: 1, duration: 0.2, ease: "power3.out", immediateRender: false }, t));
+
+          // ---- the lattice and the folder, drawn from timeline time (g1 only) ----------------------------------
+          // v21: one canvas, 60 px bleed on every side (the camera drift never shows its edge), at 2x on a 2x render
+          const PAD = 60, DPR = Math.min(2, Math.max(1, Math.round(window.devicePixelRatio || 1)));
+          const cv = $("f07-lc"); cv.width = (1920 + 2 * PAD) * DPR; cv.height = (1080 + 2 * PAD) * DPR;
+          const ctx = cv.getContext("2d");
+          const BASE = () => ctx.setTransform(DPR, 0, 0, DPR, DPR * PAD, DPR * PAD);
+          const rgba = (c, a) => `rgba(${c},${Math.max(0, Math.min(1, a)).toFixed(3)})`;
+          const CR = "240,236,229", FI = "232,93,38", INK = "17,17,17", RED = "194,74,28", HOT = "255,246,226";
+          const decay = (t, at, d) => (t >= at ? Math.exp(-(t - at) / d) : 0);
+          function seg2(a, b, q) { ctx.moveTo(a.x, a.y); ctx.lineTo(a.x + (b.x - a.x) * q, a.y + (b.y - a.y) * q); }
+          // a polyline through projected nodes up to fractional index f
+          function polyTo(pts, f) {
+            ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+            const n = Math.floor(f);
+            for (let i = 1; i <= Math.min(n, pts.length - 1); i++) ctx.lineTo(pts[i].x, pts[i].y);
+            if (n < pts.length - 1 && f > n) { const a = pts[n], b = pts[n + 1], q = f - n; ctx.lineTo(a.x + (b.x - a.x) * q, a.y + (b.y - a.y) * q); }
+          }
+          // a fire-only halo for paper (a cream core would vanish on cream)
+          const HALO_F = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 128;
+            const x = c.getContext("2d"), g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+            g.addColorStop(0, "rgba(232,93,38,0.9)"); g.addColorStop(0.35, "rgba(232,93,38,0.35)"); g.addColorStop(1, "rgba(232,93,38,0)");
+            x.fillStyle = g; x.fillRect(0, 0, 128, 128); return c;
+          })();
+
+          // ---- the folder on the desk plane y = YP: [x0, x1, z0 (near), z1 (far)] in world units, before the slide
+          const FD = { cover: [-12.1, -4.05, -4.0, 3.9], back: [-3.95, 4.15, -4.0, 3.9], tab: [1.4, 3.9, 3.9, 4.5],
+            page: [-3.6, 3.7, -3.62, 3.6], slip: [-11.1, -5.0, -3.35, 3.15] };
+          const P3 = (x, z, fo, v, y = YP) => { const o = {}; project([x + fo[0], y, z + fo[2]], v, o); return o; };
+          const quad = (r, fo, v, y) => { const [x0, x1, z0, z1] = r; return [P3(x0, z0, fo, v, y), P3(x1, z0, fo, v, y), P3(x1, z1, fo, v, y), P3(x0, z1, fo, v, y)]; };
+          const pathQ = (q) => { ctx.moveTo(q[0].x, q[0].y); for (let i = 1; i < 4; i++) ctx.lineTo(q[i].x, q[i].y); ctx.closePath(); };
+          const fillQ = (q, c) => { ctx.beginPath(); pathQ(q); ctx.fillStyle = c; ctx.fill(); };
+          // a page-px frame (100 px per world unit) at the far-left corner (x, z) of a sheet: u along +x, v toward the viewer
+          function onPlane(x, z, fo, v) {
+            const p0 = P3(x, z, fo, v), pu = P3(x + 0.5, z, fo, v), pv = P3(x, z - 0.5, fo, v);
+            ctx.setTransform(DPR * (pu.x - p0.x) / 50, DPR * (pu.y - p0.y) / 50, DPR * (pv.x - p0.x) / 50, DPR * (pv.y - p0.y) / 50, DPR * (p0.x + PAD), DPR * (p0.y + PAD));
+          }
+          const txt = (s, x, y, font, color, align = "left", ls = "0px") => { ctx.font = font; ctx.fillStyle = color; ctx.textAlign = align; ctx.letterSpacing = ls; ctx.fillText(s, x, y); };
+          const hline = (x0, x1, y, w, c) => { ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.lineWidth = w; ctx.strokeStyle = c; ctx.stroke(); };
+          const MONO5 = '500 13px "IBM Plex Mono"', MONO6 = '600 13px "IBM Plex Mono"';
+          // the DEFERRED stamp, inked once (rebuilt once the fonts are in), pressed with pinholes like 18's stamps
+          let stampImg = null, stampFonts = false;
+          function stampImage() {
+            const ok = document.fonts ? document.fonts.check('900 120px "Barlow"') : true;
+            if (stampImg && (stampFonts || !ok)) return stampImg;
+            const c = document.createElement("canvas"); c.width = 640; c.height = 250;
+            const x = c.getContext("2d"), r = HR.rng(7181);
+            x.strokeStyle = x.fillStyle = "#C24A1C"; x.lineJoin = "round";
+            x.lineWidth = 12; x.strokeRect(8, 8, 624, 234); x.lineWidth = 3; x.strokeRect(27, 27, 586, 196);
+            x.font = '900 122px "Barlow"'; x.textAlign = "center"; x.letterSpacing = "6px"; x.fillText("DEFERRED", 323, 160);
+            x.lineWidth = 2.5; x.beginPath(); x.moveTo(50, 180); x.lineTo(590, 180); x.stroke();
+            x.font = '600 19px "IBM Plex Mono"'; x.letterSpacing = "4px"; x.fillText("FIPS 203 · MIGRATION · NO DATE", 322, 208);
+            x.globalCompositeOperation = "destination-out";
+            for (let k = 0; k < 900; k++) { x.fillStyle = `rgba(0,0,0,${(0.3 + r() * 0.6).toFixed(2)})`; x.beginPath(); x.arc(r() * 640, r() * 250, 0.4 + r() * r() * 2.2, 0, Math.PI * 2); x.fill(); }
+            for (let k = 0; k < 26; k++) { x.fillStyle = `rgba(0,0,0,${(0.08 + r() * 0.2).toFixed(2)})`; x.fillRect(r() * 640, r() * 250, 40 + r() * 200, 1 + r() * 3); }
+            stampImg = c; stampFonts = ok; return c;
+          }
+
+          // the folder: boards with a visible edge, the routing slip with a clip, the FIPS 203 page with its engraved
+          // figure, the tab; then the desk lamp's pool multiplied over it (paper whites in the middle, dark at the rim)
+          function drawFolder(t, v, fo) {
+            BASE();
+            const edgeY = YP - 0.07;
+            for (const r of [FD.cover, FD.back]) fillQ(quad(r, fo, v, edgeY), "#3B3832");
+            fillQ(quad(FD.tab, fo, v), "#CFC5B3");
+            fillQ(quad(FD.cover, fo, v), "#D6CDBC"); fillQ(quad(FD.back, fo, v), "#D9D0BF");
+            // the spine crease
+            const s0 = P3(-4.0, -4.0, fo, v), s1 = P3(-4.0, 3.9, fo, v);
+            ctx.beginPath(); ctx.moveTo(s0.x, s0.y); ctx.lineTo(s1.x, s1.y); ctx.lineWidth = 3 * v.s / 124; ctx.strokeStyle = "rgba(60,52,40,0.45)"; ctx.stroke();
+            fillQ(quad(FD.slip, fo, v, YP + 0.005), "#F4F0E8");
+            fillQ(quad(FD.page, fo, v, YP + 0.01), "#F2EEE7");
+            // the routing slip
+            onPlane(FD.slip[0], FD.slip[3], fo, v);
+            txt("ROUTING SLIP", 34, 74, '900 46px "Barlow"', "#111111", "left", "1px");
+            txt("NIST · CSD · FORM 203-A", 576, 40, MONO5, "#6a655c", "right", "2px");
+            hline(34, 576, 100, 2.5, "#111111");
+            [["TO", "YOU"], ["FROM", "NIST"], ["RE", "THE NEW MATH"], ["ACTION", "MIGRATE"], ["DUE", "—"], ["READ", "☐"]].forEach(([k, val], i) => {
+              const y = 160 + i * 72;
+              txt(k, 34, y, '500 15px "IBM Plex Mono"', "#6a655c", "left", "3px");
+              txt(val, 190, y, '600 30px "IBM Plex Mono"', "#111111", "left", "1px");
+              hline(34, 576, y + 22, 1, "rgba(17,17,17,0.25)");
+            });
+            txt("(later)", 330, 518, '400 64px "Caveat Brush"', "#C8481A");
+            txt("PAGES: 47 · PAGES READ: 0", 34, 618, MONO5, "#6a655c", "left", "2px");
+            // the paper clip over the slip's top edge
+            ctx.beginPath(); ctx.lineWidth = 5; ctx.strokeStyle = "#8C877E"; ctx.lineCap = "round";
+            ctx.moveTo(470, 34); ctx.lineTo(470, -58); ctx.arc(496, -58, 26, Math.PI, 0); ctx.lineTo(522, 52); ctx.arc(503, 52, 19, 0, Math.PI); ctx.lineTo(484, -40); ctx.stroke();
+            // the tab
+            onPlane(FD.tab[0], FD.tab[3], fo, v);
+            txt("ML-KEM · FIPS 203", 125, 40, '600 21px "IBM Plex Mono"', "#111111", "center", "2px");
+            // the page: header, the engraved figure (the lattice's footprint), footer
+            onPlane(FD.page[0], FD.page[3], fo, v);
+            txt("FIPS 203", 30, 62, '900 58px "Barlow"', "#111111", "left", "0px");
+            txt("MODULE-LATTICE-BASED KEY-ENCAPSULATION", 268, 38, MONO6, "#111111", "left", "1.5px");
+            txt("MECHANISM STANDARD · NIST · 13 AUG 2024", 268, 60, MONO5, "#6a655c", "left", "1.5px");
+            hline(30, 700, 80, 2.5, "#111111");
+            hline(30, 700, 640, 1.2, "rgba(17,17,17,0.5)");
+            txt("FIG. 1 — A MODULE LATTICE, RANK 3 (NOT TO SCALE)", 30, 666, MONO6, "#111111", "left", "1.5px");
+            txt("HARD FOR A QUANTUM COMPUTER. EASY TO PUT OFF.", 30, 690, MONO5, "#6a655c", "left", "1.5px");
+            txt("ML-KEM-768", 700, 666, MONO6, "#C24A1C", "right", "2px");
+            BASE();
+            // the engraved figure: every bond and point of the lattice printed flat where its points will land
+            for (const n of nodes) { const p = P3(n.h[0], n.h[2], fo, v, YP + 0.01); n.ex = p.x; n.ey = p.y; }
+            ctx.beginPath();
+            for (const e of edges) if (!e.brace) { ctx.moveTo(e.a.ex, e.a.ey); ctx.lineTo(e.b.ex, e.b.ey); }
+            ctx.lineWidth = 1.3 * v.s / 124; ctx.strokeStyle = "rgba(17,17,17,0.3)"; ctx.stroke();
+            for (const n of nodes) { ctx.beginPath(); ctx.arc(n.ex, n.ey, 5 * v.s / 124, 0, Math.PI * 2); ctx.lineWidth = 1.3 * v.s / 124; ctx.strokeStyle = "rgba(17,17,17,0.45)"; ctx.stroke(); }
+            // DEFERRED, stamped on the hat after "math": it drops, presses, stays
+            if (t >= STAMP2 - 0.09) {
+              const u = clamp01((t - (STAMP2 - 0.09)) / 0.09), e = u * u * u, squash = decay(t, STAMP2, 0.06);
+              onPlane(FD.page[0], FD.page[3], fo, v);
+              ctx.translate(500, 420); ctx.rotate(-0.13); ctx.scale((1.7 - 0.7 * e) * 0.6 * (1 + 0.05 * squash), (1.7 - 0.7 * e) * 0.6 * (1 - 0.07 * squash));
+              ctx.globalAlpha = 0.25 + 0.7 * e; ctx.globalCompositeOperation = "multiply";
+              ctx.drawImage(stampImage(), -320, -125);
+              ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+              BASE();
+            }
+            // the desk lamp: a warm pool over the paper, falling off to dark at the folder's rim
+            const lc = P3(0.4, 0.6, fo, v), R = 7.4 * v.s;
+            ctx.save(); ctx.beginPath(); for (const r of [FD.cover, FD.back, FD.tab]) pathQ(quad(r, fo, v, edgeY + (r === FD.tab ? 0.07 : 0))); ctx.clip();
+            const g = ctx.createRadialGradient(lc.x, lc.y, 0, lc.x, lc.y, R);
+            g.addColorStop(0, "#FFFFFF"); g.addColorStop(0.42, "#F3EDE3"); g.addColorStop(0.75, "#9C958A"); g.addColorStop(1, "#2A2724");
+            ctx.globalCompositeOperation = "multiply"; ctx.fillStyle = g; ctx.fillRect(-PAD, -PAD, 1920 + 2 * PAD, 1080 + 2 * PAD);
+            ctx.restore(); ctx.globalCompositeOperation = "source-over";
+          }
+
+          // the sparks thrown off the cube's eight corners as the basis snaps square on "math"
+          const SPARKS = (() => {
+            const r = HR.rng(7191), out = [];
+            const corners = nodes.filter((n) => (n.i % (SI - 1) === 0) && (n.j % (SI - 1) === 0) && (n.k % (SK - 1) === 0));
+            for (const n of corners) for (let s = 0; s < 8; s++) {
+              const a = r() * Math.PI * 2, sp = 2.5 + r() * 4.5;
+              out.push({ n, vx: Math.cos(a) * sp, vy: 1.5 + r() * 4, vz: Math.sin(a) * sp, life: 0.3 + r() * 0.45, d: r() * 0.03 });
+            }
+            return out;
+          })();
+          function drawSparks(t, v) {
+            if (t < MATH || t > MATH + 0.85) return;
+            const at = (s, tau) => { const o = {}; project([s.n.lock[0] + s.vx * tau, s.n.lock[1] + s.vy * tau - 6 * tau * tau, s.n.lock[2] + s.vz * tau], v, o); return o; };
+            ctx.lineCap = "round";
+            for (const s of SPARKS) {
+              const tau = t - MATH - s.d; if (tau < 0 || tau > s.life) continue;
+              const a = at(s, Math.max(0, tau - 0.04)), b = at(s, tau), fade = 1 - tau / s.life;
+              ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.lineWidth = 5 * b.ps; ctx.strokeStyle = rgba(FI, 0.85 * fade); ctx.stroke();
+              ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.lineWidth = 2 * b.ps; ctx.strokeStyle = rgba(HOT, fade); ctx.stroke();
+            }
+          }
+
+          // one pass of the lattice: 'dark' (v17's light on black, then printed ink on the card) or 'ink' (over the
+          // folder's paper: ink bonds, fire route and lit points, paper struts down to the page)
+          function drawPass(mode, t, hat, v, lp, pr, W, foFull) {
+            const ink = mode === "ink";
+            if (!ink) for (let k = 0; k < SK; k++) {
+              const q = [[0, 0], [SI - 1, 0], [SI - 1, SI - 1], [0, SI - 1]].map(([i, j]) => nodes[idx(i, j, k)]);
+              ctx.beginPath(); q.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y))); ctx.closePath();
+              ctx.fillStyle = rgba(lp > 0.5 ? CR : INK, 0.028); ctx.fill();
+              ctx.lineWidth = 1; ctx.strokeStyle = lp > 0.5 ? rgba("136,136,128", 0.3 * lp) : rgba("80,80,72", 0.3 * pr); ctx.stroke();
+            }
+            if (ink) {
+              // the pop-up's paper struts: each bottom point is held to its printed spot on the page
+              const sa = 1 - clamp01((t - FOLD_OUT) / 0.2);
+              ctx.beginPath();
+              for (const n of nodes) if (n.k === 0 && popE(t, 0) > 0.02) { ctx.moveTo(n.x, n.y); ctx.lineTo(n.ex, n.ey); }
+              ctx.lineWidth = 2.2 * W; ctx.strokeStyle = rgba("90,84,74", 0.55 * sa); ctx.stroke();
+              for (const e of edges) {
+                const q = smooth(e.at - 0.2, e.at, t); if (q <= 0) continue;
+                const f = (e.a.fog + e.b.fog) / 2, ps = (e.a.ps + e.b.ps) / 2;
+                ctx.beginPath(); seg2(e.a, e.b, q);
+                ctx.lineWidth = (e.brace ? 1.3 : 2.8) * ps; ctx.strokeStyle = rgba(INK, (e.brace ? 0.35 : 0.5 + 0.4 * f) * lit.crisp); ctx.stroke();
+              }
+            } else if (lp > 0) {
+              for (const e of edges) {
+                const m = (e.a.m + e.b.m) / 2, f = (e.a.fog + e.b.fog) / 2;
+                ctx.beginPath(); seg2(e.a, e.b, 1); ctx.lineWidth = 1.3 * W; ctx.strokeStyle = rgba(CR, (e.brace ? 0.1 : 0.24) * f * m * lp); ctx.stroke();
+              }
+              ctx.globalCompositeOperation = "lighter";
+              for (const e of edges) {
+                if (e.brace) continue;
+                const q = smooth(e.at - 0.2, e.at, t); if (q <= 0) continue;
+                const m = (e.a.m + e.b.m) / 2, f = (e.a.fog + e.b.fog) / 2, ps = (e.a.ps + e.b.ps) / 2;
+                ctx.beginPath(); seg2(e.a, e.b, q); ctx.lineWidth = 11 * ps; ctx.strokeStyle = rgba(FI, 0.16 * f * m * lp * lit.glow); ctx.stroke();
+              }
+              ctx.globalCompositeOperation = "source-over";
+              for (const e of edges) {
+                const q = smooth(e.at - 0.2, e.at, t); if (q <= 0) continue;
+                const m = (e.a.m + e.b.m) / 2, f = (e.a.fog + e.b.fog) / 2, ps = (e.a.ps + e.b.ps) / 2;
+                ctx.beginPath(); seg2(e.a, e.b, q);
+                ctx.lineWidth = (e.brace ? 1.4 : 3) * ps; ctx.strokeStyle = rgba(CR, (e.brace ? 0.3 : 0.45 + 0.5 * f) * m * lp * lit.crisp); ctx.stroke();
+              }
+            }
+            if (!ink && pr > 0) for (const e of edges) {
+              const f = (e.a.fog + e.b.fog) / 2;
+              ctx.beginPath(); seg2(e.a, e.b, 1); ctx.lineWidth = (e.brace ? 0.9 : 1.6) * W; ctx.strokeStyle = rgba(INK, (e.brace ? 0.22 : 0.32 + 0.5 * f) * pr); ctx.stroke();
+            }
+            // the basis vectors light on the kick before "math"
+            const bq = smooth(PRE - 0.02, PRE + 0.14, t);
+            if (bq > 0) for (const b of BTIPS) {
+              ctx.beginPath(); seg2(ORIGIN, b, bq);
+              if (lp > 0 && !ink) { ctx.globalCompositeOperation = "lighter"; ctx.lineWidth = 14 * ORIGIN.ps; ctx.strokeStyle = rgba(FI, 0.25 * lp * lit.glow); ctx.stroke(); ctx.globalCompositeOperation = "source-over"; }
+              ctx.lineWidth = (lp > 0.5 ? 5.5 : 3) * ORIGIN.ps; ctx.strokeStyle = lp > 0.5 ? rgba(FI, 0.95) : rgba(RED, 0.9 * pr); ctx.stroke();
+            }
+            // the lit route: it draws node by node from the origin, then a spark runs it twice on "math"
+            const rf = clamp01((t - RSTART) / (MATH - 0.06 - RSTART)) * (route.length - 1);
+            if (rf > 0) {
+              const rm = ink ? 1 : route.reduce((s, p) => s + p.m, 0) / route.length;
+              if (lp > 0) {
+                if (!ink) { ctx.globalCompositeOperation = "lighter"; polyTo(route, rf); ctx.lineWidth = 22 * W; ctx.strokeStyle = rgba(FI, 0.22 * lp * lit.route * rm); ctx.stroke(); ctx.globalCompositeOperation = "source-over"; }
+                polyTo(route, rf); ctx.lineWidth = 6.5 * W; ctx.strokeStyle = rgba(FI, lp * rm); ctx.stroke();
+                for (const s0 of [MATH, MATH + 0.55]) {
+                  const u = (t - s0) / 0.5; if (u < 0 || u > 1) continue;
+                  const f = u * u * (route.length - 1 + 0.6);
+                  if (!ink) ctx.globalCompositeOperation = "lighter";
+                  const a = Math.max(0, f - 0.6), b = Math.min(route.length - 1, f);
+                  ctx.beginPath();
+                  for (let x = a; x <= b + 1e-6; x += 0.1) {
+                    const n = Math.min(route.length - 2, Math.floor(x)), q = x - n, p = route[n], r = route[n + 1];
+                    const px = p.x + (r.x - p.x) * q, py = p.y + (r.y - p.y) * q;
+                    x === a ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+                  }
+                  if (ink) { ctx.lineWidth = 9 * W; ctx.strokeStyle = rgba(FI, 0.9); ctx.stroke(); }
+                  ctx.lineWidth = 6 * W; ctx.strokeStyle = rgba(ink ? HOT : CR, 0.95 * lp); ctx.stroke();
+                  ctx.globalCompositeOperation = "source-over";
+                }
+              }
+              if (!ink && pr > 0) { polyTo(route, rf); ctx.lineWidth = 4 * W; ctx.strokeStyle = rgba(RED, pr); ctx.stroke(); }
+            }
+            // the nodes, far to near: a ring that occludes the bonds behind, a cream (or lit fire) core, a halo; each
+            // wave flashes as it lands on its kick, every point flashes white-hot on the lock
+            const order = nodes.slice().sort((p, q) => q.z - p.z);
+            for (const n of order) {
+              const landE = smooth(0, n.land, t) * 0.5 + (t >= n.land ? 0.5 : 0);
+              const fire = n.lit != null && t >= n.lit, hotE = decay(t, n.front, 0.2);
+              if (lp > 0) {
+                const m = ink ? 1 : n.m;
+                const op = (0.5 + 0.5 * landE) * m * (0.55 + 0.45 * n.fog) * (t >= MATH && t < CARD && n.flick ? 1 - 0.6 * hat : 1) * lp;
+                const r = 8.5 * n.ps * (1 + 0.5 * decay(t, n.land, 0.12) + 0.5 * hotE);
+                ctx.beginPath(); ctx.arc(n.x, n.y, r + 3.5 * n.ps, 0, Math.PI * 2); ctx.fillStyle = ink ? rgba(INK, op) : rgba("10,10,10", op); ctx.fill();
+                ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2); ctx.fillStyle = hotE > 0.3 ? rgba(HOT, op) : rgba(fire ? FI : ink ? "247,243,236" : CR, op); ctx.fill();
+                const ha = (0.12 + 0.88 * decay(t, n.land, 0.16)) * (t >= n.land ? 1 : 0.4) + (fire ? 0.7 * decay(t, n.lit, 0.18) + 0.2 : 0) + 0.8 * hotE;
+                if (ha > 0.02) {
+                  const hs = 74 * n.ps * (1 + 0.5 * decay(t, n.land, 0.2) + 0.6 * hotE);
+                  if (ink) { ctx.globalAlpha = Math.max(0, Math.min(1, (ha - 0.12) * 0.9 * lp)); }
+                  else { ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = Math.max(0, Math.min(1, ha * m * n.fog * lp)); }
+                  if (ctx.globalAlpha > 0.01) ctx.drawImage(ink ? HALO_F : HALO, n.x - hs / 2, n.y - hs / 2, hs, hs);
+                  ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+                }
+              }
+              if (!ink && pr > 0) { ctx.beginPath(); ctx.arc(n.x, n.y, 5 * n.ps, 0, Math.PI * 2); ctx.fillStyle = rgba(n.onR ? RED : INK, pr); ctx.fill(); }
+            }
+          }
+
+          const inQuad = (q, x, y) => { let s = 0; for (let i = 0; i < 4; i++) { const a = q[i], b = q[(i + 1) % 4], c = (b.x - a.x) * (y - a.y) - (b.y - a.y) * (x - a.x); if (c !== 0) { if (s === 0) s = Math.sign(c); else if (Math.sign(c) !== s) return false; } } return true; };
+          function drawLattice(t, hat) {
+            const v = view(t), pr = smooth(CARD - 0.42, CARD - 0.05, t), lp = 1 - pr, BC = basisAt(t);
+            for (const n of nodes) { const w = pos(n, t, BC); n.lock = w; project(w, v, n); n.m = textMask(n.x, n.y, lp); }
+            BASE(); ctx.clearRect(-PAD, -PAD, 1920 + 2 * PAD, 1080 + 2 * PAD);
+            ctx.lineCap = "round"; ctx.lineJoin = "round";
+            const W = v.s / BIG.s; // line widths follow the fit
+            const fi = foIn(t), fx = foOut(t), fo = [fi[0] + fx[0], 0, fi[2] + fx[2]];
+            const folder = t < FOLD_GONE + 0.05;
+            let quads = null;
+            if (folder) {
+              drawFolder(t, v, fo); BASE();
+              quads = [FD.cover, FD.back, FD.tab].map((r) => quad(r, fo, v));
+              ctx.save(); ctx.beginPath(); ctx.rect(-PAD, -PAD, 1920 + 2 * PAD, 1080 + 2 * PAD); quads.forEach(pathQ); ctx.clip("evenodd");
+              drawPass("dark", t, hat, v, lp, pr, W, fo); ctx.restore();
+              ctx.save(); ctx.beginPath(); quads.forEach(pathQ); ctx.clip();
+              drawPass("ink", t, hat, v, lp, pr, W, fo); ctx.restore();
+            } else drawPass("dark", t, hat, v, lp, pr, W, fo);
+            drawSparks(t, v);
+            // the engraved coordinates, the basis names and the lock tag ride the projected points
+            for (const n of nodes) if (n.lab) {
+              n.lab.style.transform = `translate(${n.x.toFixed(1)}px, ${n.y.toFixed(1)}px) scale(${Math.max(0.75, Math.min(1.15, n.ps)).toFixed(3)})`;
+              const onPaper = quads && quads.some((q) => inQuad(q, n.x, n.y));
+              n.lab.firstChild.style.color = onPaper ? (n.onR ? "#C24A1C" : "#4A463F") : "";
+              n.lab.style.opacity = ((onPaper ? 1 : n.m) * lp * (0.35 + 0.65 * smooth(0, n.land, t)) * (0.5 + 0.5 * n.fog) + pr).toFixed(3);
+            }
+            BTIPS.forEach((b, i) => { const o = [[18, 8], [-10, -40], [-50, -16]][i]; blabs[i].style.transform = `translate(${(b.x + o[0]).toFixed(1)}px, ${(b.y + o[1]).toFixed(1)}px)`; });
+            lockt.style.left = (END.x + 20).toFixed(1) + "px"; lockt.style.top = (END.y - 58).toFixed(1) + "px";
+          }
+
+          // ---- per-frame draw -------------------------------------------------------------------------------
+          const root = $("root"), num = $("f07-num"), kickEl = $("f07-kick"), clabel = $("f07-clabel"), wallbox = $("f07-wallbox");
+          const light = $("f07-light"), sure = $("f07-sure"), cntLabel = $("f07-clabel");
+          let wasG2 = null;
+          const mathRow = l14.find((w) => w.hero).s, aroundW = l15.find((w) => w.hero).s;
+          function render() {
+            const t = tl.time(), T = t + T0;
+            cam.x = A.x + N.x; cam.y = A.y + N.y; cam.z = A.z + N.z; cam.rot = A.rot + N.rot; cam.focus = A.focus;
+            stage.apply(T);
+            WOW.draw(tl, T0);
+            HR.draw(tl);
+            const rms = HR.band("rms", T), kick = HR.hit("kick", T, 0.14), hat = HR.hit("hat", T, 0.07);
+            let k = -1;
+            for (let i = 0; i < K.length; i++) if (t >= K[i] - 1e-6) k = i;
+            const g2 = k >= 0;
+            if (wasG2 !== g2) {
+              wasG2 = g2;
+              // chrome on cream is ink (10-ticket); inline, since #id rules under a toggled class never match
+              kickEl.style.color = g2 ? "#111111" : ""; num.style.color = g2 ? "#111111" : ""; cntLabel.style.color = g2 ? "#111111" : "";
+              kickEl.style.fontWeight = g2 ? "600" : "";
+            }
+
+            // light behind the lattice in g1, flaring on the lock
+            light.style.opacity = g2 ? "0" : ((0.55 + 0.9 * rms + 0.3 * kick) * flare.o).toFixed(3);
+            if (g2) wallbox.style.transform = "none";
+
+            // glow: "math" and "around" on dark, the fire excuses, the basis; settled nodes twinkle on hats
+            HR.glow(mathRow, T, 0.4, 0.8);
+            HR.glow(aroundW, T, 0.4, 0.8);
+            if (!g2) drawLattice(t, hat);
+
+            // the roll: only the current excuse is on screen; the lock holds into the cut
+            const kk = Math.min(k, 17), cur = g2 ? START + 1 + kk : -1, since = g2 ? t - K[kk] : 0;
+            cols.forEach(({ c, u, slot }, i) => {
+              c.classList.toggle("f07-on", i === cur);
+              u.style.transform = `scaleX(${i === cur ? clamp01(since / 0.08).toFixed(3) : 0})`;
+              slot.style.opacity = i === cur - 1 && kk > 0 ? Math.max(0, 1 - since / 0.45).toFixed(3) : "0";
+            });
+            excuses.forEach((e, i) => { e.style.visibility = g2 && i === k ? "visible" : "hidden"; });
+            fin.style.visibility = k >= 17 ? "visible" : "hidden";
+            sure.style.clipPath = `inset(-30% ${(100 - 100 * clamp01((t - SURE) / 0.28)).toFixed(1)}% -40% -5%)`;
+            kickEl.textContent = g2 ? "SEC-0001 · SPRINT BOARD" : "THE NEW MATH";
+            clabel.textContent = g2 ? "RESCHEDULED" : "OBJ";
+            num.textContent = g2 ? "×" + String(kk + 1).padStart(2, "0") : "0002";
+          }
+          tl.eventCallback("onUpdate", render);
+          tl.seek(0);
+          render();
+          window.__timelines["07-later"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

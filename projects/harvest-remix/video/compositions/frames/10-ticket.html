@@ -1,0 +1,599 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 10 — ticket (bridge, 105.243–117.94). The film's light register: the company's issue tracker on cream
+         paper. v11 idea kept: SEC-0001 "Migrate to post-quantum crypto" is typed, filed, and stepped down to LOW; the
+         roadmap shoves it a quarter-pair per kick for four years into a hatched Q-DAY column; the comment thread ends
+         on "who'd even store it?", answered in marker: "me.". v16: backups/v16-sources/compositions/frames/10-ticket.html
+         v17 (V17.md): three travelling shots, each on one continuous camera, accents only on the music, soft verse rules.
+           A 105.243–110.66  one spline camera: close on the new-issue modal while it types → pulls back as the modal
+                             files into the board ("opened") → pushes into the priority dropdown until it fills the
+                             frame; "low" is the LOW option itself (soft punch, thin ring, marker circle).
+           B 110.66–114.2    the roadmap: a constant glide along the Gantt (frozen label column) while the bar is
+                             shoved right one block per kick, each leaving a DEFERRED block; "row" lights the row.
+           C 114.2–117.94    the comment thread scrolls in time with the beats, decelerating onto the question, which
+                             is typed word by word as it is sung.
+         Switches: frame in glideUp (0.46); A→B glideL, B→C glideUp (0.46 each side, scenes only — the lyric stays
+         crisp); out: hard cut on the downbeat at 117.94 (11 locked). Counters live inside the windows (no corner HUD).
+         v20 (V20.md #7): a kick-driven carrier over the bridge's loud drums, every gag kept. Every kick shuffles the cards
+         (board cards in A, thread comments in C) a few px and recoils the camera 2 px; B's Gantt slides a quarter per kick
+         (eased steps, never stopping) while the bar is still shoved two; "again." writes on the snares (112.067, 112.979,
+         113.879). Multiplayer cursors move through the UI on the kicks: a. (security) types and clicks CREATE, then
+         walks the priority list down to LOW; brad (vp velocity) drags the bar; somebody (vp) drifts down to the question. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --paper: #F4F1EB; --rule: #CFC9BE; --muted: #6E6A62;
+          background: var(--cream); color: var(--ink);
+        }
+
+        /* ---- background: paper stock, a faint dot grid, warm daylight ---- */
+        #f10-bg { position: absolute; inset: -80px; }
+        #f10-paper { position: absolute; inset: 0; background-size: 512px 512px; }
+        #f10-dots { position: absolute; inset: 0; opacity: 0.45;
+          background-image: radial-gradient(circle, rgba(17,17,17,0.13) 1.2px, transparent 1.6px); background-size: 32px 32px; }
+        #f10-sun { position: absolute; left: 0; top: -200px; width: 1700px; height: 1300px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(255,253,248,0.6), rgba(255,253,248,0)); }
+        /* warm, light falloff at the edges (paper in lamplight, never grey) */
+        #f10-warm { position: absolute; inset: 0; pointer-events: none;
+          background: radial-gradient(ellipse 80% 78% at 48% 46%, rgba(250,240,222,0) 58%, rgba(214,182,140,0.2) 100%); }
+
+        .f10-scene { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        .f10-pulse { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        .f10-world { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; }
+
+        /* ---- shared UI: an app window on paper ---- */
+        .f10-win { position: absolute; background: var(--paper); border: 1.5px solid var(--rule);
+          box-shadow: 0 30px 60px rgba(90,70,40,0.16), 0 4px 10px rgba(90,70,40,0.1), inset 0 1px 0 #fff; }
+        .f10-tbar { position: absolute; left: 0; right: 0; top: 0; height: 44px; background: #E6E1D8; border-bottom: 1.5px solid var(--rule);
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 14px; letter-spacing: 0.12em; color: var(--muted);
+          display: flex; align-items: center; padding-left: 92px; white-space: nowrap; }
+        .f10-tbar i { position: absolute; top: 16px; width: 12px; height: 12px; border-radius: 50%; background: #CFC9BE; }
+        .f10-tbar b { font-weight: 600; color: var(--ink); }
+        .f10-mono { font-family: "IBM Plex Mono"; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+        .f10-chip { display: inline-block; padding: 3px 8px; border: 1.5px solid var(--rule); font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 12px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+        .f10-chip.f10-hot { border-color: var(--fire); color: #C8481A; }
+
+        /* A: the board (world px; the camera scales it) */
+        #f10-app { left: 0; top: 0; width: 780px; height: 700px; }
+        .f10-colh { position: absolute; top: 64px; width: 230px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 13px;
+          letter-spacing: 0.16em; color: var(--muted); border-bottom: 1.5px solid var(--rule); padding-bottom: 8px; }
+        .f10-card { position: absolute; width: 230px; height: 74px; background: #FBF9F5; border: 1.5px solid var(--rule);
+          box-shadow: 0 3px 0 rgba(60,50,40,0.06); padding: 10px 12px; }
+        .f10-card .f10-cid { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 11px; letter-spacing: 0.12em; color: var(--muted); }
+        .f10-card .f10-ct { font-family: "Barlow"; font-weight: 600; font-size: 17px; line-height: 1.1; color: var(--ink); margin-top: 4px; white-space: nowrap; }
+        .f10-card .f10-chip { position: absolute; right: 10px; top: 8px; font-size: 10px; padding: 1px 6px; }
+        #f10-sec { opacity: 0; left: 20px; top: 106px; border-color: var(--ink); background: #fff; box-shadow: 0 10px 22px rgba(60,50,40,0.18); }
+        #f10-bfoot { position: absolute; left: 20px; bottom: 18px; font-size: 11px; color: #5F5B54; }
+        #f10-scrim { position: absolute; left: -900px; top: -700px; width: 2600px; height: 2100px; background: #F2EEE7; }
+        #f10-modal { position: absolute; left: 70px; top: 150px; width: 640px; height: 330px; background: #fff; border: 1.5px solid var(--ink);
+          box-shadow: 0 30px 60px rgba(90,70,40,0.22); padding: 26px 30px; transform-origin: 0 0; }
+        #f10-modal .f10-lab { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; color: var(--muted); white-space: nowrap; }
+        #f10-field { margin-top: 10px; height: 54px; border: 1.5px solid var(--ink); padding: 12px 14px; font-family: "Barlow";
+          font-weight: 600; font-size: 25px; color: var(--ink); white-space: nowrap; }
+        .f10-caret { display: inline-block; width: 2.5px; height: 0.95em; background: var(--fire); vertical-align: -0.12em; margin-left: 2px; }
+        #f10-create { position: absolute; right: 30px; bottom: 26px; width: 150px; height: 44px; background: var(--fire); color: var(--ink);
+          font-family: "IBM Plex Mono"; font-weight: 600; font-size: 16px; letter-spacing: 0.18em; display: flex; align-items: center; justify-content: center; }
+        #f10-drop { opacity: 0; position: absolute; left: 262px; top: 96px; width: 360px; height: 300px; background: #fff; border: 1.5px solid var(--ink);
+          box-shadow: 0 18px 36px rgba(90,70,40,0.2); transform-origin: 0 0; }
+        #f10-droph { height: 40px; padding: 13px 16px 0; font-size: 11px; color: var(--muted); border-bottom: 1.5px solid var(--ink); }
+        .f10-opt { position: relative; height: 52px; padding: 17px 18px 0 22px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 15px;
+          letter-spacing: 0.14em; color: #8A857C; border-bottom: 1px solid #E6E1D8; white-space: nowrap; }
+        .f10-opt small { position: absolute; right: 16px; top: 19px; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: #9A958B; }
+        #f10-hl { position: absolute; left: 0; top: 40px; width: 100%; height: 52px; background: rgba(232,93,38,0.13); border-left: 4px solid var(--fire); }
+        #f10-lowbox { position: absolute; left: 18px; top: 196px; height: 52px; width: 160px; transform-origin: 30% 70%; }
+        #f10-low { position: absolute; left: 0; bottom: -2px; font-family: "Barlow"; font-weight: 900; font-size: 74px; line-height: 0.8;
+          letter-spacing: -0.04em; color: var(--fire); white-space: nowrap; }
+        #f10-wmarks { position: absolute; left: 0; top: 0; width: 900px; height: 700px; overflow: visible; }
+
+        /* B: the roadmap (screen px; the Gantt scrolls inside its window) */
+        #f10-road { left: 70px; top: 40px; width: 1780px; height: 650px; overflow: hidden; }
+        #f10-rcount { position: absolute; right: 22px; top: 0; height: 44px; display: flex; align-items: center; gap: 12px; }
+        #f10-rcount span { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; letter-spacing: 0.14em; color: #5F5B54; }
+        #f10-rcount b { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 24px; letter-spacing: 0.06em; color: var(--ink); }
+        #f10-gview { position: absolute; left: 330px; top: 44px; right: 0; bottom: 0; overflow: hidden; }
+        #f10-gantt { position: absolute; left: 0; top: 0; }
+        #f10-glab { position: absolute; left: 0; top: 44px; width: 330px; bottom: 0; background: #EFEBE3; border-right: 1.5px solid var(--rule); }
+
+        /* C: the thread */
+        #f10-thread { left: 980px; top: 66px; width: 870px; height: 968px; overflow: hidden; }
+        #f10-tstat { position: absolute; left: 28px; top: 62px; font-size: 12px; color: var(--muted); }
+        #f10-tcount { position: absolute; right: 28px; top: 54px; display: flex; align-items: baseline; gap: 12px; }
+        #f10-tcount span { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; letter-spacing: 0.14em; color: #5F5B54; }
+        #f10-tcount b { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 26px; letter-spacing: 0.04em; color: var(--ink); }
+        #f10-tview { position: absolute; left: 0; right: 0; top: 104px; bottom: 0; overflow: hidden; border-top: 1.5px solid var(--rule);
+          -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 40px); mask-image: linear-gradient(180deg, transparent 0, #000 40px); }
+        #f10-cms { position: absolute; left: 0; right: 0; top: 0; }
+        .f10-cm { position: absolute; left: 28px; right: 28px; height: 104px; padding: 16px 18px 0 82px; background: #FBF9F5; border: 1.5px solid var(--rule); }
+        .f10-cm .f10-av { position: absolute; left: 18px; top: 22px; width: 46px; height: 46px; border-radius: 50%; background: #DCD6CB;
+          font-family: "Barlow"; font-weight: 800; font-size: 20px; color: var(--muted); display: flex; align-items: center; justify-content: center; }
+        .f10-cm .f10-who { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+        .f10-cm .f10-say { font-family: "Barlow"; font-weight: 600; font-size: 29px; color: var(--ink); margin-top: 6px; white-space: nowrap; }
+        .f10-cm.f10-bot { background: transparent; border-style: dashed; }
+        .f10-cm.f10-bot .f10-say { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 19px; letter-spacing: 0.06em; color: var(--muted); margin-top: 12px; }
+        .f10-cm.f10-q { background: #fff; border-color: var(--ink); box-shadow: 0 10px 24px rgba(90,70,40,0.14); }
+        .f10-cm.f10-q .f10-av { background: var(--ink); color: var(--cream); }
+        #f10-typing { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 18px; letter-spacing: 0.08em; color: var(--muted); }
+        .f10-qw { display: inline-block; margin-right: 0.24em; }
+
+        /* v20: multiplayer cursors (screen px; positioned in render) */
+        .f10-cur { position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; }
+        .f10-cur svg { position: absolute; left: -3px; top: -2px; width: 34px; height: 44px; overflow: visible; transform-origin: 3px 2px; }
+        .f10-cur span { position: absolute; left: 26px; top: 34px; padding: 4px 9px 3px; background: var(--ink); color: var(--cream);
+          font-family: "IBM Plex Mono"; font-weight: 600; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+
+        /* the archive's marker voice */
+        .f10-mark { position: absolute; font-family: "Caveat Brush"; font-size: 64px; line-height: 1; color: #C8481A; white-space: nowrap; }
+
+        /* ---- the sung line (screen space, never blurred by the switches) ---- */
+        .f10-line { position: absolute; left: 5.5cqw; font-family: "Barlow"; color: var(--ink); display: flex; flex-direction: column;
+          align-items: flex-start; gap: 0.2cqw; transform-origin: 0 60%; }
+        .f10-row { display: flex; column-gap: 0.24em; font-weight: 800; font-size: 5.2cqw; line-height: 1.02; letter-spacing: -0.025em; white-space: nowrap; }
+        .f10-serif { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 9.6cqw; line-height: 0.98;
+          letter-spacing: -0.01em; column-gap: 0.22em; }
+        .f10-hot { color: var(--fire); }
+        .f10-w { display: inline-block; position: relative; }
+        .f10-wi { display: inline-block; }
+      </style>
+
+      <div data-hf-id="hf-ai4m" id="root" data-composition-id="10-ticket" data-width="1920" data-height="1080" data-duration="12.697">
+        <div id="f10-bg" data-layout-ignore>
+          <div id="f10-paper"></div>
+          <div id="f10-dots"></div>
+          <div id="f10-sun"></div>
+        </div>
+
+        <!-- A: the board, the modal, the dropdown — one world under a spline camera -->
+        <div class="f10-scene" id="f10-sA" data-layout-ignore>
+          <div class="f10-pulse" id="f10-pA">
+            <div class="f10-world" id="f10-wA">
+              <div class="f10-win" id="f10-app">
+                <div class="f10-tbar"><i style="left:22px;background:#E85D26"></i><i style="left:42px"></i><i style="left:62px"></i>nead tracker · <b>&nbsp;SECURITY</b>&nbsp;· board</div>
+                <div class="f10-colh" style="left:20px">BACKLOG</div>
+                <div class="f10-colh" style="left:270px">THIS QUARTER</div>
+                <div class="f10-colh" style="left:520px">DONE</div>
+                <div class="f10-card" style="left:20px;top:196px"><div class="f10-cid">SEC-0002</div><div class="f10-ct">Rotate the TLS certs</div><span class="f10-chip">low</span></div>
+                <div class="f10-card" style="left:20px;top:282px"><div class="f10-cid">SEC-0003</div><div class="f10-ct">Cookie banner, again</div><span class="f10-chip">low</span></div>
+                <div class="f10-card" style="left:20px;top:368px"><div class="f10-cid">SEC-0004</div><div class="f10-ct">Pen-test findings (2019)</div><span class="f10-chip">low</span></div>
+                <div class="f10-card" style="left:270px;top:106px"><div class="f10-cid">AI-0001</div><div class="f10-ct">AI chatbot for billing</div><span class="f10-chip f10-hot">critical</span></div>
+                <div class="f10-card" style="left:270px;top:192px"><div class="f10-cid">BRD-0007</div><div class="f10-ct">New logo (rounder)</div><span class="f10-chip f10-hot">high</span></div>
+                <div class="f10-card" style="left:270px;top:278px"><div class="f10-cid">OFC-0012</div><div class="f10-ct">Kombucha on tap</div><span class="f10-chip f10-hot">high</span></div>
+                <div class="f10-card" style="left:520px;top:106px"><div class="f10-cid">OFC-0003</div><div class="f10-ct">Ping-pong table ✓</div><span class="f10-chip">done</span></div>
+                <div class="f10-card" style="left:520px;top:192px"><div class="f10-cid">OFC-0009</div><div class="f10-ct">Offsite in Tulum ✓</div><span class="f10-chip">done</span></div>
+                <div class="f10-card" style="left:520px;top:278px"><div class="f10-cid">OFC-0010</div><div class="f10-ct">Pizza Fridays ✓</div><span class="f10-chip">done</span></div>
+                <div class="f10-card" id="f10-sec"><div class="f10-cid">SEC-0001 · OPEN</div><div class="f10-ct">Migrate to post-quantum…</div><span class="f10-chip" id="f10-pchip">—</span></div>
+                <div class="f10-mono" id="f10-bfoot">8 open · 0 in progress · 3 done (all office)</div>
+              </div>
+              <div id="f10-scrim"></div>
+              <div id="f10-modal">
+                <div class="f10-lab">NEW ISSUE · SECURITY · TASK</div>
+                <div id="f10-field"><span id="f10-ftext"></span><span class="f10-caret" id="f10-fcaret"></span></div>
+                <div class="f10-lab" style="margin-top:26px">REPORTER · A. (SECURITY) &nbsp;&nbsp; CREATED · TUE 09 MAR 2021</div>
+                <div class="f10-lab" style="margin-top:12px">IMPACT · EVERYTHING EVER SENT &nbsp;&nbsp; EFFORT · ??</div>
+                <div id="f10-create">CREATE</div>
+              </div>
+              <div id="f10-drop">
+                <div class="f10-mono" id="f10-droph">PRIORITY · SEC-0001</div>
+                <div id="f10-hl"></div>
+                <div class="f10-opt">CRITICAL<small>AI, BRAND</small></div><div class="f10-opt">HIGH<small>KOMBUCHA</small></div><div class="f10-opt">MEDIUM<small>—</small></div><div class="f10-opt" id="f10-lowlab">LOW</div><div class="f10-opt">SOMEDAY<small>12 ISSUES</small></div>
+                <div id="f10-lowbox"></div>
+              </div>
+              <svg id="f10-wmarks" viewBox="0 0 900 700"></svg>
+            </div>
+            <div class="f10-cur" id="f10-curA"><svg viewBox="0 0 34 44"><path d="M3 2 L3 34 L11 27 L17 41 L23 38 L17 25 L28 25 Z" fill="#E85D26" stroke="#0A0A0A" stroke-width="2.4" stroke-linejoin="round" /></svg><span>a. · security</span></div>
+          </div>
+        </div>
+
+        <!-- B: the roadmap -->
+        <div class="f10-scene" id="f10-sB" style="opacity:0" data-layout-ignore>
+          <div class="f10-pulse" id="f10-pB">
+            <div class="f10-scene" id="f10-wB" style="transform-origin:960px 40px">
+              <div class="f10-win" id="f10-road">
+                <div class="f10-tbar"><i style="left:22px;background:#E85D26"></i><i style="left:42px"></i><i style="left:62px"></i>nead tracker · <b>&nbsp;ROADMAP 2021–2024</b>&nbsp;· approved by leadership</div>
+                <div id="f10-rcount"><span>DEFERRED</span><b id="f10-rcv">×00</b></div>
+                <svg id="f10-glab" viewBox="0 0 330 606"></svg>
+                <div id="f10-gview"><svg id="f10-gantt"></svg></div>
+              </div>
+              <div class="f10-cur" id="f10-curB"><svg viewBox="0 0 34 44"><path d="M3 2 L3 34 L11 27 L17 41 L23 38 L17 25 L28 25 Z" fill="#E85D26" stroke="#0A0A0A" stroke-width="2.4" stroke-linejoin="round" /></svg><span>brad · vp velocity</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- C: the thread -->
+        <div class="f10-scene" id="f10-sC" style="opacity:0" data-layout-ignore>
+          <div class="f10-pulse" id="f10-pC">
+            <div class="f10-scene" id="f10-wC" style="transform-origin:1420px 900px">
+              <div class="f10-win" id="f10-thread">
+                <div class="f10-tbar"><i style="left:22px;background:#E85D26"></i><i style="left:42px"></i><i style="left:62px"></i>SEC-0001 · <b>&nbsp;post-quantum migration</b></div>
+                <div class="f10-mono" id="f10-tstat">OPEN · LOW · UNASSIGNED · 11 COMMENTS</div>
+                <div id="f10-tcount"><span>OPEN FOR</span><b id="f10-tcv">0 DAYS</b></div>
+                <div id="f10-tview"><div id="f10-cms"></div></div>
+              </div>
+              <div class="f10-cur" id="f10-curC"><svg viewBox="0 0 34 44"><path d="M3 2 L3 34 L11 27 L17 41 L23 38 L17 25 L28 25 Z" fill="#E85D26" stroke="#0A0A0A" stroke-width="2.4" stroke-linejoin="round" /></svg><span>somebody · vp</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="f10-warm" data-layout-ignore></div>
+
+        <!-- the sung lines -->
+        <div id="f10-type">
+          <div class="f10-line" id="f10-lA" style="top:10.4cqw"></div>
+          <div class="f10-line" id="f10-lB" style="top:41.6cqw;opacity:0"></div>
+          <div class="f10-line" id="f10-lC" style="top:6.2cqw;opacity:0"></div>
+        </div>
+
+        <!-- the archive's marker (screen space) -->
+        <div id="f10-ml" data-layout-ignore>
+          <svg id="f10-marks" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible"></svg>
+          <div class="f10-mark" id="f10-obv" style="left:132px;top:700px;transform:rotate(-6deg)">(obviously)</div>
+          <div class="f10-mark" id="f10-me" style="left:560px;top:790px;transform:rotate(-5deg);font-size:110px">me.</div>
+          <div class="f10-mark" id="f10-mes" style="left:586px;top:904px;transform:rotate(-5deg);font-size:36px">— the archive</div>
+        </div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script>
+        (() => {
+          const T0 = 105.243, DUR = 12.697;
+          const L = (t) => +(t - T0).toFixed(3);
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const NS = "http://www.w3.org/2000/svg";
+          const sv = (tag, parent, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const on = (T, kinds) => L(WOW.on(T, kinds ? { kinds } : {}));
+
+          // lyrics.json L20–L22 word starts (track s) and the music in this span
+          const G2 = L(110.66), G3 = L(114.2);
+          const OPENED = L(107.765), PRIO = L(108.6), LOW = L(109.54), ROW = L(113.22), STORE = L(116.944);
+          const KICKS = HR_ENV.onsets.kick.map(([t]) => t).filter((t) => t > T0 && t < T0 + DUR).map(L);
+          const PUSHES = KICKS.filter((k) => k >= G2 - 0.02 && k < G3 - 0.2).slice(0, 8);   // 110.694 … 113.899: eight kicks
+          const TITLE = "Migrate to post-quantum crypto";
+          const SW = 0.46; // one beat: every switch side
+
+          // ---- static build -------------------------------------------------------------------------------------
+          (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 512;
+            const x = c.getContext("2d", { willReadFrequently: true }), r = HR.rng(1001);
+            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 512, 512);
+            const img = x.getImageData(0, 0, 512, 512);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 9; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+            x.putImageData(img, 0, 0);
+            x.lineWidth = 0.7;
+            for (let k = 0; k < 140; k++) { const px = r() * 512, py = r() * 512, a = r() * Math.PI, l = 8 + r() * 20;
+              x.strokeStyle = "rgba(110,100,90,0.09)"; x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.35); x.stroke(); }
+            $("f10-paper").style.backgroundImage = `url(${c.toDataURL("image/png")})`;
+          })();
+
+          // B: the Gantt — 16 quarters 2021–2024 and a hatched Q-DAY column; leadership's bars ship, ours is shoved
+          const G = $("f10-gantt"), GL = $("f10-glab"), QW = 150, GH = 606, ROWY = 92, RH = 92, QDAY = 16 * QW, GW = QDAY + 330;
+          const qx = (q) => q * QW;
+          const ROWG = [];   // v20: leadership's bars, one group per row (they jostle on the kicks)
+          G.setAttribute("viewBox", `0 0 ${GW} ${GH}`); G.setAttribute("width", GW); G.setAttribute("height", GH);
+          const rows = [["AI everything", 1, 15, "SHIPPED"], ["Rebrand (rounder)", 2, 5, "SHIPPED"], ["Kombucha on tap", 3, 4, "SHIPPED"],
+            ["SEC-0001 · post-quantum", 0, 0, null], ["Return to office", 6, 9, "SHIPPED"]];
+          (() => {
+            const defs = sv("defs", G, {});
+            const pat = sv("pattern", defs, { id: "f10-hatch", width: 12, height: 12, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+            sv("rect", pat, { width: 3, height: 12, fill: "rgba(232,93,38,0.3)" });
+            for (let y = 0; y < 4; y++) {
+              sv("text", G, { x: qx(y * 4) + 12, y: 36, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 20, "letter-spacing": 2, fill: "#111111" }, String(2021 + y));
+              for (let q = 0; q < 4; q++) {
+                sv("text", G, { x: qx(y * 4 + q) + 12, y: 64, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 14, "letter-spacing": 1.5, fill: "#6E6A62" }, "Q" + (q + 1));
+                sv("line", G, { x1: qx(y * 4 + q), y1: 46, x2: qx(y * 4 + q), y2: GH, stroke: q ? "#E6E1D8" : "#CFC9BE", "stroke-width": q ? 1 : 1.5 });
+              }
+            }
+            sv("rect", G, { x: QDAY, y: 46, width: GW - QDAY, height: GH - 46, fill: "url(#f10-hatch)" });
+            sv("line", G, { x1: QDAY, y1: 46, x2: QDAY, y2: GH, stroke: "#E85D26", "stroke-width": 2, "stroke-dasharray": "6 5" });
+            sv("text", G, { x: QDAY + 14, y: 36, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 20, "letter-spacing": 2, fill: "#C8481A" }, "Q-DAY ?");
+            sv("text", G, { x: QDAY + 14, y: 64, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 13, "letter-spacing": 1.2, fill: "#6E6A62" }, "DATE UNKNOWN");
+            sv("line", G, { x1: 0, y1: 76, x2: GW, y2: 76, stroke: "#CFC9BE", "stroke-width": 1.5 });
+            sv("line", GL, { x1: 0, y1: 76, x2: 330, y2: 76, stroke: "#CFC9BE", "stroke-width": 1.5 });
+            sv("text", GL, { x: 24, y: 50, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 2, fill: "#6E6A62" }, "INITIATIVE");
+            rows.forEach(([name, a, b, tag], i) => {
+              const y = ROWY + i * RH, ours = !tag;
+              if (ours) sv("rect", GL, { x: 0, y: y, width: 330, height: RH - 10, fill: "rgba(232,93,38,0.1)" });
+              if (ours) sv("rect", GL, { x: 0, y: y, width: 5, height: RH - 10, fill: "#E85D26" });
+              sv("text", GL, { x: 24, y: y + 48, "font-family": ours ? "IBM Plex Mono" : "Barlow", "font-weight": 600, "font-size": ours ? 17 : 24,
+                "letter-spacing": ours ? 1.2 : 0, fill: ours ? "#111111" : "#6E6A62" }, name);
+              sv("line", G, { x1: 0, y1: y + RH - 6, x2: GW, y2: y + RH - 6, stroke: "#EEEAE2", "stroke-width": 1 });
+              sv("line", GL, { x1: 0, y1: y + RH - 6, x2: 330, y2: y + RH - 6, stroke: "#E6E1D8", "stroke-width": 1 });
+              if (tag) {
+                const rg = sv("g", G, {}); ROWG.push(rg);
+                sv("rect", rg, { x: qx(a) + 5, y: y + 18, width: (b - a) * QW - 10, height: 40, fill: "#2a2a27" });
+                sv("text", rg, { x: qx(b) - 16, y: y + 44, "text-anchor": "end", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 1.5, fill: "#F0ECE5" }, tag);
+              }
+            });
+          })();
+          const SECY = ROWY + 3 * RH;
+          const ghosts = sv("g", G, {});
+          const bar = sv("g", G, {});
+          sv("rect", bar, { x: 5, y: SECY + 18, width: QW * 2 - 10, height: 40, fill: "#E85D26" });
+          sv("rect", bar, { x: 5, y: SECY + 18, width: QW * 2 - 10, height: 5, fill: "rgba(255,230,214,0.6)" });
+          sv("text", bar, { x: 18, y: SECY + 44, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 14, "letter-spacing": 1.6, fill: "#111111" }, "PQC MIGRATION");
+          const ghostEls = PUSHES.map((_, i) => {
+            const g = sv("g", ghosts, { opacity: 0 });
+            sv("rect", g, { x: qx(i * 2) + 5, y: SECY + 18, width: QW * 2 - 10, height: 40, fill: "rgba(232,93,38,0.05)", stroke: "rgba(232,93,38,0.65)", "stroke-width": 1.5, "stroke-dasharray": "6 4" });
+            sv("text", g, { x: qx(i * 2) + 16, y: SECY + 43, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 1.6, fill: "rgba(200,72,26,0.9)" }, "DEFERRED");
+            const lit = sv("rect", g, { x: qx(i * 2) + 5, y: SECY + 18, width: QW * 2 - 10, height: 40, fill: "rgba(232,93,38,0.16)", stroke: "#E85D26", "stroke-width": 2.5, opacity: 0 });
+            return { g, lit };
+          });
+          // "again." in the marker, on the Gantt itself (it scrolls with it), written on the snares over pushes 4, 6, 8 (v20)
+          const agains = [[3, 112.067], [5, 112.979], [7, 113.879]].map(([i, T], k) => {
+            const m = sv("text", G, { x: qx(i * 2) + 26, y: SECY - 4, "font-family": "Caveat Brush", "font-size": 46, fill: "#C8481A",
+              transform: `rotate(${[-7, 4, -4][k]} ${qx(i * 2) + 60} ${SECY - 16})` }, "again.");
+            return { m, t: L(T) };
+          });
+
+          // C: the comment thread — the ticket's history, bumped and bumped; then somebody's question
+          const thread = [["A", "a. · security · mar 2021", "they can record our TLS today and read it later."],
+            ["⟳", "roadmap-bot · jun 2021", "moved to next quarter", true], ["B", "brad · vp velocity · sep 2021", "bumped to Q1, sorry"],
+            ["⟳", "roadmap-bot · jan 2022", "moved to next quarter", true], ["B", "brad · vp velocity · apr 2022", "not this quarter"],
+            ["R", "ruth · brand · oct 2022", "after the rebrand"], ["⟳", "roadmap-bot · feb 2023", "moved to next quarter", true],
+            ["B", "brad · vp velocity · may 2023", "is this still relevant?"], ["A", "a. · security · aug 2024", "NIST published FIPS 203 (ML-KEM). it's real."],
+            ["⟳", "roadmap-bot · sep 2024", "moved to next quarter", true]];
+          const CMH = 120;
+          thread.forEach(([av, who, say, bot], i) => {
+            const c = el("div", "f10-cm" + (bot ? " f10-bot" : ""), $("f10-cms"));
+            c.style.top = i * CMH + "px";
+            el("div", "f10-av", c, av); el("div", "f10-who", c, who); el("div", "f10-say", c, say);
+          });
+          const q = el("div", "f10-cm f10-q", $("f10-cms"));
+          q.style.top = thread.length * CMH + "px";
+          el("div", "f10-av", q, "?"); el("div", "f10-who", q, "somebody · vp · mar 2025");
+          const qsay = el("div", "f10-say", q);
+          const typing = el("span", "", qsay); typing.id = "f10-typing";
+          const QWORDS = [["who’d", 116.12], ["even", 116.6], ["store", 116.944], ["it?", 117.76]].map(([w, t]) => ({ s: el("span", "f10-qw", qsay, w), t: L(t) }));
+
+          // marker strokes (pathLength 100, drawn on in render): the circle around "low" (world), the arrow from "me." to "store"
+          const wob = (cx, cy, rx, ry, seed) => {
+            const r = HR.rng(seed); let d = "";
+            for (let k = 0; k <= 64; k++) { const a = -0.5 + (k / 64) * Math.PI * 2.15, j = 1 + (r() - 0.5) * 0.05;
+              d += (k ? "L" : "M") + (cx + Math.cos(a) * rx * j).toFixed(1) + " " + (cy + Math.sin(a) * ry * j).toFixed(1); }
+            return d;
+          };
+          const stroke = (parent, d, t, dur, w) => ({ t, dur, p: sv("path", parent, { d, pathLength: 100, fill: "none", stroke: "#C8481A", "stroke-width": w,
+            "stroke-linecap": "round", "stroke-linejoin": "round", "stroke-dasharray": 100, "stroke-dashoffset": 100 }) });
+          const strokes = [
+            stroke($("f10-wmarks"), wob(352, 318, 112, 36, 31), LOW + 0.08, 0.34, 3),
+            stroke($("f10-marks"), "M600 806 C 540 770, 470 730, 452 668 M452 668 l -16 26 M452 668 l 26 16", on(117.45, ["kick", "snare", "hat"]), 0.22, 5.5),
+          ];
+
+          // ---- the sung lines --------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const mk = (box, cls, words) => {
+            const row = el("div", "f10-row" + (cls ? " " + cls : ""), box);
+            return words.map(([w, t, hero, hot]) => {
+              const s = el("span", "f10-w" + (hot ? " f10-hot" : ""), row), i = el("span", "f10-wi", s, w);
+              return { s, i, t: L(t), hero };
+            });
+          };
+          const W = [
+            ...mk($("f10-lA"), "", [["ticket", 107.0]]), ...mk($("f10-lA"), "", [["opened,", 107.765]]), ...mk($("f10-lA"), "", [["priority", 108.6]]),
+            ...mk($("f10-lB"), "", [["pushed", 110.66], ["to", 110.92], ["next", 111.14], ["quarter,", 111.56]]),
+            ...mk($("f10-lB"), "", [["four", 111.931], ["years", 112.5], ["in", 112.819], ["a", 113.048], ["row", 113.22, true, true]]),
+            ...mk($("f10-lC"), "", [["somebody", 114.2], ["asked,", 115.747]]),
+            ...mk($("f10-lC"), "f10-serif", [["“who’d", 116.12], ["even", 116.6]]),
+            ...mk($("f10-lC"), "f10-serif", [["store", 116.944, true, true], ["it?”", 117.76]]),
+          ];
+          // verse rules: soft entrances only; the hero settles in and gets one soft punch and a thin ring
+          for (const { s, i, t, hero } of W) {
+            WOW.word(tl, i, t, { kind: hero ? "settle" : "rise" });
+            if (hero) {
+              WOW.punch(tl, s, t, { s: 1.04, dur: 0.5 });
+              const ring = WOW.shock(tl, s, { x: 0, y: 0, t, r: 230, n: 1, w: 2, color: "fire", dur: 0.9 });
+              ring.style.left = "50%"; ring.style.top = "55%";
+            }
+          }
+          // the hero "low" is the LOW option itself (world space, in the dropdown)
+          const lowW = el("span", "", $("f10-lowbox")); lowW.id = "f10-lowwrap"; lowW.style.cssText = "position:absolute;inset:0;transform-origin:30% 70%";
+          const low = el("span", "", lowW, "low"); low.id = "f10-low";
+          WOW.word(tl, low, LOW, { kind: "settle" });
+          WOW.punch(tl, lowW, LOW, { s: 1.04, dur: 0.5 });
+          const lring = WOW.shock(tl, lowW, { x: 0, y: 0, t: LOW, r: 130, n: 1, w: 1.2, color: "fire", dur: 1.0 });
+          lring.style.left = "42%"; lring.style.top = "45%";
+          tl.fromTo("#f10-lowlab", { color: "#8A857C" }, { color: "rgba(138,133,124,0)", duration: 0.12, ease: "none", immediateRender: false }, LOW - 0.06);
+          // the question in the thread is typed word by word, on the sung times
+          tl.set(typing, { opacity: 1 }, 0); tl.set(typing, { opacity: 0 }, QWORDS[0].t);
+          QWORDS.forEach(({ s, t }) => { tl.set(s, { opacity: 0 }, 0); tl.set(s, { opacity: 1 }, t); });
+
+          // lines leave softly just before the switch (they stay readable until the next line starts)
+          const leave = (sel, t) => tl.fromTo(sel, { opacity: 1, y: 0, filter: "blur(0px)" }, { opacity: 0, y: -18, filter: "blur(3px)", duration: 0.22, ease: "power2.in", immediateRender: false }, t - 0.22);
+          tl.set("#f10-lA", { opacity: 1 }, 0); leave("#f10-lA", G2); tl.set("#f10-lA", { opacity: 0 }, G2);
+          tl.set("#f10-lB", { opacity: 1 }, G2); leave("#f10-lB", G3); tl.set("#f10-lB", { opacity: 0 }, G3);
+          tl.set("#f10-lC", { opacity: 1 }, G3);
+          tl.set("#f10-sA", { opacity: 1 }, 0); tl.set("#f10-sA", { opacity: 0 }, G2);
+          tl.set("#f10-sB", { opacity: 1 }, G2); tl.set("#f10-sB", { opacity: 0 }, G3);
+          tl.set("#f10-sC", { opacity: 1 }, G3);
+
+          // marker writes [element, local start, dur]: clip-path wipes in render
+          const writes = [[$("f10-obv"), on(109.84), 0.36], [$("f10-me"), on(117.3, ["kick", "snare", "hat"]), 0.22], [$("f10-mes"), on(117.55), 0.26]];
+          tl.set("#f10-obv", { opacity: 1 }, 0); leave("#f10-obv", G2); tl.set("#f10-obv", { opacity: 0 }, G2);
+
+          // ---- switches --------------------------------------------------------------------------------------------
+          WOW.transition(tl, document.getElementById("el-10-ticket"), { in: "glideUp", dur: SW, start: 0 });
+          WOW.transition(tl, $("f10-sA"), { out: "glideL", dur: SW, total: G2 });
+          WOW.transition(tl, $("f10-sB"), { in: "glideL", start: G2, dur: SW, out: "glideUp", total: G3 });
+          WOW.transition(tl, $("f10-sC"), { in: "glideUp", start: G3, dur: SW });
+          // the carrier breathes with the kick, sized for the bridge's drums (≈ 1.0; v20); the 2 px recoil is in render
+          for (const p of ["f10-pA", "f10-pB", "f10-pC"]) WOW.pulse(tl, $(p), { kind: "kick", amt: 0.018 });
+          // the sung line rides the kick too (anchored on its left margin)
+          for (const p of ["f10-lA", "f10-lB", "f10-lC"]) WOW.pulse(tl, $(p), { kind: "kick", amt: 0.02, y: 2 });
+
+          // ---- A: the issue is typed, filed, then stepped down to LOW --------------------------------------------
+          // one spline camera (world point at screen centre, log zoom) through these keys: velocity never drops to 0
+          const KEYS = [[0, 380, 318, 2.45], [0.9, 404, 314, 2.32], [1.9, 248, 318, 1.84], [3.0, 216, 334, 1.64], [L(109.54), 349, 248, 3.0], [G2, 354, 254, 3.32]]
+            .map(([t, x, y, z]) => ({ t, v: [x, y, Math.log(z)] }));
+          const camAt = (t) => {
+            const n = KEYS.length; t = Math.max(KEYS[0].t, Math.min(KEYS[n - 1].t, t));
+            let i = 0; while (i < n - 2 && t > KEYS[i + 1].t) i++;
+            const a = KEYS[i], b = KEYS[i + 1], h = b.t - a.t, u = (t - a.t) / h;
+            const tan = (k, c) => { const p = KEYS[Math.max(0, k - 1)], q = KEYS[Math.min(n - 1, k + 1)]; return (q.v[c] - p.v[c]) / (q.t - p.t); };
+            const h00 = 2 * u ** 3 - 3 * u * u + 1, h10 = u ** 3 - 2 * u * u + u, h01 = -2 * u ** 3 + 3 * u * u, h11 = u ** 3 - u * u;
+            return [0, 1, 2].map((c) => h00 * a.v[c] + h10 * h * tan(i, c) + h01 * b.v[c] + h11 * h * tan(i + 1, c));
+          };
+          const KEYT = Array.from({ length: TITLE.length }, (_, i) => 0.14 + i * ((1.42 - 0.14) / TITLE.length));
+          // CREATE goes down on the kick before "opened"; the modal files itself into the backlog on "opened"
+          const PRESS = on(107.518);
+          tl.fromTo("#f10-create", { scale: 1 }, { scale: 0.93, duration: 0.08, ease: "power2.out", immediateRender: false }, PRESS);
+          tl.fromTo("#f10-create", { scale: 0.93 }, { scale: 1, duration: 0.24, ease: "power2.out", immediateRender: false }, PRESS + 0.08);
+          tl.fromTo("#f10-modal", { x: 0, y: 0, scale: 1, opacity: 1 }, { x: -50, y: -44, scale: 0.36, opacity: 0, duration: 0.34, ease: "power2.inOut", immediateRender: false }, OPENED - 0.16);
+          tl.set("#f10-sec", { opacity: 0 }, 0);
+          tl.fromTo("#f10-sec", { opacity: 0, scale: 1.06, y: -6 }, { opacity: 1, scale: 1, y: 0, duration: 0.36, ease: "power2.out", immediateRender: false }, OPENED - 0.02);
+          // the modal's backdrop lifts; later the board dims behind the dropdown (focus), so the lyric reads over it
+          tl.set("#f10-scrim", { opacity: 0.6 }, 0);
+          tl.fromTo("#f10-scrim", { opacity: 0.6 }, { opacity: 0, duration: 0.42, ease: "power1.inOut", immediateRender: false }, OPENED - 0.08);
+          tl.fromTo("#f10-scrim", { opacity: 0 }, { opacity: 0.94, duration: 0.5, ease: "power1.inOut", immediateRender: false }, PRIO - 0.04);
+          tl.set("#f10-drop", { opacity: 0 }, 0);
+          tl.fromTo("#f10-drop", { opacity: 0, y: -8, scaleY: 0.96 }, { opacity: 1, y: 0, scaleY: 1, duration: 0.24, ease: "power2.out", immediateRender: false }, PRIO - 0.05);
+          // the highlight steps down CRITICAL → HIGH → MEDIUM on the kicks, LOW on its word
+          const steps = [on(108.885), on(109.334), LOW];
+          steps.forEach((t, i) => tl.fromTo("#f10-hl", { y: 52 * i }, { y: 52 * (i + 1), duration: 0.16, ease: "power2.inOut", immediateRender: false }, t - 0.12));
+
+          // ---- B: one block per kick; the Gantt glides at constant speed under a frozen label column --------------
+          const SCROLL = GW - (1780 - 330) + 10;   // from 2021 Q1 to the whole Q-DAY column in view
+          gsap.set(bar, { x: 0 });
+          PUSHES.forEach((p, i) => {
+            tl.fromTo(bar, { x: qx(i * 2) }, { x: qx(i * 2 + 2), duration: 0.36, ease: "power2.out", immediateRender: false }, p);
+            tl.fromTo(ghostEls[i].g, { opacity: 0 }, { opacity: 1, duration: 0.24, ease: "power1.out", immediateRender: false }, p);
+          });
+          // "row": the row of DEFERRED blocks lights up, left to right, and fades back
+          ghostEls.forEach(({ lit }, i) => {
+            if (PUSHES[i] > ROW) return;
+            tl.fromTo(lit, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out", immediateRender: false }, ROW + i * 0.045);
+            tl.fromTo(lit, { opacity: 1 }, { opacity: 0.25, duration: 0.7, ease: "power2.inOut", immediateRender: false }, ROW + i * 0.045 + 0.14);
+          });
+          agains.forEach(({ m, t }) => { tl.set(m, { opacity: 0 }, 0); tl.set(m, { opacity: 1 }, t); });
+
+          // ---- C: the thread scrolls on the beat (a surge after each, never stopping), decelerating onto the question
+          const BEATS = [G3, ...[114.351, 114.805, 115.252, 115.707, 116.17, 116.621, 117.082, 117.545].map(L), DUR];
+          const SPOS = [0, 40, 168, 284, 384, 444, 474, 494, 506, 512, 516];
+          const scrollAt = (t) => {
+            if (t <= BEATS[0]) return 0;
+            for (let i = 0; i < BEATS.length - 1; i++) if (t <= BEATS[i + 1]) {
+              const u = (t - BEATS[i]) / (BEATS[i + 1] - BEATS[i]), e = 0.7 * u + 0.3 * (1 - (1 - u) * (1 - u));
+              return SPOS[i] + (SPOS[i + 1] - SPOS[i]) * e;
+            }
+            return SPOS[SPOS.length - 1];
+          };
+
+          // ---- v20: the kick carrier --------------------------------------------------------------------------------
+          // every kick (sized by its strength) moves the cards to a new seeded offset, eased over 0.24 s
+          const KALL = HR_ENV.onsets.kick.filter(([t]) => t > T0 - 0.5 && t < T0 + DUR), KT = KALL.map(([t]) => t);
+          const shuffler = (els, amp, seed) => { const r = HR.rng(seed);
+            return els.map((e) => ({ e, o: KALL.map(([, a]) => amp.map((m) => (r() - 0.5) * 2 * m * a)) })); };
+          const SHUF = [...shuffler([...$("f10-app").querySelectorAll(".f10-card:not(#f10-sec)")], [7, 4, 1.0], 2001),
+            ...shuffler([...$("f10-cms").querySelectorAll(".f10-cm:not(.f10-q)")], [8, 3, 0.4], 2002), ...shuffler(ROWG, [5, 4, 0], 2003)];
+          // B: the Gantt slides one quarter per push (an eased step plus a large linear share, so it never stops)
+          const stepped = (times, step, t, d = 0.32) => {
+            let v = 0;
+            for (let i = 0; i < times.length; i++) {
+              const a = times[i]; if (t < a) break;
+              const b = i + 1 < times.length ? times[i + 1] : a + 0.45, u = clamp01((t - a) / d), lin = clamp01((t - a) / Math.max(d, b - a));
+              v += step * (0.55 * u * u * (3 - 2 * u) + 0.45 * lin);
+            }
+            return v;
+          };
+          // cursors: keys [t, x, y, d] leave the previous point at t and arrive at t + d (smoothstep), with a hand's idle drift
+          const curPath = (K, t, seed, drift = 1) => {
+            let x = K[0][1], y = K[0][2];
+            for (let i = 1; i < K.length; i++) {
+              const [a, nx, ny, d = 0.36] = K[i]; if (t < a) break;
+              const u = clamp01((t - a) / d), e = u * u * (3 - 2 * u); x += (nx - x) * e; y += (ny - y) * e;
+            }
+            return [x + (Math.sin(t * 1.7 + seed) * 5 + Math.sin(t * 0.9 + seed * 2) * 4) * drift, y + Math.sin(t * 1.3 + seed * 3) * 4 * drift];
+          };
+          const clickS = (cl, t) => { let s = 1; for (const c of cl) if (t >= c - 0.05 && t < c + 0.3) s = Math.min(s, 1 - 0.2 * Math.sin(Math.PI * clamp01((t - c + 0.05) / 0.3))); return s; };
+          // A (world px): rests beside the field while a. types → CREATE (clicked on its kick) → the new card → the priority
+          // list, stepping down with the highlight, and clicks LOW on its word
+          const CA = [[0, 650, 356], [on(106.829), 606, 434, 0.5], [on(107.967), 196, 156, 0.42], [on(108.418), 548, 168, 0.3],
+            [steps[0] - 0.12, 548, 220, 0.2], [steps[1] - 0.12, 548, 272, 0.2], [LOW - 0.12, 548, 324, 0.2]];
+          const CLA = [PRESS, LOW];
+          // C (screen px in the thread's scene): somebody's cursor wanders down the thread on the kicks to the question
+          const CC = [[0, 1560, 330], ...[[114.35, 1480, 430], [114.805, 1600, 520], [115.252, 1500, 640], [115.707, 1620, 720],
+            [116.17, 1520, 830], [116.621, 1600, 930], [117.082, 1580, 905, 0.3]].map(([T, x, y, d]) => [L(T), x, y, d])];
+          const DB2 = L(112.524), DC2 = L(116.169);   // downbeats: B goes tight on the bar, C leans into the question
+          const curA = $("f10-curA"), curB = $("f10-curB"), curC = $("f10-curC");
+          const placeCur = (c, x, y, s) => { c.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`; c.firstChild.style.transform = s < 1 ? `scale(${s.toFixed(3)})` : ""; };
+
+          // ---- per frame -------------------------------------------------------------------------------------------
+          const wA = $("f10-wA"), wB = $("f10-wB"), wC = $("f10-wC"), gantt = $("f10-gantt"), cms = $("f10-cms"), bg = $("f10-bg");
+          const ftext = $("f10-ftext"), fcaret = $("f10-fcaret"), pchip = $("f10-pchip"), rcv = $("f10-rcv"), tcv = $("f10-tcv");
+          function render() {
+            const t = tl.time(), T = t + T0;
+            const dx = Math.sin(T * 0.41 + 2) * 5 + Math.sin(T * 0.13) * 4, dy = Math.sin(T * 0.33 + 1) * 4 + 2 * HR.hit("kick", T, 0.09);
+            bg.style.transform = `translate3d(${(-34 * t / DUR + dx * 0.3).toFixed(2)}px, ${(dy * 0.3).toFixed(2)}px, 0)`;
+            // A: the spline camera
+            if (t < G2 + 0.01) {
+              const [cx, cy, lz] = camAt(t), z = Math.exp(lz);
+              wA.style.transform = `translate(${(960 - cx * z + dx).toFixed(2)}px, ${(540 - cy * z + dy).toFixed(2)}px) scale(${z.toFixed(4)})`;
+              const [ux, uy] = curPath(CA, t, 1);
+              placeCur(curA, 960 + (ux - cx) * z + dx, 540 + (uy - cy) * z + dy, clickS(CLA, t));
+            }
+            // B: three framings: mid on the cut, easing out to the whole roadmap, then tight from the 112.524 downbeat;
+            // the Gantt slides a quarter per push
+            if (t >= G2 - 0.01 && t < G3 + 0.01) {
+              const u = clamp01((t - G2) / (G3 - G2));
+              const po = clamp01((t - G2) / 1.4), pv = clamp01((t - DB2) / 0.7);
+              const zB = 1 + 0.065 * (0.5 + 0.5 * Math.cos(Math.PI * po)) + 0.015 * u + 0.045 * pv * pv * (3 - 2 * pv);
+              wB.style.transform = `translate(${(dx - 4 * u).toFixed(2)}px, ${dy.toFixed(2)}px) scale(${zB.toFixed(4)})`;
+              const sc = stepped(PUSHES, SCROLL / PUSHES.length, t);
+              gantt.style.transform = `translateX(${(-sc).toFixed(2)}px)`;
+              // brad's cursor holds the bar's head and drags it (a press on every push)
+              const bx = gsap.getProperty(bar, "x");
+              placeCur(curB, 70 + 330 + bx + QW * 0.6 - sc + Math.sin(T * 1.9) * 3, 40 + 44 + SECY + 46 + Math.sin(T * 1.4) * 2, clickS(PUSHES, t));
+            }
+            // C: a slow push while the thread scrolls on the beat
+            if (t >= G3 - 0.01) {
+              const u = clamp01((t - G3) / (DUR - G3));
+              const pc = clamp01((t - DC2) / 2.2), zC = 1 + 0.04 * u + 0.1 * (0.5 - 0.5 * Math.cos(Math.PI * pc));
+              wC.style.transform = `translate(${dx.toFixed(2)}px, ${(dy - 10 * u).toFixed(2)}px) scale(${zC.toFixed(4)})`;
+              const [ux, uy] = curPath(CC, t, 4, 0.8);
+              placeCur(curC, ux, uy, 1);
+              const s = scrollAt(t);
+              cms.style.transform = `translateY(${(-s).toFixed(2)}px)`;
+              tcv.textContent = Math.round(1461 * Math.min(1, 0.18 + 0.82 * s / 444)).toLocaleString("en-US") + " DAYS";
+            }
+            WOW.draw(tl, T0);
+            // the kick shuffle (one eased step per kick, from the previous offset)
+            let k = -1; while (k + 1 < KT.length && KT[k + 1] <= T) k++;
+            const se = k < 0 ? 0 : 1 - Math.pow(1 - clamp01((T - KT[k]) / 0.24), 3);
+            for (const { e, o } of SHUF) {
+              const a = k > 0 ? o[k - 1] : [0, 0, 0], b = k < 0 ? [0, 0, 0] : o[k], v = [0, 1, 2].map((c) => a[c] + (b[c] - a[c]) * se);
+              e.style.translate = `${v[0].toFixed(2)}px ${v[1].toFixed(2)}px`; e.style.rotate = `${v[2].toFixed(3)}deg`;
+            }
+            for (const { m, t: t0 } of agains) m.style.clipPath = `inset(-40% ${(100 - 100 * clamp01((t - t0) / 0.26)).toFixed(1)}% -40% -5%)`;
+            const n = KEYT.filter((k) => t >= k).length;
+            ftext.textContent = TITLE.slice(0, n);
+            fcaret.style.opacity = n < TITLE.length || Math.floor(t * 3.4) % 2 ? "1" : "0";
+            pchip.textContent = t >= LOW ? "low" : "—";
+            pchip.className = "f10-chip" + (t >= LOW ? " f10-hot" : "");
+            rcv.textContent = "×" + String(PUSHES.filter((p) => t >= p).length).padStart(2, "0");
+            typing.textContent = t < QWORDS[0].t ? "somebody is typing" + ".".repeat(1 + (Math.floor(t * 4) % 3)) : "";
+            for (const s of strokes) s.p.setAttribute("stroke-dashoffset", (100 * (1 - clamp01((t - s.t) / s.dur))).toFixed(1));
+            for (const [m, t0, d] of writes) m.style.clipPath = `inset(-30% ${(100 - 100 * clamp01((t - t0) / d)).toFixed(1)}% -40% -5%)`;
+          }
+          tl.eventCallback("onUpdate", render);
+          tl.seek(0);
+          render();
+          window.__timelines["10-ticket"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

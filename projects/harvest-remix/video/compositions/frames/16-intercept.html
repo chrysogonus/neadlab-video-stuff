@@ -1,0 +1,889 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 3 — intercept (16.06–23.656), v11. The other end of the wire, drawn as a splice-tray section: the cable
+         cut away layer by layer (jacket, aramid yarn, buffer, glass cladding, the lit core), section A–A at 400:1,
+         and a tap clamp hovering open over the bare fibre. The lyric rides strands of fibre laid parallel to the
+         cable: each word arrives as a light pulse and rises out of its strand. On "copy" the clamp slams shut and
+         the light forks into a copy fibre that prints the copy; Archie (v12, first appearance) rises in from the
+         bottom-right on "myself", lights the copy with his eyes, and files it into the cold store on "ice".
+         v13 (SYSTEM.md V7): black ground (no cable duct, ciphertext wall, bokeh or wide orange wash; the core's glow sits
+         tight on the tap); the tap carries a paper tag on a string, "TAP 07 · RETENTION: INDEFINITE · REASON: JUST IN
+         CASE", and the cold store's front reads "COLD STORAGE ≈ $0.001/GB·MONTH"; on "ice" (22.96) the word lands
+         cold and frost grows across its glyphs (seeded crystal texture clipped to the type, dendrites off its edges).
+         v15: the attached longitudinal cable cutaway replaces the ambiguous concentric section. The sole printer
+         is Archie’s chest; a narrow scanning beam follows the real emerging copy, then it is held and filed.
+         v16 (V16.md §3): three shots. A (16.06–19.74): the camera dollies fast along the real cable and the bare fibre,
+         pulses and hex rush past, "read" fails under strike bars, a whip to the open clamp. B (19.74–22.0): the clamp
+         slams on "copy" (explosion, shake, flash), Archie prints the copy. C (22.0–23.656): the copy falls into the cold
+         store and the frost shatters on "ice"; the frame drops out. The cutaway inset is screen-fixed so it stays legible.
+         v17 (V17.md §16): a quiet verse, two travelling shots joined by one continuous camera move. A (16.06–19.74): a
+         constant-speed glide along the cable onto the open clamp; "read" glides in and a single bar draws through it
+         across the sung word. B (19.74–23.656): the camera cranes back onto Archie's copy machine and travels on to the
+         cold store; the clamp closes on "copy" (soft punch, one thin ring), the copy prints under the scan beam, Archie
+         lifts it over the drawer and it sinks in on "ice" while frost spreads. No shakes, flashes or bursts; glideL in,
+         glideDown out.
+         v20 (V20.md #10): the light travels. A light packet runs the length of the cable on every hat (a comet along the
+         jacket's tracer, then through the bare core, and through the cutaway inset), passing the middle of the frame ON the
+         hat; after "copy" each packet forks down the copy fibre. The tap bites at the fibre on every snare and, once shut,
+         pulses on the snares (squash, leak flare, its COPY plate lights). "read" and "copy" are set at 460 px (2.1×), each
+         line in its own place: line 1 a top-left stack, line 2 a lockup lower down that steps back to make room for the
+         drawer on "put". -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+
+        /* ---- background plane: v13, black; only a tight glow where the core runs through the tap ---- */
+        #f16-light { position: absolute; left: 1060px; top: 470px; width: 760px; height: 440px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232,93,38,0.11), rgba(232,93,38,0.04) 55%, rgba(232,93,38,0) 100%); }
+        .f16-svg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+        #f16-bg, #f16-mid { will-change: auto; }
+        #f16-wA { position: absolute; inset: 0; }
+        #f16-inset { position: absolute; inset: 0; pointer-events: none; transform-origin: 1760px 188px; transform: translate(130px, -148px) scale(0.8); }
+        #f16-fxw { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
+        #f16-rush { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform: rotate(-7deg); transform-origin: 960px 720px; pointer-events: none; overflow: visible; }
+        .f16-rl { position: absolute; left: 0; white-space: nowrap; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--cream); opacity: 0; will-change: transform; }
+        .f16-streak { position: absolute; left: 0; height: 3px; opacity: 0; will-change: transform;
+          background: linear-gradient(90deg, rgba(232,93,38,0), rgba(255,217,194,0.95) 85%, rgba(232,93,38,0.9)); }
+        .f16-bar { position: absolute; left: -0.18em; right: -0.18em; height: 0.07em; background: var(--cream); transform-origin: 0 50%; transform: scaleX(0); box-shadow: 0 0 22px rgba(240,236,229,0.5); }
+        .f16-deny { position: absolute; left: calc(100% + 34px); top: 0.3em; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 24px; letter-spacing: 0.08em;
+          color: var(--fire); white-space: nowrap; opacity: 0; line-height: 1.5; text-shadow: none; text-transform: uppercase; }
+
+        /* ---- the shade that keeps the lyric column quiet ---- */
+        #f16-shade { position: absolute; inset: 0; pointer-events: none;
+          background: linear-gradient(90deg, rgba(10,10,10,0.8), rgba(10,10,10,0.5) 20%, rgba(10,10,10,0) 32%); }
+
+        /* ---- type plane: the lyric rides fibre strands laid parallel to the cable (axis −7° about 960,720) ---- */
+        #f16-lyrics { transform-origin: 8% 50%; pointer-events: none; }
+        #f16-path { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform: rotate(-7deg); transform-origin: 960px 720px; }
+        .f16-line { position: absolute; inset: 0; opacity: 0; }
+        .f16-row { position: absolute; left: 170px; display: flex; align-items: baseline; gap: 0 0.24em; white-space: nowrap;
+          font-family: "Barlow"; font-weight: 800; font-size: 84px; line-height: 1; letter-spacing: -0.02em; color: var(--cream); }
+        .f16-row::before { content: ""; position: absolute; left: -560px; right: -90px; top: 0.98em; height: 3px;
+          background: linear-gradient(90deg, rgba(240,236,229,0.16), rgba(240,236,229,0.16) 88%, rgba(240,236,229,0)); }
+        .f16-row::after { content: ""; position: absolute; left: -560px; right: -90px; top: calc(0.98em + 1px); height: 1px;
+          background: linear-gradient(90deg, rgba(232,93,38,0.7), rgba(232,93,38,0.5) 85%, rgba(232,93,38,0)); }
+        .f16-row.f16-hero { left: 160px; font-size: 460px; font-weight: 900; letter-spacing: -0.045em; color: var(--fire); }
+        .f16-row.f16-hero::before { top: 0.9em; height: 4px; }
+        .f16-row.f16-hero::after { top: calc(0.9em + 1px); }
+        .f16-word { display: inline-block; position: relative; }
+        .f16-txt { display: inline-block; }
+        .f16-pulse { position: absolute; left: -0.08em; right: -0.08em; top: calc(0.98em - 3px); height: 9px; background: #FFD9C2; opacity: 0;
+          box-shadow: 0 0 14px 4px rgba(232,93,38,0.9), 0 0 44px 12px rgba(232,93,38,0.45); transform-origin: 100% 50%; }
+        .f16-hero .f16-pulse { top: calc(0.9em - 6px); height: 16px; }
+
+        /* ---- Archie, standing under the tap, looking right at the copy and the cold store ---- */
+        #f16-archw { position: absolute; left: 1000px; top: 740px; width: 300px; height: 380px; transform: translateY(560px); transform-origin: 50% 100%; }
+        #f16-arch { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+        /* ---- the archive's marker voice ---- */
+        #f16-markpath { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
+        .f16-mark { position: absolute; font-family: "Caveat Brush"; font-size: 64px; line-height: 1; color: var(--fire);
+          white-space: nowrap; transform-origin: 0 100%; clip-path: inset(-20% 100% -30% -5%); }
+
+        /* ---- chrome plane ---- */
+        #f16-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
+        #f16-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: var(--fire);
+          vertical-align: middle; margin-right: 16px; }
+
+        /* ---- "ice": frost grows across the glyphs (texture clipped to the type), dendrites off its edges ---- */
+        .f16-frost { position: absolute; left: 0; top: 0; white-space: nowrap; text-shadow: none;
+          filter: drop-shadow(0 0 4px rgba(214,228,238,0.4)); }
+        .f16-frost .f16-fg { display: inline-block; color: transparent; background-size: 100% 100%;
+          -webkit-background-clip: text; background-clip: text; -webkit-text-stroke: 1.4px rgba(255,255,255,0.85); }
+        .f16-dend { position: absolute; left: 0; top: 0; width: 1px; height: 1px; overflow: visible; }
+      </style>
+
+      <div data-hf-id="hf-m3ai" id="root" data-composition-id="16-intercept" data-width="1920" data-height="1080" data-duration="7.596">
+        <div id="f16-wA" data-layout-ignore>
+        <div data-hf-id="hf-3bkw" class="hr-layer" id="f16-bg" data-depth="0.3" data-layout-ignore>
+          <div data-hf-id="hf-vknv" id="f16-light"></div>
+        </div>
+        <div data-hf-id="hf-qs67" class="hr-layer" id="f16-mid" data-depth="0.65" data-layout-ignore>
+          <svg data-hf-id="hf-phs4" id="f16-art" class="f16-svg" viewBox="0 0 1920 1080"></svg>
+          <div data-hf-id="hf-xw9w" id="f16-archw">
+            <svg data-hf-id="hf-aj6q" id="f16-arch" viewBox="0 0 300 380" aria-hidden="true"></svg>
+          </div>
+        </div>
+        </div>
+        <div id="f16-rush" data-layout-ignore></div>
+        <div data-hf-id="hf-3h8z" id="f16-shade" data-layout-ignore></div>
+        <div id="f16-inset" data-layout-ignore><svg id="f16-insetsvg" class="f16-svg" viewBox="0 0 1920 1080"></svg></div>
+        <div data-hf-id="hf-isnc" class="hr-layer" id="f16-lyrics"><div data-hf-id="hf-d94g" id="f16-path"></div></div>
+        <!-- the archive's marker voice -->
+        <div data-hf-id="hf-yqq2" class="hr-layer" id="f16-markl" data-layout-ignore>
+          <svg data-hf-id="hf-t5bv" id="f16-markpath" viewBox="0 0 1920 1080" aria-hidden="true">
+            <path data-hf-id="hf-v6ny" id="f16-arrow" transform="translate(0 122)" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" d="M560 792 C 560 760, 540 730, 492 700 M492 700 l 20 2 M492 700 l 6 20" fill="none" stroke="#E85D26" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <div data-hf-id="hf-7akb" class="f16-mark" id="f16-mark1" style="left: 200px; top: 864px; transform: rotate(-3deg);">(didn't need to)</div>
+        </div>
+        <div data-hf-id="hf-y913" class="hr-layer" id="f16-chrome" data-depth="0.2">
+          <div data-hf-id="hf-rb1c" id="f16-kicker">the other end of the wire</div>
+        </div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/archie.js"></script>
+      <script>
+        (() => {
+          const T0 = 16.06, DUR = 7.596, ID = "16-intercept";
+          const L = (T) => +(T - T0).toFixed(3);
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const NS = "http://www.w3.org/2000/svg";
+          const S = (parent, tag, attrs = {}, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const mono = (parent, x, y, size, text, o = {}) => S(parent, "text", Object.assign({ x, y, fill: "#888880", "font-family": "IBM Plex Mono",
+            "font-weight": 500, "font-size": size, "letter-spacing": size * 0.16 }, o), text);
+          const frac = (x) => x - Math.floor(x);
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+
+          // story beats (track seconds → local)
+          const READ = L(16.70), LINE2 = L(19.74), COPY = L(20.74), PUT = L(21.76), ICE = L(22.96);
+
+          // the cable runs at a 7° climb; its geometry is drawn in local axis space (axis y = 720)
+          const ANG = -7, CS = Math.cos(ANG * Math.PI / 180), SN = Math.sin(ANG * Math.PI / 180);
+          const rot = (x, y) => [960 + (x - 960) * CS - (y - 720) * SN, 720 + (x - 960) * SN + (y - 720) * CS];
+          const AX = `rotate(${ANG} 960 720)`;
+
+          // ---- baked textures ---------------------------------------------------------------------------------
+          const grainURL = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 256;
+            const x = c.getContext("2d"), r = HR.rng(1601), img = x.createImageData(256, 256);
+            for (let i = 0; i < img.data.length; i += 4) { const v = r() < 0.5 ? 0 : 255; img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = (r() * 60) | 0; }
+            x.putImageData(img, 0, 0);
+            return c.toDataURL("image/png");
+          })();
+          const paperURL = (() => {
+            const c = document.createElement("canvas"); c.width = 360; c.height = 224;
+            const x = c.getContext("2d"), r = HR.rng(1602);
+            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 360, 224);
+            const img = x.getImageData(0, 0, 360, 224);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 14; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+            x.putImageData(img, 0, 0);
+            x.strokeStyle = "rgba(110,100,90,0.12)"; x.lineWidth = 0.7;
+            for (let k = 0; k < 80; k++) { const px = r() * 360, py = r() * 224, a = r() * Math.PI, l = 6 + r() * 16;
+              x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.4); x.stroke(); }
+            return c.toDataURL("image/png");
+          })();
+
+          // ---- shared defs ------------------------------------------------------------------------------------
+          const art = $("f16-art");
+          const US = 'filterUnits="userSpaceOnUse" x="-400" y="-400" width="2800" height="1900"';
+          S(art, "defs").innerHTML = `
+            <filter id="f16-b4" ${US}><feGaussianBlur stdDeviation="4"/></filter>
+            <filter id="f16-b10" ${US}><feGaussianBlur stdDeviation="10"/></filter>
+            <filter id="f16-b18" ${US}><feGaussianBlur stdDeviation="18"/></filter>
+            <pattern id="f16-grain" patternUnits="userSpaceOnUse" width="256" height="256"><image href="${grainURL}" width="256" height="256"/></pattern>
+            <pattern id="f16-yarn" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(32)">
+              <rect width="7" height="7" fill="#2a2925"/><path d="M0 1.5 H7 M0 4.8 H7" stroke="#888880" stroke-opacity="0.42" stroke-width="0.9"/></pattern>
+            <linearGradient id="f16-gjacket" x1="0" y1="632" x2="0" y2="808" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#43423e"/><stop offset="0.16" stop-color="#2d2c29"/><stop offset="0.6" stop-color="#1b1b1a"/><stop offset="1" stop-color="#0f0f0e"/></linearGradient>
+            <linearGradient id="f16-gbuffer" x1="0" y1="672" x2="0" y2="768" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#5e5c56"/><stop offset="0.3" stop-color="#3d3c38"/><stop offset="1" stop-color="#191918"/></linearGradient>
+            <linearGradient id="f16-gglass" x1="0" y1="694" x2="0" y2="746" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#F0ECE5" stop-opacity="0.34"/><stop offset="0.3" stop-color="#F0ECE5" stop-opacity="0.10"/>
+              <stop offset="0.75" stop-color="#F0ECE5" stop-opacity="0.07"/><stop offset="1" stop-color="#F0ECE5" stop-opacity="0.22"/></linearGradient>
+            <linearGradient id="f16-gup" x1="0" y1="596" x2="0" y2="714" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#55534e"/><stop offset="0.35" stop-color="#3b3a36"/><stop offset="1" stop-color="#252523"/></linearGradient>
+            <linearGradient id="f16-glo" x1="0" y1="726" x2="0" y2="844" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#363531"/><stop offset="0.6" stop-color="#232321"/><stop offset="1" stop-color="#141413"/></linearGradient>
+            <linearGradient id="f16-gferrule" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#2a2a27"/><stop offset="0.35" stop-color="#77746d"/><stop offset="0.6" stop-color="#4a4945"/><stop offset="1" stop-color="#1a1a19"/></linearGradient>
+            <linearGradient id="f16-grake" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fff" stop-opacity="0.13"/><stop offset="0.38" stop-color="#fff" stop-opacity="0"/>
+              <stop offset="0.62" stop-color="#111" stop-opacity="0"/><stop offset="1" stop-color="#111" stop-opacity="0.22"/></linearGradient>
+            <radialGradient id="f16-gscrew" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#7a7770"/><stop offset="0.55" stop-color="#3e3d39"/><stop offset="1" stop-color="#1c1c1a"/></radialGradient>
+            <radialGradient id="f16-gcore" cx="0.4" cy="0.36" r="0.7"><stop offset="0" stop-color="#FFD9C2"/><stop offset="0.25" stop-color="#F68C5C"/><stop offset="0.7" stop-color="#E85D26"/><stop offset="1" stop-color="#B9431A"/></radialGradient>
+            <linearGradient id="f16-comet" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E85D26" stop-opacity="0"/><stop offset="0.72" stop-color="#F68C5C" stop-opacity="0.75"/><stop offset="1" stop-color="#FFEADC"/></linearGradient>
+            <linearGradient id="f16-gdrawer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34332f"/><stop offset="0.5" stop-color="#252523"/><stop offset="1" stop-color="#181817"/></linearGradient>
+            <linearGradient id="f16-ghandle" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a867e"/><stop offset="0.45" stop-color="#4c4a45"/><stop offset="1" stop-color="#1e1e1c"/></linearGradient>
+            `;
+
+          // ---- the cable, cut away layer by layer --------------------------------------------------------------
+          const cab = S(art, "g", { transform: AX });
+          // contact shadows on the tray
+          S(cab, "rect", { x: -300, y: 812, width: 1290, height: 34, fill: "#000", opacity: 0.6, filter: "url(#f16-b10)" });
+          S(cab, "rect", { x: 1000, y: 770, width: 1100, height: 14, fill: "#000", opacity: 0.45, filter: "url(#f16-b10)" });
+          // jacket
+          S(cab, "rect", { x: -300, y: 632, width: 1280, height: 176, fill: "url(#f16-gjacket)" });
+          S(cab, "rect", { x: -300, y: 632, width: 1280, height: 176, fill: "url(#f16-grain)", opacity: 0.5 });
+          S(cab, "rect", { x: -300, y: 648, width: 1280, height: 3, fill: "#F0ECE5", opacity: 0.24 });
+          S(cab, "rect", { x: -300, y: 795, width: 1280, height: 2.5, fill: "#E85D26", opacity: 0.3 });
+          // the printed legend on the jacket
+          const legend = "PRIVATE CORRESPONDENCE · NOT FOR THIRD PARTIES · ";
+          mono(cab, -260, 727, 15, legend.repeat(2), { fill: "#F0ECE5", opacity: 0.46, "letter-spacing": 3 });
+          for (let x = -280; x < 980; x += 52) S(cab, "rect", { x, y: 760, width: 2, height: x % 260 === 0 ? 16 : 8, fill: "#F0ECE5", opacity: 0.3 });
+          // jacket cut face, a ring seen at an angle
+          S(cab, "ellipse", { cx: 980, cy: 720, rx: 26, ry: 88, fill: "#403f3b" });
+          S(cab, "ellipse", { cx: 980, cy: 720, rx: 26, ry: 88, fill: "url(#f16-grake)" });
+          S(cab, "ellipse", { cx: 981, cy: 720, rx: 20, ry: 71, fill: "#080808" });
+          S(cab, "path", { d: "M972 636 Q994 660 1000 700", fill: "none", stroke: "#F0ECE5", "stroke-opacity": 0.4, "stroke-width": 1.5 });
+          // aramid strength yarn
+          S(cab, "rect", { x: 980, y: 652, width: 84, height: 136, fill: "url(#f16-yarn)" });
+          S(cab, "rect", { x: 980, y: 652, width: 84, height: 136, fill: "url(#f16-grake)" });
+          S(cab, "rect", { x: 980, y: 652, width: 84, height: 2, fill: "#F0ECE5", opacity: 0.22 });
+          const yr = HR.rng(1603);
+          for (let i = 0; i < 28; i++) {
+            const y = 656 + yr() * 128, l = 6 + yr() * 18, c = (yr() - 0.5) * 12;
+            S(cab, "path", { d: `M1060 ${y.toFixed(1)} q${(l * 0.5).toFixed(1)} ${c.toFixed(1)} ${l.toFixed(1)} ${(c * 0.4).toFixed(1)}`, fill: "none", stroke: "#888880", "stroke-opacity": (0.3 + yr() * 0.4).toFixed(2), "stroke-width": 0.9 });
+          }
+          S(cab, "ellipse", { cx: 1064, cy: 720, rx: 20, ry: 68, fill: "#34332e" });
+          S(cab, "ellipse", { cx: 1065, cy: 720, rx: 14, ry: 49, fill: "#090909" });
+          // tight buffer
+          S(cab, "rect", { x: 1064, y: 672, width: 88, height: 96, fill: "url(#f16-gbuffer)" });
+          S(cab, "rect", { x: 1064, y: 681, width: 88, height: 2.5, fill: "#F0ECE5", opacity: 0.42 });
+          S(cab, "rect", { x: 1064, y: 672, width: 88, height: 96, fill: "url(#f16-grain)", opacity: 0.35 });
+          S(cab, "ellipse", { cx: 1152, cy: 720, rx: 14, ry: 48, fill: "#4c4a45" });
+          S(cab, "ellipse", { cx: 1153, cy: 720, rx: 8, ry: 27, fill: "#0b0b0a" });
+          // the bare fibre: glass cladding with the lit core
+          const FIB = "M1152 720 H2200";
+          S(cab, "path", { d: FIB, stroke: "url(#f16-gglass)", "stroke-width": 52 });
+          S(cab, "path", { d: "M1152 697 H2200", stroke: "#F0ECE5", "stroke-opacity": 0.7, "stroke-width": 1.6 });
+          S(cab, "path", { d: "M1152 744 H2200", stroke: "#F0ECE5", "stroke-opacity": 0.3, "stroke-width": 1.2 });
+          S(cab, "path", { d: "M1152 707 H2200 M1152 733 H2200", stroke: "#F0ECE5", "stroke-opacity": 0.08, "stroke-width": 1 });
+          const coreGlow = S(cab, "path", { d: FIB, stroke: "#E85D26", "stroke-width": 26, filter: "url(#f16-b10)", opacity: 0.5 });
+          S(cab, "path", { d: FIB, stroke: "#C94A1C", "stroke-width": 8 });
+          S(cab, "path", { d: FIB, stroke: "#F68C5C", "stroke-width": 2.5 });
+          // ciphertext riding the light (it never resolves)
+          const riders = S(cab, "g", {});
+          const riderText = mono(riders, 0, 680, 12, "", { fill: "#F0ECE5", opacity: 0.32, "letter-spacing": 2.6 });
+          // pulses
+          const pulseGlow = S(cab, "g", { filter: "url(#f16-b4)" }), pulseCore = S(cab, "g", {});
+          const pulses = Array.from({ length: 22 }, () => ({
+            g: S(pulseGlow, "rect", { x: -60, y: -13, width: 120, height: 26, fill: "#E85D26" }),
+            c: S(pulseCore, "rect", { x: -40, y: -4, width: 80, height: 8, fill: "#FFD9C2" }),
+          }));
+          S(cab, "path", { d: "M1880 768 h18 M1880 768 l-6 -4 M1880 768 l-6 4", stroke: "#888880", "stroke-width": 1.2, fill: "none", opacity: 0 });
+          // v20: a light packet per hat, running the whole cable: along the jacket's tracer stripe, then through the bare core
+          const HATS = HR_ENV.onsets.hat.filter(([h, a]) => h > T0 - 0.6 && h < T0 + DUR + 0.6 && a >= 0.2).map(([h, a]) => ({ th: h - T0, a: Math.min(1, 0.45 + a * 0.65) }));
+          S(cab, "clipPath", { id: "f16-jclip" }).appendChild(S(cab, "rect", { x: -300, y: 600, width: 1280, height: 260 }));
+          S(cab, "clipPath", { id: "f16-fclip" }).appendChild(S(cab, "rect", { x: 1152, y: 600, width: 1100, height: 260 }));
+          const jLane = S(cab, "g", { "clip-path": "url(#f16-jclip)" }), fLane = S(cab, "g", { "clip-path": "url(#f16-fclip)" });
+          for (const h of HATS) {
+            h.jg = S(jLane, "rect", { x: -440, y: 776, width: 440, height: 38, fill: "#E85D26", filter: "url(#f16-b10)", opacity: 0 });
+            h.jc = S(jLane, "rect", { x: -380, y: 792, width: 380, height: 7, fill: "url(#f16-comet)", opacity: 0 });
+            h.fg = S(fLane, "rect", { x: -620, y: 685, width: 640, height: 70, fill: "#E85D26", filter: "url(#f16-b10)", opacity: 0 });
+            h.fc = S(fLane, "rect", { x: -540, y: 711, width: 540, height: 18, fill: "url(#f16-comet)", opacity: 0 });
+          }
+          // v20: a dimmer steady stream on the jacket's tracer, so the light is seen travelling before the bare fibre
+          const tracers = Array.from({ length: 7 }, () => S(jLane, "rect", { x: -200, y: 793, width: 200, height: 5, fill: "url(#f16-comet)", opacity: 0 }));
+          mono(cab, 1620, 790, 13, "→ RECIPIENT", { fill: "#888880" });
+
+          // ---- the tap clamp (two machined halves, open until "copy") ------------------------------------------
+          S(cab, "ellipse", { cx: 1400, cy: 880, rx: 150, ry: 18, fill: "#000", opacity: 0.55, filter: "url(#f16-b10)", id: "f16-clampshadow" });
+          const gap = S(cab, "g", {});
+          S(gap, "rect", { x: 1270, y: 714, width: 260, height: 12, fill: "#090909", id: "f16-gaprect", opacity: 0 });
+          const leak = S(gap, "rect", { x: 1272, y: 716, width: 256, height: 8, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0 });
+          const screw = (parent, cx, cy) => {
+            const g = S(parent, "g", { transform: `translate(${cx} ${cy})` });
+            S(g, "circle", { r: 13, fill: "#0c0c0b" });
+            S(g, "circle", { r: 11.5, fill: "url(#f16-gscrew)", stroke: "#0e0e0d", "stroke-width": 1.2 });
+            const hex = S(g, "polygon", { points: Array.from({ length: 6 }, (_, i) => `${(Math.cos(i * Math.PI / 3) * 5).toFixed(2)},${(Math.sin(i * Math.PI / 3) * 5).toFixed(2)}`).join(" "), fill: "#0e0e0d" });
+            S(g, "path", { d: "M-8 -4 A9 9 0 0 1 -2 -9", fill: "none", stroke: "#F0ECE5", "stroke-opacity": 0.55, "stroke-width": 1.3, "stroke-linecap": "round" });
+            return hex;
+          };
+          const sockets = [];
+          // upper half
+          const up = S(cab, "g", {});
+          S(up, "path", { d: "M1270 612 L1286 596 H1514 L1530 612 V714 H1270 Z", fill: "url(#f16-gup)" });
+          S(up, "path", { d: "M1270 612 L1286 596 H1514 L1530 612 Z", fill: "#64625c" });
+          S(up, "path", { d: "M1286 596.8 H1514", stroke: "#F0ECE5", "stroke-opacity": 0.55, "stroke-width": 1.4 });
+          S(up, "path", { d: "M1270 612.6 H1530", stroke: "#F0ECE5", "stroke-opacity": 0.22, "stroke-width": 1 });
+          S(up, "rect", { x: 1270, y: 596, width: 260, height: 118, fill: "url(#f16-grain)", opacity: 0.3 });
+          S(up, "path", { d: "M1270 612 L1286 596 H1514 L1530 612 V714 H1270 Z", fill: "url(#f16-grake)" });
+          S(up, "rect", { x: 1270, y: 708, width: 260, height: 6, fill: "#0e0e0d", opacity: 0.8 });
+          S(up, "text", { x: 1391, y: 690.4, "text-anchor": "middle", fill: "#F0ECE5", opacity: 0.16, "font-family": "Barlow", "font-weight": 900, "font-size": 36, "letter-spacing": 1 }, "COPY");
+          const clampTxt = S(up, "text", { x: 1391, y: 689, "text-anchor": "middle", fill: "#F0ECE5", "font-family": "Barlow", "font-weight": 900, "font-size": 36, "letter-spacing": 1 }, "COPY");
+          S(up, "rect", { x: 1462, y: 664, width: 18, height: 18, fill: "#0c0c0b" });
+          const lamp = S(up, "rect", { x: 1465, y: 667, width: 12, height: 12, fill: "#3a2418" });
+          const lampGlow = S(up, "rect", { x: 1458, y: 660, width: 26, height: 26, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0 });
+          sockets.push(screw(up, 1296, 640), screw(up, 1504, 640));
+          // lower half with the output port
+          const lo = S(cab, "g", {});
+          S(lo, "rect", { x: 1384, y: 842, width: 32, height: 44, fill: "url(#f16-gferrule)" });
+          for (let y = 852; y < 884; y += 7) S(lo, "rect", { x: 1384, y, width: 32, height: 1.4, fill: "#0e0e0d", opacity: 0.6 });
+          S(lo, "path", { d: "M1388 886 L1393 930 H1407 L1412 886 Z", fill: "#1d1d1b" });
+          for (let y = 892; y < 928; y += 6) S(lo, "path", { d: `M1390 ${y} H1410`, stroke: "#3a3935", "stroke-width": 1.4 });
+          S(lo, "path", { d: "M1270 726 H1530 V828 L1514 844 H1286 L1270 828 Z", fill: "url(#f16-glo)" });
+          S(lo, "path", { d: "M1270 828 L1286 844 H1514 L1530 828 Z", fill: "#121211" });
+          S(lo, "path", { d: "M1270 726.6 H1530", stroke: "#F0ECE5", "stroke-opacity": 0.3, "stroke-width": 1.2 });
+          S(lo, "rect", { x: 1270, y: 726, width: 260, height: 118, fill: "url(#f16-grain)", opacity: 0.3 });
+          S(lo, "path", { d: "M1270 726 H1530 V828 L1514 844 H1286 L1270 828 Z", fill: "url(#f16-grake)" });
+          const bc = HR.rng(1604);
+          for (let x = 1338; x < 1462;) { const w = 1.5 + ((bc() * 3) | 0); S(lo, "rect", { x, y: 780, width: w, height: 26, fill: "#E85D26", opacity: 0.85 }); x += w + 1.5 + ((bc() * 4) | 0); }
+          sockets.push(screw(lo, 1296, 800), screw(lo, 1504, 800));
+          // v13: the tap's paper tag, lying on the tray on a string tied to the lower screw
+          const TG = { x: 530, y: 852, w: 518, h: 42 };
+          S(cab, "rect", { x: TG.x + 6, y: TG.y + 8, width: TG.w, height: TG.h, fill: "#000", opacity: 0.6, filter: "url(#f16-b4)" });
+          const tagD = `M${TG.x + 10} ${TG.y} H${TG.x + TG.w} V${TG.y + TG.h} H${TG.x + 10} L${TG.x} ${TG.y + TG.h - 10} V${TG.y + 10} Z`;
+          S(cab, "clipPath", { id: "f16-tagclip" }).appendChild(S(cab, "path", { d: tagD }));
+          S(cab, "image", { href: paperURL, x: TG.x, y: TG.y, width: TG.w, height: TG.h, preserveAspectRatio: "none", "clip-path": "url(#f16-tagclip)", opacity: 0.9 });
+          S(cab, "path", { d: tagD, fill: "url(#f16-grake)", stroke: "#0A0A0A", "stroke-opacity": 0.35, "stroke-width": 1 });
+          S(cab, "path", { d: `M${TG.x + 10} ${TG.y + 0.8} H${TG.x + TG.w}`, stroke: "#fff", "stroke-opacity": 0.5, "stroke-width": 1.2 });
+          const EY = [TG.x + TG.w - 16, TG.y + TG.h / 2];
+          S(cab, "circle", { cx: EY[0], cy: EY[1], r: 8, fill: "#C9C3B8", stroke: "#8F897E", "stroke-width": 1 });
+          S(cab, "circle", { cx: EY[0], cy: EY[1], r: 4, fill: "#0A0A0A" });
+          const tagTxt = mono(cab, TG.x + 18, TG.y + 26, 14, "", { fill: "#5F5B54", "letter-spacing": 0.2 });
+          S(tagTxt, "tspan", { "font-weight": 600 }, "COPY");
+          S(tagTxt, "tspan", {}, " · RETENTION: INDEFINITE · REASON: JUST IN CASE");
+          const tagString = S(cab, "path", { d: "", fill: "none", stroke: "#B9B2A6", "stroke-opacity": 0.75, "stroke-width": 1.4, "stroke-linecap": "round" });
+
+          // ---- an attached, longitudinal cable cutaway: sleeve, glass and the continuing signal ------------
+          const DX = 1540, DY = 298;
+          const [cutX, cutY] = rot(1112, 720);
+          // the inset is screen-fixed (the camera dives past the cable); a section mark on the cable names what it shows
+          S(art, "circle", { cx: cutX, cy: cutY, r: 5, fill: "#E85D26" });
+          S(art, "circle", { cx: cutX, cy: cutY, r: 13, fill: "none", stroke: "#E85D26", "stroke-width": 1.6 });
+          mono(art, cutX - 52, cutY - 74, 15, "A–A", { fill: "#E85D26", "font-weight": 600 });
+          S(art, "path", { d: `M${(cutX - 26).toFixed(1)} ${(cutY - 60).toFixed(1)} V${(cutY - 28).toFixed(1)} M${(cutX + 14).toFixed(1)} ${(cutY - 60).toFixed(1)} V${(cutY - 28).toFixed(1)}`, stroke: "#E85D26", "stroke-width": 1.4, fill: "none" });
+          const disc = S($("f16-insetsvg"), "g", { transform: `translate(${DX} ${DY})` });
+          S(disc, "rect", { x: -220, y: -110, width: 440, height: 230, rx: 3, fill: "#111110", stroke: "#505048", "stroke-width": 1.2 });
+          S(disc, "path", { d: "M-219 -109 H219 M-219 -109 V119", fill: "none", stroke: "#F0ECE5", "stroke-opacity": 0.16, "stroke-width": 1 });
+          mono(disc, -198, -78, 16, "FIBRE CABLE · CUTAWAY A–A", { fill: "#F0ECE5", "letter-spacing": 1 });
+          // The staggered open ends repeat the silhouette of the real cable below.
+          S(disc, "path", { d: "M-198 -43 H-66 L-38 -22 V42 L-66 62 H-198 Z", fill: "#30302c", stroke: "#77746c", "stroke-width": 1.2 });
+          S(disc, "rect", { x: -198, y: -30, width: 205, height: 80, fill: "url(#f16-yarn)" });
+          S(disc, "path", { d: "M-198 -15 H67 L89 -3 V25 L67 37 H-198 Z", fill: "#55524b", stroke: "#888880", "stroke-width": 1 });
+          S(disc, "rect", { x: -198, y: -2, width: 380, height: 25, fill: "#211e19", stroke: "#B9B2A6", "stroke-width": 1 });
+          const discGlow = S(disc, "path", { d: "M-198 10 H191", fill: "none", stroke: "#E85D26", "stroke-width": 14, filter: "url(#f16-b4)", opacity: 0.6 });
+          const discCore = S(disc, "path", { d: "M-198 10 H191", fill: "none", stroke: "#FFD9C2", "stroke-width": 2.5 });
+          S(disc, "path", { d: "M180 3 L192 10 L180 17", fill: "none", stroke: "#E85D26", "stroke-width": 2 });
+          mono(disc, -198, 94, 13, "LIGHT CARRIES THE MESSAGE →", { fill: "#888880", "letter-spacing": 0.5 });
+          // v20: the same packets cross the cutaway, its head at the middle ON the hat
+          S(disc, "clipPath", { id: "f16-dclip" }).appendChild(S(disc, "rect", { x: -198, y: -20, width: 389, height: 60 }));
+          const dLane = S(disc, "g", { "clip-path": "url(#f16-dclip)" });
+          for (const h of HATS) {
+            h.dg = S(dLane, "rect", { x: -130, y: -2, width: 140, height: 24, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0 });
+            h.dc = S(dLane, "rect", { x: -110, y: 6, width: 110, height: 8, fill: "url(#f16-comet)", opacity: 0 });
+          }
+
+          // ---- the copy path, the copy, the cold drawer ------------------------------------------------------
+          const [px0, py0] = rot(1400, 928);
+          const CP = `M${px0.toFixed(1)} ${py0.toFixed(1)} C1320 920 1230 910 1150 914`;
+          const copyG = S(art, "g", { opacity: 0 });
+          S(copyG, "path", { d: CP, fill: "none", stroke: "#F0ECE5", "stroke-opacity": 0.14, "stroke-width": 20, "stroke-linecap": "round" });
+          S(copyG, "path", { d: CP, fill: "none", stroke: "#F0ECE5", "stroke-opacity": 0.4, "stroke-width": 1.2, transform: "translate(-3 -7)" });
+          const copyCore = S(copyG, "path", { d: CP, fill: "none", stroke: "#E85D26", "stroke-width": 4, "stroke-linecap": "round" });
+          const copyGlow = S(copyG, "path", { d: CP, fill: "none", stroke: "#E85D26", "stroke-width": 16, filter: "url(#f16-b4)", opacity: 0.55 });
+          const CPLEN = copyCore.getTotalLength();
+          copyCore.setAttribute("stroke-dasharray", CPLEN); copyGlow.setAttribute("stroke-dasharray", CPLEN);
+          const copyPulses = Array.from({ length: 4 }, () => S(copyG, "circle", { r: 5, fill: "#FFD9C2", opacity: 0 }));
+          for (const h of HATS) { h.cg = S(copyG, "circle", { r: 20, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0 }); h.cc = S(copyG, "circle", { r: 8, fill: "#FFEADC", opacity: 0 }); }
+
+          // the drawer: open, its interior showing older copies
+          const DR = { x: 1500, y: 918, w: 320, h: 112 };
+          const drawer = S(art, "g", {});
+          S(drawer, "rect", { x: DR.x - 18, y: DR.y - 46, width: DR.w + 36, height: DR.h + 200, fill: "#141413" });
+          S(drawer, "rect", { x: DR.x - 18, y: DR.y - 46, width: 2, height: DR.h + 200, fill: "#F0ECE5", opacity: 0.12 });
+          S(drawer, "rect", { x: DR.x - 18, y: DR.y - 46, width: DR.w + 36, height: 2, fill: "#F0ECE5", opacity: 0.16 });
+          const inside = S(drawer, "g", {});
+          S(inside, "path", { d: `M${DR.x + 10} ${DR.y - 38} H${DR.x + DR.w - 10} L${DR.x + DR.w} ${DR.y} H${DR.x} Z`, fill: "#090909" });
+          for (let i = 0; i < 8; i++) {
+            const x = DR.x + 26 + i * 35;
+            S(inside, "rect", { x, y: DR.y - 30 + (i % 3) * 3, width: 26, height: 30, fill: i === 4 ? "#3a2418" : "#2a2a27" });
+            S(inside, "rect", { x, y: DR.y - 30 + (i % 3) * 3, width: 26, height: 1.5, fill: "#F0ECE5", opacity: 0.25 });
+          }
+          // the copy (printed by the light at the end of the copy fibre)
+          const card = S(art, "g", {});
+          const cardBody = S(card, "g", { opacity: 0 });
+          S(cardBody, "rect", { x: 1606, y: 782, width: 170, height: 106, fill: "#000", opacity: 0.45, filter: "url(#f16-b4)" });
+          S(cardBody, "image", { href: paperURL, x: 1598, y: 768, width: 180, height: 112, preserveAspectRatio: "none" });
+          S(cardBody, "path", { d: "M1598 768 L1688 836 L1778 768", fill: "rgba(17,17,17,0.07)", stroke: "rgba(17,17,17,0.3)", "stroke-width": 1.2 });
+          S(cardBody, "path", { d: "M1598 880 L1662 830 M1778 880 L1714 830", fill: "none", stroke: "rgba(17,17,17,0.14)", "stroke-width": 1 });
+          S(cardBody, "path", { d: "M1598 768.8 H1778", stroke: "#fff", "stroke-opacity": 0.6, "stroke-width": 1.4 });
+          S(cardBody, "circle", { cx: 1688, cy: 836, r: 17, fill: "#B9431A" });
+          S(cardBody, "circle", { cx: 1688, cy: 836, r: 15, fill: "url(#f16-gcore)" });
+          S(cardBody, "text", { x: 1688, y: 841.5, "text-anchor": "middle", fill: "#C94A1C", "font-family": "Barlow", "font-weight": 900, "font-size": 15 }, "a.");
+          mono(cardBody, 1606, 874, 8, "COPY", { fill: "#E85D26", "font-weight": 600, "letter-spacing": 1.2 });
+          for (let i = 0; i < 3; i++) mono(cardBody, 1606, 786 + i * 10, 7, HR.cipher(12, 1620 + i), { fill: "#5F5B54", "letter-spacing": 1 });
+          const scan = S(cardBody, "rect", { x: 1598, y: 768, width: 2, height: 112, fill: "#FFD9C2", opacity: 0 });
+          const scanGlow = S(cardBody, "rect", { x: 1594, y: 768, width: 10, height: 112, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0 });
+          // drawer front
+          const front = S(art, "g", { id: "f16-front" });
+          S(front, "rect", { x: DR.x, y: DR.y, width: DR.w, height: DR.h, fill: "url(#f16-gdrawer)" });
+          S(front, "rect", { x: DR.x, y: DR.y, width: DR.w, height: DR.h, fill: "url(#f16-grain)", opacity: 0.35 });
+          S(front, "rect", { x: DR.x + 10, y: DR.y + 10, width: DR.w - 20, height: DR.h - 20, fill: "none", stroke: "#0c0c0b", "stroke-width": 2 });
+          S(front, "path", { d: `M${DR.x + 11} ${DR.y + DR.h - 11} H${DR.x + DR.w - 11} V${DR.y + 11}`, fill: "none", stroke: "#F0ECE5", "stroke-opacity": 0.14, "stroke-width": 1 });
+          S(front, "rect", { x: DR.x, y: DR.y, width: DR.w, height: 2, fill: "#F0ECE5", opacity: 0.42 });
+          S(front, "rect", { x: DR.x, y: DR.y, width: DR.w, height: DR.h, fill: "url(#f16-grake)" });
+          // label card holder
+          S(front, "rect", { x: DR.x + 22, y: DR.y + 20, width: 136, height: 52, fill: "#0e0e0d" });
+          S(front, "image", { href: paperURL, x: DR.x + 26, y: DR.y + 24, width: 128, height: 44, preserveAspectRatio: "none" });
+          S(front, "text", { x: DR.x + 36, y: DR.y + 60, fill: "#111111", "font-family": "Barlow", "font-weight": 900, "font-size": 30, "letter-spacing": -0.5 }, "0001");
+          const drLabel = mono(front, DR.x + 150, DR.y + 38, 8.5, "COPY · HELD", { "text-anchor": "end", fill: "#5F5B54", "font-weight": 600, "letter-spacing": 1 });
+          S(front, "path", { d: `M${DR.x + 22} ${DR.y + 20} H${DR.x + 158}`, stroke: "#F0ECE5", "stroke-opacity": 0.25, "stroke-width": 1 });
+          // handle
+          S(front, "rect", { x: DR.x + 176, y: DR.y + 76, width: 120, height: 18, fill: "#000", opacity: 0.5, filter: "url(#f16-b4)" });
+          S(front, "rect", { x: DR.x + 170, y: DR.y + 64, width: 120, height: 16, fill: "url(#f16-ghandle)" });
+          S(front, "rect", { x: DR.x + 170, y: DR.y + 64.5, width: 120, height: 1.5, fill: "#F0ECE5", opacity: 0.6 });
+          S(front, "rect", { x: DR.x + 164, y: DR.y + 60, width: 10, height: 24, fill: "#3a3935" });
+          S(front, "rect", { x: DR.x + 286, y: DR.y + 60, width: 10, height: 24, fill: "#3a3935" });
+          // lamp
+          S(front, "rect", { x: DR.x + DR.w - 44, y: DR.y + 22, width: 20, height: 20, fill: "#0c0c0b" });
+          const drLamp = S(front, "rect", { x: DR.x + DR.w - 40, y: DR.y + 26, width: 12, height: 12, fill: "#E85D26" });
+          const drLampGlow = S(front, "rect", { x: DR.x + DR.w - 48, y: DR.y + 18, width: 28, height: 28, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0.6 });
+          const drTemp = mono(front, DR.x + 262, DR.y + 40, 13, "JUST IN CASE", { "text-anchor": "end", fill: "#E85D26", "font-weight": 600, "letter-spacing": 0.6 });
+          // frost: hairlines growing in from the edges (hidden until "ice")
+          const frost = S(art, "g", { opacity: 1 });
+          const frostTint = S(frost, "rect", { x: DR.x, y: DR.y, width: DR.w, height: DR.h, fill: "#F0ECE5", opacity: 0 });
+          const fr = HR.rng(1606), frostLines = [];
+          const seedLine = (x, y, a, len, w, o, delay) => {
+            const x2 = x + Math.cos(a) * len, y2 = y + Math.sin(a) * len;
+            const p = S(frost, "path", { d: `M${x.toFixed(1)} ${y.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`, stroke: "#F0ECE5", "stroke-opacity": o.toFixed(2),
+              "stroke-width": w.toFixed(2), "stroke-dasharray": len.toFixed(1), "stroke-dashoffset": len.toFixed(1), fill: "none" });
+            frostLines.push({ p, len, delay });
+            return [x2, y2];
+          };
+          for (let i = 0; i < 64; i++) {
+            const side = i % 4; let x, y, a;
+            if (side === 0) { x = DR.x + fr() * DR.w; y = DR.y; a = Math.PI / 2; }
+            else if (side === 1) { x = DR.x + fr() * DR.w; y = DR.y + DR.h; a = -Math.PI / 2; }
+            else if (side === 2) { x = DR.x; y = DR.y + fr() * DR.h; a = 0; }
+            else { x = DR.x + DR.w; y = DR.y + fr() * DR.h; a = Math.PI; }
+            a += (fr() - 0.5) * 1.6;
+            const len = 8 + fr() * fr() * 44, d = fr() * 0.35;
+            const [mx, my] = seedLine(x, y, a, len, 0.8 + fr() * 0.7, 0.4 + fr() * 0.45, d);
+            if (len > 22) for (const s of [-1, 1]) if (fr() < 0.6) {
+              const t = 0.35 + fr() * 0.4, bx = x + (mx - x) * t, by = y + (my - y) * t;
+              seedLine(bx, by, a + s * (0.6 + fr() * 0.3), len * (0.25 + fr() * 0.3), 0.7, 0.35 + fr() * 0.3, d + 0.12 + t * 0.15);
+            }
+          }
+          for (let i = 0; i < 14; i++) seedLine(DR.x + fr() * DR.w, DR.y - 2, -Math.PI / 2 + (fr() - 0.5) * 1.4, 6 + fr() * 20, 0.8, 0.35 + fr() * 0.3, 0.1 + fr() * 0.3);
+          const frontTxt = S(art, "g", {});   // above the frost, so the price stays legible
+          S(frontTxt, "rect", { x: DR.x + 12, y: DR.y + 86, width: DR.w - 24, height: 20, fill: "#121211" });
+          S(frontTxt, "rect", { x: DR.x + 12, y: DR.y + 105, width: DR.w - 24, height: 1, fill: "#F0ECE5", opacity: 0.12 });
+          mono(frontTxt, DR.x + 18, DR.y + 100, 13, "COLD STORAGE ≈ $0.001/GB·MONTH", { fill: "#888880", "letter-spacing": 0.2 });
+          const flakes = Array.from({ length: 12 }, (_, i) => {
+            const c = S(art, "circle", { cx: DR.x + 20 + fr() * (DR.w - 40), cy: DR.y, r: (1.2 + fr() * 2.2).toFixed(1), fill: "#F0ECE5", opacity: 0 });
+            return { c, dx: (fr() - 0.5) * 120, dy: -30 - fr() * 70 };
+          });
+
+          // ---- title block (bottom left) ---------------------------------------------------------------------
+          const tb = S(art, "g", { opacity: 0.85 });
+          S(tb, "path", { d: "M120 976 H690", stroke: "#505048", "stroke-width": 1, fill: "none" });
+          mono(tb, 120, 960, 15, "COPY FIRST. ASK NEVER.", { fill: "#888880", "letter-spacing": 1 });
+          mono(tb, 120, 1008, 13, "ARCHIVE COPY", { fill: "#888880", "letter-spacing": 0.8 });
+          const counter = mono(tb, 344, 1008, 16, "0 B", { fill: "#E85D26", "font-weight": 600, "letter-spacing": 0.4 });
+
+          // ---- lyrics ---------------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const type = $("f16-lyrics");
+          const lines = [{"i": 2, "section": "Verse 1", "text": "I couldn't read a word of it, I didn't even try", "start": 16.06, "end": 19.74, "words": [{"w": "I", "start": 16.06, "end": 16.18}, {"w": "couldn't", "start": 16.18, "end": 16.7}, {"w": "read", "start": 16.7, "end": 17.04}, {"w": "a", "start": 17.04, "end": 17.16}, {"w": "word", "start": 17.16, "end": 17.48}, {"w": "of", "start": 17.48, "end": 17.57}, {"w": "it,", "start": 17.57, "end": 17.9}, {"w": "I", "start": 17.9, "end": 18.06}, {"w": "didn't", "start": 18.06, "end": 18.56}, {"w": "even", "start": 18.56, "end": 18.98}, {"w": "try", "start": 18.98, "end": 19.74}]}, {"i": 3, "section": "Verse 1", "text": "I made myself a copy and I put it on ice", "start": 19.74, "end": 23.656, "words": [{"w": "I", "start": 19.74, "end": 19.92}, {"w": "made", "start": 19.92, "end": 20.16}, {"w": "myself", "start": 20.16, "end": 20.68}, {"w": "a", "start": 20.68, "end": 20.74}, {"w": "copy", "start": 20.74, "end": 21.42}, {"w": "and", "start": 21.42, "end": 21.62}, {"w": "I", "start": 21.62, "end": 21.76}, {"w": "put", "start": 21.76, "end": 21.98}, {"w": "it", "start": 21.98, "end": 22.06}, {"w": "on", "start": 22.06, "end": 22.96}, {"w": "ice", "start": 22.96, "end": 23.656}]}];
+          // each line rides four fibre strands laid parallel to the cable; the hero owns the second strand as a display row
+          const LAYOUT = [[[0, 1], [2], [3, 4, 5, 6], [7, 8, 9, 10]], [[0, 1, 2, 3], [4], [5, 6, 7, 8], [9, 10]]];
+          // v20: the heroes at 460 px; each line has its own rows (left x, baseline in the cable's axis space)
+          const HS = 460;
+          const ROWS = [[[170, 150], [150, 520], [170, 640], [170, 745]],
+                        [[560, 300], [120, 600], [110, 760], [110, 860]]];
+          const BASE = ROWS[0].map((r) => r[1]);
+          const heroes = [], boxes = [];
+          let iceWe = null, iceTx = null, readWe = null;
+          const path = $("f16-path");
+          lines.forEach((line, j) => {
+            const box = el("div", "f16-line", path);
+            boxes.push(box);
+            LAYOUT[j].forEach((row, r) => {
+              const isHero = r === 1;
+              const re = el("div", "f16-row" + (isHero ? " f16-hero hr-glow" : ""), box);
+              if (isHero) re.setAttribute("data-layout-allow-overlap", ""); // v17: the hero row deliberately sits tight on its strand above the next line
+              re.style.top = `${ROWS[j][r][1] - (isHero ? 0.9 * HS : 0.98 * 84)}px`;
+              re.style.left = `${ROWS[j][r][0]}px`;
+              for (const wi of row) {
+                const w = line.words[wi], t = L(w.start);
+                const we = el("span", "f16-word", re), tx = el("span", "f16-txt", we, w.w.toLowerCase()), pulse = el("i", "f16-pulse", we);
+                if (isHero) { we.setAttribute("data-layout-allow-overlap", ""); tx.setAttribute("data-layout-allow-overlap", ""); }
+                if (t <= 0) continue;   // the frame opens on "i": on screen at the cut
+                // the light pulse runs in along the strand and lands under the word as it rises out of the fibre
+                tl.fromTo(pulse, { x: -300, scaleX: 2.2, opacity: 0 }, { x: 0, scaleX: 1, opacity: 1, duration: 0.3, ease: "power1.in" }, t - 0.3);
+                tl.fromTo(pulse, { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, t + 0.02);
+                tl.set(tx, { opacity: 0 }, 0);
+                if (isHero) {
+                  // v17: the hero glides in along its strand ("read") or settles onto it ("copy"), readable on its word time
+                  WOW.word(tl, tx, t, { kind: w.w === "read" ? "glide" : "settle", dur: 0.46 });
+                  heroes.push([re, we, t]); if (w.w === "read") readWe = we; continue;
+                }
+                // lead words rise out of their strand; "ice" sinks into it
+                WOW.word(tl, tx, t, { kind: w.w === "ice" ? "sink" : "rise" });
+                if (w.w === "ice") {   // v13: "ice" lands cold, then frosts over in render()
+                  iceWe = we; iceTx = tx;
+                  tl.fromTo(we, { color: "#FFFFFF", textShadow: "0 0 18px rgba(225,235,242,0.7)" },
+                    { color: "#F0ECE5", textShadow: "0 0 6px rgba(225,235,242,0.25)", duration: 0.6, ease: "power1.in" }, t + 0.04);
+                  continue;
+                }
+                tl.fromTo(we, { color: "#E85D26", textShadow: "0 0 22px rgba(232,93,38,0.95)" },
+                  { color: "#F0ECE5", textShadow: "0 0 0px rgba(232,93,38,0)", duration: 0.5, ease: "power1.in" }, t + 0.04);
+              }
+            });
+            tl.set(box, { opacity: 1 }, Math.max(0, L(line.start)));
+          });
+          // v17: line 1 slides on along its strands and fades as line 2 begins (no whip)
+          // v18: it leaves across the first word of line 2, so the frame never stands without a lyric
+          tl.fromTo(boxes[0], { x: 0, opacity: 1, filter: "blur(0px)" }, { x: -90, opacity: 0, filter: "blur(4px)", duration: 0.3, ease: "power2.in", immediateRender: false }, LINE2 - 0.12);
+          tl.set(boxes[0], { opacity: 0 }, LINE2 + 0.18);
+          // v20: "copy" holds the frame at full size, then steps back on the 21.567 hat (eased, 0.45 s) so Archie and the
+          // cold store have the right of the frame for "put it on ice"
+          const STEPBACK = L(21.567), copyRow = heroes[1][0];
+          copyRow.style.transformOrigin = "0% 90%";
+          tl.fromTo(copyRow, { scale: 1, y: 0 }, { scale: 0.5, y: 80, duration: 0.45, ease: "power2.inOut", immediateRender: false }, STEPBACK);
+
+          // ---- "on ice": frost grows across the word's glyphs ------------------------------------------------
+          // a seeded crystal texture clipped to the type (a copy of the glyphs over the word), revealed from the
+          // bottom-left by a mask, plus dendrites that grow off its edges from behind the glyphs
+          const frostURL = (() => {
+            const W = 240, H = 180, c = document.createElement("canvas"); c.width = W; c.height = H;
+            const x = c.getContext("2d"), r = HR.rng(1608);
+            const g = x.createLinearGradient(0, 0, 0, H);
+            g.addColorStop(0, "#D4D8D7"); g.addColorStop(0.55, "#B3B9BA"); g.addColorStop(1, "#C8CDCD");
+            x.fillStyle = g; x.fillRect(0, 0, W, H);
+            x.fillStyle = "rgba(190,214,232,0.16)"; x.fillRect(0, 0, W, H);
+            const arm = (px, py, a, len, w, depth) => {
+              const ex = px + Math.cos(a) * len, ey = py + Math.sin(a) * len;
+              x.strokeStyle = `rgba(255,255,255,${(0.55 + 0.4 * r()).toFixed(2)})`; x.lineWidth = w;
+              x.beginPath(); x.moveTo(px, py); x.lineTo(ex, ey); x.stroke();
+              if (depth > 0) for (let k = 1; k <= 3; k++) {
+                const f = k / 4, bx = px + (ex - px) * f, by = py + (ey - py) * f;
+                for (const sgn of [-1, 1]) if (r() < 0.8) arm(bx, by, a + sgn * Math.PI / 3, len * (0.28 + 0.2 * r()) * (1 - f * 0.5), w * 0.6, depth - 1);
+              }
+            };
+            for (let i = 0; i < 16; i++) { const cx = r() * W, cy = r() * H, n = 6, a0 = r() * Math.PI;
+              for (let k = 0; k < n; k++) arm(cx, cy, a0 + k * Math.PI / 3, 14 + r() * 20, 2, 2); }
+            for (let i = 0; i < 140; i++) { x.fillStyle = `rgba(255,255,255,${(0.3 + 0.6 * r()).toFixed(2)})`; x.fillRect(r() * W, r() * H, 1.2, 1.2); }
+            return c.toDataURL("image/png");
+          })();
+          const frostEl = el("span", "f16-frost", iceWe);
+          frostEl.setAttribute("data-layout-allow-occlusion", "");   // the frost copy deliberately lies over the word
+          for (const ch of "ice") el("span", "f16-fg", frostEl, ch).style.backgroundImage = `url(${frostURL})`;
+          // dendrites from the glyph edges (word box: 84 px Barlow; x-height top ≈ 34, baseline ≈ 76, width ≈ 110)
+          const dend = document.createElementNS(NS, "svg");
+          dend.setAttribute("class", "f16-dend"); dend.setAttribute("aria-hidden", "true");
+          iceWe.insertBefore(dend, iceWe.firstChild);
+          iceTx.style.position = "relative";   // the glyphs paint over the dendrites' roots
+          const dr = HR.rng(1609), dends = [];
+          const seg = (x0, y0, x1, y1, w, o, delay, dur) => dends.push({ delay, dur, p: S(dend, "path", { d: `M${x0.toFixed(1)} ${y0.toFixed(1)} L${x1.toFixed(1)} ${y1.toFixed(1)}`,
+            pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1, stroke: "#F4F6F5", "stroke-opacity": o.toFixed(2), "stroke-width": w, "stroke-linecap": "round", fill: "none" }) });
+          const fern = (px, py, a, len, delay) => {   // a rime needle with 60° side ticks, growing outward
+            const ex = px + Math.cos(a) * len, ey = py + Math.sin(a) * len, dur = 0.08 + len / 120;
+            seg(px, py, ex, ey, 1.1, 0.6 + 0.35 * dr(), delay, dur);
+            for (const f of [0.3, 0.5, 0.7, 0.88]) for (const sgn of [-1, 1]) if (dr() < 0.7) {
+              const bx = px + (ex - px) * f, by = py + (ey - py) * f, b = a + sgn * Math.PI / 3, bl = len * (1 - f) * (0.35 + 0.25 * dr());
+              seg(bx, by, bx + Math.cos(b) * bl, by + Math.sin(b) * bl, 0.8, 0.45 + 0.4 * dr(), delay + f * dur, 0.06 + bl / 120);
+            }
+          };
+          const roots = [];
+          for (let i = 0; i < 12; i++) roots.push([30 + i * 6.5 + dr() * 4, 37, -Math.PI / 2, 9 + dr() * 11]);   // up off the c and e
+          for (let i = 0; i < 14; i++) roots.push([3 + i * 7.6 + dr() * 3, 71, Math.PI / 2, 4 + dr() * 6]);     // rime under the baseline
+          for (let i = 0; i < 4; i++) roots.push([4 + i * 3, 20, -Math.PI / 2 + (i - 1.5) * 0.45, 7 + dr() * 7]); // the i's dot
+          for (let i = 0; i < 4; i++) roots.push([3, 40 + i * 9, Math.PI, 5 + dr() * 8], [107, 44 + i * 7, 0, 5 + dr() * 8]); // the sides
+          roots.forEach(([rx, ry, a, len]) => {
+            const d = Math.hypot(rx, ry - 80) / 130;            // reached by the frost front from the bottom-left
+            fern(rx, ry, a + (dr() - 0.5) * 0.9, len, 0.1 + d * 0.34 + dr() * 0.06);
+          });
+          const FROST = L(22.96) + 0.06;
+
+          // the archive's marker: "(didn't need to)", drawn on after "even", leaves with the line
+          const NOTE = L(18.62), mark1 = $("f16-mark1"), arrow = $("f16-arrow");
+          tl.fromTo(mark1, { scale: 1.06, rotation: -7 }, { scale: 1, rotation: -5, duration: 0.5, ease: "power3.out", immediateRender: false }, NOTE + 0.1);
+          tl.fromTo([mark1, arrow], { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, LINE2 - 0.34);
+
+          // ---- Archie (v12: replaces the lamp-headed Archivist): rises in from the bottom edge on "myself", lights
+          // the copy with his eyes, follows it into the drawer and nods it shut on "ice"
+          const archie = HR.archie($("f16-arch"), { id: "f16a", x: 150, y: 330, scale: 0.68, seed: 12 });
+          const RISE = L(20.16);   // "myself"
+          archie.mood(tl, "curious", RISE - 0.2, 0.3);
+          archie.mood(tl, "surprised", COPY - 0.02, 0.08, "power3.out");
+          archie.mood(tl, "focused", COPY + 0.4, 0.3);
+          archie.to(tl, { drawer: 1, shL: 38, elL: -80, shR: 42, elR: -80 }, COPY-0.25, 0.2);
+          archie.to(tl, { drawer: 0, shL: -34, elL: -96, shR: -34, elR: -96, lidL: 0.25, lidR: 0.25 }, COPY+0.58, 0.22);
+          archie.to(tl, { shR: 82, elR: -24, shL: 4, elL: 8 }, PUT, 0.23);
+          archie.shiver(tl, ICE + 0.1, DUR - ICE);
+          archie.to(tl, { jit: 0.45 }, ICE + 0.26, 0.2);   // v17: a small shiver, not a tremor
+          // A whole incoming letter slides into his chest. The printed copy emerges from that same slot.
+          const copyOverlay = S($("f16-mid"), "svg", { id:"f16-copy-overlay", class:"f16-svg", viewBox:"0 0 1920 1080", "data-layout-ignore":"" });
+          copyOverlay.appendChild(card);
+          const inputLetter = S(copyOverlay, "g", { opacity: 0 });
+          S(inputLetter,"rect",{x:-74,y:-44,width:148,height:88,fill:"#F0ECE5",stroke:"#888880","stroke-width":1.5});
+          S(inputLetter,"path",{d:"M-74 -44 L0 13 L74 -44 M-74 44 L-22 0 M74 44 L22 0",fill:"none",stroke:"#888880","stroke-width":1.2});
+          S(inputLetter,"circle",{cx:0,cy:12,r:12,fill:"#E85D26"});
+          tl.set(inputLetter,{opacity:1},RISE+0.02);
+          tl.fromTo(inputLetter,{x:1390,y:770,scale:0.8,rotation:-16},{x:1150,y:914,scale:0.62,rotation:0,duration:0.36,ease:"power2.in"},RISE+0.02);
+          tl.fromTo(inputLetter,{scaleY:0.62},{scaleY:0.02,duration:0.18,ease:"power3.in",immediateRender:false},COPY-0.18);
+          tl.set(inputLetter,{opacity:0},COPY);
+          const lensFrost = S($("f16-arch"),"g",{opacity:0});
+          for(const ex of [107,197]) {
+            S(lensFrost,"circle",{cx:ex,cy:57,r:23,fill:"#F0ECE5",opacity:0.28});
+            for(let j=0;j<7;j++) {
+              const a=j*Math.PI*2/7,cx=ex+Math.cos(a)*13,cy=57+Math.sin(a)*13;
+              S(lensFrost,"path",{d:`M${cx-5} ${cy}h10 M${cx} ${cy-5}v10 M${cx-3} ${cy-3}l6 6 M${cx-3} ${cy+3}l6 -6`,stroke:"#F0ECE5","stroke-width":1.4});
+            }
+          }
+          tl.fromTo(lensFrost,{opacity:0},{opacity:1,duration:0.24,ease:"power2.out"},ICE);
+          tl.fromTo("#f16-archw", { y: 560, rotation: 7 }, { y: 0, rotation: 0, duration: 0.7, ease: "power3.out" }, RISE - 0.5);
+
+          // ---- the clamp: hovering open, jolted by the kicks, slammed shut on "copy" (drawn in render) ---------
+          const CLOSE = 0.34;   // v17: the halves glide shut over a third of a second, meeting ON "copy"
+          tl.set("#f16-gaprect", { opacity: 1 }, COPY);
+          tl.fromTo("#f16-clampshadow", { attr: { rx: 180 }, opacity: 0.3 }, { attr: { rx: 150 }, opacity: 0.55, duration: CLOSE, ease: "power2.in" }, COPY - CLOSE);
+          // the copy fibre draws on from the port; the copy prints under a scanline
+          tl.set(copyG, { opacity: 1 }, COPY);
+          tl.fromTo([copyCore, copyGlow], { attr: { "stroke-dashoffset": CPLEN } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.28, ease: "power2.out" }, COPY);
+          const PRINT = COPY + 0.18, PRINT_D = 0.55;
+          tl.set(cardBody,{opacity:1},PRINT);
+          // Print, clasp to the chest, then file: all authored in the archive's world coordinates.
+          tl.fromTo(cardBody,{x:-538,y:103,scale:0.04,svgOrigin:"1688 824"},
+            {x:-538,y:64,scale:0.64,duration:PRINT_D,ease:"power2.out"},PRINT);
+          tl.fromTo(cardBody,{x:-538,y:64,rotation:0},{x:-538,y:80,rotation:-8,duration:PUT-PRINT-PRINT_D,ease:"sine.inOut",immediateRender:false},PRINT+PRINT_D);
+          // v17: Archie lifts the copy over the cold store in one arc, it hovers, then sinks into the drawer, gone ON "ice"
+          const HOVER = PUT + 0.5;
+          S(S(art, "defs"), "clipPath", { id: "f16-cardclip" }).appendChild(S(art, "rect", { x: 0, y: -2000, width: 1920, height: 2918 }));
+          tl.fromTo(cardBody,{x:-538,y:80,rotation:-8,scale:0.64},
+            {x:0,y:-170,rotation:5,scale:1,duration:HOVER-PUT,ease:"sine.inOut",immediateRender:false},PUT);
+          tl.fromTo(cardBody,{x:0,y:-170,rotation:5},
+            {x:0,y:150,rotation:1,duration:ICE - HOVER,ease:"power1.inOut",immediateRender:false},HOVER);
+          tl.set(card, { attr: { "clip-path": "url(#f16-cardclip)" } }, HOVER);
+          tl.set(card, { opacity: 0 }, ICE + 0.05);
+          // "ice": the drawer frosts over, slowly, from its edges in
+          tl.fromTo(inside, { opacity: 1 }, { opacity: 0.4, duration: 0.6, ease: "power2.out", immediateRender: false }, ICE);
+          tl.fromTo(frostTint, { opacity: 0 }, { opacity: 0.32, duration: 0.7, ease: "power2.out" }, ICE);
+          frostLines.forEach(({ p, len, delay }) => tl.fromTo(p, { attr: { "stroke-dashoffset": len } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.5, ease: "power2.out" }, ICE + delay * 1.3));
+
+          // ---- the camera (v17): one continuous move. A: a constant-speed glide along the cable onto the open clamp;
+          // then a crane back onto Archie's copy machine (no cut), a slow drift through the print, on to the cold store ----
+          const stage = HR.stage($("root"), { seed: 16, drift: 1, pulse: 0.8 });
+          const cam = stage.cam;
+          const D = 0.65;   // the world layer's depth
+          const cf = (P, S2, z) => { const sc = 1 + (z - 1) * D; return { x: -(S2[0] - 960 - sc * (P[0] - 960)) / D, y: -(S2[1] - 540 - sc * (P[1] - 540)) / D, z }; };
+          const AXP = (x, dy = 0) => rot(x, 720 + dy);
+          const SC = [1250, 650];
+          const KEYS = [
+            // A (v20): three framings on the downbeats: mid at the cut, tight on the strike (17.188), wider onto the clamp (19.028)
+            [0, cf(AXP(470), SC, 1.95)], [L(17.188), cf(AXP(820), SC, 2.4)], [L(19.028) - 0.1, cf(AXP(1250, -20), SC, 1.85)], [3.2, cf(AXP(1350), SC, 1.95)],
+            [4.15, cf([1390, 800], [1520, 610], 1.42)], [COPY, cf([1380, 795], [1520, 605], 1.72)],       // B: the copy machine (v20: right of the giant "copy")
+            [PUT, cf([1150, 880], [1300, 650], 1.5)], [ICE, cf([1660, 974], [1560, 700], 1.85)], [DUR, cf([1660, 974], [1560, 690], 2.0)],   // v18: onto the cold store, large, as it frosts
+          ];
+          // a C1 cubic through the keys (Catmull-Rom tangents on non-uniform times): the camera never stops or jerks
+          const camAt = (t) => {
+            const n = KEYS.length; let i = 0;
+            while (i < n - 2 && t > KEYS[i + 1][0]) i++;
+            const [t0, p0] = KEYS[i], [t1, p1] = KEYS[i + 1], h = t1 - t0, u = Math.max(0, Math.min(1, (t - t0) / h));
+            const tan = (k, c) => { const a = KEYS[Math.max(0, k - 1)], b = KEYS[Math.min(n - 1, k + 1)]; return (b[1][c] - a[1][c]) / (b[0] - a[0]); };
+            const u2 = u * u, u3 = u2 * u, out = {};
+            for (const c of ["x", "y", "z"]) out[c] = (2 * u3 - 3 * u2 + 1) * p0[c] + (u3 - 2 * u2 + u) * h * tan(i, c) + (-2 * u3 + 3 * u2) * p1[c] + (u3 - u2) * h * tan(i + 1, c);
+            return out;
+          };
+
+          // v20: where each hat's packet passes the middle of the frame (axis x under screen point 1180, 640 at its hat time)
+          for (const h of HATS) {
+            const c = camAt(Math.max(0, Math.min(DUR, h.th))), sc = 1 + (c.z - 1) * D;
+            const px = 960 + (1180 - 960 + D * c.x) / sc - 960, py = 540 + (640 - 540 + D * c.y) / sc - 720;
+            h.xh = 960 + px * CS + py * SN;
+          }
+          const PV = 2900;   // packet speed, axis px per second
+          // v20: "read" keeps failing: on the hats after the strike it flashes and judders for a beat, then snaps back
+          const FAILS = [17.873, 18.338, 18.799, 19.374].map(L), readTx = readWe.querySelector(".f16-txt");
+          readTx.setAttribute("data-layout-allow-occlusion", "");   // under its own strike-through, on purpose
+
+          // ---- accents (verse: soft; every hand-placed time is a word time or a real onset) -------------------------
+          const fxw = el("div", "", $("f16-mid")); fxw.id = "f16-fxw"; fxw.setAttribute("data-layout-ignore", "");
+          WOW.pulse(tl, $("f16-lyrics"), { kind: "kick", amt: 0.012, y: 2 });
+          // "read" fails: one bar draws through it across the sung word, done on the snare at 17.181
+          const STRIKE_END = L(WOW.on(17.18)), STRIKE0 = READ + 0.08;
+          const bar = el("i", "f16-bar", readWe); bar.style.top = "52%"; bar.setAttribute("data-layout-allow-occlusion", "");   // the strike-through is meant to cross the word
+          tl.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: STRIKE_END - STRIKE0, ease: "power2.inOut", immediateRender: false }, STRIKE0);
+          const deny = el("div", "f16-deny", readWe); deny.setAttribute("data-layout-allow-overflow", ""); deny.innerHTML = "read ✗<br>0 bytes decoded";
+          tl.fromTo(deny, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, STRIKE_END);
+          tl.fromTo(deny, { opacity: 1 }, { opacity: 0, duration: 0.3, immediateRender: false }, NOTE - 0.3);
+          // "copy": the clamp meets ON the word: a soft punch on the world and one thin ring off the clamp
+          const CLX = 1397, CLY = 690;
+          WOW.punch(tl, $("f16-mid"), COPY, { s: 1.03, dur: 0.6 });
+          WOW.shock(tl, fxw, { x: CLX, y: CLY, t: COPY, r: 560, n: 1, w: 2, color: "fire", dur: 1.0 });
+          // the frame: glides in from 02 (the pan along the wire), the copy sinks out into 03
+          WOW.transition(tl, document.getElementById("el-16-intercept"), { in: "glideL", out: "glideDown", dur: 0.46, total: DUR });
+
+          // ---- ciphertext and light streaming along the cable's axis (screen space): steady, a texture of flow ----------
+          const rushEl = $("f16-rush"), rr = HR.rng(1650), RUSH = [];
+          rushEl.style.webkitMaskImage = rushEl.style.maskImage = "linear-gradient(90deg, transparent 0%, transparent 22%, #000 52%)";
+          for (let i = 0; i < 16; i++) {
+            const streak = i % 2 === 1, e = el(streak ? "i" : "div", streak ? "f16-streak" : "f16-rl", rushEl);
+            const y = 40 + rr() * 980, len = streak ? 220 + rr() * 520 : 0;
+            if (streak) { e.style.width = len + "px"; e.style.height = (2 + rr() * 3) + "px"; }
+            else { e.style.fontSize = (13 + rr() * 30).toFixed(0) + "px"; e.textContent = HR.cipher(40, 1660 + i).replace(/(.{4})/g, "$1 "); }
+            e.style.top = y + "px";
+            RUSH.push({ e, streak, len: streak ? len : 1500, speed: streak ? 1300 + rr() * 900 : 380 + rr() * 420, ph: rr() * 4000, base: streak ? 0.7 : 0.18 + rr() * 0.24 });   // v20: brighter flow
+          }
+          const rushI = (t) => 0.25 + 0.6 * (1 - clamp01((t - 3.2) / 1.0));   // full along the cable, eases back on the machine
+
+          // ---- per frame (all from timeline time) --------------------------------------------------------------
+          const FX0 = 1152, FX1 = 2120, lightEl = $("f16-light");
+                    const riderStr = Array.from({ length: 8 }, (_, i) => HR.cipher(8, 1640 + i)).join("  ");
+          function render() {
+            const t = tl.time(), T = T0 + t, step = Math.floor(t * 15);
+            HR.draw(tl);
+            WOW.draw(tl, 16.06);
+            const cc = camAt(t); cam.x = cc.x; cam.y = cc.y; cam.z = cc.z;
+            stage.apply(T);
+            // rushing hex and streaks
+            const ri = rushI(t), hat = HR.hit("hat", T, 0.08);
+            for (const r of RUSH) {
+              const span = 1920 + r.len + 700, x = ((t * r.speed + r.ph) % span) - r.len - 300;
+              r.e.style.transform = `translateX(${x.toFixed(1)}px)`;
+              r.e.style.opacity = Math.min(1, r.base * ri * (1 + 1.4 * hat)).toFixed(3);
+            }
+            for (const [re] of heroes) HR.glow(re, T, 0.3, 0.6);
+            const fl = FAILS.find((a) => t >= a && t < a + 0.13);
+            // the letters stay "read": the word flashes cream and judders sideways, a decode that fails again
+            const jt = Math.floor(t * 30);
+            readTx.style.translate = fl != null ? `${(((jt * 7) % 5) - 2) * 9}px 0` : "0px 0";
+            readTx.style.rotate = fl != null ? `${(jt % 2 ? -1.5 : 1.2)}deg` : "0deg";
+            readTx.style.color = fl != null ? "#F0ECE5" : "";
+            const bass = HR.band("bass", T), rms = HR.band("rms", T);
+            const flare = 0.6 * HR.hit("snare", T, 0.2);   // v17: the snares brighten the light; no flare on "read"
+            const snE = clamp01(HR.hit("snare", T, 0.12) / 0.7);   // v20: the tap's snare pulse
+            lightEl.style.transform = `scale(${(0.93 + 0.14 * rms).toFixed(3)})`;
+            lightEl.style.opacity = (0.7 + 0.45 * rms).toFixed(3);
+            coreGlow.setAttribute("opacity", (0.35 + 0.4 * bass + 0.3 * flare).toFixed(3));
+            discGlow.setAttribute("opacity", (0.4 + 0.45 * bass + 0.4 * flare).toFixed(3));
+            discCore.setAttribute("stroke-width", (2.5 + 0.8 * flare).toFixed(2));
+            // v20: the hat packets: jacket tracer, bare core, the cutaway, and (after "copy") down the copy fibre
+            for (const h of HATS) {
+              const d = t - h.th, live = d > -0.4 && d < 0.75, x = h.xh + PV * d;
+              const fade = live ? h.a * Math.min(1, (d + 0.4) / 0.12) * Math.min(1, (0.75 - d) / 0.2) : 0;
+              const tr = `translate(${x.toFixed(1)} 0)`;
+              for (const e of [h.jg, h.jc, h.fg, h.fc]) e.setAttribute("transform", tr);
+              h.jg.setAttribute("opacity", (0.55 * fade).toFixed(3)); h.jc.setAttribute("opacity", fade.toFixed(3));
+              h.fg.setAttribute("opacity", (0.75 * fade).toFixed(3)); h.fc.setAttribute("opacity", fade.toFixed(3));
+              const dx = -198 + 389 * (0.5 + d / 0.5);   // the cutaway: across in 0.5 s, its middle on the hat
+              const dOn = d > -0.3 && d < 0.4 ? h.a : 0;
+              for (const e of [h.dg, h.dc]) e.setAttribute("transform", `translate(${(dx + 110).toFixed(1)} 0)`);
+              h.dg.setAttribute("opacity", (0.7 * dOn).toFixed(3)); h.dc.setAttribute("opacity", dOn.toFixed(3));
+              const tf = h.th + (1400 - h.xh) / PV, v = (t - tf) / 0.5;   // reaches the tap, then forks down the copy fibre
+              if (t >= COPY + 0.28 && tf >= COPY && v >= 0 && v < 1) {
+                const q = copyCore.getPointAtLength(v * CPLEN), o = h.a * Math.min(1, v * 8, (1 - v) * 5);
+                for (const e of [h.cg, h.cc]) { e.setAttribute("cx", q.x.toFixed(1)); e.setAttribute("cy", q.y.toFixed(1)); }
+                h.cg.setAttribute("opacity", (0.8 * o).toFixed(3)); h.cc.setAttribute("opacity", o.toFixed(3));
+              } else { h.cg.setAttribute("opacity", 0); h.cc.setAttribute("opacity", 0); }
+            }
+            tracers.forEach((e, i) => {
+              const u = frac(t * 1.3 + i / tracers.length), x = -300 + u * 1480;
+              e.setAttribute("transform", `translate(${x.toFixed(1)} 0)`);
+              e.setAttribute("opacity", (Math.min(1, u * 6, (1 - u) * 6) * (0.45 + 0.4 * bass)).toFixed(3));
+            });
+            // pulses ride the core left to right
+            pulses.forEach(({ g, c }, i) => {
+              const u = frac(t * (2.1 + 0.5 * (i % 3)) + i / pulses.length), x = FX0 + u * (FX1 - FX0);
+              const o = Math.min(1, u * 8, (1 - u) * 6).toFixed(3);
+              g.setAttribute("transform", `translate(${x.toFixed(1)} 720)`); c.setAttribute("transform", `translate(${x.toFixed(1)} 720)`);
+              g.setAttribute("opacity", (o * (0.55 + 0.45 * bass)).toFixed(3)); c.setAttribute("opacity", o);
+            });
+            // ciphertext riding the light; it scrambles hard on "read" and never resolves
+            const shift = (t * 420) % 80;
+            riderText.setAttribute("x", (FX0 + 20 - shift).toFixed(1));
+            const scr = t >= READ - 0.05 && t < READ + 0.6;
+            riderText.textContent = scr ? Array.from({ length: 8 }, (_, i) => HR.cipher(8, 1700 + i + step * 13)).join("  ") : riderStr;
+            riderText.setAttribute("fill", scr ? "#E85D26" : "#F0ECE5");
+            riderText.setAttribute("opacity", scr ? 0.85 : (0.3 + 0.25 * hat).toFixed(3));
+            // the tap lamp, the leak through the clamp, the copy pulses
+            const on = t >= COPY;
+            lamp.setAttribute("fill", on || snE > 0.35 ? "#E85D26" : "#3a2418");
+            lampGlow.setAttribute("opacity", on ? Math.min(1, 0.55 + 0.45 * hat + 0.6 * snE).toFixed(3) : (0.7 * snE).toFixed(3));
+            leak.setAttribute("opacity", on ? Math.min(1, 0.5 + 0.4 * bass + 0.6 * snE).toFixed(3) : 0);
+            leak.setAttribute("height", on ? (8 + 10 * snE).toFixed(1) : 8); leak.setAttribute("y", on ? (716 - 5 * snE).toFixed(1) : 716);
+            // the COPY plate lights from inside on each snare once the tap is shut
+            const pl = on ? snE : 0;
+            clampTxt.setAttribute("fill", `rgb(${Math.round(240 - 8 * pl)},${Math.round(236 - 143 * pl)},${Math.round(229 - 191 * pl)})`);
+            copyPulses.forEach((c, i) => {
+              if (!on || t < COPY + 0.28) { c.setAttribute("opacity", 0); return; }
+              const v = frac((t - COPY) * 1.7 + i / copyPulses.length), p = copyCore.getPointAtLength(v * CPLEN);
+              c.setAttribute("cx", p.x.toFixed(1)); c.setAttribute("cy", p.y.toFixed(1));
+              c.setAttribute("opacity", Math.min(1, v * 6, (1 - v) * 6).toFixed(3));
+            });
+            drLampGlow.setAttribute("opacity", (0.4 + 0.5 * hat).toFixed(3));
+            // the clamp halves (v17): hovering open and breathing, they glide shut ON "copy" and settle with a soft squash
+            let open = 0, jolt = 0, sy = 1;
+            const t1 = COPY - CLOSE;
+            // v20: before "copy" the jaws bite at the fibre on every snare; after, the shut tap squashes on every snare
+            if (t < t1) { open = 52 - 7 * (0.5 - 0.5 * Math.cos(Math.PI * t / t1)); jolt = 2.5 * Math.sin(t * 2.3) * clamp01((t1 - t) / 0.4) - 18 * snE; }
+            else if (t < COPY) { const u = (t - t1) / CLOSE; open = 45 * (1 - u * u); }
+            else { const d = t - COPY; sy = 1 - 0.03 * Math.sin(Math.min(d, 0.6) / 0.6 * Math.PI) * Math.exp(-d / 0.25) - (d > 0.5 ? 0.035 * snE : 0); }
+            const sx = 1 + (1 - sy) * 0.3, sq = `translate(1400 720) scale(${sx.toFixed(4)} ${sy.toFixed(4)}) translate(-1400 -720)`;
+            up.setAttribute("transform", `${sq} translate(0 ${(-(open + jolt)).toFixed(2)})`);
+            lo.setAttribute("transform", `${sq} translate(0 ${(open + jolt).toFixed(2)})`);
+            const ky = 720 + (80 + open + jolt) * sy;
+            tagString.setAttribute("d", `M${EY[0]} ${EY[1]} Q${((EY[0] + 1296) / 2).toFixed(1)} ${(Math.max(EY[1], ky) + 34).toFixed(1)} 1296 ${ky.toFixed(1)}`);
+            const sr = 60 * (t < COPY + 0.02 ? 0 : 1 - Math.pow(1 - clamp01((t - COPY - 0.02) / 0.3), 3));
+            sockets.forEach((h, i) => h.setAttribute("transform", `rotate(${Math.max(0, sr - i * 6).toFixed(1)})`));
+            // the print scanline
+            const sp = (t - PRINT) / PRINT_D;
+            const so = sp > 0 && sp < 1 ? Math.sin(Math.PI * sp) : 0;
+            const sy2 = 178 * (0.5 - 0.5 * Math.cos(Math.PI * clamp01(sp)));
+            for (const e of [scan, scanGlow]) { e.setAttribute("transform", `translate(${sy2.toFixed(1)} 0)`); e.setAttribute("opacity", so.toFixed(3)); }
+            // ice: lamp to cream, labels, flakes drifting off the frost
+            const iced = t >= ICE;
+            drLamp.setAttribute("fill", iced ? "#F0ECE5" : "#E85D26");
+            drLampGlow.setAttribute("fill", iced ? "#F0ECE5" : "#E85D26");
+            drLabel.textContent = iced ? "ON ICE · HELD" : "COPY · HELD";
+            drTemp.textContent = iced ? "KEEP FOREVER" : "JUST IN CASE";
+            drTemp.setAttribute("fill", iced ? "#F0ECE5" : "#E85D26");
+            flakes.forEach(({ c, dx, dy }, i) => {
+              const d = t - ICE - (i % 3) * 0.06, q = clamp01(d / 1.4), e = 1 - Math.pow(1 - q, 2);
+              c.setAttribute("transform", `translate(${(dx * e).toFixed(1)} ${(dy * e).toFixed(1)})`);
+              c.setAttribute("opacity", d < 0 ? 0 : (0.8 * clamp01(d / 0.2) * (1 - clamp01((d - 0.5) / 0.9))).toFixed(3));
+            });
+            // Archie: looks up at the tap, tilts on the slam, lights the copy, follows it down, nods it shut on "ice"
+            const ease = (x) => 0.5 - 0.5 * Math.cos(Math.PI * clamp01(x));
+            let th = -14 - 34 * ease((t - RISE) / 0.3);                              // looks up at the tap
+            th += 10 * ease((t - PRINT) / 0.3);                                       // across at the copy as it prints
+            th += 22 * ease((t - PUT) / 0.4);                                         // follows it into the drawer
+            th -= 18 * ease((t - ICE - 0.6) / 0.5);                                   // then back up, deadpan
+            const dS = t - COPY; if (dS >= 0 && dS < 0.8) th += -5 * Math.exp(-dS / 0.2) * Math.cos(dS * 12);   // a small tilt as it closes
+            const dN = t - (ICE - 0.12);                                              // the push: one firm nod
+            if (dN >= 0 && dN < 0.9) th += dN < 0.12 ? 12 * dN / 0.12 : 12 * Math.exp(-(dN - 0.12) / 0.14) * Math.cos((dN - 0.12) * 18);
+            th += 1.6 * Math.sin(t * 2.1);
+            // th is the old lamp head's angle; Archie's gaze follows the same direction (51° below its axis)
+            const gz = (51 + th) * Math.PI / 180, push = dN >= 0 && dN < 0.9 ? (dN < 0.12 ? dN / 0.12 : Math.exp(-(dN - 0.12) / 0.16)) : 0;
+            const beam = clamp01((t - PRINT + 0.05) / 0.25) * (1 - clamp01((t - ICE) / 0.2));
+            archie.s.lookX = Math.cos(gz); archie.s.lookY = Math.sin(gz); archie.s.turn = 0.4 * Math.cos(gz);
+            if(t < ICE) archie.s.tilt = 0.35 * (th + 30) + 10 * push;
+            if (t < COPY-0.25) { archie.s.shR = 8 + 40 * push; archie.s.elR = 10 - 30 * push; }
+            if (t >= RISE - 0.4) {
+              const g0 = archie.s.glow;
+              archie.s.glow = g0 + 0.6 * beam + 0.3 * HR.hit("kick", T, 0.12);
+              archie.apply(T);
+              archie.s.glow = g0;
+            }
+            // the marker: the arrow draws on, then the words write left to right
+            const ap = clamp01((t - NOTE) / 0.2), mp = clamp01((t - NOTE - 0.1) / 0.34);
+            arrow.setAttribute("stroke-dashoffset", (100 * (1 - ap)).toFixed(2));
+            mark1.style.clipPath = `inset(-20% ${(100 - mp * 100).toFixed(1)}% -30% -5%)`;
+            // "ice" frosts over from the bottom-left
+            const fp = clamp01((t - FROST) / 0.5), fr2 = (fp * fp * (3 - 2 * fp)) * 115;
+            frostEl.style.opacity = fp > 0 ? 1 : 0;
+            frostEl.style.webkitMaskImage = frostEl.style.maskImage = `radial-gradient(circle at 0% 105%, #000 ${(fr2 - 12).toFixed(1)}%, rgba(0,0,0,0) ${fr2.toFixed(1)}%)`;
+            for (const { p, delay, dur } of dends) p.setAttribute("stroke-dashoffset", (1 - clamp01((t - FROST - delay) / dur)).toFixed(3));
+            // the copy counter
+            const k = clamp01((t - PRINT) / PRINT_D);
+            counter.textContent = t < PRINT ? "0 B" : `${Math.round(k * 2048).toLocaleString("en-US")} / 2,048 B`;
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

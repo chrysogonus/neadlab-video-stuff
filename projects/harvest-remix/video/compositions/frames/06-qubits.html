@@ -1,0 +1,1031 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 6 — qubits (verse 2, 61.346–75.987). v20 (V20.md change #5): one continuous camera travel through one
+         line-drawn lab instead of separate shots in black voids. One world, one camera:
+         set A (world 0,0) the qubit tower: a crane lowers one chip layer per beat; the camera cranes up with the top and
+            frames the stack to fill the frame height (zoom eases 3.2 → ~1.15). Opens on 05's match cut: the drawer lamp
+            is the top chip's core (1194, 707) at 3.2×, exactly as v19.
+         pan A→B (65.16–65.96) the camera keeps craning up, past the catwalk, into the forecast office.
+         set B (world 0,−1080) the forecast runway: the camera flies along it in one surge per kick, the decade's digits
+            passing under; "decade," is painted on the runway surface on its word; the end tick 10 arrives on "here".
+         pan B→C (68.72–69.52) a sweep right along the cable tray to the archive aisle.
+         set C (world 1920,−1080) the password fields against drawer 0001: one field scrambles per hat; three framings
+            on the downbeats; UNCHANGED stamps on the 71.861 snare and presses again on the 72.775 snare.
+         s4 (pushIn, kept from v19) blueprint (drawn ON 73.22) → birthday cake of drawers (candles flare ON 74.14) →
+            drawer 0001 takes both, shuts on "as"; TRUE on each "true".
+         Lyric positions per line: left-middle (A), top-right (B), top-left (C), bottom-left (blueprint), top-right
+         (birthday), left-middle (true).
+         Switches: in = 05's drawer match cut; C→s4 pushIn, inside s4 glideL / glideUp (half-beat), out to 07 glideL (0.46).
+         Small text (SYSTEM.md V7): LOGICAL QUBITS: WORKING ON IT, SOURCE: EXPERTS (2015), NO FORECAST BEYOND THIS POINT,
+         LAST MODIFIED 09 MAR 2021, COPY FILED 2021 · UNAFFECTED BY PASSWORD CHANGE. The MAIL / BANK / CLOUD fields are a
+         plant (paid off in 22). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f06-all { position: absolute; inset: 0; }
+        #f06-scn { position: absolute; inset: 0; overflow: hidden; background: var(--ink); }
+        .f06-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+        .f06-set { position: absolute; width: 1920px; height: 1080px; }
+        .f06-fx { position: absolute; inset: 0; pointer-events: none; }
+        #f06-wl { position: absolute; left: 0; top: 0; overflow: visible; }
+
+        /* ---- chrome and type ---- */
+        .f06-kicker { position: relative; margin-bottom: 1.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
+        .f06-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
+          vertical-align: middle; margin-right: 16px; }
+        #f06-kA { position: absolute; left: 5.5cqw; top: 4.2cqw; margin: 0; }
+        .f06-label { position: absolute; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 15px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); white-space: nowrap; }
+        .f06-line { position: absolute; font-family: "Barlow"; color: var(--cream);
+          display: flex; flex-direction: column; align-items: flex-start; gap: 0.6cqw; }
+        #f06-l10 { left: 5.5cqw; top: 30cqh; }
+        #f06-l11 { right: 5.5cqw; top: 6cqh; align-items: flex-end; }
+        .f06-row { display: flex; flex-wrap: nowrap; white-space: nowrap; column-gap: 0.26em; font-weight: 800; font-size: 4.4cqw;
+          line-height: 1.04; letter-spacing: -0.02em; text-shadow: 0 4px 18px rgba(0, 0, 0, 0.75), 0 0 2px rgba(0, 0, 0, 0.6); }
+        .f06-row.f06-big { font-weight: 900; font-size: 11.5cqw; line-height: 0.86; letter-spacing: -0.04em;
+          color: var(--fire); margin: 0.3cqw 0 0.5cqw -0.4cqw; transform-origin: 0 80%;
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 26px) rgba(232, 93, 38, 0.55), 0 0 calc(var(--hr-glow, 0.5) * 80px) rgba(232, 93, 38, 0.28); }
+        .f06-w { display: inline-block; position: relative; }
+        .f06-w.f06-fire { color: var(--fire); }
+        .f06-note { position: relative; margin-top: 0.9cqw; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 15px;
+          letter-spacing: 0.14em; color: var(--cream-muted); white-space: nowrap; }
+
+        /* ---- the world's hairlines ---- */
+        .f06-wlab { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 15px; letter-spacing: 2.2px; fill: #6a6a62; }
+
+        /* ---- A: the tower ---- */
+        #f06-slight { position: absolute; left: 0; top: 0; width: 1100px; height: 820px; margin: -410px 0 0 -550px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.18), rgba(232, 93, 38, 0.05) 50%, rgba(232, 93, 38, 0) 100%); }
+        .f06-chip { position: absolute; transform-origin: 50% 100%; }
+        .f06-chip svg { position: absolute; left: 0; top: 0; overflow: visible; }
+        .f06-rail { position: absolute; width: 2px; background: linear-gradient(180deg, rgba(240, 236, 229, 0.3), rgba(240, 236, 229, 0.18) 30%, rgba(240, 236, 229, 0.22)); }
+        .f06-gauge { position: absolute; width: 14px; height: 1px; background: rgba(240, 236, 229, 0.26); }
+        .f06-year { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 20px; letter-spacing: 0.14em;
+          color: var(--cream-hint); white-space: nowrap; }
+        .f06-year::before { content: ""; display: inline-block; width: 34px; height: 1px; background: currentColor;
+          vertical-align: middle; margin-right: 14px; }
+        .f06-ghost { position: absolute; transform-origin: 0 0; opacity: 0.45; filter: blur(1.5px); }
+
+        /* ---- B: the runway ---- */
+        #f06-rview { position: absolute; inset: 0; perspective: 1100px; perspective-origin: 760px 120px; }
+        #f06-rplane { position: absolute; left: 360px; top: -1640px; width: 1100px; height: 2800px; overflow: hidden;
+          transform-origin: 50% 100%; transform: rotateX(63deg) rotateZ(-9deg) scale(1.4);
+          -webkit-mask-image: linear-gradient(0deg, #000 50%, rgba(0, 0, 0, 0) 97%); mask-image: linear-gradient(0deg, #000 50%, rgba(0, 0, 0, 0) 97%); }
+        #f06-rstrip { position: absolute; left: 0; width: 1100px; background: linear-gradient(90deg, #1a1a19, #262624 50%, #1a1a19);
+          box-shadow: inset 4px 0 0 rgba(240, 236, 229, 0.42), inset -4px 0 0 rgba(240, 236, 229, 0.42); }
+        .f06-minor { position: absolute; top: 0; bottom: 0; width: 130px; }
+        .f06-major { position: absolute; left: 0; width: 700px; height: 7px; margin-top: -3px; background: var(--cream-muted); }
+        .f06-num { position: absolute; left: 730px; font-family: "Barlow"; font-weight: 900; font-size: 190px; line-height: 1;
+          letter-spacing: -0.03em; color: #5a5a54; margin-top: -164px; }
+        .f06-rtxt { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 34px; letter-spacing: 0.14em; color: var(--cream-muted); white-space: nowrap; }
+        .f06-paint { position: absolute; left: 40px; margin-top: -250px; font-family: "Barlow"; font-weight: 900; font-size: 270px; line-height: 1;
+          letter-spacing: -0.03em; color: var(--fire); white-space: nowrap; transform: scaleY(1.9); transform-origin: 0 100%;
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 30px) rgba(232, 93, 38, 0.6), 0 0 calc(var(--hr-glow, 0.5) * 90px) rgba(232, 93, 38, 0.3); }
+        #f06-beam { position: absolute; left: 520px; width: 16px; background: linear-gradient(0deg, rgba(232, 93, 38, 0.35), #E85D26 85%, #F0ECE5);
+          box-shadow: 0 0 18px 6px rgba(232, 93, 38, 0.5), 0 0 60px 20px rgba(232, 93, 38, 0.22); }
+        #f06-bhead { position: absolute; left: 528px; width: 0; height: 0; }
+        #f06-bhead i { position: absolute; left: -60px; top: -60px; width: 120px; height: 120px; border-radius: 50%;
+          background: radial-gradient(closest-side, #F0ECE5, rgba(240, 236, 229, 0.7) 25%, rgba(232, 93, 38, 0.45) 50%, rgba(232, 93, 38, 0)); }
+        .f06-alight { position: absolute; width: 50px; height: 22px; margin: -11px 0 0 -25px; border-radius: 3px; background: #F0ECE5;
+          box-shadow: 0 0 14px 4px rgba(240, 236, 229, 0.45); }
+        #f06-endband { position: absolute; left: 0; width: 1100px; height: 24px; margin-top: -12px; background: var(--fire);
+          box-shadow: 0 0 30px 8px rgba(232, 93, 38, 0.55); }
+        #f06-hatch { position: absolute; left: 0; width: 1100px; background: repeating-linear-gradient(45deg, rgba(240, 236, 229, 0.07) 0 4px, rgba(0, 0, 0, 0) 4px 40px); }
+        #f06-rglow { position: absolute; left: 0; top: 0; width: 1500px; height: 700px; margin: -350px 0 0 -750px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.16), rgba(232, 93, 38, 0) 100%); }
+
+        /* ---- C (v21): the office monitor, its sticky notes, and drawer 0001 lit behind ---- */
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        .f06-lay { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        /* back layer: drawer 0001 under its own lamp */
+        #f06-dlight { position: absolute; left: 1580px; top: 470px; width: 1100px; height: 1000px; margin: -500px 0 0 -550px;
+          border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 214, 170, 0.16), rgba(232, 93, 38, 0.07) 55%, rgba(232, 93, 38, 0) 100%); }
+        #f06-cone { position: absolute; left: 0; top: 0; overflow: visible; }
+        #f06-slot { position: absolute; left: 1286px; top: 206px; width: 588px; height: 588px; background: #0d0d0c;
+          box-shadow: inset 0 14px 30px rgba(0, 0, 0, 0.85); border: 1px solid #34332f; }
+        .f06-nb { position: absolute; left: 1286px; width: 588px; height: 150px; border: 1px solid #2c2b28;
+          background: linear-gradient(180deg, #1e1d1b, #121211); }
+        .f06-nb b { position: absolute; left: 24px; top: 20px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 22px; letter-spacing: 0.14em; color: #4a4a44; }
+        #f06-drawer { position: absolute; left: 1306px; top: 226px; width: 548px; height: 548px;
+          border: 1px solid #8a4422; background: linear-gradient(180deg, #57524a, #3a3732 22%, #26241f 70%, #1a1916);
+          box-shadow: inset 0 3px 0 rgba(255, 236, 214, 0.55), inset 0 -3px 0 rgba(0, 0, 0, 0.6), 0 30px 60px rgba(0, 0, 0, 0.6); }
+        #f06-drawer .f06-bev { position: absolute; inset: 16px; border: 1px solid rgba(240, 236, 229, 0.12);
+          box-shadow: inset 0 -1px 0 rgba(240, 236, 229, 0.04), inset 0 1px 0 rgba(0, 0, 0, 0.5); }
+        #f06-plate { position: absolute; left: 36px; top: 36px; width: 250px; height: 88px; background: #121211;
+          border: 1px solid #3c3a35; box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(240, 236, 229, 0.16); }
+        #f06-plate small { position: absolute; left: 16px; top: 10px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px;
+          letter-spacing: 0.14em; color: var(--cream-muted); }
+        #f06-plate b { position: absolute; left: 16px; top: 28px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 46px;
+          line-height: 1; letter-spacing: 0.14em; color: #FFB48A;
+          text-shadow: 0 0 10px rgba(255, 150, 90, 0.9), 0 0 30px rgba(232, 93, 38, 0.55); }
+        #f06-tag { position: absolute; right: 34px; top: 40px; width: 176px; height: 80px; background: linear-gradient(180deg, #FBF8F2, #E9E3D6);
+          border: 1px solid #111; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5); transform: rotate(1.5deg); }
+        #f06-tag small { position: absolute; left: 12px; top: 10px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; color: #5F5B54; }
+        #f06-tag b { position: absolute; left: 12px; top: 32px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 30px; letter-spacing: 0.08em; color: #111; }
+        #f06-lamp { position: absolute; right: 34px; top: 136px; width: 16px; height: 16px; border-radius: 50%; background: var(--fire);
+          box-shadow: 0 0 10px 3px rgba(232, 93, 38, 0.8), 0 0 36px 10px rgba(232, 93, 38, 0.35); }
+        #f06-dhex { position: absolute; left: 40px; top: 170px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 22px;
+          line-height: 40px; letter-spacing: 0.1em; color: #a8a49a; white-space: pre; }
+        #f06-dmod { left: 40px; top: 382px; font-size: 14px; color: #a8a49a; }
+        #f06-handle { position: absolute; left: 50%; bottom: 40px; width: 200px; height: 16px; margin-left: -100px; border-radius: 4px;
+          background: linear-gradient(180deg, #d8d2c6, #7a766c 45%, #2a2926); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.7); }
+        #f06-unchpos { position: absolute; left: 1316px; top: 456px; }
+        #f06-unch { padding: 12px 24px 8px; border: 8px double var(--fire); background: rgba(10, 10, 10, 0.25);
+          font-family: "IBM Plex Mono"; font-weight: 600; font-size: 54px; line-height: 1; letter-spacing: 0.08em; color: var(--fire);
+          transform-origin: 50% 50%; white-space: nowrap; filter: drop-shadow(0 0 calc(var(--hr-glow, 0.5) * 18px) rgba(232, 93, 38, 0.6)); }
+        #f06-unch small { display: block; margin-top: 8px; font-size: 15px; letter-spacing: 0.3em; text-align: center; }
+        /* mid layer: the desk and the monitor */
+        #f06-desk { position: absolute; left: -400px; top: 934px; width: 2800px; height: 420px;
+          background: linear-gradient(180deg, #181715, #0d0d0c 35%, #0A0A0A); border-top: 2px solid rgba(240, 236, 229, 0.42); }
+        #f06-dspill { position: absolute; left: 660px; top: 960px; width: 1500px; height: 260px; margin: -130px 0 0 -750px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(240, 236, 229, 0.13), rgba(240, 236, 229, 0.03) 60%, rgba(240, 236, 229, 0)); }
+        #f06-mglow { position: absolute; left: 670px; top: 470px; width: 1700px; height: 1150px; margin: -575px 0 0 -850px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(240, 236, 229, 0.08), rgba(240, 236, 229, 0.02) 55%, rgba(240, 236, 229, 0)); }
+        #f06-mon { position: absolute; left: 110px; top: 96px; width: 1120px; height: 770px; border-radius: 26px;
+          background: linear-gradient(180deg, #2c2a26, #171614 26%, #0f0f0e); border: 2px solid #050505;
+          box-shadow: inset 0 2px 0 rgba(240, 236, 229, 0.45), inset 0 -4px 0 rgba(0, 0, 0, 0.6), 0 40px 80px rgba(0, 0, 0, 0.7); }
+        #f06-mon .f06-brand { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 14px; letter-spacing: 0.4em; color: #8a867c; white-space: nowrap; }
+        #f06-mon .f06-led { position: absolute; right: 40px; bottom: 14px; width: 10px; height: 10px; border-radius: 50%; background: #F0ECE5;
+          box-shadow: 0 0 8px 2px rgba(240, 236, 229, 0.7); }
+        #f06-glass { position: absolute; left: 50px; top: 44px; width: 1020px; height: 680px; border-radius: 10px; background: #0c0d0d;
+          box-shadow: inset 0 0 0 2px #050505, inset 0 0 40px rgba(240, 236, 229, 0.25), 0 0 calc(var(--scr, 1) * 70px) rgba(240, 236, 229, 0.22); }
+        #f06-dlg { position: absolute; left: 18px; top: 18px; width: 984px; height: 644px; overflow: hidden;
+          background: linear-gradient(180deg, #F2EEE6, #E8E3D9 60%, #DCD5C8); }
+        #f06-dlg .f06-tbar { position: absolute; left: 0; top: 0; right: 0; height: 44px; background: #1A1A18; }
+        #f06-dlg .f06-tbar span { position: absolute; top: 13px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 16px; letter-spacing: 0.14em; color: #F0ECE5; white-space: nowrap; }
+        #f06-dlg .f06-tbar i { position: absolute; top: 14px; width: 16px; height: 16px; border: 2px solid #F0ECE5; box-sizing: border-box; }
+        #f06-refresh { position: absolute; left: 0; right: 0; height: 120px; background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0)); mix-blend-mode: soft-light; }
+        #f06-sheen { position: absolute; inset: 0; border-radius: 10px; pointer-events: none;
+          background: linear-gradient(118deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 32%, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 0.05)); }
+        #f06-l12 { left: 36px; top: 58px; gap: 0; }
+        #f06-l12 .f06-row { font-size: 70px; color: #111; text-shadow: none; }
+        #f06-l12 .f06-row.f06-big { font-size: 168px; color: var(--fire); margin: 2px 0 10px -6px;
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 14px) rgba(232, 93, 38, 0.35); }
+        #f06-fields { position: relative; margin: 0 0 14px; display: flex; flex-direction: column; gap: 6px; }
+        .f06-field { position: relative; width: 600px; height: 48px; overflow: hidden; border: 2px solid #3a3833;
+          background: #FBF8F2; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.18); }
+        .f06-field .f06-label { left: 16px; top: 14px; font-size: 15px; color: #5F5B54; }
+        .f06-field .f06-stat { left: auto; right: 16px; top: 15px; font-size: 13px; color: var(--fire); }
+        .f06-dots { position: absolute; left: 120px; top: 14px; display: flex; gap: 11px; }
+        .f06-dot { display: block; width: 16px; height: 16px; border-radius: 50%; background: #111; }
+        .f06-scr { position: absolute; left: 118px; top: 6px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 26px; line-height: 34px;
+          letter-spacing: 0.14em; color: #111; white-space: nowrap; }
+        .f06-caret { position: absolute; top: 8px; width: 3px; height: 30px; background: var(--fire); }
+        .f06-scan { position: absolute; top: 0; bottom: 0; width: 140px; margin-left: -136px;
+          background: linear-gradient(90deg, rgba(232, 93, 38, 0), rgba(232, 93, 38, 0.18) 70%, rgba(232, 93, 38, 0.5) 97%, rgba(232, 93, 38, 0)); }
+        #f06-neck { position: absolute; left: 600px; top: 860px; width: 140px; height: 84px; background: linear-gradient(90deg, #22211e, #121110 60%, #0b0b0a); border: 2px solid #0b0a09; }
+        #f06-base { position: absolute; left: 470px; top: 926px; width: 400px; height: 26px; border-radius: 50%; background: linear-gradient(180deg, #2c2a26, #0f0f0e);
+          border: 2px solid #0b0a09; box-shadow: inset 0 2px 0 rgba(240, 236, 229, 0.3); }
+        #f06-kbd { position: absolute; left: 0; top: 0; overflow: visible; }
+        /* the sticky notes: cream paper, marker hand */
+        .f06-sn { position: absolute; left: 990px; top: 494px; width: 250px; height: 228px; transform-origin: 50% 8%;
+          background: linear-gradient(180deg, #E9E3D5 0 26px, #FBF8F0 26px, #F3EEE3 80%, #E8E1D2);
+          box-shadow: 0 10px 18px rgba(0, 0, 0, 0.55), inset 0 -2px 0 rgba(0, 0, 0, 0.08); }
+        .f06-sn b { position: absolute; left: 0; right: 0; top: 64px; text-align: center; font-family: "Caveat Brush"; font-weight: 400; font-size: 58px;
+          line-height: 1; color: #111; white-space: nowrap; }
+        .f06-sn i { position: absolute; left: 34px; right: 34px; top: 132px; height: 6px; border-radius: 3px; background: var(--fire); transform: rotate(-2deg); }
+        .f06-sn small { position: absolute; left: 16px; bottom: 16px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; color: #5F5B54; white-space: nowrap; }
+        .f06-sn em { position: absolute; right: 14px; top: 5px; font-family: "IBM Plex Mono"; font-style: normal; font-weight: 600; font-size: 13px; letter-spacing: 0.1em; color: #7a2a0e; }
+        .f06-sn s { position: absolute; left: 22px; right: 22px; top: 88px; height: 7px; border-radius: 4px; background: #111; transform-origin: 0 50%; transform: rotate(-4deg) scaleX(0); }
+
+        /* ---- s4: three literal shots (blueprint, birthday, drawer 0001 + TRUE) ---- */
+        #f06x { position: absolute; inset: 0; opacity: 0; overflow: hidden; background: var(--ink); }
+        .f06x-s { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+        .f06x-cam { position: absolute; inset: 0; transform-origin: 62% 52%; }
+        .f06x-svg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+        #f06x-bp { transform: translate(-60px, 0); }
+        #f06x-cake { transform: translate(-600px, 0); }
+        .f06x-kick { position: relative; margin-bottom: 1cqw; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 16px;
+          letter-spacing: 0.16em; color: #888880; white-space: nowrap; }
+        .f06x-kick::before { content: ""; display: inline-block; width: 36px; height: 2px; background: var(--fire); vertical-align: middle; margin-right: 16px; }
+        .f06x-line { position: absolute; font-family: "Barlow"; color: var(--cream); display: flex; flex-direction: column;
+          align-items: flex-start; gap: 0.4cqw; }
+        #f06x-la { left: 5.5cqw; bottom: 7cqh; }
+        #f06x-lb { right: 5.5cqw; top: 7cqh; align-items: flex-end; }
+        #f06x-lb .f06x-big { font-size: 10cqw; margin-left: 0; }
+        #f06x-lc { left: 5.5cqw; top: 30cqh; }
+        .f06x-row { display: flex; column-gap: 0.26em; font-weight: 800; font-size: 4.6cqw; line-height: 1.04; letter-spacing: -0.02em; white-space: nowrap;
+          text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8), 0 0 3px rgba(0, 0, 0, 0.7); }
+        .f06x-row.f06x-big { font-weight: 900; font-size: 13cqw; line-height: 0.86; letter-spacing: -0.04em; margin-left: -0.5cqw; color: var(--fire);
+          transform-origin: 0 80%;
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 26px) rgba(232, 93, 38, 0.55), 0 0 calc(var(--hr-glow, 0.5) * 80px) rgba(232, 93, 38, 0.28), 0 4px 18px rgba(0, 0, 0, 0.8); }
+        .f06x-w { display: inline-block; position: relative; }
+        #f06x-a { background: radial-gradient(ellipse 60% 70% at 55% 50%, #121416, #0A0A0A 70%); }
+        #f06x-b { background: radial-gradient(ellipse 50% 60% at 36% 60%, #17110e, #0A0A0A 70%); }
+        #f06x-c { background: radial-gradient(ellipse 60% 70% at 64% 52%, #141311, #0A0A0A 70%); }
+        .f06x-stamp { position: absolute; padding: 4px 24px 0; border: 10px solid var(--fire); border-radius: 18px; font-family: "Barlow"; font-weight: 900;
+          font-size: 170px; line-height: 0.95; letter-spacing: 0.02em; color: var(--fire); white-space: nowrap;
+          filter: drop-shadow(0 0 calc(var(--hr-glow, 0.5) * 26px) rgba(232, 93, 38, 0.7)); }
+        .f06x-stamp small { position: absolute; left: 0; right: 0; bottom: -34px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 18px; letter-spacing: 0.32em; }
+      </style>
+
+      <div data-hf-id="hf-ba3y" id="root" data-composition-id="06-qubits" data-width="1920" data-height="1080" data-duration="14.641">
+        <svg data-hf-id="hf-p3r6" width="0" height="0" style="position: absolute" aria-hidden="true">
+          <defs data-hf-id="hf-mh0t">
+            <linearGradient data-hf-id="hf-7s2g" id="f06-gtop" x1="0" y1="1" x2="0.3" y2="0"><stop data-hf-id="hf-reei" offset="0" stop-color="#21211f" /><stop data-hf-id="hf-g9qi" offset="1" stop-color="#33332f" /></linearGradient>
+            <linearGradient data-hf-id="hf-0gqn" id="f06-gfront" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-2iqq" offset="0" stop-color="#2a2a27" /><stop data-hf-id="hf-xh8t" offset="1" stop-color="#151514" /></linearGradient>
+            <linearGradient data-hf-id="hf-qan9" id="f06-gside" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-8bhw" offset="0" stop-color="#191917" /><stop data-hf-id="hf-96vr" offset="1" stop-color="#0f0f0e" /></linearGradient>
+            <radialGradient data-hf-id="hf-xuqt" id="f06-gspill"><stop data-hf-id="hf-393l" offset="0" stop-color="#E85D26" stop-opacity="0.75" /><stop data-hf-id="hf-p64o" offset="0.45" stop-color="#E85D26" stop-opacity="0.22" /><stop data-hf-id="hf-3qcc" offset="1" stop-color="#E85D26" stop-opacity="0" /></radialGradient>
+            <linearGradient data-hf-id="hf-t5ai" id="f06-gpost" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-84vt" offset="0" stop-color="#4a4a45" /><stop data-hf-id="hf-bgit" offset="0.4" stop-color="#2c2c29" /><stop data-hf-id="hf-8abw" offset="1" stop-color="#1a1a18" /></linearGradient>
+          </defs>
+        </svg>
+
+        <div id="f06-all">
+          <!-- A → B → C: one world under one camera -->
+          <div id="f06-scn">
+            <div class="f06-cam" id="f06-bg" data-layout-ignore></div>
+            <div class="f06-cam" id="f06-world" data-layout-allow-overflow>
+              <svg id="f06-wl" width="1" height="1" aria-hidden="true" data-layout-ignore></svg>
+              <!-- A: the tower -->
+              <div class="f06-set" id="f06-A" style="left: 0; top: 0" data-layout-ignore data-layout-allow-overflow>
+                <div id="f06-slight"></div>
+                <div id="f06-rails"></div>
+                <div id="f06-chips"></div>
+                <div id="f06-years"></div>
+              </div>
+              <!-- B: the runway -->
+              <div class="f06-set" id="f06-B" style="left: 0; top: -1080px" data-layout-allow-overflow>
+                <div id="f06-rview" data-layout-ignore>
+                  <div id="f06-rglow"></div>
+                  <div id="f06-rplane"><div id="f06-rstrip"></div></div>
+                </div>
+              </div>
+              <!-- C (v21): the office monitor and its sticky notes; drawer 0001's copy lit and untouched behind -->
+              <div class="f06-set" id="f06-C" style="left: 1920px; top: -1080px" data-layout-allow-overflow>
+                <div class="f06-lay" id="f06-Cback" data-layout-ignore data-layout-allow-overflow>
+                  <div id="f06-dlight"></div>
+                  <div class="f06-nb" style="top: -130px"><b>0000</b></div>
+                  <div class="f06-nb" style="top: 800px"><b>0002</b></div>
+                  <div id="f06-slot"></div>
+                  <div id="f06-drawer">
+                    <div class="f06-bev"></div>
+                    <div id="f06-plate"><small>OBJ</small><b>0001</b></div>
+                    <div id="f06-tag"><small>COPY · SEALED</small><b>2021</b></div>
+                    <div id="f06-lamp"></div>
+                    <div id="f06-dhex"></div>
+                    <div class="f06-label" id="f06-dmod">LAST MODIFIED 09 MAR 2021</div>
+                    <div id="f06-handle"></div>
+                  </div>
+                  <svg id="f06-cone" width="1" height="1" aria-hidden="true"></svg>
+                  <div class="f06-label" style="left: 1306px; top: 786px; color: #a8a49a">COPY FILED 2021 · UNAFFECTED BY PASSWORD CHANGE</div>
+                  <div id="f06-unchpos" data-layout-allow-overlap><div id="f06-unch">UNCHANGED<small>SINCE 2021</small></div></div>
+                  <div class="f06-fx" id="f06-fxC"></div>
+                </div>
+                <div class="f06-lay" id="f06-Cmid" data-layout-allow-overflow>
+                  <div id="f06-mglow" data-layout-ignore></div>
+                  <div id="f06-desk" data-layout-ignore></div>
+                  <div id="f06-dspill" data-layout-ignore></div>
+                  <svg id="f06-kbd" width="1" height="1" aria-hidden="true" data-layout-ignore></svg>
+                  <div id="f06-neck" data-layout-ignore></div>
+                  <div id="f06-base" data-layout-ignore></div>
+                  <div id="f06-mon" data-layout-allow-overflow>
+                    <div class="f06-brand" data-layout-ignore>OFFICE · 17"</div>
+                    <i class="f06-led" data-layout-ignore></i>
+                    <div id="f06-glass">
+                      <div id="f06-dlg">
+                        <div class="f06-tbar" data-layout-ignore><span style="left: 20px">CHANGE PASSWORD · ALL ACCOUNTS</span><span style="right: 92px; color: #888880">POLICY: EVERY 90 DAYS</span><i style="right: 52px"></i><i style="right: 22px; background: #E85D26; border-color: #E85D26"></i></div>
+                        <div class="f06-line" id="f06-l12"></div>
+                        <div id="f06-refresh" data-layout-ignore></div>
+                      </div>
+                      <div id="f06-sheen" data-layout-ignore></div>
+                    </div>
+                  </div>
+                  <div id="f06-notes" data-layout-ignore></div>
+                </div>
+              </div>
+            </div>
+            <div class="f06-kicker" id="f06-kA">HARDWARE · ONE LAYER A BEAT</div>
+            <div class="f06-line" id="f06-l10"></div>
+            <div class="f06-line" id="f06-l11"></div>
+          </div>
+
+          <!-- s4: blueprint, birthday, drawer 0001 -->
+          <div id="f06x">
+            <div class="f06x-s" id="f06x-a">
+              <div class="f06x-cam" id="f06x-ca"><svg class="f06x-svg" id="f06x-bp" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg></div>
+              <div class="f06x-line" id="f06x-la"><div class="f06x-kick">OBJ 0388 · BLUEPRINT · RETAINED</div></div>
+            </div>
+            <div class="f06x-s" id="f06x-b">
+              <div class="f06x-cam" id="f06x-cb" style="transform-origin: 700px 620px">
+                <svg class="f06x-svg" id="f06x-cake" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg>
+                <div class="f06-fx" id="f06x-fxb" data-layout-ignore></div>
+              </div>
+              <div class="f06x-line" id="f06x-lb"><div class="f06x-kick">OBJ 0412 · BIRTHDAY · RETAINED</div></div>
+            </div>
+            <div class="f06x-s" id="f06x-c">
+              <div class="f06x-cam" id="f06x-cc" style="transform-origin: 1290px 408px">
+                <svg class="f06x-svg" id="f06x-dr" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg>
+                <div class="f06x-stamp" id="f06x-st1" style="left: 880px; top: 540px" data-layout-allow-overlap>TRUE<small>NO EXPIRY</small></div>
+                <div class="f06x-stamp" id="f06x-st2" style="left: 1010px; top: 660px" data-layout-allow-overlap>TRUE<small>AS TRUE</small></div>
+              </div>
+              <div class="f06x-line" id="f06x-lc"><div class="f06x-kick">COLD STORAGE · NO EXPIRY</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script>
+        (() => {
+          const T0 = 61.346, DUR = 14.641, END = T0 + DUR; // frame span, track seconds
+          const L = (t) => +(t - T0).toFixed(3);
+          const C2 = 65.616, C3 = 69.04, C4 = 73.0; // line starts
+          const PA0 = 65.16, PA1 = 65.96, PB0 = 68.72, PB1 = 69.52; // the camera's two travels between sets
+          const DECADE = 66.8, HERE = 68.619, PASS = 70.505, STAMP = 71.861, PRESS = 72.775;
+          const BLUE = 73.22, BDAY = 74.14, TRUE = 75.02, TRUE2 = 75.96;
+          const XB = WOW.on(73.74), XC = 74.496; // s4 inner cuts: the 73.691 snare, "stays"
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const NS = "http://www.w3.org/2000/svg";
+          const sv = (tag, parent, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const env = (dt, decay) => (dt < 0 ? 0 : Math.exp(-dt / decay));
+          const sio = (u) => 0.5 - 0.5 * Math.cos(Math.PI * clamp01(u)); // sine.inOut
+          const lerp = (a, b, u) => a + (b - a) * u;
+          const tl = gsap.timeline({ paused: true });
+          tl.to({}, { duration: DUR }, 0); // the timeline spans the whole frame (the out switch runs to DUR)
+
+          // ---- lyrics: [text, start, kind] kind: 0 lead, 1 hero (own display row), 2 lead in fire, 3 new row --------
+          const LINES = {
+            l10: [["They're", 62.02], ["stacking", 62.119], ["up", 62.8], ["the", 62.94], ["qubits,", 63.1, 1], ["a", 63.86],
+              ["few", 63.96], ["more", 64.3], ["every", 64.603], ["year", 65.0]],
+            l11: [["The", 65.616], ["experts", 65.98], ["said", 66.34], ["a", 66.66], ["now", 67.26, 3],
+              ["the", 67.52], ["decade's", 67.7], ["nearly", 68.195], ["here", 68.619, 2]],
+            l12: [["You", 69.04], ["changed", 69.233], ["all", 69.831], ["of", 70.101], ["your", 70.3], ["passwords,", 70.505, 1],
+              ["you", 71.18], ["think", 71.278], ["that", 71.62, 3], ["sees", 71.762], ["you", 72.12], ["through", 72.3]],
+          };
+          el("div", "f06-kicker", $("f06-l11"), "THE FORECAST");
+          const heroRows = [];
+          function buildLine(key) {
+            const box = $("f06-" + key), words = [];
+            let row = null;
+            for (const [w, t, k] of LINES[key]) {
+              if (k === 1 || k === 3 || !row || row.classList.contains("f06-big")) row = el("div", "f06-row" + (k === 1 ? " f06-big" : ""), box);
+              if (k === 1) heroRows.push(row);
+              words.push({ s: el("span", "f06-w" + (k === 2 ? " f06-fire" : ""), row, w.toLowerCase()), t, hero: k === 1, row });
+            }
+            return words;
+          }
+          const lines = Object.fromEntries(Object.keys(LINES).map((k) => [k, buildLine(k)]));
+          el("div", "f06-note", $("f06-l11"), "SOURCE: EXPERTS (2015)");
+          // verse entrances; the hero: soft settle and one soft punch (v20: no rings). A's lead words sink in, stacking.
+          const sing = (words, kind) => words.forEach(({ s, t, hero, row }) => {
+            if (hero) { WOW.word(tl, s, L(t), { kind: "settle", dur: 0.32 }); WOW.punch(tl, row, L(t), { s: 1.04, dur: 0.6 }); }
+            else WOW.word(tl, s, L(t), { kind });
+          });
+          sing(lines.l10, "sink");
+          sing(lines.l11, "rise");
+          sing(lines.l12, "rise");
+          for (const r of heroRows) WOW.pulse(tl, r, { kind: "kick", amt: 0.014, y: 2 });
+
+          // ---- A: the tower ----------------------------------------------------------------------------------------
+          // Chip k sits at world y = BASE − k·GAP; the top chip of the opening (k = 3) has its core on 05's drawer lamp (1194, 707).
+          const W = 380, DX = 140, DY = 64, TH = 16, POST = 34, GAP = TH + POST, X0 = 965, BASE = 875, K0 = 4, N = 13;
+          const coreX = X0 + 0.5 * W + 0.28 * DX, coreY = (k) => BASE - k * GAP - 0.28 * DY;
+          const Z0 = 3.2, ZEND = 62.6; // v19 opening: the core's zoom at the cut, and when the pull-out settles
+          const DROPS = [61.799, 62.26, 62.721, 63.168, 63.633, 64.088, 64.544, 64.997, 65.456].map((b) => WOW.on(b)); // k = 4..12
+          const P = (u, v) => `${(u * W + v * DX).toFixed(1)},${(DY - v * DY).toFixed(1)}`;
+          const quad = (a, b, c, d) => `${P(...a)} ${P(...b)} ${P(...c)} ${P(...d)}`;
+          function slab(parent, i, plinth) {
+            const box = el("div", "f06-chip", parent);
+            const y = plinth ? BASE + GAP : BASE - i * GAP;
+            Object.assign(box.style, { left: X0 + "px", top: y - DY + "px", width: W + DX + "px", height: DY + TH + POST + "px" });
+            const s = sv("svg", box, { width: W + DX, height: DY + TH + POST, viewBox: `0 0 ${W + DX} ${DY + TH + POST}` });
+            const th = plinth ? 26 : TH;
+            // the crane's sling: four lines from the corners to a hook, one cable up out of frame (fades after landing)
+            const rig = plinth ? null : sv("g", s, { opacity: 0 });
+            if (rig) {
+              const hx = 0.5 * W + 0.5 * DX, hy = -240;
+              for (const [u, v] of [[0, 0], [1, 0], [1, 1], [0, 1]]) { const [px, py] = P(u, v).split(","); sv("line", rig, { x1: px, y1: py, x2: hx, y2: hy, stroke: "rgba(240,236,229,0.42)", "stroke-width": 1.4 }); }
+              sv("line", rig, { x1: hx, y1: hy, x2: hx, y2: -1800, stroke: "rgba(240,236,229,0.5)", "stroke-width": 2 });
+              sv("rect", rig, { x: hx - 9, y: hy - 14, width: 18, height: 22, fill: "#1a1a18", stroke: "rgba(240,236,229,0.55)", "stroke-width": 1.4 });
+              sv("rect", rig, { x: hx - 3, y: hy - 6, width: 6, height: 6, fill: "#E85D26" });
+            }
+            if (!plinth) for (const [x, y0] of [[10, DY + TH], [W - 16, DY + TH], [W + DX - 16, TH]])
+              sv("rect", s, { x, y: y0, width: 8, height: POST, fill: "url(#f06-gpost)" });
+            sv("polygon", s, { points: `${P(1, 0)} ${P(1, 1)} ${W + DX},${th} ${W},${DY + th}`, fill: "url(#f06-gside)", stroke: "#2e2e2b", "stroke-width": 1 });
+            sv("polygon", s, { points: `${P(0, 0)} ${P(1, 0)} ${W},${DY + th} 0,${DY + th}`, fill: "url(#f06-gfront)", stroke: "#2e2e2b", "stroke-width": 1 });
+            sv("polygon", s, { points: quad([0, 0], [1, 0], [1, 1], [0, 1]), fill: "url(#f06-gtop)" });
+            const tr = HR.rng(700 + i);
+            sv("polygon", s, { points: quad([0.06, 0.1], [0.94, 0.1], [0.94, 0.9], [0.06, 0.9]), fill: "none", stroke: "#3c3c37", "stroke-width": 1 });
+            if (!plinth) {
+              for (let k = 0; k < 7; k++) {
+                const u = 0.12 + k * 0.125, v1 = 0.14 + tr() * 0.06;
+                sv("polyline", s, { points: `${P(u, v1)} ${P(u, 0.3)} ${P(0.5 + (u - 0.5) * 0.25, 0.42)}`, fill: "none", stroke: "#46463f", "stroke-width": 1.2 });
+                sv("polygon", s, { points: quad([u - 0.01, v1 - 0.03], [u + 0.01, v1 - 0.03], [u + 0.01, v1 + 0.02], [u - 0.01, v1 + 0.02]), fill: "#6a6a62" });
+              }
+            }
+            const spill = sv("ellipse", s, { cx: 0.5 * W + 0.27 * DX, cy: DY - 0.27 * DY, rx: 190, ry: 44, fill: "url(#f06-gspill)", opacity: 0.4 });
+            const core = sv("g", s, { class: "hr-glowbox" });
+            if (!plinth) {
+              sv("polygon", core, { points: quad([0.38, 0.1], [0.62, 0.1], [0.62, 0.46], [0.38, 0.46]), fill: "none", stroke: "#E85D26", "stroke-opacity": 0.45, "stroke-width": 1.5 });
+              sv("polygon", core, { points: quad([0.44, 0.17], [0.56, 0.17], [0.56, 0.39], [0.44, 0.39]), fill: "#E85D26" });
+              sv("rect", core, { x: W * 0.455, y: DY + 4, width: W * 0.09, height: TH - 8, fill: "#E85D26" });
+            }
+            const hot = plinth ? null : sv("polygon", s, { points: quad([0.475, 0.23], [0.525, 0.23], [0.525, 0.33], [0.475, 0.33]), fill: "#F0ECE5", opacity: 0 });
+            sv("line", s, { x1: 0, y1: DY, x2: W, y2: DY, stroke: "#F0ECE5", "stroke-opacity": 0.36, "stroke-width": 1.2 });
+            sv("line", s, { x1: 0, y1: DY, x2: DX, y2: 0, stroke: "#F0ECE5", "stroke-opacity": 0.16, "stroke-width": 1 });
+            const lab = sv("text", s, plinth
+              ? { x: 18, y: DY + th - 7, transform: "scale(0.8333 1)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 14, "letter-spacing": 2, fill: "#888880" }
+              : { x: 14, y: DY + th - 4, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 10, "letter-spacing": 2, fill: "#66665e" });
+            lab.textContent = plinth ? "LOGICAL QUBITS: WORKING ON IT" : "Q" + String(i + 1).padStart(2, "0") + " · " + HR.cipher(6, 80 + i);
+            return { box, core, hot, spill, rig };
+          }
+          // the gantry: two rails with a height gauge, running up to the catwalk
+          for (const x of [X0 - 46, X0 + W + DX + 40]) { const r = el("i", "f06-rail", $("f06-rails")); Object.assign(r.style, { left: x + "px", top: "-40px", height: BASE + GAP + 40 + "px" }); }
+          for (let k = -2; k < 18; k++) { const g = el("i", "f06-gauge", $("f06-rails")); Object.assign(g.style, { left: X0 + W + DX + 41 + "px", top: BASE - k * GAP + "px" }); }
+          const plinth = slab($("f06-chips"), -1, true);
+          plinth.box.style.left = X0 - 40 + "px";
+          plinth.box.style.transform = "scaleX(1.2)";
+          const chips = Array.from({ length: N }, (_, k) => Object.assign(slab($("f06-chips"), k, false), { k, b: k < K0 ? -1 : DROPS[k - K0] }));
+          const years = Array.from({ length: 7 }, (_, j) => {
+            const e = el("div", "f06-year", $("f06-years"), String(2019 + j));
+            Object.assign(e.style, { left: X0 + W + DX + 62 + "px", top: BASE - 2 * j * GAP - DY + 2 + "px" });
+            return { e, b: 2 * j < K0 ? -1 : DROPS[2 * j - K0] };
+          });
+          // background (parallax 0.4): two distant stacks (other labs), dim and soft
+          (() => {
+            const ghost = (x, y, n, sc) => {
+              const g = el("div", "f06-ghost", $("f06-bg"));
+              Object.assign(g.style, { left: x + "px", top: y + "px", transform: `scale(${sc})` });
+              const s = sv("svg", g, { width: W + DX, height: n * GAP + DY + 30, viewBox: `0 0 ${W + DX} ${n * GAP + DY + 30}`, style: "overflow: visible" });
+              for (let k = 0; k < n; k++) {
+                const yy = (n - 1 - k) * GAP;
+                const q = (a) => a.map(([u, v]) => `${(u * W + v * DX).toFixed(1)},${(yy + DY - v * DY).toFixed(1)}`).join(" ");
+                sv("polygon", s, { points: `${q([[0, 0], [1, 0]])} ${W},${yy + DY + TH} 0,${yy + DY + TH}`, fill: "#1b1b19", stroke: "#2c2c29" });
+                sv("polygon", s, { points: q([[0, 0], [1, 0], [1, 1], [0, 1]]), fill: "#232320", stroke: "#34342f" });
+                sv("polygon", s, { points: q([[0.45, 0.2], [0.55, 0.2], [0.55, 0.38], [0.45, 0.38]]), fill: "#E85D26", opacity: 0.55 });
+              }
+            };
+            ghost(60, 300, 12, 0.62);
+            ghost(470, 470, 9, 0.48);
+            ghost(1620, 120, 16, 0.55);
+          })();
+
+          // chips are lowered on the crane: they arrive decelerating ON their beat, the sling fades once they sit
+          chips.forEach(({ box, rig, b, k }) => {
+            if (k < K0) return;
+            tl.set(box, { opacity: 0, y: -260 }, 0);
+            tl.set(rig, { opacity: 1 }, 0);
+            const a = Math.max(0, L(b) - 0.44);
+            tl.fromTo(box, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "none", immediateRender: false }, a);
+            tl.fromTo(box, { y: -260 }, { y: 0, duration: L(b) - a, ease: "power2.out", immediateRender: false }, a);
+            tl.fromTo(rig, { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power1.in", immediateRender: false }, L(b) + 0.05);
+          });
+          years.forEach(({ e, b }) => { if (b > 0) WOW.word(tl, e, L(b), { kind: "glideR" }); });
+
+          // ---- the world's hairlines: the catwalk between A and B, the cable tray from B to C (one building) --------
+          (() => {
+            const wl = $("f06-wl"), line = "rgba(240,236,229,0.2)";
+            const g = sv("g", wl, {});
+            // catwalk at A's top: deck, rail, posts
+            sv("path", g, { d: "M560 -40 H1900 M560 -96 H1900 M560 -18 H1900", stroke: line, "stroke-width": 2, fill: "none" });
+            for (let x = 580; x <= 1900; x += 66) sv("path", g, { d: `M${x} -96 V-40 M${x} -40 L${x + 33} -18`, stroke: "rgba(240,236,229,0.13)", "stroke-width": 1.4 });
+            sv("text", g, { x: 580, y: -112, class: "f06-wlab" }, "LEVEL 2 · FORECAST OFFICE ↑");
+            // cable tray from the runway room into the archive aisle, with hangers
+            sv("path", g, { d: "M1300 -140 H2600 M1300 -110 H2600", stroke: line, "stroke-width": 2, fill: "none" });
+            for (let x = 1320; x <= 2600; x += 40) sv("path", g, { d: `M${x} -140 L${x + 20} -110`, stroke: "rgba(240,236,229,0.1)", "stroke-width": 1.2 });
+            for (let x = 1400; x <= 2600; x += 300) sv("path", g, { d: `M${x} -140 V-300`, stroke: "rgba(240,236,229,0.12)", "stroke-width": 1.4 });
+            // the doorway between B and C
+            sv("path", g, { d: "M1890 -1060 V-150 M1950 -1060 V-150 M1890 -1060 H1950", stroke: line, "stroke-width": 2, fill: "none" });
+            sv("text", g, { x: 1966, y: -170, class: "f06-wlab" }, "AISLE 06 · ARCHIVE →");
+            // dimension line along the archive aisle's floor
+            sv("path", g, { d: "M2020 -60 H3780 M2020 -72 V-48 M3780 -72 V-48", stroke: "rgba(240,236,229,0.16)", "stroke-width": 1.4, fill: "none" });
+            sv("text", g, { x: 2900, y: -76, class: "f06-wlab", "text-anchor": "middle" }, "COPY 0001 · FILED 2021 · RETENTION ∞");
+          })();
+
+          // ---- B: the runway ----------------------------------------------------------------------------------------
+          const RW = 1100, RH = 2800, YR = 240, D0 = 1500, NEAR = 380, SH = 7200;
+          const dTick = (i) => D0 + i * YR, D10 = dTick(10), YEND = D10 - NEAR;
+          const strip = $("f06-rstrip");
+          Object.assign(strip.style, { top: RH - SH + "px", height: SH + "px" });
+          const at = (d) => SH - d + "px"; // strip top for a distance d from the near (bottom) end
+          for (const side of ["left", "right"]) {
+            const m = el("div", "f06-minor", strip);
+            m.style[side] = "0";
+            m.style.background = `repeating-linear-gradient(0deg, rgba(240,236,229,0.38) 0 3px, rgba(0,0,0,0) 3px ${YR / 12}px)`;
+            m.style.backgroundPosition = `0 ${-(SH - D0) % (YR / 12)}px`;
+          }
+          const ticks = Array.from({ length: 11 }, (_, i) => {
+            const t = el("div", "f06-major", strip); t.style.top = at(dTick(i));
+            const n = el("div", "f06-num", strip, String(i)); n.style.top = at(dTick(i));
+            return { t, n };
+          });
+          el("div", "f06-rtxt", strip, "FORECAST · 2015").style.cssText += `left: 150px; top: ${at(D0 - 80)};`;
+          for (const [d, txt] of [[300, "RUNWAY · EXPERTS ONLY"], [800, "APPROACH · 2015"]]) el("div", "f06-rtxt", strip, txt).style.cssText += `left: 150px; top: ${at(d)}; color: #6a6a62;`;
+          for (let d = 200; d < D0; d += YR) { const c = el("div", "f06-major", strip); c.style.cssText += `top: ${at(d)}; width: 160px; left: 470px; height: 5px; background: #4a4a45;`; }
+          const band = el("div", "", strip); band.id = "f06-endband"; band.style.top = at(D10);
+          el("div", "f06-rtxt", strip, "A DECADE").style.cssText += `left: 150px; top: ${at(D10 + 110)}; color: #E85D26;`;
+          const hatch = el("div", "", strip); hatch.id = "f06-hatch"; Object.assign(hatch.style, { top: "0", height: SH - D10 - 40 + "px" });
+          el("div", "f06-rtxt", strip, "NO FORECAST BEYOND THIS POINT").style.cssText += `left: 150px; top: ${at(D10 + 420)};`;
+          const LSP = 140, LN = 21, lights = [];
+          for (let i = 0; i < LN; i++) for (const x of [40, RW - 40]) { const e = el("i", "f06-alight", $("f06-rplane")); e.style.left = x + "px"; lights.push({ e, i }); }
+          const beam = el("div", "", strip); beam.id = "f06-beam";
+          const bhead = el("div", "", strip); bhead.id = "f06-bhead"; el("i", "", bhead);
+          // travel: one surge per kick (eased, 0.42 s) on a slow creep; the last surge (the 68.66 kick, "here") brings the
+          // end tick 10 close to the lens
+          const KB = [65.697, 66.14, 66.824, 67.519, 67.966, 68.66], VCR = 260, SURGE = 0.42;
+          const STEP = (YEND - VCR * (KB[KB.length - 1] + SURGE - C2)) / KB.length;
+          const ease = (u) => { const x = clamp01(u); return x * x * (3 - 2 * x) * 0.35 + (1 - Math.pow(1 - x, 3)) * 0.65; }; // eased in and out, front-weighted
+          const travel = (T) => { let y = VCR * Math.max(0, T - C2 + 0.45); for (const k of KB) y += STEP * ease((T - k + 0.04) / SURGE); return y; };
+          // "decade," painted on the runway surface, near-mid in view on its word; sprayed on left to right
+          const PAINT_D = travel(DECADE) + 900;
+          const paint = el("div", "f06-paint", strip, "decade,"); paint.style.top = at(PAINT_D);
+          paint.setAttribute("data-layout-allow-overlap", "");
+          const beamOn = { v: 0 }, flare = { v: 0 };
+          tl.fromTo(beamOn, { v: 0 }, { v: 1, duration: 0.4, ease: "power2.out", immediateRender: false }, L(DECADE) - 0.06);
+          tl.fromTo(flare, { v: 1 }, { v: 0, duration: 0.9, ease: "power2.out", immediateRender: false }, L(HERE));
+
+          // ---- C (v21): the office monitor (the line is typed into its password dialog), the sticky notes, drawer 0001 --
+          // The four strong hats in the line (69.117, 70.47, 71.26, 72.232): a new sticky note slaps on the bezel, the old one
+          // is ripped off and drops to the desk; the dialog field for that account scrambles. The copy behind never changes.
+          const NH = HR_ENV.onsets.hat.filter(([t, a]) => t > C3 && t < C4 && a >= 0.7).map((p) => p[0]);
+          const l12 = $("f06-l12"), fieldsBox = el("div", "", l12);
+          fieldsBox.id = "f06-fields";
+          l12.insertBefore(fieldsBox, l12.querySelectorAll(".f06-row")[2]); // between "passwords," and "you think"
+          const fields = ["MAIL", "BANK", "CLOUD"].map((name, f) => {
+            const box = el("div", "f06-field", fieldsBox);
+            const scan = el("div", "f06-scan", box);
+            el("div", "f06-label", box, name);
+            const stat = el("div", "f06-label f06-stat", box, "UPDATED");
+            const dots = el("div", "f06-dots", box);
+            const ds = Array.from({ length: 13 }, () => el("i", "f06-dot", dots));
+            const scr = el("div", "f06-scr", box, "");
+            const caret = el("i", "f06-caret", box);
+            return { box, ds, caret, scan, stat, scr, f };
+          });
+          $("f06-dhex").textContent = Array.from({ length: 5 }, (_, i) => HR.cipher(24, 7001 + i).replace(/(.{4})/g, "$1 ")).join("\n");
+          const HATS_C = NH; // one field scrambles per strong hat (MAIL, BANK, CLOUD, MAIL)
+          const SCR = 0.34; // scramble length, s
+          const pwLen = (f, k) => 7 + Math.floor(HR.rng(f * 131 + k * 17 + 5)() * 7); // 7..13 dots
+          // the notes: #10 is up when the camera arrives; #11..#14 slap on the hats (22 pays off "passwords changed ×14")
+          const NOTES = ["Summer2019!", "hunter2", "Password1!", "Password2!", "Password3!"];
+          const NCX = 1115, NCY = 608; // a note's centre on the bezel
+          const notes = NOTES.map((pw, i) => {
+            const e = el("div", "f06-sn", $("f06-notes"));
+            el("em", "", e, "CHANGE #" + (10 + i));
+            el("b", "", e, pw).style.fontSize = pw.length > 8 ? "46px" : "58px";
+            el("i", "", e);
+            el("small", "", e, "DO NOT SHARE");
+            e.setAttribute("data-layout-allow-overlap", "");
+            const r = HR.rng(900 + i);
+            return { e, slap: i === 0 ? -9 : NH[i - 1], rip: i < NOTES.length - 1 ? NH[i] - 0.1 : 99,
+              rot: (i % 2 ? 1 : -1) * (3 + 5 * r()), ox: (r() - 0.5) * 18, oy: (r() - 0.5) * 12,
+              lx: 1200 + i * 52 + 24 * r(), ly: 1004 + 8 * r(), lrot: (i % 2 ? 1 : -1) * (14 + 24 * r()), spin: (i % 2 ? -1 : 1) * (150 + 90 * r()) };
+          });
+          // the keyboard on the desk (line drawing)
+          (() => {
+            const kb = $("f06-kbd");
+            sv("polygon", kb, { points: "360,1066 1000,1066 962,980 398,980", fill: "#1c1b19", stroke: "#0b0a09", "stroke-width": 3 });
+            sv("path", kb, { d: "M400 982 H960", stroke: "rgba(240,236,229,0.45)", "stroke-width": 2 });
+            for (let r = 0; r < 4; r++) {
+              const y = 992 + r * 18, k = (y - 980) / 86, x0 = 398 - 38 * k + 14, x1 = 962 + 38 * k - 14;
+              sv("line", kb, { x1: x0, y1: y, x2: x1, y2: y, stroke: "#34322d", "stroke-width": 13, "stroke-dasharray": "33 6" });
+              sv("line", kb, { x1: x0, y1: y - 6, x2: x1, y2: y - 6, stroke: "rgba(240,236,229,0.22)", "stroke-width": 1.4, "stroke-dasharray": "33 6" });
+            }
+          })();
+          // drawer 0001's own lamp: cord, shade, white-hot bulb, a cone of light with dust that nobody has disturbed
+          const lampG = sv("g", $("f06-cone"), {}), motes = [];
+          (() => {
+            sv("defs", $("f06-cone"), {}).innerHTML =
+              '<linearGradient id="f06-cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE9D2" stop-opacity=".34"/><stop offset=".55" stop-color="#FFC9A0" stop-opacity=".1"/><stop offset="1" stop-color="#E85D26" stop-opacity="0"/></linearGradient>' +
+              '<radialGradient id="f06-bulb"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".35" stop-color="#FFF1DE" stop-opacity=".9"/><stop offset="1" stop-color="#FFC9A0" stop-opacity="0"/></radialGradient>';
+            sv("polygon", lampG, { points: "1530,140 1630,140 1900,860 1260,860", fill: "url(#f06-cg)" });
+            sv("line", lampG, { x1: 1580, y1: -400, x2: 1580, y2: 76, stroke: "rgba(240,236,229,0.45)", "stroke-width": 2 });
+            sv("polygon", lampG, { points: "1524,140 1636,140 1608,76 1552,76", fill: "#26241f", stroke: "rgba(240,236,229,0.6)", "stroke-width": 2 });
+            sv("ellipse", lampG, { cx: 1580, cy: 142, rx: 120, ry: 50, fill: "url(#f06-bulb)" });
+            sv("ellipse", lampG, { cx: 1580, cy: 141, rx: 50, ry: 9, fill: "#FFFFFF" });
+            const r = HR.rng(611);
+            for (let i = 0; i < 26; i++) motes.push({ c: sv("circle", lampG, { r: (1.2 + 2.2 * r()).toFixed(1), fill: "#FFEBD6" }), x: r(), y: r(), ph: r() * 6.28, sp: 10 + 22 * r() });
+          })();
+          const unch = $("f06-unch");
+          gsap.set(unch, { rotation: -7 });
+          tl.set(unch, { opacity: 0 }, 0);
+          tl.fromTo(unch, { opacity: 0, scale: 1.7, rotation: -13 }, { opacity: 0.96, scale: 0.97, rotation: -7, duration: 0.12, ease: "power2.in", immediateRender: false }, L(STAMP) - 0.12);
+          tl.fromTo(unch, { scale: 0.97 }, { scale: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, L(STAMP));
+          WOW.shake(tl, $("f06-world"), STAMP - T0, { amp: 6, dur: 0.3, rot: 0.1, seed: 6 });
+          // the second press on the 72.775 snare: the stamp thumps again, ink flecks off its edge
+          WOW.punch(tl, $("f06-unchpos"), L(PRESS), { s: 1.08, dur: 0.35 });
+          WOW.burst(tl, $("f06-fxC"), { x: 1530, y: 510, t: L(PRESS), n: 22, speed: 620, size: [3, 8], dur: 0.6, gravity: 900, cream: 0.25, seed: 61 });
+          WOW.shake(tl, $("f06-world"), L(PRESS), { amp: 7, dur: 0.32, rot: 0.12, seed: 7 });
+
+          // ---- s4: blueprint, birthday, drawer 0001 --------------------------------------------------------------------
+          const xLine = (box, rows) => rows.flatMap(([words, big]) => {
+            const row = el("div", "f06x-row" + (big ? " f06x-big" : ""), $(box));
+            return words.map(([w, t]) => ({ s: el("span", "f06x-w", row, w.toLowerCase()), t, big, row }));
+          });
+          const xa = xLine("f06x-la", [[[["But", 73.0], ["a", 73.16]]], [[["blueprint", 73.22]], true]]);
+          const xb = xLine("f06x-lb", [[[["or", 73.78], ["a", 74.0]]], [[["birthday", 74.14]], true]]);
+          const xc = xLine("f06x-lc", [[[["stays", 74.496], ["as", 74.88]]], [[["true", 75.02]], true], [[["as", 75.598], ["true", 75.96]]]]);
+          const xBig = Array.from(document.querySelectorAll("#f06x .f06x-big"));
+          for (const w of [...xa, ...xb, ...xc]) {
+            if (!w.big) { WOW.word(tl, w.s, L(w.t), { kind: "rise" }); continue; }
+            WOW.word(tl, w.s, L(w.t), { kind: "settle", dur: 0.32 });
+            WOW.punch(tl, w.row, L(w.t), { s: 1.04, dur: 0.6 });
+          }
+          for (const r of xBig) WOW.pulse(tl, r, { kind: "kick", amt: 0.014, y: 2 });
+
+          // shot A: the blueprint, cream hairlines on ink, drawn complete ON "blueprint" (73.22), then lit
+          const bp = $("f06x-bp"), bpPaths = [];
+          (() => {
+            let g = "";
+            for (let x = 0; x <= 2400; x += 40) g += `M${x} 0V1080`;
+            for (let y = 0; y <= 1080; y += 40) g += `M0 ${y}H2400`;
+            sv("path", bp, { d: g, stroke: "rgba(240,236,229,0.05)", "stroke-width": 1 });
+            let G = "";
+            for (let x = 0; x <= 2400; x += 200) G += `M${x} 0V1080`;
+            for (let y = 0; y <= 1080; y += 200) G += `M0 ${y}H2400`;
+            sv("path", bp, { d: G, stroke: "rgba(240,236,229,0.1)", "stroke-width": 1.2 });
+            const Pp = (d, w, c = "#F0ECE5") => bpPaths.push(sv("path", bp, { d, fill: "none", stroke: c, "stroke-width": w, pathLength: 100, "stroke-dasharray": 100, "stroke-dashoffset": 100, "stroke-linecap": "square" }));
+            Pp("M860 200 H1760 V900 H860 Z", 6); Pp("M878 218 H1742 V882 H878 Z", 2);
+            Pp("M1240 218 V600", 5); Pp("M878 620 H1180 M1300 620 H1500 V882", 5); Pp("M1500 620 H1742", 5);
+            Pp("M1180 620 A120 120 0 0 1 1300 500", 1.5); Pp("M1240 480 A120 120 0 0 0 1360 600", 1.5);
+            Pp("M1060 200 H1180 M1060 190 H1180 M1060 210 H1180", 1.5); Pp("M1760 330 V470 M1770 330 V470 M1750 330 V470", 1.5);
+            Pp("M1380 900 H1460 M1380 910 H1460 M1380 890 H1460", 1.5);
+            for (let k = 0; k < 9; k++) Pp(`M${1540 + k * 22} 650 V860`, 1.2);
+            Pp("M1360 760 m-90 0 a90 90 0 1 0 180 0 a90 90 0 1 0 -180 0", 2.5); Pp("M1360 760 m-60 0 a60 60 0 1 0 120 0 a60 60 0 1 0 -120 0", 1.2);
+            Pp("M860 150 H1760 M860 138 V162 M1760 138 V162", 1.4); Pp("M810 200 V900 M798 200 H822 M798 900 H822", 1.4);
+            Pp("M860 940 H1240 M860 930 V950 M1240 930 V950", 1.2);
+            Pp("M1440 960 H1840 V1050 H1440 Z M1440 990 H1840 M1640 990 V1050", 1.6);
+            const Tt = (x, y, s, txt, o = {}) => sv("text", bp, Object.assign({ x, y, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": s, "letter-spacing": 3, fill: "rgba(240,236,229,0.75)" }, o), txt);
+            Tt(1310, 140, 18, "9 000", { "text-anchor": "middle" }); Tt(770, 560, 18, "7 000", { transform: "rotate(-90 770 560)", "text-anchor": "middle" });
+            Tt(1050, 975, 15, "3 800", { "text-anchor": "middle" });
+            Tt(1000, 420, 20, "VAULT 00"); Tt(1300, 360, 20, "AISLE ∞"); Tt(940, 780, 20, "ARCHIVE"); Tt(1290, 880, 15, "DRAWER 0001", { fill: "#E85D26" });
+            Tt(1456, 982, 15, "OBJ 0388 · BLUEPRINT"); Tt(1456, 1032, 15, "REV 4 · 1:50"); Tt(1656, 1032, 15, "RET ∞", { fill: "#E85D26" });
+          })();
+          // shot B: a birthday cake made of filing drawers; two candles on "or a", the rest flare ON "birthday" with sparks
+          const cake = $("f06x-cake"), flames = [];
+          (() => {
+            sv("defs", cake, {}).innerHTML =
+              '<linearGradient id="f06x-en" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7F3EC"/><stop offset=".55" stop-color="#E4DDD0"/><stop offset="1" stop-color="#B9B0A0"/></linearGradient>' +
+              '<linearGradient id="f06x-ch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".3" stop-color="#B8B4AA"/><stop offset=".6" stop-color="#5A574F"/><stop offset="1" stop-color="#9A968C"/></linearGradient>' +
+              '<radialGradient id="f06x-fl" cx=".5" cy=".65" r=".6"><stop offset="0" stop-color="#FFF6EC"/><stop offset=".35" stop-color="#FFC9A0"/><stop offset=".7" stop-color="#E85D26"/><stop offset="1" stop-color="#E85D26" stop-opacity="0"/></radialGradient>' +
+              '<radialGradient id="f06x-glow"><stop offset="0" stop-color="#FF9A62" stop-opacity=".55"/><stop offset="1" stop-color="#E85D26" stop-opacity="0"/></radialGradient>';
+            const CX = 1300;
+            sv("ellipse", cake, { cx: CX + 20, cy: 930, rx: 430, ry: 40, fill: "rgba(0,0,0,0.55)" });
+            sv("ellipse", cake, { cx: CX, cy: 905, rx: 400, ry: 34, fill: "#2a2825", stroke: "#0b0a09", "stroke-width": 4 });
+            sv("path", cake, { d: `M${CX - 395} 900 A400 34 0 0 1 ${CX + 395} 900`, fill: "none", stroke: "rgba(240,236,229,0.35)", "stroke-width": 2 });
+            [[620, 170, 900, ["OBJ 0412", "BIRTHDAY"]], [470, 150, 730, ["∞", "KEEP"]], [320, 130, 580, ["0001", ""]]].forEach(([w, h, yb, labs], tier) => {
+              const x0 = CX - w / 2, y0 = yb - h;
+              sv("rect", cake, { x: x0, y: y0, width: w, height: h, rx: 6, fill: "url(#f06x-en)", stroke: "#111111", "stroke-width": 3 });
+              sv("path", cake, { d: `M${x0 + 6} ${y0 + 3} H${x0 + w - 6}`, stroke: "rgba(255,255,255,0.9)", "stroke-width": 2 });
+              const n = tier === 2 ? 1 : 2, dw = w / n;
+              for (let d = 0; d < n; d++) {
+                const dx = x0 + d * dw;
+                sv("rect", cake, { x: dx + 12, y: y0 + 22, width: dw - 24, height: h - 34, rx: 4, fill: "none", stroke: "rgba(17,17,17,0.55)", "stroke-width": 2.5 });
+                const lab = labs[d] ?? "";
+                if (lab) {
+                  sv("rect", cake, { x: dx + dw / 2 - 62, y: y0 + 40, width: 124, height: 36, rx: 2, fill: "#3A3833" });
+                  sv("rect", cake, { x: dx + dw / 2 - 57, y: y0 + 44, width: 114, height: 28, fill: "#FBF8F2" });
+                  sv("text", cake, { x: dx + dw / 2, y: y0 + 64, "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": lab.length > 4 ? 15 : 20, "letter-spacing": 1.5, fill: "#111111" }, lab);
+                }
+                sv("rect", cake, { x: dx + dw / 2 - 40, y: y0 + h - 44, width: 80, height: 13, rx: 6, fill: "url(#f06x-ch)", stroke: "#111111", "stroke-width": 2 });
+              }
+              let d = `M${x0 - 4} ${y0 - 2}`;
+              const r = HR.rng(700 + tier);
+              for (let x = x0; x < x0 + w; x += 36) { const dl = 10 + r() * 34; d += ` L${x + 6} ${y0 + 8} Q${x + 12} ${y0 + dl} ${x + 18} ${y0 + dl} Q${x + 24} ${y0 + dl} ${x + 28} ${y0 + 8}`; }
+              d += ` L${x0 + w + 4} ${y0 - 2} Z`;
+              sv("path", cake, { d, fill: "#E85D26", stroke: "#7a2a0e", "stroke-width": 2 });
+              sv("path", cake, { d: `M${x0} ${y0 + 2} H${x0 + w}`, stroke: "rgba(255,214,186,0.7)", "stroke-width": 2 });
+            });
+            [1190, 1263, 1337, 1410].forEach((x, k) => {
+              const y = 450;
+              sv("rect", cake, { x: x - 10, y: y - 96, width: 20, height: 100, rx: 3, fill: "#F7F3EC", stroke: "#111111", "stroke-width": 2.5 });
+              for (let s = 0; s < 4; s++) sv("path", cake, { d: `M${x - 10} ${y - 80 + s * 24} L${x + 10} ${y - 92 + s * 24}`, stroke: "#E85D26", "stroke-width": 5 });
+              sv("path", cake, { d: `M${x} ${y - 96} V${y - 108}`, stroke: "#111111", "stroke-width": 3 });
+              const g = sv("g", cake, { transform: `translate(${x} ${y - 112})`, opacity: 0 });
+              sv("circle", g, { r: 90, fill: "url(#f06x-glow)" });
+              const f = sv("path", g, { d: "M0 -58 C 18 -30 22 -10 0 4 C -22 -10 -18 -30 0 -58 Z", fill: "url(#f06x-fl)" });
+              sv("path", g, { d: "M0 -26 C 7 -14 8 -4 0 2 C -8 -4 -7 -14 0 -26 Z", fill: "#FFF6EC" });
+              flames.push({ g, f, k });
+            });
+          })();
+          const LIGHT = [73.78, 74.0, BDAY, BDAY]; // "or", "a", then both on "birthday"
+          // sparks from the two wicks that catch on "birthday" (cake drawn at CX 1300, shifted −600 in the svg)
+          for (const [x, seed] of [[1337 - 600, 71], [1410 - 600, 72]])
+            WOW.burst(tl, $("f06x-fxb"), { x, y: 338, t: L(BDAY), n: 12, speed: 520, size: [2, 6], dur: 0.55, gravity: 1100, spread: 140, aim: -90, cream: 0.6, seed });
+          // shot C: drawer 0001 takes both, shuts on "as"; the candles still burn inside; TRUE, twice
+          const dr = $("f06x-dr");
+          let drFront, drLeak, drRoll, drCake;
+          (() => {
+            sv("defs", dr, {}).innerHTML =
+              '<linearGradient id="f06x-df" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3833"/><stop offset=".4" stop-color="#26241f"/><stop offset="1" stop-color="#121110"/></linearGradient>' +
+              '<linearGradient id="f06x-leak" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC9A0" stop-opacity=".9"/><stop offset="1" stop-color="#E85D26" stop-opacity="0"/></linearGradient>';
+            sv("rect", dr, { x: 760, y: 220, width: 1060, height: 760, rx: 10, fill: "#1a1917", stroke: "#0b0a09", "stroke-width": 4 });
+            sv("path", dr, { d: "M766 226 H1814", stroke: "rgba(240,236,229,0.3)", "stroke-width": 2 });
+            sv("rect", dr, { x: 800, y: 300, width: 980, height: 120, fill: "#050404" });
+            drLeak = sv("rect", dr, { x: 800, y: 250, width: 980, height: 52, fill: "url(#f06x-leak)", opacity: 0, transform: "scale(1 -1) translate(0 -552)" });
+            drRoll = sv("g", dr, {});
+            sv("rect", drRoll, { x: -150, y: -22, width: 300, height: 44, rx: 22, fill: "#F0ECE5", stroke: "#111111", "stroke-width": 3 });
+            for (let k = 0; k < 6; k++) sv("path", drRoll, { d: `M${-130 + k * 50} -22 V22`, stroke: "rgba(17,17,17,0.35)", "stroke-width": 1.5 });
+            sv("ellipse", drRoll, { cx: 150, cy: 0, rx: 10, ry: 22, fill: "#d9d2c4", stroke: "#111111", "stroke-width": 2 });
+            drCake = sv("g", dr, {});
+            sv("rect", drCake, { x: -70, y: -40, width: 140, height: 60, rx: 4, fill: "#E4DDD0", stroke: "#111111", "stroke-width": 3 });
+            sv("rect", drCake, { x: -48, y: -78, width: 96, height: 40, rx: 4, fill: "#E4DDD0", stroke: "#111111", "stroke-width": 3 });
+            sv("path", drCake, { d: "M-70 -38 H70 M-48 -76 H48", stroke: "#E85D26", "stroke-width": 8 });
+            for (const x of [-30, -10, 10, 30]) { sv("rect", drCake, { x: x - 3, y: -104, width: 6, height: 26, fill: "#F7F3EC", stroke: "#111111", "stroke-width": 1.5 });
+              sv("path", drCake, { d: `M${x} -122 C ${x + 6} -114 ${x + 6} -108 ${x} -104 C ${x - 6} -108 ${x - 6} -114 ${x} -122 Z`, fill: "#FF9A62" }); }
+            drFront = sv("g", dr, {});
+            sv("rect", drFront, { x: 790, y: 420, width: 1000, height: 520, rx: 8, fill: "url(#f06x-df)", stroke: "#0b0a09", "stroke-width": 4 });
+            sv("path", drFront, { d: "M796 425 H1784", stroke: "rgba(240,236,229,0.4)", "stroke-width": 2.5 });
+            sv("rect", drFront, { x: 1170, y: 480, width: 240, height: 96, rx: 3, fill: "#3A3833", stroke: "#0b0a09", "stroke-width": 2 });
+            sv("rect", drFront, { x: 1180, y: 490, width: 220, height: 76, fill: "#FBF8F2" });
+            sv("text", drFront, { x: 1290, y: 518, "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 18, "letter-spacing": 3, fill: "#5F5B54" }, "OBJ");
+            sv("text", drFront, { x: 1290, y: 556, "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 40, "letter-spacing": 4, fill: "#111111" }, "0001");
+            sv("rect", drFront, { x: 1170, y: 800, width: 240, height: 30, rx: 15, fill: "url(#f06x-ch)", stroke: "#111111", "stroke-width": 3 });
+            sv("circle", drFront, { cx: 1720, cy: 470, r: 12, fill: "#E85D26" });
+            sv("text", drFront, { x: 830, y: 910, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 16, "letter-spacing": 3, fill: "rgba(240,236,229,0.45)" }, "BLUEPRINT · BIRTHDAY · A. · RETENTION INDEFINITE");
+          })();
+          const SLAM = 74.88; // "as"
+          for (const [id, t, rot] of [["#f06x-st1", TRUE, -8], ["#f06x-st2", TRUE2, 6]]) {
+            gsap.set(id, { rotation: rot });
+            tl.set(id, { opacity: 0 }, 0);
+            tl.fromTo(id, { opacity: 0, scale: 1.3, rotation: rot - 5 }, { opacity: 0.96, scale: 1, rotation: rot, duration: 0.24, ease: "power2.out", immediateRender: false }, L(t) - 0.08);
+          }
+
+          // ---- visibility and switches --------------------------------------------------------------------------
+          const lA = [$("f06-kA"), $("f06-l10")], lB = $("f06-l11");
+          const sets = [[$("f06-A"), T0 - 1, PA1 + 0.05], [$("f06-B"), PA0 - 0.05, PB1 + 0.05], [$("f06-C"), PB0 - 0.05, END + 1]];
+          for (const [e, a, b] of sets) { tl.set(e, { opacity: a <= T0 ? 1 : 0 }, 0); if (a > T0) tl.set(e, { opacity: 1 }, L(a)); if (b < END) tl.set(e, { opacity: 0 }, L(b)); }
+          tl.set("#f06-scn", { opacity: 1 }, 0); tl.set("#f06-scn", { opacity: 0 }, L(C4));
+          tl.set("#f06x", { opacity: 1 }, L(C4));
+          [["#f06x-a", C4, XB], ["#f06x-b", XB, XC], ["#f06x-c", XC, END + 1]].forEach(([id, a, b]) => {
+            tl.set(id, { opacity: 1 }, L(a)); if (b < END) tl.set(id, { opacity: 0 }, L(b));
+          });
+          const SW = 0.46, HALF = 0.23;
+          WOW.transition(tl, $("f06-scn"), { out: "pushIn", dur: SW, total: L(C4) });
+          WOW.transition(tl, $("f06x"), { in: "pushIn", dur: SW, start: L(C4) });
+          WOW.transition(tl, $("f06x-a"), { out: "glideL", dur: HALF, total: L(XB) });
+          WOW.transition(tl, $("f06x-b"), { in: "glideL", out: "glideUp", dur: HALF, start: L(XB), total: L(XC) });
+          WOW.transition(tl, $("f06x-c"), { in: "glideUp", dur: HALF, start: L(XC) });
+          WOW.transition(tl, $("f06-all"), { out: "glideL", dur: SW, total: DUR });
+
+          // ---- the camera: one camera over the world (centre point cx, cy in world px, zoom z) ------------------------
+          // A: frames the stack so it fills the frame height and cranes up with its top (the stack's height eases up with
+          // each chip's descent); from the match cut (core at 1194, 707, 3.2×) it settles over the first 1.25 s exactly as v19.
+          const stackN = (T) => { let n = K0; for (const c of chips) if (c.k >= K0) n += sio((T - (c.b - 0.44)) / 0.44); return n; };
+          function camA(T) {
+            const n = stackN(T), topY = BASE - (n - 1) * GAP - DY - 10, v = clamp01((T - ZEND) / (PA0 - ZEND));
+            const zA = 1.78 - 0.2 * v;
+            const fAx = coreX + 20 - 30 * v, fAy = topY, sAx = 1240 + 40 * v, sAy = 250 - 40 * v;
+            const zu = clamp01((T - T0) / (ZEND - T0)), g = (1 - zu) * (1 - zu) * (1 + 1.2 * zu);
+            const z = zA + (Z0 - zA) * g, fx = lerp(fAx, coreX, g), fy = lerp(fAy, coreY(3), g), sx = lerp(sAx, 1194, g), sy = lerp(sAy, 707, g);
+            return { cx: fx + (960 - sx) / z, cy: fy + (540 - sy) / z, z };
+          }
+          // B: centred on the runway set with a slow push; C: three framings, moved on the downbeats/stamp (eased, ≥ 0.45 s)
+          const camB = (T) => { const u = sio((T - PA1) / (PB0 - PA1)); return { cx: 960 - 30 * u, cy: -540 + 10 * u, z: 1.0 + 0.05 * u }; };
+          // v21: arrive mid (monitor + drawer), push tight onto the dialog for "passwords," (70.49 downbeat), ease back out
+          // to take in the drawer for UNCHANGED (71.861), a slow push from the 72.318 downbeat into the pushIn
+          const CK = [[68.6, 980, 560, 1.0], [69.4, 900, 540, 1.04], [70.49, 690, 470, 1.36], [71.6, 965, 520, 1.15], [72.32, 975, 530, 1.17], [C4, 975, 535, 1.2], [C4 + 0.8, 975, 535, 1.22]];
+          const cr = (p0, p1, p2, p3, u) => 0.5 * (2 * p1 + (-p0 + p2) * u + (2 * p0 - 5 * p1 + 4 * p2 - p3) * u * u + (-p0 + 3 * p1 - 3 * p2 + p3) * u * u * u);
+          function camC(T) {
+            let k = 0; while (k < CK.length - 2 && T >= CK[k + 1][0]) k++;
+            const a = CK[Math.max(0, k - 1)], b = CK[k], c = CK[k + 1], d = CK[Math.min(CK.length - 1, k + 2)], u = clamp01((T - b[0]) / (c[0] - b[0]));
+            return { cx: 1920 + cr(a[1], b[1], c[1], d[1], u), cy: -1080 + cr(a[2], b[2], c[2], d[2], u), z: cr(a[3], b[3], c[3], d[3], u) };
+          }
+          const mixCam = (a, b, w, dip) => ({ cx: lerp(a.cx, b.cx, w), cy: lerp(a.cy, b.cy, w), z: Math.exp(lerp(Math.log(a.z), Math.log(b.z), w)) * (1 - dip) });
+          function cam(T) {
+            if (T < PA0) return camA(T);
+            if (T < PA1) { const u = (T - PA0) / (PA1 - PA0); return mixCam(camA(T), camB(T), sio(u), 0.06 * Math.sin(Math.PI * u)); }
+            if (T < PB0) return camB(T);
+            if (T < PB1) { const u = (T - PB0) / (PB1 - PB0); return mixCam(camB(T), camC(T), sio(u), 0.14 * Math.sin(Math.PI * u)); }
+            return camC(T);
+          }
+          const C0 = camA(T0); // the opening camera (the bg layer's parallax is measured from it)
+          const drift = (T, a) => [Math.sin(T * 0.41 + 6) * 7 * a + Math.sin(T * 0.13 + 12) * 5 * a, Math.sin(T * 0.33 + 18) * 5 * a + Math.sin(T * 0.09 + 6) * 4 * a];
+
+          // ---- per-frame draw (a pure function of timeline time) ----------------------------------------------------
+          const world = $("f06-world"), bg = $("f06-bg"), slight = $("f06-slight"), chipsEl = $("f06-chips");
+          const rglow = $("f06-rglow"), rview = $("f06-rview"), dlight = $("f06-dlight"), lamp = $("f06-lamp");
+          const cBack = $("f06-Cback"), glass = $("f06-glass"), mglow = $("f06-mglow"), refresh = $("f06-refresh"), drawerEl = $("f06-drawer");
+          function render() {
+            const t = tl.time(), T = t + T0;
+            WOW.draw(tl, T0);
+            HR.draw(tl);
+            const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.14), hat = HR.hit("hat", T, 0.12), snare = HR.hit("snare", T, 0.14);
+            for (const r of [...heroRows, ...xBig]) HR.glow(r, T, 0.35, 0.7);
+
+            // the camera, its drift (eased in from the cut) and a kick bob (≤ 4 px)
+            if (T < C4) {
+              const c = cam(T), [dx, dy] = drift(T, Math.min(1, (T - T0) * 4));
+              const tx = 960 - c.cx * c.z + dx, ty = 540 - c.cy * c.z + dy - 4 * kick * Math.min(1, (T - T0) * 4);
+              const roll = Math.min(1, (T - T0) * 1.5) * (0.7 * Math.sin(T * 0.9 + 1.3) + 0.3 * Math.sin(T * 2.1));
+              world.style.transform = `translate(960px, 540px) rotate(${roll.toFixed(3)}deg) translate(-960px, -540px) translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px) scale(${c.z.toFixed(4)})`;
+              // background at 0.4: less zoom, slower travel (matches v19's opening exactly at the cut)
+              const zb = 1 + 0.4 * (c.z - 1), P0x = coreX, P0y = coreY(3);
+              const bx = P0x + (C0.cx - P0x) * C0.z / zb + (c.cx - C0.cx) * 0.4, by = P0y + (C0.cy - P0y) * C0.z / zb + (c.cy - C0.cy) * 0.4;
+              bg.style.transform = `translate(${(960 - bx * zb + 0.4 * dx).toFixed(2)}px, ${(540 - by * zb + 0.4 * dy).toFixed(2)}px) scale(${zb.toFixed(4)})`;
+              // the lyric blocks: a little parallax; A's leaves with the world as the camera cranes up, B's slides off left
+              const wA = sio((T - PA0) / (PA1 - PA0)), wB = sio((T - PB0) / (PB1 - PB0));
+              for (const e of lA) { e.style.transform = `translate(${(dx * 0.35).toFixed(2)}px, ${(dy * 0.35 + 1080 * wA).toFixed(2)}px)`; e.style.opacity = (1 - clamp01((T - PA0) / 0.5)).toFixed(3); }
+              lB.style.transform = `translate(${(dx * 0.35 - 1500 * wB).toFixed(2)}px, ${(dy * 0.35).toFixed(2)}px)`;
+              lB.style.opacity = (T < PA0 ? 0 : 1 - clamp01((T - PB0) / 0.28)).toFixed(3);
+              world.style.filter = ""; // (no blur: the travels are eased and short)
+            }
+
+            // A — chips glow with the stack, flash on landing, every kick and hat lights the cores
+            if (T < PA1 + 0.05) {
+              const n = chips.filter((c) => T >= c.b - 1e-6).length;
+              let latest = 0;
+              chips.forEach((c, j) => {
+                const flash = c.b > 0 ? env(T - c.b, 0.32) : 0;
+                let wave = 0;
+                for (let i = j + 1; i < chips.length; i++) if (chips[i].b > 0) wave = Math.max(wave, env(T - (chips[i].b + (i - j) * 0.035), 0.16));
+                const g = 0.3 + 0.5 * (n / N) + 0.3 * bass + 1.1 * flash + 0.5 * wave + 0.7 * kick + 0.4 * hat;
+                c.core.style.setProperty("--hr-glow", g.toFixed(3));
+                c.hot.setAttribute("opacity", clamp01(flash + 0.4 * wave + 0.5 * hat * (j === n - 1 ? 1 : 0.3)).toFixed(3));
+                c.spill.setAttribute("opacity", clamp01(0.25 + 0.35 * g).toFixed(3));
+                latest = Math.max(latest, flash);
+              });
+              // the stack takes each landing with a 2 px give
+              let give = 0; for (const c of chips) if (c.b > 0) { const d = T - c.b; if (d >= 0 && d < 0.4) give = Math.max(give, 2 * Math.sin(Math.PI * d / 0.4)); }
+              chipsEl.style.transform = `translateY(${give.toFixed(2)}px)`;
+              plinth.spill.setAttribute("opacity", clamp01(0.2 + 0.03 * n + 0.3 * bass).toFixed(3));
+              const top = chips[Math.max(0, n - 1)].k;
+              slight.style.left = coreX + "px"; slight.style.top = coreY(top) + 120 + "px";
+              slight.style.opacity = clamp01(0.5 + 0.4 * (n / N) + 0.3 * bass + 0.25 * latest + 0.2 * kick).toFixed(3);
+              const cur = years.filter((y) => T >= y.b - 1e-6).length - 1;
+              years.forEach(({ e: ye }, j) => {
+                const now = j === cur;
+                ye.style.color = now ? "#E85D26" : j < cur ? "#888880" : "#505048";
+                ye.classList.toggle("hr-glow", now);
+                if (now) HR.glow(ye, T, 0.3, 0.6);
+              });
+            }
+
+            // B — fly along the runway; the beam runs ahead of the lens and reaches the end tick on "here"
+            if (T >= PA0 - 0.05 && T < PB1 + 0.05) {
+              const y = travel(T);
+              strip.style.transform = `translateY(${y.toFixed(2)}px)`;
+              // approach lights: each sits at a fixed runway distance (recycled as they pass under); a chase runs out
+              // from the lens on every kick (strong) and hat (weak)
+              const ph = ((y % LSP) + LSP) % LSP;
+              for (const { e, i } of lights) {
+                const rel = i * LSP + (LSP - ph), dAbs = y + rel; // distance from the lens, distance along the runway
+                let b = 0.18;
+                for (const k of KB) b = Math.max(b, env(T - k - rel / 2600, 0.22));
+                for (const h of HR.onsetsIn("hat", T - 1.2, T + 0.01)) b = Math.max(b, 0.5 * env(T - h - rel / 2600, 0.1));
+                e.style.top = (RH - rel).toFixed(1) + "px";
+                e.style.opacity = clamp01(b).toFixed(3);
+                e.style.background = dAbs > D10 - 30 ? "#E85D26" : "#F0ECE5";
+              }
+              // flying: the camera banks and sways over the runway; each surge dips the nose
+              let dip = 0; for (const k of KB) dip = Math.max(dip, Math.sin(Math.PI * clamp01((T - k) / SURGE)));
+              rview.style.perspectiveOrigin = `${(760 + 150 * Math.sin((T - C2) * 1.7) + 60 * Math.sin((T - C2) * 0.7)).toFixed(1)}px ${(120 - 70 * dip + 30 * Math.sin((T - C2) * 1.1)).toFixed(1)}px`;
+              rview.style.transform = `translateX(${(-50 * Math.sin((T - C2) * 1.7)).toFixed(2)}px) rotate(${(2.4 * Math.sin((T - C2) * 1.7 + 0.6)).toFixed(3)}deg)`;
+              const q = clamp01((T - DECADE) / (HERE - DECADE));
+              const head = Math.min(D10, y + NEAR + 900 * (1 - q));
+              const on = beamOn.v;
+              beam.style.top = at(head); beam.style.height = Math.max(0, head - D0) + "px";
+              beam.style.opacity = (on * (0.75 + 0.25 * bass)).toFixed(3);
+              bhead.style.top = at(head); bhead.style.opacity = on.toFixed(3);
+              bhead.firstChild.style.transform = `scale(${(0.9 + 0.3 * bass + 1.2 * flare.v + 0.5 * snare).toFixed(3)})`;
+              ticks.forEach(({ t: tk, n }, i) => {
+                const lit = on > 0.05 && dTick(i) <= head + 1;
+                tk.style.backgroundColor = lit ? "#E85D26" : `rgb(${Math.round(136 + 80 * snare)}, ${Math.round(136 + 80 * snare)}, ${Math.round(128 + 80 * snare)})`;
+                tk.style.boxShadow = lit ? "0 0 18px rgba(232, 93, 38, 0.6)" : "none";
+                n.style.color = lit ? (i === 10 ? "#E85D26" : "#c4642e") : "#7a7a72";
+              });
+              band.style.boxShadow = `0 0 ${(30 + 70 * flare.v).toFixed(1)}px ${(8 + 20 * flare.v).toFixed(1)}px rgba(232, 93, 38, ${(0.45 + 0.4 * flare.v).toFixed(3)})`;
+              // the paint: sprayed on left to right from 0.06 s before the word, then glowing with the bass
+              const pu = clamp01((T - (DECADE - 0.06)) / 0.2);
+              paint.style.clipPath = `inset(-20% ${(100 - 100 * pu).toFixed(2)}% -20% -5%)`;
+              paint.style.opacity = pu > 0 ? "1" : "0";
+              HR.glow(paint, T, 0.4 + 1.2 * env(T - DECADE, 0.35), 0.6);
+              rglow.style.left = "900px"; rglow.style.top = "960px";
+              rglow.style.opacity = (0.5 + 0.5 * on + 0.3 * bass + 0.8 * flare.v).toFixed(3);
+            }
+
+            // C — the dialog's fields scramble per strong hat, the notes slap and drop, the copy behind stays put
+            if (T >= PB0 - 0.05 && T < C4) {
+              const step = Math.floor(t * 30);
+              const KC = HR.onsetsIn("kick", PB0, T + 1e-6).filter((x) => HR_ENV.onsets.kick.find((o) => o[0] === x)[1] >= 0.9);
+              const lastKick = KC.length ? KC[KC.length - 1] : -9;
+              for (const { box, ds, caret, scan, stat, scr, f } of fields) {
+                let k = -1;
+                for (let i = 0; i < HATS_C.length; i++) if (i % 3 === f && T >= HATS_C[i]) k = i;
+                const dt = k < 0 ? 9 : T - HATS_C[k], len = pwLen(f, k);
+                const scrambling = k >= 0 && dt < SCR;
+                if (scrambling) {
+                  const r = HR.rng(f * 977 + step * 31);
+                  let s = ""; for (let i = 0; i < 12; i++) s += "ABCDEFGHJKMNPQRSTUVWXYZ0123456789#$%&@!?"[(r() * 40) | 0];
+                  scr.textContent = s; scr.style.opacity = "1";
+                } else scr.style.opacity = "0";
+                const since = Math.min(k < 0 ? 9 : dt - SCR, T - lastKick - f * 0.04); // a kick retypes every field (staggered)
+                const shown = scrambling ? 0 : since < 0 ? len : Math.min(len, Math.floor(since / 0.028) + 1);
+                ds.forEach((d, i) => { d.style.opacity = i < shown ? 1 : 0; });
+                caret.style.left = (scrambling ? 354 : 122 + shown * 27) + "px";
+                caret.style.opacity = scrambling || Math.floor(t * 4) % 2 === 0 ? 1 : 0;
+                scan.style.left = (120 + clamp01(dt / SCR) * 470) + "px";
+                scan.style.opacity = scrambling ? "1" : "0";
+                stat.style.opacity = k >= 0 && !scrambling ? (0.6 + 0.4 * env(dt - SCR, 0.3)).toFixed(3) : "0";
+                const fl = Math.max(k >= 0 ? env(dt, 0.2) : 0, 0.6 * kick);
+                box.style.borderColor = fl > 0.3 ? "#E85D26" : "#3a3833";
+                const w = k >= 0 ? env(dt, 0.14) : 0;
+                box.style.background = w > 0.02 ? `rgb(${Math.round(lerp(251, 246, w))}, ${Math.round(lerp(248, 178, w))}, ${Math.round(lerp(242, 140, w))})` : "";
+                box.style.boxShadow = `inset 0 2px 4px rgba(0, 0, 0, 0.18), 0 0 ${(2 + 18 * fl).toFixed(1)}px rgba(232, 93, 38, ${(0.6 * fl).toFixed(3)})`;
+              }
+              // the screen: its light on the room breathes with the kicks; a slow refresh band rolls down the glass
+              glass.style.setProperty("--scr", (0.9 + 0.7 * kick + 0.2 * bass).toFixed(3));
+              mglow.style.opacity = (0.75 + 0.35 * kick + 0.2 * bass).toFixed(3);
+              refresh.style.top = (((T - PB0) * 0.55 % 1) * 800 - 120).toFixed(1) + "px";
+              // the notes: slap ON the hat (from 0.1 s before), wobble, the top one's free edge lifts on every kick;
+              // the replaced one is ripped 0.1 s before the next slap and flutters down onto the desk
+              let top = -1; notes.forEach((n, i) => { if (T >= n.slap - 0.1 && T < n.rip) top = i; });
+              notes.forEach((n, i) => {
+                const dS = T - n.slap;
+                if (dS < -0.1) { n.e.style.opacity = "0"; return; }
+                let sc = 1, rot = n.rot, x = n.ox, y = n.oy, sy = 1, op = 1;
+                if (dS < 0) { const u = (dS + 0.1) / 0.1; sc = 1.6 - 0.6 * u * u; rot -= 14 * (1 - u * u); op = clamp01(u * 3); y -= 70 * (1 - u * u); }
+                else { sc = 1 + 0.06 * Math.exp(-dS / 0.09) * Math.cos(dS * 45); rot += 3 * Math.exp(-dS / 0.15) * Math.sin(dS * 30); }
+                if (i === top) rot += 2.2 * kick;
+                const dR = T - n.rip;
+                if (dR > 0) {
+                  const u = clamp01(dR / 0.62), peel = clamp01(dR / 0.12);
+                  x = lerp(n.ox, n.lx - NCX, u); y = n.oy - 26 * peel * (1 - u) + (n.ly - NCY - n.oy) * u * u;
+                  rot = n.rot + n.spin * u * (1 - u) + n.lrot * u + 18 * Math.sin(u * 9) * (1 - u);
+                  sy = lerp(1, 0.3, Math.pow(u, 1.6)); sc = 1 - 0.12 * u;
+                }
+                n.e.style.opacity = op.toFixed(3);
+                n.e.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(1, ${sy.toFixed(3)}) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
+              });
+              // drawer 0001 sits further back (parallax 0.72); its lamp swings once on each stamp; dust drifts in the cone
+              const c = cam(T);
+              cBack.style.transform = `translate(${((Math.max(c.cx, 2420) - 2880) * 0.28).toFixed(1)}px, ${((c.cy + 540) * 0.28).toFixed(1)}px)`;
+              let sw = 0.8 * Math.sin(T * 0.9);
+              for (const h of [STAMP, PRESS]) if (T > h) sw += 3.2 * Math.exp(-(T - h) / 0.9) * Math.sin((T - h) * 5.2);
+              lampG.setAttribute("transform", `rotate(${sw.toFixed(3)} 1580 -400)`);
+              const jolt = (h) => (T > h ? 5 * Math.exp(-(T - h) / 0.1) * Math.cos((T - h) * 40) : 0);
+              drawerEl.style.transform = `translateY(${(jolt(STAMP) + jolt(PRESS)).toFixed(2)}px)`;
+              for (const m of motes) {
+                const cy = 220 + ((m.y * 640 + (T - T0) * m.sp) % 640), wid = 100 + (cy - 140) * 0.75; // drifting down the cone
+                m.c.setAttribute("cx", (1580 + (m.x - 0.5) * 0.85 * wid + 14 * Math.sin(T * 0.7 + m.ph)).toFixed(1));
+                m.c.setAttribute("cy", cy.toFixed(1));
+                m.c.setAttribute("opacity", (0.25 + 0.45 * (0.5 + 0.5 * Math.sin(T * 1.3 + m.ph))).toFixed(3));
+              }
+              dlight.style.opacity = (0.85 + 0.15 * bass).toFixed(3);
+              lamp.style.transform = `scale(${(1 + 0.5 * kick + 0.4 * snare).toFixed(3)})`;
+              unch.style.setProperty("--hr-glow", (0.4 + 0.5 * bass + 1.2 * env(T - STAMP, 0.4) + 1.2 * env(T - PRESS, 0.35)).toFixed(3));
+            }
+
+            // s4 — the three shots: slow continuous cameras with a kick pulse
+            if (T >= C4) {
+              const kp = 1 + 0.012 * kick;
+              if (T < XB) {
+                const u = clamp01((T - C4) / (XB - C4)), e3 = (x) => 1 - Math.pow(1 - clamp01(x), 3);
+                bpPaths.forEach((p, i) => {
+                  p.setAttribute("stroke-dashoffset", (100 * (1 - e3((T - (C4 - 0.02) - i * 0.004) / 0.12))).toFixed(1));
+                  const lit = env(T - BLUE, 0.28) * (i < 5 ? 1 : 0.6);
+                  p.setAttribute("stroke", lit > 0.05 ? `rgb(${Math.round(lerp(240, 232, lit))}, ${Math.round(lerp(236, 93, lit))}, ${Math.round(lerp(229, 38, lit))})` : "#F0ECE5");
+                });
+                const pb = 1 + 0.035 * env(T - BLUE, 0.3) * (T >= BLUE ? 1 : 0);
+                $("f06x-ca").style.transform = `scale(${((1.1 - 0.06 * u) * pb * kp).toFixed(4)}) rotate(${(-0.8 + 0.8 * u).toFixed(3)}deg)`;
+              } else if (T < XC) {
+                const u = clamp01((T - XB) / (XC - XB));
+                flames.forEach(({ g, f, k }) => {
+                  const on = clamp01((T - LIGHT[k] + 0.04) / 0.1), fl = T >= BDAY ? env(T - BDAY, 0.16) : 0;
+                  g.setAttribute("opacity", on.toFixed(3));
+                  f.setAttribute("transform", `scale(${(1 + 0.08 * Math.sin(T * 23 + k) + 0.35 * fl).toFixed(3)} ${(1 + 0.12 * Math.sin(T * 31 + k * 2) + 0.2 * env(T - LIGHT[k], 0.12) + 0.6 * fl).toFixed(3)})`);
+                });
+                const pb = 1 + 0.03 * (T >= BDAY ? env(T - BDAY, 0.3) : 0);
+                $("f06x-cb").style.transform = `scale(${((1.2 + 0.1 * u) * pb * kp).toFixed(4)})`;
+              } else {
+                const fall = (t0) => { const q = clamp01((T - t0) / 0.34); return -110 + 680 * q * q; };
+                drRoll.setAttribute("transform", `translate(1150 ${fall(XC).toFixed(1)}) rotate(${(-8 + 30 * clamp01((T - XC) / 0.32)).toFixed(1)})`);
+                drCake.setAttribute("transform", `translate(1440 ${fall(XC + 0.08).toFixed(1)}) rotate(${(6 - 14 * clamp01((T - XC - 0.08) / 0.32)).toFixed(1)})`);
+                const cl = sio((T - (SLAM - 0.24)) / 0.24), d = T - SLAM;
+                const settle = d > 0 ? 3 * Math.exp(-d / 0.12) * Math.cos(d * 26) : 0;
+                drFront.setAttribute("transform", `translate(0 ${(-120 * cl + settle).toFixed(1)})`);
+                drLeak.setAttribute("opacity", (T >= SLAM ? clamp01((T - SLAM) / 0.1) * (0.55 + 0.2 * Math.sin(T * 17) + 0.12 * Math.sin(T * 29)) : 0).toFixed(3));
+                const ue = clamp01((T - XC) / (END - XC)), e = 1 - (1 - ue) * (1 - ue);
+                $("f06x-cc").style.transform = `scale(${((1 + 0.45 * e) * kp).toFixed(4)})`;
+                for (const id of ["f06x-st1", "f06x-st2"]) $(id).style.setProperty("--hr-glow", (0.4 + 0.5 * bass).toFixed(3));
+              }
+            }
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["06-qubits"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

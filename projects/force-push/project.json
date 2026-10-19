@@ -1,12 +1,5 @@
 {
   "title": "Force Push",
-  "kind": "song",
   "audio": "input/Force Push.wav",
-  "transcript": "input/force-push.txt",
-  "frozen": [
-    "treatment",
-    "cues",
-    "scenes",
-    "review"
-  ]
+  "transcript": "input/force-push.txt"
 }

@@ -1,0 +1,919 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 12 — key (final chorus, 123.479–131.022), v11 rebuild: the escalated echo of 04. g1: the same machined
+         archive chronometer, but racing: the hands spin the years by (the YEAR drum rolls 2021 → 2026, the elapsed ring
+         closes) and slam to a stop on "time". Archie (v12) leans back beside it, head cocked, eyes on the clock: it
+         has all the time. "i waited for you," is the serif voice, past tense; "time" the Barlow hero. g2: BYTES HELD
+         again, bigger every time: a full-width 13-digit odometer continues beyond locked 08's final count, jumps to the
+         billions on the downbeat, and climbs into the trillions as a torrent of cables pours bytes in; the marker adds
+         "(and counting)"; "mine" slams it locked at 4398046511104 (4 TiB). No drawer wall.
+         v13 (SYSTEM.md V7): black ground matching 04 (ghost wall and bokeh go, the lit glyphs stay at 04's 0.6; warm
+         washes cut to 0.07/0.10), flat glowing heroes. Time has passed since 04: dust film on the clock glass and along the
+         bezel's top, dust motes drifting in the light, a cobweb strung from Archie's neck to his lid and to the clock rim
+         (its own layer, #f12-web; Archie untouched), the face engraved STILL HELD · NOT YET READ, the YEAR label at 14 px.
+         v17 (V17.md §12): `pushIn` in, `glideDown` out; the camera is one continuous carrier per shot and the clock shot
+         pushes through into the counter; the lit glyphs fall in orderly streams (#f12-rain) that speed up with the torrent
+         and stop on "mine"; accents only on "time", "mine" and the downbeats/onsets, no elastic wobbles, no shakes.
+         v21 (V21.md W8): 04's enamel dial, yellowed, stained and crazed; dark dust on the glass. The counter's hits are
+         mechanical: the wheels slam (a carry ripple on 128.911, all at once on "mine"), run white-hot and cool to fire, and
+         throw sparks off the reel; the reel has its own lamp. No flat rings, rays or flashes. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        .f12-group { position: absolute; inset: 0; opacity: 0; }
+        .f12-group.f12-on { opacity: 1; } /* g1 is on from the first frame */
+        #f12-fg { transform-origin: 5.5% 85%; } /* the type plane zooms around the lyric's corner, never off the pad */
+
+        /* ---- background plane: the ghost ciphertext wall, a few glyphs lit ---- */
+        #f12-wall { position: absolute; left: -120px; top: -50px; width: 2400px; opacity: 0.075;
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 26px; line-height: 64px;
+          letter-spacing: 0.14em; color: var(--cream); white-space: pre; }
+        /* v17: the archive's hex glyphs fall in orderly streams (a canvas, drawn per frame) */
+        #f12-rain { position: absolute; left: -120px; top: -60px; width: 2160px; height: 1200px; }
+        #f12-light { position: absolute; left: -200px; top: 200px; width: 1400px; height: 1000px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.07), rgba(232, 93, 38, 0) 100%); }
+        #f12-clocklight { position: absolute; left: 610px; top: -105px; width: 1500px; height: 1300px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(240, 236, 229, 0.07), rgba(232, 93, 38, 0.05) 55%, rgba(232, 93, 38, 0) 100%); }
+        #f12-plight { position: absolute; left: 60px; top: -240px; width: 1800px; height: 940px; border-radius: 50%; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.1), rgba(232, 93, 38, 0.03) 55%, rgba(232, 93, 38, 0) 100%); }
+
+        #f12-structure { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #f12-clocksvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+        .f12-rib { fill: #1A1A18; stroke: #282826; stroke-width: 2; }
+        .f12-rim { fill: none; stroke: #F0ECE5; stroke-opacity: 0.15; stroke-width: 2; }
+
+        /* Archie, leaning back beside the clock */
+        #f12-arch { position: absolute; left: 915px; top: 665px; width: 304px; height: 385px; overflow: visible;
+          transform-origin: 50% 100%; transform: rotate(-4deg); }
+        /* v13: the cobweb, its own layer riding Archie's frame (same box, same sway) */
+        #f12-web { position: absolute; left: 915px; top: 665px; width: 304px; height: 385px; overflow: visible;
+          transform-origin: 50% 100%; transform: rotate(-4deg); pointer-events: none; }
+        #f12-motes { position: absolute; inset: 0; pointer-events: none; }
+        .f12-mote { position: absolute; left: 0; top: 0; border-radius: 50%; opacity: 0;
+          background: radial-gradient(circle, rgba(240, 236, 229, 0.95), rgba(240, 236, 229, 0.4) 40%, rgba(240, 236, 229, 0) 70%);
+          box-shadow: 0 0 10px rgba(240, 236, 229, 0.18); }
+
+        /* ---- machine plane (g2): the full-width BYTES HELD odometer and the torrent of intake cables ---- */
+        .f12-screw { position: absolute; width: 10px; height: 10px; border-radius: 50%;
+          background: radial-gradient(circle at 35% 30%, #888880, #505048 45%, #1A1A18);
+          box-shadow: 0 1px 0 rgba(240, 236, 229, 0.18), 0 -1px 1px rgba(0, 0, 0, 0.6); }
+        .f12-screw::after { content: ""; position: absolute; left: 1px; right: 1px; top: 4px; height: 2px; background: rgba(17, 17, 17, 0.85);
+          transform: rotate(var(--f12-a, 30deg)); }
+        #f12-plate { position: absolute; left: 44px; top: 118px; width: 1832px; height: 334px; box-sizing: border-box;
+          border: 2px solid; border-color: #888880 #282826 #111111 #505048;
+          background: linear-gradient(180deg, #232321, #1A1A18 30%, #141413);
+          box-shadow: inset 0 2px 0 rgba(240, 236, 229, 0.18), inset 0 -3px 0 rgba(0, 0, 0, 0.6), 0 30px 60px rgba(0, 0, 0, 0.65); }
+        #f12-plate .f12-rake { position: absolute; inset: 0; pointer-events: none;
+          background: linear-gradient(104deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 30%, rgba(17, 17, 17, 0) 62%, rgba(17, 17, 17, 0.25)); }
+        #f12-plabel { position: absolute; left: 30px; top: 14px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 22px;
+          letter-spacing: 0.14em; color: var(--cream-muted); white-space: nowrap; }
+        #f12-plabel b { font-weight: 600; color: var(--fire); }
+        .f12-pmicro { position: absolute; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; letter-spacing: 0.2em;
+          color: rgba(136, 136, 128, 0.85); white-space: nowrap; text-transform: uppercase; }
+        #f12-dwin { position: absolute; left: 18px; top: 50px; height: 240px; box-sizing: border-box;
+          border: 2px solid; border-color: #111111 #282826 #888880 #282826; background: #111111;
+          box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.9); display: flex; padding: 2px; }
+        .f12-cell { position: relative; flex: none; width: 128px; height: 232px; overflow: hidden; background: #1A1A18; margin-left: 4px; }
+        .f12-cell:first-child { margin-left: 0; }
+        .f12-cell.f12-gap { margin-left: 22px; }
+        .f12-cell::after { content: ""; position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0) 26%, rgba(240, 236, 229, 0.04) 50%, rgba(0, 0, 0, 0) 74%, rgba(0, 0, 0, 0.85)); }
+        .f12-col { position: absolute; left: 0; top: 0; width: 128px; color: var(--fire); }
+        .f12-col div { height: 232px; line-height: 232px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 210px; letter-spacing: 0; }
+        .f12-brk { position: absolute; top: 38px; width: 30px; height: 264px; box-sizing: border-box; border: 0 solid var(--fire); opacity: 0; }
+        #f12-brkl { left: 4px; border-width: 8px 0 8px 8px; transform-origin: 100% 50%; }
+        #f12-brkr { left: 1794px; border-width: 8px 8px 8px 0; transform-origin: 0 50%; }
+        #f12-stv { position: absolute; right: 28px; top: 8px; display: flex; align-items: center; gap: 12px; font-family: "IBM Plex Mono";
+          font-weight: 600; font-size: 28px; letter-spacing: 0.12em; color: var(--cream); white-space: nowrap; }
+        #f12-stv i { font-style: normal; font-weight: 500; font-size: 13px; letter-spacing: 0.2em; color: rgba(136, 136, 128, 0.85); margin-right: 6px; }
+        #f12-stdot { width: 14px; height: 14px; border-radius: 50%; background: var(--fire); flex: none; }
+        #f12-pad { width: 24px; height: 31px; flex: none; overflow: visible; display: none; }
+
+        /* v21: the reel's own lamp, a white-hot tube along the top of its window */
+        #f12-lamp { position: absolute; left: 22px; top: 53px; width: 1786px; height: 4px; background: #FFF4E0; pointer-events: none;
+          box-shadow: 0 0 10px 2px rgba(255, 226, 196, 0.85), 0 6px 40px 6px rgba(255, 226, 196, 0.22); }
+        #f12-wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+        /* ---- foreground: chrome and lyrics ---- */
+        .f12-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
+        .f12-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
+          vertical-align: middle; margin-right: 16px; }
+        /* v20: the clock is larger and fills the right, so the date line sits under the kicker on the left */
+        .f12-chrome { position: absolute; left: calc(5.5cqw + 52px); top: calc(4.2cqw + 30px); font-family: "IBM Plex Mono"; font-weight: 500; font-size: 16px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); white-space: nowrap; }
+        .f12-line { position: absolute; left: 5.5cqw; bottom: 5.5cqw; width: 60cqw; font-family: "Barlow"; color: var(--cream);
+          display: flex; flex-direction: column; align-items: flex-start; gap: 0.6cqw; }
+        .f12-row { display: flex; flex-wrap: wrap; column-gap: 0.26em; font-weight: 800; font-size: 4.8cqw;
+          line-height: 1.04; letter-spacing: -0.02em; }
+        .f12-row.f12-serif { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 6.1cqw;
+          line-height: 1.12; letter-spacing: 0; column-gap: 0.22em; margin-bottom: -0.3cqw; }
+        .f12-row.f12-big { font-weight: 900; font-size: 15cqw; line-height: 0.86; letter-spacing: -0.04em;
+          color: var(--fire); margin: 0.4cqw 0 0 -0.6cqw; transform-origin: 0 100%;
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 26px) rgba(232, 93, 38, 0.55), 0 0 calc(var(--hr-glow, 0.5) * 80px) rgba(232, 93, 38, 0.28); }
+        .f12-w { display: inline-block; position: relative; opacity: 0; }
+        .f12-dot { position: absolute; border-radius: 50%; background: var(--fire); opacity: 0; text-shadow: none; }
+        /* the archive's marker voice, drawn on left to right */
+        #f12-mark { position: absolute; left: 1336px; top: 470px; font-family: "Caveat Brush"; font-size: 70px; line-height: 1;
+          color: var(--fire); white-space: nowrap; transform: rotate(-4deg); transform-origin: 0 50%; clip-path: inset(-30% 100% -40% -5%);
+          text-shadow: 0 0 6px #0A0A0A, 0 0 14px #0A0A0A, 0 0 24px rgba(10, 10, 10, 0.9); }
+
+        .f12-bokeh { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--cream);
+          opacity: 0.035; filter: blur(14px); white-space: nowrap; }
+      </style>
+
+      <div data-hf-id="hf-fa4h" id="root" data-composition-id="12-key" data-width="1920" data-height="1080" data-duration="7.543">
+        <div data-hf-id="hf-s1r8" class="hr-layer" id="f12-bg" data-depth="0.35" data-dof="6" data-layout-ignore>
+          <div data-hf-id="hf-9ce7" id="f12-light"></div>
+          <div data-hf-id="hf-cxqd" id="f12-wall"></div>
+          <canvas data-hf-id="hf-5wc3" id="f12-rain" width="2160" height="1200"></canvas>
+          <div data-hf-id="hf-tj17" id="f12-clocklight"></div>
+          <div data-hf-id="hf-ea69" id="f12-plight"></div>
+        </div>
+        <div data-hf-id="hf-dupm" class="hr-layer" id="f12-mid" data-depth="0.6" data-layout-ignore>
+          <svg data-hf-id="hf-l9v7" id="f12-structure" viewBox="0 0 1920 1080"></svg>
+          <canvas id="f12-beamc" data-layout-ignore width="1920" height="1080" style="position: absolute; inset: 0; width: 100%; height: 100%"></canvas>
+          <div id="f12-orbit" style="position: absolute; inset: 0; transform-origin: 1360px 545px">
+          <svg data-hf-id="hf-qoto" id="f12-clocksvg" viewBox="0 0 1920 1080">
+            <defs data-hf-id="hf-mh0t">
+              <linearGradient data-hf-id="hf-9qr9" id="f12-bz" x1="0.15" y1="0.1" x2="0.85" y2="0.95"><stop data-hf-id="hf-f9lk" stop-color="#888880" /><stop data-hf-id="hf-x270" offset="0.28" stop-color="#505048" /><stop data-hf-id="hf-xnfa" offset="0.62" stop-color="#282826" /><stop data-hf-id="hf-9w3h" offset="1" stop-color="#111111" /></linearGradient>
+              <linearGradient data-hf-id="hf-tj76" id="f12-ch" x1="0.85" y1="0.95" x2="0.15" y2="0.1"><stop data-hf-id="hf-fv2k" stop-color="#505048" /><stop data-hf-id="hf-y80e" offset="0.4" stop-color="#282826" /><stop data-hf-id="hf-04i9" offset="1" stop-color="#111111" /></linearGradient>
+              <radialGradient data-hf-id="hf-y5v8" id="f12-vig" cx="0.42" cy="0.38" r="0.62"><stop data-hf-id="hf-ngfv" offset="0.55" stop-color="#111111" stop-opacity="0" /><stop data-hf-id="hf-6u8o" offset="1" stop-color="#111111" stop-opacity="0.75" /></radialGradient>
+              <radialGradient data-hf-id="hf-kl1q" id="f12-cap" cx="0.35" cy="0.3" r="0.8"><stop data-hf-id="hf-bfzk" stop-color="#888880" /><stop data-hf-id="hf-yjs5" offset="0.5" stop-color="#505048" /><stop data-hf-id="hf-bl70" offset="1" stop-color="#1A1A18" /></radialGradient>
+              <linearGradient data-hf-id="hf-4lxw" id="f12-rake" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-72ti" stop-color="#FFFFFF" stop-opacity="0.07" /><stop data-hf-id="hf-on9z" offset="0.4" stop-color="#FFFFFF" stop-opacity="0" /><stop data-hf-id="hf-ev4v" offset="0.6" stop-color="#111111" stop-opacity="0" /><stop data-hf-id="hf-x8uz" offset="1" stop-color="#111111" stop-opacity="0.32" /></linearGradient>
+              <linearGradient data-hf-id="hf-9h9l" id="f12-glass" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-kn9q" stop-color="#FFFFFF" stop-opacity="0.24" /><stop data-hf-id="hf-qr10" offset="1" stop-color="#FFFFFF" stop-opacity="0" /></linearGradient>
+              <radialGradient id="f12-enamel" cx="0.4" cy="0.36" r="0.72"><stop offset="0" stop-color="#F3EBD8" /><stop offset="0.5" stop-color="#E9DCBE" /><stop offset="0.82" stop-color="#D7C39A" /><stop offset="1" stop-color="#A88F62" /></radialGradient>
+              <radialGradient id="f12-stain"><stop offset="0" stop-color="#9C7A42" stop-opacity="0.32" /><stop offset="0.7" stop-color="#9C7A42" stop-opacity="0.12" /><stop offset="1" stop-color="#9C7A42" stop-opacity="0" /></radialGradient>
+              <linearGradient data-hf-id="hf-3v5i" id="f12-drum" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-tn6m" stop-color="#000000" stop-opacity="0.9" /><stop data-hf-id="hf-tnq4" offset="0.32" stop-color="#000000" stop-opacity="0" /><stop data-hf-id="hf-qs21" offset="0.5" stop-color="#F0ECE5" stop-opacity="0.05" /><stop data-hf-id="hf-w54d" offset="0.68" stop-color="#000000" stop-opacity="0" /><stop data-hf-id="hf-tocf" offset="1" stop-color="#000000" stop-opacity="0.9" /></linearGradient>
+              <filter data-hf-id="hf-bozw" id="f12-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur data-hf-id="hf-8w1q" stdDeviation="22" /></filter>
+              <filter data-hf-id="hf-bkmb" id="f12-hsh" x="-30%" y="-10%" width="160%" height="120%"><feGaussianBlur data-hf-id="hf-5pp5" stdDeviation="7" /></filter>
+              <clipPath data-hf-id="hf-qm2o" id="f12-faceclip"><circle data-hf-id="hf-35wo" r="470" /></clipPath>
+              <clipPath data-hf-id="hf-ykr5" id="f12-glassclip"><circle data-hf-id="hf-aflg" r="562" /></clipPath>
+            </defs>
+            <g data-hf-id="hf-3eu1" id="f12-clock" transform="translate(1360 545) scale(0.76)"></g>
+          </svg>
+          </div>
+          <svg data-hf-id="hf-8s1a" id="f12-arch" viewBox="0 0 300 380" aria-hidden="true"></svg>
+          <svg data-hf-id="hf-w3b1" id="f12-web" viewBox="0 0 300 380" aria-hidden="true"></svg>
+          <div data-hf-id="hf-m0t5" id="f12-motes"></div>
+          <canvas id="f12-dustc" data-layout-ignore width="1920" height="1080" style="position: absolute; inset: 0; width: 100%; height: 100%"></canvas>
+        </div>
+
+        <div data-hf-id="hf-6y7x" class="hr-layer" id="f12-mach" data-depth="0.4" data-layout-ignore>
+          <div data-hf-id="hf-3qra" id="f12-m2" class="f12-group">
+            <svg data-hf-id="hf-uqj2" id="f12-wires" viewBox="0 0 1920 1080"><defs data-hf-id="hf-vvwl" id="f12-wdefs"></defs><g data-hf-id="hf-vkup" id="f12-cables"></g><g data-hf-id="hf-983z" id="f12-pkts"></g></svg>
+            <div data-hf-id="hf-q5sf" id="f12-plate">
+              <div data-hf-id="hf-b1f8" id="f12-plabel">BYTES HELD <b data-hf-id="hf-cufq">·</b> OBJ 0001 + EVERYONE'S, EVERYTHING SINCE</div>
+              <div data-hf-id="hf-caui" id="f12-stv"><i data-hf-id="hf-xh0g">INTAKE</i><i data-hf-id="hf-gzxx" id="f12-stdot"></i><svg data-hf-id="hf-c8rn" id="f12-pad" viewBox="0 0 34 44"><path data-hf-id="hf-thnz" d="M8 20 V13 a9 9 0 0 1 18 0 V20" fill="none" stroke="#E85D26" stroke-width="5" /><rect data-hf-id="hf-4mau" x="2" y="19" width="30" height="24" fill="#E85D26" /><rect data-hf-id="hf-3ivi" x="15" y="26" width="4" height="9" fill="#111111" /></svg><span data-hf-id="hf-agz5" id="f12-stt">OPEN</span></div>
+              <div data-hf-id="hf-nif7" id="f12-dwin"></div>
+              <div id="f12-lamp" data-layout-ignore></div>
+              <div data-hf-id="hf-teqs" class="f12-brk" id="f12-brkl"></div><div data-hf-id="hf-liiq" class="f12-brk" id="f12-brkr"></div>
+              <div data-hf-id="hf-j1md" class="f12-pmicro" style="left: 30px; top: 304px;">RET ∞ · READ AFTER Q-DAY · X25519</div>
+              <div data-hf-id="hf-kyg8" class="f12-pmicro" style="left: 760px; top: 304px;">RETENTION: INDEFINITE · REASON: JUST IN CASE</div>
+              <div data-hf-id="hf-ph8r" class="f12-pmicro" style="right: 30px; top: 304px;" id="f12-rate">RATE 0</div>
+              <div data-hf-id="hf-z9cj" class="f12-rake"></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-qkmp" class="hr-layer" id="f12-fg" data-depth="0.7">
+          <div data-hf-id="hf-551a" id="f12-g1" class="f12-group f12-on"><div data-hf-id="hf-1vu2" class="f12-line" id="f12-l24"></div></div>
+          <div data-hf-id="hf-7hio" id="f12-g2" class="f12-group"><div data-hf-id="hf-5ty3" class="f12-line" id="f12-l25"></div><div data-hf-id="hf-0wuv" id="f12-mark">(and counting)</div></div>
+        </div>
+        <div data-hf-id="hf-04rp" class="hr-layer" id="f12-chromel" data-depth="0.2">
+          <div data-hf-id="hf-7hqq" id="f12-c1" class="f12-group f12-on">
+            <div data-hf-id="hf-78oz" class="f12-kicker">STILL HELD</div>
+            <div data-hf-id="hf-uk69" class="f12-chrome">HELD SINCE TUE 09 MAR 2021 · 14:02</div>
+          </div>
+          <div data-hf-id="hf-3omc" id="f12-c2" class="f12-group"><div data-hf-id="hf-yjw2" class="f12-kicker">ALL AISLES · INTAKE</div></div>
+        </div>
+
+        <div data-hf-id="hf-co7y" class="hr-layer" id="f12-near" data-depth="1.7" data-layout-ignore></div>
+        <div class="hr-layer" id="f12-fx" data-depth="0.6" data-layout-ignore></div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/archie.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script>
+        (() => {
+          const T0 = 123.479, DUR = 7.543, END = T0 + DUR; // frame span, track seconds
+          const L = (t) => +(t - T0).toFixed(3);
+          const BEATS = [123.479, 123.93, 124.388, 124.841, 125.288, 125.74, 126.199, 126.658, 127.105, 127.551, 128.01, 128.458, 128.911, 129.37, 129.828, 130.281, 130.734];
+          const TIME = 126.84, G2 = 128.253, JUMP = 128.911, MINE = 130.7;
+          // lyric rows: each row is a list of [word, start]; `big` marks the hero display row, `serif` the intimate voice
+          const LINES = {
+            l24: [{ serif: [["I", 123.928], ["waited", 124.34], ["for", 124.732], ["you,", 125.1]] }, [["I", 125.689], ["had", 126.14], ["the", 126.64]], { big: [["time", TIME]] }],
+            l25: [[["Every", G2], ["byte", 128.66], ["you", 129.12], ["ever", 129.5]], [["sent", 129.73], ["is", 130.309]], { big: [["mine", MINE]] }],
+          };
+          // the words that stream as bytes, each on its own cable of the torrent
+          const PKTS = [["every", G2, 4], ["byte", 128.66, 1], ["you", 129.12, 6], ["ever", 129.5, 2], ["sent", 129.73, 7], ["is", 130.309, 3]];
+          const FLY = 0.3;
+          const START = 4294967296, JV = 34359738368, PRE = 3.62e12, FINAL = 4398046511104; // locked 08's billions → 4 TiB
+          const MARK = 129.73;
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const NS = "http://www.w3.org/2000/svg";
+          const S = (parent, tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const P = (a, r) => [Math.sin(a * Math.PI / 180) * r, -Math.cos(a * Math.PI / 180) * r]; // clock angle (deg, clockwise from 12) → xy
+          const f1 = (v) => v.toFixed(1);
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const eo3 = (u) => 1 - Math.pow(1 - clamp01(u), 3);
+
+          // ---- static build: the glyph streams, near bokeh --------------------------------------------------
+          // v17: the archive's lit hex glyphs fall in orderly streams: 18 evenly spaced columns in two depth tiers, two
+          // streams per column at a regular stagger, a cream head and a fading fire tail. One shared speed (its integral
+          // is tabulated, so a speed change never jumps a glyph): steady while the clock races, climbing with the
+          // torrent, braking to a stop on "mine" (locked).
+          const RAIN = $("f12-rain"), rx = RAIN.getContext("2d"), RW = 2160, RH = 1200, TAIL = 8;
+          const RCOLS = Array.from({ length: 18 }, (_, i) => {
+            const near = i % 2 === 0, fs = near ? 26 : 19;
+            return { x: 60 + i * 120, near, fs, row: fs * 1.55, spd: near ? 1 : 0.7, a: near ? 0.5 : 0.28, off: ((i * 7) % 18) / 18 };
+          });
+          const RSTEP = 1 / 240, RPHASE = [0];
+          {
+            const vAt = (T) => {
+              const up = clamp01((T - G2) / (MINE - G2)), s = up * up * (3 - 2 * up);
+              const brake = 1 - clamp01((T - MINE) / 0.3);
+              return 150 * (1 + 3.2 * s) * brake * brake;
+            };
+            for (let k = 1; k * RSTEP <= DUR + 0.05; k++) RPHASE.push(RPHASE[k - 1] + vAt(T0 + (k - 0.5) * RSTEP) * RSTEP);
+          }
+          const rainPhase = (t) => { const x = Math.max(0, t) / RSTEP, k = Math.min(RPHASE.length - 2, Math.floor(x)); return RPHASE[k] + (RPHASE[k + 1] - RPHASE[k]) * (x - k); };
+          const drawRain = (t, level) => {
+            rx.clearRect(0, 0, RW, RH);
+            const ph = rainPhase(t);
+            RCOLS.forEach((c, i) => {
+              rx.font = `600 ${c.fs}px "IBM Plex Mono"`; rx.textAlign = "center";
+              const P = RH + TAIL * c.row + 40;
+              for (let s = 0; s < 2; s++) {
+                const pos = ph * c.spd + (c.off + s * 0.5) * P, cyc = Math.floor(pos / P), head = pos - cyc * P;
+                const gr = HR.rng(i * 7919 + s * 104729 + cyc * 31337);
+                for (let k = 0; k < TAIL; k++) {
+                  const y = head - k * c.row, ch = HR.HEX[(gr() * 16) | 0];
+                  if (y < -c.row || y > RH + c.row) continue;
+                  // the lyric sits low left: the streams thin out behind it
+                  const dim = c.x < 1380 ? 1 - 0.6 * clamp01((y - 380) / 260) : 1;
+                  const al = c.a * level * dim * (k === 0 ? 0.95 : Math.pow(1 - k / TAIL, 1.4));
+                  rx.fillStyle = k === 0 ? `rgba(240,236,229,${al.toFixed(3)})` : `rgba(232,93,38,${al.toFixed(3)})`;
+                  rx.fillText(ch, c.x, y);
+                }
+              }
+            });
+          };
+          const nr = HR.rng(1288);
+          for (let i = 0; i < 0; i++) {
+            const b = el("div", "f12-bokeh", $("f12-near"), HR.cipher(2 + (i % 2), 1500 + i));
+            Object.assign(b.style, { left: `${-100 + nr() * 2000}px`, top: `${-60 + nr() * 1000}px`, fontSize: `${200 + nr() * 160}px` });
+          }
+          // archive ribs behind the clock and the counter
+          [890, 1170, 1450, 1730].forEach((x) => {
+            S($("f12-structure"), "path", { d: `M${x} -80L${x + 68} -80L${x + 28} 1160L${x - 42} 1160Z`, fill: "#111111", opacity: 0.95 });
+            S($("f12-structure"), "path", { class: "f12-rib", d: `M${x - 12} -80L${x + 29} -80L${x - 12} 1160L${x - 54} 1160Z` });
+            S($("f12-structure"), "path", { class: "f12-rim", d: `M${x - 12} -80L${x - 54} 1160` });
+            [180, 480, 780].forEach((y) => S($("f12-structure"), "rect", { x: x - 19 - y / 30, y, width: 22, height: 44, fill: "#282826", stroke: "#505048", "stroke-width": 1 }));
+          });
+
+          // ---- the chronometer (04's, copied) ------------------------------------------------------------------
+          const clk = $("f12-clock");
+          S(clk, "circle", { cx: 26, cy: 46, r: 610, fill: "#000000", opacity: 0.8, filter: "url(#f12-soft)" });
+          S(clk, "circle", { r: 600, fill: "url(#f12-bz)" });
+          const knurl = S(clk, "g", {});
+          for (let i = 0; i < 360; i++) {
+            const [x0, y0] = P(i, 585), [x1, y1] = P(i, 600);
+            S(knurl, "path", { d: `M${f1(x0)} ${f1(y0)}L${f1(x1)} ${f1(y1)}`, stroke: i % 2 ? "rgba(0,0,0,0.55)" : "rgba(240,236,229,0.13)", "stroke-width": 3 });
+          }
+          S(clk, "circle", { r: 584, fill: "none", stroke: "rgba(0,0,0,0.6)", "stroke-width": 2 });
+          S(clk, "path", { d: `M${P(232, 597).map(f1).join(" ")} A597 597 0 0 1 ${P(32, 597).map(f1).join(" ")}`, fill: "none", stroke: "rgba(240,236,229,0.42)", "stroke-width": 3, "stroke-linecap": "round" });
+          S(clk, "path", { d: `M${P(70, 597).map(f1).join(" ")} A597 597 0 0 1 ${P(200, 597).map(f1).join(" ")}`, fill: "none", stroke: "rgba(0,0,0,0.7)", "stroke-width": 4, "stroke-linecap": "round" });
+          S(clk, "circle", { r: 572, fill: "#111111" });
+          S(clk, "circle", { r: 562, fill: "url(#f12-ch)" });
+          S(clk, "path", { d: `M${P(60, 563).map(f1).join(" ")} A563 563 0 0 1 ${P(210, 563).map(f1).join(" ")}`, fill: "none", stroke: "rgba(240,236,229,0.3)", "stroke-width": 2 });
+          S(S(clk, "defs", {}), "path", { id: "f12-barc", d: `M${P(-62, 547).map(f1).join(" ")} A547 547 0 0 1 ${P(62, 547).map(f1).join(" ")}` });
+          const bt = S(clk, "text", { "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 5, fill: "rgba(240,236,229,0.42)", stroke: "rgba(0,0,0,0.5)", "stroke-width": 0.6, "paint-order": "stroke" });
+          S(bt, "textPath", { href: "#f12-barc", startOffset: "50%", "text-anchor": "middle" }, "ARCHIVE CLOCK · RETENTION INDEFINITE");
+          // the elapsed ring on the chamfer: it closes as the years go by
+          const arc = S(clk, "path", { fill: "none", stroke: "#E85D26", "stroke-width": 6, "stroke-linecap": "butt", class: "hr-glowbox" });
+          // v21 (W8): 04's cream enamel dial, years on: yellowed toward the rim, stained, the enamel crazed
+          S(clk, "circle", { r: 540, fill: "url(#f12-enamel)" });
+          S(clk, "circle", { r: 540, fill: "none", stroke: "rgba(0,0,0,0.75)", "stroke-width": 3 });
+          S(clk, "circle", { r: 531, fill: "none", stroke: "rgba(70,50,20,0.28)", "stroke-width": 18, filter: "url(#f12-hsh)" });
+          { const st = S(clk, "g", {}), rs0 = HR.rng(1290); // age stains, heavier low where the damp settled
+            for (let i = 0; i < 9; i++) { const a = rs0() * 360, d = 160 + rs0() * 320, [x, y] = P(a, d);
+              S(st, "circle", { cx: f1(x), cy: f1(y + 60), r: f1(50 + rs0() * 110), fill: "url(#f12-stain)", opacity: (0.35 + 0.5 * rs0()).toFixed(2) }); } }
+          { const cz = S(clk, "g", { fill: "none", stroke: "rgba(70,52,28,0.42)", "stroke-width": 1.1, "stroke-linejoin": "round" }), rc = HR.rng(1291);
+            for (let i = 0; i < 46; i++) { // the crazing: short wandering hairlines in the enamel
+              let [x, y] = P(rc() * 360, 60 + Math.sqrt(rc()) * 470), a = rc() * Math.PI * 2, d = `M${f1(x)} ${f1(y)}`;
+              for (let k = 0; k < 5; k++) { a += (rc() - 0.5) * 1.4; const l = 14 + rc() * 30; x += Math.cos(a) * l; y += Math.sin(a) * l; if (Math.hypot(x, y) > 535) break; d += `L${f1(x)} ${f1(y)}`; }
+              S(cz, "path", { d }); } }
+          const ticks = S(clk, "g", {});
+          S(ticks, "circle", { r: 537, fill: "none", stroke: "#1A1A18", "stroke-width": 1.4 });
+          S(ticks, "circle", { r: 506, fill: "none", stroke: "#1A1A18", "stroke-width": 1.1 });
+          for (let i = 0; i < 240; i++) {
+            if (i % 4 === 0) continue;
+            const [x0, y0] = P(i * 1.5, 536), [x1, y1] = P(i * 1.5, 530);
+            S(ticks, "path", { d: `M${f1(x0)} ${f1(y0)}L${f1(x1)} ${f1(y1)}`, stroke: "#6E6250", "stroke-width": 1 });
+          }
+          for (let i = 0; i < 60; i++) {
+            const big = i % 5 === 0, [x0, y0] = P(i * 6, 537), [x1, y1] = P(i * 6, big ? 506 : 522);
+            S(ticks, "path", { d: `M${f1(x0)} ${f1(y0)}L${f1(x1)} ${f1(y1)}`, stroke: big ? (i === 0 ? "#E85D26" : "#1A1712") : "#2E2A22", "stroke-width": big ? 6 : 2 });
+            if (big && i !== 15) {
+              const [tx, ty] = P(i * 6, 484);
+              S(ticks, "text", { x: f1(tx), y: f1(ty), "text-anchor": "middle", "dominant-baseline": "central", "font-family": "IBM Plex Mono", "font-weight": 600,
+                "font-size": 26, "letter-spacing": 1, fill: i === 0 ? "#E85D26" : "#1A1712" }, String(i).padStart(2, "0"));
+            }
+          }
+          S(clk, "circle", { r: 452, fill: "none", stroke: "rgba(26,23,18,0.35)", "stroke-width": 1.2 });
+          const eng = (x, y, size, text, o = {}) => [S(clk, "text", Object.assign({ x, y, "text-anchor": "middle", fill: "rgba(26,23,18,0.78)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": size, "letter-spacing": size * 0.3 }, o), text)];
+          S(clk, "circle", { cy: -352, r: 21, fill: "#C94A1C" });
+          S(clk, "circle", { cy: -353, r: 18, fill: "#E85D26" });
+          S(clk, "circle", { cy: -353, r: 13.5, fill: "none", stroke: "rgba(17,17,17,0.3)", "stroke-width": 1.4 });
+          S(clk, "text", { y: -346.5, "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 18, fill: "#B9431A" }, "a.");
+          S(clk, "path", { d: "M-14 -360 A16 16 0 0 1 -4 -368", fill: "none", stroke: "rgba(255,236,224,0.55)", "stroke-width": 2, "stroke-linecap": "round" });
+          eng(0, -298, 17, "HN/DL", { "font-weight": 600, fill: "#1A1712" });
+          eng(0, -272, 11, "NO APPOINTMENT NECESSARY");
+          eng(0, 268, 14, "STILL HELD · NOT YET READ", { "font-weight": 600 });
+          eng(0, 292, 10, "READ AFTER Q-DAY · RET ∞");
+          // the YEAR drum window at three o'clock (04's DAYS HELD window, now counting years)
+          const WX = 214, DW = 44, DG = 3, DH = 72;
+          S(clk, "rect", { x: WX - 12, y: -50, width: 4 * DW + 3 * DG + 24, height: 100, fill: "url(#f12-bz)" });
+          S(clk, "path", { d: `M${WX - 12} 50 V-50 H${WX + 4 * DW + 3 * DG + 12}`, fill: "none", stroke: "rgba(240,236,229,0.38)", "stroke-width": 1.5 });
+          S(clk, "rect", { x: WX - 3, y: -41, width: 4 * DW + 3 * DG + 6, height: 82, fill: "#111111" });
+          eng(WX + (4 * DW + 3 * DG) / 2, -64, 14, "YEAR", { "font-weight": 600 });
+          const yrsLab = eng(WX + (4 * DW + 3 * DG) / 2, 72, 10, "YEARS HELD · 00");
+          const drums = [];
+          for (let d = 0; d < 4; d++) {
+            const x = WX + d * (DW + DG);
+            const cp = S(clk, "clipPath", { id: "f12-dc" + d }); S(cp, "rect", { x, y: -37, width: DW, height: 74 });
+            const g = S(clk, "g", { "clip-path": `url(#f12-dc${d})` });
+            S(g, "rect", { x, y: -37, width: DW, height: 74, fill: "#1A1A18" });
+            const col = S(g, "g", {});
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0].forEach((n, k) => S(col, "text", { x: x + DW / 2, y: k * DH + 18, "text-anchor": "middle", "font-family": "IBM Plex Mono",
+              "font-weight": 600, "font-size": 50, fill: d === 3 ? "#E85D26" : "#F0ECE5" }, String(n)));
+            S(g, "rect", { x, y: -37, width: DW, height: 74, fill: "url(#f12-drum)" });
+            drums.push(col);
+          }
+          [2, 0, 2].forEach((n, d) => drums[d].setAttribute("transform", `translate(0 ${-n * DH})`));
+          S(clk, "path", { d: `M${WX - 3} 41 H${WX + 4 * DW + 3 * DG + 3} V-41`, fill: "none", stroke: "rgba(240,236,229,0.2)", "stroke-width": 1.5 });
+          S(clk, "path", { d: `M${WX - 3} 41 V-41 H${WX + 4 * DW + 3 * DG + 3}`, fill: "none", stroke: "rgba(0,0,0,0.9)", "stroke-width": 3 });
+
+          // the hands: faceted steel hour and minute, the fire second hand; each casts a soft shadow; while racing,
+          // the minute and second hands leave a smear of ghost hands behind them
+          const hourD = ["M0 -320 L-17 -40 L0 50 Z", "M0 -320 L17 -40 L0 50 Z"];
+          const minD = ["M0 -520 L-24 -46 L0 64 Z", "M0 -520 L24 -46 L0 64 Z"];
+          const secD = "M-2.6 150 L-1.6 -505 L0 -540 L1.6 -505 L2.6 150 Z";
+          const shadows = S(clk, "g", { opacity: 0.6 });
+          const shH = S(shadows, "path", { d: "M0 -320 L-17 -40 L0 50 L17 -40 Z", fill: "#000000", filter: "url(#f12-hsh)" });
+          const shM = S(shadows, "path", { d: "M0 -520 L-24 -46 L0 64 L24 -46 Z", fill: "#000000", filter: "url(#f12-hsh)" });
+          const shS = S(shadows, "g", { filter: "url(#f12-hsh)" });
+          S(shS, "path", { d: secD, fill: "#000000" }); S(shS, "circle", { cy: 112, r: 24, fill: "#000000" });
+          const ghostM = [0.3, 0.18, 0.1, 0.05].map((o) => ({ o, g: S(clk, "path", { d: "M0 -520 L-24 -46 L0 64 L24 -46 Z", fill: "#2A2620", opacity: 0 }) }));
+          const ghostS = [0.42, 0.28, 0.18, 0.1, 0.05].map((o) => ({ o, g: S(clk, "path", { d: secD, fill: "#E85D26", opacity: 0 }) }));
+          const handH = S(clk, "g", {});
+          S(handH, "path", { d: hourD[0], fill: "#45443F" }); S(handH, "path", { d: hourD[1], fill: "#111111" });
+          S(handH, "path", { d: "M0 -318 L0 48", stroke: "rgba(240,236,229,0.55)", "stroke-width": 1.4 });
+          S(handH, "path", { d: "M0 -300 L-6 -170 L0 -150 L6 -170 Z", fill: "#E9DCBE" });
+          const handM = S(clk, "g", {});
+          S(handM, "path", { d: minD[0], fill: "#45443F" }); S(handM, "path", { d: minD[1], fill: "#111111" });
+          S(handM, "path", { d: "M0 -518 L0 62", stroke: "rgba(240,236,229,0.6)", "stroke-width": 1.6 });
+          S(handM, "path", { d: "M-24 -46 L0 -520 L24 -46", fill: "none", stroke: "rgba(0,0,0,0.5)", "stroke-width": 1.5 });
+          S(handM, "path", { d: "M0 -500 L-7 -340 L0 -318 L7 -340 Z", fill: "#E85D26" });
+          const handS = S(clk, "g", { class: "hr-glowbox" });
+          S(handS, "path", { d: secD, fill: "#E85D26" });
+          S(handS, "circle", { cy: 112, r: 24, fill: "#E85D26" });
+          S(handS, "circle", { cy: 112, r: 15, fill: "none", stroke: "rgba(17,17,17,0.35)", "stroke-width": 2 });
+          S(handS, "path", { d: "M-15 104 A17 17 0 0 1 -4 96", fill: "none", stroke: "rgba(255,236,224,0.6)", "stroke-width": 2.5, "stroke-linecap": "round" });
+          S(handS, "path", { d: "M0 -540 L-6 -470 L6 -470 Z", fill: "#F0ECE5", opacity: 0.85 });
+          S(clk, "circle", { cy: 6, r: 48, fill: "#000000", opacity: 0.5, filter: "url(#f12-hsh)" });
+          S(clk, "circle", { r: 44, fill: "url(#f12-cap)", stroke: "rgba(0,0,0,0.55)", "stroke-width": 1.5 });
+          S(clk, "circle", { r: 30, fill: "#111111" });
+          S(clk, "circle", { r: 22, fill: "#E85D26" });
+          S(clk, "circle", { r: 7, fill: "#111111" });
+          S(clk, "path", { d: "M-32 -14 A35 35 0 0 1 -12 -33", fill: "none", stroke: "rgba(240,236,229,0.6)", "stroke-width": 3, "stroke-linecap": "round" });
+          const glass = S(clk, "g", { "clip-path": "url(#f12-glassclip)" });
+          S(glass, "path", { d: "M-620 -40 C-420 -120 -120 -360 60 -620 L-620 -620 Z", fill: "url(#f12-glass)" });
+          S(glass, "path", { d: "M-620 60 C-400 -30 -80 -300 120 -620", fill: "none", stroke: "rgba(255,255,255,0.12)", "stroke-width": 26 });
+          S(clk, "path", { d: `M${P(250, 556).map(f1).join(" ")} A556 556 0 0 1 ${P(330, 556).map(f1).join(" ")}`, fill: "none", stroke: "rgba(240,236,229,0.32)", "stroke-width": 2, "stroke-linecap": "round" });
+          S(clk, "circle", { r: 600, fill: "url(#f12-rake)" });
+          // v13: years of dust — a fine grey film and speckle on the glass, heavier where it settles low, and a fuzzy
+          // grey line along the top of the bezel
+          const dust = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 1220;
+            const x = c.getContext("2d"), r = HR.rng(1213), O = 610;
+            x.save(); x.beginPath(); x.arc(O, O, 562, 0, Math.PI * 2); x.clip();
+            for (let i = 0; i < 70; i++) {
+              const a = r() * Math.PI * 2, d = Math.sqrt(r()) * 560, bx = O + Math.cos(a) * d, by = O + Math.sin(a) * d;
+              const rr = 60 + r() * 160, g = x.createRadialGradient(bx, by, 0, bx, by, rr);
+              const k = 0.022 + 0.03 * clamp01((by - 300) / 900);
+              g.addColorStop(0, `rgba(120,98,60,${(k * 1.6).toFixed(3)})`); g.addColorStop(1, "rgba(120,98,60,0)");
+              x.fillStyle = g; x.fillRect(bx - rr, by - rr, rr * 2, rr * 2);
+            }
+            for (let i = 0; i < 5200; i++) {
+              const a = r() * Math.PI * 2, d = Math.sqrt(r()) * 562, px = O + Math.cos(a) * d, py = O + Math.sin(a) * d;
+              const big = r() < 0.03, rad = big ? 1.4 + r() * 1.4 : 0.45 + r() * 0.9;
+              const al = (big ? 0.28 : 0.1 + r() * 0.26) * (0.75 + 0.5 * clamp01((py - 200) / 900));
+              x.fillStyle = `rgba(92,76,50,${al.toFixed(3)})`;
+              x.beginPath(); x.arc(px, py, rad, 0, Math.PI * 2); x.fill();
+            }
+            x.lineWidth = 0.9; x.strokeStyle = "rgba(92,76,50,0.4)"; // a few fibres
+            for (let i = 0; i < 9; i++) {
+              const px = O + (r() - 0.5) * 860, py = O + (r() - 0.5) * 860, a = r() * Math.PI, l = 8 + r() * 16;
+              x.beginPath(); x.moveTo(px, py); x.quadraticCurveTo(px + Math.cos(a) * l * 0.6 + 4, py + Math.sin(a) * l * 0.6 - 4, px + Math.cos(a) * l, py + Math.sin(a) * l); x.stroke();
+            }
+            x.restore();
+            for (let i = 0; i < 2600; i++) { // dust settled on the top of the bezel
+              const deg = (r() - 0.5) * 150 * Math.sqrt(r()), a = (deg - 90) * Math.PI / 180, d = 588 + r() * 13 - Math.abs(deg) * 0.02;
+              const al = (0.18 + r() * 0.3) * (1 - Math.abs(deg) / 80);
+              x.fillStyle = `rgba(196,192,184,${Math.max(0, al).toFixed(3)})`;
+              x.beginPath(); x.arc(O + Math.cos(a) * d, O + Math.sin(a) * d, 0.6 + r() * 1.3, 0, Math.PI * 2); x.fill();
+            }
+            return c.toDataURL("image/png");
+          })();
+          S(clk, "image", { href: dust, x: -610, y: -610, width: 1220, height: 1220 });
+
+          // v20 (V20.md #6): years of wear. Fine wipe scratches on the glass, each catching the light at its own angle of
+          // the slow orbit (render glints them in turn); the glass cracks when the hands slam to a stop on "time".
+          const scr = S(clk, "g", { fill: "none", stroke: "#FFFFFF", "stroke-linecap": "round" }), rs = HR.rng(1240);
+          const scratches = Array.from({ length: 18 }, (_, i) => {
+            const cx = (rs() - 0.5) * 300, cy = (rs() - 0.5) * 300, r = 140 + rs() * 360, a0 = rs() * 360, span = 8 + rs() * 26;
+            const [x0, y0] = P(a0, r), [x1, y1] = P(a0 + span, r);
+            const d = i % 4 === 3 ? `M${f1(cx + x0 * 0.6)} ${f1(cy + y0 * 0.6)}L${f1(cx + x0 * 0.6 + (rs() - 0.5) * 160)} ${f1(cy + y0 * 0.6 + (rs() - 0.5) * 90)}`
+              : `M${f1(cx + x0)} ${f1(cy + y0)}A${f1(r)} ${f1(r)} 0 0 1 ${f1(cx + x1)} ${f1(cy + y1)}`;
+            return { p: S(scr, "path", { d, "stroke-width": 1.4 + rs() * 1.4, opacity: 0.05 }), at: -13 + (i / 17) * 28 + (rs() - 0.5) * 2 };
+          });
+          // the glass's specular sheen: a broad soft band that slides across the face as the orbit turns the light
+          const sheenDefs = S(clk, "defs", {});
+          const sg = S(sheenDefs, "linearGradient", { id: "f12-sheen", x1: 0, y1: 0, x2: 1, y2: 0 });
+          [[0, 0], [0.35, 0.05], [0.5, 0.13], [0.65, 0.05], [1, 0]].forEach(([o, a]) => S(sg, "stop", { offset: o, "stop-color": "#F0ECE5", "stop-opacity": a }));
+          const sheen = S(S(clk, "g", { "clip-path": "url(#f12-glassclip)" }), "rect", { x: -210, y: -900, width: 420, height: 1800, fill: "url(#f12-sheen)" });
+          const CRK = P(306, 300); // the crack's point of impact: the upper left of the face, clear of the hands' rest
+          const crk = S(clk, "g", { fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }), rk = HR.rng(1266);
+          const crackLines = [];
+          for (let i = 0; i < 9; i++) {
+            const a = (i / 9) * Math.PI * 2 + (rk() - 0.5) * 0.5, len = 70 + rk() * 230, n = 6;
+            let d = `M${f1(CRK[0])} ${f1(CRK[1])}`;
+            for (let k = 1; k <= n; k++) { const u = k / n, j = (rk() - 0.5) * 22 * Math.sin(Math.PI * u);
+              d += `L${f1(CRK[0] + Math.cos(a) * len * u - Math.sin(a) * j)} ${f1(CRK[1] + Math.sin(a) * len * u + Math.cos(a) * j)}`; }
+            crackLines.push({ el: S(crk, "path", { d, stroke: "rgba(0,0,0,0.7)", "stroke-width": 3.2, pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1, transform: "translate(2 3)" }), i });
+            crackLines.push({ el: S(crk, "path", { d, stroke: "rgba(240,236,229,0.62)", "stroke-width": 1.8, pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }), i });
+          }
+          [[46, 20, 150], [92, 200, 320], [138, 60, 120]].forEach(([r, a0, a1], i) => {   // the concentric breaks between the rays
+            const [x0, y0] = P(a0, r), [x1, y1] = P(a1, r);
+            const d = `M${f1(CRK[0] + x0)} ${f1(CRK[1] + y0)}A${r} ${r} 0 0 1 ${f1(CRK[0] + x1)} ${f1(CRK[1] + y1)}`;
+            crackLines.push({ el: S(crk, "path", { d, stroke: "rgba(240,236,229,0.45)", "stroke-width": 1.3, pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }), i: 9 + i });
+          });
+
+          // v13: dust motes drifting through the light over the clock
+          const MOTES = Array.from({ length: 7 }, (_, i) => {
+            const mr = HR.rng(7700 + i), z = 7 + mr() * 6;
+            const m = el("i", "f12-mote", $("f12-motes"));
+            Object.assign(m.style, { width: z + "px", height: z + "px" });
+            return { m, x0: 720 + mr() * 760, y0: 110 + mr() * 440, vx: 6 + mr() * 14, vy: 10 + mr() * 18, ph: mr() * 6.28, a: 0.45 + mr() * 0.35 };
+          });
+
+          // ---- Archie, leaned back beside the clock (v12: replaces the lamp-headed Archivist) ------------------
+          const archie = HR.archie($("f12-arch"), { id: "f12a", x: 150, y: 372, scale: 0.68, seed: 6 });
+          const AS = 304 / 300, AX = 915, AY = 665;
+
+          // v13: the cobweb (Archie's svg frame; Archie mounted at 150,372 ×0.68): a corner web from the neck tube to
+          // the lid's back corner, and a sagging pair of strands out to the clock's rim with a few cross threads
+          const wb = S($("f12-web"), "g", { fill: "none", stroke: "rgba(240,236,229,0.5)", "stroke-width": 0.6, "stroke-linecap": "round" });
+          const hub = [172, 190], frame = [[169, 168], [186, 171], [204, 177], [219, 184], [229, 191]];
+          S(wb, "path", { d: `M169 168 Q 203 170 229 191` });
+          frame.forEach(([fx, fy]) => S(wb, "path", { d: `M${hub[0]} ${hub[1]} L${fx} ${fy}` }));
+          [0.3, 0.5, 0.7, 0.88].forEach((k) => {
+            const pts = frame.map(([fx, fy]) => [hub[0] + (fx - hub[0]) * k, hub[1] + (fy - hub[1]) * k]);
+            S(wb, "path", { d: "M" + pts.map(([px, py], i) => (i ? `Q ${f1((pts[i - 1][0] + px) / 2 + 0.6)} ${f1((pts[i - 1][1] + py) / 2 + 1.4)} ` : "") + `${f1(px)} ${f1(py)}`).join(" ") });
+          });
+          const rim = [70, 95]; // v16: the clock is smaller and centred, so the web reaches its new rim
+          S(wb, "path", { d: `M147 172 Q 104 160 ${rim[0]} ${rim[1]}`, "stroke-opacity": 0.85 });
+          S(wb, "path", { d: `M84 191 Q 76 186 ${rim[0]} ${rim[1] + 4}`, "stroke-opacity": 0.75 });
+          [[0.25, 0.3], [0.5, 0.55], [0.75, 0.8]].forEach(([a, b]) => {
+            const q = (u, p0, c, p1) => (1 - u) * (1 - u) * p0 + 2 * u * (1 - u) * c + u * u * p1;
+            const ax = q(a, 147, 104, rim[0]), ay = q(a, 172, 160, rim[1]), bx = q(b, 84, 76, rim[0]), by = q(b, 191, 186, rim[1] + 4);
+            S(wb, "path", { d: `M${f1(ax)} ${f1(ay)} L${f1(bx)} ${f1(by)}`, "stroke-opacity": 0.6 });
+          });
+          const webEl = $("f12-web");
+          const CX = 1360, CY = 545, CK = 0.76; // the clock's centre and scale in the frame
+
+          // v20: dust in the light. A shaft of light falls from the upper left across the clock (#f12-beamc, behind it);
+          // motes drift through it (#f12-dustc, in front), lit inside the shaft and nearly gone outside. Each kick that
+          // ticks the year knocks a puff of dust off the top of the bezel, which floats down through the shaft.
+          const TICKS = [125.072, 125.301, 125.624, 127.093]; // the year drum: 2021 → 2025, one year per kick
+          const BEAM = { top: [900, 1350], bot: [1150, 2100], y0: -60, y1: 1140 };
+          const beamAt = (x, y) => {
+            const u = clamp01((y - BEAM.y0) / (BEAM.y1 - BEAM.y0)), xl = BEAM.top[0] + (BEAM.bot[0] - BEAM.top[0]) * u, xr = BEAM.top[1] + (BEAM.bot[1] - BEAM.top[1]) * u;
+            const w = xr - xl, q = (x - xl) / w;
+            return q <= 0 || q >= 1 ? 0 : Math.pow(Math.sin(Math.PI * q), 1.6);
+          };
+          const beamC = $("f12-beamc"), bx = beamC.getContext("2d"), dustC = $("f12-dustc"), dx2 = dustC.getContext("2d");
+          const AMB = Array.from({ length: 160 }, (_, i) => {
+            const r = HR.rng(12600 + i);
+            return { x: 800 + r() * 1150, y: -40 + r() * 1120, vx: 4 + r() * 10, vy: 8 + r() * 16, ph: r() * 6.28, z: 1.2 + r() * 3, a: 0.55 + r() * 0.45 };
+          });
+          const SHED = TICKS.map((tk, k) => Array.from({ length: 34 }, (_, i) => {
+            const r = HR.rng(12700 + k * 97 + i), ang = (r() - 0.5) * 120, rad = 600 * CK + 2 + r() * 6;
+            const [px, py] = P(ang, rad);
+            return { t: tk + r() * 0.05, x: CX + px, y: CY + py, vx: Math.sin(ang * Math.PI / 180) * 70 + (r() - 0.5) * 70, vy: -40 - r() * 70,
+              fall: 26 + r() * 40, ph: r() * 6.28, z: 0.9 + r() * 2.6, a: 0.5 + r() * 0.5 };
+          }));
+          const drawDust = (t, T) => {
+            bx.clearRect(0, 0, 1920, 1080); dx2.clearRect(0, 0, 1920, 1080);
+            const lift = 0.85 + 0.3 * HR.band("bass", T);
+            const g = bx.createLinearGradient(BEAM.top[0], 0, BEAM.top[1] + 500, 1080);
+            g.addColorStop(0, "rgba(240,236,229,0.0)"); g.addColorStop(0.5, `rgba(240,236,229,${(0.055 * lift).toFixed(3)})`); g.addColorStop(1, "rgba(240,236,229,0.012)");
+            bx.fillStyle = g; bx.beginPath();
+            bx.moveTo(BEAM.top[0], BEAM.y0); bx.lineTo(BEAM.top[1], BEAM.y0); bx.lineTo(BEAM.bot[1], BEAM.y1); bx.lineTo(BEAM.bot[0], BEAM.y1); bx.closePath(); bx.fill();
+            const dot = (x, y, z, a) => {
+              const lit = beamAt(x, y), al = a * (0.12 + 0.88 * lit) * lift;
+              if (al < 0.02) return;
+              dx2.fillStyle = `rgba(240,236,229,${Math.min(1, al).toFixed(3)})`;
+              dx2.beginPath(); dx2.arc(x, y, z * (0.8 + 0.4 * lit), 0, Math.PI * 2); dx2.fill();
+            };
+            for (const m of AMB) {
+              const x = m.x + m.vx * t + 14 * Math.sin(t * 0.7 + m.ph), y = ((m.y + m.vy * t + 9 * Math.sin(t * 0.5 + m.ph * 1.3)) % 1180 + 1180) % 1180 - 50;
+              dot(x, y, m.z, m.a * (0.6 + 0.4 * Math.sin(t * 1.3 + m.ph)));
+            }
+            for (const puff of SHED) for (const p of puff) {
+              const u = T - p.t; if (u < 0 || u > 3.2) continue;
+              const e = 1 - Math.exp(-u / 0.25);
+              const x = p.x + p.vx * 0.25 * e + 10 * Math.sin(u * 1.6 + p.ph) * e, y = p.y + p.vy * 0.25 * e + p.fall * u;
+              dot(x, y, p.z, p.a * Math.min(1, u / 0.04) * (1 - clamp01((u - 2) / 1.2)));
+            }
+          };
+
+          // ---- the BYTES HELD odometer (g2): 13 digits, grouped in threes -------------------------------------
+          const ND = 13, cols = [], cells = [];
+          for (let d = 0; d < ND; d++) {
+            const cell = el("div", "f12-cell" + ((ND - d) % 3 === 0 && d > 0 ? " f12-gap" : ""), $("f12-dwin")), col = el("div", "f12-col hr-glow", cell);
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0].forEach((n) => el("div", "", col, String(n)));
+            cols.push(col); cells.push(cell);
+          }
+          [[8, 8, 30], [1810, 8, -20], [8, 312, 75], [1810, 312, 10], [900, 8, 55], [900, 312, -35]].forEach(([l, t, a]) => {
+            const s = el("i", "f12-screw", $("f12-plate")); Object.assign(s.style, { left: l + "px", top: t + "px" }); s.style.setProperty("--f12-a", a + "deg");
+          });
+
+          // the torrent: a fan of intake cables from the floor, one from the right wall, feeders from the ceiling
+          const CAB = [];
+          for (let i = 0; i < 9; i++) {
+            const x0 = 1170 + i * 96, xe = 1130 + i * 84;
+            CAB.push({ d: `M ${x0} 1140 C ${x0} 820 ${xe} 660 ${xe} 452`, w: 12 - (i % 3) * 2 });
+          }
+          CAB.push({ d: "M 1990 610 C 1890 610 1852 570 1852 452", w: 10 });
+          for (let j = 0; j < 6; j++) { const x = 760 + j * 200; CAB.push({ d: `M ${x} -30 V 118`, w: 8, top: true }); }
+          const hex = (w) => Array.from(w).map((ch) => ch.charCodeAt(0).toString(16).toUpperCase().padStart(2, "0")).join(" ");
+          const cg = $("f12-cables"), cr = HR.rng(1212);
+          const cables = CAB.map((c, i) => {
+            const id = "f12-cp" + i;
+            S($("f12-wdefs"), "path", { id, d: c.d });
+            S(cg, "path", { d: c.d, fill: "none", stroke: "#000000", "stroke-opacity": 0.6, "stroke-width": c.w + 4, transform: "translate(4 8)" });
+            S(cg, "path", { d: c.d, fill: "none", stroke: "#1A1A18", "stroke-width": c.w });
+            S(cg, "path", { d: c.d, fill: "none", stroke: "rgba(240,236,229,0.16)", "stroke-width": 1.5, transform: "translate(-2 -1)" });
+            const flow = S(cg, "path", { d: c.d, fill: "none", stroke: "#E85D26", "stroke-width": 3, "stroke-dasharray": `${10 + (i % 4) * 6} ${26 + (i % 3) * 10}`, class: "hr-glowbox", opacity: 0 });
+            let tp = null;
+            if (!c.top) {
+              const tx = S(cg, "text", { "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 18, "letter-spacing": 3, fill: "#505048", dy: -12 });
+              tp = S(tx, "textPath", { href: "#" + id, startOffset: "0%" }, Array.from({ length: 24 }, (_, k) => HR.cipher(2, 1700 + i * 31 + k)).join(" "));
+            }
+            return { flow, tp, on: G2 + 0.05 + cr() * 0.6, sp: 260 + cr() * 260, ph: cr() * 400 };
+          });
+          // capped plugs where the cables meet the plate
+          CAB.forEach((c) => {
+            const m = c.d.match(/(-?\d+) (-?\d+)$/) || c.d.match(/M (-?\d+) -30 V (\d+)/);
+            const x = c.top ? +c.d.split(" ")[1] : +m[1], y = c.top ? 104 : 452;
+            S(cg, "rect", { x: x - 20, y: y - (c.top ? 0 : 14), width: 40, height: 14, fill: "#282826", stroke: "#505048", "stroke-width": 1.5 });
+          });
+          const pkts = PKTS.map(([w, , ci]) => {
+            const tx = S($("f12-pkts"), "text", { "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 30, "letter-spacing": 2, fill: "#F0ECE5", stroke: "#111111", "stroke-width": 8, "paint-order": "stroke", dy: -16 });
+            return S(tx, "textPath", { href: "#f12-cp" + ci, startOffset: "0%", "text-anchor": "end" }, hex(w));
+          });
+
+          // ---- lyrics ------------------------------------------------------------------------------------------
+          function buildLine(key) {
+            const box = $("f12-" + key), words = [];
+            for (const row of LINES[key]) {
+              const big = !Array.isArray(row) && !!row.big, serif = !Array.isArray(row) && !!row.serif;
+              const r = el("div", "f12-row" + (big ? " f12-big hr-glow" : "") + (serif ? " f12-serif" : ""), box);
+              for (const [w, t] of big ? row.big : serif ? row.serif : row) words.push({ s: el("span", "f12-w", r, w.toLowerCase()), t, big, r });
+            }
+            return words;
+          }
+          const lines = Object.fromEntries(Object.keys(LINES).map((k) => [k, buildLine(k)]));
+
+          // ---- timeline -------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const stage = HR.stage($("root"), { seed: 12 });
+          const cam = stage.cam;
+          cam.focus = 0.5;
+          // v20: in the clock shot the lyric plane rides the camera at a fifth of its depth (the camera trucks further past the
+          // clock while the line stays put); the counter shot keeps the plane's own depth
+          const fgLayer = stage.layers.find((l) => l.el.id === "f12-fg"), FG_D = fgLayer.d;
+          // ...and grows slowly about its own corner instead, so it moves without ever leaving the frame
+          tl.fromTo("#f12-g1", { scale: 1, transformOrigin: "5.5% 85%" }, { scale: 1.1, transformOrigin: "5.5% 85%", duration: L(G2), ease: "none" }, 0);
+          for (const id of ["f12-g1", "f12-c1"]) tl.set("#" + id, { opacity: 0 }, L(G2));
+          for (const id of ["f12-g2", "f12-c2", "f12-m2"]) tl.set("#" + id, { opacity: 1 }, L(G2));
+          tl.set(["#f12-clocksvg", "#f12-arch", "#f12-web", "#f12-motes", "#f12-beamc", "#f12-dustc"], { opacity: 0 }, L(G2));
+
+          // v17 camera: one continuous carrier per shot (constant speed, never stops). The clock shot drifts left and
+          // pushes slowly in; the counter shot pushes on while the camera rises with the torrent, carrying into the
+          // `glideDown` out. Accents are WOW.punches on top (below); the shot change is a push through (SW).
+          const SW = 0.46; // the in-frame push-through: [G2 − SW, G2 + SW]
+          // v20: the clock shot is a slow orbit and push: the camera trucks right and rises while the clock turns a few
+          // degrees on its vertical axis (O.ry, in render), so the parallax and the scratches' glints carry it
+          tl.fromTo(cam, { x: -100, y: 12, z: 1 }, { x: 160, y: -14, z: 1.12, duration: L(G2), ease: "none" }, 0);
+          // and on each year's clunk (the kicks) the camera takes an eased notch in, on top of the carrier
+          // (a sum of eased 0.4 s steps, so overlapping notches stay smooth)
+          const notchAt = (T) => TICKS.reduce((v, tk) => { const u = clamp01((T - tk) / 0.4); return v + u * u * (3 - 2 * u); }, 0);
+          const O = { ry: 15, rx: 3 };
+          tl.fromTo(O, { ry: 15, rx: 3 }, { ry: -13, rx: -2, duration: L(G2), ease: "none" }, 0);
+          tl.fromTo(cam, { x: 12, y: 26, z: 1 }, { x: -18, y: -30, z: 1.06, duration: DUR - L(G2), ease: "none", immediateRender: false }, L(G2));
+
+          // the clock bucks when the hands slam to a stop on "time" (one dip, a smooth return)
+          tl.fromTo("#f12-clocksvg", { y: 0 }, { y: 10, duration: 0.06, ease: "power2.out", immediateRender: false }, L(TIME));
+          tl.fromTo("#f12-clocksvg", { y: 10 }, { y: 0, duration: 0.5, ease: "sine.inOut", immediateRender: false }, L(TIME) + 0.06);
+
+          // Years asleep; the stopped clock wakes him, then he blows the years off.
+          archie.mood(tl, "asleep", 0, 0.01);
+          archie.to(tl, { sway: 1, zz: 1, idle: 0.35 }, 0.02, 0.01);
+          // v20: each year's clunk jolts him in his sleep (he does not wake until the hands slam)
+          [125.072, 125.301, 125.624].forEach((tk, i) => { archie.bump(tl, L(tk), 0.06 + 0.02 * i); archie.nod(tl, L(tk) + 0.02, 5); });
+          archie.wake(tl, L(TIME));
+          archie.startle(tl, L(TIME), { h: 42, air: 0.26 });
+          archie.puff(tl, L(TIME) + 0.62);
+          const dustPuff = Array.from({ length: 24 }, (_, i) => {
+            const r = HR.rng(14120 + i), m = el("i", "f12-mote", $("f12-motes"));
+            const z = 5 + r() * 14;
+            Object.assign(m.style, { width: z + "px", height: z + "px" });
+            return { m, vx: 150 + r() * 260, vy: -130 + r() * 180, x: 1000 + r() * 100, y: 810 + r() * 65 };
+          });
+
+          // lyrics: lead words build by glyph, hero words slam; the first line rides the push-through out with the clock
+          for (const ws of Object.values(lines)) for (const { s, t, big } of ws) {
+            if (big) {
+              const gs = HR.hero(tl, s, L(t), { spread: 40, sharp: true });
+              // v17: the kit's elastic settle wobbles the huge word for 0.6 s (read as extra hits); these later tweens win
+              tl.fromTo(gs, { scale: 1.22 }, { scale: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, L(t));
+              tl.fromTo(s, { skewX: -8 }, { skewX: 0, duration: 0.45, ease: "power3.out", immediateRender: false }, L(t));
+            } else HR.lead(tl, s, L(t));
+            tl.set(s, { opacity: 1 }, L(t));
+          }
+
+          // hero slams squash and spit fire dots ("mine" harder, more dots)
+          const sr = HR.rng(1244);
+          for (const { s, t, big, r } of Object.values(lines).flat()) {
+            if (!big) continue;
+            const hard = t === MINE, sq = hard ? 0.9 : 0.93;
+            tl.fromTo(r, { scaleY: 1, scaleX: 1 }, { scaleY: sq, scaleX: hard ? 1.035 : 1.02, duration: 0.05, ease: "power2.out", immediateRender: false }, L(t));
+            tl.fromTo(r, { scaleY: sq, scaleX: hard ? 1.035 : 1.02 }, { scaleY: 1, scaleX: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, L(t) + 0.05);
+            for (let i = 0; i < (hard ? 14 : 8); i++) {
+              const d = el("span", "f12-dot", s), side = i % 2 ? -1 : 1, z = 4 + sr() * sr() * (hard ? 22 : 16);
+              d.setAttribute("data-layout-ignore", "");
+              Object.assign(d.style, { width: z + "px", height: z + "px", left: (side < 0 ? -2 - sr() * 4 : 100 + sr() * 4) + "%", top: (25 + sr() * 55) + "%" });
+              const dx = side * (14 + sr() * (hard ? 80 : 50)), dy = (sr() - 0.5) * 40;
+              tl.fromTo(d, { opacity: 0, x: -dx * 0.5, y: 0, scale: 0.3 }, { opacity: 0.95, x: 0, y: dy * 0.3, scale: 1, duration: 0.09, ease: "power3.out", immediateRender: false }, L(t));
+              tl.fromTo(d, { opacity: 0.95, x: 0, y: dy * 0.3 }, { opacity: 0, x: dx * 0.4, y: dy + 30, duration: 0.7, ease: "power2.in", immediateRender: false }, L(t) + 0.09);
+            }
+          }
+          // "time" loosens on the downbeat
+          const timeG = lines.l24.find((w) => w.big).s._hrG;
+          tl.fromTo(timeG, { x: 0 }, { x: (i) => i * 20, duration: 1.0, ease: "power2.out", immediateRender: false }, L(127.105));
+
+
+          // v17 (V17.md §12): the explosive kit only on the hero words ("time", "mine") and the downbeats; every other
+          // accent sits on an onset from HR_ENV. No shakes and no elastic wobbles: their per-frame jitter and rebounds
+          // measured as extra hits after the hero (v16's 127.03 / 130.83); smooth punches carry the weight instead.
+          const fx = $("f12-fx"), HOST = document.getElementById("el-12-key");
+          {
+            WOW.transition(tl, HOST, { in: "pushIn", dur: 0.46 });
+            WOW.transition(tl, HOST, { out: "glideDown", dur: 0.46, total: DUR });
+            WOW.pulse(tl, $("f12-clocksvg"), { kind: "kick", amt: 0.018, y: 5 });
+            // bar 2's downbeat (kick under "you,"): a thin ring off the racing clock and a small punch
+            // v20: no flat rings or washes in the clock shot: the hits are mechanical (the year drum clunks over and
+            // shakes dust off the bezel on each kick, render; the glass cracks on "time")
+            const D2 = WOW.on(125.288, { kinds: ["down"] });
+            WOW.punch(tl, $("f12-clocksvg"), L(D2), { s: 1.025, dur: 0.45 });
+            // "time": the years slam to a stop — sparks off the hub, the glass cracks from a point on the upper face and
+            // throws glass chips
+            WOW.punch(tl, HOST, L(TIME), { s: 1.05, dur: 0.45 });
+            WOW.burst(tl, fx, { x: CX, y: CY, t: L(TIME), n: 36, speed: 1300, size: [6, 18], seed: 127, dur: 0.9 });
+            crackLines.forEach(({ el, i }) => tl.fromTo(el, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: i < 9 ? 0.07 : 0.1, ease: "expo.out", immediateRender: false }, L(TIME) + (i < 9 ? (i % 3) * 0.008 : 0.04)));
+            WOW.burst(tl, fx, { x: CX + CRK[0] * CK, y: CY + CRK[1] * CK, t: L(TIME), n: 18, speed: 700, size: [3, 8], spread: 240, aim: -100, gravity: 1600, cream: 1, color: "cream", dur: 0.8, seed: 1267 });
+            // bar 3's downbeat (kick + snare): Archie lands from his startle, "time" loosens, the year drum makes 2025
+            const D3 = WOW.on(127.105, { kinds: ["down"] });
+            WOW.punch(tl, $("f12-clocksvg"), L(D3), { s: 1.02, dur: 0.4 });
+            // v21: the counter's hits are mechanical. The downbeat jump into the billions: the digit wheels slam over in a
+            // left-to-right ripple (the carry running through the reel) and the reel throws sparks off its window edges
+            const plate = $("f12-plate");
+            WOW.punch(tl, HOST, L(JUMP), { s: 1.025, dur: 0.4 });
+            cells.forEach((cl, d) => {
+              const t0 = L(JUMP) + d * 0.012;
+              tl.fromTo(cl, { y: 0 }, { y: 18, duration: 0.04, ease: "power2.in", immediateRender: false }, t0);
+              tl.fromTo(cl, { y: 18 }, { y: 0, duration: 0.28, ease: "power3.out", immediateRender: false }, t0 + 0.04);
+            });
+            [[150, 290, 90], [580, 290, 90], [1010, 290, 90], [1440, 290, 90], [360, 50, -90], [1220, 50, -90]].forEach(([x, y, aim], i) =>
+              WOW.burst(tl, plate, { x, y, t: L(JUMP) + i * 0.012, n: 18, speed: 1500, size: [7, 18], aim, spread: 110, gravity: 1500, cream: 0.75, dur: 0.75, seed: 1290 + i }));
+            // ...and the wheels run white-hot for a beat as the carry rips through, cooling back to fire
+            tl.fromTo(cols, { color: "#FFF4E0" }, { color: "#E85D26", duration: 0.32, ease: "power2.in", immediateRender: false }, L(JUMP));
+            // "mine" locks it (the last downbeat lands with it): every wheel slams down at once and the clamps strike sparks
+            WOW.punch(tl, HOST, L(MINE), { s: 1.06, dur: 0.5 });
+            tl.fromTo(cells, { y: 0, scaleY: 1 }, { y: 26, scaleY: 0.94, duration: 0.05, ease: "power3.in", immediateRender: false }, L(MINE));
+            tl.fromTo(cells, { y: 26, scaleY: 0.94 }, { y: 0, scaleY: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, L(MINE) + 0.05);
+            [[24, 170, 180, 18], [1808, 170, 0, 18], [300, 290, 90, 12], [900, 290, 90, 12], [1500, 290, 90, 12], [640, 50, -90, 12], [1160, 50, -90, 12]].forEach(([x, y, aim, n], i) =>
+              WOW.burst(tl, plate, { x, y, t: L(MINE), n: n + 8, speed: 1800, size: [8, 20], aim, spread: 120, gravity: 1600, cream: 0.8, dur: 0.85, seed: 1300 + i }));
+          }
+
+          // g2 — the plate thunks on the torrent's kicks (hardest on the downbeat jump) and, lighter, its snares
+          [[JUMP, 2], [129.252, 0.6], [129.605, 1], [130.058, 1], [130.276, 0.6]].forEach(([b, k]) => {
+            const tb = WOW.on(b);
+            tl.fromTo("#f12-plate", { y: 0 }, { y: 4 * k, duration: 0.05, ease: "power2.out", immediateRender: false }, L(tb));
+            tl.fromTo("#f12-plate", { y: 4 * k }, { y: 0, duration: 0.3, ease: "sine.out", immediateRender: false }, L(tb) + 0.05);
+          });
+          tl.fromTo("#f12-plight", { opacity: 0 }, { opacity: 0.8, duration: 0.4, ease: "power2.out" }, L(G2));
+          // "mine" locks it: the brackets clamp on, the plate slams, the digits flash cream, the torrent goes dark
+          tl.fromTo(".f12-brk", { opacity: 0, scaleX: 2.6 }, { opacity: 1, scaleX: 1, duration: 0.12, ease: "power4.in" }, L(MINE) - 0.12);
+          tl.fromTo("#f12-plate", { scale: 1, y: 0 }, { scale: 1.04, y: 10, duration: 0.05, ease: "power2.out", immediateRender: false }, L(MINE));
+          tl.fromTo("#f12-plate", { scale: 1.04, y: 10 }, { scale: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, L(MINE) + 0.05);
+          tl.fromTo(cols, { color: "#F0ECE5" }, { color: "#E85D26", duration: 0.28, ease: "power2.in", immediateRender: false }, L(MINE));
+          tl.fromTo("#f12-plight", { opacity: 0.8 }, { opacity: 1.6, duration: 0.05, ease: "power2.out", immediateRender: false }, L(MINE));
+          tl.fromTo("#f12-cables", { opacity: 1 }, { opacity: 0.3, duration: 0.14, ease: "power2.out", immediateRender: false }, L(MINE));
+          tl.fromTo("#f12-mid", { opacity: 1 }, { opacity: 0.3, duration: 0.12, ease: "power2.out", immediateRender: false }, L(MINE));
+
+          // ---- per-frame draw -------------------------------------------------------------------------------
+          // the race: each hand spins at a constant rate, brakes hard over the last 0.24 s and slams to a stop on
+          // "time" with one sprung overshoot that settles smoothly (v17: no ringing). The minute hand lands pointing at
+          // the hero word.
+          const TS = L(TIME), DEC = 0.24, T1 = TS - DEC;
+          const racer = (w, final, kick) => {
+            const rem = w * DEC / 3, total = w * T1 + rem, a0 = final - total;
+            const raw = (t) => t < T1 ? a0 + w * t : t < TS ? a0 + w * T1 + rem * eo3((t - T1) / DEC) : final;
+            return {
+              at: (t) => raw(t) + (t > TS ? kick * ((t - TS) / 0.07) * Math.exp(1 - (t - TS) / 0.07) : 0),
+              prog: (t) => clamp01((raw(t) - a0) / total),
+            };
+          };
+          const rM = racer(760, 260 + 360 * 7, 5), rH = racer(110, 321 + 360, 2), rS = racer(1900, 312 + 360 * 17, 7);
+          const sBeats = BEATS.filter((b) => b > TIME && b < G2); // the stopped clock still ticks the beat
+          const secAt = (t) => {
+            let a = rS.at(t);
+            const T = t + T0;
+            for (const b of sBeats) a += 12 * eo3((T - b) / 0.12);
+            return a;
+          };
+          const heroes = Object.values(lines).flat().filter((w) => w.big).map((w) => w.r);
+          const lightEl = $("f12-light"), plightEl = $("f12-plight"), archEl = $("f12-arch"), orbitEl = $("f12-orbit");
+          const stt = $("f12-stt"), stdot = $("f12-stdot"), pad = $("f12-pad"), rateEl = $("f12-rate"), mark = $("f12-mark");
+          const rot = (g, a, dx = 0, dy = 0) => g.setAttribute("transform", `translate(${dx} ${dy}) rotate(${a.toFixed(3)})`);
+          const ang = (y, x) => Math.atan2(y, x) * 180 / Math.PI;
+          // the count: 4 GiB held, an exponential climb, the downbeat jump to 32 GiB, the torrent into the
+          // trillions; "mine" slams it to 4 TiB and holds
+          const k1 = Math.log(17179869184 / START) / (JUMP - G2), k2 = Math.log(PRE / JV) / (MINE - JUMP);
+          const bytesAt = (T) => {
+            if (T < G2) return START;
+            if (T < JUMP) return START * Math.exp(k1 * (T - G2));
+            if (T < MINE) { const base = JV * Math.exp(k2 * (T - JUMP)); return 17179869184 + (base - 17179869184) * eo3((T - JUMP) / 0.12); }
+            return FINAL - (FINAL - PRE) * (1 - eo3((T - MINE) / 0.14));
+          };
+          const rateStr = (r) => r >= 1e12 ? (r / 1e12).toFixed(1) + " TB/S" : r >= 1e9 ? (r / 1e9).toFixed(1) + " GB/S" : r >= 1e6 ? (r / 1e6).toFixed(1) + " MB/S" : (r / 1e3).toFixed(0) + " KB/S";
+          let lastDim = -1, lastYrs = "", lastBlur = [];
+          // the in-frame push-through (the v17 `pushIn` shape on #root): in over the last beat of g1, out over the first
+          // beat of g2; about a point left of centre so the sung "time" and the incoming "every" stay on the canvas
+          const rootEl = $("root"), tG = L(G2);
+          rootEl.style.transformOrigin = "420px 780px";
+          const pushThrough = (t) => {
+            const u1 = clamp01((t - (tG - SW)) / SW), u2 = clamp01((t - tG) / SW), e2 = 1 - (1 - u2) * (1 - u2);
+            return t < tG ? { s: 1 + 0.2 * u1 * u1, b: 4 * u1 * u1 } : { s: 1.14 - 0.14 * e2, b: 4 * (1 - e2) };
+          };
+          function render() {
+            const t = tl.time(), T = t + T0;
+            fgLayer.d = T < G2 ? 0.15 : FG_D;
+            const nn = T < G2 ? notchAt(T) : 0, nz = 0.04 * nn, nxx = 0;
+            cam.z += nz; cam.x += nxx;
+            stage.apply(T);
+            cam.z -= nz; cam.x -= nxx;
+            HR.draw(tl);
+            WOW.draw(tl, 123.479);
+            // the host's switches and punches scale about the clock in g1 and about the lyric corner in g2, so "mine"
+            // stays on the canvas through its punch and the `glideDown` out (origin y ≥ 520 keeps the glide covering)
+            HOST.style.transformOrigin = t < tG ? `${CX}px ${CY}px` : "25% 88%";
+            const pt = pushThrough(t);
+            rootEl.style.scale = pt.s > 1.0001 ? pt.s.toFixed(4) : "";
+            rootEl.style.filter = pt.b > 0.3 ? `blur(${pt.b.toFixed(1)}px)` : "";
+            // g1: the racing chronometer
+            if (T < G2) {
+              const h = rH.at(t), m = rM.at(t), s = secAt(t);
+              rot(handH, h); rot(handM, m); rot(handS, s);
+              rot(shH, h, 10, 16); rot(shM, m, 14, 22); rot(shS, s, 18, 28);
+              ghostM.forEach(({ o, g }, i) => { const a = rM.at(t - (i + 1) * 0.014); g.setAttribute("opacity", (o * clamp01(Math.abs(m - a) / 4)).toFixed(3)); rot(g, a); });
+              ghostS.forEach(({ o, g }, i) => { const a = rS.at(t - (i + 1) * 0.008); g.setAttribute("opacity", (o * clamp01(Math.abs(s - a) / 4)).toFixed(3)); rot(g, a); });
+              // the elapsed ring closes as the years go by; v20: the YEAR drum clunks over 2021 → 2025, one year per kick
+              const pr = rM.prog(t), sw = 360 * pr;
+              if (sw < 0.5) arc.setAttribute("d", "");
+              else if (sw > 359.5) arc.setAttribute("d", `M0 -551 A551 551 0 1 1 0 551 A551 551 0 1 1 0 -551`);
+              else { const [bx, by] = P(sw, 551); arc.setAttribute("d", `M0 -551 A551 551 0 ${sw > 180 ? 1 : 0} 1 ${f1(bx)} ${f1(by)}`); }
+              HR.glow(arc, T, 0.2, 0.5); HR.glow(handS, T, 0.15, 0.4);
+              const pos = TICKS.reduce((v, tk) => v + eo3((T - tk) / 0.12), 0);
+              drums[3].setAttribute("transform", `translate(0 ${(-(1 + pos) * DH).toFixed(2)})`);
+              const yrs = "YEARS HELD · " + String(Math.round(pos)).padStart(2, "0");
+              // the orbit (the clock turns on its vertical axis), with a clunk on each tick; scratches glint in turn as
+              // the light angle passes theirs; dust in the shaft
+              const clunk = TICKS.reduce((v, tk) => { const u = T - tk; return v + (u < 0 ? 0 : u < 0.05 ? u / 0.05 : Math.exp(-(u - 0.05) / 0.12)); }, 0);
+              orbitEl.style.transform = `perspective(2600px) rotateY(${O.ry.toFixed(3)}deg) rotateX(${O.rx.toFixed(3)}deg) translateY(${(4 * clunk).toFixed(2)}px)`;
+              sheen.setAttribute("transform", `rotate(-32) translate(${(-O.ry * 52).toFixed(1)} 0)`);
+              for (const sc of scratches) { const g = Math.exp(-Math.pow((O.ry - sc.at) / 1.6, 2)); sc.p.setAttribute("opacity", (0.06 + 0.5 * g).toFixed(3)); }
+              drawDust(t, T);
+              if (yrs !== lastYrs) { yrsLab.forEach((n) => { n.textContent = yrs; }); lastYrs = yrs; }
+
+              // Archie: leaned back, eyes on the clock (drifting after the hour hand), head cocked, a lazy sway;
+              // a contented nod on "waited", a firmer one on "time"
+              const hx = AX + 157 * AS, hy = AY + 137 * AS;
+              const [tx, ty] = P(h, 320);
+              const dx = CX + tx * CK - hx, dy = CY + ty * CK - hy, dd = Math.hypot(dx, dy) || 1;
+              archie.s.lookX = dx / dd; archie.s.lookY = 0.8 * dy / dd; archie.s.turn = 0.3 * dx / dd;
+              const blow = t - L(TIME) - 0.62;
+              wb.setAttribute("transform", blow < 0 ? "" : `translate(${blow * 130} ${-blow * 70}) rotate(${blow * 90} 172 190)`);
+              wb.setAttribute("opacity", blow < 0 ? 1 : Math.max(0, 1 - blow / 0.5));
+              for (const p of dustPuff) {
+                p.m.style.transform = `translate(${p.x + p.vx * Math.max(0, blow)}px, ${p.y + p.vy * Math.max(0, blow) + 60 * blow * blow}px)`;
+                p.m.style.opacity = blow < 0 ? 0 : Math.max(0, 0.85 * (1 - blow / 0.9));
+              }
+              archEl.style.transform = `rotate(${(-4 + 0.6 * Math.sin(t * 0.9)).toFixed(2)}deg)`;
+              webEl.style.transform = archEl.style.transform;
+              for (const { m, x0, y0, vx, vy, ph, a } of MOTES) {
+                const mx = x0 + vx * t + 9 * Math.sin(t * 0.8 + ph), my = y0 + vy * t + 6 * Math.sin(t * 0.55 + ph * 1.7);
+                m.style.transform = `translate(${mx.toFixed(1)}px, ${my.toFixed(1)}px)`;
+                m.style.opacity = (a * (0.55 + 0.45 * Math.sin(t * 1.1 + ph))).toFixed(3);
+              }
+              archie.apply(T);
+            }
+
+            // g2: the torrent and the odometer
+            const v = bytesAt(T), r = Math.max(0, (v - bytesAt(T - 0.016)) / 0.016);
+            const locked = T >= MINE;
+            if (T >= G2) {
+              cables.forEach((c, i) => {
+                const on = clamp01((T - c.on) / 0.2);
+                const surge = 1 + 2.2 * clamp01((T - JUMP) / (MINE - JUMP));
+                const flowT = locked ? MINE - T0 : t;
+                c.flow.setAttribute("opacity", (on * (locked ? 0.35 : 1)).toFixed(3));
+                c.flow.setAttribute("stroke-dashoffset", (-(c.ph + flowT * c.sp * surge)).toFixed(1));
+                if (c.tp) c.tp.setAttribute("startOffset", (((flowT * 14 * surge + i * 7) % 50) - 50).toFixed(2) + "%");
+                HR.glow(c.flow, T, 0.4, 0.6);
+              });
+              PKTS.forEach(([, w], i) => {
+                const q = clamp01((T - w) / FLY), e = q * q * (3 - 2 * q);
+                pkts[i].setAttribute("startOffset", (T < w ? 0 : e * 125).toFixed(2) + "%");
+                pkts[i].parentNode.setAttribute("opacity", q >= 1 ? 0 : 1);
+              });
+              // each digit column rolls like a mechanical counter; fast columns smear; leading zeros sit dim
+              const n = Math.max(1, String(Math.floor(v)).length);
+              for (let d = 0; d < ND; d++) {
+                const place = Math.pow(10, ND - 1 - d);
+                let pos;
+                if (place === 1) pos = v % 10;
+                else { const lower = v % place; pos = Math.floor(v / place) % 10 + clamp01(lower - (place - 1)); }
+                cols[d].style.transform = `translateY(${(-pos * 232).toFixed(1)}px)`;
+                const bl = Math.min(7, Math.max(0, (r / place - 5) / 5)).toFixed(1);
+                if (bl !== lastBlur[d]) { cols[d].style.filter = bl === "0.0" ? "none" : `blur(${bl}px)`; lastBlur[d] = bl; }
+                HR.glow(cols[d], T, locked ? 0.6 : 0.3, 0.5);
+              }
+              if (n !== lastDim) { cells.forEach((c, d) => { c.style.opacity = d < ND - n ? "0.3" : "1"; }); lastDim = n; }
+              stt.textContent = locked ? "LOCKED" : "OPEN";
+              stt.style.color = locked ? "#E85D26" : "#F0ECE5";
+              stdot.style.display = locked ? "none" : "block";
+              stdot.style.opacity = (0.45 + 0.55 * Math.abs(Math.sin(t * 9))).toFixed(2);
+              pad.style.display = locked ? "block" : "none";
+              rateEl.textContent = locked ? "RATE — · HELD" : "RATE " + rateStr(r);
+              mark.style.clipPath = `inset(-30% ${(100 - 100 * clamp01((T - MARK) / 0.5)).toFixed(1)}% -40% -5%)`;
+            }
+
+            for (const hr of heroes) HR.glow(hr, T, 0.35, 0.8);
+            // the archive's streams: brighter as the years pass, full while the torrent runs, dimmed when locked
+            drawRain(t, (T < G2 ? 0.7 + 0.3 * (T - T0) / (G2 - T0) : 1) * (locked ? 1 - 0.4 * clamp01((T - MINE) / 0.3) : 1));
+            lightEl.style.opacity = ((0.6 + 0.5 * HR.band("bass", T)) * (locked ? 0.3 : 1)).toFixed(3);
+            plightEl.style.transform = `scale(${(0.96 + 0.08 * HR.band("bass", T)).toFixed(3)})`;
+          }
+          tl.eventCallback("onUpdate", render);
+          tl.seek(0); render();
+          window.__timelines["12-key"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -21,7 +21,7 @@ from difflib import SequenceMatcher
 
 import numpy as np
 
-from ctcalign import FRAME, align, emissions, word_table
+from ctcalign import align, emissions, word_table
 from pron import pron
 
 # Primary emission set: mixture of both CTC models on the demucs vocal stem's
@@ -211,7 +211,6 @@ def detect_extras(words, f):
     """Vocal activity (vocal stem) not covered by any lyric word."""
     hop = f["hop"]
     r = median_filter_1d(f["rms_db"], 9)
-    loc = np.maximum.accumulate(r)  # unused guard
     act = r > -36
     cover = np.zeros_like(act)
     for w in words:

@@ -1,0 +1,659 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 6 — watch (41.72–45.487), v11: the iris centred, "i'll see you / sooner or" in the harvester's serif
+         voice running round its rings (text on a path), "later" slammed under the shut aperture. v10 notes: The archive watching: a giant cropped iris diaphragm (nine shaded
+         blades with bevelled cutting edges and overlap shadows, a machined aperture ring with a turning f-stop scale)
+         looks at the letter, object 0001, and its seal. The blades click on the kicks, open wide on "sooner" and slam
+         shut around the seal on "later". Left: the line as poster type with "later" as the hero, and the iris's
+         engraved control plate with its f-stop drum. SYSTEM.md v4 detail pass.
+         v13 (SYSTEM.md V7): black ground (no wall, ghost irises or bokeh), flat glowing "later", a tighter warm light; the
+         turning f-stop scale is engraved SOONER at its open end and LATER in the closed zone, so it turns from one to the
+         other as the aperture shuts.
+         v17 (V17.md): `pushIn` in from 04, no hit on the 41.853 kick (the iris opening carries it), `pullOut` out into 18. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+
+        /* ---- background plane: ciphertext wall, other watchers out of focus, warm light behind the iris ---- */
+        #f17-wall { position: absolute; left: -120px; top: -40px; width: 2400px; opacity: 0.055;
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 24px; line-height: 60px;
+          letter-spacing: 0.14em; color: var(--cream); white-space: pre; }
+        #f17-ghosts { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
+          filter: brightness(0.72) blur(3px); opacity: 0.62; }
+        #f17-light { position: absolute; left: 420px; top: 100px; width: 1080px; height: 1040px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.1), rgba(232, 93, 38, 0.03) 58%, rgba(232, 93, 38, 0) 100%);
+          transform-origin: 50% 50%; }
+
+        /* ---- midground: the iris ---- */
+        #f17-mid { transform-origin: 50% 57.41%; }
+        #f17-art { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+
+        /* ---- the iris's control plate (bottom left) ---- */
+        #f17-platel { transform-origin: 84% 10%; }
+        #f17-plate { position: absolute; left: 1352px; top: 58px; width: 504px; height: 116.2px; overflow: visible; }
+
+        /* ---- type plane ---- */
+        #f17-type { transform-origin: 50% 57.41%; }
+        #f17-rings { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+        .f17-arc { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 108px; letter-spacing: 0.005em;
+          fill: var(--cream); stroke: #111111; stroke-width: 7px; stroke-linejoin: round; paint-order: stroke; opacity: 0; }
+        .f17-arc .f17-off { fill: transparent; stroke: transparent; }
+        #f17-line { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-family: "Barlow"; }
+        .f17-hero { display: inline-block; font-weight: 900; font-size: 12cqw; line-height: 0.92; letter-spacing: -0.05em; color: var(--fire); white-space: nowrap;
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 0.08em) rgba(232, 93, 38, 0.55),
+                       0 0 calc(var(--hr-glow, 0.5) * 0.24em) rgba(232, 93, 38, 0.28); }
+        .f17-hero .hr-g { transform-origin: 50% 100%; }
+        .f17-w { display: inline-block; position: relative; }
+
+        /* ---- v16: the watcher grid (canvas), shade under the hero word, effects, watcher count ---- */
+        #f17-gridw { position: absolute; inset: 0; }
+        #f17-grid { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #f17-shade { position: absolute; left: 160px; top: 690px; width: 1600px; height: 380px; opacity: 0;
+          background: radial-gradient(closest-side, rgba(10,10,10,0.88), rgba(10,10,10,0.6) 60%, rgba(10,10,10,0) 100%); }
+        #f17-fx { position: absolute; inset: 0; pointer-events: none; }
+        #f17-count { position: absolute; left: 5.5cqw; top: 1004px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 22px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); white-space: nowrap;
+          text-shadow: 0 0 8px #0A0A0A, 0 0 16px #0A0A0A; }
+        #f17-count b { color: var(--fire); font-weight: 600; }
+
+        /* ---- chrome ---- */
+        #f17-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
+        #f17-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: var(--fire);
+          vertical-align: middle; margin-right: 16px; }
+
+        /* ---- near plane ---- */
+        .f17-bokeh { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--cream);
+          opacity: 0.035; filter: blur(14px); white-space: nowrap; }
+      </style>
+
+      <div data-hf-id="hf-2vxm" id="root" data-composition-id="17-watch" data-width="1920" data-height="1080" data-duration="3.767">
+        <div data-hf-id="hf-a9o7" class="hr-layer" id="f17-bg" data-depth="0.3" data-dof="5" data-layout-ignore>
+          <div data-hf-id="hf-zml2" id="f17-wall"></div>
+          <svg data-hf-id="hf-4lp3" id="f17-ghosts" viewBox="0 0 1920 1080"></svg>
+          <div data-hf-id="hf-zvyy" id="f17-light"></div>
+        </div>
+        <div id="f17-gridw" data-layout-ignore><canvas id="f17-grid" width="1920" height="1080"></canvas></div>
+        <div data-hf-id="hf-ecs6" class="hr-layer" id="f17-mid" data-depth="0.65" data-layout-ignore>
+          <svg data-hf-id="hf-hd1m" id="f17-art" viewBox="0 0 1920 1080"></svg>
+        </div>
+        <div data-hf-id="hf-v1f2" class="hr-layer" id="f17-platel" data-depth="0.45" data-layout-ignore>
+          <svg data-hf-id="hf-az0y" id="f17-plate" viewBox="0 0 720 166"></svg>
+        </div>
+        <div id="f17-shade" data-layout-ignore></div>
+        <div data-hf-id="hf-34p3" class="hr-layer" id="f17-type" data-depth="0.85">
+          <svg data-hf-id="hf-rp9w" id="f17-rings" viewBox="0 0 1920 1080"></svg>
+          <div data-hf-id="hf-snx4" id="f17-line"></div>
+        </div>
+        <div data-hf-id="hf-0db0" class="hr-layer" id="f17-chrome" data-depth="0.2">
+          <div data-hf-id="hf-8pzj" id="f17-kicker">ARCHIVE · THE WATCHER</div>
+          <div id="f17-count"></div>
+        </div>
+        <div data-hf-id="hf-ssc9" class="hr-layer" id="f17-near" data-depth="1.7" data-layout-ignore></div>
+        <div id="f17-fx" data-layout-ignore></div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script>
+        (() => {
+          const T0 = 41.72, DUR = 3.767, ID = "17-watch";
+          const L = (T) => +(T - T0).toFixed(3);
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const NS = "http://www.w3.org/2000/svg";
+          const S = (parent, tag, attrs = {}, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const clamp = (x) => Math.max(0, Math.min(1, x));
+          const f1 = (v) => v.toFixed(1);
+          const TAU = Math.PI * 2;
+
+          // ---- the iris: geometry --------------------------------------------------------------------------------
+          // N blades; the aperture is a regular N-gon of inradius rho, rotated by phi. Each blade's visible face is the
+          // region between its cutting edge (extended to the rim) and the previous blade's extended edge, so the nine
+          // faces tile the ring exactly and every edge lies on top of the next blade (the pinwheel).
+          const N = 9, RB = 452;
+          // Fit the complete rim through the exit push, with room above for both curved lyric rows.
+          const CX = 960, CY = 620, SC = 0.6;
+          function irisGeom(rho, phi, rb = RB) {
+            const rv = rho / Math.cos(Math.PI / N);
+            const V = [], D = [], E = [];
+            for (let k = 0; k < N; k++) { const a = phi + (k * TAU) / N; V.push([rv * Math.cos(a), rv * Math.sin(a)]); }
+            for (let k = 0; k < N; k++) { const v = V[k], w = V[(k + 1) % N], dx = w[0] - v[0], dy = w[1] - v[1], l = Math.hypot(dx, dy); D.push([dx / l, dy / l]); }
+            const at = (p, d, r) => { const b = p[0] * d[0] + p[1] * d[1], c = p[0] * p[0] + p[1] * p[1] - r * r; const s = -b + Math.sqrt(Math.max(0, b * b - c)); return [p[0] + s * d[0], p[1] + s * d[1]]; };
+            for (let k = 0; k < N; k++) E.push(at(V[(k + 1) % N], D[k], rb));
+            return { V, D, E, at, rv };
+          }
+          const P = (p) => `${f1(p[0])} ${f1(p[1])}`;
+          const bladePath = (g, k, rb = RB) => {
+            const { V, E } = g, k1 = (k + 1) % N, km = (k + N - 1) % N;
+            return `M${P(V[k])}L${P(V[k1])}L${P(E[k])}A${rb} ${rb} 0 0 0 ${P(E[km])}Z`;
+          };
+          const rotP = (p, a) => [p[0] * Math.cos(a) - p[1] * Math.sin(a), p[0] * Math.sin(a) + p[1] * Math.cos(a)];
+
+          // ---- background: ciphertext wall, ghost irises (other watchers in the archive), near bokeh -------------
+
+          (() => {
+            const svg = $("f17-ghosts");
+            [].forEach(([x, y, s, rho, phi]) => {
+              const g = S(svg, "g", { transform: `translate(${x} ${y}) scale(${s})` });
+              S(g, "circle", { r: 600, fill: "#282826" });
+              S(g, "circle", { r: 548, fill: "#1A1A18", stroke: "#505048", "stroke-width": 6 });
+              const geo = irisGeom(rho, phi);
+              for (let k = 0; k < N; k++) {
+                const tone = 0.5 + 0.5 * Math.cos(phi + ((k + 0.5) * TAU) / N - 1.25 * Math.PI);
+                S(g, "path", { d: bladePath(geo, k), fill: tone > 0.5 ? "#3a3a36" : "#222220" });
+                S(g, "path", { d: `M${P(geo.V[k])}L${P(geo.E[k])}`, stroke: "#888880", "stroke-width": 3 });
+              }
+              S(g, "circle", { r: rho * 0.6, fill: "#E85D26", opacity: 0.8 });
+              S(g, "circle", { r: 470, fill: "none", stroke: "#888880", "stroke-width": 10, opacity: 0.5 });
+            });
+          })();
+          const nr = HR.rng(1777);
+          for (let i = 0; i < 0; i++) {
+            const b = el("div", "f17-bokeh", $("f17-near"), HR.cipher(2 + (i % 2), 1780 + i));
+            Object.assign(b.style, { left: `${-80 + nr() * 1900}px`, top: `${-60 + nr() * 1080}px`, fontSize: `${190 + nr() * 160}px` });
+          }
+
+          // ---- baked paper fibre for the letter --------------------------------------------------------------------
+          const paperURL = (() => {
+            const c = document.createElement("canvas"); c.width = 288; c.height = 180;
+            const x = c.getContext("2d"), r = HR.rng(1717);
+            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 288, 180);
+            const img = x.getImageData(0, 0, 288, 180);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 14; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+            x.putImageData(img, 0, 0);
+            x.strokeStyle = "rgba(110,100,90,0.10)"; x.lineWidth = 0.6;
+            for (let k = 0; k < 70; k++) { const px = r() * 288, py = r() * 180, a = r() * Math.PI, l = 6 + r() * 16;
+              x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.4); x.stroke(); }
+            return c.toDataURL("image/png");
+          })();
+
+          // ---- the iris: static build ------------------------------------------------------------------------------
+          const art = $("f17-art");
+          const defs = S(art, "defs");
+          defs.innerHTML =
+            '<pattern id="f17-paper" patternUnits="userSpaceOnUse" width="288" height="180"><image href="' + paperURL + '" width="288" height="180"/></pattern>' +
+            '<radialGradient id="f17-cham" cx=".5" cy=".5" r=".5"><stop stop-color="#2a1a12"/><stop offset=".55" stop-color="#161412"/><stop offset="1" stop-color="#111111"/></radialGradient>' +
+            '<radialGradient id="f17-vig" cx=".5" cy=".5" r=".5"><stop offset=".22" stop-color="#111111" stop-opacity="0"/><stop offset=".62" stop-color="#111111" stop-opacity=".35"/><stop offset="1" stop-color="#111111" stop-opacity=".85"/></radialGradient>' +
+            '<radialGradient id="f17-spill" cx=".5" cy=".5" r=".5"><stop stop-color="#E85D26" stop-opacity=".42"/><stop offset=".5" stop-color="#E85D26" stop-opacity=".12"/><stop offset="1" stop-color="#E85D26" stop-opacity="0"/></radialGradient>' +
+            '<linearGradient id="f17-gtop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#111" stop-opacity="0.015"/><stop offset="1" stop-color="#111" stop-opacity="0.09"/></linearGradient>' +
+            '<linearGradient id="f17-gbot" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#111" stop-opacity="0.07"/><stop offset="1" stop-color="#111" stop-opacity="0"/></linearGradient>' +
+            '<linearGradient id="f17-crake" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF" stop-opacity=".16"/><stop offset=".36" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".58" stop-color="#111111" stop-opacity="0"/><stop offset="1" stop-color="#111111" stop-opacity=".2"/></linearGradient>' +
+            '<radialGradient id="f17-wg" cx="0.38" cy="0.34" r="0.78"><stop offset="0" stop-color="#F68C5C"/><stop offset="0.42" stop-color="#E85D26"/><stop offset="0.82" stop-color="#C94A1C"/><stop offset="1" stop-color="#A63B14"/></radialGradient>' +
+            '<radialGradient id="f17-wr" cx="0.5" cy="0.5" r="0.5"><stop offset="0.82" stop-color="#B9431A"/><stop offset="1" stop-color="#8E3010"/></radialGradient>' +
+            '<linearGradient id="f17-bz" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#888880"/><stop offset=".28" stop-color="#505048"/><stop offset=".62" stop-color="#282826"/><stop offset="1" stop-color="#111111"/></linearGradient>' +
+            '<linearGradient id="f17-lip" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5a5a54"/><stop offset=".35" stop-color="#3a3a36"/><stop offset=".7" stop-color="#222220"/><stop offset="1" stop-color="#151514"/></linearGradient>' +
+            '<radialGradient id="f17-face" cx=".4" cy=".36" r=".72"><stop stop-color="#2c2c2a"/><stop offset=".7" stop-color="#1A1A18"/><stop offset="1" stop-color="#121211"/></radialGradient>' +
+            '<radialGradient id="f17-cap" cx=".35" cy=".3" r=".8"><stop stop-color="#888880"/><stop offset=".5" stop-color="#505048"/><stop offset="1" stop-color="#1A1A18"/></radialGradient>' +
+            '<radialGradient id="f17-gloss" cx=".5" cy=".5" r=".5"><stop stop-color="#F0ECE5" stop-opacity=".1"/><stop offset="1" stop-color="#F0ECE5" stop-opacity="0"/></radialGradient>' +
+            '<linearGradient id="f17-rake" gradientUnits="userSpaceOnUse" x1="-452" y1="-452" x2="452" y2="452"><stop stop-color="#FFFFFF" stop-opacity=".1"/><stop offset=".4" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".6" stop-color="#000000" stop-opacity="0"/><stop offset="1" stop-color="#000000" stop-opacity=".38"/></linearGradient>' +
+            '<filter id="f17-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>' +
+            '<filter id="f17-soft2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="4"/></filter>' +
+            '<path id="f17-arcT" d="M -484 0 A 484 484 0 0 1 484 0"/>' +
+            '<path id="f17-arcB" d="M -491 0 A 491 491 0 0 0 491 0"/>';
+
+          // the ring's contact shadow on the archive behind
+          S(art, "circle", { cx: CX + 14, cy: CY + 21, r: 606 * SC, fill: "rgba(0,0,0,0.7)", filter: "url(#f17-soft)" });
+          const iris = S(art, "g", { transform: `translate(${CX} ${CY}) scale(${SC})` });
+
+          // the chamber behind the blades: the letter, object 0001, and its seal
+          S(iris, "circle", { r: RB, fill: "url(#f17-cham)" });
+          const spill = S(iris, "circle", { r: 420, fill: "url(#f17-spill)" });
+          const card = S(iris, "g", {});
+          S(card, "rect", { x: -366, y: -206, width: 760, height: 476, fill: "rgba(0,0,0,0.6)", filter: "url(#f17-soft)" });
+          S(card, "rect", { x: -380, y: -238, width: 760, height: 476, fill: "url(#f17-paper)" });
+          S(card, "path", { d: "M-380 238 L-55 -8 Q0 -40 55 -8 L380 238 Z", fill: "url(#f17-gbot)" });
+          S(card, "path", { d: "M-380 238 L-55 -8 Q0 -40 55 -8 L380 238", fill: "none", stroke: "rgba(17,17,17,0.12)", "stroke-width": 2 });
+          S(card, "path", { d: "M-378 238 L-52 -3 M378 238 L52 -3", fill: "none", stroke: "rgba(255,255,255,0.45)", "stroke-width": 1.3 });
+          S(card, "path", { d: "M-380 -235 L0 16 L380 -235", fill: "none", stroke: "rgba(17,17,17,0.3)", "stroke-width": 9, filter: "url(#f17-soft2)" });
+          S(card, "path", { d: "M-380 -238 L0 0 L380 -238 Z", fill: "url(#f17-gtop)" });
+          S(card, "path", { d: "M-380 -238 L0 0 L380 -238", fill: "none", stroke: "rgba(17,17,17,0.26)", "stroke-width": 2 });
+          S(card, "path", { d: "M-369 -238 L0 -9 L369 -238", fill: "none", stroke: "rgba(255,255,255,0.5)", "stroke-width": 1.2 });
+          const hexRows = [];
+          for (let i = 0; i < 6; i++) {
+            hexRows.push(S(card, "text", { x: -330, y: -150 + i * 38, fill: "#5F5B54", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 22, "letter-spacing": 2 },
+              HR.cipher(12, 1730 + i).replace(/(.{4})/g, "$1 ")));
+          }
+          S(card, "text", { x: -350, y: 214, fill: "rgba(17,17,17,0.56)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 14, "letter-spacing": 2.6 }, "A. · TUE 09.03.2021 · 14:02 · OBJ 0001");
+          (() => { const r = HR.rng(1731); for (let x = 90, i = 0; i < 52; i++, x += 5.6) { const tall = r() < 0.5; S(card, "rect", { x: f1(x), y: tall ? 190 : 200, width: 2.6, height: tall ? 26 : 16, fill: "rgba(232,93,38,0.78)" }); } })();
+          S(card, "rect", { x: -380, y: -238, width: 760, height: 476, fill: "url(#f17-crake)" });
+          S(card, "rect", { x: -380, y: -238, width: 760, height: 476, fill: "rgba(17,17,17,0.16)" });
+          // the seal (01's sculpted wax, scaled): poured rim with drips, gradient body, bead ring, embossed "a."
+          const sealGlow = S(card, "circle", { r: 150, fill: "url(#f17-spill)" });
+          const seal = S(card, "g", { transform: "scale(1.25)" });
+          (() => {
+            let d = "";
+            const drips = [[0.6, 7], [2.5, 5], [4.4, 8.5]];
+            for (let k = 0; k <= 120; k++) {
+              const a = (k / 120) * TAU;
+              let rr = 55.5 + 1.8 * Math.sin(7 * a + 0.5) + 1.2 * Math.sin(13 * a + 2) + 0.7 * Math.sin(23 * a);
+              for (const [a0, h] of drips) { const da = Math.atan2(Math.sin(a - a0), Math.cos(a - a0)); rr += h * Math.exp(-(da * da) / 0.012); }
+              d += (k ? "L" : "M") + f1(Math.cos(a) * rr) + " " + f1(Math.sin(a) * rr);
+            }
+            S(seal, "circle", { cx: 4, cy: 7, r: 60, fill: "rgba(0,0,0,0.35)", filter: "url(#f17-soft2)" });
+            S(seal, "path", { d: d + "Z", fill: "url(#f17-wr)" });
+            S(seal, "circle", { r: 50, fill: "url(#f17-wg)" });
+            S(seal, "circle", { r: 43.5, fill: "none", stroke: "rgba(255,206,176,0.38)", "stroke-width": 1.2, transform: "translate(0.8 0.8)" });
+            S(seal, "circle", { r: 41, fill: "rgba(17,17,17,0.06)", stroke: "rgba(17,17,17,0.30)", "stroke-width": 2.4 });
+            for (let i = 0; i < 30; i++) { const a = (i / 30) * TAU; S(seal, "circle", { cx: f1(Math.cos(a) * 36.5), cy: f1(Math.sin(a) * 36.5), r: 1.35, fill: "rgba(17,17,17,0.26)" }); }
+            S(seal, "text", { x: 1.6, y: 15.4, "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 40, fill: "rgba(17,17,17,0.36)" }, "a.");
+            S(seal, "text", { x: -1.1, y: 12.4, "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 40, fill: "rgba(255,214,188,0.5)" }, "a.");
+            S(seal, "text", { x: 0, y: 13.8, "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 40, fill: "#D4521E" }, "a.");
+            S(seal, "path", { d: "M-38 -24 A44 44 0 0 1 -8 -45", fill: "none", stroke: "rgba(255,236,224,0.6)", "stroke-width": 3.5, "stroke-linecap": "round" });
+            S(seal, "path", { d: "M30 34 A44 44 0 0 1 12 44", fill: "none", stroke: "rgba(255,236,224,0.22)", "stroke-width": 2, "stroke-linecap": "round" });
+          })();
+          S(iris, "circle", { r: RB, fill: "url(#f17-vig)" });
+          // the blades' shadow falling into the aperture
+          const apShadow = S(iris, "path", { fill: "none", stroke: "rgba(0,0,0,0.85)", "stroke-width": 54, "stroke-linejoin": "round", filter: "url(#f17-soft)" });
+
+          // the blades: shaded face, overlap shadow from the blade above, rake, bevelled cutting edge, pivot, cam slot
+          const bladeDefs = S(defs, "g");
+          const blades = [];
+          for (let k = 0; k < N; k++) {
+            const body = S(bladeDefs, "linearGradient", { id: `f17-bg${k}`, gradientUnits: "userSpaceOnUse" });
+            const st = [S(body, "stop", { offset: "0" }), S(body, "stop", { offset: "0.22" }), S(body, "stop", { offset: "1" })];
+            const sh = S(bladeDefs, "linearGradient", { id: `f17-sg${k}`, gradientUnits: "userSpaceOnUse" });
+            S(sh, "stop", { offset: "0", "stop-color": "#000000", "stop-opacity": "0.72" });
+            S(sh, "stop", { offset: "0.35", "stop-color": "#000000", "stop-opacity": "0.3" });
+            S(sh, "stop", { offset: "1", "stop-color": "#000000", "stop-opacity": "0" });
+            const clip = S(bladeDefs, "clipPath", { id: `f17-bc${k}` });
+            const clipPath = S(clip, "path", {});
+            blades.push({ st, sh, clipPath, body });
+          }
+          const gFace = S(iris, "g"), gShade = S(iris, "g"), gEdge = S(iris, "g"), gPin = S(iris, "g");
+          blades.forEach((b, k) => {
+            b.face = S(gFace, "path", { fill: `url(#f17-bg${k})` });
+            b.strip = S(gShade, "path", { fill: `url(#f17-sg${k})`, "clip-path": `url(#f17-bc${(k + 1) % N})` });
+            b.edgeDark = S(gEdge, "path", { fill: "none", stroke: "rgba(0,0,0,0.75)", "stroke-width": 3, "clip-path": `url(#f17-bc${k})` });
+            b.edge = S(gEdge, "path", { fill: "none", "stroke-width": 2.2, "stroke-linecap": "round" });
+            b.slot = S(gPin, "path", { fill: "none", stroke: "rgba(0,0,0,0.8)", "stroke-width": 9, "stroke-linecap": "round" });
+            b.slotHi = S(gPin, "path", { fill: "none", stroke: "rgba(240,236,229,0.13)", "stroke-width": 1.4, "stroke-linecap": "round" });
+            const pin = S(gPin, "g");
+            S(pin, "circle", { cx: 2, cy: 3, r: 11, fill: "rgba(0,0,0,0.55)" });
+            S(pin, "circle", { r: 10, fill: "url(#f17-cap)", stroke: "rgba(0,0,0,0.6)", "stroke-width": 1.2 });
+            S(pin, "path", { d: "M-6 0 H6", stroke: "#111111", "stroke-width": 2.4, transform: `rotate(${20 + k * 41})` });
+            b.pin = pin;
+            b.label = S(gPin, "text", { fill: "rgba(240,236,229,0.32)", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 2.4, "text-anchor": "middle" },
+              "");
+          });
+          // raking light over the blade assembly (the aperture cut out of it by a mask)
+          const mask = S(defs, "mask", { id: "f17-apm", maskUnits: "userSpaceOnUse", x: -700, y: -700, width: 1400, height: 1400 });
+          S(mask, "circle", { r: RB + 4, fill: "#FFFFFF" });
+          const maskHole = S(mask, "path", { fill: "#000000" });
+          S(iris, "circle", { r: RB, fill: "url(#f17-rake)", mask: "url(#f17-apm)" });
+
+          // the lip: a stepped bevel with slotted screws, holding the blades
+          const ann = (r0, r1) => `M${r0} 0A${r0} ${r0} 0 1 1 ${-r0} 0A${r0} ${r0} 0 1 1 ${r0} 0ZM${r1} 0A${r1} ${r1} 0 1 0 ${-r1} 0A${r1} ${r1} 0 1 0 ${r1} 0Z`;
+          S(iris, "circle", { r: 449, fill: "none", stroke: "rgba(0,0,0,0.75)", "stroke-width": 14, filter: "url(#f17-soft2)" });
+          S(iris, "path", { d: ann(470, 446), fill: "url(#f17-lip)", "fill-rule": "evenodd" });
+          S(iris, "circle", { r: 446.5, fill: "none", stroke: "rgba(240,236,229,0.3)", "stroke-width": 1.4 });
+          S(iris, "circle", { r: 469, fill: "none", stroke: "rgba(0,0,0,0.6)", "stroke-width": 2 });
+          for (let i = 0; i < 12; i++) {
+            const a = (i / 12) * TAU + 0.13, x = Math.cos(a) * 458, y = Math.sin(a) * 458;
+            S(iris, "circle", { cx: f1(x), cy: f1(y), r: 7.5, fill: "url(#f17-cap)", stroke: "rgba(0,0,0,0.6)", "stroke-width": 1 });
+            S(iris, "path", { d: `M${f1(x - 5)} ${f1(y)} H${f1(x + 5)}`, stroke: "#111111", "stroke-width": 2, transform: `rotate(${(i * 53) % 180} ${f1(x)} ${f1(y)})` });
+          }
+          // the fixed engraved ring: maker's marks along the top and bottom arcs
+          S(iris, "path", { d: ann(496, 470), fill: "url(#f17-face)", "fill-rule": "evenodd" });
+          const eng = { fill: "rgba(136,136,128,0.95)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 14, "letter-spacing": 3.2 };
+          const tT = S(iris, "text", eng); S(tT, "textPath", { href: "#f17-arcT", startOffset: "50%", "text-anchor": "middle" }, "THE ARCHIVE IS WATCHING");
+          const tB = S(iris, "text", eng); S(tB, "textPath", { href: "#f17-arcB", startOffset: "50%", "text-anchor": "middle" }, "WATCHING OBJ 0001 · SINCE TUE 09 MAR 2021 · RETENTION INDEFINITE");
+          S(iris, "circle", { r: 496, fill: "none", stroke: "rgba(0,0,0,0.7)", "stroke-width": 2 });
+          // the turning f-stop scale
+          S(iris, "path", { d: ann(548, 496), fill: "url(#f17-face)", "fill-rule": "evenodd" });
+          const band = S(iris, "g");
+          const lathe = HR.rng(1750);
+          for (let r = 499; r < 547; r += 3) S(band, "circle", { r, fill: "none", stroke: lathe() < 0.5 ? "rgba(240,236,229,0.05)" : "rgba(0,0,0,0.35)", "stroke-width": 1 });
+          const STOPS = ["1.4", "2", "2.8", "4", "5.6", "8", "11", "16", "22"];
+          for (let i = 0; i < 180; i++) {
+            const deg = i * 2, rel = (((deg - 180) % 360) + 360) % 360, a = (deg * Math.PI) / 180;
+            const inScale = rel <= 96, major = inScale && rel % 12 === 0, mid = inScale && rel % 6 === 0;
+            const r0 = major ? 534 : mid ? 539 : 542;
+            S(band, "path", { d: `M${f1(Math.cos(a) * r0)} ${f1(Math.sin(a) * r0)}L${f1(Math.cos(a) * 547)} ${f1(Math.sin(a) * 547)}`,
+              stroke: major ? "rgba(240,236,229,0.9)" : mid ? "rgba(240,236,229,0.55)" : "rgba(136,136,128,0.7)", "stroke-width": major ? 3 : mid ? 2 : 1.2 });
+          }
+          // the closed zone, in fire, past f/22
+          S(band, "path", { d: (() => { const a0 = (277 * Math.PI) / 180, a1 = (318 * Math.PI) / 180; return `M${f1(Math.cos(a0) * 542)} ${f1(Math.sin(a0) * 542)}A542 542 0 0 1 ${f1(Math.cos(a1) * 542)} ${f1(Math.sin(a1) * 542)}`; })(),
+            fill: "none", stroke: "#E85D26", "stroke-width": 5 });
+          const numerals = STOPS.map((s, k) => {
+            const a = ((180 + 12 * k) * Math.PI) / 180, x = Math.cos(a) * 514, y = Math.sin(a) * 514;
+            const t = S(band, "text", { x: f1(x), y: f1(y + 6.5), "text-anchor": "middle", fill: k === 8 ? "#E85D26" : "rgba(240,236,229,0.82)", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 18 }, s);
+            return { t, x, y };
+          });
+          // v13: the scale is engraved SOONER at its open end and LATER in the closed zone, set along the ring
+          [[160, "SOONER", "rgba(240,236,229,0.88)", -90], [292, "LATER", "#E85D26", 90]].forEach(([deg, word, fill, turn]) => {
+            const a = (deg * Math.PI) / 180, x = Math.cos(a) * 515, y = Math.sin(a) * 515;
+            S(band, "text", { x: f1(x), y: f1(y + 8), "text-anchor": "middle", fill, "font-family": "IBM Plex Mono", "font-weight": 600,
+              "font-size": 23, "letter-spacing": 4, transform: `rotate(${deg + turn} ${f1(x)} ${f1(y)})` }, word);
+          });
+          S(iris, "circle", { r: 548, fill: "none", stroke: "rgba(0,0,0,0.75)", "stroke-width": 2 });
+          // the knurled bezel
+          S(iris, "path", { d: ann(600, 549), fill: "url(#f17-bz)", "fill-rule": "evenodd" });
+          for (let i = 0; i < 300; i++) {
+            const a = (i / 300) * TAU, c = Math.cos(a), s = Math.sin(a);
+            S(iris, "path", { d: `M${f1(c * 584)} ${f1(s * 584)}L${f1(c * 600)} ${f1(s * 600)}`, stroke: i % 2 ? "rgba(0,0,0,0.55)" : "rgba(240,236,229,0.16)", "stroke-width": 2.4 });
+          }
+          S(iris, "circle", { r: 582, fill: "none", stroke: "rgba(0,0,0,0.55)", "stroke-width": 2 });
+          S(iris, "circle", { r: 551, fill: "none", stroke: "rgba(240,236,229,0.2)", "stroke-width": 1.2 });
+          // the index: a fire mark at nine o'clock, reading the scale
+          S(iris, "path", { d: "M-551 0 L-574 -11 L-574 11 Z", fill: "#E85D26" });
+          S(iris, "path", { d: "M-576 0 H-598", stroke: "#E85D26", "stroke-width": 3 });
+          // fixed light on top: gloss, highlight arcs upper left, shade lower right
+          S(iris, "ellipse", { cx: -230, cy: -260, rx: 380, ry: 250, fill: "url(#f17-gloss)", transform: "rotate(-38 -230 -260)" });
+          S(iris, "path", { d: "M-560 -170 A585 585 0 0 1 -170 -560", fill: "none", stroke: "rgba(240,236,229,0.45)", "stroke-width": 4, "stroke-linecap": "round" });
+          S(iris, "path", { d: "M-450 -120 A466 466 0 0 1 -120 -450", fill: "none", stroke: "rgba(240,236,229,0.32)", "stroke-width": 2.5, "stroke-linecap": "round" });
+          S(iris, "path", { d: "M540 220 A585 585 0 0 1 220 540", fill: "none", stroke: "rgba(0,0,0,0.7)", "stroke-width": 4, "stroke-linecap": "round" });
+          // the watch lamp on the bezel: flickers on the hats, burns on "later"
+          const lampG = S(iris, "g", { transform: "translate(-470 -330)" });
+          S(lampG, "circle", { r: 13, fill: "#1A1A18", stroke: "#505048", "stroke-width": 3 });
+          const lamp = S(lampG, "circle", { r: 8, fill: "#E85D26" });
+          const lampGlow = S(lampG, "circle", { r: 22, fill: "url(#f17-spill)" });
+          S(lampG, "circle", { cx: -3, cy: -3, r: 2.5, fill: "rgba(240,236,229,0.5)" });
+
+          // ---- the control plate: engraved steel, an f-stop drum in a window, the exposure scale -----------------
+          const plate = $("f17-plate");
+          S(plate, "defs").innerHTML =
+            '<linearGradient id="f17-pg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3a3a36"/><stop offset=".35" stop-color="#282826"/><stop offset=".8" stop-color="#1A1A18"/><stop offset="1" stop-color="#111111"/></linearGradient>' +
+            '<linearGradient id="f17-prake" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF" stop-opacity=".08"/><stop offset=".38" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".62" stop-color="#111111" stop-opacity="0"/><stop offset="1" stop-color="#111111" stop-opacity=".3"/></linearGradient>' +
+            '<linearGradient id="f17-drum" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#111111"/><stop offset=".25" stop-color="#282826"/><stop offset=".5" stop-color="#2e2e2b"/><stop offset=".75" stop-color="#282826"/><stop offset="1" stop-color="#111111"/></linearGradient>' +
+            '<clipPath id="f17-win"><rect x="30" y="58" width="150" height="80"/></clipPath>' +
+            '<filter id="f17-psoft" x="-20%" y="-40%" width="140%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>';
+          S(plate, "rect", { x: 8, y: 16, width: 720, height: 166, fill: "rgba(0,0,0,0.6)", filter: "url(#f17-psoft)" });
+          S(plate, "rect", { x: 0, y: 0, width: 720, height: 166, fill: "url(#f17-pg)" });
+          S(plate, "path", { d: "M1 165 V1 H719", fill: "none", stroke: "rgba(240,236,229,0.32)", "stroke-width": 2 });
+          S(plate, "path", { d: "M719 1 V165 H1", fill: "none", stroke: "rgba(0,0,0,0.7)", "stroke-width": 2 });
+          S(plate, "rect", { x: 9, y: 9, width: 702, height: 148, fill: "none", stroke: "rgba(0,0,0,0.45)", "stroke-width": 1.5 });
+          [[20, 20], [700, 20], [20, 146], [700, 146]].forEach(([x, y], i) => {
+            S(plate, "circle", { cx: x, cy: y, r: 6.5, fill: "url(#f17-cap)", stroke: "rgba(0,0,0,0.6)", "stroke-width": 1 });
+            S(plate, "path", { d: `M${x - 4} ${y} H${x + 4}`, stroke: "#111111", "stroke-width": 1.8, transform: `rotate(${30 + i * 47} ${x} ${y})` });
+          });
+          const pe = (x, y, size, text, o = {}) => S(plate, "text", Object.assign({ x, y, fill: "rgba(136,136,128,0.95)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": size, "letter-spacing": 2.2 }, o), text);
+          pe(34, 44, 13, "WATCHING · WAITING");
+          pe(690, 44, 13, "OBJ 0001 · IN VIEW", { "text-anchor": "end" });
+          // the drum window: a recess with a lip, the stop number rolling behind it
+          S(plate, "rect", { x: 30, y: 58, width: 150, height: 80, fill: "#111111" });
+          const drum = S(plate, "g", { "clip-path": "url(#f17-win)" });
+          S(drum, "rect", { x: 30, y: 58, width: 150, height: 80, fill: "url(#f17-drum)" });
+          const drumRoll = S(drum, "g");
+          STOPS.forEach((s, k) => S(drumRoll, "text", { x: 105, y: 113 + k * 92, "text-anchor": "middle", fill: k === 8 ? "#E85D26" : "#F0ECE5", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 40, "letter-spacing": -1 }, "f/" + s));
+          S(drum, "rect", { x: 30, y: 58, width: 150, height: 80, fill: "url(#f17-drum)", opacity: 0.35 });
+          S(plate, "path", { d: "M30 138 V58 H180", fill: "none", stroke: "rgba(0,0,0,0.85)", "stroke-width": 3 });
+          S(plate, "path", { d: "M30 139 H181 V58", fill: "none", stroke: "rgba(240,236,229,0.22)", "stroke-width": 1.5 });
+          // the exposure scale: nine stops, a fire pointer riding it
+          const SX0 = 222, SDX = 54;
+          S(plate, "path", { d: `M${SX0} 106 H${SX0 + 8 * SDX}`, stroke: "rgba(0,0,0,0.7)", "stroke-width": 2 });
+          S(plate, "path", { d: `M${SX0} 107.5 H${SX0 + 8 * SDX}`, stroke: "rgba(240,236,229,0.1)", "stroke-width": 1 });
+          STOPS.forEach((s, k) => {
+            const x = SX0 + k * SDX;
+            S(plate, "path", { d: `M${x} 90 V106`, stroke: k === 8 ? "#E85D26" : "rgba(240,236,229,0.6)", "stroke-width": 2 });
+            if (k < 8) S(plate, "path", { d: `M${x + SDX / 2} 98 V106`, stroke: "rgba(136,136,128,0.6)", "stroke-width": 1.2 });
+            pe(x, 134, 14, s, { "text-anchor": "middle", fill: k === 8 ? "#E85D26" : "rgba(136,136,128,0.95)", "letter-spacing": 0.5 });
+          });
+          pe(SX0, 74, 12, "OPEN", { "letter-spacing": 2.4 });
+          pe(SX0 + 8 * SDX, 74, 12, "SHUT", { "text-anchor": "middle", "letter-spacing": 2.4, fill: "#E85D26" });
+          const ptr = S(plate, "path", { d: "M0 88 L-8 76 L8 76 Z", fill: "#E85D26" });
+          const ptrState = pe(SX0 + 4 * SDX, 74, 12, "", { "text-anchor": "middle", "letter-spacing": 2.4, fill: "rgba(240,236,229,0.7)" });
+          S(plate, "rect", { x: 0, y: 0, width: 720, height: 166, fill: "url(#f17-prake)" });
+
+          // ---- the line --------------------------------------------------------------------------------------------
+          const lyric = { words: [["i’ll", 41.72], ["see", 41.91], ["you", 42.52], ["sooner", 42.818], ["or", 44.165], ["later", 44.58]] };
+          // the harvester's voice runs round the iris: "i'll see you" on the outer ring, "sooner or" on the inner. Each word
+          // is its own <text> carrying the whole ring's phrase (the other words transparent), so the browser lays out every
+          // word in place and each can slide along the ring on its own.
+          const RINGS = [{ r: 410, ix: [0, 1, 2] }, { r: 330, ix: [3, 4] }];
+          const rings = $("f17-rings"), ringG = S(rings, "g"), ringG2 = S(rings, "g"), W = [];
+          const rdefs = S(rings, "defs");
+          RINGS.forEach(({ r, ix }, k) => {
+            S(rdefs, "path", { id: `f17-ring${k}`, d: `M${CX - r} ${CY}A${r} ${r} 0 0 1 ${CX + r} ${CY}` });
+            ix.forEach((i) => {
+              const t = S(k ? ringG2 : ringG, "text", { class: "f17-arc" });
+              if (k) { t.style.fontSize = "150px"; t.style.strokeWidth = "12px"; }
+              const tp = S(t, "textPath", { href: `#f17-ring${k}`, startOffset: "50%", "text-anchor": "middle" });
+              ix.forEach((j, n) => { if (n) tp.appendChild(document.createTextNode(" ")); S(tp, "tspan", j === i ? {} : { class: "f17-off", "data-layout-ignore": "", "aria-hidden": "true" }, lyric.words[j][0]); });
+              W[i] = t;
+            });
+          });
+          const line = $("f17-line");
+          W[5] = el("span", "f17-w f17-hero", line, "later");
+          const heroRow = W[5];
+
+          // ---- timeline ----------------------------------------------------------------------------------------------
+          // v16: three shots. (a) 41.72-42.818 one iris snaps open on the kick; (b) 42.818-44.58 the iris multiplies (1 -> 9 -> 25 -> 49 -> 81)
+          // while the camera pulls back through the array; (c) 44.58-45.487 every iris slams shut at once, "later" explodes.
+          const CUT = 42.818, SLAM = 44.58, TEND = T0 + DUR;
+          const tl = gsap.timeline({ paused: true });
+          const ORIGIN = `${CX} ${CY}`;
+          const fx = $("f17-fx"), gridw = $("f17-gridw"), typeL = $("f17-type"), midL = $("f17-mid");
+          lyric.words.forEach(([, T], i) => {
+            if (i === 5) return;
+            tl.fromTo(W[i], { opacity: 0, rotation: i < 3 ? 6 : 0, svgOrigin: ORIGIN, filter: "blur(10px)" },
+              { opacity: 1, rotation: 0, svgOrigin: ORIGIN, filter: "blur(0px)", duration: 0.38, ease: "expo.out" }, Math.max(0, L(T) - 0.03));
+          });
+          // shot a: the first ring drifts round the eye; it is flung away at the cut
+          tl.fromTo(ringG, { rotation: 2.2, svgOrigin: ORIGIN }, { rotation: -0.6, svgOrigin: ORIGIN, duration: L(CUT), ease: "sine.inOut" }, 0);
+          tl.fromTo(ringG, { scale: 1, opacity: 1, svgOrigin: ORIGIN }, { scale: 2, opacity: 0, svgOrigin: ORIGIN, duration: 0.2, ease: "power3.in", immediateRender: false }, L(CUT) - 0.04);
+          // shot b: "sooner or" spins in on a ring round the centre iris, drifts, and is thrown off on the slam
+          tl.fromTo(ringG2, { rotation: -230, scale: 0.55, svgOrigin: ORIGIN }, { rotation: 0, scale: 1, svgOrigin: ORIGIN, duration: 0.8, ease: "expo.out", immediateRender: false }, L(CUT));
+          tl.fromTo(ringG2, { rotation: 0, svgOrigin: ORIGIN }, { rotation: 13, svgOrigin: ORIGIN, duration: L(SLAM) - 0.12 - (L(CUT) + 0.8), ease: "none", immediateRender: false }, L(CUT) + 0.8);
+          tl.fromTo(ringG2, { rotation: 13, scale: 1, opacity: 1, svgOrigin: ORIGIN }, { rotation: 95, scale: 2.2, opacity: 0, svgOrigin: ORIGIN, duration: 0.22, ease: "power3.in", immediateRender: false }, L(SLAM) - 0.12);
+          // "later": the explosive hero word, centred on the shut array
+          const LATER = L(SLAM), HX = 960, HY = 866;
+          tl.fromTo(W[5], { opacity: 0 }, { opacity: 1, duration: 0.01 }, LATER - 0.25);
+          WOW.explode(tl, W[5], LATER, { parent: fx, x: HX, y: HY, shake: typeL, amp: 16, rays: 22, burst: 34, seed: 17 });
+          tl.fromTo("#f17-shade", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out", immediateRender: false }, LATER - 0.1);
+
+          // the camera for shot a: a push toward the iris with a punch on the kick
+          const stage = HR.stage($("root"), { seed: 17, drift: 1 });
+          const cam = stage.cam;
+          cam.focus = 0.4;
+          tl.fromTo(cam, { x: 22, z: 1.0 }, { x: -10, z: 1.1, duration: L(CUT), ease: "power2.in" }, 0);
+          tl.fromTo("#f17-wall", { x: 0 }, { x: -110, duration: DUR, ease: "none" }, 0);
+          tl.fromTo("#f17-near", { x: 0 }, { x: -240, duration: DUR, ease: "none" }, 0);
+          tl.fromTo("#f17-ghosts", { x: 0 }, { x: -50, duration: DUR, ease: "none" }, 0);
+          // shot a: the iris opens on the 41.853 kick inside the pushIn (v17: no hit there); every click after it hits something
+          [42.51].forEach((t) => { WOW.shake(tl, midL, L(t) - 0.04, { amp: 7, dur: 0.3, seed: 22 }); WOW.punch(tl, midL, L(t) - 0.04, { s: 1.05, dur: 0.3 }); });
+          WOW.shock(tl, fx, { x: CX, y: CY, t: L(42.28), r: 600, n: 1, w: 4, color: "cream", dur: 0.35 });
+          WOW.shock(tl, fx, { x: CX, y: CY, t: L(42.52), r: 800, n: 1, w: 5, color: "fire", dur: 0.4 });
+          // the cut into the array (CUT): the iris blows open wide, the grid takes over
+          WOW.flash(tl, fx, L(CUT), { a: 0.45, dur: 0.16 });
+          WOW.shock(tl, fx, { x: CX, y: CY, t: L(CUT), r: 1500, n: 3, w: 8, color: "fire", dur: 0.6, gap: 0.07 });
+          WOW.rays(tl, fx, { x: CX, y: CY, t: L(CUT), n: 30, r0: 160, r1: 1300, seed: 62, color: "cream", dur: 0.5, w: 5 });
+          WOW.shake(tl, gridw, L(CUT), { amp: 16, dur: 0.4, seed: 31 });
+          WOW.shake(tl, typeL, L(CUT), { amp: 8, dur: 0.3, seed: 32 });
+          // shot b: each kick sends a ripple through the array
+          [43.0, 43.7, 44.36].forEach((t, k) => { WOW.shock(tl, fx, { x: CX, y: CY, t: L(t) - 0.02, r: 1300, n: 1, w: 4 + k, color: k % 2 ? "cream" : "fire", dur: 0.55 }); WOW.shake(tl, gridw, L(t) - 0.02, { amp: 6 + k * 2, dur: 0.25, seed: 40 + k }); });
+          // shot c: every iris slams at once
+          WOW.flash(tl, fx, LATER, { a: 0.95, dur: 0.24 });
+          WOW.shock(tl, fx, { x: CX, y: CY, t: LATER, r: 1700, n: 3, w: 10, color: "fire", dur: 0.7, gap: 0.07 });
+          WOW.shock(tl, fx, { x: CX, y: CY, t: LATER + 0.05, r: 1200, n: 1, w: 5, color: "cream", dur: 0.5 });
+          WOW.shake(tl, gridw, LATER, { amp: 26, dur: 0.5, seed: 33 });
+          [44.82, 45.28].forEach((t, k) => { WOW.shock(tl, fx, { x: CX, y: CY, t: L(t), r: 1300, n: 1, w: 6, color: k ? "cream" : "fire", dur: 0.45 }); WOW.shake(tl, gridw, L(t), { amp: 12, dur: 0.3, seed: 50 + k }); WOW.flash(tl, fx, L(t), { a: 0.18, dur: 0.1 }); });
+          // v17 switches: pushIn from 04 (into the iris), pullOut into 18 (the irises shut, pull back to the title)
+          WOW.transition(tl, document.getElementById("el-17-watch"), { in: "pushIn", out: "pullOut", dur: 0.46, total: DUR });
+
+          // ---- the iris's motion: a pure function of track time --------------------------------------------------
+          // [beat, target inradius, lead, duration, kind]: clicks on the kicks, wide open on "sooner", slam on "later"
+          const RHO0 = 22;
+          const STEPS = [[41.853, 215, 0.09, 0.15, "open"], [42.28, 165, 0.0, 0.1, "click"], [42.513, 262, 0.05, 0.14, "click"],
+            [42.74, 190, 0.0, 0.09, "click"], [42.818, 350, 0.07, 0.07, "open"]];
+          const backOut = (p, c = 1.7) => { const q = p - 1; return 1 + (c + 1) * q * q * q + c * q * q; };
+          function rhoAt(T) {
+            let r = RHO0, prev = RHO0;
+            for (const [t, to, lead, dur, kind] of STEPS) {
+              const p = clamp((T - (t - lead)) / dur);
+              const e = kind === "slam" ? p * p * p : backOut(p, kind === "open" ? 1.2 : 1.9);
+              r += (to - prev) * e; prev = to;
+            }
+            if (T > 44.58) { const d = T - 44.58; r += 9 * Math.exp(-d / 0.07) * Math.sin((TAU * d) / 0.11); }
+            return r;
+          }
+          // how hard the most recent blade step landed (for the ring shudder)
+          const KICKS = STEPS.map((s) => s[0]);
+          const shudder = (T) => { let v = 0; for (const t of KICKS) if (T >= t) v = Math.max(v, (t === 44.58 ? 1 : 0.35) * Math.exp(-(T - t) / 0.09)); return v; };
+
+          // ---- v16: the array of watchers, drawn on one canvas ------------------------------------------------------
+          const gcv = $("f17-grid"), gx = gcv.getContext("2d"), PITCH = 800, KS = 0.6, RING0 = CUT + 0.1, RSTEP = 0.17;
+          const countEl = $("f17-count");
+          const envAt = (T) => Math.max(HR.hit("kick", T, 0.13), 0.55 * HR.hit("hat", T, 0.08), 0.8 * HR.hit("snare", T, 0.1));
+          const ez = (u) => 1 - Math.pow(1 - u, 2.2);
+          function zAt(T) {
+            if (T < SLAM) return Math.exp(Math.log(0.2) * ez(clamp((T - CUT) / (SLAM - CUT)))) * (1 + 0.03 * HR.hit("kick", T, 0.13));
+            const p = clamp((T - SLAM - 0.2) / (TEND - SLAM - 0.2));
+            return 0.2 * (1 + 1.1 * p * p * p) * (1 + 0.16 * Math.exp(-(T - SLAM) / 0.12) + 0.03 * HR.hit("kick", T, 0.13));
+          }
+          const rotAt = (T) => 0.28 * ez(clamp((T - CUT) / (SLAM - CUT))) * (T < SLAM ? 1 : 1 - 0.7 * clamp((T - SLAM - 0.2) / (TEND - SLAM - 0.2)));
+          function drawIris(c, rho, phi, lit, flash, detail) {
+            const g = irisGeom(rho, phi), circ = (r) => { c.beginPath(); c.arc(0, 0, r, 0, TAU); };
+            circ(600); c.fillStyle = "#222220"; c.fill();
+            circ(560); c.fillStyle = "#1A1A18"; c.fill(); c.lineWidth = 16; c.strokeStyle = "#505048"; c.stroke();
+            circ(RB); c.fillStyle = "#17120f"; c.fill();
+            circ(RB); c.fillStyle = `rgba(232,93,38,${(0.1 + 0.35 * lit).toFixed(3)})`; c.fill();
+            c.fillStyle = "#F0ECE5"; c.fillRect(-280, -175, 560, 350);
+            c.lineWidth = 5; c.strokeStyle = "rgba(17,17,17,0.35)";
+            c.beginPath(); c.moveTo(-280, -175); c.lineTo(0, 15); c.lineTo(280, -175); c.moveTo(-280, 175); c.lineTo(-60, -10); c.moveTo(280, 175); c.lineTo(60, -10); c.stroke();
+            c.beginPath(); c.arc(0, 30, 62, 0, TAU); c.fillStyle = "#E85D26"; c.fill(); c.lineWidth = 7; c.strokeStyle = "#B9431A"; c.stroke();
+            for (let k = 0; k < N; k++) {
+              const k1 = (k + 1) % N, km = (k + N - 1) % N, V = g.V, E = g.E;
+              c.beginPath(); c.moveTo(V[k][0], V[k][1]); c.lineTo(V[k1][0], V[k1][1]); c.lineTo(E[k][0], E[k][1]);
+              c.arc(0, 0, RB, Math.atan2(E[k][1], E[k][0]), Math.atan2(E[km][1], E[km][0]), true); c.closePath();
+              const tone = 0.5 + 0.5 * Math.cos(phi + ((k + 0.5) * TAU) / N - LA);
+              c.fillStyle = mix("#1c1c1a", "#4c4c47", tone); c.fill();
+              c.lineWidth = 3; c.strokeStyle = `rgba(240,236,229,${(0.25 + 0.35 * tone).toFixed(2)})`;
+              c.beginPath(); c.moveTo(V[k][0], V[k][1]); c.lineTo(E[k][0], E[k][1]); c.stroke();
+            }
+            if (rho < 60) { circ(rho * 1.6); c.fillStyle = `rgba(232,93,38,${(0.6 + 0.4 * lit).toFixed(2)})`; c.fill(); }
+            circ(RB + 10); c.lineWidth = 22; c.strokeStyle = "#3a3a36"; c.stroke();
+            circ(578); c.lineWidth = detail ? 40 : 30; c.strokeStyle = "#2c2c2a"; c.stroke();
+            if (detail) { c.setLineDash([5, 5]); c.lineWidth = 34; c.strokeStyle = "rgba(240,236,229,0.14)"; c.stroke(); c.setLineDash([]); }
+            c.beginPath(); c.moveTo(-548, 0); c.lineTo(-580, -16); c.lineTo(-580, 16); c.closePath(); c.fillStyle = "#E85D26"; c.fill();
+            if (flash > 0.02) { circ(600); c.fillStyle = `rgba(240,236,229,${flash.toFixed(3)})`; c.fill(); }
+          }
+          function drawGrid(T) {
+            const z = zAt(T), rot = rotAt(T), cr = Math.cos(rot), sr = Math.sin(rot);
+            const shut = T >= SLAM, flash = shut ? Math.exp(-(T - SLAM) / 0.09) * 0.9 : 0;
+            gx.clearRect(0, 0, 1920, 1080);
+            gx.save(); gx.translate(CX, CY); gx.rotate(rot); gx.scale(z, z);
+            for (let j = -8; j <= 8; j++) for (let i = -8; i <= 8; i++) {
+              const ring = Math.max(Math.abs(i), Math.abs(j)), p = ring ? clamp((T - (RING0 + ring * RSTEP)) / 0.18) : 1;
+              if (p <= 0) continue;
+              const s = ring ? backOut(p, 2.2) : 1, wx = i * PITCH, wy = j * PITCH;
+              const sx = CX + z * (cr * wx - sr * wy), sy = CY + z * (sr * wx + cr * wy), rs = 600 * KS * s * z;
+              if (sx + rs < 0 || sx - rs > 1920 || sy + rs < 0 || sy - rs > 1080) continue;
+              const dist = Math.hypot(i, j), d = dist * 0.045;
+              let lit, rho, phi;
+              if (shut) { lit = Math.max(Math.exp(-(T - SLAM) / 0.15), envAt(T - d)); rho = 22 + 14 * envAt(T) + 70 * Math.exp(-(T - SLAM) / 0.07) * Math.abs(Math.sin((T - SLAM) * 45)); phi = 0.5 + dist * 0.3; }
+              else {
+                lit = Math.max(envAt(T - d), 0.9 * Math.exp(-Math.max(0, T - d - CUT) / 0.2));
+                rho = 120 + 215 * lit + 25 * Math.sin(T * 3 - dist * 0.8); phi = -0.35 + (330 - rho) * 0.0024 + dist * 0.4;
+              }
+              gx.save(); gx.translate(wx, wy); gx.scale(KS * s, KS * s);
+              drawIris(gx, rho, phi, lit, flash, z * KS > 0.12);
+              gx.restore();
+            }
+            gx.restore();
+            const rmax = Math.max(0, Math.min(8, Math.floor((T - RING0) / RSTEP) + 1)), n = (2 * rmax + 1) ** 2;
+            countEl.innerHTML = shut ? `<b>${n}</b> watchers · all shut` : `watchers <b>${n}</b>`;
+          }
+
+          // ---- per frame ---------------------------------------------------------------------------------------------
+          const LA = 1.25 * Math.PI; // the light comes from the upper left
+          const mix = (a, b, t) => { const h = (s) => [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16)); const A = h(a), B = h(b);
+            return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, "0")).join(""); };
+          const lightEl = $("f17-light");
+          function render() {
+            const t = tl.time(), T = T0 + t, step = Math.floor(t * 15);
+            stage.apply(T);
+            WOW.draw(tl); HR.draw(tl);
+            HR.glow(heroRow, T, 0.35, 0.8);
+            const inA = T < CUT;
+            midL.style.visibility = $("f17-platel").style.visibility = inA ? "visible" : "hidden";
+            gridw.style.visibility = inA ? "hidden" : "visible";
+            if (!inA) drawGrid(T); else countEl.innerHTML = "watchers <b>1</b>";
+            if (!inA) { lightEl.style.transform = `scale(${(0.93 + 0.14 * HR.band("rms", T)).toFixed(3)})`; return; }
+
+            const rho = rhoAt(T), phi = -0.35 + (330 - rho) * 0.0024;
+            const g = irisGeom(rho, phi);
+            const poly = "M" + g.V.map(P).join("L") + "Z";
+            apShadow.setAttribute("d", poly);
+            maskHole.setAttribute("d", poly);
+            for (let k = 0; k < N; k++) {
+              const b = blades[k], k1 = (k + 1) % N, km = (k + N - 1) % N;
+              const d = bladePath(g, k);
+              b.face.setAttribute("d", d);
+              b.clipPath.setAttribute("d", d);
+              // shading across the face, from the cutting edge to the rim, toned by how the blade faces the light
+              const u = phi + ((k + 0.5) * TAU) / N, cu = Math.cos(u), su = Math.sin(u);
+              const tone = 0.5 + 0.5 * Math.cos(u - LA);
+              Object.entries({ x1: rho * cu, y1: rho * su, x2: RB * cu, y2: RB * su }).forEach(([a, v]) => b.body.setAttribute(a, f1(v)));
+              b.st[0].setAttribute("stop-color", mix("#2c2c2a", "#6a6a63", tone));
+              b.st[1].setAttribute("stop-color", mix("#1c1c1a", "#3e3e3a", tone));
+              b.st[2].setAttribute("stop-color", mix("#111111", "#22221f", tone));
+              // the overlap shadow this blade's edge casts onto the next blade
+              const dd = g.D[k]; let n = [-dd[1], dd[0]];
+              if (n[0] * -g.V[k][0] + n[1] * -g.V[k][1] < 0) n = [-n[0], -n[1]];
+              const a0 = g.V[k1], a1 = g.E[k], w = 34;
+              b.strip.setAttribute("d", `M${P(a0)}L${P(a1)}L${P([a1[0] + n[0] * w, a1[1] + n[1] * w])}L${P([a0[0] + n[0] * w, a0[1] + n[1] * w])}Z`);
+              Object.entries({ x1: a0[0], y1: a0[1], x2: a0[0] + n[0] * w, y2: a0[1] + n[1] * w }).forEach(([a, v]) => b.sh.setAttribute(a, f1(v)));
+              // the cutting edge: a bevel catching the light, a dark thickness line behind it
+              const edgeLit = 0.2 + 0.5 * (0.5 + 0.5 * Math.cos(Math.atan2(n[1], n[0]) - LA));
+              b.edge.setAttribute("d", `M${P(g.V[k])}L${P(g.E[k])}`);
+              b.edge.setAttribute("stroke", `rgba(240,236,229,${edgeLit.toFixed(3)})`);
+              const o = [-n[0] * 4, -n[1] * 4];
+              b.edgeDark.setAttribute("d", `M${P([g.V[k][0] + o[0], g.V[k][1] + o[1]])}L${P([g.E[k][0] + o[0], g.E[k][1] + o[1]])}`);
+              // pivot pin, cam slot and engraved serial, placed inside this blade's face near the rim
+              const inFace = (r, frac) => { const q = g.at(g.V[k], g.D[km], r); return rotP(q, (frac * TAU) / N); };
+              const pv = inFace(RB - 30, 0.5);
+              b.pin.setAttribute("transform", `translate(${P(pv)})`);
+              const s0 = inFace(RB - 64, 0.25), s1 = inFace(RB - 64, 0.75);
+              b.slot.setAttribute("d", `M${P(s0)}L${P(s1)}`);
+              b.slotHi.setAttribute("d", `M${P([s0[0] + 2, s0[1] + 4])}L${P([s1[0] + 2, s1[1] + 4])}`);
+              const lp = inFace(RB - 98, 0.5); let la = ((Math.atan2(lp[1], lp[0]) * 180 / Math.PI + 90) % 360 + 360) % 360; if (la > 90 && la < 270) la -= 180;
+              b.label.setAttribute("transform", `translate(${P(lp)}) rotate(${la.toFixed(1)})`);
+            }
+            // the ring: the scale turns with the aperture (stop number under the index), shudders on each step
+            const sIdx = Math.max(0, 4.2 * Math.log2(330 / Math.max(60, rho)));
+            const sh = shudder(T), bandRot = -12 * sIdx + sh * Math.sin(T * 90) * 0.8;
+            band.setAttribute("transform", `rotate(${bandRot.toFixed(2)})`);
+            numerals.forEach(({ t: n, x, y }) => n.setAttribute("transform", `rotate(${(-bandRot).toFixed(2)} ${f1(x)} ${f1(y)})`));
+            const slam = T >= 44.58 ? Math.exp(-(T - 44.58) / 0.12) : 0;
+            iris.setAttribute("transform", `translate(${CX} ${CY}) scale(${(SC - SC * 0.012 * slam * Math.cos((T - 44.58) * 40)).toFixed(4)})`);
+            // the letter sits deeper than the blades: it drifts against them
+            card.setAttribute("transform", `translate(${f1(Math.sin(T * 0.7) * 10 - (330 - rho) * 0.02)} ${f1(Math.cos(T * 0.55) * 6)})`);
+            hexRows[1].textContent = HR.cipher(12, 1760 + step).replace(/(.{4})/g, "$1 ");
+            hexRows[4].textContent = HR.cipher(12, 1790 + (step >> 1)).replace(/(.{4})/g, "$1 ");
+            const bass = HR.band("bass", T);
+            spill.setAttribute("opacity", (0.55 + 0.6 * bass + 0.5 * slam).toFixed(3));
+            sealGlow.setAttribute("opacity", (0.5 + 0.7 * bass + 0.8 * slam).toFixed(3));
+            const lit = T >= 44.58 ? 1 : 0.25 + 0.75 * HR.hit("hat", T, 0.07);
+            lamp.setAttribute("opacity", lit.toFixed(3));
+            lampGlow.setAttribute("opacity", (lit * (0.7 + 0.5 * bass)).toFixed(3));
+            lightEl.style.transform = `scale(${(0.93 + 0.14 * HR.band("rms", T)).toFixed(3)})`;
+            // the plate: drum rolls to the stop, the pointer rides the scale
+            const sd = Math.min(8, sIdx);
+            drumRoll.setAttribute("transform", `translate(0 ${f1(-sd * 92)})`);
+            ptr.setAttribute("transform", `translate(${f1(SX0 + sd * SDX)} 0)`);
+            ptrState.textContent = T >= 44.58 ? "SEALED IN VIEW" : rho > 300 ? "WIDE OPEN" : T >= 43.6 ? "CLOSING" : "WATCHING";
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

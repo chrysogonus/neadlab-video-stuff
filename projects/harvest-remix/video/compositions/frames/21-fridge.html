@@ -1,0 +1,815 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 21 — fridge (131.022–134.514), v14 H3: "the fridge hums low, the key falls out".
+         The dilution refrigerator as 11-petabytes' lamps-and-hairlines (the globe recipe): six plates as rings of lamps
+         with engraved faces, ~100 coax lines with control pulses running down to the chip. On "key" the chip flashes;
+         what falls out is the actual secret: Shor's algorithm (the discrete-log version) recovers the X25519 ephemeral
+         private key from the recorded handshake, and the AES-256-GCM session key falls out of the chip as hex, settling
+         into one line. Facts (sources in renders/texts-v14.md): stage temperatures 50 K / 4 K / ~800 mK still / ~100 mK
+         cold plate / ~10 mK mixing chamber; ~2,330 logical qubits for a 256-bit curve (Roetteler et al. 2017).
+         v17 (V17.md §21): one slow, continuous camera descent past the stages (still → cold plate → mixing chamber) down
+         to the chip, with a slow orbit from the first instant; a "next stop" readout counts the floors. The hum is one
+         wave of light down the rims on the 132.557 downbeat; "key" gets a soft hero, a small punch and one thin ring
+         round the chip; the key's 64 hex digits drop out of the chip in order from "falls" and the last lands on "out".
+         No spray, no shakes. `glideDown` in (from 12), `glideL` out (to 13).
+         v21 (V21.md W2, 132.0–134.5; the fridge shot before it is unchanged): the cryostat as a lit chandelier. The plates are
+         machined discs (engraved faces, slotted rim bands) that are dark until their hit, then flare white-hot and stay lit in
+         paper-cream, one stage per hit, top to bottom: 132.098 (50 K), 132.315 (4 K), 132.557 (still), 132.81 (cold plate),
+         "key" 132.94 (mixing chamber + the chip's flash). On "key" the chip throws out 13's key, white-hot, with sparks; from
+         "falls" it tumbles toward the lens (three half turns, perspective growth) while the camera pulls back and tilts down
+         onto the fridge's cream shelf, lit by the chip; it lands ON "out" 134.04 blade-tip first (sparks, shake), the bow slams
+         on the kick 134.133, it hops and settles on the kick 134.393 at 13's key position and height. The 64-hex session key
+         prints under the derivation once it is down. Replaces v20's hum wave, thin ring and falling hex digits. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --cream-muted: #888880; --cream-hint: #505048;
+          background: var(--ink); color: var(--cream);
+        }
+        #f21-gl { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+        #f21-fx { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+        /* v21: the world (cryostat, shelf, key, sparks) shakes as one on the key's impacts; the type does not */
+        #f21-world { position: absolute; inset: 0; }
+        #f21-keyl { position: absolute; inset: 0; pointer-events: none; }
+        #f21-kshadow { position: absolute; left: 0; top: 0; width: 560px; height: 76px; opacity: 0; will-change: transform, opacity;
+          background: radial-gradient(closest-side, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.45) 55%, rgba(0, 0, 0, 0)); }
+        .f21-key { position: absolute; left: 0; top: 0; width: 440px; height: 137.5px; opacity: 0; transform-origin: 50% 50%; will-change: transform, opacity, filter; }
+        .f21-key svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+        /* stage tags that follow the plates */
+        .f21-tag { position: absolute; left: 0; top: 0; display: flex; align-items: center; white-space: nowrap; will-change: transform, opacity; }
+        .f21-tag i { display: block; width: 46px; height: 1px; background: var(--cream-muted); margin-right: 10px; }
+        .f21-tag span { font: 500 15px "IBM Plex Mono"; letter-spacing: 0.12em; color: var(--cream-muted); }
+        .f21-tag b { font-weight: 600; color: var(--cream); margin-right: 10px; }
+        .f21-tag.f21-mxc i { background: var(--fire); }
+        .f21-tag.f21-mxc b { color: var(--fire); }
+        .f21-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font: 500 16px "IBM Plex Mono"; letter-spacing: 0.14em; color: var(--fire); }
+        .f21-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor; vertical-align: middle; margin-right: 16px; }
+        #f21-stop { position: absolute; left: calc(5.5cqw + 52px); top: calc(4.2cqw + 30px); font: 500 15px "IBM Plex Mono"; letter-spacing: 0.12em; color: var(--cream-muted); white-space: nowrap; }
+        #f21-stop b { font-weight: 600; color: var(--cream); }
+        /* the lyric */
+        .f21-line { position: absolute; left: 5.5cqw; top: 9.5cqw; width: 50cqw; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5cqw; font-family: "Barlow"; transform-origin: 0 40%; }
+        .f21-row { display: flex; flex-wrap: wrap; column-gap: 0.26em; font-weight: 800; font-size: 4.4cqw; line-height: 1.04; letter-spacing: -0.02em; }
+        .f21-row.f21-big { font-weight: 900; font-size: 13cqw; line-height: 0.86; letter-spacing: -0.04em; color: var(--fire); margin: 0.3cqw 0 0.5cqw -0.4cqw; transform-origin: 0 80%; }
+        .f21-w { display: inline-block; position: relative; }
+        /* v19: an ink shadow keeps the lead rows readable while the fridge's cream walls sweep behind them (invisible on black) */
+        .f21-row:not(.f21-big) { text-shadow: 0 2px 14px rgba(10, 10, 10, 0.9), 0 0 3px rgba(10, 10, 10, 0.8); }
+        /* what falls out: the derivation and the key */
+        #f21-out { position: absolute; left: 5.5cqw; top: 932px; width: 1300px; font-family: "IBM Plex Mono"; }
+        .f21-step { font: 500 16px "IBM Plex Mono"; letter-spacing: 0.08em; color: var(--cream-muted); white-space: nowrap; clip-path: inset(-20% 100% -20% 0); margin-bottom: 6px; }
+        .f21-step b { color: var(--cream); font-weight: 600; }
+        #f21-klabel { font: 600 15px "IBM Plex Mono"; letter-spacing: 0.14em; color: var(--fire); margin-bottom: 12px; opacity: 0; }
+        #f21-mark { position: absolute; left: 1250px; top: 866px; font: 400 52px/1 "Caveat Brush"; color: var(--fire); white-space: nowrap;
+          transform: rotate(-6deg); transform-origin: 0 100%; clip-path: inset(-20% 100% -30% -5%); }
+        /* v19: the literal fridge (cream enamel, ink linework) that opens onto the cryostat */
+        #f21-fridge { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 1330px 636px; will-change: transform, filter; }
+        #f21-fbody { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 1330px 1000px; }
+        #f21-fbody > svg { position: absolute; left: 0; top: 0; overflow: visible; }
+        #f21-doorbox { position: absolute; left: 1086px; top: 330px; width: 488px; height: 610px; perspective: 1800px; perspective-origin: -126px 210px; }
+        #f21-door { position: absolute; inset: 0; transform-style: preserve-3d; transform-origin: 100% 50%; }
+        .f21-dface { position: absolute; inset: 0; backface-visibility: hidden; }
+        .f21-dface svg { display: block; }
+        #f21-dback { transform: rotateY(180deg); }
+        #f21-dedge { position: absolute; left: 0; top: 10px; width: 34px; height: 590px; transform-origin: 0 50%; transform: rotateY(90deg);
+          background: linear-gradient(90deg, #d6cfc2, #b9b2a4); box-shadow: inset 0 0 0 2px #141412; }
+        #f21-foot { position: absolute; right: 5.5cqw; bottom: 3.6cqw; text-align: right; line-height: 1.7; font: 500 14px "IBM Plex Mono"; letter-spacing: 0.1em; color: var(--cream-muted); opacity: 0; }
+      </style>
+
+      <div data-hf-id="hf-ja9q" id="root" data-composition-id="21-fridge" data-width="1920" data-height="1080" data-duration="3.492">
+        <div id="f21-world" data-layout-ignore>
+          <canvas data-hf-id="hf-z3xc" id="f21-gl" width="1920" height="1080" data-layout-ignore></canvas>
+          <div data-hf-id="hf-170h" id="f21-tags" data-layout-ignore></div>
+          <div id="f21-keyl" data-layout-ignore><div id="f21-kshadow"></div><div id="f21-keys"></div></div>
+          <canvas data-hf-id="hf-uc9x" id="f21-fx" width="1920" height="1080" data-layout-ignore></canvas>
+        </div>
+        <div id="f21-fridge" data-layout-ignore><div id="f21-fbody">
+          <svg id="f21-fsvg" width="1920" height="1080" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+          <div id="f21-doorbox"><div id="f21-door">
+            <div class="f21-dface" id="f21-dfront"></div><div class="f21-dface" id="f21-dback"></div><div id="f21-dedge"></div>
+          </div></div>
+          <svg id="f21-hum" width="1920" height="1080" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
+        </div></div>
+        <div data-hf-id="hf-6jvb" class="f21-kicker">THE QUANTUM COMPUTER · DILUTION REFRIGERATOR</div>
+        <div data-hf-id="hf-f21s" id="f21-stop">NEXT STOP · <b>800 mK</b> STILL</div>
+        <div data-hf-id="hf-h4jo" class="hr-layer" id="f21-fg" data-depth="0.8"><div data-hf-id="hf-of74" class="f21-line" id="f21-l26"></div></div>
+        <div data-hf-id="hf-1j1d" id="f21-out">
+          <div data-hf-id="hf-pig4" id="f21-klabel">AES-256-GCM SESSION KEY</div>
+          <div data-hf-id="hf-p2ds" class="f21-step" id="f21-s1"><b data-hf-id="hf-pkdf">SHOR</b> (DISCRETE-LOG VERSION) ON X25519 → THE EPHEMERAL PRIVATE KEY</div>
+          <div data-hf-id="hf-3us9" class="f21-step" id="f21-s2">+ THE RECORDED HANDSHAKE → THE SHARED SECRET → HKDF →</div>
+        </div>
+        <div data-hf-id="hf-emcy" id="f21-mark">(oops)</div>
+        <div data-hf-id="hf-zto1" id="f21-foot">10 mK: COLDER THAN DEEP SPACE (2.7 K)<br data-hf-id="hf-x5px">≈ 2,330 LOGICAL QUBITS FOR A 256-BIT CURVE<br>ROETTELER ET AL., 2017</div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+
+        const T0 = 131.022, DUR = 3.492;
+        const L = (t) => +(t - T0).toFixed(3);
+        const KEY = L(132.94), FALL = L(133.2), LAND = L(134.04); // "key", "falls", "out"
+        const $ = (id) => document.getElementById(id);
+        const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+        const clamp01 = (x) => Math.min(1, Math.max(0, x));
+        const smooth = (a, b, x) => { const u = clamp01((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+        const rng = HR.rng(2121);
+
+        // ---- v19: "the fridge" taken literally ---------------------------------------------------------------
+        // A kitchen fridge in cream enamel and ink line (the cryostat's cabinet): freezer on top ("4 K" magnet), the main
+        // door with a chrome handle, a "10 mK" magnet and a note. It hums from "hums" (soft rock on its feet, hum arcs), the
+        // door swings open on "low," (hinge right, CSS perspective) onto the lit interior where the cryostat hangs, and on
+        // the 132.098 kick/snare the camera pushes through the doorway, arriving in the stage descent on the 132.557 downbeat.
+        const HUMS = L(131.371), DOOR = L(131.86), PUSH0 = L(WOW.on(132.1)), PUSH1 = L(132.557);
+        const WIN = { x0: 1146, y0: 384, x1: 1514, y1: 888 }; // the inner back of the cabinet: the window onto the GL scene
+        const WCX = (WIN.x0 + WIN.x1) / 2, WCY = (WIN.y0 + WIN.y1) / 2;
+        const INK = "#141412", MONO = 'font-family="IBM Plex Mono" font-weight="600"';
+        const chrome = (id, vertical) => `<linearGradient id="${id}" x1="0" y1="0" x2="${vertical ? 0 : 1}" y2="${vertical ? 1 : 0}"><stop stop-color="#6d6c68"/><stop offset=".35" stop-color="#f8f6f1"/><stop offset=".6" stop-color="#a19f99"/><stop offset="1" stop-color="#4a4945"/></linearGradient>`;
+        const enamel = (id) => `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="0.25"><stop stop-color="#F6F2EB"/><stop offset=".55" stop-color="#ECE6DC"/><stop offset="1" stop-color="#D6CFC2"/></linearGradient>`;
+        const handle = (x, y0, y1) => `<rect x="${x - 4}" y="${y0}" width="26" height="16" rx="3" fill="#8f8d87" stroke="${INK}" stroke-width="2"/>
+          <rect x="${x - 4}" y="${y1 - 16}" width="26" height="16" rx="3" fill="#8f8d87" stroke="${INK}" stroke-width="2"/>
+          <rect x="${x + 22}" y="${y0 + 14}" width="7" height="${y1 - y0 - 28}" fill="rgba(20,20,18,0.16)"/>
+          <rect x="${x}" y="${y0 + 8}" width="18" height="${y1 - y0 - 16}" rx="8" fill="url(#f21-chrome)" stroke="${INK}" stroke-width="2"/>`;
+        $("f21-fsvg").innerHTML = `<defs>${chrome("f21-chrome")}${enamel("f21-enamel")}
+            <linearGradient id="f21-side" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#9f988b"/><stop offset="1" stop-color="#c3bcaf"/></linearGradient>
+            <linearGradient id="f21-spill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#FFF4E6" stop-opacity=".55"/><stop offset="1" stop-color="#FFF4E6" stop-opacity="0"/></linearGradient>
+            <radialGradient id="f21-bulb" cx=".5" cy="0" r=".9"><stop stop-color="#FFF6EA" stop-opacity=".75"/><stop offset=".5" stop-color="#FFE9D2" stop-opacity=".18"/><stop offset="1" stop-color="#FFE9D2" stop-opacity="0"/></radialGradient>
+            <radialGradient id="f21-shadow" cx=".5" cy=".5" r=".5"><stop stop-color="#000" stop-opacity=".7"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+          <path d="M-4000,-4000 H6000 V5000 H-4000 Z M${WIN.x0},${WIN.y0} V${WIN.y1} H${WIN.x1} V${WIN.y0} Z" fill="#0A0A0A" fill-rule="evenodd"/>
+          <line x1="520" y1="1001" x2="1920" y2="1001" stroke="#2a2a27" stroke-width="2"/>
+          <ellipse cx="1320" cy="1002" rx="360" ry="22" fill="url(#f21-shadow)"/>
+          <polygon id="f21-spillp" points="1106,1002 1554,1002 1780,1080 880,1080" fill="url(#f21-spill)" opacity="0"/>
+          <path d="M1092,60 L1040,86 L1040,980 L1092,1000 Z" fill="url(#f21-side)" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M1080,90 a30,30 0 0 1 30,-30 H1550 a30,30 0 0 1 30,30 V970 a30,30 0 0 1 -30,30 H1110 a30,30 0 0 1 -30,-30 Z M1106,364 a14,14 0 0 1 14,-14 H1540 a14,14 0 0 1 14,14 V906 a14,14 0 0 1 -14,14 H1120 a14,14 0 0 1 -14,-14 Z"
+            fill="url(#f21-enamel)" fill-rule="evenodd" stroke="${INK}" stroke-width="3"/>
+          <polygon points="1106,350 1554,350 ${WIN.x1},${WIN.y0} ${WIN.x0},${WIN.y0}" fill="#D2CBBE" stroke="${INK}" stroke-width="2"/>
+          <polygon points="1106,350 ${WIN.x0},${WIN.y0} ${WIN.x0},${WIN.y1} 1106,920" fill="#E6E0D4" stroke="${INK}" stroke-width="2"/>
+          <polygon points="1554,350 ${WIN.x1},${WIN.y0} ${WIN.x1},${WIN.y1} 1554,920" fill="#BDB6A8" stroke="${INK}" stroke-width="2"/>
+          <polygon points="1106,920 1554,920 ${WIN.x1},${WIN.y1} ${WIN.x0},${WIN.y1}" fill="#DAD3C6" stroke="${INK}" stroke-width="2"/>
+          <rect x="1300" y="356" width="60" height="14" rx="5" fill="#FFF8EE" stroke="${INK}" stroke-width="2"/>
+          <rect id="f21-bulbg" x="${WIN.x0}" y="${WIN.y0}" width="${WIN.x1 - WIN.x0}" height="${WIN.y1 - WIN.y0}" fill="url(#f21-bulb)" opacity="0"/>
+          <g transform="translate(1086 66)">
+            <rect width="488" height="254" rx="22" fill="url(#f21-enamel)" stroke="${INK}" stroke-width="3"/>
+            ${handle(26, 128, 236)}
+            <circle cx="390" cy="96" r="32" fill="${INK}"/><text x="390" y="104" ${MONO} font-size="21" fill="#F0ECE5" text-anchor="middle">4 K</text>
+          </g>
+          <g transform="translate(1080 948)">
+            ${Array.from({ length: 4 }, (_, i) => `<rect x="${62 + i * 92}" y="14" width="68" height="6" rx="3" fill="${INK}" opacity=".75"/>`).join("")}
+            <text x="250" y="42" ${MONO} font-size="14" letter-spacing="2" fill="#6E6A62" text-anchor="middle">BASE 10 mK · COOLDOWN ~2 DAYS · DO NOT DEFROST</text>
+          </g>`;
+        $("f21-dfront").innerHTML = `<svg width="488" height="610" viewBox="0 0 488 610" aria-hidden="true"><defs>${chrome("f21-chrome2")}${enamel("f21-enamel2")}</defs>
+          <rect x="1.5" y="1.5" width="485" height="607" rx="22" fill="url(#f21-enamel2)" stroke="${INK}" stroke-width="3"/>
+          <rect x="12" y="12" width="464" height="586" rx="16" fill="none" stroke="rgba(20,20,18,0.1)" stroke-width="2"/>
+          ${handle(26, 34, 312).replace(/f21-chrome\)/g, "f21-chrome2)")}
+          <g transform="translate(300 52) rotate(-5)">
+            <rect x="3" y="4" width="138" height="60" rx="10" fill="rgba(20,20,18,0.22)"/>
+            <rect width="138" height="60" rx="10" fill="#E85D26" stroke="${INK}" stroke-width="2"/>
+            <text x="69" y="41" ${MONO} font-size="31" fill="#F0ECE5" text-anchor="middle">10 mK</text>
+          </g>
+          <g transform="translate(118 150) rotate(3)">
+            <rect x="4" y="5" width="262" height="196" fill="rgba(20,20,18,0.16)"/>
+            <rect width="262" height="196" fill="#FBF8F1" stroke="rgba(20,20,18,0.45)" stroke-width="1.5"/>
+            <text x="24" y="78" font-family="Caveat Brush" font-size="62" fill="${INK}">DO NOT</text>
+            <text x="24" y="138" font-family="Caveat Brush" font-size="62" fill="${INK}">OPEN</text>
+            <path d="M24 150 q 90 -10 170 2" fill="none" stroke="#E85D26" stroke-width="5" stroke-linecap="round"/>
+            <text x="24" y="182" ${MONO} font-size="18" letter-spacing="3" fill="${INK}">· QUANTUM ·</text>
+            <circle cx="131" cy="2" r="12" fill="${INK}"/>
+          </g></svg>`;
+        $("f21-dback").innerHTML = `<svg width="488" height="610" viewBox="0 0 488 610" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="485" height="607" rx="22" fill="#E9E3D7" stroke="${INK}" stroke-width="3"/>
+          <rect x="12" y="12" width="464" height="586" rx="18" fill="#DDD6C9" stroke="#3A3A36" stroke-width="10"/>
+          <rect x="70" y="108" width="96" height="104" fill="#FBF8F1" stroke="${INK}" stroke-width="2.5"/><path d="M70 108 L118 80 L166 108" fill="#F0ECE5" stroke="${INK}" stroke-width="2.5"/>
+          <text x="118" y="170" ${MONO} font-size="26" fill="${INK}" text-anchor="middle">He-3</text>
+          <rect x="196" y="108" width="96" height="104" fill="#FBF8F1" stroke="${INK}" stroke-width="2.5"/><path d="M196 108 L244 80 L292 108" fill="#F0ECE5" stroke="${INK}" stroke-width="2.5"/>
+          <text x="244" y="170" ${MONO} font-size="26" fill="${INK}" text-anchor="middle">He-4</text>
+          <rect x="40" y="196" width="408" height="38" rx="4" fill="#F4F0E9" stroke="${INK}" stroke-width="2.5"/>
+          <rect x="40" y="430" width="408" height="38" rx="4" fill="#F4F0E9" stroke="${INK}" stroke-width="2.5"/>
+          <text x="244" y="455" ${MONO} font-size="15" letter-spacing="2" fill="#6E6A62" text-anchor="middle">MIXTURE · DO NOT DRINK</text></svg>`;
+        // hum arcs: three per site, rippling outward from the cabinet's sides
+        const HUMSITES = [[1600, 150, 1], [1600, 880, 1], [1022, 150, -1], [1022, 880, -1]];
+        const humArcs = [];
+        for (const [x, y, side] of HUMSITES) for (let i = 0; i < 3; i++) {
+          const e = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          const R = 18 + i * 9;
+          e.setAttribute("d", `M0,${-R} q${side * R * 0.55},${R} 0,${2 * R}`);
+          e.setAttribute("fill", "none"); e.setAttribute("stroke", "#D8D1C4"); e.setAttribute("stroke-width", "3"); e.setAttribute("stroke-linecap", "round");
+          $("f21-hum").appendChild(e); humArcs.push({ e, x, y, side, i });
+        }
+        const fridgeEl = $("f21-fridge"), fbody = $("f21-fbody"), doorEl = $("f21-door");
+        function renderFridge(t) {
+          if (t >= PUSH1) { fridgeEl.style.opacity = "0"; return; }
+          fridgeEl.style.opacity = "1";
+          // the camera: a slow push toward the door, then through the doorway (accelerating, streaked)
+          const u = clamp01((t - PUSH0) / (PUSH1 - PUSH0));
+          const S = (1 + 0.035 * Math.min(t, PUSH0) / PUSH0) * (1 + 7.5 * Math.pow(u, 2.6));
+          fridgeEl.style.transform = `scale(${S.toFixed(4)})`;
+          fridgeEl.style.filter = u > 0.05 ? `blur(${(6 * u * u).toFixed(2)}px)` : "";
+          // the hum: a soft rock on its feet from "hums", easing off once the door is open
+          const env = smooth(HUMS - 0.04, HUMS + 0.12, t) * (1 - 0.75 * smooth(DOOR + 0.1, DOOR + 0.6, t));
+          const sx = env * (2.4 * Math.sin(2 * Math.PI * 6.5 * t) + 1.1 * Math.sin(2 * Math.PI * 10.3 * t + 1));
+          const sr = env * 0.14 * Math.sin(2 * Math.PI * 5.2 * t + 0.5);
+          fbody.style.transform = `translate(${sx.toFixed(2)}px, 0) rotate(${sr.toFixed(3)}deg)`;
+          const henv = smooth(HUMS - 0.04, HUMS + 0.16, t);
+          for (const a of humArcs) {
+            const p = (t * 2.4 + a.i / 3) % 1;
+            a.e.setAttribute("transform", `translate(${(a.x + a.side * (6 + 30 * p)).toFixed(1)} ${a.y})`);
+            a.e.setAttribute("opacity", (henv * Math.sin(Math.PI * p) * 0.9).toFixed(3));
+          }
+          // the door swings open on "low," (hinge right): the latch gives, it swings past 90° and slows
+          const du = clamp01((t - DOOR) / 0.5), th = 116 * (1 - Math.pow(1 - du, 2.4));
+          doorEl.style.transform = `rotateY(${th.toFixed(2)}deg)`;
+          const open = smooth(0, 40, th);
+          $("f21-bulbg").setAttribute("opacity", (open * (1 - smooth(0.1, 0.6, u))).toFixed(3)); // gone before it scales into a wash
+          $("f21-spillp").setAttribute("opacity", (0.45 * open).toFixed(3));
+        }
+
+        // ---- the lyric (L26), each word on its own start ------------------------------------------------------
+        const ROWS = [
+          { words: [["The", 131.022], ["fridge", 131.122], ["hums", 131.371], ["low,", 131.86]] },
+          { words: [["the", 132.76]] },
+          { big: true, words: [["key", 132.94]] },
+          { words: [["falls", 133.2], ["out", 134.04]] },
+        ];
+        const spans = [];
+        for (const r of ROWS) {
+          const row = el("div", "f21-row" + (r.big ? " f21-big hr-glow" : ""), $("f21-l26"));
+          for (const [w, t] of r.words) spans.push([el("span", "f21-w", row, w.toLowerCase()), t, !!r.big, row]);
+        }
+
+        // ---- the refrigerator: plates (y up, the mixing chamber at y = 0) ---------------------------------------
+        const PLATES = [
+          { y: 66, r: 27, label: null },
+          { y: 52, r: 25, label: ["50 K", ""] },
+          { y: 38, r: 23, label: ["4 K", ""] },
+          { y: 25, r: 20.5, label: ["800 mK", "STILL"] },
+          { y: 12.5, r: 18, label: ["100 mK", "COLD PLATE"] },
+          { y: 0, r: 15.5, label: ["10 mK", "MIXING CHAMBER"], mxc: true },
+        ];
+        const CHIP_Y = -7, SHELF = -11, TH = 1.4; // v21: thicker plates (lit rim bands); the fridge's shelf under the chip
+        // v21: one stage lights per hit, top to bottom; "key" lights the mixing chamber and the chip
+        const STAGE_T = [132.098, 132.098, 132.315, 132.557, 132.81, 132.94].map(L);
+        const pos = [], size = [], kind = [], seed = [], stageOf = [];
+        let sid = 1, curStage = -1;
+        const add = (x, y, z, k, s) => { pos.push(x, y, z); size.push(s); kind.push(k); seed.push((sid++ * 0.61803398875) % 1); stageOf.push(curStage); };
+        const lpos = [], lcol = [];
+        const C = { hint: new THREE.Color(0x3a3a36), muted: new THREE.Color(0x6e6c66), fire: new THREE.Color(0xe85d26), dim: new THREE.Color(0x2a2a27) };
+        const seg = (a, b, c) => { lpos.push(a[0], a[1], a[2], b[0], b[1], b[2]); lcol.push(c.r, c.g, c.b, c.r, c.g, c.b); };
+        const circle = (y, r, n, c, a0 = 0) => { for (let i = 0; i < n; i++) { const a = a0 + (i / n) * Math.PI * 2, b = a0 + ((i + 1) / n) * Math.PI * 2; seg([r * Math.cos(a), y, r * Math.sin(a)], [r * Math.cos(b), y, r * Math.sin(b)], c); } };
+
+        PLATES.forEach((p, pi) => {
+          curStage = pi;
+          // the rim: a dense ring of lamps (fire) on the plate's edge, seen from above and below as the camera passes
+          const nr = Math.round((2 * Math.PI * p.r) / 0.34);
+          for (let i = 0; i < nr; i++) { const a = (i / nr) * Math.PI * 2; for (const dy of [-0.42, 0.42]) add(p.r * Math.cos(a), p.y + dy * TH, p.r * Math.sin(a), 0, 0.2); }
+          // both faces engraved: the bolt circle (dim lamps), concentric rings and spokes
+          for (const yf of [p.y - TH / 2 - 0.02, p.y + TH / 2 + 0.02]) {
+            const nb = Math.round((2 * Math.PI * p.r * 0.9) / 1.6);
+            for (let i = 0; i < nb; i++) { const a = (i / nb) * Math.PI * 2 + 0.05; add(0.9 * p.r * Math.cos(a), yf, 0.9 * p.r * Math.sin(a), 1, 0.14); }
+            for (const f of [0.28, 0.5, 0.72]) circle(yf, f * p.r, 120, C.hint);
+            circle(yf, 0.97 * p.r, 160, C.muted);
+            for (let i = 0; i < 24; i++) { const a = (i / 24) * Math.PI * 2; seg([0.28 * p.r * Math.cos(a), yf, 0.28 * p.r * Math.sin(a)], [0.72 * p.r * Math.cos(a), yf, 0.72 * p.r * Math.sin(a)], C.dim); }
+          }
+        });
+        curStage = 6; // the chip and everything below
+        // support rods between the plates
+        for (let k = 0; k + 1 < PLATES.length; k++) {
+          const A = PLATES[k], B = PLATES[k + 1];
+          for (let i = 0; i < 6; i++) {
+            const a = (i / 6) * Math.PI * 2 + 0.26, ra = 0.82 * A.r, rb = 0.82 * B.r;
+            seg([ra * Math.cos(a), A.y - 0.4, ra * Math.sin(a)], [rb * Math.cos(a), B.y + 0.3, rb * Math.sin(a)], C.muted);
+          }
+        }
+        // the coax: ~100 lines from the top plate down through every stage to the sample holder
+        const COAX = [];
+        const radiusAt = (y, f) => {
+          if (y <= 0) return f * 15.5 * (0.18 + 0.82 * clamp01((y - CHIP_Y) / -CHIP_Y));
+          for (let k = PLATES.length - 1; k > 0; k--) {
+            const A = PLATES[k - 1], B = PLATES[k];
+            if (y <= A.y) { const u = (y - B.y) / (A.y - B.y); return f * (B.r + (A.r - B.r) * u); }
+          }
+          return f * PLATES[0].r;
+        };
+        for (let i = 0; i < 104; i++) {
+          const a = (i / 104) * Math.PI * 2 + rng() * 0.04, f = 0.42 + 0.14 * ((i * 7) % 5) / 4, ph = rng() * 6.28;
+          const path = [];
+          for (let s = 0; s <= 72; s++) {
+            const y = PLATES[0].y - (s / 72) * (PLATES[0].y - CHIP_Y);
+            const r = radiusAt(y, f) + 0.25 * Math.sin(y * 0.37 + ph);
+            path.push([r * Math.cos(a + 0.02 * Math.sin(y * 0.2 + ph)), y, r * Math.sin(a + 0.02 * Math.sin(y * 0.2 + ph))]);
+          }
+          const c = i % 9 === 0 ? C.fire : i % 3 === 0 ? C.muted : C.hint;
+          for (let s = 0; s < path.length - 1; s++) seg(path[s], path[s + 1], c);
+          COAX.push(path);
+        }
+        // the sample holder (a square box) and the chip's qubits, 6 × 6
+        const HB = 2.6;
+        for (const y of [CHIP_Y + 1.2, CHIP_Y - 0.4]) {
+          const q = [[-HB, y, -HB], [HB, y, -HB], [HB, y, HB], [-HB, y, HB]];
+          for (let i = 0; i < 4; i++) seg(q[i], q[(i + 1) % 4], C.muted);
+        }
+        for (const [x, z] of [[-HB, -HB], [HB, -HB], [HB, HB], [-HB, HB]]) seg([x, CHIP_Y + 1.2, z], [x, CHIP_Y - 0.4, z], C.muted);
+        for (let i = 0; i < 4; i++) { const a = (i / 4) * Math.PI * 2 + Math.PI / 4; seg([HB * Math.cos(a), CHIP_Y + 1.2, HB * Math.sin(a)], [5 * Math.cos(a), -0.4, 5 * Math.sin(a)], C.muted); }
+        for (let i = 0; i < 6; i++) for (let j = 0; j < 6; j++) add(-1.75 + i * 0.7, CHIP_Y - 0.42, -1.75 + j * 0.7, 3, 0.26);
+        // control pulses: lamps that travel down the coax (their positions are written every frame)
+        const NP = 220, PULSE0 = size.length;
+        const pulses = Array.from({ length: NP }, (_, i) => ({ line: (i * 37) % COAX.length, ph: rng(), sp: 0.55 + rng() * 0.6, born: rng() * 1.6 }));
+        for (let i = 0; i < NP; i++) add(0, 0, 0, 2, 0.17);
+
+        const COUNT = size.length;
+        const geo = new THREE.BufferGeometry();
+        const posAttr = new THREE.Float32BufferAttribute(pos, 3);
+        posAttr.setUsage(THREE.DynamicDrawUsage);
+        geo.setAttribute("position", posAttr);
+        geo.setAttribute("aSize", new THREE.Float32BufferAttribute(size, 1));
+        geo.setAttribute("aKind", new THREE.Float32BufferAttribute(kind, 1));
+        geo.setAttribute("aSeed", new THREE.Float32BufferAttribute(seed, 1));
+        geo.setAttribute("aStage", new THREE.Float32BufferAttribute(stageOf, 1));
+        const aVis = new THREE.Float32BufferAttribute(new Float32Array(COUNT).fill(1), 1);
+        aVis.setUsage(THREE.DynamicDrawUsage);
+        geo.setAttribute("aVis", aVis);
+
+        // the lyric owns the left of the frame: anything drawn behind it steps down so the type reads
+        const DIM = `float lyricDim(vec4 clip) { vec2 ndc = clip.xy / clip.w; return 1.0 - 0.65 * smoothstep(0.0, 0.22, min(-0.04 - ndc.x, ndc.y + 0.42)); }`;
+
+        // ---- the lamp model (the globe's: a sharp disc and a soft halo; a separate additive bloom pass) --------
+        const HALO = 2.3;
+        const uni = { uTime: { value: 0 }, uScale: { value: 1000 }, uHum: { value: 0 }, uFlash: { value: 0 }, uBloom: { value: 0.1 }, uRun: { value: 0 },
+          uLit: { value: new Array(7).fill(0) }, uFlare: { value: new Array(7).fill(0) } };
+        const LAMP = DIM + `
+          attribute float aSize; attribute float aKind; attribute float aSeed; attribute float aVis; attribute float aStage;
+          uniform float uTime; uniform float uScale; uniform float uHum; uniform float uFlash; uniform float uRun;
+          uniform float uLit[7]; uniform float uFlare[7];
+          varying vec3 vCol; varying float vA; varying float vPx;
+          void lamp(out vec3 col, out float a, out float px) {
+            vec4 mv = modelViewMatrix * vec4(position, 1.0);
+            float depth = max(-mv.z, 0.01);
+            vec3 fire = vec3(0.9098, 0.3647, 0.1490), cream = vec3(0.9412, 0.9255, 0.8980), hint = vec3(0.42, 0.41, 0.38), hot = vec3(1.0, 0.97, 0.92);
+            float shimmer = 0.85 + 0.15 * sin(uTime * 9.0 + aSeed * 40.0);
+            // v21: the stage this lamp belongs to switches on with its hit (lit), white-hot for a moment (flare)
+            float lit = 0.0, flare = 0.0;
+            for (int k = 0; k < 7; k++) { if (abs(aStage - float(k)) < 0.5) { lit = uLit[k]; flare = uFlare[k]; } }
+            if (aKind < 0.5) { col = mix(mix(fire, hot, 0.3 * lit), hot, flare); a = (0.3 + 0.55 * lit + 0.3 * uHum) * shimmer * (1.0 + 0.8 * flare); }
+            else if (aKind < 1.5) { col = mix(hint, fire, 0.5 * lit + 0.5 * flare); a = 0.4 + 0.35 * lit + 0.6 * flare; }
+            else if (aKind < 2.5) { col = cream; a = aVis; }
+            else { // the qubits: fire while the computation runs, white-hot on the flash
+              float blink = step(0.5, fract(sin(aSeed * 91.7 + floor(uTime * 18.0) * 3.1) * 4375.5));
+              col = mix(fire, cream, max(uFlash, 0.35 * blink * uRun)); a = 1.0;
+            }
+            float s = aSize * (aKind > 2.5 ? 1.0 + 0.5 * uFlash : 1.0) * (aKind < 0.5 ? 1.0 + 0.2 * uHum + 0.2 * lit + 0.9 * flare : 1.0);
+            px = s * uScale / depth;
+            gl_Position = projectionMatrix * mv;
+            a *= lyricDim(gl_Position);
+          }`;
+        const coreMat = new THREE.ShaderMaterial({
+          uniforms: uni, transparent: true, depthWrite: false, depthTest: true,
+          vertexShader: LAMP + `
+            void main() {
+              vec3 col; float a, px; lamp(col, a, px);
+              if (px < 2.4) { a *= pow(px / 2.4, 0.35); px = 2.4; }
+              vCol = col; vA = a; vPx = px;
+              gl_PointSize = a < 0.003 ? 0.0 : min(px * ${HALO.toFixed(2)}, 600.0);
+            }`,
+          fragmentShader: `
+            varying vec3 vCol; varying float vA; varying float vPx;
+            void main() {
+              float r = length(gl_PointCoord - 0.5) * 2.0 * ${HALO.toFixed(2)};
+              float fw = 1.0 / max(vPx, 1.0);
+              float core = 1.0 - smoothstep(1.0 - fw, 1.0 + fw, r);
+              float glow = 0.3 * exp(-2.4 * max(r - 1.0, 0.0)) * (1.0 - smoothstep(${(HALO - 0.3).toFixed(2)}, ${HALO.toFixed(2)}, r));
+              float a = vA * max(core, glow);
+              if (a < 0.004) discard;
+              gl_FragColor = vec4(vCol, a);
+            }`,
+        });
+        const bloomMat = new THREE.ShaderMaterial({
+          uniforms: uni, transparent: true, depthWrite: false, depthTest: true, blending: THREE.AdditiveBlending,
+          vertexShader: LAMP + `
+            uniform float uBloom;
+            void main() {
+              vec3 col; float a, px; lamp(col, a, px);
+              float hero = step(2.5, aKind);
+              vCol = col;
+              vA = a * uBloom * mix(1.0, 4.0 + 3.0 * uFlash, hero);
+              vPx = clamp(px * mix(4.0, 9.0, hero), 6.0, mix(160.0, 700.0, hero));
+              gl_PointSize = vA < 0.002 ? 0.0 : vPx;
+            }`,
+          fragmentShader: `
+            varying vec3 vCol; varying float vA;
+            void main() {
+              float r = length(gl_PointCoord - 0.5) * 2.0;
+              float g = exp(-r * r * 4.5) * (1.0 - smoothstep(0.75, 1.0, r));
+              gl_FragColor = vec4(vCol, vA * g);
+            }`,
+        });
+        const bloom = new THREE.Points(geo, bloomMat); bloom.frustumCulled = false;
+        const points = new THREE.Points(geo, coreMat); points.frustumCulled = false;
+        const lgeo = new THREE.BufferGeometry();
+        lgeo.setAttribute("position", new THREE.Float32BufferAttribute(lpos, 3));
+        lgeo.setAttribute("color", new THREE.Float32BufferAttribute(lcol, 3));
+        // hairlines: vertex colours, stepped down behind the lyric like the lamps
+        const lmat = new THREE.ShaderMaterial({
+          transparent: true, depthWrite: false, depthTest: true,
+          vertexShader: DIM + `
+            attribute vec3 color; varying vec3 vCol; varying float vA;
+            void main() { gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); vCol = color; vA = 0.9 * lyricDim(gl_Position); }`,
+          fragmentShader: `varying vec3 vCol; varying float vA; void main() { gl_FragColor = vec4(vCol, vA); }`,
+        });
+        const lines = new THREE.LineSegments(lgeo, lmat); lines.frustumCulled = false;
+        // ink solids: each plate occludes what is behind it
+        const inkMat = new THREE.MeshBasicMaterial({ color: 0x0a0a0a });
+        // v21: each plate's edge is a machined band (matte, flat-shaded, bolt slots): dark until its stage's hit, then
+        // white-hot for a moment and warm paper-cream after it. The faces stay ink with their engraving.
+        const bandMats = PLATES.map(() => new THREE.ShaderMaterial({
+          uniforms: { uLit: { value: 0 }, uFlare: { value: 0 } },
+          vertexShader: DIM + `
+            varying vec3 vN; varying vec2 vUv; varying float vDim;
+            void main() { vN = normalize(normalMatrix * normal); vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); vDim = lyricDim(gl_Position); }`,
+          fragmentShader: `
+            uniform float uLit; uniform float uFlare; varying vec3 vN; varying vec2 vUv; varying float vDim;
+            void main() {
+              float l = 0.42 + 0.58 * max(0.0, dot(normalize(vN), normalize(vec3(-0.35, 0.45, 0.85))));
+              vec3 off = vec3(0.13, 0.125, 0.115), warm = vec3(0.93, 0.80, 0.70), hot = vec3(1.0, 0.97, 0.92);
+              vec3 c = mix(mix(off, warm, uLit), hot, uFlare);
+              float slot = smoothstep(0.42, 0.5, abs(fract(vUv.x * 96.0) - 0.5));
+              float edge = smoothstep(0.0, 0.12, vUv.y) * (1.0 - smoothstep(0.88, 1.0, vUv.y));
+              c *= l * (1.0 - 0.5 * slot) * (0.5 + 0.5 * edge);
+              gl_FragColor = vec4(c * mix(1.0, vDim, 0.8), 1.0);
+            }`,
+        }));
+        // the faces: ink until the stage lights, then a matte paper-cream disc (the hairline engraving drawn over it reads as
+        // ink on paper); the underside takes less light. The centre stays open for the coax.
+        const faceMat = (i, side) => new THREE.ShaderMaterial({
+          uniforms: bandMats[i].uniforms,
+          vertexShader: DIM + `
+            varying vec2 vP; varying float vDim;
+            void main() { vP = position.xz; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); vDim = lyricDim(gl_Position); }`,
+          fragmentShader: `
+            uniform float uLit; uniform float uFlare; varying vec2 vP; varying float vDim;
+            void main() {
+              float r = length(vP) / ${PLATES[i].r.toFixed(2)};
+              vec3 c = mix(vec3(0.039), vec3(0.86, 0.80, 0.72) * ${side.toFixed(2)}, uLit);
+              c = mix(c, vec3(1.0, 0.97, 0.92) * ${side.toFixed(2)}, uFlare);
+              c = mix(vec3(0.039), c, (0.72 + 0.28 * (1.0 - smoothstep(0.35, 1.0, r))) * smoothstep(0.15, 0.19, r));
+              gl_FragColor = vec4(mix(vec3(0.039), c, mix(1.0, vDim, 0.85)), 1.0);
+            }`,
+        });
+        const solids = PLATES.map((p, i) => { const m = new THREE.Mesh(new THREE.CylinderGeometry(p.r * 0.99, p.r * 0.99, TH, 128), [bandMats[i], faceMat(i, 0.92), faceMat(i, 0.8)]); m.position.y = p.y; return m; });
+        // v21: the shelf the key lands on: the fridge's own cream enamel floor, lit by the chip's pool of light (fading to ink
+        // away from it), the key's heat and the impact; a hairline grid (the enamel's pressed ribs) for depth
+        const shelfMat = new THREE.ShaderMaterial({
+          uniforms: { uPool: { value: 0 }, uLand: { value: new THREE.Vector3(0, SHELF, 30) }, uImpact: { value: 0 }, uHeat: { value: 0 }, uHeatP: { value: new THREE.Vector3() } },
+          transparent: false, depthWrite: true,
+          vertexShader: DIM + `
+            varying vec3 vW; varying float vDim;
+            void main() { vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; vDim = lyricDim(gl_Position); }`,
+          fragmentShader: `
+            uniform float uPool; uniform vec3 uLand; uniform float uImpact; uniform float uHeat; uniform vec3 uHeatP;
+            varying vec3 vW; varying float vDim;
+            void main() {
+              float r = length(vW.xz);
+              float pool = uPool * (0.015 + 0.95 * exp(-r * r / (2.0 * 12.0 * 12.0)));
+              float dl = length(vW.xz - uLand.xz), dh = length(vW.xz - uHeatP.xz);
+              vec3 cream = vec3(0.90, 0.86, 0.79), fire = vec3(0.9098, 0.3647, 0.1490), hot = vec3(1.0, 0.96, 0.9);
+              vec3 c = cream * pool;
+              c += fire * uHeat * 0.55 * exp(-dh * dh / 30.0);
+              c += mix(fire, hot, 0.6) * uImpact * 1.1 * exp(-dl * dl / 40.0);
+              vec2 g = abs(fract(vW.xz / 2.4) - 0.5);
+              float rib = 1.0 - 0.22 * (1.0 - smoothstep(0.0, 0.035, min(g.x, g.y)));
+              c *= rib * mix(1.0, vDim, 0.9);
+              gl_FragColor = vec4(c + vec3(0.039), 1.0);
+            }`,
+        });
+        const shelf = new THREE.Mesh(new THREE.PlaneGeometry(260, 260), shelfMat);
+        shelf.rotation.x = -Math.PI / 2; shelf.position.y = SHELF;
+        solids.push(shelf);
+        const holder = new THREE.Mesh(new THREE.BoxGeometry(2 * HB - 0.1, 1.5, 2 * HB - 0.1), inkMat);
+        holder.position.set(0, CHIP_Y + 0.4, 0);
+        solids.push(holder);
+        // the cold glow round the chip (camera-facing, additive)
+        const hazeMat = new THREE.ShaderMaterial({
+          uniforms: { uHaze: { value: 0 } }, transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
+          vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+          fragmentShader: `uniform float uHaze; varying vec2 vUv;
+            void main() { float r = length(vUv - 0.5) * 2.0; float a = uHaze * (0.55 * exp(-r * 9.0) + 0.25 * exp(-r * 3.0)) * (1.0 - smoothstep(0.8, 1.0, r));
+              gl_FragColor = vec4(mix(vec3(0.9098, 0.3647, 0.1490), vec3(1.0, 0.94, 0.88), clamp(uHaze - 0.6, 0.0, 1.0)), a); }`,
+        });
+        const haze = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), hazeMat); haze.position.set(0, CHIP_Y - 0.5, 0); haze.frustumCulled = false;
+
+        const group = new THREE.Group();
+        group.add(...solids, lines, bloom, points);
+        haze.renderOrder = 4; lines.renderOrder = 1; bloom.renderOrder = 2; points.renderOrder = 3;
+        const scene = new THREE.Scene();
+        scene.add(group, haze);
+        const renderer = new THREE.WebGLRenderer({ canvas: $("f21-gl"), antialias: true, preserveDrawingBuffer: true });
+        renderer.setPixelRatio(1); renderer.setSize(1920, 1080, false); renderer.setClearColor(0x0a0a0a, 1);
+        const camera = new THREE.PerspectiveCamera(40, 1920 / 1080, 0.5, 600);
+        // lens shift: the look-at point sits right of centre, the lyric owns the left
+        const SX = 0.62, SY = 0.5;
+        camera.setViewOffset(1920, 1080, -(SX - 0.5) * 1920, (0.5 - SY) * 1080, 1920, 1080);
+
+        // ---- the camera, a pure function of time: one continuous descent past the stages ----------------------
+        // Descent speed eases in from the glideDown (whose own move settles over the first beat), runs steady through
+        // the line and slows a little at the bottom while the key falls; it is still moving at the glideL out.
+        // The orbit runs at a constant rate from the first instant, so the frame is never static.
+        // v21: the inside path is a smooth (Hermite) curve through keys: down past each stage as it lights (one per hit),
+        // level with the mixing chamber on "key", then a pull-back and tilt down while the key falls toward the lens,
+        // so the chip hangs over the shelf and the key lands in the foreground. Columns: t, cam y, radius, target y.
+        const CK = [[PUSH0, 34, 60, 28], [PUSH1, 27, 56, 21], [L(132.81), 15, 47, 9], [KEY, 8, 47, 1], [FALL, 4, 51, -4], [LAND, 1, 64, -13], [DUR, 0.5, 66, -14]];
+        const camPath = (t, c) => {
+          if (t <= CK[0][0]) return CK[0][c];
+          const n = CK.length - 1;
+          if (t >= CK[n][0]) return CK[n][c];
+          let i = 0; while (t > CK[i + 1][0]) i++;
+          const tan = (k) => (k <= 0 || k >= n ? (CK[Math.min(n, k + 1)][c] - CK[Math.max(0, k - 1)][c]) / (CK[Math.min(n, k + 1)][0] - CK[Math.max(0, k - 1)][0])
+            : (CK[k + 1][c] - CK[k - 1][c]) / (CK[k + 1][0] - CK[k - 1][0]));
+          const t0 = CK[i][0], t1 = CK[i + 1][0], h = t1 - t0, u = (t - t0) / h, u2 = u * u, u3 = u2 * u;
+          return (2 * u3 - 3 * u2 + 1) * CK[i][c] + (u3 - 2 * u2 + u) * h * tan(i) + (-2 * u3 + 3 * u2) * CK[i + 1][c] + (u3 - u2) * h * tan(i + 1);
+        };
+        // "key": a soft swell (short eased attack, slow release) used by the fov, the chip and the ring
+        const keyEnv = (t) => (t < KEY ? 0 : smooth(0, 0.07, t - KEY) * Math.exp(-(t - KEY - 0.07 > 0 ? t - KEY - 0.07 : 0) * 2.6));
+        const tgt = new THREE.Vector3();
+        let camAz = 0;
+        // v19: until the push through the fridge door the camera stands back so the whole cryostat hangs in the doorway
+        // (lens-shifted onto the window); it dollies in with the push and settles into the descent by ~132.8.
+        const lerp = (a, b, u) => a + (b - a) * u;
+        function placeCamera(t) {
+          const b = smooth(PUSH0 - 0.08, PUSH1 + 0.25, t);
+          camAz = 0.92 - 0.16 * t;
+          const y = lerp(44, camPath(t, 1), b), rh = lerp(215, camPath(t, 2), b);
+          camera.position.set(rh * Math.sin(camAz), y, rh * Math.cos(camAz));
+          tgt.set(0, lerp(30, camPath(t, 3), b), 0);
+          const sx = lerp(WCX / 1920, SX, b), sy = lerp(WCY / 1080, SY, b);
+          camera.setViewOffset(1920, 1080, -(sx - 0.5) * 1920, (0.5 - sy) * 1080, 1920, 1080);
+          camera.fov = 40 - 1.4 * keyEnv(t);
+          camera.updateProjectionMatrix();
+          camera.lookAt(tgt);
+          camera.updateMatrixWorld();
+          return y;
+        }
+
+        // ---- stage tags and the "next stop" readout ----------------------------------------------------------
+        const tags = PLATES.filter((p) => p.label).map((p) => {
+          const d = el("div", "f21-tag" + (p.mxc ? " f21-mxc" : ""), $("f21-tags"));
+          el("i", "", d); const s = el("span", "", d); el("b", "", s, p.label[0]); s.append(p.label[1]);
+          return { p, d, v: new THREE.Vector3() };
+        });
+        const STOPS = [[25, "NEXT STOP · <b>800 mK</b> STILL"], [12.5, "NEXT STOP · <b>100 mK</b> COLD PLATE"], [3, "NEXT STOP · <b>10 mK</b> MIXING CHAMBER"], [-1e9, "LAST STOP · <b>THE CHIP</b> · 10 mK"]];
+        let stopShown = -1;
+
+        // ---- v21: the key that falls out: 13's key, physical. It is computed on "key" (the chip flashes white-hot and throws
+        // it out, glowing), tumbles toward the lens from "falls" (a perspective approach: small at the chip, growing fast),
+        // lands ON "out" blade-tip first with sparks, the bow slams down on the kick 134.133, it hops and settles on the kick
+        // 134.393 — at 13's key position and height, so 13's key glides in where this one lies. Sparks are metal on enamel.
+        const KEYHEX = HR.cipher(64, 9113).toLowerCase();
+        const fxc = $("f21-fx"), DPR = window.devicePixelRatio || 1;
+        fxc.width = Math.round(1920 * DPR); fxc.height = Math.round(1080 * DPR);
+        const fx = fxc.getContext("2d"); fx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        const SLOT_X = 0.055 * 1920, SLOT_Y = 905, ADV = 17.6;
+        const B1 = L(134.133), B2 = L(134.393);
+        const LX = 1290, LY = 527, KS = 1.15, SYR = 0.56, HALF = 220 * KS, TIP = [LX - HALF, LY], TILT = -16;
+        const keyPath = "M0 0 H72 V72 H0 Z M22 25 V47 H48 V25 Z M72 26 H230 V44 H218 V58 H204 V44 H188 V54 H172 V44 H156 V60 H140 V44 H72 Z";
+        $("f21-keys").innerHTML = [0.16, 0.32].map(() => `<div class="f21-key f21-ghost"><svg viewBox="0 0 230 72" aria-hidden="true"><g transform="translate(230 0) scale(-1 1)"><path d="${keyPath}" fill-rule="evenodd" fill="#FFE6CC"/></g></svg></div>`).join("") +
+          `<div class="f21-key" id="f21-key"><svg viewBox="0 0 230 72" aria-hidden="true"><defs>
+            <path id="f21-kp" fill-rule="evenodd" d="${keyPath}"/><clipPath id="f21-kclip"><use href="#f21-kp"/></clipPath>
+            <linearGradient id="f21-kg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.5"/><stop offset="0.35" stop-color="#FFFFFF" stop-opacity="0"/><stop offset="0.7" stop-color="#111111" stop-opacity="0.06"/><stop offset="1" stop-color="#111111" stop-opacity="0.24"/></linearGradient></defs>
+            <g transform="translate(230 0) scale(-1 1)">
+              <use href="#f21-kp" fill="#888880" transform="translate(0 4)"/><use href="#f21-kp" fill="#F0ECE5"/>
+              <g clip-path="url(#f21-kclip)">
+                <rect x="0" y="0" width="230" height="72" fill="url(#f21-kg)"/>
+                <path d="M78 33 H226" stroke="rgba(17,17,17,0.22)" stroke-width="2.2"/><path d="M78 35.4 H226" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+                <path d="M18 21 H52 V51" fill="none" stroke="rgba(17,17,17,0.3)" stroke-width="2"/><path d="M18 51 H52" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+                <circle cx="10" cy="10" r="2.2" fill="rgba(17,17,17,0.35)"/><circle cx="62" cy="10" r="2.2" fill="rgba(17,17,17,0.35)"/>
+                <circle cx="10" cy="62" r="2.2" fill="rgba(17,17,17,0.35)"/><circle cx="62" cy="62" r="2.2" fill="rgba(17,17,17,0.35)"/>
+                <rect id="f21-kheat" x="0" y="0" width="230" height="72" fill="#FFF8EE" opacity="0"/>
+                <rect id="f21-kshade" x="0" y="0" width="230" height="72" fill="#111111" opacity="0"/>
+              </g>
+              <use href="#f21-kp" fill="none" stroke="#111111" stroke-width="1.6" stroke-linejoin="miter"/>
+            </g>
+            <text id="f21-ktext" x="30" y="41.4" font-family="IBM Plex Mono" font-weight="600" font-size="7.4" letter-spacing="1.4" fill="rgba(17,17,17,0.5)">X25519 · RECORDED KEY EXCHANGE</text></svg></div>`;
+        const keyEl = $("f21-key"), ghosts = Array.from(document.querySelectorAll(".f21-ghost")), kshadow = $("f21-kshadow");
+        const chipV = new THREE.Vector3(0, CHIP_Y - 0.5, 0);
+        const toScreen = (v) => { const p = v.clone().project(camera); return [(p.x + 1) * 960, (1 - p.y) * 540]; };
+        const rc = new THREE.Raycaster();
+        const onShelf = (sx, sy, out) => { // the shelf point under a screen point (camera as currently placed)
+          rc.setFromCamera(new THREE.Vector2(sx / 960 - 1, 1 - sy / 540), camera);
+          const o = rc.ray.origin, d = rc.ray.direction, k = d.y < -1e-4 ? (SHELF - o.y) / d.y : 400;
+          return out.set(o.x + d.x * k, SHELF, o.z + d.z * k);
+        };
+        const heatOf = (t) => (t < KEY ? 0 : 0.12 + 0.88 * Math.exp(-(t - KEY) * 1.7));
+        // the key's pose (centre x, y; rotation deg; scale; scaleY of the flip about its shaft, signed) at local time t
+        function keyPose(t) {
+          if (t < KEY) return null;
+          const flip = (u) => Math.cos(3 * Math.PI * (1 - u)); // three half turns about the shaft, face up on landing
+          if (t < LAND) {
+            const ua = (t - KEY) / (LAND - KEY), rot = TILT - 400 * (LAND - t);
+            const [cx, cy] = toScreen(chipV);
+            const sy = flip(ua) * lerp(1, SYR, smooth(FALL, LAND, t));
+            if (t < FALL) { // thrown out of the chip: a short pop up and out
+              const u = (t - KEY) / (FALL - KEY), e = 1 - (1 - u) * (1 - u);
+              return { x: cx + 70 * e, y: cy + 10 - 44 * e, rot, sc: 0.13 + 0.09 * u, sy };
+            }
+            const u = (t - FALL) / (LAND - FALL);
+            const P1 = [TIP[0] + HALF * Math.cos((TILT * Math.PI) / 180), TIP[1] + HALF * Math.sin((TILT * Math.PI) / 180)];
+            const sx0 = cx + 70, sy0 = cy - 34, wx = 1 - Math.pow(1 - u, 1.6), wy = Math.pow(u, 1.25);
+            const sc = 1 / (1 / 0.22 + (1 / KS - 1 / 0.22) * Math.pow(u, 0.95));
+            return { x: sx0 + (P1[0] - sx0) * wx, y: sy0 + (P1[1] - sy0) * wy, rot, sc, sy };
+          }
+          if (t < B1) { // blade tip down: the key pivots on its tip and the bow slams onto the shelf
+            const v = (t - LAND) / (B1 - LAND), th = TILT * (1 - v * v), a = (th * Math.PI) / 180;
+            return { x: TIP[0] + HALF * Math.cos(a), y: TIP[1] + HALF * Math.sin(a), rot: th, sc: KS, sy: SYR };
+          }
+          if (t < B2) { // the rebound: a hop, the bow lifting a little
+            const v = (t - B1) / (B2 - B1), h = 30 * 4 * v * (1 - v);
+            return { x: LX + 6 * Math.sin(Math.PI * v), y: LY - h, rot: -5 * Math.sin(Math.PI * v), sc: KS * (1 + 0.02 * Math.sin(Math.PI * v)), sy: SYR, hop: h };
+          }
+          const w = t - B2, d = Math.exp(-w * 13);
+          return { x: LX, y: LY - 4 * Math.abs(Math.sin(w * 34)) * d, rot: 1.6 * Math.sin(w * 34) * d, sc: KS, sy: SYR };
+        }
+        const placeKey = (node, p, alpha) => {
+          if (!p || alpha <= 0.002) { node.style.opacity = "0"; return; }
+          node.style.opacity = alpha.toFixed(3);
+          node.style.transform = `translate(${(p.x - 220).toFixed(1)}px, ${(p.y - 68.75).toFixed(1)}px) rotate(${p.rot.toFixed(2)}deg) scale(${p.sc.toFixed(4)}, ${(p.sc * p.sy).toFixed(4)})`;
+        };
+        function drawKey(t) {
+          const p = keyPose(t);
+          placeKey(keyEl, p, p ? smooth(KEY - 0.01, KEY + 0.05, t) : 0);
+          if (p) {
+            const h = heatOf(t), f = Math.abs(p.sy) / Math.max(0.01, Math.abs(p.sy) > SYR ? 1 : SYR);
+            $("f21-kheat").setAttribute("opacity", (0.92 * h).toFixed(3));
+            $("f21-kshade").setAttribute("opacity", (0.5 * clamp01(1 - f)).toFixed(3));
+            $("f21-ktext").setAttribute("opacity", p.sy > 0 ? 1 : 0);
+            keyEl.style.filter = `drop-shadow(0 0 1.5px rgba(10,10,10,0.95)) drop-shadow(0 0 ${(6 + 34 * h).toFixed(1)}px rgba(232,93,38,${(0.35 + 0.55 * h).toFixed(2)}))`;
+          }
+          // two trailing copies while it flies (a shutter smear on the fall only)
+          ghosts.forEach((g, i) => {
+            const lag = 0.035 * (i + 1), q = t > FALL && t < LAND + 0.03 ? keyPose(Math.max(KEY, Math.min(t, LAND) - lag)) : null;
+            placeKey(g, q, (i ? 0.14 : 0.28) * smooth(FALL, FALL + 0.2, t) * (1 - smooth(LAND - 0.05, LAND + 0.03, t)));
+          });
+          // the contact shadow on the shelf: soft and wide while the key is high, tight and dark on contact
+          if (!p || t < FALL) { kshadow.style.opacity = "0"; return; }
+          const u = t < LAND ? (t - FALL) / (LAND - FALL) : 1, lift = t < LAND ? 1 - u : (p.hop || 0) / 30;
+          kshadow.style.opacity = (0.85 * smooth(0.25, 1, u) * (1 - 0.35 * lift)).toFixed(3);
+          kshadow.style.transform = `translate(${(p.x - 280).toFixed(1)}px, ${(LY + 30 - 38).toFixed(1)}px) scale(${(0.35 + 0.65 * u * (1 - 0.1 * lift)).toFixed(3)}, ${(0.6 + 0.4 * u).toFixed(3)})`;
+        }
+
+        // sparks: metal on enamel. Each spray is seeded; positions are simulated from the spawn to t (pure function of t).
+        const SPRAYS = [];
+        const spray = (t0, x, y, n, a0, a1, floor, sp, seed) => {
+          const r = HR.rng(seed);
+          for (let i = 0; i < n; i++) {
+            const a = ((a0 + (a1 - a0) * r()) * Math.PI) / 180, v = sp * (0.3 + 0.7 * r());
+            SPRAYS.push({ t0: t0 + r() * 0.03, x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 0.35 + 0.55 * r(), floor, hot: r() });
+          }
+        };
+        const simTo = (s, dt) => { // fixed-step ballistic flight with a damped bounce on the shelf line
+          let x = s.x, y = s.y, vx = s.vx, vy = s.vy; const h = 1 / 240, n = Math.floor(dt / h);
+          for (let k = 0; k < n; k++) { vy += 2400 * h; x += vx * h; y += vy * h; if (y > s.floor && vy > 0) { y = s.floor; vy *= -0.32; vx *= 0.7; } }
+          return [x, y];
+        };
+        function drawSparks(t) {
+          for (const s of SPRAYS) {
+            const dt = t - s.t0; if (dt <= 0 || dt > s.life) continue;
+            const fade = 1 - dt / s.life, [x, y] = simTo(s, dt), [x0, y0] = simTo(s, Math.max(0, dt - 0.024));
+            fx.lineCap = "round";
+            fx.strokeStyle = `rgba(232,93,38,${(0.5 * fade).toFixed(3)})`; fx.lineWidth = 5;
+            fx.beginPath(); fx.moveTo(x0, y0); fx.lineTo(x, y); fx.stroke();
+            fx.strokeStyle = s.hot > 0.35 ? `rgba(255,246,234,${fade.toFixed(3)})` : `rgba(255,190,140,${fade.toFixed(3)})`; fx.lineWidth = 2;
+            fx.beginPath(); fx.moveTo(x0, y0); fx.lineTo(x, y); fx.stroke();
+          }
+        }
+        function drawFx(t) {
+          fx.clearRect(0, 0, 1920, 1080);
+          if (t < KEY) return;
+          drawSparks(t);
+          // the session key's hex prints under the derivation once the key is down
+          const n = Math.floor(64 * clamp01((t - LAND - 0.06) / 0.36));
+          if (n > 0) {
+            fx.font = '600 29px "IBM Plex Mono"'; fx.textAlign = "left"; fx.textBaseline = "middle";
+            fx.shadowColor = "rgba(232,93,38,0.6)"; fx.shadowBlur = 10; fx.fillStyle = "#F0ECE5";
+            for (let i = 0; i < n; i++) fx.fillText(KEYHEX[i], SLOT_X + i * ADV, SLOT_Y);
+            fx.shadowBlur = 0;
+          }
+        }
+
+        // ---- timeline -----------------------------------------------------------------------------------------
+        const tl = gsap.timeline({ paused: true });
+        const clock = { t: 0 };
+        tl.fromTo(clock, { t: 0 }, { t: DUR, duration: DUR, ease: "none" }, 0);
+        const stage = HR.stage($("root"), { seed: 21 });
+        const cam = stage.cam;
+        // the type rides a slow push of its own (carrier) — no elastic kicks
+        tl.fromTo(cam, { z: 1.0, y: -6 }, { z: 1.045, y: 4, duration: DUR, ease: "none" }, 0);
+
+        // lead words: soft entrances; "The" is sung on the frame's first instant and arrives with the glide.
+        // "falls" and "out" sink into place: the words fall.
+        for (const [s, t, big] of spans) {
+          if (big) continue;
+          if (t === T0) continue;
+          WOW.word(tl, s, L(t), { kind: t >= 133.2 ? "sink" : "rise", dur: 0.3 });
+        }
+        // the hero: a soft hit (small overshoot), a gentle punch of the row; the physical key comes out of the chip (drawKey)
+        const [keySpan, , , keyRow] = spans.find((x) => x[2]);
+        // v21: sparks — from the chip as the key is thrown out, then metal on enamel at each impact; the world shakes with them
+        placeCamera(KEY);
+        const [chx, chy] = toScreen(chipV);
+        spray(KEY, chx, chy, 26, 0, 360, chy + 130, 900, 2101);
+        spray(LAND, TIP[0] + 6, LY + 14, 54, -175, -95, LY + 40, 1150, 2102);
+        spray(LAND, TIP[0] + 6, LY + 14, 16, -85, -20, LY + 40, 800, 2103);
+        spray(B1, LX + HALF - 40, LY + 18, 40, -85, -5, LY + 40, 1050, 2104);
+        spray(B2, LX - HALF + 30, LY + 18, 14, -170, -110, LY + 40, 650, 2105);
+        spray(B2, LX + HALF - 40, LY + 18, 14, -70, -10, LY + 40, 650, 2106);
+        WOW.shake(tl, $("f21-world"), LAND, { amp: 7, dur: 0.3, seed: 21 });
+        WOW.shake(tl, $("f21-world"), B1, { amp: 5, dur: 0.26, seed: 22 });
+        WOW.shake(tl, $("f21-world"), B2, { amp: 3, dur: 0.24, seed: 23 });
+        const IMPACTS = [[LAND, 1], [B1, 0.75], [B2, 0.45]];
+        const impactAt = (t) => IMPACTS.reduce((m, [ti, s]) => Math.max(m, t < ti ? 0 : s * Math.exp(-(t - ti) / 0.22)), 0);
+        const landP = new THREE.Vector3(), heatP = new THREE.Vector3();
+        placeCamera(LAND); onShelf(LX, LY + 30, landP);
+        HR.hero(tl, keySpan, KEY, { spread: 16, over: 1.12, pre: 0.16, sharp: true });
+        WOW.punch(tl, keyRow, KEY, { s: 1.035, dur: 0.5 });
+        WOW.pulse(tl, $("f21-l26"), { kind: "kick", amt: 0.012, y: 2 });
+
+        // the derivation types on after the flash; the label and the marker after the last character lands
+        const typeOn = (id, at, d) => tl.fromTo("#" + id, { clipPath: "inset(-20% 100% -20% 0)" }, { clipPath: "inset(-20% 0% -20% 0)", duration: d, ease: "none" }, at);
+        typeOn("f21-s1", KEY + 0.08, 0.4);
+        typeOn("f21-s2", KEY + 0.42, 0.36);
+        tl.fromTo("#f21-klabel", { opacity: 0 }, { opacity: 1, duration: 0.2, immediateRender: false }, FALL + 0.1);
+        tl.fromTo("#f21-mark", { clipPath: "inset(-20% 100% -30% -5%)" }, { clipPath: "inset(-20% 0% -30% -5%)", duration: 0.3, ease: "none" }, LAND + 0.08);
+        tl.fromTo("#f21-foot", { opacity: 0 }, { opacity: 1, duration: 0.3, immediateRender: false }, PUSH1 + 0.05); // v19: once inside (was 0.4, under the fridge)
+
+        // switches: glideDown in from 12, glideL out to 13 (one beat each side)
+        const host = document.getElementById("el-21-fridge") || $("root");
+        WOW.transition(tl, host, { in: "glideDown", out: "glideL", dur: 0.46, total: DUR });
+
+        const v = new THREE.Vector3();
+        function render() {
+          const t = tl.time(), T = t + T0;
+          stage.apply(T);
+          WOW.draw(tl, T0);
+          renderFridge(t);
+          const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.12);
+          const camY = placeCamera(t);
+          // the computation: pulses run faster and denser toward "key"; on the flash they all fire, then thin out
+          const run = smooth(0.3, KEY, t), post = t > KEY ? Math.exp(-(t - KEY) * 3) : 0;
+          for (let i = 0; i < NP; i++) {
+            const p = pulses[i], path = COAX[p.line];
+            const u = ((t * p.sp * (0.6 + 1.6 * run) + p.ph) % 1);
+            const s = u * (path.length - 1), k = Math.floor(s), w = s - k, a = path[k], b = path[Math.min(k + 1, path.length - 1)];
+            posAttr.setXYZ(PULSE0 + i, a[0] + (b[0] - a[0]) * w, a[1] + (b[1] - a[1]) * w, a[2] + (b[2] - a[2]) * w);
+            aVis.setX(PULSE0 + i, (0.35 + 0.65 * run) * smooth(p.born * 0.6, p.born * 0.6 + 0.25, t) * (1 - 0.7 * post * (i % 3 ? 1 : 0)));
+          }
+          posAttr.needsUpdate = true; aVis.needsUpdate = true;
+          // the hum: the whole cryostat trembles a hair with the bass
+          group.position.set(0.04 * bass * Math.sin(T * 2 * Math.PI * 23), 0, 0.04 * bass * Math.cos(T * 2 * Math.PI * 19));
+          const flash = keyEnv(t);
+          uni.uTime.value = t; uni.uHum.value = bass; uni.uRun.value = run; uni.uFlash.value = flash;
+          // v21: the stages light one per hit (flare white-hot, then warm; the chip pre-heats the mixing chamber from the
+          // cold plate's hit); the shelf takes the chip's light from "key"
+          for (let i = 0; i < 6; i++) {
+            const d = t - STAGE_T[i], lit = Math.max(d < 0 ? 0 : smooth(0, 0.04, d), i === 5 ? 0.4 * smooth(STAGE_T[4], KEY, t) : 0), fl = d < 0 ? 0 : smooth(0, 0.015, d) * Math.exp(-d / 0.22);
+            uni.uLit.value[i] = lit; uni.uFlare.value[i] = fl;
+            bandMats[i].uniforms.uLit.value = lit; bandMats[i].uniforms.uFlare.value = fl;
+          }
+          uni.uLit.value[6] = smooth(KEY - 0.02, KEY + 0.04, t); uni.uFlare.value[6] = flash;
+          const imp = impactAt(t), sm = shelfMat.uniforms;
+          sm.uPool.value = smooth(KEY - 0.04, KEY + 0.12, t) * (0.78 + 0.35 * flash) + 0.4 * imp;
+          sm.uImpact.value = imp; sm.uLand.value.copy(landP);
+          sm.uHeat.value = t > FALL ? heatOf(t) * smooth(FALL, LAND, t) : 0;
+          if (t > FALL) { const p = keyPose(t); if (p) onShelf(p.x, LY + 30, heatP); sm.uHeatP.value.copy(heatP); }
+          uni.uScale.value = 540 / Math.tan((camera.fov * Math.PI) / 360);
+          uni.uBloom.value = 0.08 * (1 + 0.6 * bass + 0.6 * kick) + 0.06 * flash;
+          hazeMat.uniforms.uHaze.value = 0.3 + 0.35 * run + 0.5 * flash;
+          haze.quaternion.copy(camera.quaternion);
+          renderer.render(scene, camera);
+          // tags follow their plates' right-hand rim as seen from the camera; they fade at the frame's edges
+          for (const g of tags) {
+            const a = -camAz + 0.12;
+            v.set(g.p.r * Math.cos(a), g.p.y, g.p.r * Math.sin(a)).applyMatrix4(group.matrixWorld);
+            const [x, y] = toScreen(v);
+            g.d.style.transform = `translate(${(x + 14).toFixed(1)}px, ${(y - 10).toFixed(1)}px)`;
+            g.d.style.opacity = (smooth(20, 110, y) * (1 - smooth(860, 940, y)) * (1 - smooth(1700, 1800, x))).toFixed(3);
+          }
+          // the next stop: the first stage still below the camera
+          const k = STOPS.findIndex(([y]) => camY > y);
+          if (k !== stopShown) { stopShown = k; $("f21-stop").innerHTML = STOPS[k][1]; }
+          drawKey(t);
+          drawFx(t);
+          HR.glow(keyRow, T, 0.5, 0.9);
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines["21-fridge"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

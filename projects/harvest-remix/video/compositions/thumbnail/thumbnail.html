@@ -1,0 +1,446 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- YouTube thumbnail (v13, F7): 01-seal frozen with the seal already pressed and the title clean; snapshot at t=1.0, saved as renders/thumbnail-v13.png (1280x720). Derived from Frame 1 — seal (intro, 0–7.96), v10. The title poster (t=0 is the thumbnail) over hot wax pooling on the letter;
+         the stamp comes down on the first kick and lifts off an embossed seal. v10 detail pass: shaded flaps, fold
+         highlights, raking light, a postal sorting barcode, a sculpted seal, harvested copies in the background.
+         v11: the outbox under the envelope (a-to-b mail, SENDING -> SENT on the stamp) opens the bookend 15 closes.
+         SYSTEM.md v4 reference frame.
+         v13 (SYSTEM.md V7): black ground, no ghost wall / ghost copies / bokeh; no orange flip on the stamp, the seal's
+         light rakes the card instead; the outbox footer plants TLS 1.3 · X25519 · FORWARD SECRECY (22 strikes it). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-700.woff2") format("woff2"); font-weight: 700; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+        #th-mark { position: absolute; left: 1592px; top: 884px; font-family: "Caveat Brush"; font-size: 92px; line-height: 1;
+          color: var(--fire); transform: rotate(-5deg); white-space: nowrap; }
+        #th-arrow { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+
+        /* ---- background plane: the ciphertext wall and the warm light behind the letter ---- */
+        #f01-wall { position: absolute; left: -120px; top: -60px; width: 2400px; opacity: 0.075;
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 26px; line-height: 64px;
+          letter-spacing: 0.14em; color: var(--cream); white-space: pre; }
+        #f01-light { position: absolute; left: 1190px; top: 250px; width: 840px; height: 620px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.13), rgba(232, 93, 38, 0.04) 55%, rgba(232, 93, 38, 0) 100%);
+          transform-origin: 50% 50%; }
+
+        /* ---- midground plane: the letter, object 0001 ---- */
+        #f01-cardpos { position: absolute; left: 1186px; top: 318px; width: 646px; height: 404px; }
+        #f01-cardpos::before { content: ""; position: absolute; left: 3%; right: 3%; bottom: -46px; height: 70px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(0,0,0,0.55), rgba(0,0,0,0)); }
+        #f01-rake { position: absolute; inset: 0; pointer-events: none;
+          background: linear-gradient(118deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 36%, rgba(17,17,17,0) 58%, rgba(17,17,17,0.13)); }
+        /* harvested copies: the same letter, filed again and again, out of focus behind */
+        .f01-ghost { position: absolute; width: 576px; height: 360px; background-color: #F0ECE5; background-size: 288px 180px;
+          filter: brightness(0.24) blur(3px); opacity: 0.42; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+        .f01-ghost svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #f01-card { position: absolute; inset: 0; background-color: var(--cream); background-size: 288px 180px;
+          box-shadow: inset 0 2px 0 rgba(240,236,229,.9), inset 0 -3px 0 rgba(110,100,90,.35), 0 40px 80px rgba(0,0,0,.5), 0 6px 14px rgba(0,0,0,.35), 18px 16px 65px rgba(232,93,38,.12); }
+        .f01-flap { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #f01-hex { position: absolute; left: 44px; top: 40px; width: 360px; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 20px; line-height: 31px; letter-spacing: 0.08em; color: #5F5B54; white-space: pre; }
+        /* the outbox: the a-to-b mail client the letter leaves from (15-secure closes on the same window) */
+        #f01-outbox { position: absolute; left: 0; top: 474px; width: 646px; height: 100px; overflow: visible; }
+        #f01-tls { position: absolute; left: 0; top: 590px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 14px;
+          letter-spacing: 0.14em; color: var(--cream-muted); white-space: nowrap; }
+        #f01-tls b { font-weight: 600; color: var(--cream); }
+        #f01-tls i { font-style: normal; color: var(--fire); }
+        #f01-label { position: absolute; left: 0; top: 426px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 15px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); white-space: nowrap; }
+        /* the seal sits on the flap's point */
+        #f01-sealpos { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+        #f01-wax { position: absolute; left: -100px; top: -100px; width: 200px; height: 200px; overflow: visible; }
+        #f01-seal { position: absolute; left: -80px; top: -80px; width: 160px; height: 160px; opacity: 0; overflow: visible; }
+        #f01-stamp { position: absolute; left: -82px; top: -82px; width: 164px; height: 164px; border-radius: 50%;
+          background: var(--ink); box-shadow: inset 0 0 0 3px #2c2c2a, inset 0 0 0 12px var(--ink), inset 0 0 0 14px #3a3a37;
+          opacity: 0; }
+        #f01-flare { position: absolute; left: -420px; top: -300px; width: 840px; height: 600px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(255, 170, 120, 0.62), rgba(232, 93, 38, 0.22) 45%, rgba(232, 93, 38, 0) 100%);
+          mix-blend-mode: screen; opacity: 0; pointer-events: none; }
+        .f01-drop { position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; border-radius: 50%;
+          background: var(--fire); opacity: 0; }
+        .f01-spoke { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+        .f01-spoke i { position: absolute; display: block; left: -1.5px; width: 3px; background: var(--ink);
+          transform-origin: 50% 100%; opacity: 0; }
+        .f01-ring { position: absolute; width: 140px; height: 140px; left: -70px; top: -70px; border-radius: 50%;
+          border: 3px solid var(--ink); box-sizing: border-box; opacity: 0; }
+
+        /* ---- foreground plane: chrome and the title ---- */
+        #f01-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); }
+        #f01-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: var(--f01-rule, var(--fire));
+          vertical-align: middle; margin-right: 16px; }
+        #f01-title { position: absolute; left: 5.5cqw; top: 15.5cqw; font-family: "Barlow"; font-weight: 900;
+          font-size: 10cqw; line-height: 0.9; letter-spacing: -0.04em; }
+        .f01-row { display: block; white-space: nowrap; }
+        #f01-now { color: var(--cream); }
+        #f01-later { color: var(--fire); margin-top: 0.04em; }
+        .f01-c { display: inline-block; position: relative; }
+        .f01-x { position: absolute; left: 50%; top: 0.3em; transform: translateX(-50%); font-family: "IBM Plex Mono";
+          font-weight: 600; font-size: 0.74em; letter-spacing: 0; -webkit-text-stroke: 0.03em currentColor; opacity: 0; }
+
+        /* ---- near plane: out-of-focus glyphs passing in front ---- */
+        .f01-bokeh { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--cream);
+          opacity: 0.035; filter: blur(14px); white-space: nowrap; }
+      </style>
+
+      <div data-hf-id="hf-tvui" id="root" data-composition-id="thumbnail" data-width="1920" data-height="1080" data-duration="7.96">
+        <div data-hf-id="hf-mwgg" class="hr-layer" id="f01-bg" data-depth="0.3" data-dof="5" data-layout-ignore>
+          <div data-hf-id="hf-c3l5" id="f01-wall"></div>
+          <div data-hf-id="hf-z41l" id="f01-ghosts"></div>
+          <div data-hf-id="hf-mua3" id="f01-light"></div>
+        </div>
+        <div data-hf-id="hf-pokw" class="hr-layer" id="f01-mid" data-depth="0.65">
+          <div data-hf-id="hf-pmsn" id="f01-cardpos">
+            <div data-hf-id="hf-dsib" id="f01-card">
+              <svg data-hf-id="hf-xby7" class="f01-flap" id="f01-flap" viewBox="0 0 576 360" preserveAspectRatio="none">
+                <defs data-hf-id="hf-mh0t">
+                  <linearGradient data-hf-id="hf-4pg2" id="f01-gtop" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-aa8g" offset="0" stop-color="#111" stop-opacity="0.015" /><stop data-hf-id="hf-6b9g" offset="1" stop-color="#111" stop-opacity="0.085" /></linearGradient>
+                  <linearGradient data-hf-id="hf-ly6u" id="f01-gbot" x1="0" y1="1" x2="0" y2="0"><stop data-hf-id="hf-frap" offset="0" stop-color="#111" stop-opacity="0.07" /><stop data-hf-id="hf-up33" offset="1" stop-color="#111" stop-opacity="0" /></linearGradient>
+                  <linearGradient data-hf-id="hf-cqqn" id="f01-gl" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-ezmw" offset="0" stop-color="#111" stop-opacity="0.06" /><stop data-hf-id="hf-8olb" offset="1" stop-color="#111" stop-opacity="0" /></linearGradient>
+                  <linearGradient data-hf-id="hf-9vdb" id="f01-gr" x1="1" y1="0" x2="0" y2="0"><stop data-hf-id="hf-4366" offset="0" stop-color="#111" stop-opacity="0.075" /><stop data-hf-id="hf-8aaa" offset="1" stop-color="#111" stop-opacity="0" /></linearGradient>
+                  <filter data-hf-id="hf-8468" id="f01-soft" x="-10%" y="-10%" width="120%" height="140%"><feGaussianBlur data-hf-id="hf-ehxa" stdDeviation="3.5" /></filter>
+                </defs>
+                <path data-hf-id="hf-gyin" d="M0 0 L250 190 L0 360 Z" fill="url(#f01-gl)" />
+                <path data-hf-id="hf-z5gb" d="M576 0 L326 190 L576 360 Z" fill="url(#f01-gr)" />
+                <path data-hf-id="hf-8m63" d="M0 360 L246 174 Q288 150 330 174 L576 360 Z" fill="url(#f01-gbot)" />
+                <path data-hf-id="hf-buc3" d="M0 360 L246 174 Q288 150 330 174 L576 360" fill="none" stroke="rgba(17,17,17,0.10)" stroke-width="1.5" />
+                <path data-hf-id="hf-2371" d="M2 360 L248 178 M574 360 L328 178" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
+                <path data-hf-id="hf-ydbb" d="M0 2 L288 190 L576 2" fill="none" stroke="rgba(17,17,17,0.30)" stroke-width="7" filter="url(#f01-soft)" />
+                <path data-hf-id="hf-ol9j" d="M0 0 L288 180 L576 0 Z" fill="url(#f01-gtop)" />
+                <path data-hf-id="hf-gflj" d="M0 0 L288 180 L576 0" fill="none" stroke="rgba(17,17,17,0.24)" stroke-width="1.6" />
+                <path data-hf-id="hf-x8q3" d="M8 0 L288 173 L568 0" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1" />
+                <path data-hf-id="hf-iwmt" d="M0 1.2 H576" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" />
+                <text data-hf-id="hf-z7pc" x="26" y="340" font-family="IBM Plex Mono" font-weight="500" font-size="11" letter-spacing="2.2" fill="rgba(17,17,17,0.72)">A. · TUE 09.03.2021 · 14:02</text>
+                <g data-hf-id="hf-oq0f" id="f01-sort"></g>
+              </svg>
+              <div data-hf-id="hf-moja" id="f01-rake"></div>
+              <div data-hf-id="hf-m3t4" id="f01-hex"></div>
+              <div data-hf-id="hf-3gac" id="f01-sealpos">
+                <div data-hf-id="hf-ts50" id="f01-flare" data-layout-ignore></div>
+                <div data-hf-id="hf-skci" id="f01-spokes"></div>
+                <svg data-hf-id="hf-ucxj" id="f01-wax" class="hr-glowbox" viewBox="-80 -80 160 160" preserveAspectRatio="xMidYMid meet"><path data-hf-id="hf-6msx" id="f01-waxpath" fill="#E85D26" /><path data-hf-id="hf-dxbf" id="f01-waxhi" fill="none" stroke="rgba(240,236,229,0.42)" stroke-width="3" stroke-linecap="round" /></svg>
+                <svg data-hf-id="hf-9bok" id="f01-seal" class="hr-glowbox" viewBox="-64 -64 128 128" data-layout-allow-overlap>
+                  <defs data-hf-id="hf-vl9d">
+                    <radialGradient data-hf-id="hf-4u9m" id="f01-wg" cx="0.38" cy="0.34" r="0.78"><stop data-hf-id="hf-9ji3" offset="0" stop-color="#F68C5C" /><stop data-hf-id="hf-ecoc" offset="0.42" stop-color="#E85D26" /><stop data-hf-id="hf-w92l" offset="0.82" stop-color="#C94A1C" /><stop data-hf-id="hf-830a" offset="1" stop-color="#A63B14" /></radialGradient>
+                    <radialGradient data-hf-id="hf-eu99" id="f01-wr" cx="0.5" cy="0.5" r="0.5"><stop data-hf-id="hf-7xzq" offset="0.82" stop-color="#B9431A" /><stop data-hf-id="hf-13mw" offset="1" stop-color="#8E3010" /></radialGradient>
+                  </defs>
+                  <path data-hf-id="hf-50an" id="f01-rim" fill="url(#f01-wr)" />
+                  <circle data-hf-id="hf-yt0v" r="50" fill="url(#f01-wg)" />
+                  <circle data-hf-id="hf-cvyr" r="43.5" fill="none" stroke="rgba(255,206,176,0.38)" stroke-width="1.2" transform="translate(0.8 0.8)" />
+                  <circle data-hf-id="hf-ejau" r="41" fill="rgba(17,17,17,0.06)" stroke="rgba(17,17,17,0.30)" stroke-width="2.4" />
+                  <g data-hf-id="hf-mbhe" id="f01-beads"></g>
+                  <text data-hf-id="hf-3vod" x="1.6" y="15.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(17,17,17,0.36)">a.</text>
+                  <text data-hf-id="hf-rrqi" x="-1.1" y="12.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(255,214,188,0.5)">a.</text>
+                  <text data-hf-id="hf-av18" x="0" y="13.8" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="#D4521E">a.</text>
+                  <path data-hf-id="hf-yf3i" d="M-38 -24 A44 44 0 0 1 -8 -45" fill="none" stroke="rgba(255,236,224,0.6)" stroke-width="3.5" stroke-linecap="round" />
+                  <path data-hf-id="hf-4l3v" d="M30 34 A44 44 0 0 1 12 44" fill="none" stroke="rgba(255,236,224,0.22)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <div data-hf-id="hf-jlz1" id="f01-drops"></div>
+                <div data-hf-id="hf-49yy" id="f01-stamp"></div>
+              </div>
+            </div>
+            <div data-hf-id="hf-ch6k" id="f01-label">OBJ 0001 · OPEN</div>
+            <div data-hf-id="hf-qnwl" id="f01-tls"><b data-hf-id="hf-beoe">TLS 1.3</b> · X25519 · FORWARD SECRECY <i data-hf-id="hf-q7i5">✓</i></div>
+            <svg data-hf-id="hf-k2fc" id="f01-outbox" viewBox="0 0 646 100" aria-hidden="true">
+              <defs data-hf-id="hf-ws6g">
+                <linearGradient data-hf-id="hf-anaq" id="f01-obg" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-i3x1" offset="0" stop-color="#22221f"/><stop data-hf-id="hf-e5a6" offset="1" stop-color="#171716"/></linearGradient>
+                <linearGradient data-hf-id="hf-1upr" id="f01-obrake" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-bzfr" offset="0" stop-color="#ffffff" stop-opacity="0.06"/><stop data-hf-id="hf-2rtj" offset="0.4" stop-color="#ffffff" stop-opacity="0"/><stop data-hf-id="hf-a8gc" offset="1" stop-color="#000000" stop-opacity="0.2"/></linearGradient>
+                <filter data-hf-id="hf-k6tg" id="f01-obsoft" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur data-hf-id="hf-5rbr" stdDeviation="12" /></filter>
+              </defs>
+              <rect data-hf-id="hf-7wxp" x="14" y="22" width="632" height="92" fill="#000" opacity="0.55" filter="url(#f01-obsoft)" />
+              <rect data-hf-id="hf-kd1y" x="0" y="0" width="646" height="100" fill="url(#f01-obg)" stroke="#3a3a37" stroke-width="2" />
+              <!-- title bar: the traffic lights and the address bar with its padlock -->
+              <rect data-hf-id="hf-d8vo" x="1" y="1" width="644" height="38" fill="#262624" />
+              <path data-hf-id="hf-ko8c" d="M1 2 H645" stroke="rgba(240,236,229,0.32)" stroke-width="1.5" />
+              <circle data-hf-id="hf-1kfo" cx="20" cy="20" r="5" fill="#E85D26" /><circle data-hf-id="hf-unbo" cx="37" cy="20" r="5" fill="#505048" /><circle data-hf-id="hf-jadj" cx="54" cy="20" r="5" fill="#505048" />
+              <rect data-hf-id="hf-bd5n" x="74" y="8" width="560" height="24" fill="#111111" stroke="#3a3a37" stroke-width="1.5" />
+              <g data-hf-id="hf-8520" transform="translate(90 19) scale(0.72)">
+                <path data-hf-id="hf-2key" d="M-6 -1 V-6 a6 6 0 0 1 12 0 V-1" fill="none" stroke="#E85D26" stroke-width="2.6" />
+                <rect data-hf-id="hf-vzf6" x="-9" y="-1" width="18" height="13" fill="#E85D26" />
+              </g>
+              <text data-hf-id="hf-m4xu" x="106" y="25" font-family="IBM Plex Mono" font-weight="500" font-size="13" letter-spacing="0.4"><tspan data-hf-id="hf-v6cc" fill="#888880">https://</tspan><tspan data-hf-id="hf-e03j" fill="#F0ECE5">mail.a-to-b.net</tspan><tspan data-hf-id="hf-xhkl" fill="#888880">/outbox/0001</tspan></text>
+              <rect data-hf-id="hf-j52t" x="560" y="12" width="68" height="16" fill="none" stroke="#E85D26" stroke-width="1.3" />
+              <text data-hf-id="hf-7xur" x="594" y="24" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="11" letter-spacing="1.2" fill="#E85D26">TLS 1.3</text>
+              <path data-hf-id="hf-ndal" d="M1 39.5 H645" stroke="#2c2c29" stroke-width="1.5" />
+              <!-- the message row -->
+              <text data-hf-id="hf-8f0w" x="18" y="76" font-family="IBM Plex Mono" font-weight="500" font-size="14" letter-spacing="1.6" fill="#888880"><tspan data-hf-id="hf-ojm1" fill="#F0ECE5" font-weight="600">OUTBOX · 1</tspan> · TO B. · TUE 09 MAR 2021 · 14:02</text>
+              <g data-hf-id="hf-w10v" id="f01-obpend">
+                <rect data-hf-id="hf-dxdk" x="490" y="56" width="138" height="28" fill="none" stroke="#505048" stroke-width="1.5" />
+                <text data-hf-id="hf-qpw0" x="559" y="75" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="13" letter-spacing="2.2" fill="#888880">SENDING</text>
+              </g>
+              <g data-hf-id="hf-yyi2" id="f01-obsent" opacity="0">
+                <rect data-hf-id="hf-dj6h" x="490" y="56" width="138" height="28" fill="#E85D26" />
+                <path data-hf-id="hf-82sp" d="M491 57.5 H627" stroke="rgba(255,220,200,0.6)" stroke-width="1.5" />
+                <text data-hf-id="hf-jrq0" x="548" y="75" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="13" letter-spacing="2.2" fill="#111111">SENT</text>
+                <path data-hf-id="hf-efvp" d="M589 70 l5 5 l10 -11" fill="none" stroke="#111111" stroke-width="2.6" stroke-linecap="square" />
+              </g>
+              <rect data-hf-id="hf-fp9m" x="1" y="96" width="644" height="3" fill="#111111" />
+              <rect data-hf-id="hf-j8m9" id="f01-obprog" x="1" y="96" width="0" height="3" fill="#E85D26" />
+              <rect data-hf-id="hf-sh10" x="0" y="0" width="646" height="100" fill="url(#f01-obrake)" />
+            </svg>
+          </div>
+        </div>
+        <div data-hf-id="hf-039x" class="hr-layer" id="f01-fg" data-depth="1">
+          <div data-hf-id="hf-7we6" id="f01-kicker">NEAD</div>
+          <div data-hf-id="hf-7dw5" id="f01-title">
+            <span data-hf-id="hf-0kko" class="f01-row" id="f01-now">harvest now,</span>
+            <span data-hf-id="hf-ldp1" class="f01-row" id="f01-later"></span>
+          </div>
+        </div>
+        <div data-hf-id="hf-0dwy" class="hr-layer" id="f01-near" data-depth="1.7" data-layout-ignore></div>
+        <svg data-hf-id="hf-tx6h" id="th-arrow" viewBox="0 0 1920 1080" aria-hidden="true"><path data-hf-id="hf-pr11" d="M1600 920 C 1580 930, 1568 928, 1556 920 M1556 920 l 14 -10 M1556 920 l 16 6" fill="none" stroke="#E85D26" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div data-hf-id="hf-vj3i" id="th-mark">(it isn't)</div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 7.96;
+          const STAMP = 6.117; // the first kick
+          const RINGS = [6.439, 6.737, 7.044];
+          const FILL = [7.036, 7.175, 7.338, 7.477, 7.593, 7.732, 7.918];
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const h01 = (a, b) => HR.rng(a * 7919 + b * 104729 + 13)();
+
+          // ---- static build ---------------------------------------------------------------------------------
+
+          // paper: seeded fibre noise baked once into the card's background
+          (() => {
+            const c = document.createElement("canvas"); c.width = 288; c.height = 180;
+            const x = c.getContext("2d"), r = HR.rng(404);
+            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 288, 180);
+            const img = x.getImageData(0, 0, 288, 180);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 14; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+            x.putImageData(img, 0, 0);
+            x.strokeStyle = "rgba(110,100,90,0.10)"; x.lineWidth = 0.6;
+            for (let k = 0; k < 70; k++) { const px = r() * 288, py = r() * 180, a = r() * Math.PI, l = 6 + r() * 16;
+              x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.4); x.stroke(); }
+            const url = `url(${c.toDataURL("image/png")})`;
+            $("f01-card").style.backgroundImage = url;
+            // harvested copies behind: the same letter, filed again, out of focus
+            [].forEach(([l, tp, rot], i) => {
+              const g = el("div", "f01-ghost", $("f01-ghosts"));
+              Object.assign(g.style, { left: l + "px", top: tp + "px", transform: `rotate(${rot}deg)`, backgroundImage: url });
+              g.innerHTML = '<svg viewBox="0 0 576 360" preserveAspectRatio="none"><path d="M0 0 L288 180 L576 0 Z" fill="rgba(17,17,17,0.09)"/><path d="M0 0 L288 180 L576 0" fill="none" stroke="rgba(17,17,17,0.35)" stroke-width="3"/><circle cx="288" cy="180" r="34" fill="#E85D26"/></svg>';
+            });
+          })();
+
+          // postal sorting barcode (fire ink) along the bottom edge of the flap side
+          (() => {
+            const g = $("f01-sort"), r = HR.rng(611);
+            for (let x = 330, i = 0; i < 46; i++, x += 4.9) {
+              const tall = r() < 0.5, b = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+              b.setAttribute("x", x.toFixed(1)); b.setAttribute("y", tall ? 326 : 334); b.setAttribute("width", 2.2);
+              b.setAttribute("height", tall ? 20 : 12); b.setAttribute("fill", "rgba(232,93,38,0.78)"); g.appendChild(b);
+            }
+          })();
+
+          // the seal: a hand-poured rim (wobble and three drips) and a pressed bead ring
+          (() => {
+            let d = "";
+            const drips = [[0.6, 7], [2.5, 5], [4.4, 8.5]];
+            for (let k = 0; k <= 120; k++) {
+              const a = (k / 120) * Math.PI * 2;
+              let rr = 55.5 + 1.8 * Math.sin(7 * a + 0.5) + 1.2 * Math.sin(13 * a + 2) + 0.7 * Math.sin(23 * a);
+              for (const [a0, h] of drips) { const da = Math.atan2(Math.sin(a - a0), Math.cos(a - a0)); rr += h * Math.exp(-(da * da) / 0.012); }
+              d += (k ? "L" : "M") + (Math.cos(a) * rr).toFixed(2) + " " + (Math.sin(a) * rr).toFixed(2);
+            }
+            $("f01-rim").setAttribute("d", d + "Z");
+            const beads = $("f01-beads");
+            for (let i = 0; i < 30; i++) {
+              const a = (i / 30) * Math.PI * 2, c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+              c.setAttribute("cx", (Math.cos(a) * 36.5).toFixed(2)); c.setAttribute("cy", (Math.sin(a) * 36.5).toFixed(2));
+              c.setAttribute("r", 1.35); c.setAttribute("fill", "rgba(17,17,17,0.26)"); beads.appendChild(c);
+            }
+          })();
+
+          // "harvest now," splits into glyphs (they jolt on the stamp); "decrypt later" carries a hex glyph per letter
+          const nowG = HR.glyphs($("f01-now"));
+          const chars = [];
+          for (const ch of "decrypt later") {
+            if (ch === " ") { el("span", "", $("f01-later"), " "); continue; }
+            const c = el("span", "f01-c", $("f01-later"));
+            const p = el("span", "", c, ch);
+            const x = el("span", "f01-x", c, "0");
+            const adv = { d: 0.57, e: 0.54, c: 0.49, r: 0.38, y: 0.52, p: 0.57, t: 0.37, l: 0.27, a: 0.54 }[ch];
+            x.style.transform = `translateX(-50%) scaleX(${Math.max(0.62, Math.min(1, (adv + 0.02) / 0.444))})`;
+            chars.push({ c, p, x });
+          }
+          $("f01-later").classList.add("hr-glow");
+
+          // near plane: a few huge out-of-focus hex glyphs
+          const nr = HR.rng(77);
+          for (let i = 0; i < 0; i++) {
+            const b = el("div", "f01-bokeh", $("f01-near"), HR.cipher(2 + (i % 3), 300 + i));
+            Object.assign(b.style, { left: `${-100 + nr() * 2000}px`, top: `${-80 + nr() * 1100}px`, fontSize: `${180 + nr() * 160}px` });
+          }
+
+          // stamp burst, rings, wax droplets
+          const N = 18, spokes = [];
+          for (let i = 0; i < N; i++) {
+            const s = el("div", "f01-spoke", $("f01-spokes"));
+            s.style.transform = `rotate(${(i / N) * 360 + 5}deg)`;
+            const line = el("i", "", s), r0 = 92 + (i % 3) * 12, len = 70 + (i % 4) * 30;
+            line.style.top = -(r0 + len) + "px"; line.style.height = len + "px";
+            spokes.push(line);
+          }
+          const rings = [STAMP].concat(RINGS).map(() => el("div", "f01-ring", $("f01-sealpos")));
+          const dr = HR.rng(909);
+          const drops = Array.from({ length: 16 }, (_, i) => {
+            const d = el("div", "f01-drop", $("f01-drops"));
+            const a = (i / 16) * Math.PI * 2 + dr() * 0.3, v = 120 + dr() * 170, s = 0.35 + dr() * 0.8;
+            return { d, dx: Math.cos(a) * v, dy: Math.sin(a) * v * 0.62 - 40, s };
+          });
+
+          // ---- timeline -------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const stage = HR.stage($("root"), { seed: 5, drift: 1 });
+          const cam = stage.cam;
+          cam.focus = 0.35;
+
+          // the camera: one slow dolly over the pad, a kick on the stamp, a lean through the fill
+          tl.fromTo(cam, { z: 1, x: 18 }, { z: 1.05, x: -6, duration: STAMP, ease: "sine.inOut" }, 0);
+          tl.fromTo(cam, { z: 1.05, rot: 0 }, { z: 1.09, rot: -0.5, duration: 0.06, ease: "power3.out", immediateRender: false }, STAMP);
+          tl.fromTo(cam, { z: 1.09, rot: -0.5 }, { z: 1.065, rot: 0, duration: 0.55, ease: "elastic.out(1, 0.5)", immediateRender: false }, STAMP + 0.06);
+          tl.fromTo(cam, { z: 1.065, x: -6 }, { z: 1.085, x: -20, duration: DUR - STAMP - 0.61, ease: "power2.in", immediateRender: false }, STAMP + 0.61);
+          tl.fromTo("#f01-wall", { x: 0 }, { x: -120, duration: DUR, ease: "none" }, 0);
+          tl.fromTo("#f01-near", { x: 0 }, { x: -260, duration: DUR, ease: "none" }, 0);
+          tl.fromTo("#f01-ghosts", { x: 0, y: 0 }, { x: -70, y: -14, duration: DUR, ease: "none" }, 0);
+
+          // the wax pools through the pad (its path is drawn per frame from `wax.r`)
+          const wax = { r: 8, a: 1 };
+          tl.fromTo(wax, { r: 8 }, { r: 58, duration: STAMP - 0.5, ease: "power1.out" }, 0.25);
+          // the soft kick at 2.269 nudges the card
+          tl.fromTo("#f01-card", { y: 0 }, { y: 4, duration: 0.07, ease: "power2.out" }, 2.269);
+          tl.fromTo("#f01-card", { y: 4 }, { y: 0, duration: 0.55, ease: "power2.inOut", immediateRender: false }, 2.339);
+
+          // the stamp: anticipation above (big, blurred), slams ON the kick, squashes, lifts off the embossed seal
+          tl.fromTo("#f01-stamp", { opacity: 0, scale: 1.9, filter: "blur(10px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.in" }, STAMP - 0.16);
+          tl.fromTo("#f01-stamp", { scaleX: 1, scaleY: 1 }, { scaleX: 1.08, scaleY: 0.92, duration: 0.05, ease: "power2.out", immediateRender: false }, STAMP);
+          tl.fromTo("#f01-stamp", { scale: 1, opacity: 1 }, { scale: 1.5, opacity: 0, filter: "blur(8px)", duration: 0.32, ease: "power2.in", immediateRender: false }, STAMP + 0.12);
+          tl.set("#f01-wax", { opacity: 0 }, 0);
+          tl.set("#f01-seal", { opacity: 1 }, 0);
+          tl.fromTo("#f01-seal", { scale: 1.12 }, { scale: 1, duration: 0.45, ease: "elastic.out(1, 0.45)", immediateRender: false }, STAMP);
+          tl.fromTo("#f01-card", { y: 0 }, { y: 9, duration: 0.05, ease: "power2.out", immediateRender: false }, STAMP);
+          tl.fromTo("#f01-card", { y: 9 }, { y: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, STAMP + 0.05);
+          drops.forEach(({ d, dx, dy, s }, i) => {
+            const t0 = STAMP + (i % 3) * 0.008;
+            tl.fromTo(d, { opacity: 1, x: 0, scale: s }, { x: dx, duration: 0.55, ease: "power2.out", immediateRender: false }, t0);
+            tl.fromTo(d, { y: 0 }, { y: dy, duration: 0.22, ease: "power2.out", immediateRender: false }, t0);
+            tl.fromTo(d, { y: dy }, { y: dy + 150, opacity: 0, scale: s * 0.4, duration: 0.4, ease: "power2.in", immediateRender: false }, t0 + 0.22);
+          });
+
+          // v13: no register flip. The seal's light flares on the kick and rakes the card; the title answers in a glyph wave
+          const flare = { v: 0 };
+          tl.fromTo(flare, { v: 0 }, { v: 1, duration: 0.05, ease: "power2.out", immediateRender: false }, STAMP);
+          tl.fromTo(flare, { v: 1 }, { v: 0.22, duration: 1.1, ease: "power2.out", immediateRender: false }, STAMP + 0.05);
+          tl.set("#f01-label", { color: "var(--cream)" }, STAMP);
+          // the outbox: the letter leaves on the kick
+          tl.set("#f01-obpend", { opacity: 0 }, 0);
+          tl.set("#f01-obsent", { opacity: 1 }, 0);
+          tl.fromTo("#f01-obsent", { scale: 1.12, transformOrigin: "559px 70px" }, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.5)", immediateRender: false }, STAMP);
+          const waveG = nowG.concat(chars.map((c) => c.c));
+          waveG.forEach((g, i) => {
+            const t0 = STAMP + 0.012 * i;
+            tl.fromTo(g, { y: 0 }, { y: 14, duration: 0.06, ease: "power2.out", immediateRender: false }, t0);
+            tl.fromTo(g, { y: 14 }, { y: 0, duration: 0.5, ease: "elastic.out(1, 0.4)", immediateRender: false }, t0 + 0.06);
+          });
+
+          spokes.forEach((s, i) => {
+            const t0 = STAMP + (i % 4) * 0.012;
+            tl.fromTo(s, { opacity: 1, scaleY: 0, y: 0 }, { scaleY: 1, y: -18, duration: 0.2, ease: "power4.out", immediateRender: false }, t0);
+            tl.fromTo(s, { opacity: 1, y: -18 }, { opacity: 0, y: -44, duration: 0.45, ease: "power2.in", immediateRender: false }, t0 + 0.25);
+          });
+          [STAMP].concat(RINGS).forEach((t, k) => {
+            tl.fromTo(rings[k], { opacity: 1, scale: 1 }, { opacity: 0, scale: k === 0 ? 3.8 : 3.0, duration: 0.6, ease: "power2.out", immediateRender: false }, t);
+          });
+          FILL.forEach((t, k) => {
+            const dx = (k % 2 ? -1 : 1) * (2 + k * 0.7);
+            tl.fromTo("#f01-cardpos", { x: 0 }, { x: dx, duration: 0.03, ease: "none", immediateRender: false }, t);
+            tl.fromTo("#f01-cardpos", { x: dx }, { x: 0, duration: 0.09, ease: "power2.out", immediateRender: false }, t + 0.03);
+          });
+
+          // ---- per-frame draw (all from timeline time) ------------------------------------------------------
+          const ANCHORS = [[0.498, 0.12], [2.269, 0.08], [4.253, 0.03]];
+          function density(t) {
+            if (t >= STAMP) return Math.min(1, 0.45 + 0.55 * Math.pow((t - STAMP) / (DUR - 0.1 - STAMP), 1.6));
+            let p = 0.3;
+            for (const [a, lo] of ANCHORS) {
+              const d = t - a;
+              if (d >= 0 && d < 1.0) { const w = d < 0.12 ? d / 0.12 : d < 0.45 ? 1 : 1 - (d - 0.45) / 0.55; p = Math.min(p, 0.3 - (0.3 - lo) * w); }
+            }
+            return p;
+          }
+          function waxPath(r, t) {
+            let d = "";
+            for (let k = 0; k <= 48; k++) {
+              const a = (k / 48) * Math.PI * 2;
+              const rr = r * (1 + 0.05 * Math.sin(5 * a + t * 1.3) + 0.035 * Math.sin(9 * a - t * 2.1) + 0.02 * Math.sin(13 * a + 1.7));
+              d += (k ? "L" : "M") + (Math.cos(a) * rr).toFixed(2) + " " + (Math.sin(a) * rr * 0.97).toFixed(2);
+            }
+            return d + "Z";
+          }
+          const waxEl = $("f01-waxpath"), waxHi = $("f01-waxhi"), lightEl = $("f01-light");
+          function render() {
+            const t = tl.time();
+            const step = Math.floor(t * 15);
+            stage.apply(t);
+            // wax: a living pool with a wet highlight; glow with the pad, then the seal glows with the bass
+            waxEl.setAttribute("d", waxPath(wax.r, t));
+            const hr = wax.r * 0.62;
+            waxHi.setAttribute("d", `M${(-hr * 0.8).toFixed(1)} ${(-hr * 0.45).toFixed(1)} A${hr.toFixed(1)} ${hr.toFixed(1)} 0 0 1 ${(-hr * 0.1).toFixed(1)} ${(-hr * 0.85).toFixed(1)}`);
+            HR.glow($("f01-wax"), t, 0.35, 0.9);
+            HR.glow($("f01-seal"), t, 0.4, 0.8);
+            HR.glow($("f01-later"), t, 0.3, 0.6);
+            const breath = 0.92 + 0.16 * HR.band("rms", t);
+            lightEl.style.transform = `scale(${breath.toFixed(3)})`;
+            lightEl.style.opacity = (0.65 + 0.5 * HR.band("rms", t)).toFixed(3);
+            // the seal's flare: hot light raking the card from the seal, decaying after the kick
+            $("f01-flare").style.opacity = (flare.v * (0.85 + 0.3 * HR.band("bass", t))).toFixed(3);
+
+            // the outbox progress bar fills with the wax, full on the stamp
+            $("f01-obprog").setAttribute("width", (644 * Math.min(1, Math.max(0, (t - 0.25) / (STAMP - 0.25)))).toFixed(1));
+            $("f01-label").textContent = "OBJ 0001 · SEALED · TLS 1.3";
+            // the letter's body: a few rows scramble; in the fill every row churns, reshuffled per hit
+            const fill = t >= FILL[0], hits = FILL.filter((f) => t >= f).length;
+            $("f01-hex").textContent = Array.from({ length: 7 }, (_, i) => {
+              const live = fill || (t >= STAMP ? i % 2 === 0 : i % 3 === 0);
+              return HR.cipher(16, 977 + i * 31 + (live ? step + hits * 101 : 0)).replace(/(.{4})/g, "$1 ");
+            }).join("\n");
+
+            // "decrypt later": letters drift in and out of hex, never all settling; hats flick one glyph
+            const p = Math.min(1, density(t) + 0.25 * HR.hit("hat", t, 0.08));
+            const states = chars.map((c, i) => h01(i + 1, Math.floor(t * (2.2 + (i % 3) * 0.7) + i * 0.37)) < p);
+            if (!states.some(Boolean)) states[Math.floor(t * 1.5) % chars.length] = true;
+            chars.forEach((c, i) => {
+              const hx = t >= 2.269 && states[i];
+              c.p.style.opacity = hx ? 0 : 1;
+              c.x.style.opacity = hx ? 1 : 0;
+              if (hx) c.x.textContent = HR.HEX[(h01(i + 41, step) * 16) | 0];
+            });
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["thumbnail"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

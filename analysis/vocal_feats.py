@@ -14,7 +14,6 @@ HOP = 110  # ~5 ms
 
 def compute():
     y, sr = common.load_stem("vocals", sr=SR)
-    t_len = 1 + len(y) // HOP
     rms = librosa.feature.rms(y=y, frame_length=1024, hop_length=HOP, center=True)[0]
     S = np.abs(librosa.stft(y, n_fft=1024, hop_length=HOP, center=True)) ** 2
     freqs = librosa.fft_frequencies(sr=SR, n_fft=1024)

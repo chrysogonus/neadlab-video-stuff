@@ -1,0 +1,1005 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 4 — wait (chorus 1, 33.806–41.720), v11 restage. g1: the machined archive chronometer (v10) keeps time;
+         "i'll wait for you," is the harvester's serif voice, "time" the Barlow hero the minute hand sweeps onto. The
+         Archie (v12) rises from the floor beside the clock and waits, its eyes on the second hand, ticking with it.
+         g2: the literal pun — "every byte you ever sent" streams as bytes (each word's own ASCII hex) along an intake
+         wire into a big BYTES HELD odometer, which starts here at 0000000000 (the film's escalating counter); "mine"
+         slams and locks it at 0000000256. No drawer wall: the ground is a ghost ciphertext wall with lit glyphs.
+         v13 (SYSTEM.md V7): black ground (the ghost wall and bokeh go; the lit glyphs stay, as the archive filling), flat
+         glowing hero, smaller warm lights; the counter's fine print adds CONSENT: IMPLIED.
+         v14 (V14.md §3): the gag. g1: Archie winds a tiny alarm clock, sets it down on 35.631, taps a tread, nods off
+         (jerked up by the slam on "time"), asleep by 38.4. g2: asleep at the lower right, full size, the intake log narrowed
+         to clear him; on "mine" the alarm rings, he jumps clean off the floor, lands, glares, slaps it quiet (41.42),
+         and a held beat of silence ends the scene.
+         v15: full chronometer bezel at (1230, 520), radius 405; Archie and his floor alarm sit higher and farther
+         inward, with the lyric's baseline lifted to retain breathing room through the existing camera punches.
+         v21 (V21.md W8/W4): g1 is a cream enamel dial (paper whites, ink print, blued hands); the second hand ticks big on the
+         snares with sparks off its tip, "time" starts a time-lapse (three hours, DAYS HELD rolls to 0365) that brakes into the
+         37.924 snare; camera pushes on 35.631 / 37.47; no flat rings or washes. g2 is a pneumatic intake: glass tubes, one
+         envelope per sung word from the YOU hatch, a lit hopper window that fills; "mine" slams the gate (sparks off the
+         latch, the tubes jam); Archie wakes on the 41.147 downbeat and slaps the alarm on the 41.597 snare. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        .f04-group { position: absolute; inset: 0; opacity: 0; }
+        #f04-fg { transform-origin: 5.5% 85%; }
+        #f04-l6, #f04-l7 { transform-origin: 0 100%; } /* the type plane zooms around the lyric's corner, never off the pad */
+
+        /* ---- background plane: the ghost ciphertext wall, a few glyphs lit ---- */
+        #f04-wall { position: absolute; left: -120px; top: -50px; width: 2400px; opacity: 0.075;
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 26px; line-height: 64px;
+          letter-spacing: 0.14em; color: var(--cream); white-space: pre; }
+        .f04-lit { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 26px; line-height: 64px;
+          color: var(--fire); opacity: 0; text-shadow: 0 0 10px rgba(232, 93, 38, 0.8), 0 0 26px rgba(232, 93, 38, 0.35); }
+        #f04-light { position: absolute; left: -200px; top: 200px; width: 1400px; height: 1000px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.07), rgba(232, 93, 38, 0) 100%); }
+        #f04-clocklight { position: absolute; left: 680px; top: 20px; width: 1100px; height: 1000px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(240, 236, 229, 0.07), rgba(232, 93, 38, 0.05) 55%, rgba(232, 93, 38, 0) 100%); }
+        #f04-plight { position: absolute; left: 160px; top: -260px; width: 1700px; height: 900px; border-radius: 50%; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.09), rgba(232, 93, 38, 0.025) 55%, rgba(232, 93, 38, 0) 100%); }
+
+        #f04-structure { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #f04-clocksvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+        .f04-rib { fill: #1A1A18; stroke: #282826; stroke-width: 2; }
+        .f04-rim { fill: none; stroke: #F0ECE5; stroke-opacity: 0.15; stroke-width: 2; }
+
+        /* the Archivist (15-secure's #f15-arch), waiting beside the clock */
+        #f04-arch { position: absolute; left: 730px; top: 490px; width: 390px; height: 494px; overflow: visible;
+          transform-origin: 50% 100%; transform: translateY(520px); }
+
+        /* ---- machine plane (g2): the BYTES HELD odometer, the intake wire, the packet log ---- */
+        .f04-screw { position: absolute; width: 10px; height: 10px; border-radius: 50%;
+          background: radial-gradient(circle at 35% 30%, #888880, #505048 45%, #1A1A18);
+          box-shadow: 0 1px 0 rgba(240, 236, 229, 0.18), 0 -1px 1px rgba(0, 0, 0, 0.6); }
+        .f04-screw::after { content: ""; position: absolute; left: 1px; right: 1px; top: 4px; height: 2px; background: rgba(17, 17, 17, 0.85);
+          transform: rotate(var(--f04-a, 30deg)); }
+        /* v16: the counter is a small plate at the top right; the torrent and the silo are the picture */
+        #f04-platew { position: absolute; left: 600px; top: 26px; width: 1196px; height: 184px; }
+        #f04-plates { position: absolute; left: 0; top: 0; width: 1708px; height: 262px; transform: scale(0.7); transform-origin: 0 0; }
+        #f04-plate { position: absolute; left: 0; top: 0; width: 1708px; height: 262px; box-sizing: border-box;
+          border: 2px solid; border-color: #888880 #282826 #111111 #505048;
+          background: linear-gradient(180deg, #232321, #1A1A18 30%, #141413);
+          box-shadow: inset 0 2px 0 rgba(240, 236, 229, 0.18), inset 0 -3px 0 rgba(0, 0, 0, 0.6), 0 30px 60px rgba(0, 0, 0, 0.65); }
+        #f04-plate .f04-rake { position: absolute; inset: 0; pointer-events: none;
+          background: linear-gradient(104deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 30%, rgba(17, 17, 17, 0) 62%, rgba(17, 17, 17, 0.25)); }
+        #f04-plabel { position: absolute; left: 30px; top: 16px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 22px;
+          letter-spacing: 0.14em; color: var(--cream-muted); white-space: nowrap; }
+        #f04-plabel b { font-weight: 600; color: var(--fire); }
+        .f04-pmicro { position: absolute; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 16px; letter-spacing: 0.06em;
+          color: rgba(136, 136, 128, 0.85); white-space: nowrap; text-transform: uppercase; }
+        #f04-dwin { position: absolute; left: 26px; top: 56px; width: 1172px; height: 180px; box-sizing: border-box;
+          border: 2px solid; border-color: #111111 #282826 #888880 #282826; background: #111111;
+          box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.9); display: flex; gap: 4px; padding: 2px; }
+        .f04-cell { position: relative; flex: none; width: 112px; height: 172px; overflow: hidden; background: #1A1A18; }
+        .f04-cell::after { content: ""; position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0) 28%, rgba(240, 236, 229, 0.04) 50%, rgba(0, 0, 0, 0) 72%, rgba(0, 0, 0, 0.85)); }
+        .f04-col { position: absolute; left: 0; top: 0; width: 112px; }
+        .f04-col div { height: 172px; line-height: 172px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 150px; letter-spacing: 0; color: var(--fire); }
+        .f04-brk { position: absolute; top: 46px; width: 26px; height: 200px; box-sizing: border-box; border: 0 solid var(--fire); opacity: 0; }
+        #f04-brkl { left: 8px; border-width: 7px 0 7px 7px; transform-origin: 100% 50%; }
+        #f04-brkr { left: 1190px; border-width: 7px 7px 7px 0; transform-origin: 0 50%; }
+        #f04-stat { position: absolute; left: 1252px; top: 58px; width: 420px; }
+        #f04-stv { position: absolute; left: 0; top: 24px; display: flex; align-items: center; gap: 14px; font-family: "IBM Plex Mono";
+          font-weight: 600; font-size: 44px; letter-spacing: 0.1em; color: var(--cream); white-space: nowrap; }
+        #f04-stdot { width: 16px; height: 16px; border-radius: 50%; background: var(--fire); flex: none; }
+        #f04-pad { width: 34px; height: 44px; flex: none; overflow: visible; display: none; }
+
+        /* v16 g2: the torrent is three canvases (one per shot) behind the lyric, a scrim keeps the lyric readable */
+        .f04-shot { position: absolute; inset: 0; opacity: 0; }
+        .f04-shot canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #f04-scrim { position: absolute; inset: 0; pointer-events: none;
+          background: radial-gradient(ellipse 52% 50% at 20% 78%, rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.55) 55%, rgba(10, 10, 10, 0) 100%); }
+        #f04-fx { pointer-events: none; }
+
+        /* ---- foreground: chrome and lyrics ---- */
+        .f04-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
+          font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
+        .f04-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
+          vertical-align: middle; margin-right: 16px; }
+        .f04-chrome { position: absolute; right: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 16px;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); white-space: nowrap; }
+        .f04-line { position: absolute; left: 5.5cqw; bottom: 5.5cqw; width: 60cqw; font-family: "Barlow"; color: var(--cream);
+          display: flex; flex-direction: column; align-items: flex-start; gap: 0.6cqw; }
+        .f04-row { display: flex; flex-wrap: wrap; column-gap: 0.26em; font-weight: 800; font-size: 4.8cqw;
+          line-height: 1.04; letter-spacing: -0.02em; }
+        .f04-row.f04-serif { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 6.1cqw;
+          line-height: 1.12; letter-spacing: 0; column-gap: 0.22em; margin-bottom: -0.3cqw; }
+        .f04-row.f04-big { font-weight: 900; font-size: 15cqw; line-height: 0.86; letter-spacing: -0.04em;
+          color: var(--fire); margin: 0.4cqw 0 0 -0.6cqw; transform-origin: 0 100%;
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 26px) rgba(232, 93, 38, 0.55), 0 0 calc(var(--hr-glow, 0.5) * 80px) rgba(232, 93, 38, 0.28); }
+        .f04-w { display: inline-block; position: relative; opacity: 0; }
+        #f04-l6 { bottom: 120px; }
+        .f04-dot { position: absolute; border-radius: 50%; background: var(--fire); opacity: 0; text-shadow: none; }
+
+        .f04-bokeh { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--cream);
+          opacity: 0.035; filter: blur(14px); white-space: nowrap; }
+      </style>
+
+      <div data-hf-id="hf-0p28" id="root" data-composition-id="04-wait" data-width="1920" data-height="1080" data-duration="7.914">
+        <div data-hf-id="hf-o0nv" class="hr-layer" id="f04-bg" data-depth="0.35" data-dof="6" data-layout-ignore>
+          <div data-hf-id="hf-d3vi" id="f04-light"></div>
+          <div data-hf-id="hf-rio2" id="f04-wall"></div>
+          <div data-hf-id="hf-c71c" id="f04-lits"></div>
+          <div data-hf-id="hf-8hok" id="f04-clocklight"></div>
+          <div data-hf-id="hf-va9u" id="f04-plight"></div>
+        </div>
+        <div data-hf-id="hf-1q4j" class="hr-layer" id="f04-mid" data-depth="0.6" data-layout-ignore>
+          <svg data-hf-id="hf-s30a" id="f04-structure" viewBox="0 0 1920 1080"></svg>
+          <svg data-hf-id="hf-8ix7" id="f04-clocksvg" viewBox="0 0 1920 1080">
+            <defs data-hf-id="hf-mh0t">
+              <linearGradient data-hf-id="hf-e3cg" id="f04-bz" x1="0.15" y1="0.1" x2="0.85" y2="0.95"><stop data-hf-id="hf-f9lk" stop-color="#888880" /><stop data-hf-id="hf-x270" offset="0.28" stop-color="#505048" /><stop data-hf-id="hf-xnfa" offset="0.62" stop-color="#282826" /><stop data-hf-id="hf-9w3h" offset="1" stop-color="#111111" /></linearGradient>
+              <linearGradient data-hf-id="hf-kcv7" id="f04-ch" x1="0.85" y1="0.95" x2="0.15" y2="0.1"><stop data-hf-id="hf-fv2k" stop-color="#505048" /><stop data-hf-id="hf-y80e" offset="0.4" stop-color="#282826" /><stop data-hf-id="hf-04i9" offset="1" stop-color="#111111" /></linearGradient>
+              <radialGradient data-hf-id="hf-13en" id="f04-vig" cx="0.42" cy="0.38" r="0.62"><stop data-hf-id="hf-ngfv" offset="0.55" stop-color="#111111" stop-opacity="0" /><stop data-hf-id="hf-6u8o" offset="1" stop-color="#111111" stop-opacity="0.75" /></radialGradient>
+              <radialGradient data-hf-id="hf-hroz" id="f04-cap" cx="0.35" cy="0.3" r="0.8"><stop data-hf-id="hf-bfzk" stop-color="#888880" /><stop data-hf-id="hf-yjs5" offset="0.5" stop-color="#505048" /><stop data-hf-id="hf-bl70" offset="1" stop-color="#1A1A18" /></radialGradient>
+              <linearGradient data-hf-id="hf-a84n" id="f04-rake" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-72ti" stop-color="#FFFFFF" stop-opacity="0.07" /><stop data-hf-id="hf-on9z" offset="0.4" stop-color="#FFFFFF" stop-opacity="0" /><stop data-hf-id="hf-ev4v" offset="0.6" stop-color="#111111" stop-opacity="0" /><stop data-hf-id="hf-x8uz" offset="1" stop-color="#111111" stop-opacity="0.32" /></linearGradient>
+              <linearGradient data-hf-id="hf-tfa8" id="f04-glass" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-kn9q" stop-color="#FFFFFF" stop-opacity="0.3" /><stop data-hf-id="hf-qr10" offset="1" stop-color="#FFFFFF" stop-opacity="0" /></linearGradient>
+              <radialGradient id="f04-enamel" cx="0.4" cy="0.36" r="0.72"><stop offset="0" stop-color="#FBF8F2" /><stop offset="0.55" stop-color="#F0ECE5" /><stop offset="0.86" stop-color="#E0DACD" /><stop offset="1" stop-color="#C4BDAE" /></radialGradient>
+              <linearGradient id="f04-glint" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0" /><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.75" /><stop offset="1" stop-color="#FFFFFF" stop-opacity="0" /></linearGradient>
+              <linearGradient data-hf-id="hf-shb1" id="f04-drum" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-tn6m" stop-color="#000000" stop-opacity="0.9" /><stop data-hf-id="hf-tnq4" offset="0.32" stop-color="#000000" stop-opacity="0" /><stop data-hf-id="hf-qs21" offset="0.5" stop-color="#F0ECE5" stop-opacity="0.05" /><stop data-hf-id="hf-w54d" offset="0.68" stop-color="#000000" stop-opacity="0" /><stop data-hf-id="hf-tocf" offset="1" stop-color="#000000" stop-opacity="0.9" /></linearGradient>
+              <filter data-hf-id="hf-hbf9" id="f04-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur data-hf-id="hf-8w1q" stdDeviation="22" /></filter>
+              <filter data-hf-id="hf-k8to" id="f04-hsh" x="-30%" y="-10%" width="160%" height="120%"><feGaussianBlur data-hf-id="hf-5pp5" stdDeviation="7" /></filter>
+              <clipPath data-hf-id="hf-vejr" id="f04-faceclip"><circle data-hf-id="hf-35wo" r="470" /></clipPath>
+              <clipPath data-hf-id="hf-rbq8" id="f04-glassclip"><circle data-hf-id="hf-aflg" r="562" /></clipPath>
+            </defs>
+            <g data-hf-id="hf-kiss" id="f04-clock" transform="translate(1230 520) scale(0.675)"></g>
+          </svg>
+          <svg data-hf-id="hf-19zt" id="f04-arch" viewBox="0 0 300 380" aria-hidden="true"></svg>
+        </div>
+
+        <div class="hr-layer" id="f04-world" data-depth="0" data-layout-ignore>
+          <div class="f04-shot" id="f04-s1"><canvas id="f04-cv1" width="1920" height="1080"></canvas></div>
+        </div>
+        <div data-hf-id="hf-hzb2" class="hr-layer" id="f04-mach" data-depth="0.4" data-layout-ignore>
+          <div data-hf-id="hf-krms" id="f04-m2" class="f04-group">
+            <div id="f04-platew"><div id="f04-plates"><div data-hf-id="hf-sg42" id="f04-plate">
+              <div data-hf-id="hf-u8oi" id="f04-plabel">BYTES HELD <b data-hf-id="hf-cufq">·</b> OBJ 0001 + EVERYTHING SINCE</div>
+              <div data-hf-id="hf-zbqg" class="f04-pmicro" style="right: 30px; top: 22px;">COPIES, NOT CONSENT</div>
+              <div data-hf-id="hf-h7w8" id="f04-dwin"></div>
+              <div data-hf-id="hf-awqy" class="f04-brk" id="f04-brkl"></div><div data-hf-id="hf-3vrw" class="f04-brk" id="f04-brkr"></div>
+              <div data-hf-id="hf-t47w" id="f04-stat">
+                <div data-hf-id="hf-l0cf" class="f04-pmicro" style="left: 0; top: 0;">INTAKE</div>
+                <div data-hf-id="hf-4tin" id="f04-stv"><i data-hf-id="hf-s100" id="f04-stdot"></i><svg data-hf-id="hf-4ouu" id="f04-pad" viewBox="0 0 34 44"><path data-hf-id="hf-thnz" d="M8 20 V13 a9 9 0 0 1 18 0 V20" fill="none" stroke="#E85D26" stroke-width="5" /><rect data-hf-id="hf-4mau" x="2" y="19" width="30" height="24" fill="#E85D26" /><rect data-hf-id="hf-3ivi" x="15" y="26" width="4" height="9" fill="#111111" /></svg><span data-hf-id="hf-ns1w" id="f04-stt">OPEN</span></div>
+                <div data-hf-id="hf-u08a" class="f04-pmicro" style="left: 0; top: 104px;">RECORDED · TLS 1.3 · X25519</div>
+                <div data-hf-id="hf-lhrs" class="f04-pmicro" style="left: 0; top: 128px; font-size: 15px; letter-spacing: 0.04em;">RET ∞ · READ AFTER Q-DAY · CONSENT: IMPLIED</div>
+                <div data-hf-id="hf-9530" class="f04-pmicro" style="left: 0; top: 152px;" id="f04-pk">PKT 0000</div>
+              </div>
+              <div data-hf-id="hf-5aok" class="f04-rake"></div>
+            </div></div></div>
+            <svg data-hf-id="hf-fz37" id="f04-arch2" viewBox="0 0 1920 1080" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden;"></svg>
+          </div>
+        </div>
+
+        <div data-hf-id="hf-dvju" class="hr-layer" id="f04-fg" data-depth="0.7">
+          <div data-hf-id="hf-90s9" id="f04-g1" class="f04-group"><div data-hf-id="hf-imom" class="f04-line" id="f04-l6"></div></div>
+          <div data-hf-id="hf-f6i2" id="f04-g2" class="f04-group"><div id="f04-scrim" data-layout-ignore></div><div data-hf-id="hf-osef" class="f04-line" id="f04-l7"></div></div>
+        </div>
+        <div data-hf-id="hf-3918" class="hr-layer" id="f04-chromel" data-depth="0.2">
+          <div data-hf-id="hf-gvnp" id="f04-c1" class="f04-group">
+            <div data-hf-id="hf-66vg" class="f04-kicker">STILL HELD</div>
+            <div data-hf-id="hf-xhca" class="f04-chrome">HELD SINCE TUE 09 MAR 2021 · 14:02</div>
+          </div>
+          <div data-hf-id="hf-ktrq" id="f04-c2" class="f04-group"><div data-hf-id="hf-cwtn" class="f04-kicker">THE INTAKE</div></div>
+        </div>
+
+        <div data-hf-id="hf-wjat" class="hr-layer" id="f04-near" data-depth="1.7" data-layout-ignore></div>
+        <div class="hr-layer" id="f04-fx" data-layout-ignore></div>
+      </div>
+
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/archie.js"></script>
+      <script>
+        (() => {
+          const T0 = 33.806, DUR = 7.914; // frame span, track seconds
+          const L = (t) => +(t - T0).toFixed(3);
+          const BARS = [33.806, 35.631, 37.47, 39.308, 41.147, 41.72];
+          const BEATS = [33.806, 34.26, 34.719, 35.175, 35.631, 36.089, 36.553, 37.011, 37.47, 37.929, 38.393];
+          const TIME = 37.1, G2 = 38.642, MINE = 40.942;
+          // lyric rows: each row is a list of [word, start]; `big` marks the hero display row, `serif` the intimate voice
+          const LINES = {
+            l6: [{ serif: [["I'll", 34.222], ["wait", 34.68], ["for", 35.02], ["you,", 35.44]] }, [["I've", 36.108], ["got", 36.52], ["the", 36.98]], { big: [["time", TIME]] }],
+            l7: [[["Every", G2], ["byte", 39.06], ["you", 39.54], ["ever", 39.79]], [["sent", 40.059], ["is", 40.717]], { big: [["mine", MINE]] }],
+          };
+          // the words that stream as bytes: each sends its own ASCII hex down the wire
+          const PKTS = [["every", G2], ["byte", 39.06], ["you", 39.54], ["ever", 39.79], ["sent", 40.059]];
+          const FLY = 0.62; // a word-packet's flight from its source to the intake
+          const DELTA = [4, 8, 16, 32, 64]; // fictional archive intake; grows into locked 08 counter
+          const FINAL = 256;
+          const $ = (id) => document.getElementById(id);
+          const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const NS = "http://www.w3.org/2000/svg";
+          const S = (parent, tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const P = (a, r) => [Math.sin(a * Math.PI / 180) * r, -Math.cos(a * Math.PI / 180) * r]; // clock angle (deg, clockwise from 12) → xy
+          const f1 = (v) => v.toFixed(1);
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+          // ---- static build: background ghost wall, lit glyphs, near bokeh -------------------------------------
+          const WALL = Array.from({ length: 19 }, (_, i) => HR.cipher(88, 401 + i).replace(/(.{4})/g, "$1 ").trim());
+          // v13: the ghost wall itself is not drawn; its glyphs only exist where they light
+          const CW = 26 * 0.6 + 26 * 0.14; // mono advance + letter-spacing
+          const lr = HR.rng(41), lits = [];
+          for (let i = 0; i < 64; i++) {
+            const r = (lr() * 19) | 0, g = (lr() * 22) | 0, c = (lr() * 4) | 0, idx = g * 5 + c;
+            const u = el("span", "f04-lit", $("f04-lits"), WALL[r][idx]);
+            Object.assign(u.style, { left: (-120 + idx * CW).toFixed(1) + "px", top: (-50 + r * 64) + "px" });
+            lits.push({ u, order: lr(), flick: lr() < 0.2 });
+          }
+          const nr = HR.rng(88);
+          for (let i = 0; i < 0; i++) {
+            const b = el("div", "f04-bokeh", $("f04-near"), HR.cipher(2 + (i % 2), 500 + i));
+            Object.assign(b.style, { left: `${-100 + nr() * 2000}px`, top: `${-60 + nr() * 1000}px`, fontSize: `${200 + nr() * 160}px` });
+          }
+          // archive ribs behind the clock and the counter
+          [890, 1170, 1450, 1730].forEach((x) => {
+            S($("f04-structure"), "path", { d: `M${x} -80L${x + 68} -80L${x + 28} 1160L${x - 42} 1160Z`, fill: "#111111", opacity: 0.95 });
+            S($("f04-structure"), "path", { class: "f04-rib", d: `M${x - 12} -80L${x + 29} -80L${x - 12} 1160L${x - 54} 1160Z` });
+            S($("f04-structure"), "path", { class: "f04-rim", d: `M${x - 12} -80L${x - 54} 1160` });
+            [180, 480, 780].forEach((y) => S($("f04-structure"), "rect", { x: x - 19 - y / 30, y, width: 22, height: 44, fill: "#282826", stroke: "#505048", "stroke-width": 1 }));
+          });
+
+          const clk = $("f04-clock");
+          S(clk, "circle", { cx: 26, cy: 46, r: 610, fill: "#000000", opacity: 0.8, filter: "url(#f04-soft)" });
+          S(clk, "circle", { r: 600, fill: "url(#f04-bz)" });
+          // knurled bezel edge
+          const knurl = S(clk, "g", {});
+          for (let i = 0; i < 360; i++) {
+            const a = i, [x0, y0] = P(a, 585), [x1, y1] = P(a, 600);
+            S(knurl, "path", { d: `M${f1(x0)} ${f1(y0)}L${f1(x1)} ${f1(y1)}`, stroke: i % 2 ? "rgba(0,0,0,0.55)" : "rgba(240,236,229,0.13)", "stroke-width": 3 });
+          }
+          S(clk, "circle", { r: 584, fill: "none", stroke: "rgba(0,0,0,0.6)", "stroke-width": 2 });
+          // bezel bevel: light on the upper left, shade on the lower right
+          S(clk, "path", { d: `M${P(232, 597).map(f1).join(" ")} A597 597 0 0 1 ${P(32, 597).map(f1).join(" ")}`, fill: "none", stroke: "rgba(240,236,229,0.42)", "stroke-width": 3, "stroke-linecap": "round" });
+          S(clk, "path", { d: `M${P(70, 597).map(f1).join(" ")} A597 597 0 0 1 ${P(200, 597).map(f1).join(" ")}`, fill: "none", stroke: "rgba(0,0,0,0.7)", "stroke-width": 4, "stroke-linecap": "round" });
+          // the step down and the inner chamfer (lit on its lower right)
+          S(clk, "circle", { r: 572, fill: "#111111" });
+          S(clk, "circle", { r: 562, fill: "url(#f04-ch)" });
+          S(clk, "path", { d: `M${P(60, 563).map(f1).join(" ")} A563 563 0 0 1 ${P(210, 563).map(f1).join(" ")}`, fill: "none", stroke: "rgba(240,236,229,0.3)", "stroke-width": 2 });
+          // engraved bezel text on the chamfer (upper arc)
+          S(S(clk, "defs", {}), "path", { id: "f04-barc", d: `M${P(-62, 547).map(f1).join(" ")} A547 547 0 0 1 ${P(62, 547).map(f1).join(" ")}` });
+          const bt = S(clk, "text", { "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 5, fill: "rgba(240,236,229,0.42)", stroke: "rgba(0,0,0,0.5)", "stroke-width": 0.6, "paint-order": "stroke" });
+          S(bt, "textPath", { href: "#f04-barc", startOffset: "50%", "text-anchor": "middle" }, "ARCHIVE CLOCK · RETENTION INDEFINITE");
+          // the elapsed arc on the chamfer (drawn per frame)
+          const arc = S(clk, "path", { fill: "none", stroke: "#E85D26", "stroke-width": 6, "stroke-linecap": "butt", class: "hr-glowbox" });
+          // v21 (W8): a cream enamel dial — paper white under the glass, printed in ink, lit from the upper left; the
+          // minute track, the numerals and the furniture are printed on it
+          S(clk, "circle", { r: 540, fill: "url(#f04-enamel)" });
+          S(clk, "circle", { r: 540, fill: "none", stroke: "rgba(0,0,0,0.75)", "stroke-width": 3 });
+          S(clk, "circle", { r: 531, fill: "none", stroke: "rgba(60,50,35,0.22)", "stroke-width": 16, filter: "url(#f04-hsh)" }); // the rehaut's shade on the enamel
+          const ticks = S(clk, "g", {});
+          S(ticks, "circle", { r: 537, fill: "none", stroke: "#1A1A18", "stroke-width": 1.4 });
+          S(ticks, "circle", { r: 506, fill: "none", stroke: "#1A1A18", "stroke-width": 1.1 });
+          for (let i = 0; i < 240; i++) {
+            if (i % 4 === 0) continue;
+            const [x0, y0] = P(i * 1.5, 536), [x1, y1] = P(i * 1.5, 530);
+            S(ticks, "path", { d: `M${f1(x0)} ${f1(y0)}L${f1(x1)} ${f1(y1)}`, stroke: "#6E6A60", "stroke-width": 1 });
+          }
+          for (let i = 0; i < 60; i++) {
+            const big = i % 5 === 0, [x0, y0] = P(i * 6, 537), [x1, y1] = P(i * 6, big ? 506 : 522);
+            S(ticks, "path", { d: `M${f1(x0)} ${f1(y0)}L${f1(x1)} ${f1(y1)}`, stroke: big ? (i === 0 ? "#E85D26" : "#111111") : "#2A2A27", "stroke-width": big ? 6 : 2 });
+            if (big && i !== 15) {
+              const [tx, ty] = P(i * 6, 484);
+              S(ticks, "text", { x: f1(tx), y: f1(ty), "text-anchor": "middle", "dominant-baseline": "central", "font-family": "IBM Plex Mono", "font-weight": 600,
+                "font-size": 26, "letter-spacing": 1, fill: i === 0 ? "#E85D26" : "#1A1A18" }, String(i).padStart(2, "0"));
+            }
+          }
+          S(clk, "circle", { r: 452, fill: "none", stroke: "rgba(17,17,17,0.35)", "stroke-width": 1.2 });
+          // printed dial furniture: maker's seal, the name, the hold record
+          const eng = (x, y, size, text, o = {}) => S(clk, "text", Object.assign({ x, y, "text-anchor": "middle", fill: "rgba(17,17,17,0.78)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": size, "letter-spacing": size * 0.3 }, o), text);
+          S(clk, "circle", { cy: -352, r: 21, fill: "#C94A1C" });
+          S(clk, "circle", { cy: -353, r: 18, fill: "#E85D26" });
+          S(clk, "circle", { cy: -353, r: 13.5, fill: "none", stroke: "rgba(17,17,17,0.3)", "stroke-width": 1.4 });
+          S(clk, "text", { y: -346.5, "text-anchor": "middle", "font-family": "Barlow", "font-weight": 900, "font-size": 18, fill: "#B9431A" }, "a.");
+          S(clk, "path", { d: "M-14 -360 A16 16 0 0 1 -4 -368", fill: "none", stroke: "rgba(255,236,224,0.55)", "stroke-width": 2, "stroke-linecap": "round" });
+          eng(0, -298, 17, "HN/DL", { "font-weight": 600, fill: "#111111" });
+          eng(0, -272, 11, "NO APPOINTMENT NECESSARY");
+          eng(0, 268, 13, "HELD · NOT READ", { "font-weight": 600 });
+          eng(0, 292, 10, "READ AFTER Q-DAY · RET ∞");
+          // the DAYS HELD drum window at three o'clock
+          const WX = 214, DW = 44, DG = 3, DH = 72;
+          S(clk, "rect", { x: WX - 12, y: -50, width: 4 * DW + 3 * DG + 24, height: 100, fill: "url(#f04-bz)" });
+          S(clk, "path", { d: `M${WX - 12} 50 V-50 H${WX + 4 * DW + 3 * DG + 12}`, fill: "none", stroke: "rgba(240,236,229,0.38)", "stroke-width": 1.5 });
+          S(clk, "rect", { x: WX - 3, y: -41, width: 4 * DW + 3 * DG + 6, height: 82, fill: "#111111" });
+          eng(WX + (4 * DW + 3 * DG) / 2, -64, 12, "DAYS HELD", { "font-weight": 600 });
+          eng(WX + (4 * DW + 3 * DG) / 2, 72, 10, "SINCE 09.03.2021");
+          const drums = [];
+          for (let d = 0; d < 4; d++) {
+            const x = WX + d * (DW + DG);
+            const cp = S(clk, "clipPath", { id: "f04-dc" + d }); S(cp, "rect", { x, y: -37, width: DW, height: 74 });
+            const g = S(clk, "g", { "clip-path": `url(#f04-dc${d})` });
+            S(g, "rect", { x, y: -37, width: DW, height: 74, fill: "#1A1A18" });
+            const col = S(g, "g", {});
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0].forEach((n, k) => S(col, "text", { x: x + DW / 2, y: k * DH + 18, "text-anchor": "middle", "font-family": "IBM Plex Mono",
+              "font-weight": 600, "font-size": 50, fill: d === 3 ? "#E85D26" : "#F0ECE5" }, String(n)));
+            S(g, "rect", { x, y: -37, width: DW, height: 74, fill: "url(#f04-drum)" });
+            drums.push(col);
+          }
+          S(clk, "path", { d: `M${WX - 3} 41 H${WX + 4 * DW + 3 * DG + 3} V-41`, fill: "none", stroke: "rgba(240,236,229,0.2)", "stroke-width": 1.5 });
+          S(clk, "path", { d: `M${WX - 3} 41 V-41 H${WX + 4 * DW + 3 * DG + 3}`, fill: "none", stroke: "rgba(0,0,0,0.9)", "stroke-width": 3 });
+
+          // the hands: faceted steel hour and minute, the fire second hand; each casts a soft shadow
+          const hourD = ["M0 -320 L-17 -40 L0 50 Z", "M0 -320 L17 -40 L0 50 Z"];
+          const minD = ["M0 -520 L-24 -46 L0 64 Z", "M0 -520 L24 -46 L0 64 Z"];
+          const secD = "M-2.6 150 L-1.6 -505 L0 -540 L1.6 -505 L2.6 150 Z";
+          const shadows = S(clk, "g", { opacity: 0.6 });
+          const shH = S(shadows, "path", { d: "M0 -320 L-17 -40 L0 50 L17 -40 Z", fill: "#000000", filter: "url(#f04-hsh)" });
+          const shM = S(shadows, "path", { d: "M0 -520 L-24 -46 L0 64 L24 -46 Z", fill: "#000000", filter: "url(#f04-hsh)" });
+          const shS = S(shadows, "g", { filter: "url(#f04-hsh)" });
+          S(shS, "path", { d: secD, fill: "#000000" }); S(shS, "circle", { cy: 112, r: 24, fill: "#000000" });
+          // v21: while the hands time-lapse, they leave a smear of ghost hands on the enamel
+          const ghostM = [0.32, 0.2, 0.12, 0.06].map((o) => ({ o, g: S(clk, "path", { d: "M0 -520 L-24 -46 L0 64 L24 -46 Z", fill: "#2A2A27", opacity: 0 }) }));
+          const ghostH = [0.3, 0.16].map((o) => ({ o, g: S(clk, "path", { d: "M0 -320 L-17 -40 L0 50 L17 -40 Z", fill: "#2A2A27", opacity: 0 }) }));
+          const ghostS = [0.42, 0.28, 0.18, 0.1, 0.05].map((o) => ({ o, g: S(clk, "path", { d: secD, fill: "#E85D26", opacity: 0 }) }));
+          // v21: blued-black steel hands on the enamel
+          const handH = S(clk, "g", {});
+          S(handH, "path", { d: hourD[0], fill: "#45443F" }); S(handH, "path", { d: hourD[1], fill: "#111111" });
+          S(handH, "path", { d: "M0 -318 L0 48", stroke: "rgba(240,236,229,0.55)", "stroke-width": 1.4 });
+          S(handH, "path", { d: "M0 -300 L-6 -170 L0 -150 L6 -170 Z", fill: "#F0ECE5" });
+          const handM = S(clk, "g", {});
+          S(handM, "path", { d: minD[0], fill: "#45443F" }); S(handM, "path", { d: minD[1], fill: "#111111" });
+          S(handM, "path", { d: "M0 -518 L0 62", stroke: "rgba(240,236,229,0.6)", "stroke-width": 1.6 });
+          S(handM, "path", { d: "M-24 -46 L0 -520 L24 -46", fill: "none", stroke: "rgba(0,0,0,0.5)", "stroke-width": 1.5 });
+          S(handM, "path", { d: "M0 -500 L-7 -340 L0 -318 L7 -340 Z", fill: "#E85D26" });
+          const handS = S(clk, "g", { class: "hr-glowbox" });
+          S(handS, "path", { d: secD, fill: "#E85D26" });
+          S(handS, "circle", { cy: 112, r: 24, fill: "#E85D26" });
+          S(handS, "circle", { cy: 112, r: 15, fill: "none", stroke: "rgba(17,17,17,0.35)", "stroke-width": 2 });
+          S(handS, "path", { d: "M-15 104 A17 17 0 0 1 -4 96", fill: "none", stroke: "rgba(255,236,224,0.6)", "stroke-width": 2.5, "stroke-linecap": "round" });
+          S(handS, "path", { d: "M0 -540 L-6 -470 L6 -470 Z", fill: "#F0ECE5", opacity: 0.85 });
+          // center stack
+          S(clk, "circle", { cy: 6, r: 48, fill: "#000000", opacity: 0.5, filter: "url(#f04-hsh)" });
+          S(clk, "circle", { r: 44, fill: "url(#f04-cap)", stroke: "rgba(0,0,0,0.55)", "stroke-width": 1.5 });
+          S(clk, "circle", { r: 30, fill: "#111111" });
+          S(clk, "circle", { r: 22, fill: "#E85D26" });
+          S(clk, "circle", { r: 7, fill: "#111111" });
+          S(clk, "path", { d: "M-32 -14 A35 35 0 0 1 -12 -33", fill: "none", stroke: "rgba(240,236,229,0.6)", "stroke-width": 3, "stroke-linecap": "round" });
+          // the crystal: one broad reflection, a specular edge; then the raking light over everything
+          const glass = S(clk, "g", { "clip-path": "url(#f04-glassclip)" });
+          S(glass, "path", { d: "M-620 -40 C-420 -120 -120 -360 60 -620 L-620 -620 Z", fill: "url(#f04-glass)" });
+          S(glass, "path", { d: "M-620 60 C-400 -30 -80 -300 120 -620", fill: "none", stroke: "rgba(255,255,255,0.14)", "stroke-width": 26 });
+          // v21: a white-hot glint that sweeps the crystal on the big hits (the clock's own light)
+          const glint = S(glass, "rect", { x: -130, y: -900, width: 260, height: 1800, fill: "url(#f04-glint)", opacity: 0 });
+          // v21: sparks struck off the second hand's tip on the snares and off the hub on "time" (clock units, drawn per frame)
+          const sparkG = S(clk, "g", { fill: "none", "stroke-linecap": "round" });
+          S(clk, "path", { d: `M${P(250, 556).map(f1).join(" ")} A556 556 0 0 1 ${P(330, 556).map(f1).join(" ")}`, fill: "none", stroke: "rgba(240,236,229,0.32)", "stroke-width": 2, "stroke-linecap": "round" });
+          S(clk, "circle", { r: 600, fill: "url(#f04-rake)" });
+
+          // ---- Archie, waiting beside the clock (v12: replaces the lamp-headed Archivist) -------------------------
+          const archie = HR.archie($("f04-arch"), { id: "f04a", x: 150, y: 372, scale: 0.68, seed: 4 });
+          // Gaze uses the same authored coordinates and scale as the reframed chronometer and actor.
+          const AS = 390 / 300, AX = 730, AY = 490;
+          const CX = 1230, CY = 520, CS = 0.675;
+          // v14: his tiny twin-bell alarm clock; origin = the carry handle (where a claw grips it), hanging down ~84
+          const alarm = (parent) => {
+            const g = S(parent, "g", {}), body = S(g, "g", {});
+            for (const [w, c] of [[7, "#111111"], [4, "#5A574F"]]) S(body, "path", { d: "M-18 66 L-27 84 M18 66 L27 84", stroke: c, "stroke-width": w, "stroke-linecap": "round" });
+            for (const [w, c] of [[7, "#111111"], [3.5, "#888880"]]) S(body, "path", { d: "M-14 5 Q0 -9 14 5", fill: "none", stroke: c, "stroke-width": w });
+            const bells = [-1, 1].map((sd) => {
+              const b = S(body, "g", { transform: `translate(${sd * 21} 18)` });
+              S(b, "path", { d: "M-15 6 A15 15 0 0 1 15 6 Z", fill: "#888880", stroke: "#111111", "stroke-width": 2.5 });
+              S(b, "path", { d: "M-9 1 A9 9 0 0 1 -1 -7", fill: "none", stroke: "rgba(240,236,229,0.75)", "stroke-width": 2, "stroke-linecap": "round" });
+              return b;
+            });
+            const btn = S(body, "g", {}); // the alarm-off plunger on top
+            S(btn, "rect", { x: -4, y: -13, width: 8, height: 10, fill: "#5A574F", stroke: "#111111", "stroke-width": 2 });
+            S(btn, "rect", { x: -8, y: -17, width: 16, height: 6, rx: 2, fill: "#E85D26", stroke: "#111111", "stroke-width": 2 });
+            const hammer = S(body, "g", { transform: "translate(0 18)" });
+            S(hammer, "path", { d: "M0 6 V-6", stroke: "#111111", "stroke-width": 3 });
+            S(hammer, "circle", { cy: -7, r: 4, fill: "#5A574F", stroke: "#111111", "stroke-width": 1.5 });
+            S(body, "circle", { cy: 48, r: 30, fill: "#E85D26", stroke: "#111111", "stroke-width": 3 });
+            S(body, "circle", { cy: 48, r: 22, fill: "#F0ECE5", stroke: "#111111", "stroke-width": 2 });
+            for (let k = 0; k < 12; k++) S(body, "path", { d: "M0 29 V33", stroke: "#111111", "stroke-width": k % 3 ? 1.2 : 2.5, transform: `rotate(${k * 30} 0 48)` });
+            S(body, "path", { d: "M0 48 V34 M0 48 L10 52", stroke: "#111111", "stroke-width": 3, "stroke-linecap": "round" });
+            S(body, "circle", { cy: 48, r: 2.6, fill: "#E85D26" });
+            S(body, "path", { d: "M-24 38 A26 26 0 0 1 -10 24", fill: "none", stroke: "rgba(255,236,224,0.7)", "stroke-width": 3, "stroke-linecap": "round" });
+            const key = S(body, "g", { transform: "translate(-31 48)" });
+            S(key, "path", { d: "M0 0 H-9", stroke: "#111111", "stroke-width": 5 });
+            const wing = S(key, "path", { d: "M-10 0 L-15 -12 L-5 -12 Z M-10 0 L-15 12 L-5 12 Z", fill: "#888880", stroke: "#111111", "stroke-width": 1.5 });
+            const rings = [-1, 1].map((sd) => S(g, "path", { d: `M${sd * 44} 2 q${sd * 9} 13 0 26 M${sd * 54} -6 q${sd * 14} 21 0 42`, fill: "none",
+              stroke: "#E85D26", "stroke-width": 3.5, "stroke-linecap": "round", opacity: 0, class: "hr-glowbox" }));
+            return { g, body, btn, bells, hammer, wing, rings };
+          };
+          // ringing: the case rattles and hops, the hammer hammers, the bells shake and the ring lines flash
+          const ring = (c, T, on) => {
+            c.body.setAttribute("transform", on ? `translate(0 ${(-Math.abs(Math.sin(T * 47)) * 5).toFixed(2)}) rotate(${(Math.sin(T * 101) * 9).toFixed(2)} 0 48)` : "");
+            c.hammer.setAttribute("transform", `translate(0 18) rotate(${on ? (Math.sin(T * 190) * 34).toFixed(1) : 0})`);
+            c.bells.forEach((b, i) => b.setAttribute("transform", `translate(${(i ? 21 : -21) + (on ? Math.sin(T * 160 + i * 2) * 2 : 0)} 18)`));
+            c.rings.forEach((r, i) => r.setAttribute("opacity", on ? (Math.sin(T * 38 + i * Math.PI) > 0 ? 1 : 0.25).toFixed(2) : "0"));
+          };
+          const wind = (c, a) => c.wing.setAttribute("transform", `translate(-10 0) scale(1 ${Math.cos(a).toFixed(3)}) translate(10 0)`);
+          const clockH = alarm(archie.hand("R", { upright: true }));
+          const clockF = alarm($("f04-arch")); // the same clock, once it is set down on the floor
+          const CK = 1.35; // the clock's size in Archie's units
+          clockH.g.setAttribute("transform", `scale(${CK})`);
+          clockF.g.setAttribute("opacity", "0");
+
+          // ---- the BYTES HELD odometer (g2) ------------------------------------------------------------------
+          const cols = [], cells = [];
+          for (let d = 0; d < 10; d++) {
+            const cell = el("div", "f04-cell", $("f04-dwin")), col = el("div", "f04-col hr-glow", cell);
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0].forEach((n) => el("div", "", col, String(n)));
+            cols.push(col); cells.push(cell);
+          }
+          [[8, 8, 30], [1686, 8, -20], [8, 240, 75], [1686, 240, 10]].forEach(([l, t, a]) => {
+            const s = el("i", "f04-screw", $("f04-plate")); Object.assign(s.style, { left: l + "px", top: t + "px" }); s.style.setProperty("--f04-a", a + "deg");
+          });
+// ---- v21 g2 (W4): the pneumatic intake. Clear glass tubes from every source shoot envelopes into a drop column over a
+          // steel hopper; the sung words ride the big tube from the YOU hatch, one envelope per word, and pile up in the lit
+          // window; "mine" slams the gate shut (sparks off the latch, the tubes jam). One canvas, one continuous camera in world
+          // px; the framing changes on the downbeat 39.308 (along the tube) and the kick 40.474 (onto the gate). Pure functions of T.
+          const hex = (w) => Array.from(w).map((ch) => ch.charCodeAt(0).toString(16).toUpperCase().padStart(2, "0")).join(" ");
+          const COL = { x0: 1190, x1: 1350, y0: 96, y1: 432 };   // the glass drop column
+          const HOP = { x0: 1040, x1: 1480, y0: 432, y1: 1030 };  // the hopper
+          const WIN = { x0: 1084, x1: 1356, y0: 520, y1: 960 };   // its lit window
+          const GATE = { hx: 1424, hy: 432, len: 284, th: 34 };   // hinged right of the mouth; open stands up, shut lies across
+          const GAUGE = { x: 1418, y: 598, r: 46 };
+          const HT = { b: [[250, 300], [600, 300], [900, 300], [1190, 300]], D: 96 }; // the hero tube from the YOU hatch
+          const TUBES = [
+            { b: [[-340, 150], [300, 150], [880, 168], [1190, 170]], lab: "EMAIL" },
+            { b: [[-340, 222], [250, 222], [900, 232], [1190, 232]], lab: "BANK" },
+            { b: [[-340, 392], [300, 392], [860, 362], [1190, 360]], lab: "CLINIC" },
+            { b: [[-340, 470], [350, 470], [880, 404], [1190, 396]], lab: "CHAT" },
+            { b: [[-340, 540], [420, 540], [960, 420], [1190, 416]], lab: "TAX" },
+            { b: [[380, -300], [380, 10], [1226, -90], [1226, 96]], lab: "LOGIN", top: true },
+            { b: [[720, -300], [720, 0], [1270, -60], [1270, 96]], lab: "PAYROLL", top: true },
+            { b: [[1060, -300], [1060, -40], [1314, -40], [1314, 96]], lab: "DIARY", top: true },
+          ].map((tb) => ({ ...tb, D: 54 }));
+          const bez = (b, u) => { const m = 1 - u, a = m * m * m, c = 3 * m * m * u, d = 3 * m * u * u, e = u * u * u;
+            return [a * b[0][0] + c * b[1][0] + d * b[2][0] + e * b[3][0], a * b[0][1] + c * b[1][1] + d * b[2][1] + e * b[3][1]]; };
+          const bezA = (b, u) => { const p = bez(b, Math.max(0, u - 0.004)), q = bez(b, Math.min(1, u + 0.004)); return Math.atan2(q[1] - p[1], q[0] - p[0]); };
+          // each tube sampled once: points with their normals, for the glass walls and the speculars
+          const sample = (tb) => { tb.pts = Array.from({ length: 61 }, (_, i) => { const u = i / 60, [x, y] = bez(tb.b, u), a = bezA(tb.b, u); return [x, y, -Math.sin(a), Math.cos(a)]; }); };
+          TUBES.forEach(sample); sample(HT);
+          // the bulk mail: sparse at first, a torrent by "mine"; already in flight when the shot opens
+          const fallOf = (top, ey) => { const v = top ? 380 : 120; return (-v + Math.sqrt(v * v + 5200 * Math.max(0, COL.y1 - ey))) / 2600; };
+          const BULK = [], pr = HR.rng(1604);
+          for (let t = G2 - 0.45; t < MINE - 0.03; ) {
+            const u = clamp01((t - G2) / (MINE - G2)), k = (pr() * TUBES.length) | 0, tb = TUBES[k];
+            const d = (0.95 - 0.45 * u) * (0.85 + 0.3 * pr()), end = tb.b[3];
+            BULK.push({ k, t, d, top: !!tb.top, ex: end[0], ey: end[1], xo: (pr() - 0.5) * 100, a0: (pr() - 0.5) * 0.5, spin: (pr() - 0.5) * 14, f: fallOf(tb.top, end[1]) });
+            t += (1 / (36 + 190 * Math.pow(u, 1.3))) * (0.5 + pr());
+          }
+          // v17: each word-envelope leaves the tube on the nearest kick/snare/downbeat (WOW.on); a landing with no event near stays quiet
+          const LAND = PKTS.map(([, t]) => WOW.on(t + FLY));
+          const LOUD = PKTS.map(([, t], i) => LAND[i] !== t + FLY);
+          const HERO = PKTS.map(([w, t], i) => ({ t, d: LAND[i] - t, h: hex(w), w, top: false, ex: 1190, ey: 300, xo: [10, -30, 30, -10, 0][i], a0: 0, spin: [3, -4, 5, -3, 2][i], f: fallOf(false, 300), hero: true }));
+          for (const p of [...BULK, ...HERO]) p.arr = p.t + p.d + p.f;
+          // the pile in the window: every envelope that drops through the mouth before the gate shuts takes the next slot
+          const PILE = [...BULK, ...HERO].filter((p) => p.arr <= MINE).sort((a, b) => a.arr - b.arr);
+          // the bin already holds years of mail (OLD, greyed); the new arrivals land on top of it
+          const pileR = HR.rng(1777), PW = WIN.x1 - WIN.x0, OLD = Array.from({ length: 90 }, () => ({ old: true }));
+          const PER = 5, ROWH = Math.min(12, (WIN.y1 - WIN.y0 - 70) / Math.ceil((OLD.length + PILE.length) / PER));
+          [...OLD, ...PILE].forEach((p, k) => {
+            const row = Math.floor(k / PER);
+            p.px = p.hero ? WIN.x0 + PW * (0.3 + 0.1 * (k % 5)) : WIN.x0 + 26 + ((k % PER) + pileR() * 0.8) * (PW - 52) / PER;
+            p.py = WIN.y1 - 16 - row * ROWH - pileR() * 6; p.pr = (pileR() - 0.5) * (p.hero ? 0.5 : 1.1);
+          });
+          // the jam: envelopes still falling when the gate shuts stack on it; those still in their tubes brake to a stop
+          const STACK = [...BULK, ...HERO].filter((p) => p.arr > MINE && p.t + p.d <= MINE).sort((a, b) => a.arr - b.arr);
+          STACK.forEach((p, k) => { p.sy = GATE.hy - GATE.th - 12 - Math.floor(k / 4) * 9; p.sx = COL.x0 + 26 + (k % 4) * 36 + ((k * 7) % 11); });
+          const ARR_TOTAL = PILE.length;
+          const fillAt = (T) => (T < G2 ? 0 : PILE.filter((p) => p.arr <= T).length / ARR_TOTAL);
+          // the camera: [track s, world centre x, y, zoom]; eased between keys
+          const CAMK = [[G2, 880, 470, 0.86], [39.308, 905, 462, 0.9], [39.78, 820, 380, 1.2], [40.474, 920, 384, 1.24], [40.92, 1105, 500, 1.4], [MINE, 1110, 502, 1.42], [41.72, 1128, 512, 1.34]];
+          const lerp = (a, b, u) => a + (b - a) * u;
+          const camAt = (T) => {
+            let i = 0; while (i < CAMK.length - 2 && T > CAMK[i + 1][0]) i++;
+            const [ta, xa, ya, za] = CAMK[i], [tb, xb, yb, zb] = CAMK[i + 1], u = clamp01((T - ta) / (tb - ta)), e = u * u * (3 - 2 * u);
+            return { x: lerp(xa, xb, e), y: lerp(ya, yb, e), z: lerp(za, zb, e) };
+          };
+          const scr = (T, wx, wy) => { const c = camAt(T); return [960 + (wx - c.x) * c.z, 540 + (wy - c.y) * c.z]; };
+          // the gate: open (π/2, standing up) until it slams shut ON "mine" (accelerating), one hard rebound, settled by +0.3
+          const gateAt = (T) => {
+            const a0 = MINE - 0.085;
+            if (T < a0) return Math.PI / 2 + 0.015 * Math.sin(T * 9) * clamp01((T - G2) / 0.5);
+            if (T < MINE) { const u = (T - a0) / 0.085; return Math.PI / 2 * (1 - u * u * u); }
+            const d = T - MINE; return -0.13 * Math.exp(-d / 0.07) * Math.abs(Math.sin(d * 26));
+          };
+          // gate sparks: struck off the latch as the slab hits it
+          const GSPK = Array.from({ length: 46 }, (_, i) => { const r = HR.rng(5100 + i), a = (-178 + r() * 176) * Math.PI / 180, v = 500 + r() * 1300;
+            return { t: MINE + r() * 0.03, x: GATE.hx - GATE.len + 10, y: GATE.hy - 6, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 200, life: 0.4 + 0.45 * r(), w: 2 + 3 * r() }; });
+          const cv = $("f04-cv1"), DPR = window.devicePixelRatio > 1.5 ? 2 : 1; // the film renders in 4K
+          cv.width = 1920 * DPR; cv.height = 1080 * DPR;
+          const c = cv.getContext("2d");
+          const rrect = (x, y, w, h, r) => { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); };
+          const poly = (pts, off) => { c.beginPath(); pts.forEach(([x, y, nx, ny], i) => { const X = x + nx * off, Y = y + ny * off; i ? c.lineTo(X, Y) : c.moveTo(X, Y); }); };
+          // an envelope centred on (x, y), turned a; hero envelopes carry the sung word and its bytes
+          const envelope = (x, y, a, w, h, o = {}) => {
+            c.save(); c.translate(x, y); c.rotate(a); c.globalAlpha = o.al ?? 1;
+            c.fillStyle = o.fill ?? "#EEE8DC"; c.fillRect(-w / 2, -h / 2, w, h);
+            c.strokeStyle = "rgba(60,56,48,0.55)"; c.lineWidth = Math.max(1, w / 40); c.strokeRect(-w / 2, -h / 2, w, h);
+            c.beginPath(); c.moveTo(-w / 2, -h / 2); c.lineTo(0, h * 0.08); c.lineTo(w / 2, -h / 2); c.stroke();
+            if (o.word) {
+              c.fillStyle = "#E85D26"; c.fillRect(w / 2 - w * 0.2, -h / 2 + h * 0.1, w * 0.13, h * 0.2);
+              c.fillStyle = "#151514"; c.textAlign = "left"; c.textBaseline = "alphabetic";
+              c.font = `900 ${(h * 0.36).toFixed(0)}px "Barlow"`; c.fillText(o.word, -w / 2 + w * 0.08, h * 0.3);
+              c.font = `600 ${(h * 0.12).toFixed(0)}px "IBM Plex Mono"`; c.fillStyle = "#3A3A36"; c.fillText("TO: ARCHIVE · " + o.hex, -w / 2 + w * 0.08, h * 0.44);
+            } else { c.fillStyle = "rgba(232,93,38,0.85)"; c.fillRect(w / 2 - w * 0.22, -h / 2 + h * 0.12, w * 0.12, h * 0.18); }
+            c.restore();
+          };
+          const tubeBack = (tb) => {
+            poly(tb.pts, 0); c.lineCap = "butt"; c.lineJoin = "round";
+            c.strokeStyle = "rgba(240,236,229,0.16)"; c.lineWidth = tb.D; c.stroke();
+            c.strokeStyle = "rgba(24,24,22,0.7)"; c.lineWidth = tb.D - 8; c.stroke();
+            c.strokeStyle = "rgba(240,236,229,0.07)"; c.lineWidth = tb.D * 0.45; c.stroke();
+          };
+          const tubeFront = (tb, k) => {
+            c.strokeStyle = "rgba(240,236,229,0.72)"; c.lineWidth = 3;
+            poly(tb.pts, -tb.D / 2); c.stroke(); c.strokeStyle = "rgba(240,236,229,0.4)"; poly(tb.pts, tb.D / 2); c.stroke();
+            c.strokeStyle = `rgba(255,255,255,${(0.6 + 0.4 * k).toFixed(3)})`; c.lineWidth = tb.D > 60 ? 6 : 4;
+            poly(tb.pts.slice(3, 58), -tb.D * 0.3); c.stroke();
+            c.strokeStyle = "rgba(240,236,229,0.22)"; c.lineWidth = tb.D > 60 ? 4 : 2.5; poly(tb.pts.slice(6, 54), tb.D * 0.3); c.stroke();
+            for (const u of [0.22, 0.55, 0.86]) { // collars
+              const [x, y, nx, ny] = tb.pts[Math.round(u * 60)];
+              c.save(); c.translate(x, y); c.rotate(Math.atan2(ny, nx));
+              c.fillStyle = "#3A3A36"; c.fillRect(-tb.D / 2 - 7, -8, tb.D + 14, 16);
+              c.strokeStyle = "rgba(240,236,229,0.6)"; c.lineWidth = 1.5; c.strokeRect(-tb.D / 2 - 7, -8, tb.D + 14, 16);
+              c.restore();
+            }
+          };
+          // where an envelope is at T: in its tube (q < 1), falling in the column, gone into the hopper, or jammed
+          const envAt = (p, T) => {
+            const tb = p.hero ? HT : TUBES[p.k], q = (T - p.t) / p.d;
+            if (q < 0) return null;
+            if (q < 1) {
+              let qq = q;
+              if (T > MINE && p.t + p.d > MINE) qq = (MINE - p.t) / p.d + (0.06 / p.d) * (1 - Math.exp(-(T - MINE) / 0.06)); // the jam
+              if (qq >= 1) qq = 0.999;
+              const [x, y] = bez(tb.b, qq); return { x, y, a: bezA(tb.b, qq), tube: true };
+            }
+            const u = T - p.t - p.d, v = p.top ? 380 : 120;
+            let x = p.ex + (p.top ? 0 : 150 * (1 - Math.exp(-u / 0.1))) + p.xo * (1 - Math.exp(-u / 0.2)), y = p.ey + v * u + 1300 * u * u;
+            x = Math.max(COL.x0 + 30, Math.min(COL.x1 - 30, x));
+            const a = (p.top ? Math.PI / 2 : 0) + p.a0 + p.spin * u;
+            if (p.sy != null && T > MINE - 0.02 && y >= p.sy) return { x: p.sx, y: p.sy, a: p.a0 * 0.4, rest: true };
+            if (u >= p.f) return null;
+            return { x, y, a };
+          };
+          function drawWorld(T) {
+            const cam = camAt(T), kick = HR.hit("kick", T, 0.14), z = cam.z * (1 + 0.02 * kick);
+            const jolt = HERO.reduce((v, p, i) => v + (LOUD[i] && T >= LAND[i] ? 5 * Math.exp(-(T - LAND[i]) / 0.08) : 0), 0);
+            c.setTransform(DPR, 0, 0, DPR, 0, 0); c.clearRect(0, 0, 1920, 1080);
+            c.save(); c.translate(960, 540); c.scale(z, z); c.translate(-cam.x, -cam.y + jolt);
+            // ground: faint crosses so the camera's travel reads
+            c.strokeStyle = "rgba(240,236,229,0.12)"; c.lineWidth = 2; c.beginPath();
+            for (let gx = -640; gx <= 1800; gx += 160) for (let gy = -320; gy <= 1360; gy += 160) { c.moveTo(gx - 6, gy); c.lineTo(gx + 6, gy); c.moveTo(gx, gy - 6); c.lineTo(gx, gy + 6); }
+            c.stroke();
+            // the tubes (back walls), their mail, then the glass in front
+            TUBES.forEach(tubeBack); tubeBack(HT);
+            const inCol = [];
+            for (const p of BULK) { const e = envAt(p, T); if (!e) continue; if (e.tube) envelope(e.x, e.y, e.a, 44, 29); else inCol.push([p, e]); }
+            for (const p of HERO) { const e = envAt(p, T); if (!e) continue; if (e.tube) envelope(e.x, e.y, e.a, 118, 74, { word: p.w, hex: p.h }); else inCol.push([p, e]); }
+            TUBES.forEach((tb) => tubeFront(tb, kick)); tubeFront(HT, kick);
+            // tags on the tubes (the deadpan layer)
+            c.font = '600 15px "IBM Plex Mono"'; c.textAlign = "center"; c.textBaseline = "middle";
+            TUBES.forEach((tb) => { const [x, y] = tb.pts[tb.top ? 20 : 13]; c.fillStyle = "#F0ECE5"; rrect(x - 40, y - 12 - tb.D / 2 - 18, 80, 22, 3); c.fill(); c.fillStyle = "#151514"; c.fillText(tb.lab, x, y - tb.D / 2 - 19); });
+            // the YOU hatch the sung words leave from
+            { const [x, y] = HT.b[0], open = Math.max(0, ...HERO.map((p) => { const d = T - p.t; return d >= -0.05 && d < 0.25 ? 1 - Math.abs(d - 0.05) / 0.2 : 0; }));
+              c.fillStyle = "#1E1E1C"; rrect(x - 120, y - 74, 120, 148, 8); c.fill(); c.strokeStyle = "rgba(240,236,229,0.7)"; c.lineWidth = 3; c.stroke();
+              c.fillStyle = `rgba(255,214,180,${(0.25 + 0.7 * open).toFixed(3)})`; c.fillRect(x - 12, y - 46, 12, 92);
+              c.fillStyle = "#F0ECE5"; c.font = '600 22px "IBM Plex Mono"'; c.fillText("YOU", x - 60, y - 96); c.font = '500 12px "IBM Plex Mono"'; c.fillStyle = "#888880"; c.fillText("SEND ONLY", x - 60, y + 92); }
+            // the drop column: glass, the mail tumbling down it, the jam on the gate
+            c.fillStyle = "rgba(240,236,229,0.05)"; c.fillRect(COL.x0, COL.y0, COL.x1 - COL.x0, COL.y1 - COL.y0);
+            for (const [p, e] of inCol) envelope(e.x, e.y, e.a, p.hero ? 118 : 44, p.hero ? 74 : 29, p.hero ? { word: p.w, hex: p.h } : {});
+            c.strokeStyle = "rgba(240,236,229,0.5)"; c.lineWidth = 3; c.strokeRect(COL.x0, COL.y0, COL.x1 - COL.x0, COL.y1 - COL.y0);
+            c.strokeStyle = `rgba(255,255,255,${(0.55 + 0.4 * kick).toFixed(3)})`; c.lineWidth = 5; c.beginPath(); c.moveTo(COL.x0 + 18, COL.y0 + 14); c.lineTo(COL.x0 + 18, COL.y1 - 20); c.stroke();
+            c.lineWidth = 2; c.beginPath(); c.moveTo(COL.x1 - 16, COL.y0 + 30); c.lineTo(COL.x1 - 16, COL.y1 - 40); c.stroke();
+            // the hopper: a riveted steel bin with a lit window onto the pile
+            const H = HOP, g = c.createLinearGradient(H.x0, 0, H.x1, 0); g.addColorStop(0, "#34332F"); g.addColorStop(0.5, "#24231F"); g.addColorStop(1, "#161614");
+            c.fillStyle = g; c.fillRect(H.x0, H.y0, H.x1 - H.x0, H.y1 - H.y0);
+            c.strokeStyle = "rgba(240,236,229,0.55)"; c.lineWidth = 3; c.beginPath(); c.moveTo(H.x0, H.y1); c.lineTo(H.x0, H.y0); c.lineTo(H.x1, H.y0); c.stroke();
+            c.fillStyle = "#1A1A18"; c.fillRect(H.x0 - 16, H.y0 - 6, H.x1 - H.x0 + 32, 22); c.strokeStyle = "rgba(240,236,229,0.7)"; c.lineWidth = 2; c.strokeRect(H.x0 - 16, H.y0 - 6, H.x1 - H.x0 + 32, 22);
+            c.fillStyle = "#6E6A60"; for (let x = H.x0 + 14; x < H.x1; x += 44) for (const y of [H.y0 + 34, H.y1 - 30]) { c.beginPath(); c.arc(x, y, 4, 0, Math.PI * 2); c.fill(); }
+            // the window: dark glass, the pile lit by the bin's own lamp
+            const W = WIN, f = fillAt(T);
+            c.fillStyle = "#0D0D0C"; c.fillRect(W.x0, W.y0, W.x1 - W.x0, W.y1 - W.y0);
+            c.save(); c.beginPath(); c.rect(W.x0, W.y0, W.x1 - W.x0, W.y1 - W.y0); c.clip();
+            const lamp = c.createRadialGradient((W.x0 + W.x1) / 2, W.y0 + 10, 10, (W.x0 + W.x1) / 2, W.y0 + 10, 520);
+            lamp.addColorStop(0, "rgba(255,226,196,0.28)"); lamp.addColorStop(1, "rgba(255,226,196,0)"); c.fillStyle = lamp; c.fillRect(W.x0, W.y0, W.x1 - W.x0, W.y1 - W.y0);
+            const n = Math.round(f * ARR_TOTAL), topY = n ? PILE[n - 1].py : OLD[OLD.length - 1].py;
+            for (const p of OLD) { const depth = clamp01((p.py - topY) / 300), sh = Math.round(200 - 110 * depth); envelope(p.px, p.py, p.pr, 52, 34, { fill: `rgb(${sh},${sh - 6},${sh - 18})` }); }
+            for (let k = 0; k < n; k++) {
+              const p = PILE[k], dd = T - p.arr, drop = dd < 0.12 ? 1 - dd / 0.12 : 0;
+              const depth = clamp01((p.py - topY) / 300), sh = Math.round(242 - 110 * depth);
+              envelope(p.px, p.py - drop * drop * 120, p.pr, p.hero ? 104 : 52, p.hero ? 66 : 34, p.hero ? { word: p.w, hex: p.h, fill: `rgb(${sh},${sh - 6},${sh - 18})` } : { fill: `rgb(${sh},${sh - 6},${sh - 18})` });
+            }
+            c.globalCompositeOperation = "lighter"; c.fillStyle = lamp; c.fillRect(W.x0, W.y0, W.x1 - W.x0, W.y1 - W.y0); c.globalCompositeOperation = "source-over";
+            c.fillStyle = "#F4E6D2"; c.shadowColor = "rgba(255,226,196,0.9)"; c.shadowBlur = 24; c.fillRect((W.x0 + W.x1) / 2 - 60, W.y0 + 6, 120, 8); c.shadowBlur = 0; // the lamp tube
+            c.restore();
+            c.strokeStyle = "rgba(255,255,255,0.16)"; c.lineWidth = 10; c.beginPath(); c.moveTo(W.x0 + 30, W.y1 - 20); c.lineTo(W.x0 + 170, W.y0 + 40); c.stroke();
+            c.strokeStyle = "rgba(240,236,229,0.6)"; c.lineWidth = 3; c.strokeRect(W.x0, W.y0, W.x1 - W.x0, W.y1 - W.y0);
+            c.fillStyle = "#888880"; c.font = '600 14px "IBM Plex Mono"'; c.textAlign = "left";
+            c.fillText("INTAKE BIN 01 · CONTENTS: EVERYTHING", H.x0 + 14, H.y0 + 64 - 10); c.fillText(T >= MINE ? "FULL · DO NOT EMPTY" : "FILLING · " + Math.floor(f * 100) + "%", W.x0, W.y1 + 30);
+            // the pressure gauge: cream face, the needle jumps on the kicks and climbs with the torrent, pegged by "mine"
+            { const G = GAUGE, pres = T >= MINE ? 1 - 0.06 * Math.exp(-(T - MINE) / 0.1) * Math.cos((T - MINE) * 60) : 0.12 + 0.6 * f + 0.16 * kick;
+              c.fillStyle = "#1A1A18"; c.beginPath(); c.arc(G.x, G.y, G.r + 8, 0, Math.PI * 2); c.fill(); c.strokeStyle = "rgba(240,236,229,0.6)"; c.lineWidth = 2; c.stroke();
+              c.fillStyle = "#F0ECE5"; c.beginPath(); c.arc(G.x, G.y, G.r, 0, Math.PI * 2); c.fill();
+              c.strokeStyle = "#E85D26"; c.lineWidth = 6; c.beginPath(); c.arc(G.x, G.y, G.r - 8, Math.PI * 0.25 + 0.8 * Math.PI, Math.PI * 2.25); c.stroke();
+              c.strokeStyle = "#151514"; c.lineWidth = 2; for (let i = 0; i <= 10; i++) { const a = Math.PI * (0.75 + 1.5 * i / 10); c.beginPath(); c.moveTo(G.x + Math.cos(a) * (G.r - 4), G.y + Math.sin(a) * (G.r - 4)); c.lineTo(G.x + Math.cos(a) * (G.r - 13), G.y + Math.sin(a) * (G.r - 13)); c.stroke(); }
+              const na = Math.PI * (0.75 + 1.5 * Math.min(1.02, pres)); c.strokeStyle = "#E85D26"; c.lineWidth = 4; c.beginPath(); c.moveTo(G.x, G.y); c.lineTo(G.x + Math.cos(na) * (G.r - 8), G.y + Math.sin(na) * (G.r - 8)); c.stroke();
+              c.fillStyle = "#151514"; c.beginPath(); c.arc(G.x, G.y, 5, 0, Math.PI * 2); c.fill();
+              c.font = '600 10px "IBM Plex Mono"'; c.textAlign = "center"; c.fillText("kPa", G.x, G.y + 24); c.fillStyle = "#888880"; c.font = '500 11px "IBM Plex Mono"'; c.fillText("INTAKE", G.x, G.y + G.r + 24); }
+            // the gate: a steel slab with a stencilled face and a knuckle hinge
+            { const ang = gateAt(T);
+              c.save(); c.translate(GATE.hx, GATE.hy); c.rotate(ang);
+              c.fillStyle = "rgba(0,0,0,0.55)"; c.fillRect(-GATE.len + 8, -GATE.th + 10, GATE.len, GATE.th);
+              const gg = c.createLinearGradient(0, -GATE.th, 0, 0); gg.addColorStop(0, "#56544D"); gg.addColorStop(0.3, "#3A3935"); gg.addColorStop(1, "#1F1F1C");
+              c.fillStyle = gg; c.fillRect(-GATE.len, -GATE.th, GATE.len, GATE.th);
+              c.strokeStyle = "rgba(255,255,255,0.75)"; c.lineWidth = 2.5; c.beginPath(); c.moveTo(-GATE.len, -GATE.th); c.lineTo(0, -GATE.th); c.stroke();
+              for (let x = -GATE.len + 6; x < -GATE.len + 50; x += 20) { c.fillStyle = "#F0ECE5"; c.beginPath(); c.moveTo(x, 0); c.lineTo(x + 10, 0); c.lineTo(x + 24, -GATE.th); c.lineTo(x + 14, -GATE.th); c.closePath(); c.fill(); }
+              c.fillStyle = "#F0ECE5"; c.font = '900 24px "Barlow"'; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText("NO RETURNS", -GATE.len / 2 + 34, -GATE.th / 2 + 1);
+              c.restore();
+              c.fillStyle = "#6E6A60"; c.beginPath(); c.arc(GATE.hx, GATE.hy - GATE.th / 2, 22, 0, Math.PI * 2); c.fill(); c.strokeStyle = "rgba(255,255,255,0.7)"; c.lineWidth = 2; c.stroke();
+              c.fillStyle = "#151514"; c.beginPath(); c.arc(GATE.hx, GATE.hy - GATE.th / 2, 7, 0, Math.PI * 2); c.fill();
+              // the latch on the far side, and the fire bolt that shoots through it once the gate is down
+              const lx = GATE.hx - GATE.len; c.fillStyle = "#2E2E2B"; c.fillRect(lx - 34, GATE.hy - 50, 30, 70); c.strokeStyle = "rgba(240,236,229,0.6)"; c.strokeRect(lx - 34, GATE.hy - 50, 30, 70);
+              if (T >= MINE) { const b = clamp01((T - MINE - 0.03) / 0.08); c.fillStyle = "#E85D26"; c.fillRect(lx - 70 + 60 * b, GATE.hy - 26, 90, 16); }
+            }
+            // sparks off the latch: white-hot heads, fire tails, gravity
+            for (const s of GSPK) {
+              const d = T - s.t; if (d < 0 || d > s.life) continue;
+              const x = s.x + s.vx * d, y = s.y + s.vy * d + 1300 * d * d, x2 = s.x + s.vx * (d - 0.03), y2 = s.y + s.vy * (d - 0.03) + 1300 * (d - 0.03) * (d - 0.03), l = d / s.life;
+              c.strokeStyle = l < 0.4 ? `rgba(255,246,228,${(1 - l).toFixed(2)})` : `rgba(232,93,38,${(1 - l).toFixed(2)})`; c.lineWidth = s.w; c.lineCap = "round";
+              c.beginPath(); c.moveTo(x2, y2); c.lineTo(x, y); c.stroke();
+            }
+            c.restore();
+          }
+
+          // ---- lyrics ------------------------------------------------------------------------------------------
+          function buildLine(key) {
+            const box = $("f04-" + key), words = [];
+            for (const row of LINES[key]) {
+              const big = !Array.isArray(row) && !!row.big, serif = !Array.isArray(row) && !!row.serif;
+              const r = el("div", "f04-row" + (big ? " f04-big hr-glow" : "") + (serif ? " f04-serif" : ""), box);
+              for (const [w, t] of big ? row.big : serif ? row.serif : row) words.push({ s: el("span", "f04-w", r, w.toLowerCase()), t, big, r });
+            }
+            return words;
+          }
+          const lines = Object.fromEntries(Object.keys(LINES).map((k) => [k, buildLine(k)]));
+
+          // ---- timeline -------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          const stage = HR.stage($("root"), { seed: 9 });
+          const cam = stage.cam;
+          cam.focus = 0.5;
+          const groups = [["f04-g1", T0, G2], ["f04-c1", T0, G2], ["f04-g2", G2, 41.72], ["f04-c2", G2, 41.72], ["f04-m2", G2, 41.72], ["f04-s1", G2, 41.72]];
+          for (const [id, a, b] of groups) { tl.set("#" + id, { opacity: 1 }, L(a)); if (b < 41.72) tl.set("#" + id, { opacity: 0 }, L(b)); }
+
+          // camera: trucks alternate per bar; a slow push per group with a punch on each hero
+          const XS = [0, 50, -30, 60, -15, 45];
+          BARS.slice(0, -1).forEach((b, i) => {
+            const end = BARS[i + 1];
+            tl.fromTo(cam, { x: XS[i] }, { x: XS[i + 1], duration: end - b, ease: "power2.inOut", immediateRender: i === 0 }, L(b));
+          });
+          const push = (a, hit, end, z0) => {
+            tl.fromTo(cam, { z: z0, rot: 0 }, { z: z0 + 0.04, rot: 0, duration: L(hit) - L(a), ease: "sine.inOut", immediateRender: a === T0 }, L(a));
+            tl.fromTo(cam, { z: z0 + 0.04, rot: 0 }, { z: z0 + 0.085, rot: -0.5, duration: 0.06, ease: "power3.out", immediateRender: false }, L(hit));
+            tl.fromTo(cam, { z: z0 + 0.085, rot: -0.5 }, { z: z0 + 0.05, rot: 0, duration: 0.5, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(hit) + 0.06);
+            const s = L(hit) + 0.56;
+            if (L(end) > s) tl.fromTo(cam, { z: z0 + 0.05 }, { z: z0 + 0.06, duration: L(end) - s, ease: "sine.inOut", immediateRender: false }, s);
+          };
+          push(T0, TIME, G2, 1);
+          push(G2, MINE, 41.72, 1);
+
+          // the clock: minute hand sweeps round onto "time"; the second hand steps on every beat; drums roll
+          // v21 (W8): the hands are pure functions of track time. The second hand ticks small on the beats and BIG (30°,
+          // sprung) on the snares; "time" starts a time-lapse: the minute hand spins three hours, the hour hand a quarter,
+          // the DAYS HELD drum rolls a year — braking into the 37.924 snare with one sprung overshoot.
+          const hands = { h: 296, m: 150, s: 312 };
+          const g1Beats = BEATS.filter((b) => b < G2);
+          const SN = [34.244, 35.16, 36.084, 37.004], LAP0 = TIME, LAP1 = 37.924;
+          const TKS = BEATS.filter((b) => b > T0 + 0.05 && b < G2 && (b < LAP0 || b > LAP1 + 0.05) && SN.every((s) => Math.abs(s - b) > 0.1));
+          const spr = (d) => (d <= 0 ? 0 : 1 - Math.exp(-20.25 * d) * (Math.cos(40.2 * d) + 0.504 * Math.sin(40.2 * d))); // sprung step, ~20 % overshoot
+          const lapP = (T) => { const u = clamp01((T - LAP0) / (LAP1 - LAP0)); return 1 - Math.pow(1 - u, 2.2); }; // fast off the word, braking
+          const lapBump = (T) => { const d = T - LAP1; return d <= 0 ? 0 : Math.exp(-d / 0.07) * Math.sin(d * 38); };
+          const M_END = 252 + 1080, M_PRE = 164;
+          const handsAt = (T) => {
+            const creep = clamp01((T - T0) / (LAP0 - T0)), wind = -6 * clamp01((T - 36.98) / 0.12);
+            const lp = lapP(T), lb = lapBump(T);
+            const m = T < LAP0 ? 150 + (M_PRE - 150) * creep + wind : M_PRE - 6 + (M_END - M_PRE + 6) * lp + 7 * lb + 1.5 * clamp01((T - LAP1) / 0.7);
+            const h = 296 + 6 * creep + 90 * lp + 2 * lb;
+            let s = 312 + 360 * 12 * lp + 10 * lb;
+            for (const b of SN) s += 30 * spr(T - b + 0.01);
+            for (const b of TKS) s += 6 * spr(T - b + 0.01);
+            return { h, m, s };
+          };
+          // the DAYS HELD count: steps up on each beat, then the time-lapse rolls it to a year
+          const VALS = BEATS.map((_, k) => Math.max(1, Math.round(Math.pow(1.9, k))));
+          const daysAt = (T) => {
+            const k = g1Beats.filter((b) => b <= Math.min(T, LAP0 - 0.01) + 1e-6).length;
+            const cur = VALS[Math.max(0, k - 1)], prev = VALS[Math.max(0, k - 2)];
+            const p = k >= 1 ? 1 - Math.pow(1 - Math.min(1, (Math.min(T, LAP0 - 0.01) - g1Beats[k - 1]) / 0.12), 3) : 1;
+            const base = prev + (cur - prev) * p;
+            return T < LAP0 ? base : base + (365 - base) * lapP(T);
+          };
+          // sparks: [track time, x, y (clock units), base angle (deg, screen), spread, count, speed, seed]
+          const tipAt = (T) => { const a = handsAt(T).s; return [...P(a, 540), a]; };
+          const SPK = [];
+          const spark = (t, x, y, aim, spread, n, sp, seed) => {
+            const r = HR.rng(seed);
+            for (let i = 0; i < n; i++) {
+              const a = (aim + (r() - 0.5) * spread) * Math.PI / 180, v = sp * (0.45 + 0.55 * r());
+              SPK.push({ t: t + r() * 0.02, x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 0.35 + 0.35 * r(), w: 3 + 4 * r(),
+                p: S(sparkG, "path", { stroke: "#FFF4E0", "stroke-width": 4, opacity: 0 }) });
+            }
+          };
+          SN.forEach((b, i) => { const [x, y, a] = tipAt(b + 0.06); spark(b, x, y, a, 120, 14, 1500, 4410 + i); }); // tangent: along the hand's travel
+          spark(TIME, 0, 0, -90, 360, 28, 1900, 4420); // "time": the hub throws a ring of sparks
+          { const [x, y, a] = tipAt(LAP1); spark(LAP1, x, y, a, 140, 18, 1700, 4421); } // the time-lapse slams to a stop
+          tl.fromTo("#f04-clocksvg", { y: 0 }, { y: 12, duration: 0.05, ease: "power2.out", immediateRender: false }, L(TIME));
+          tl.fromTo("#f04-clocksvg", { y: 12 }, { y: 0, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(TIME) + 0.05);
+          tl.set("#f04-clocksvg", { opacity: 0 }, L(G2));
+          tl.set("#f04-arch", { opacity: 0 }, L(G2));
+
+          // v14 gag: Archie rises holding a tiny alarm clock, winds it, sets it down, sits back and taps a tread at the
+          // big clock, then nods off (the hand's slam on "time" jerks him awake for a moment); asleep by 38.4
+          const A = { y: 520, lean: 3 };
+          tl.fromTo(A, { y: 520, lean: 3 }, { y: 0, lean: 0, duration: 0.56, ease: "back.out(1.3)", immediateRender: false }, L(34.26) - 0.1);
+          // gaze weights: the small clock, the big second hand, or down (asleep)
+          const W = { small: 1, big: 0, key: 0 };
+          const HOLD = { shR: -28, elR: -62, clawR: 0.85, shL: -24, elL: -58, clawL: 0.6 };
+          archie.to(tl, { ...HR.archie.MOODS.focused, ...HOLD }, 0, 0.01);
+          const CRANKS = [34.719, 34.947, 35.175];
+          CRANKS.forEach((c, i) => {
+            archie.to(tl, { elL: -80, shL: -30 }, L(c) - 0.1, 0.1, "power2.in");
+            archie.to(tl, { elL: -50, shL: -20 }, L(c), 0.12, "power2.out");
+            tl.fromTo(W, { key: i * Math.PI }, { key: (i + 1) * Math.PI, duration: 0.22, ease: "power2.inOut", immediateRender: false }, L(c) - 0.1);
+          });
+          // done: a pleased little check, then he leans over and sets it down on the downbeat
+          const PUT = 35.631;
+          archie.mood(tl, "happy", L(35.3), 0.2);
+          archie.to(tl, { shL: 8, elL: 10, clawL: 0.2 }, L(35.3), 0.25, "power2.inOut");
+          archie.to(tl, { rot: 16, shR: 108, elR: -58, neck: 0.15, tilt: 10, ...HR.archie.MOODS.focused }, L(PUT) - 0.26, 0.26, "power2.inOut");
+          archie.to(tl, { clawR: 0.1 }, L(PUT), 0.08, "power2.out");
+          // sits back with a plop, arms folded down, and waits at the big clock, impatient
+          archie.to(tl, { rot: 0, shR: 8, elR: 10, clawR: 0.2, neck: 0.3, tilt: 0 }, L(PUT) + 0.14, 0.3, "back.out(1.6)");
+          archie.bump(tl, L(PUT) + 0.3, 0.08);
+          archie.to(tl, { ...HR.archie.MOODS.focused, lidL: 0.36, lidR: 0.3, browL: 8, browR: 8 }, L(PUT) + 0.3, 0.25);
+          tl.fromTo(W, { small: 1, big: 0 }, { small: 0, big: 1, duration: 0.25, ease: "power2.inOut", immediateRender: false }, L(PUT) + 0.2);
+          archie.tapTread(tl, L(36.089), 1);
+          archie.tapTread(tl, L(36.553), 1);
+          // nods off; the minute hand's slam on "time" jerks him up, then he sinks for good
+          archie.doze(tl, L(36.62), 1.78, { nod: L(TIME) });
+          tl.fromTo(W, { big: 1 }, { big: 0.2, duration: 0.4, ease: "sine.inOut", immediateRender: false }, L(36.62));
+          tl.fromTo(W, { big: 0.2 }, { big: 1, duration: 0.08, ease: "power3.out", immediateRender: false }, L(TIME));
+          tl.fromTo(W, { big: 1 }, { big: 0, duration: 0.8, ease: "sine.inOut", immediateRender: false }, L(TIME) + 0.45);
+
+          // g2: still asleep at the lower right, the clock on the floor beside him. The comic beat: the LOCKED clunk on
+          // "mine" sets the alarm off; he jumps clean off the floor, lands, glares at it and slaps it quiet (41.42),
+          // then a held beat of silence before the cut
+          const A2 = { x: 1690, y: 1062, sc: 0.94 }, SLAP = 41.597;
+          const archie2 = HR.archie($("f04-arch2"), { id: "f04b", x: A2.x, y: A2.y, scale: A2.sc, seed: 4 });
+          archie2.to(tl, { ...HR.archie.MOODS.asleep, sway: 1, zz: 1, idle: 0.4 }, 0, 0.01);
+          const clock2 = alarm($("f04-arch2"));
+          clock2.g.setAttribute("transform", `translate(${(A2.x - 262 * A2.sc).toFixed(1)} ${(A2.y - 84 * A2.sc * CK).toFixed(1)}) scale(${(A2.sc * CK).toFixed(3)})`);
+          // v21 (W4): he sleeps through the first bar of ringing and wakes on the downbeat 41.147
+          const WAKE = 41.147;
+          archie2.startle(tl, L(WAKE), { h: 90, air: 0.26, settle: false });
+          // lands at ~41.41: arms down, a glare at the clock
+          archie2.to(tl, { ...HR.archie.MOODS.focused, lidL: 0.42, lidR: 0.42, browL: 10, browR: 10, browRotL: 16, browRotR: -16, pupil: 0.75,
+            neck: 0.5, glow: 1.2, shL: 8, elL: 10, shR: 8, elR: 10, clawL: 0.2, clawR: 0.2 }, L(41.41), 0.06, "power2.out");
+          // the slap: the L claw winds up high, leaning away, then whips down onto the plunger on the snare
+          archie2.to(tl, { shL: 150, elL: -10, clawL: 0.3, rot: 7 }, L(41.47), 0.07, "power2.out");
+          archie2.to(tl, { shL: 82, elL: 16, rot: -16, clawL: 0 }, L(SLAP) - 0.04, 0.04, "power3.in");
+          // ...click. Silence; a small satisfied look, the claw still on the button
+          archie2.to(tl, { lidL: 0.5, lidR: 0.36, browL: 2, browR: -10, browRotL: 7, browRotR: -5, pupil: 0.9 }, L(SLAP) + 0.04, 0.08, "power2.out");
+
+          // lyrics: g1 lead words build by glyph; g2 lead words are thrown in with varied fast moves; hero words explode ON their word time
+          const fx = $("f04-fx"), CLK = { x: 1230, y: 520 };
+          const HEROC = { l6: [390, 836], l7: [414, 851] }; // hero word centres in frame px
+          const KIND = { every: "glide", byte: "sink", you: "rise", ever: "glideR", sent: "settle", is: "rise" }; // v17 soft entrances; only "mine" snaps
+          for (const [key, ws] of Object.entries(lines)) for (const { s, t, big } of ws) {
+            if (big) {
+              tl.set(s, { opacity: 1 }, Math.max(0, L(t) - 0.215)); // glyphs start at ~t-0.23; any earlier and a seek shows stale glyph state
+              WOW.explode(tl, s, L(t), { fx: false, from: key === "l6" ? "burst" : "left", seed: key === "l6" ? 7 : 9 }); // v21: no flat rings; the object takes the hit
+            } else if (key === "l6") { HR.lead(tl, s, L(t)); tl.set(s, { opacity: 1 }, L(t)); }
+            else WOW.word(tl, s, L(t), { kind: KIND[s.textContent] });
+          }
+          HR.exit(tl, $("f04-l6"), L(G2) - 0.26);
+
+          // hero slams squash into the floor and spit a few fire dots
+          const sr = HR.rng(4404);
+          for (const { s, t, big, r } of Object.values(lines).flat()) {
+            if (!big) continue;
+            tl.fromTo(r, { scaleY: 1, scaleX: 1 }, { scaleY: 0.93, scaleX: 1.02, duration: 0.05, ease: "power2.out", immediateRender: false }, L(t));
+            tl.fromTo(r, { scaleY: 0.93, scaleX: 1.02 }, { scaleY: 1, scaleX: 1, duration: 0.45, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(t) + 0.05);
+            for (let i = 0; i < 8; i++) {
+              const d = el("span", "f04-dot", s), side = i % 2 ? -1 : 1, z = 4 + sr() * sr() * 16;
+              d.setAttribute("data-layout-ignore", "");
+              Object.assign(d.style, { width: z + "px", height: z + "px", left: (side < 0 ? -2 - sr() * 4 : 100 + sr() * 4) + "%", top: (25 + sr() * 55) + "%" });
+              const dx = side * (14 + sr() * 50), dy = (sr() - 0.5) * 40;
+              tl.fromTo(d, { opacity: 0, x: -dx * 0.5, y: 0, scale: 0.3 }, { opacity: 0.95, x: 0, y: dy * 0.3, scale: 1, duration: 0.09, ease: "power3.out", immediateRender: false }, L(t));
+              tl.fromTo(d, { opacity: 0.95, x: 0, y: dy * 0.3 }, { opacity: 0, x: dx * 0.4, y: dy + 30, duration: 0.7, ease: "power2.in", immediateRender: false }, L(t) + 0.09);
+            }
+          }
+          // "time" loosens on the downbeat
+          const timeG = lines.l6.find((w) => w.big).s._hrG;
+          tl.fromTo(timeG, { x: 0 }, { x: (i) => i * 20, duration: 1.1, ease: "power2.out", immediateRender: false }, L(37.47));
+
+          // g2 — each word-envelope that leaves the tube on a beat thunks the plate (the canvas jolts the bin, drawWorld)
+          LAND.forEach((b, i) => {
+            if (!LOUD[i]) return;
+            tl.fromTo("#f04-plate", { y: 0 }, { y: 5, duration: 0.04, ease: "power2.out", immediateRender: false }, L(b));
+            tl.fromTo("#f04-plate", { y: 5 }, { y: 0, duration: 0.36, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(b) + 0.04);
+          });
+          tl.fromTo("#f04-plight", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, L(G2));
+          // kicks punch the intake (the gauge and the tube speculars answer in drawWorld); snares punch the machine plane
+          HR.onsetsIn("kick", G2, MINE - 0.05).forEach((t) => WOW.punch(tl, $("f04-s1"), L(t), { s: 1.02, dur: 0.4 }));
+          HR.onsetsIn("snare", G2, MINE - 0.05).forEach((t) => WOW.punch(tl, $("f04-m2"), L(t), { s: 1.012, dur: 0.35 }));
+          { const [ox, oy] = scr(MINE, GATE.hx - GATE.len / 2, GATE.hy); $("f04-s1").style.transformOrigin = `${ox.toFixed(0)}px ${oy.toFixed(0)}px`; }
+          // "mine": the gate slams shut ON the word (sparks off the latch, drawWorld), the bin and the room take the hit
+          {
+            const hit = [$("f04-s1"), $("f04-m2"), $("f04-g2"), $("f04-world")];
+            hit.forEach((e, i) => WOW.shake(tl, e, L(MINE), { amp: 8, dur: 0.45, seed: 90 + i }));
+            WOW.punch(tl, document.getElementById("el-04-wait"), L(MINE), { s: 1.04, dur: 0.55 });
+          }
+          // "mine" locks the counter: the brackets clamp on, the plate slams
+          tl.fromTo([".f04-brk"], { opacity: 0, scaleX: 2.2 }, { opacity: 1, scaleX: 1, duration: 0.12, ease: "power4.in" }, L(MINE) - 0.1);
+          tl.fromTo("#f04-plate", { scale: 1 }, { scale: 1.025, duration: 0.05, ease: "power2.out", immediateRender: false }, L(MINE));
+          tl.fromTo("#f04-plate", { scale: 1.025 }, { scale: 1, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(MINE) + 0.05);
+          // the frame leaves on the alarm: the lens pushes into Archie's eye (paired with 17-watch's pushIn)
+          document.getElementById("el-04-wait").style.transformOrigin = "86% 60%";
+          WOW.transition(tl, document.getElementById("el-04-wait"), { out: "pushIn", dur: 0.46, total: DUR });
+
+          // ---- g1: the clock's hits are mechanical (v21): sparks off the hand and the hub (render), a glint across the
+          // crystal, the camera pushes on the downbeats 35.631 and 37.47 (render), kicks punch the clock plane ----
+          HR.onsetsIn("kick", T0, G2 - 0.05).forEach((t) => WOW.punch(tl, $("f04-mid"), L(t), { s: 1.012, dur: 0.45 }));
+          // v18 (V18.md §04): the vault's last bolt lands as the chorus arrives — one weighted hit on 33.806, then quiet
+          WOW.punch(tl, $("f04-mid"), 0, { s: 1.035, dur: 0.6 });
+          for (const [t, dur] of [[TIME, 0.32], [LAP1, 0.28], [35.631, 0.3]]) {
+            tl.fromTo(glint, { attr: { x: -700 }, opacity: 0.95 }, { attr: { x: 500 }, opacity: 0.2, duration: dur, ease: "power2.out", immediateRender: false }, L(t));
+            tl.set(glint, { opacity: 0 }, L(t) + dur);
+          }
+          {
+            const t = L(TIME);
+            ["f04-mid", "f04-g1"].forEach((id, i) => WOW.shake(tl, $(id), t, { amp: i ? 5 : 8, dur: 0.45, seed: 150 + i }));
+            WOW.punch(tl, document.getElementById("el-04-wait"), t, { s: 1.04, dur: 0.55 });
+          }
+          WOW.shake(tl, $("f04-mid"), L(LAP1), { amp: 6, dur: 0.35, seed: 158 });
+
+          // ---- per-frame draw -------------------------------------------------------------------------------
+          const heroes = Object.values(lines).flat().filter((w) => w.big).map((w) => w.r);
+          const lightEl = $("f04-light"), plightEl = $("f04-plight"), archEl = $("f04-arch");
+          const platew = $("f04-platew"), l6 = $("f04-l6"), l7 = $("f04-l7"), clocksvg = $("f04-clocksvg"), stt = $("f04-stt"), stdot = $("f04-stdot"), pad = $("f04-pad"), pk = $("f04-pk");
+          const rot = (g, a, dx = 0, dy = 0) => g.setAttribute("transform", `translate(${dx} ${dy}) rotate(${a.toFixed(3)})`);
+          const ang = (y, x) => Math.atan2(y, x) * 180 / Math.PI;
+          // the count: 0 before g2, a trickle, an eased jump as each packet lands; "mine" slams it to FINAL and holds
+          const bytesAt = (T) => {
+            if (T < G2) return 0;
+            if (T >= MINE) return FINAL - (FINAL - 129) * Math.pow(1 - clamp01((T - MINE) / 0.14), 3);
+            let v = (T - G2) * 2;
+            LAND.forEach((b, i) => { if (T >= b) v += DELTA[i] * (1 - Math.pow(1 - clamp01((T - b) / 0.3), 3)); });
+            return v;
+          };
+          tl.seek(L(PUT)); archie.apply(PUT);
+          const put = archie.handAt("R");
+          clockF.g.setAttribute("transform", `translate(${put.x.toFixed(1)} ${(372 - 84 * 0.68 * CK).toFixed(1)}) scale(${0.68 * CK})`);
+          tl.seek(0);
+          let lastDim = -1;
+          function render() {
+            const t = tl.time(), T = t + T0;
+            const sm = (u) => { u = clamp01(u); return u * u * (3 - 2 * u); };
+            const nz = T < G2 ? 0.05 * sm((T - 35.631) / 0.45) + 0.07 * sm((T - 37.47) / 0.45) : 0;
+            cam.z += nz; stage.apply(T); cam.z -= nz;
+            HR.draw(tl); WOW.draw(tl);
+            // kick pulses on the type, the clock and the counter (own elements: WOW.pulse reads the local clock, not track time)
+            const kk = HR.hit("kick", T, 0.14);
+            for (const e of [l6, l7]) { e.style.scale = (1 + 0.02 * kk).toFixed(4); e.style.translate = `0px ${(-4 * kk).toFixed(2)}px`; }
+            platew.style.scale = (1 + 0.03 * kk).toFixed(4);
+            clocksvg.style.scale = (1 + 0.02 * kk).toFixed(4);
+            // hands and their shadows (light from the upper left); v21: ghost hands smear while they race
+            if (T < G2) {
+              Object.assign(hands, handsAt(T));
+              const at = (dt) => handsAt(T - dt);
+              ghostM.forEach(({ o, g }, i) => { const a = at((i + 1) * 0.014).m; g.setAttribute("opacity", (o * clamp01(Math.abs(hands.m - a) / 5)).toFixed(3)); rot(g, a); });
+              ghostH.forEach(({ o, g }, i) => { const a = at((i + 1) * 0.02).h; g.setAttribute("opacity", (o * clamp01(Math.abs(hands.h - a) / 3)).toFixed(3)); rot(g, a); });
+              ghostS.forEach(({ o, g }, i) => { const a = at((i + 1) * 0.008).s; g.setAttribute("opacity", (o * clamp01(Math.abs(hands.s - a) / 5)).toFixed(3)); rot(g, a); });
+              rot(handH, hands.h); rot(handM, hands.m); rot(handS, hands.s);
+              rot(shH, hands.h, 10, 16); rot(shM, hands.m, 14, 22); rot(shS, hands.s, 18, 28);
+              const sw = Math.min(359.9, hands.m - 150), [ax, ay] = P(150, 551), [bx, by] = P(150 + sw, 551);
+              arc.setAttribute("d", sw > 359.5 ? "M0 -551 A551 551 0 1 1 0 551 A551 551 0 1 1 0 -551" : `M${f1(ax)} ${f1(ay)} A551 551 0 ${sw > 180 ? 1 : 0} 1 ${f1(bx)} ${f1(by)}`);
+              HR.glow(arc, T, 0.2, 0.5); HR.glow(handS, T, 0.15, 0.4);
+              // DAYS HELD: the drums roll like an odometer
+              const dv = daysAt(T);
+              drums.forEach((col, d) => {
+                const place = Math.pow(10, 3 - d), pos = place === 1 ? dv % 10 : Math.floor(dv / place) % 10 + clamp01((dv % place) - (place - 1));
+                col.setAttribute("transform", `translate(0 ${(-pos * 72).toFixed(2)})`);
+              });
+              // sparks: white-hot heads, fire tails, gravity (clock units)
+              for (const k of SPK) {
+                const d = T - k.t;
+                if (d < 0 || d > k.life) { if (k.on) { k.p.setAttribute("opacity", "0"); k.on = false; } continue; }
+                const x = k.x + k.vx * d, y = k.y + k.vy * d + 1300 * d * d, d2 = Math.max(0, d - 0.03), x2 = k.x + k.vx * d2, y2 = k.y + k.vy * d2 + 1300 * d2 * d2, l = d / k.life;
+                k.p.setAttribute("d", `M${f1(x2)} ${f1(y2)}L${f1(x)} ${f1(y)}`);
+                k.p.setAttribute("stroke", l < 0.45 ? "#FFF4E0" : "#E85D26"); k.p.setAttribute("stroke-width", (k.w * (1 - 0.5 * l)).toFixed(2));
+                k.p.setAttribute("opacity", (1 - l * l).toFixed(3)); k.on = true;
+              }
+              // the camera pushes on the downbeats 35.631 and 37.47 (eased notches on top of the carrier)
+            }
+
+            // Archie: eyes on the clock in his claw (then on the floor), on the big second hand's tip (so the gaze
+            // ticks with it), or down as he sleeps
+            const hx = AX + 157 * AS, hy = AY + 137 * AS + A.y;
+            const [sx, sy] = P(hands.s, 520 * CS);
+            const hc = T < PUT ? archie.handAt("R") : put;
+            const vx = W.small * (AX + hc.x * AS - hx) / 160 + W.big * (CX + sx - hx) / 600;
+            const vy = W.small * (AY + hc.y * AS + A.y + 40 - hy) / 160 + W.big * (CY + sy - hy) / 600 + (1 - W.small - W.big) * 0.8;
+            const vd = Math.max(1, Math.hypot(vx, vy));
+            archie.s.lookX = vx / vd; archie.s.lookY = 0.8 * vy / vd; archie.s.turn = 0.35 * vx / vd * (W.small + W.big);
+            archEl.style.transform = `translateY(${A.y.toFixed(1)}px) rotate(${A.lean.toFixed(2)}deg)`;
+            archie.apply(T);
+            const down = T >= PUT;
+            clockH.g.setAttribute("opacity", down ? "0" : "1");
+            clockF.g.setAttribute("opacity", down ? "1" : "0");
+            wind(clockH, W.key);
+            if (T >= G2) {
+              const woke = clamp01((T - 41.4) / 0.06);
+              archie2.s.lookX = -0.95 * woke; archie2.s.lookY = 0.6 * woke; archie2.s.turn = -0.5 * woke;
+              archie2.apply(T);
+              ring(clock2, T, T >= MINE && T < SLAP);
+              if (T >= SLAP) { // the plunger goes down and the clock squashes under the slap
+                const q = Math.exp(-(T - SLAP) / 0.06);
+                clock2.body.setAttribute("transform", `translate(0 ${(84 * 0.14 * q).toFixed(2)}) scale(${(1 + 0.08 * q).toFixed(3)} ${(1 - 0.14 * q).toFixed(3)})`);
+                clock2.btn.setAttribute("transform", "translate(0 5)");
+              } else clock2.btn.setAttribute("transform", "");
+            }
+
+            // g2: the torrent canvases
+            if (T >= G2 - 0.002) drawWorld(T);
+
+            // the odometer: each digit column rolls like a mechanical counter; leading zeros sit dim
+            const v = bytesAt(T);
+            const n = Math.max(1, String(Math.floor(v)).length);
+            for (let d = 0; d < 10; d++) {
+              const place = Math.pow(10, 9 - d);
+              let pos;
+              if (place === 1) pos = v % 10;
+              else { const lower = v % place; pos = Math.floor(v / place) % 10 + clamp01(lower - (place - 1)); }
+              cols[d].style.transform = `translateY(${(-pos * 172).toFixed(1)}px)`;
+            }
+            if (n !== lastDim) { cells.forEach((c, d) => { c.style.opacity = d < 10 - n ? "0.3" : "1"; }); lastDim = n; }
+            for (const c of cols) HR.glow(c, T, T >= MINE ? 0.55 : 0.3, 0.5);
+            const locked = T >= MINE;
+            stt.textContent = locked ? "LOCKED" : "OPEN";
+            stt.style.color = locked ? "#E85D26" : "#F0ECE5";
+            stdot.style.display = locked ? "none" : "block";
+            stdot.style.opacity = (0.45 + 0.55 * Math.abs(Math.sin(t * 6))).toFixed(2);
+            pad.style.display = locked ? "block" : "none";
+            pk.textContent = "PKT " + String(LAND.filter((b) => T >= b).length).padStart(4, "0") + " · " + fmt(Math.floor(v)) + " B";
+
+            for (const h of heroes) HR.glow(h, T, 0.35, 0.8);
+            // the archive fills: more ghost glyphs light as the chorus goes on, faster once the bytes pour in; hats flicker a few
+            const fill = T < G2 ? 0.08 + 0.22 * (T - T0) / (G2 - T0) : 0.3 + 0.7 * clamp01(v / 70000);
+            const hat = HR.hit("hat", T, 0.07);
+            for (const { u, order, flick } of lits) {
+              const on = order < fill;
+              u.style.opacity = on ? (flick ? (0.6 - 0.45 * hat).toFixed(2) : "0.6") : "0";
+            }
+            lightEl.style.opacity = ((0.6 + 0.5 * HR.band("bass", T)) * (T >= MINE ? 0.3 : 1)).toFixed(3);
+            plightEl.style.transform = `scale(${(0.96 + 0.08 * HR.band("bass", T)).toFixed(3)})`;
+          }
+          tl.eventCallback("onUpdate", render);
+          tl.seek(0); render();
+          window.__timelines["04-wait"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
