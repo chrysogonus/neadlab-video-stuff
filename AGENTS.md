@@ -80,8 +80,11 @@ and confirm each one: the line on screen is legible at phone size; nothing sits 
 beat; the frame matches the line being sung. The opening hooks in its first seconds: a poster first frame, or a
 narrative cold open backed by a designed YouTube thumbnail.
 
-## The legacy engine
+## Repository checks
 
-`app/` (the TypeScript/three.js engine), `./vid render|run|make`, `prompts/` and `docs/` built the published
-Harvest and Force Push videos and harvest-remix v1–v6. They stay working for those; new videos are HyperFrames
-projects. `./vid check` (the pre-commit hook and CI) guards the repository; keep it green.
+`./vid check` (the pre-commit hook and CI) guards the repository: no tracked file over 5 MB outside
+`projects/*/input/`, `tools/` typechecks and its tests pass, `analysis/` lints and its tests pass. Keep it green.
+`./vid check --full` also reruns the beat analysis and requires every project's `data/audio.json` byte for byte.
+
+The published Harvest and Force Push videos and harvest-remix v1–v6 came from a TypeScript/three.js engine, retired
+on 2026-10-19; it is in git history up to `e4376f8` (`app/`, `prompts/`, the engine docs). Their masters are in `out/`.

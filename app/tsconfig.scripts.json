@@ -1,5 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": { "types": ["bun", "vite/client"] },
-  "include": ["scripts", "test", "vite.config.ts", "knip.ts"]
-}
