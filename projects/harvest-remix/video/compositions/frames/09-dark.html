@@ -10,7 +10,20 @@
          v10's version (lamp searching a drawer wall): backups/v10-sources/compositions/frames/09-dark.html
          v13 (SYSTEM.md V7): ink #0A0A0A; the blueprint grid and the cool wash are gone, and the big heat wash is now a
          tight 0.12 glow under the harvest window only. The cream card, the chart and the marker are unchanged
-         (the card's ">" is fire a hair deeper, #E25A24, to clear 3:1 on the paper). -->
+         (the card's ">" is fire a hair deeper, #E25A24, to clear 3:1 on the paper).
+         v17 (V17.md §09): a breather. One slow linear push-in and pan toward the window over the whole break; one eased
+         step per bar (downbeats 99.756 / 101.588 / 103.405): x, then + y, then > z with the window. No squashes, punches,
+         bounces or shakes. Bar labels are two short lines that fit their bars; the overrun tint sits under the labels;
+         the Q-day line runs behind the bars. Out: glideUp into 10 (the cream wipe is gone). v16: backups/v16-sources/.
+         v19 (V19.md §4): still a breather, but with a real carrier and the music moving it: one linear push 1 → ~1.12
+         with a pan across the break; the bars grow as one continuous front, easing toward each downbeat's target; the
+         axis years light up on the kicks; the marker writes in real time, glyph by glyph; the harvest window fills in
+         steps on the hats. v18: backups/v18-sources/.
+         v20 (V20.md §5): a breath, never still. Three framings, one per bar (tight on x, mid on the Q-Day gate, wide on the
+         chart). The x bar carries the archive envelope at its front and steps on each snare and kick; a year reel rides the
+         front; the y drawer slides out a notch per hat; the gate slams 2031 → 2028 on the 102.49 snare with sparks;
+         HARVEST WINDOW is stamped on the 104.32 snare. A faint far drawer wall and foreground formula ghosts give depth.
+         v19: backups/v19-sources/. -->
   </head>
   <body>
     <template>
@@ -62,22 +75,27 @@
         #f09-lane { position: absolute; left: 160px; top: 610px; width: 1470px; height: 90px; border: 2px dashed rgba(240,236,229,0.16); }
         #f09-yb::after { content: ""; position: absolute; left: 210px; right: 0; top: 0; bottom: 0;
           background: repeating-linear-gradient(135deg, rgba(240,236,229,0.22) 0 3px, transparent 3px 12px); box-shadow: inset 2px 0 0 rgba(240,236,229,0.5); }
-        .f09-bt { position: absolute; left: 22px; top: 30px; font-size: 25px; font-weight: 600; letter-spacing: 0.08em; }
-        .f09-bt em { font-family: "Instrument Serif"; font-style: italic; font-size: 46px; letter-spacing: 0; text-transform: none; vertical-align: -6px; margin-right: 8px; }
-        #f09-xsub { position: absolute; left: 160px; top: 718px; font-size: 21px; color: var(--cream); opacity: 0; }
+        .f09-bt { position: absolute; left: 22px; top: 0; bottom: 0; display: flex; align-items: center; gap: 12px; }
+        .f09-bt em { font-family: "Instrument Serif"; font-style: italic; font-size: 54px; line-height: 1; letter-spacing: 0; text-transform: none; margin-top: -8px; }
+        .f09-bt span { display: flex; flex-direction: column; gap: 4px; }
+        .f09-bt b { font-size: 22px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.1; }
+        .f09-bt small { font-size: 15px; font-weight: 600; letter-spacing: 0.14em; line-height: 1.1; opacity: 0.72; }
+        #f09-yb .f09-bt { text-shadow: 0 0 3px #2A2A27, 0 0 3px #2A2A27, 0 0 6px #2A2A27; }
+        #f09-xsub { position: absolute; left: 160px; top: 718px; font-size: 21px; color: var(--cream); opacity: 0;
+          text-shadow: 0 0 3px #0A0A0A, 0 0 4px #0A0A0A, 0 0 7px #0A0A0A; }
         #f09-xsub span { color: var(--muted); }
 
         #f09-win { position: absolute; left: 454px; top: 548px; width: 1176px; height: 352px;
           background: repeating-linear-gradient(135deg, rgba(232,93,38,0.26) 0 3px, rgba(232,93,38,0.07) 3px 14px);
           box-shadow: inset 3px 0 0 var(--fire); }
-        #f09-tint { position: absolute; left: 454px; top: 610px; width: 1176px; height: 90px; background: rgba(232,93,38,0.62); mix-blend-mode: normal; }
         #f09-band { position: absolute; left: 454px; top: 760px; width: 1176px; height: 84px; background: var(--fire); color: var(--ink);
           display: flex; align-items: center; gap: 28px; padding-left: 26px; white-space: nowrap; }
         #f09-band b { font-family: "Barlow"; font-weight: 900; font-size: 52px; letter-spacing: -0.02em; text-transform: lowercase; }
         #f09-band span { font-size: 21px; font-weight: 600; }
 
         #f09-z { position: absolute; left: 0; top: 0; width: 0; height: 0; }
-        #f09-zl { position: absolute; left: -2px; top: 476px; width: 4px; height: 432px;
+        #f09-zl { position: absolute; left: -2px; top: 476px; width: 4px; height: 432px; will-change: transform;
+          -webkit-mask-image: linear-gradient(180deg, #000 0 222px, transparent 222px 286px, #000 286px); mask-image: linear-gradient(180deg, #000 0 222px, transparent 222px 286px, #000 286px);
           background: repeating-linear-gradient(180deg, var(--cream) 0 14px, transparent 14px 22px); }
         #f09-zdot { position: absolute; left: -11px; top: 466px; width: 22px; height: 22px; border-radius: 50%; background: var(--fire); }
         #f09-zlab { position: absolute; left: 22px; top: 472px; }
@@ -87,37 +105,51 @@
         #f09-zsv { position: absolute; left: 0; top: 0; width: 600px; height: 600px; overflow: visible; }
 
         /* the archive's marker (fire on ink) */
-        .f09-mark { position: absolute; font-family: "Caveat Brush"; font-weight: 400; line-height: 1; color: var(--fire); white-space: nowrap; clip-path: inset(-30% 100% -40% -5%); }
+        .f09-mark { position: absolute; font-family: "Caveat Brush"; font-weight: 400; line-height: 1; color: var(--fire); white-space: nowrap; }
+        .f09-mark .hr-g { opacity: 0; }
         #f09-marks { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+
+        /* ---- v20: the archive envelope rides the x bar's front; a year reel rides above the front ---- */
+        #f09-env { position: absolute; left: 0; top: 622px; width: 96px; height: 66px; will-change: transform; }
+        #f09-env svg { position: absolute; inset: 0; overflow: visible; filter: drop-shadow(0 10px 14px rgba(0,0,0,0.6)); }
+        #f09-seal { position: absolute; left: 34px; top: 22px; width: 28px; height: 28px; border-radius: 50%;
+          background: radial-gradient(circle at 38% 34%, #F27A47, var(--fire) 55%, #B9441A); }
+        #f09-reel { position: absolute; left: 0; top: 548px; display: flex; gap: 4px; will-change: transform; }
+        .f09-rw { position: relative; width: 36px; height: 52px; overflow: hidden; border-radius: 4px; background: #141413;
+          box-shadow: inset 0 0 0 1.5px rgba(240,236,229,0.26), inset 0 8px 10px rgba(0,0,0,0.7), inset 0 -8px 10px rgba(0,0,0,0.7); }
+        .f09-rs { position: absolute; left: 0; top: 0; width: 100%; will-change: transform; }
+        .f09-rs b { display: block; height: 52px; line-height: 54px; text-align: center; font-family: "Barlow"; font-weight: 800;
+          font-size: 44px; color: var(--cream); }
+        #f09-formula > span { transform-origin: 50% 62%; }
+        #f09-yb .f09-bt { left: 64px; }
+        /* depth: a far drawer wall (bg layer) and foreground formula ghosts (fg layer), both faint */
+        #f09-wall { position: absolute; left: -260px; top: -180px; width: 2440px; height: 1440px; opacity: 0.06; }
+        .f09-fgg { position: absolute; font-family: "Instrument Serif"; font-style: italic; font-size: 620px; line-height: 1;
+          color: var(--cream); opacity: 0.05; }
 
         /* ---- chrome ---- */
         #f09-kicker { position: absolute; left: 5.5cqw; top: 1000px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 20px;
           letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
         #f09-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: var(--fire); vertical-align: middle; margin-right: 16px; }
 
-        /* ---- the hand-off: a cream sheet slides over, 10's ground ---- */
-        #f09-wipe { position: absolute; left: 0; top: -40px; width: 2100px; height: 1160px; background-color: var(--cream);
-          box-shadow: -40px 0 80px rgba(0,0,0,0.5), -6px 0 0 rgba(255,255,255,0.6); }
-        #f09-wipe::after { content: ""; position: absolute; inset: 0; opacity: 0.5;
-          background-image: radial-gradient(circle, rgba(17,17,17,0.13) 1.2px, transparent 1.6px); background-size: 32px 32px; }
       </style>
 
       <div data-hf-id="hf-cer9" id="root" data-composition-id="09-dark" data-width="1920" data-height="1080" data-duration="5.487">
         <div data-hf-id="hf-pcsy" class="hr-layer" id="f09-bg" data-depth="0.3" data-dof="3" data-layout-ignore>
+          <svg data-hf-id="hf-v20w" id="f09-wall" viewBox="0 0 2440 1440"></svg>
           <div data-hf-id="hf-985e" id="f09-heat" class="f09-heat"></div>
         </div>
 
-        <div data-hf-id="hf-abkb" class="hr-layer" id="f09-mid" data-depth="0.65" data-layout-ignore>
+        <div data-hf-id="hf-abkb" class="hr-layer" id="f09-mid" data-depth="0.9" data-layout-ignore>
           <div data-hf-id="hf-l3iz" id="f09-win" style="clip-path: inset(0 100% 0 0)"></div>
+          <div data-hf-id="hf-id5n" id="f09-zl"></div>
           <svg data-hf-id="hf-egcn" id="f09-axis" viewBox="0 0 1920 1080"></svg>
           <div data-hf-id="hf-2ufx" class="f09-mono" id="f09-xsub">x is <span data-hf-id="hf-jzwf">love letters · medical records · blueprints</span></div>
           <div data-hf-id="hf-2slj" id="f09-lane"></div>
-          <div data-hf-id="hf-1ff4" class="f09-bar f09-mono" id="f09-xb"><div data-hf-id="hf-55m0" class="f09-bt"><em data-hf-id="hf-a0hp">x</em>example shelf life · 25 years</div></div>
-          <div data-hf-id="hf-5uh3" class="f09-bar f09-mono" id="f09-yb"><div data-hf-id="hf-z63w" class="f09-bt"><em data-hf-id="hf-aesq">y</em>example migration · 5–10 yrs</div></div>
-          <div data-hf-id="hf-ap4e" id="f09-tint" style="clip-path: inset(0 100% 0 0)"></div>
+          <div data-hf-id="hf-1ff4" class="f09-bar f09-mono" id="f09-xb"><div data-hf-id="hf-55m0" class="f09-bt"><em data-hf-id="hf-a0hp">x</em><span><b>shelf life</b><small>25 years · example</small></span></div></div>
+          <div data-hf-id="hf-5uh3" class="f09-bar f09-mono" id="f09-yb"><div data-hf-id="hf-z63w" class="f09-bt"><em data-hf-id="hf-aesq">y</em><span><b>migration</b><small>5–10 years · example</small></span></div></div>
           <div data-hf-id="hf-lcnt" id="f09-band" class="f09-mono hr-glowbox" style="clip-path: inset(0 100% 0 0)"><b data-hf-id="hf-hzgq">harvest window</b><span data-hf-id="hf-cbml">readable while it should still be secret</span></div>
-          <div data-hf-id="hf-agos" id="f09-z" style="opacity:0">
-            <div data-hf-id="hf-id5n" id="f09-zl"></div>
+          <div data-hf-id="hf-agos" id="f09-z">
             <div data-hf-id="hf-atj2" id="f09-zdot" class="hr-glowbox"></div>
             <div data-hf-id="hf-yqfc" id="f09-zlab" class="f09-mono">
               <div data-hf-id="hf-ugdq" class="f09-zt"><em data-hf-id="hf-at3r">z</em>q-day</div>
@@ -128,6 +160,12 @@
           </div>
           <svg data-hf-id="hf-uxd6" id="f09-marks" viewBox="0 0 1920 1080"></svg>
           <div data-hf-id="hf-zpw0" class="f09-mark" id="f09-mine" style="left:1236px;top:466px;font-size:66px;transform:rotate(-4deg)">(this part is mine)</div>
+          <div data-hf-id="hf-v20r" id="f09-reel" data-layout-allow-overlap></div>
+          <div data-hf-id="hf-v20e" id="f09-env" data-layout-allow-overlap>
+            <svg data-hf-id="hf-v20s" viewBox="0 0 96 66"><rect x="0.75" y="0.75" width="94.5" height="64.5" rx="3" fill="#F0ECE5" stroke="#CFC9BE" stroke-width="1.5"/>
+              <path d="M2 3 L48 38 L94 3" fill="none" stroke="#B9B2A6" stroke-width="1.6"/><path d="M2 63 L36 30 M94 63 L60 30" fill="none" stroke="#D9D3C8" stroke-width="1.2"/></svg>
+            <div data-hf-id="hf-v20d" id="f09-seal" class="hr-glowbox"></div>
+          </div>
         </div>
 
         <div data-hf-id="hf-1j4s" class="hr-layer" id="f09-pl" data-depth="0.85">
@@ -147,35 +185,65 @@
           </div>
         </div>
 
+        <div data-hf-id="hf-v20f" class="hr-layer" id="f09-fg" data-depth="1.3" data-dof="20" data-layout-ignore aria-hidden="true">
+          <div data-hf-id="hf-v20x" class="f09-fgg" style="left:1480px;top:560px">x</div>
+          <div data-hf-id="hf-v20y" class="f09-fgg" style="left:-120px;top:620px">y</div>
+          <div data-hf-id="hf-v20z" class="f09-fgg" style="left:1760px;top:-200px">z</div>
+        </div>
+
         <div data-hf-id="hf-h713" class="hr-layer" id="f09-chrome" data-depth="0.2">
           <div data-hf-id="hf-fsb2" id="f09-kicker">Fig. 1 · illustrative scenario, not a forecast</div>
         </div>
-
-        <div data-hf-id="hf-ch0p" id="f09-wipe" data-layout-ignore></div>
       </div>
 
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
       <script>
         (() => {
           const T0 = 99.756, DUR = 5.487;
           const L = (t) => +(t - T0).toFixed(3);
           const $ = (id) => document.getElementById(id);
           const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const smooth = (u) => u * u * (3 - 2 * u);
           const NS = "http://www.w3.org/2000/svg";
           const sv = (tag, parent, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
 
-          // the music (env.js): downbeats 99.756 / 101.588 / 103.405; kicks and snares inside the break
-          const PLUS = L(100.448), Y = L(100.797), KB = L(100.965), D1 = L(101.588), STRIKE = L(102.489);
-          const D2 = L(103.399), K4 = L(103.984), S4 = L(104.317), K5 = L(104.506);
-          const WIPE = DUR - 0.34;
+          // the music (env.js): three bars — 99.756 (x), 101.588 (+ y), 103.405 (> z, the window); the formula inks on the downbeats.
+          // v19: the strike on the snare 102.489, "sooner" written to the downbeat; the axis years light on the kicks; the window
+          // fills on the hats; "(this part is mine)" is written from the hat 103.746, its arrow on the kick 104.506.
+          // v20 (V20.md §5): every hit of the break moves something. Bar 1: the x bar (the archive envelope at its front) steps
+          // on the 100.44/100.67 snares and the 100.80/100.97 kicks; bar 2: the y drawer slides out a notch per hat; the Q-Day
+          // gate slams 2031 → 2028 on the 102.49 snare; bar 3: "> z", the window heats on the hats, HARVEST WINDOW is stamped
+          // on the 104.32 snare. The camera takes three framings, one per bar: tight on x, mid on the gate, wide on the chart.
+          const D0 = 0, D1 = L(101.588), D2 = L(103.405), STRIKE = L(WOW.on(102.489));
+          const HATS = [103.746, 104.087, 104.564].map((t) => L(WOW.on(t, { kinds: ["hat"] })));   // the window's three steps
+          const MINE = HATS[0], ARROW = L(WOW.on(104.506, { kinds: ["kick"] }));
+          const STAMP = L(WOW.on(104.32, { kinds: ["snare"] }));
+          const on = (t, k) => L(WOW.on(t, { kinds: k }));
+          // the bars' fronts as keys [local time, fraction]: each move does 80 % of its distance in 0.15 s, the rest
+          // linearly until the next key, so the front steps on the hit and never stops between hits
+          const XK = [[0, 0.05], [on(100.44, ["snare"]), 0.3], [on(100.67, ["snare"]), 0.48], [on(100.80, ["kick"]), 0.62],
+            [on(100.97, ["kick"]), 0.78], [on(101.12, ["hat"]), 0.9], [D1, 1]];
+          const YK = [[D1, 0.18], [on(101.94, ["hat"]), 0.34], [on(102.28, ["hat"]), 0.48], [STRIKE, 0.6], [on(102.74, ["hat"]), 0.72],
+            [on(102.94, ["hat"]), 0.83], [on(103.19, ["hat"]), 0.93], [D2, 1]];
+          const keyed = (K, t, end) => {
+            let v = 0;
+            for (let i = 0; i < K.length; i++) {
+              const [a, to] = K[i], b = i + 1 < K.length ? K[i + 1][0] : end, from = i ? K[i - 1][1] : 0;
+              if (t < a) break;
+              const fast = Math.min(1, (t - a) / 0.15), lin = Math.min(1, (t - a) / Math.max(0.15, b - a));
+              v = from + (to - from) * (0.8 * (1 - Math.pow(1 - fast, 3)) + 0.2 * lin);
+            }
+            return v;
+          };
 
           // the chart's scale: 42 px a year from 2021
           const X = (yr) => 160 + (yr - 2021) * 42;
           const Z0 = 2031, Z1 = 2028;   // "in a decade", then sooner
 
           // ---- static build ---------------------------------------------------------------------------------------
-          (() => {   // paper fibre for the plate and the wipe sheet
+          (() => {   // paper fibre for the plate
             const c = document.createElement("canvas"); c.width = c.height = 512;
             const x = c.getContext("2d", { willReadFrequently: true }), r = HR.rng(909);
             x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 512, 512);
@@ -187,102 +255,197 @@
               x.strokeStyle = "rgba(110,100,90,0.09)"; x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.35); x.stroke(); }
             const url = `url(${c.toDataURL("image/png")})`;
             $("f09-plate").style.backgroundImage = url;
-            $("f09-wipe").style.backgroundImage = url;
           })();
 
-          // the axis: a tick a year 2021–2061, labels every five, faint verticals up into the chart
-          const AX = $("f09-axis");
+          // the axis: a tick a year 2021–2061, labels every five, faint verticals up into the chart.
+          // v19: the years light up as a front that steps five years on each kick (ticks and labels go dim → cream).
+          const AX = $("f09-axis"), ticks = [];
           sv("line", AX, { x1: 120, y1: 900, x2: 1880, y2: 900, stroke: "#F0ECE5", "stroke-width": 2.5 });
           for (let yr = 2021; yr <= 2061; yr++) {
             const x = X(yr), major = (yr - 2021) % 5 === 0;
-            if (yr === 2026) { sv("line", AX, { x1: x, y1: 900, x2: x, y2: 918, stroke: "#F0ECE5", "stroke-width": 2 }); continue; }
-            sv("line", AX, { x1: x, y1: 900, x2: x, y2: major ? 918 : 909, stroke: major ? "#F0ECE5" : "#888880", "stroke-width": major ? 2 : 1.2 });
+            if (yr === 2026) { ticks.push({ yr, major: true, l: sv("line", AX, { x1: x, y1: 900, x2: x, y2: 918, stroke: "#F0ECE5", "stroke-width": 2 }) }); continue; }
+            const l = sv("line", AX, { x1: x, y1: 900, x2: x, y2: major ? 918 : 909, stroke: major ? "#F0ECE5" : "#888880", "stroke-width": major ? 2 : 1.2 });
+            let lab = null;
             if (major) {
               sv("line", AX, { x1: x, y1: 540, x2: x, y2: 900, stroke: "rgba(240,236,229,0.08)", "stroke-width": 1.2 });
-              sv("text", AX, { x, y: 950, "text-anchor": yr === 2021 ? "start" : "middle", "font-family": "IBM Plex Mono", "font-weight": yr === 2021 ? 600 : 500,
+              lab = sv("text", AX, { x, y: 950, "text-anchor": yr === 2021 ? "start" : "middle", "font-family": "IBM Plex Mono", "font-weight": yr === 2021 ? 600 : 500,
                 "font-size": 22, "letter-spacing": 2, fill: yr === 2021 ? "#E85D26" : "#888880" }, yr === 2021 ? "2021 · SENT" : String(yr));
             }
+            if (yr > 2021) ticks.push({ yr, major, l, lab });
           }
           sv("path", AX, { d: "M1880 900 l -16 -9 v 18 z", fill: "#F0ECE5" });
+          // the bars' fronts (fractions) and the lit front in years: the axis lights behind whichever bar is growing;
+          // after the window opens it sweeps on to 2061
+          const barX = (t) => keyed(XK, t, D1 + 0.4);
+          const barY = (t) => keyed(YK, t, D2 + 0.4);
+          const yearAt = (t) => t < D1 ? 2021 + 25 * barX(t) : 2046 + 10 * barY(t);
+          const frontAt = (t) => yearAt(t) + 5 * smooth(clamp01((t - D2 - 0.3) / (DUR - D2 - 0.6)));
 
-          // marker strokes (pathLength 100, drawn on in render): the strike through "a decade", the arrow to the window
+          // the far drawer wall (bg layer): drawer fronts with handles and labels, faint, for depth
+          (() => {
+            const W = $("f09-wall"), rw = HR.rng(4242);
+            for (let row = 0; row < 12; row++) for (let col = 0; col < 18; col++) {
+              const x = 20 + col * 134, y = 20 + row * 118;
+              sv("rect", W, { x, y, width: 122, height: 106, rx: 3, fill: "none", stroke: "#F0ECE5", "stroke-width": 2 });
+              sv("rect", W, { x: x + 41, y: y + 60, width: 40, height: 8, rx: 4, fill: "#F0ECE5" });
+              sv("rect", W, { x: x + 14, y: y + 16, width: 30 + rw() * 40, height: 10, fill: "#F0ECE5", opacity: 0.6 });
+            }
+          })();
+          // the year reel: four odometer windows (0–9 then 0 again, so the roll wraps)
+          const REEL = $("f09-reel"), strips = [];
+          for (let i = 0; i < 4; i++) {
+            const w = document.createElement("div"); w.className = "f09-rw";
+            const s = document.createElement("div"); s.className = "f09-rs";
+            for (let d = 0; d <= 10; d++) { const b = document.createElement("b"); b.textContent = String(d % 10); s.appendChild(b); }
+            w.appendChild(s); REEL.appendChild(w); strips.push(s);
+          }
+          // an odometer: each digit turns with the one to its right as that one rolls over
+          const reelDigits = (Y) => [1000, 100, 10, 1].map((p) => {
+            const whole = Math.floor(Y / p) % 10, rest = Y % p;
+            return p === 1 ? Y % 10 : whole + Math.max(0, rest - (p - 1));
+          });
+
+          // marker strokes (pathLength 100, drawn on in render at a pen's pace): the strike through "a decade", the arrow
           const MK = $("f09-marks"), ZS = $("f09-zsv");
           const r = HR.rng(99);
           const wav = (x0, x1, y, amp) => { let d = ""; for (let k = 0; k <= 12; k++) { const x = x0 + (x1 - x0) * k / 12; d += (k ? "L" : "M") + x.toFixed(1) + " " + (y + (r() - 0.5) * amp - k * 0.6).toFixed(1); } return d; };
           const pathOf = (parent, d, w) => sv("path", parent, { d, pathLength: 100, fill: "none", stroke: "#E85D26", "stroke-width": w, "stroke-linecap": "round", "stroke-linejoin": "round", "stroke-dasharray": 100, "stroke-dashoffset": 100 });
           const strokes = [
-            { p: pathOf(ZS, wav(64, 214, 548, 5), 6), t: STRIKE - 0.04, dur: 0.16 },
-            { p: pathOf(ZS, wav(60, 218, 541, 4), 4.5), t: STRIKE + 0.1, dur: 0.12 },
-            { p: pathOf(MK, "M1700 548 C 1748 600, 1730 700, 1650 746 M1650 746 l 30 -2 M1650 746 l 10 -28", 5.5), t: K4 - 0.02, dur: 0.24 },
+            { p: pathOf(ZS, wav(64, 214, 548, 5), 6), t: STRIKE - 0.04, dur: 0.22 },
+            { p: pathOf(ZS, wav(60, 218, 541, 4), 4.5), t: STRIKE + 0.12, dur: 0.18 },
+            { p: pathOf(MK, "M1700 548 C 1748 600, 1730 700, 1650 746 M1650 746 l 30 -2 M1650 746 l 10 -28", 5.5), t: ARROW, dur: 0.3 },
           ];
+          // handwriting: each glyph of a marker note is written left to right in turn, at a pen's pace (narrow glyphs
+          // quicker, a lift between words), from t0 to t1
+          const WIDE = { m: 1.4, w: 1.3, i: 0.55, "(": 0.6, ")": 0.6, " ": 0.9 };
+          const hand = (el, t0, t1) => {
+            const text = el.textContent, gs = HR.glyphs(el), units = [];
+            for (const ch of text) units.push(WIDE[ch] ?? 1);
+            const k = (t1 - t0) / units.reduce((a, b) => a + b, 0), out = [];
+            let t = t0, gi = 0;
+            [...text].forEach((ch, i) => { const d = units[i] * k; if (ch !== " ") out.push({ g: gs[gi++], t, d: d * 0.85 }); t += d; });
+            return out;
+          };
+          const pen = [...hand($("f09-soon"), STRIKE + 0.3, D2 - 0.02), ...hand($("f09-mine"), MINE, ARROW - 0.02)];
 
           // ---- timeline ---------------------------------------------------------------------------------------------
           const tl = gsap.timeline({ paused: true });
-          const S = { xb: 0.3, yb: 0, zy: -520, zx: Z0, fire: 0, sq: 1, wipe: 0, heat: 0 };
+          // formula ink (0..1 left-to-right reveals over the ghost), z's year, the window's fire
+          const S = { zx: Z0, fire: 0, heat: 0, fx: 1, fp: 0, fy: 0, fg: 0, fz: 0 };
           const seg = (o, from, to, a, b, ease) => tl.fromTo(o, from, { ...to, duration: Math.max(0.01, b - a), ease, immediateRender: false }, a);
+          const ink = (key, id, t, dur) => {   // a formula glyph is inked in over its ghost, settling a few px
+            seg(S, { [key]: 0 }, { [key]: 1 }, t, t + dur, "power2.inOut");
+            seg("#" + id, { y: 16 }, { y: 0 }, t, t + dur + 0.35, "power3.out");
+          };
+          const legend = (id, t) => { tl.set("#" + id, { opacity: 0 }, 0); seg("#" + id, { opacity: 0, x: -20 }, { opacity: 1, x: 0 }, t, t + 0.6, "power2.out"); };
 
-          // the formula assembles on the beats: x on the downbeat cut, + and y on the kicks, > on the bar, z on the last
-          tl.fromTo("#f09-fx", { scale: 1.32, yPercent: -6 }, { scale: 1, yPercent: 0, duration: 0.6, ease: "elastic.out(1, 0.45)", immediateRender: false }, 0);
-          for (const [id, t] of [["f09-fp", PLUS], ["f09-fy", Y], ["f09-fg", D1], ["f09-fz", D2]])
-            HR.hero(tl, $(id), t, { spread: 0, over: 1.3, pre: 0.1, sharp: true });
-          seg("#f09-ly", { opacity: 0, x: -24 }, { opacity: 1, x: 0 }, Y + 0.08, Y + 0.4, "power3.out");
-          seg("#f09-lz", { opacity: 0, x: -24 }, { opacity: 1, x: 0 }, D1 + 0.08, D1 + 0.4, "power3.out");
+          // a formula glyph slams in: oversize on the hit, back past 1, settles (the house hero-word hit)
+          const slam = (id, t, s0 = 1.45) => seg("#" + id, { scale: s0, y: -14 }, { scale: 1, y: 0 }, t, t + 0.34, "back.out(2.4)");
 
-          // x shoots 25 years from 2021; y stacks 5–10 more on its end
-          seg(S, { xb: 0.3 }, { xb: 1 }, 0, 0.42, "expo.out");
-          seg("#f09-xsub", { opacity: 0, y: -12 }, { opacity: 1, y: 0 }, 0.3, 0.6, "power3.out");
-          seg(S, { yb: 0 }, { yb: 1 }, Y - 0.03, Y + 0.32, "expo.out");
-          // bars squash on their kicks
-          for (const t of [0, Y, KB]) { seg(S, { sq: 1 }, { sq: 0.86 }, t - 0.02, t + 0.03, "power2.out"); seg(S, { sq: 0.86 }, { sq: 1 }, t + 0.03, t + 0.4, "elastic.out(1, 0.4)"); }
+          // bar 1 (on the cut): x slams in; "x is love letters …" types under the bar on the hats (in render)
+          slam("f09-fx", D0, 1.3);
+          tl.set("#f09-xsub", { opacity: 1 }, 0);
 
-          // z drops in on the bar at "a decade"
-          tl.set("#f09-z", { opacity: 1 }, D1 - 0.16);
-          seg(S, { zy: -520 }, { zy: 0 }, D1 - 0.16, D1, "power4.in");
-          seg(S, { zy: 0 }, { zy: -18 }, D1, D1 + 0.08, "power2.out");
-          seg(S, { zy: -18 }, { zy: 0 }, D1 + 0.08, D1 + 0.3, "bounce.out");
-          // the marker: strike on the snare, "sooner" after; z is shoved earlier on the downbeat and the overrun catches fire
-          const writes = [[$("f09-soon"), STRIKE + 0.24, 0.42], [$("f09-mine"), K4 + 0.18, 0.5]];
-          seg(S, { zx: Z0 }, { zx: Z1 - 0.35 }, D2 - 0.09, D2, "power3.in");
-          seg(S, { zx: Z1 - 0.35 }, { zx: Z1 }, D2, D2 + 0.4, "elastic.out(1, 0.5)");
-          seg(S, { fire: 0 }, { fire: 1 }, D2 + 0.02, D2 + 0.42, "expo.out");
-          seg(S, { heat: 0 }, { heat: 1 }, D2, D2 + 0.5, "power2.out");
-          for (const t of [K4, K5]) { seg("#f09-band", { scaleY: 1 }, { scaleY: 0.88 }, t - 0.02, t + 0.03, "power2.out"); seg("#f09-band", { scaleY: 0.88 }, { scaleY: 1 }, t + 0.03, t + 0.4, "elastic.out(1, 0.4)"); }
+          // bar 2: "+" slams on the downbeat, y inks in; the marker strikes "in a decade" on the snare and writes "sooner"
+          seg(S, { fp: 0 }, { fp: 1 }, D1 - 0.02, D1 + 0.06, "none"); slam("f09-fp", D1);
+          ink("fy", "f09-fy", D1 + 0.12, 0.6);
+          legend("f09-ly", D1 + 0.15);
+          // the Q-Day gate slams from 2031 to 2028 on the 102.49 snare: sparks off the rail at its foot, the frame recoils
+          seg(S, { zx: Z0 }, { zx: Z1 }, STRIKE - 0.03, STRIKE + 0.2, "back.out(1.8)");
+          WOW.burst(tl, $("f09-mid"), { x: X(Z1), y: 900, t: STRIKE + 0.04, n: 26, speed: 760, gravity: 1700, spread: 140, aim: -90,
+            size: [3, 9], dur: 0.75, cream: 0.5, seed: 9 });
+          WOW.shake(tl, $("root"), STRIKE, { amp: 8, dur: 0.32, rot: 0.15, seed: 9 });
 
-          // the hand-off: a cream sheet slides over from the right, accelerating into 10's cut
-          seg(S, { wipe: 0 }, { wipe: 1 }, WIPE, DUR, "power3.in");
+          // bar 3: "> z" slams in; the overrun lights from z to the end of y in three steps on the hats; HARVEST WINDOW
+          // is stamped onto the band on the 104.32 snare
+          seg(S, { fg: 0 }, { fg: 1 }, D2 - 0.02, D2 + 0.06, "none"); slam("f09-fg", D2);
+          ink("fz", "f09-fz", D2 + 0.12, 0.6);
+          legend("f09-lz", D2 + 0.15);
+          HATS.forEach((h, i) => seg(S, { fire: i / 3 }, { fire: (i + 1) / 3 }, h, h + 0.26, "power2.out"));
+          seg(S, { heat: 0 }, { heat: 1 }, HATS[0], HATS[2] + 0.3, "power1.inOut");
+          tl.set("#f09-band b", { opacity: 0 }, 0);
+          tl.fromTo("#f09-band b", { opacity: 0, scale: 1.7, rotation: -9 }, { opacity: 1, scale: 0.97, rotation: -2, duration: 0.12, ease: "power2.in", immediateRender: false }, STAMP - 0.12);
+          tl.fromTo("#f09-band b", { scale: 0.97 }, { scale: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, STAMP);
+          WOW.shake(tl, $("root"), STAMP, { amp: 6, dur: 0.3, rot: 0.1, seed: 4 });
 
-          // ---- the camera ----------------------------------------------------------------------------------------
-          const stage = HR.stage($("root"), { seed: 9 });
+          // ---- the camera: three framings, one per bar, each moving into the next across its downbeat (0.6 s, eased), and
+          // drifting inside its bar so it is never still. cam (x, y) puts chart point (px, py) at the frame centre at zoom z.
+          const stage = HR.stage($("root"), { seed: 9, pulse: 0.6 });
           const cam = stage.cam; cam.focus = 0.75;
-          const B = { x: 36, z: 1.0 }, P = { z: 0, rot: 0 };
-          const punches = [[0, 0.03, -0.3], [PLUS, 0.012, 0.2], [Y, 0.015, -0.2], [D1, 0.03, 0.35], [D2, 0.05, -0.5], [K4, 0.012, 0.2], [K5, 0.02, -0.25]];
-          punches.forEach(([t, z, rot], i) => {
-            const next = i + 1 < punches.length ? punches[i + 1][0] : DUR;
-            tl.fromTo(P, { z: 0, rot: 0 }, { z, rot, duration: 0.05, ease: "power3.out", immediateRender: false }, t);
-            tl.fromTo(P, { z, rot }, { z: 0, rot: 0, duration: Math.min(0.5, next - t - 0.07), ease: "elastic.out(1, 0.5)", immediateRender: false }, t + 0.05);
-          });
-          seg(B, { x: 36, z: 1.0 }, { x: -16, z: 1.035 }, 0, D2, "sine.inOut");
-          seg(B, { x: -16, z: 1.035 }, { x: 24, z: 1.06 }, D2, DUR, "sine.inOut");
+          const at = (px, py, z) => { const s = 1 + (z - 1) * 0.9; return { x: s * (px - 960) / 0.9, y: s * (py - 540) / 0.9, z }; };
+          const camTo = (a, b, t0, t1, ease) => tl.fromTo(cam, a, { ...b, duration: t1 - t0, ease, immediateRender: false }, t0);
+          const F1a = at(640, 400, 1.75), F1b = at(990, 420, 1.75), F2a = at(1010, 560, 1.3), F2b = at(1060, 560, 1.34),
+            F3a = at(960, 540, 1.0), F3b = at(990, 560, 1.04);
+          tl.set(cam, F1a, 0);
+          camTo(F1a, F1b, 0, D1 - 0.15, "power1.inOut");            // bar 1: tight on x, trucking right with the envelope
+          camTo(F1b, F2a, D1 - 0.15, D1 + 0.45, "power2.inOut");    // → mid on the downbeat
+          camTo(F2a, F2b, D1 + 0.45, D2 - 0.15, "none");            // bar 2: on the gate and the drawer
+          camTo(F2b, F3a, D2 - 0.15, D2 + 0.5, "power2.inOut");     // → wide on the downbeat
+          camTo(F3a, F3b, D2 + 0.5, DUR, "power1.out");              // bar 3: the whole chart, a slow push
+          // the plate settles a little lower as the chart below grows (its own slow drift against the camera)
+          tl.fromTo("#f09-plate", { y: -6 }, { y: 8, duration: DUR, ease: "none" }, 0);
+
+          // out: glideUp into 10's paper (hard cut in from 08: the music stops)
+          WOW.transition(tl, document.getElementById("el-09-dark"), { out: "glideUp", dur: 0.46, total: DUR });
 
           // ---- per frame ---------------------------------------------------------------------------------------------
-          const xb = $("f09-xb"), yb = $("f09-yb"), zg = $("f09-z"), win = $("f09-win"), tint = $("f09-tint"), band = $("f09-band");
-          const heat = $("f09-heat"), wipe = $("f09-wipe"), zdot = $("f09-zdot"), fx = $("f09-fx");
+          const xb = $("f09-xb"), yb = $("f09-yb"), zg = $("f09-z"), zl = $("f09-zl"), win = $("f09-win"), band = $("f09-band");
+          const heat = $("f09-heat"), zdot = $("f09-zdot");
+          const env = $("f09-env"), seal = $("f09-seal"), xsub = $("f09-xsub");
+          const glyphs = [["fx", $("f09-fx")], ["fp", $("f09-fp")], ["fy", $("f09-fy")], ["fg", $("f09-fg")], ["fz", $("f09-fz")]];
+          const WIN0 = X(Z1), WINW = 1176;
+          const mix = (a, b, u) => a.map((v, i) => Math.round(v + (b[i] - v) * u));
+          const GREY = [136, 136, 128], CREAMC = [240, 236, 229];
+          // the overrun tint painted under a bar's label: fire from the window's left edge to its lit end
+          const tinted = (el, left, width, base, tint) => {
+            const a = clamp01((WIN0 - left) / width), b = clamp01((WIN0 + WINW * S.fire - left) / width);
+            el.style.background = b > a
+              ? `linear-gradient(90deg, ${base} 0 ${(a * 100).toFixed(2)}%, ${tint} ${(a * 100).toFixed(2)}% ${(b * 100).toFixed(2)}%, ${base} ${(b * 100).toFixed(2)}%)`
+              : base;
+          };
           function render() {
             const t = tl.time(), T = t + T0;
-            cam.x = B.x; cam.z = B.z + P.z; cam.rot = P.rot;
             stage.apply(T);
-            xb.style.transform = `scaleY(${S.sq.toFixed(4)})`; xb.style.clipPath = `inset(-20px ${(100 * (1 - S.xb)).toFixed(2)}% -20px 0)`;
-            yb.style.transform = `scaleY(${S.sq.toFixed(4)})`; yb.style.clipPath = `inset(-20px ${(100 * (1 - S.yb)).toFixed(2)}% -20px 0)`;
-            zg.style.transform = `translate(${X(S.zx).toFixed(1)}px, ${S.zy.toFixed(1)}px)`;
+            WOW.draw(tl, T0);
+            const bx = barX(t), by = barY(t);
+            xb.style.clipPath = `inset(-20px ${(100 * (1 - bx)).toFixed(2)}% -20px 0)`;
+            yb.style.clipPath = `inset(-20px ${(100 * (1 - by)).toFixed(2)}% -20px 0)`;
+            // the envelope rides the x front, kicked a few degrees by each hit; the reel rides above the growing front
+            const xf = 160 + 1050 * bx, front = t < D1 ? xf : 1210 + 420 * by;
+            const kk = HR.hit("kick", T, 0.12), sn = HR.hit("snare", T, 0.12);
+            env.style.transform = `translate(${(xf - 48).toFixed(1)}px, ${(-7 * Math.max(kk, sn)).toFixed(1)}px) rotate(${(5 * (sn - kk)).toFixed(2)}deg)`;
+            HR.glow(seal, T, 0.25 + 0.7 * S.heat, 0.5);
+            REEL.style.transform = `translateX(${(front - 58 - 156).toFixed(1)}px)`;
+            REEL.style.opacity = (clamp01((front - 360) / 160) * (1 - smooth(clamp01((t - HATS[0]) / 0.4)))).toFixed(3);
+            reelDigits(yearAt(t)).forEach((v, i) => { strips[i].style.transform = `translateY(${(-52 * v).toFixed(1)}px)`; });
+            // "x is love letters · …" types in a character at a time, across bar 1
+            xsub.style.clipPath = `inset(-10px ${(100 - 100 * Math.floor(46 * clamp01((t - 0.35) / 1.2)) / 46).toFixed(2)}% -10px -10px)`;
+            tinted(xb, 160, 1050, "#F0ECE5", "#EE9A76");
+            tinted(yb, 1210, 420, "#2A2A27", "#6E3018");
+            zg.style.transform = `translateX(${X(S.zx).toFixed(1)}px)`;
+            zl.style.transform = `translateX(${X(S.zx).toFixed(1)}px)`;
             const clip = `inset(0 ${(100 * (1 - S.fire)).toFixed(2)}% 0 0)`;
-            win.style.clipPath = clip; tint.style.clipPath = clip; band.style.clipPath = clip;
+            win.style.clipPath = clip; band.style.clipPath = clip;
             heat.style.opacity = (S.heat * (0.7 + 0.5 * HR.band("bass", T))).toFixed(3);
-            HR.glow(band, T, 0.3, 0.6); HR.glow(zdot, T);
-            band.style.translate = `${(HR.hit("snare", T, 0.08) * 1.5).toFixed(2)}px 0`;
-            fx.style.translate = `0 ${(-HR.hit("snare", T, 0.08) * 2).toFixed(2)}px`;
-            wipe.style.transform = `translateX(${(1940 * (1 - S.wipe)).toFixed(1)}px)`;
-            for (const s of strokes) s.p.setAttribute("stroke-dashoffset", (100 * (1 - clamp01((t - s.t) / s.dur))).toFixed(1));
-            for (const [m, t0, d] of writes) m.style.clipPath = `inset(-30% ${(100 - 100 * clamp01((t - t0) / d)).toFixed(1)}% -40% -5%)`;
+            HR.glow(band, T, 0.3 + 0.5 * HR.hit("hat", T, 0.2), 0.6); HR.glow(zdot, T);
+            for (const [k, g] of glyphs) g.style.clipPath = `inset(-30% ${(180 * (1 - S[k]) - 40).toFixed(2)}% -30% -40%)`;
+            // the axis: years behind the front lit cream, the year at the front brightest, all lifted on each kick
+            const F = frontAt(t), kick = HR.hit("kick", T, 0.22);
+            for (const k of ticks) {
+              const lit = clamp01(F - k.yr + 1), head = clamp01(1 - Math.abs(F - k.yr) / 2.5);
+              const c = mix(k.major ? CREAMC : GREY, CREAMC, lit);
+              k.l.setAttribute("stroke", `rgb(${c})`);
+              k.l.setAttribute("stroke-opacity", (k.major ? 0.8 + 0.2 * lit : 0.7 + 0.3 * lit).toFixed(3));
+              k.l.setAttribute("y2", (900 + (k.major ? 18 : 9) + lit * (k.major ? 4 : 5) + head * (6 + 8 * kick)).toFixed(1));
+              k.l.setAttribute("stroke-width", ((k.major ? 2 : 1.2) + lit * 0.6 + head * 1.4).toFixed(2));
+              if (k.lab) k.lab.setAttribute("fill", `rgb(${mix(GREY, CREAMC, clamp01(lit * (0.75 + 0.25 * kick) + head * 0.25))})`);
+            }
+            for (const s of strokes) s.p.setAttribute("stroke-dashoffset", (100 * (1 - smooth(clamp01((t - s.t) / s.dur)))).toFixed(1));
+            for (const { g, t: t0, d } of pen) {   // a glyph is written left to right; its overhangs show once it is done
+              const p = clamp01((t - t0) / d);
+              g.style.opacity = p > 0 ? "1" : "0";
+              g.style.clipPath = p >= 1 ? "none" : `inset(-45% ${(130 - 160 * smooth(p)).toFixed(1)}% -50% -30%)`;
+            }
           }
           tl.eventCallback("onUpdate", render);
           tl.seek(0);

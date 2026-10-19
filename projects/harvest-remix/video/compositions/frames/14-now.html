@@ -1,14 +1,14 @@
 <!doctype html><html><head><meta charset="UTF-8"/>
-<!-- v16: the seal break is real. 0–0.656 pressure: the wax swells and trembles, hairline cracks run out along it and light leaks
-     through; ON "decrypted" (144.26) it fractures into 14 shaded wax shards that spin, tumble and fly outward/toward the camera
-     with motion-blur trails, with shockwave, rays, sparks, flash, shake; WOW.explode throws the word in. Cut to 22 unchanged.
-     Frame 14 — now (143.604–145.444), v10 detail pass. The charged pre-drop: 01's fire seal fractures along a
-     growing crack while lines of light converge on it and the sealed-record wall behind trembles; "decrypted"
-     slams on its word time, "now" only gathers (22-breach owns the impact at 145.444). Everything accelerates
-     into the cut (power3.in push, smear on the last 0.1 s).
-     v13 (SYSTEM.md V7): the hush on black. Ink #0A0A0A; the sealed-record wall, the ghost ciphertext placeholders,
-     the near-plane bokeh and the shade/vignette layers are gone; the fire light is tightened to a glow behind the
-     seal, so the seal is the one light; the converging rays peak softer (.58, was .85). "decrypted" stays flat cream (hr-glowcream), no extrusion. -->
+<!-- v17: the wax break. One canvas draws the seal, its cracks, the light and the shards, so the shards are exactly the
+     pieces of the seal on screen. 0–0.656 (the near-silent bar): the seal swells and trembles, hairline cracks run out
+     from the impact point (a step on the 143.791 kick), light leaks through them and out past the rim, the cipher slot
+     where the word will be scrambles faster and faster. ON "decrypted" (144.26): one 2-frame white flash (the type
+     inverts to ink), the slot resolves to the word, the wax fractures into 24 crisp shards (dark back faces, fire-lit
+     fracture edges, the seal's own face on the front) plus chips and sparks, each tumbling and falling under gravity
+     (seeded, ballistic), one thin ring that stops short of the word. "now" on 145.27 sits where 22's "now" opens.
+     Hard cut in from 13 and out to 22 (unchanged). Camera: one slow push through the bar, accelerating into the drop.
+     v16 removed: the fire wash at 0, the glyph throw-in, the grey flash, the brown overlays and the
+     toward-camera shard growth, the frame-wide hairline, the full-frame shockwaves and rays, the exit blur. -->
 </head><body><template>
 <style>
 @font-face{font-family:"Barlow";src:url("assets/fonts/barlow-800.woff2") format("woff2");font-weight:800}
@@ -19,235 +19,268 @@
   --ink:#0A0A0A;--ink-alt:#1A1A18;--fire:#E85D26;--cream:#F0ECE5;--cream-muted:#888880;--cream-hint:#505048;--border:#282826;
   background:var(--ink);color:var(--cream)}
 .f14-cam{position:absolute;inset:0}
-.f14-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-#f14-light{position:absolute;left:1150px;top:130px;width:820px;height:820px;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(232,93,38,.13),rgba(232,93,38,.04) 55%,rgba(232,93,38,0) 100%)}
-#f14-sealpos{position:absolute;left:1560px;top:540px;width:0;height:0}
-#f14-seal{position:absolute;left:-380px;top:-380px;width:760px;height:760px;overflow:visible}
-#f14-shadow{position:absolute;left:-280px;top:215px;width:560px;height:110px;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(0,0,0,.6),rgba(0,0,0,0))}
-#f14-fx{position:absolute;inset:0}
-#f14-ember{position:absolute;left:1260px;top:240px;width:600px;height:600px;border-radius:50%;opacity:0;
-  background:radial-gradient(closest-side,rgba(255,244,230,.95),rgba(232,93,38,.55) 40%,rgba(232,93,38,0) 100%)}
-#f14-label{position:absolute;left:-300px;top:330px;width:600px;text-align:center;font:500 15px "IBM Plex Mono";letter-spacing:.14em;color:var(--cream-muted);white-space:nowrap}
+#f14-light{position:absolute;left:1070px;top:130px;width:920px;height:920px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(232,93,38,.12),rgba(232,93,38,.035) 55%,rgba(232,93,38,0) 100%)}
+#f14-cv{position:absolute;left:0;top:0;width:1920px;height:1080px}
+#f14-label{position:absolute;left:1230px;top:966px;width:600px;text-align:center;font:500 15px "IBM Plex Mono";letter-spacing:.14em;color:var(--cream-muted);white-space:nowrap}
 #f14-kicker{position:absolute;left:5.5cqw;top:4.2cqw;font:500 18px "IBM Plex Mono";letter-spacing:.14em;color:var(--fire);white-space:nowrap}
 #f14-kicker::before{content:"";display:inline-block;width:36px;height:2px;background:var(--fire);vertical-align:middle;margin-right:16px}
 #f14-type{transform-origin:5.5% 50%}
 .f14-row{position:absolute;left:5.5cqw;font-family:"Barlow";white-space:nowrap}
 #f14-then{top:13cqh;font-size:5cqw;font-weight:800;line-height:1.08;letter-spacing:-.025em;color:var(--cream)}
-#f14-dec{top:25cqh;font-size:11.5cqw;font-weight:900;line-height:.92;letter-spacing:-.045em;color:var(--cream);margin-left:-.25cqw}
-#f14-now{top:47cqh;font-size:15cqw;font-weight:900;line-height:.86;letter-spacing:-.045em;color:var(--fire);opacity:1}
+#f14-dec{top:25cqh;font-size:11.5cqw;font-weight:900;line-height:.92;letter-spacing:-.045em;color:var(--cream);margin-left:-.25cqw;transform-origin:0 60%}
+#f14-hex{top:29.5cqh;font:600 8.6cqw "IBM Plex Mono";line-height:1;letter-spacing:.04em;color:var(--cream-hint);transform:scaleX(.92);transform-origin:0 50%}
+#f14-flash{position:absolute;inset:-60px;background:#FFFBF5;opacity:0;pointer-events:none}
+#f14-now{position:absolute;left:5.5cqw;top:84cqh;font-family:"Barlow";font-weight:900;font-size:8.8cqw;line-height:.86;letter-spacing:-.045em;white-space:nowrap;transform-origin:0 70%;color:var(--fire)}
 </style>
 <div data-hf-id="hf-a44g" id="root" data-composition-id="14-now" data-width="1920" data-height="1080" data-duration="1.84">
 <div data-hf-id="hf-gvrw" id="f14-cam" class="f14-cam">
-  <div data-hf-id="hf-6lvr" class="hr-layer" id="f14-bg" data-depth="0.3" data-dof="4" data-layout-ignore>
+  <div data-hf-id="hf-6lvr" class="hr-layer" id="f14-bg" data-depth="0.3" data-layout-ignore>
     <div data-hf-id="hf-3kop" id="f14-light"></div>
   </div>
-  <div data-hf-id="hf-amee" class="hr-layer" id="f14-raylayer" data-depth="0.5" data-layout-ignore>
-    <svg data-hf-id="hf-ra36" id="f14-rays" class="f14-svg" viewBox="0 0 1920 1080"></svg>
-  </div>
   <div data-hf-id="hf-lojh" class="hr-layer" id="f14-mid" data-depth="0.65" data-layout-ignore>
-    <div data-hf-id="hf-cc4i" id="f14-sealpos">
-      <div data-hf-id="hf-mb7b" id="f14-shadow"></div>
-            <svg data-hf-id="hf-6y4s" id="f14-seal" class="hr-glowbox" viewBox="-90 -90 180 180">
-        <defs data-hf-id="hf-mh0t">
-          <radialGradient data-hf-id="hf-l4kc" id="f14-wg" cx="0.38" cy="0.34" r="0.78"><stop data-hf-id="hf-9ji3" offset="0" stop-color="#F68C5C"/><stop data-hf-id="hf-ecoc" offset="0.42" stop-color="#E85D26"/><stop data-hf-id="hf-w92l" offset="0.82" stop-color="#C94A1C"/><stop data-hf-id="hf-830a" offset="1" stop-color="#A63B14"/></radialGradient>
-          <radialGradient data-hf-id="hf-38nb" id="f14-wr" cx="0.5" cy="0.5" r="0.5"><stop data-hf-id="hf-7xzq" offset="0.82" stop-color="#B9431A"/><stop data-hf-id="hf-13mw" offset="1" stop-color="#8E3010"/></radialGradient>
-          <g id="f14-art"></g><path id="f14-rimonly"/><clipPath id="f14-rimcp"><path id="f14-rimclip"/></clipPath>
-        </defs>
-        <g id="f14-seal-in"><g id="f14-ticks"></g><use href="#f14-art"/><g id="f14-crack" clip-path="url(#f14-rimcp)"></g></g>
-      </svg>
-      <div data-hf-id="hf-rgf3" id="f14-label">THE RECORDED HANDSHAKE</div>
-    </div>
+    <canvas id="f14-cv" width="1920" height="1080"></canvas>
+    <div data-hf-id="hf-rgf3" id="f14-label">X25519 · RECORDED KEY EXCHANGE</div>
   </div>
+  <div id="f14-flash" data-layout-ignore></div>
   <div data-hf-id="hf-nldl" class="hr-layer" id="f14-chrome" data-depth="0.2"><div data-hf-id="hf-e465" id="f14-kicker">THE SEAL IS GIVING WAY</div></div>
   <div data-hf-id="hf-rgib" class="hr-layer" id="f14-type" data-depth="0.6">
     <div data-hf-id="hf-naag" class="f14-row" id="f14-then">harvested then,</div>
-    <div data-hf-id="hf-9vhs" class="f14-row hr-glowcream" id="f14-dec">decrypted</div>
-    <div data-hf-id="hf-jezg" class="f14-row hr-glow" id="f14-now" data-layout-allow-overlap>now</div>
-  </div>
-  <div class="hr-layer" id="f14-fxlayer" data-depth="0.65" data-layout-ignore>
-    <div id="f14-fx"><div id="f14-ember"></div><svg id="f14-shardsvg" class="f14-svg" viewBox="0 0 1920 1080"><defs id="f14-sdefs"></defs></svg></div>
+    <div class="f14-row" id="f14-hex" data-layout-allow-overlap data-layout-ignore>7F3A09C1E</div>
+    <div data-hf-id="hf-9vhs" class="f14-row hr-glowcream" id="f14-dec" data-layout-allow-overlap>decrypted</div>
   </div>
 </div>
+<div data-hf-id="hf-jezg" id="f14-now" class="hr-glow">now</div>
 </div>
 <script src="assets/kit/env.js"></script><script src="assets/kit/hr-kit.js"></script><script src="assets/kit/wow-kit.js"></script>
 <script>(()=>{
 const T0=143.604,DUR=1.84,ID="14-now";
 const W={dec:144.26,now:145.27};
 const L=t=>+(t-T0).toFixed(3),clamp=x=>Math.max(0,Math.min(1,x));
-const LD=L(W.dec),LN=L(W.now);
+const LD=L(W.dec),LN=L(W.now),KICK=L(WOW.on(143.79,{kinds:["kick"]}));
+const FL=2/30;                                   // the flash: two frames at 30 fps
 const $=id=>document.getElementById(id);
-const NS="http://www.w3.org/2000/svg";
-const S=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);parent.appendChild(e);return e};
-const cam0=$("f14-cam"),root=cam0.parentElement;
-const CX=1560,CY=540;
+const cam0=$("f14-cam"),root=cam0.parentElement,cv=$("f14-cv"),ctx=cv.getContext("2d");
+const CX=1530,CY=590,U=4;                        // seal centre (canvas px) and px per seal unit
+const TAU=Math.PI*2,lerp=(a,b,x)=>a+(b-a)*x,sstep=x=>{x=clamp(x);return x*x*(3-2*x);};
 
-// ---- converging lines of light ----------------------------------------------------------------------------
-const rays=[],rr=HR.rng(1402);
-for(let i=0;i<64;i++){
-  const a=(i/64)*Math.PI*2+rr()*.09,fire=rr()<.75;
-  const e=S("line",{stroke:fire?"#E85D26":"#F0ECE5","stroke-width":(fire?1:.7)+rr()*2.2,"stroke-linecap":"round"},$("f14-rays"));
-  rays.push({e,c:Math.cos(a),s:Math.sin(a),sp:.7+rr()*.6,o:rr(),len:50+rr()*130,w:fire?1:.55});
-}
-const hair=S("line",{x1:0,y1:CY,x2:1920,y2:CY,stroke:"#E85D26","stroke-width":1},$("f14-rays"));
-
-// ---- the seal (01's design, larger), split along its crack into two clipped halves --------------------------
-let rim="";
+// ---- the seal: rim radius q(a) (01's sculpted rim with three drips) -----------------------------------------------
 const drips=[[.6,7],[2.5,5],[4.4,8.5]];
-for(let k=0;k<=120;k++){const a=k/120*Math.PI*2;let q=55.5+1.8*Math.sin(7*a+.5)+1.2*Math.sin(13*a+2)+.7*Math.sin(23*a);
-  for(const[a0,h]of drips){const da=Math.atan2(Math.sin(a-a0),Math.cos(a-a0));q+=h*Math.exp(-(da*da)/.012);}
-  rim+=(k?"L":"M")+(Math.cos(a)*q).toFixed(2)+" "+(Math.sin(a)*q).toFixed(2);}
-let beads="";for(let i=0;i<30;i++){const a=i/30*Math.PI*2;beads+=`<circle cx="${(Math.cos(a)*36.5).toFixed(2)}" cy="${(Math.sin(a)*36.5).toFixed(2)}" r="1.35" fill="rgba(17,17,17,0.26)"/>`;}
-const ART=`<path d="${rim}Z" fill="url(#f14-wr)"/><circle r="50" fill="url(#f14-wg)"/>
-<circle r="43.5" fill="none" stroke="rgba(255,206,176,0.38)" stroke-width="1.2" transform="translate(0.8 0.8)"/>
-<circle r="41" fill="rgba(17,17,17,0.06)" stroke="rgba(17,17,17,0.30)" stroke-width="2.4"/>${beads}
-<text x="1.6" y="15.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(17,17,17,0.36)">a.</text>
-<text x="-1.1" y="12.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(255,214,188,0.5)">a.</text>
-<text x="0" y="13.8" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="#D4521E">a.</text>
-<path d="M-38 -24 A44 44 0 0 1 -8 -45" fill="none" stroke="rgba(255,236,224,0.6)" stroke-width="3.5" stroke-linecap="round"/>
-<path d="M30 34 A44 44 0 0 1 12 44" fill="none" stroke="rgba(255,236,224,0.22)" stroke-width="2" stroke-linecap="round"/>`;
-$("f14-art").innerHTML=ART;
-$("f14-rimonly").setAttribute("d",rim+"Z");$("f14-rimclip").setAttribute("d",rim+"Z");
-
-// ---- the fracture: 7 radial cracks from the impact point cut the wax into 7 inner wedges and 7 outer pieces (14 shards) ----------
-const N=7,cr=HR.rng(1403),fx=$("f14-fx"),sdefs=$("f14-sdefs");
-const f2=v=>v.toFixed(2),P=p=>p.map(([x,y])=>f2(x)+","+f2(y)).join(" ");
-const E=[];  // crack i: centre -> r~9 -> r~20 -> r~40 -> r75, jagged
-for(let i=0;i<N;i++){const a=(i+.5*(cr()-.5))/N*Math.PI*2,line=[[0,0]];
-  [9,21,40,75].forEach((r,j)=>{const aa=a+(j<3?(cr()-.5)*.28:0),rr=r+(j<3?(cr()-.5)*3:0);line.push([Math.cos(aa)*rr,Math.sin(aa)*rr]);});
-  E.push(line);}
-const mid=E.map((e,i)=>{const n=E[(i+1)%N],a=e[3],b=n[3];return[(a[0]+b[0])/2*.93+(cr()-.5)*3,(a[1]+b[1])/2*.93+(cr()-.5)*3];});
-const polys=[];
-for(let i=0;i<N;i++){const e=E[i],n=E[(i+1)%N];
-  polys.push([[0,0],e[1],e[2],e[3],mid[i],n[3],n[2],n[1]].map(p=>p.slice()));                       // inner wedge (i)
-  polys.push([e[3],e[4],n[4],n[3],mid[i]].map(p=>p.slice()));                                         // outer piece (i), e[3]=v1
-}
-// outer piece also takes the shoulder between e[3]..e[4] along the crack; inner wedge stops at the ring (e[3], mid, n[3])
-const light=[-1,-1];
-const shardInfo=polys.map((poly,k)=>{
-  const cx=poly.reduce((s,p)=>s+p[0],0)/poly.length,cy=poly.reduce((s,p)=>s+p[1],0)/poly.length;
-  S("path",{d:"M"+P(poly).split(" ").join(" L")+"Z"},S("clipPath",{id:"f14-cp"+k},sdefs));
-  const g=S("g",{id:"f14-sh"+k},sdefs),cl=S("g",{"clip-path":`url(#f14-cp${k})`},g);
-  S("use",{href:"#f14-rimonly",fill:"#5E220B",transform:"translate(1.5 2.4)"},cl);
-  S("use",{href:"#f14-art"},cl);
-  const bv=S("g",{"clip-path":"url(#f14-rimcp)"},cl);
-  poly.forEach((p,j)=>{const q=poly[(j+1)%poly.length],nx=(p[1]-q[1]),ny=(q[0]-p[0]),m=[(p[0]+q[0])/2-cx,(p[1]+q[1])/2-cy];
-    const out=Math.sign(nx*m[0]+ny*m[1])||1,lit=(nx*out*light[0]+ny*out*light[1])>0;
-    S("path",{d:`M${f2(p[0])} ${f2(p[1])} L${f2(q[0])} ${f2(q[1])}`,fill:"none",stroke:lit?"rgba(255,226,206,.55)":"rgba(60,20,6,.8)","stroke-width":lit?1.1:1.5,"stroke-linejoin":"round"},bv);});
-  return{k,cx,cy,inner:k%2===0,ang:Math.atan2(cy,cx)};
-});
-// per-shard flight: dir, speed, toward-camera growth, spin, tumble (all seeded)
-const fr2=HR.rng(1405);
-const shards=shardInfo.map(si=>{
-  const out=!si.inner,a=si.ang+(fr2()-.5)*.5,v=out?1700+fr2()*1500:900+fr2()*1100;
-  const sh={...si,dx:Math.cos(a),dy:Math.sin(a),v,zv:out?1+fr2()*3:4+fr2()*4,w:(fr2()<.5?-1:1)*(350+fr2()*1000),ps:fr2()*6.28,pw:4+fr2()*6,ph:fr2()*6.28};
-  sh.t1=S("use",{href:"#f14-sh"+si.k},$("f14-shardsvg"));sh.t2=S("use",{href:"#f14-sh"+si.k},$("f14-shardsvg"));
-  sh.m=S("g",{},$("f14-shardsvg"));S("use",{href:"#f14-sh"+si.k},sh.m);
-  const og=S("g",{"clip-path":"url(#f14-cp"+si.k+")"},sh.m);sh.ov=S("use",{href:"#f14-rimonly",fill:"#000","fill-opacity":0},og);
-  return sh;});
-const KS=760/180,S0=1.14;
-function place(sh,tau,e,alpha){
-  const drag=1.4,d=sh.v*(1-Math.exp(-drag*tau))/drag,x=sh.dx*d,y=sh.dy*d+260*tau*tau,s=S0*(1+sh.zv*tau);
-  const rot=sh.w*tau,c=Math.cos(sh.ps+sh.pw*tau),sy=(c<0?-1:1)*Math.max(Math.abs(c),.1);
-  e.setAttribute("transform",`translate(${f2(CX+x)} ${f2(CY+y)}) rotate(${f2(rot)}) scale(${f2(KS*s)} ${f2(KS*s*sy)}) translate(${f2(-sh.cx)} ${f2(-sh.cy)})`);
-  e.setAttribute("opacity",alpha.toFixed(3));return{rot,c};
+const rimR=a=>{let q=55.5+1.8*Math.sin(7*a+.5)+1.2*Math.sin(13*a+2)+.7*Math.sin(23*a);
+  for(const[a0,h]of drips){const da=Math.atan2(Math.sin(a-a0),Math.cos(a-a0));q+=h*Math.exp(-(da*da)/.012);}return q;};
+const RIM=[];for(let k=0;k<180;k++){const a=k/180*TAU,q=rimR(a);RIM.push([Math.cos(a)*q,Math.sin(a)*q]);}
+const rimPath=c=>{c.beginPath();RIM.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();};
+// the seal's face, drawn once into an offscreen canvas at 8 px per unit (redrawn once Barlow has loaded)
+const AR=64,AS=8,art=document.createElement("canvas");art.width=art.height=AR*2*AS;let artFont=null;
+function buildArt(){
+  const fontOK=document.fonts&&document.fonts.check('900 40px "Barlow"');if(artFont===fontOK)return;artFont=fontOK;
+  const a=art.getContext("2d");a.setTransform(AS,0,0,AS,AR*AS,AR*AS);a.clearRect(-AR,-AR,AR*2,AR*2);
+  let g=a.createRadialGradient(0,0,0,0,0,62);g.addColorStop(.82,"#B9431A");g.addColorStop(1,"#8E3010");
+  rimPath(a);a.fillStyle=g;a.fill();
+  g=a.createRadialGradient(-12,-16,0,-12,-16,78);[[0,"#F68C5C"],[.42,"#E85D26"],[.82,"#C94A1C"],[1,"#A63B14"]].forEach(([o,c])=>g.addColorStop(o,c));
+  a.beginPath();a.arc(0,0,50,0,TAU);a.fillStyle=g;a.fill();
+  a.beginPath();a.arc(.8,.8,43.5,0,TAU);a.strokeStyle="rgba(255,206,176,.38)";a.lineWidth=1.2;a.stroke();
+  a.beginPath();a.arc(0,0,41,0,TAU);a.fillStyle="rgba(17,17,17,.06)";a.fill();a.strokeStyle="rgba(17,17,17,.30)";a.lineWidth=2.4;a.stroke();
+  a.fillStyle="rgba(17,17,17,.26)";for(let i=0;i<30;i++){const q=i/30*TAU;a.beginPath();a.arc(Math.cos(q)*36.5,Math.sin(q)*36.5,1.35,0,TAU);a.fill();}
+  a.font='900 40px "Barlow"';a.textAlign="center";a.textBaseline="alphabetic";
+  [[1.6,15.4,"rgba(17,17,17,.36)"],[-1.1,12.4,"rgba(255,214,188,.5)"],[0,13.8,"#D4521E"]].forEach(([x,y,c])=>{a.fillStyle=c;a.fillText("a.",x,y);});
+  a.lineCap="round";a.strokeStyle="rgba(255,236,224,.6)";a.lineWidth=3.5;a.beginPath();a.arc(0,0,44,-2.58,-1.75);a.stroke();
+  a.strokeStyle="rgba(255,236,224,.22)";a.lineWidth=2;a.beginPath();a.arc(0,0,44,.86,1.3);a.stroke();
 }
 
-// ---- cracks (drawn on in the pressure phase, then the wax comes apart along them) --------------------------------------
-const crk=$("f14-crack"),cl=[];
-const clen=pl=>{let l=0;for(let i=1;i<pl.length;i++)l+=Math.hypot(pl[i][0]-pl[i-1][0],pl[i][1]-pl[i-1][1]);return l;};
-function crack(pl,t0,dur){const d="M"+P(pl).split(" ").join(" L"),len=clen(pl),mk=(w,col,extra)=>S("path",{d,fill:"none",stroke:col,"stroke-width":w,"stroke-linecap":"round","stroke-linejoin":"bevel","stroke-dasharray":len,"stroke-dashoffset":len,...extra},crk);
-  cl.push({len,t0,dur,glow:mk(3,"rgba(232,93,38,.6)"),dark:mk(1.6,"#1a0a04"),core:mk(.4,"#FFB36B")});}
-E.forEach((e,i)=>crack(e.slice(0,5),.04+i*.045,.24));
-E.forEach((e,i)=>crack([e[3],mid[i],E[(i+1)%N][3]],.3+i*.03,.16));
-// light leaking out along the cracks: beams behind the seal
-const beams=E.map((e,i)=>{const a=Math.atan2(e[4][1],e[4][0]);
-  return{a,e:S("line",{stroke:i%2?"#F0ECE5":"#E85D26","stroke-width":3,"stroke-linecap":"round",opacity:0},$("f14-rays"))};});
-// calibration ring of ticks around the seal
-for(let i=0;i<72;i++){const a=i/72*Math.PI*2,r0=i%6?78:74,r1=82;
-  S("line",{x1:Math.cos(a)*r0,y1:Math.sin(a)*r0,x2:Math.cos(a)*r1,y2:Math.sin(a)*r1,stroke:i%18?"#505048":"#E85D26","stroke-width":i%6?.6:1.1},$("f14-ticks"));}
+// ---- the fracture: 8 radial cracks from an off-centre impact point, two ring cracks -> 24 pieces --------------------------
+const N=8,cr=HR.rng(1403),IMP=[-4,3],RING=[12,25,40];
+const E=[];
+for(let i=0;i<N;i++){const a=(i+(cr()-.5)*.55)/N*TAU,line=[IMP.slice()];
+  RING.forEach(r=>{const aa=a+(cr()-.5)*.26,rr=r+(cr()-.5)*3;line.push([IMP[0]*(1-r/60)+Math.cos(aa)*rr,IMP[1]*(1-r/60)+Math.sin(aa)*rr]);});
+  E.push({a,line});}
+const mids=r=>E.map((e,i)=>{const n=E[(i+1)%N],j=RING.indexOf(r)+1,p=e.line[j],q=n.line[j];
+  const m=[(p[0]+q[0])/2,(p[1]+q[1])/2],l=Math.hypot(m[0],m[1]),k=(l+(cr()-.5)*3.5)/l;return[m[0]*k,m[1]*k];});
+const M1=mids(12),M2=mids(40);
+// a crack reaches the rim along its own angle; the outer piece's edge follows the rim between two cracks
+const rimAt=a=>{const q=rimR(a);return[Math.cos(a)*q,Math.sin(a)*q];};
+const rimArc=(a0,a1)=>{let d=a1-a0;while(d<=0)d+=TAU;const n=Math.max(2,Math.ceil(d/TAU*90)),o=[];for(let k=1;k<n;k++)o.push(rimAt(a0+d*k/n));return o;};
+const pieces=[];   // {poly, rimEdge[] (true = the edge is the seal's own rim), core}
+for(let i=0;i<N;i++){const e=E[i].line,n=E[(i+1)%N].line,ea=E[i].a,na=E[(i+1)%N].a,re=rimAt(ea),rn=rimAt(na);
+  pieces.push({poly:[e[0],e[1],M1[i],n[1]],rim:[0,0,0,0],kind:0});
+  pieces.push({poly:[e[1],e[2],e[3],M2[i],n[3],n[2],n[1],M1[i]],rim:[0,0,0,0,0,0,0,0],kind:1});
+  const arc=rimArc(ea,na),poly=[e[3],re,...arc,rn,n[3],M2[i]];
+  pieces.push({poly,rim:poly.map((_,j)=>j>=1&&j<=arc.length+1?1:0),kind:2});
+}
+// flight (seeded, ballistic under gravity): velocity outward from the impact, an upward kick, spin, tumble
+const G=2000,fr=HR.rng(1405),WORDDIR=Math.atan2(473-CY,1134-CX);
+const awayFromWord=(vx,vy)=>{const a=Math.atan2(vy,vx),d=Math.abs(Math.atan2(Math.sin(a-WORDDIR),Math.cos(a-WORDDIR)));return d<.9?.45:1;};
+for(const p of pieces){
+  const n=p.poly.length;p.c=[p.poly.reduce((s,q)=>s+q[0],0)/n,p.poly.reduce((s,q)=>s+q[1],0)/n];
+  p.q=p.poly.map(([x,y])=>[x-p.c[0],y-p.c[1]]);
+  const dx=p.c[0]-IMP[0],dy=p.c[1]-IMP[1],l=Math.hypot(dx,dy)||1,a=Math.atan2(dy,dx)+(fr()-.5)*.45;
+  const sp=[760,430,260][p.kind]*(.75+.5*fr());let vx=Math.cos(a)*sp,vy=Math.sin(a)*sp-(360+fr()*260);
+  const k=awayFromWord(vx,vy);vx*=k;
+  Object.assign(p,{vx,vy,w:(fr()<.5?-1:1)*(1+fr()*3.2),tr:(fr()<.5?-1:1)*(4+fr()*7),ax:fr()*Math.PI,zv:fr()*.25,h:[3.2,4.2,5][p.kind]});
+}
+// chips along the cracks and sparks
+const chips=[],sparks=[],cs=HR.rng(1407);
+for(let i=0;i<34;i++){const e=E[i%N].line,j=1+(cs()*3|0),p=e[j],s=1.4+cs()*2.6,a=Math.atan2(p[1]-IMP[1],p[0]-IMP[0])+(cs()-.5)*.8,sp=480+cs()*700;
+  let vx=Math.cos(a)*sp,vy=Math.sin(a)*sp-(300+cs()*300);vx*=awayFromWord(vx,vy);
+  chips.push({p,vx,vy,s,r0:cs()*TAU,w:(cs()-.5)*24,tr:(cs()-.5)*30,sh:[[1,0],[-.6,.8+cs()*.4],[-.5,-.9]]});}
+for(let i=0;i<36;i++){const e=E[i%N].line,p=e[1+(cs()*3|0)],a=Math.atan2(p[1]-IMP[1],p[0]-IMP[0])+(cs()-.5)*.7,sp=700+cs()*1100;
+  let vx=Math.cos(a)*sp,vy=Math.sin(a)*sp-200;vx*=awayFromWord(vx,vy);sparks.push({p,vx,vy,life:.22+cs()*.36,hot:cs()<.4});}
+
+// ---- the pressure: crack growth (smooth, staggered, a step forward on the kick) ---------------------------------------
+const kickStep=t=>.12*sstep((t-KICK)/.08);
+const radialGrow=i=>{const t0=.02+((i*3)%N)/N*.18;return t=>clamp(Math.pow(clamp((t-t0)/.5),1.35)+kickStep(t)*clamp((t-t0)*8));};
+const grow=E.map((_,i)=>radialGrow(i));
+const ringGrow=(i,r)=>t=>clamp(Math.pow(clamp((t-(r===12?.36:.44)-i*.012)/.18),1.2));
+function partial(c,pl,f){   // a polyline drawn up to fraction f of its length
+  const seg=[];let tot=0;for(let i=1;i<pl.length;i++){const l=Math.hypot(pl[i][0]-pl[i-1][0],pl[i][1]-pl[i-1][1]);seg.push(l);tot+=l;}
+  let left=tot*f;c.moveTo(pl[0][0],pl[0][1]);
+  for(let i=1;i<pl.length&&left>0;i++){const k=Math.min(1,left/seg[i-1]);c.lineTo(lerp(pl[i-1][0],pl[i][0],k),lerp(pl[i-1][1],pl[i][1],k));left-=seg[i-1];}
+}
+const crackLines=t=>{const out=[];
+  E.forEach((e,i)=>{const re=rimAt(e.a);out.push([[...e.line,re],grow[i](t)]);});
+  E.forEach((e,i)=>{const n=E[(i+1)%N].line;out.push([[e.line[1],M1[i],n[1]],ringGrow(i,12)(t)]);out.push([[e.line[3],M2[i],n[3]],ringGrow(i,40)(t)]);});
+  return out;};
 
 // ---- timeline ------------------------------------------------------------------------------------------------
 const tl=gsap.timeline({paused:true});
-const stage=HR.stage(root,{seed:14,drift:1}),cam=stage.cam;cam.focus=.45;
-const decEl=$("f14-dec");
-tl.fromTo("#f14-then",{color:"#F0ECE5"},{color:"#888880",duration:.3,ease:"power2.out"},LD);
-tl.set(HR.glyphs(decEl),{opacity:0},0);               // the word does not exist until it is thrown in
-WOW.explode(tl,decEl,LD,{parent:fx,x:640,y:390,rays:16,seed:14,from:"burst"});
-const nowG=HR.glyphs($("f14-now"));
-tl.fromTo(nowG,{opacity:0,scale:.3,x:i=>[-260,40,320][i],y:i=>[-110,150,-70][i],rotation:i=>[-16,11,-7][i],filter:"blur(14px)"},
-  {opacity:.92,scale:.9,x:i=>[14,0,-14][i],y:0,rotation:0,filter:"blur(1.5px)",duration:DUR-LN-.03,ease:"power2.in",stagger:{each:.01,from:"center"}},LN);
-// the camera: a slow lean in, a kick on the break, then the power3.in push into the drop
-tl.fromTo(cam,{z:1,x:24,rot:0},{z:1.03,x:0,rot:0,duration:LD,ease:"sine.inOut"},0);
-tl.fromTo(cam,{z:1.03,rot:0},{z:1.08,rot:-.9,duration:.05,ease:"power3.out",immediateRender:false},LD);
-tl.fromTo(cam,{z:1.08,rot:-.9},{z:1.045,rot:0,duration:.45,ease:"elastic.out(1,0.5)",immediateRender:false},LD+.05);
-tl.fromTo(cam,{z:1.045,x:0,rot:0},{z:1.26,x:-40,rot:.8,duration:DUR-(LD+.5),ease:"power3.in",immediateRender:false},LD+.5);
-tl.fromTo(cam,{focus:.45},{focus:.15,duration:DUR-LD,ease:"power2.in",immediateRender:false},LD);
-tl.fromTo(cam0,{filter:"blur(0px)"},{filter:"blur(3px)",duration:.1,ease:"power2.in"},DUR-.1);
-// the break: shockwaves, rays, sparks, flash, shake
-WOW.flash(tl,root,0,{color:"fire",a:.35,dur:.1});                                    // carries 13's fire swell through the cut
-WOW.shock(tl,fx,{x:CX,y:CY,t:LD,r:1600,n:2,w:6,color:"fire",dur:.75,gap:.07});
-WOW.rays(tl,fx,{x:CX,y:CY,t:LD,n:34,r0:120,r1:1500,seed:141,color:"cream",dur:.6,w:6});
-WOW.burst(tl,fx,{x:CX,y:CY,t:LD,n:40,speed:1600,size:[6,20],seed:142,dur:1.0,cream:.35,gravity:500});
-WOW.flash(tl,root,LD,{color:"cream",a:.62,dur:.12});
-WOW.shake(tl,cam0,LD,{amp:26,dur:.55,rot:1});
-WOW.punch(tl,cam0,LD,{s:1.05,dur:.45});
-// kicks in the build: small edge shake as the pressure rises
-for(const T of HR.onsetsIn("kick",T0,T0+LD-.05))WOW.punch(tl,cam0,T-T0,{s:1.012,dur:.2});
+const stage=HR.stage(root,{seed:14,drift:1,pulse:.6}),cam=stage.cam;
+const decEl=$("f14-dec"),hexEl=$("f14-hex"),thenEl=$("f14-then"),nowEl=$("f14-now"),flashEl=$("f14-flash");
+// the word: hidden until its time, then slams in as the cipher slot resolves (drop hero: a short elastic settle)
+tl.set(decEl,{opacity:0},0);tl.set(decEl,{opacity:1},LD);
+tl.fromTo(decEl,{scale:1.1,skewX:-7},{scale:1,skewX:0,duration:.55,ease:"elastic.out(1,0.5)",immediateRender:false},LD);
+tl.set(hexEl,{opacity:1},0);tl.set(hexEl,{opacity:0},LD);
+// "now" on its word, placed where 22-breach opens it (22 starts it at scale 1.12)
+tl.set(nowEl,{opacity:0},0);
+tl.fromTo(nowEl,{opacity:0,scale:1.32},{opacity:1,scale:1.12,duration:.14,ease:"power3.out",immediateRender:false},LN-.04);
+// the flash: two frames, clean on and off
+tl.set(flashEl,{opacity:0},0);tl.set(flashEl,{opacity:.94},LD);tl.set(flashEl,{opacity:0},LD+FL);
+// the camera: one slow push through the bar, then accelerating into the drop
+tl.fromTo(cam,{z:1,x:18,rot:0},{z:1.035,x:0,rot:0,duration:LD,ease:"power1.in"},0);
+tl.fromTo(cam,{z:1.035,x:0,rot:0},{z:1.14,x:-30,rot:.6,duration:DUR-LD,ease:"power2.in",immediateRender:false},LD);
+// the break: a short rumble and punch on the word time
+WOW.shake(tl,cam0,LD,{amp:8,dur:.42,rot:.4});
+WOW.punch(tl,cam0,LD,{s:1.035,dur:.42});
 
 // ---- per-frame draw (all from timeline time) -----------------------------------------------------------------
-const lightEl=$("f14-light"),seal=$("f14-seal"),ember=$("f14-ember");
-const kick=$("f14-kicker"),label=$("f14-label"),ticks=$("f14-ticks"),dec=$("f14-dec"),now=$("f14-now");
-const fr=x=>x-Math.floor(x);
+const kick=$("f14-kicker"),label=$("f14-label"),lightEl=$("f14-light");
+const HEX="0123456789ABCDEF",hexSeed=HR.rng(1409),hexOff=Array.from({length:9},()=>hexSeed()*97|0);
+let ringMax=360;
+function measure(){const x0=decEl.offsetLeft,y0=decEl.offsetTop,x1=x0+decEl.offsetWidth,y1=y0+decEl.offsetHeight+30;
+  const dx=Math.max(x0-CX,0,CX-x1),dy=Math.max(y0-CY,0,CY-y1);ringMax=Math.max(160,Math.min(520,Math.hypot(dx,dy)-70));}
+const mix=(a,b,k)=>"#"+[0,2,4].map(i=>Math.round(lerp(parseInt(a.substr(i+1,2),16),parseInt(b.substr(i+1,2),16),clamp(k))).toString(16).padStart(2,"0")).join("");
+function sealXf(c,sw,jx,jy){c.setTransform(U*sw,0,0,U*sw,CX+jx,CY+jy);}
+function drawShard(p,tau,sw){
+  const s=U*sw*(1+p.zv*tau),th=p.w*tau,ph=p.tr*tau,cp=Math.cos(ph),sp=Math.sin(ph);
+  const px=CX+p.c[0]*U*sw+p.vx*tau,py=CY+p.c[1]*U*sw+p.vy*tau+.5*G*tau*tau;
+  // screen affine: T(px,py)·S(s)·R(th+ax)·diag(1,cos ph)·R(-ax)
+  const A=th+p.ax,ca=Math.cos(A),sa=Math.sin(A),cb=Math.cos(-p.ax),sb=Math.sin(-p.ax);
+  // R(A)·diag(1,cp)·R(-ax) = [[ca,-sa*cp],[sa,ca*cp]]·[[cb,-sb],[sb,cb]]
+  const m11=ca*cb-sa*cp*sb,m12=-ca*sb-sa*cp*cb,m21=sa*cb+ca*cp*sb,m22=-sa*sb+ca*cp*cb;
+  const a=s*m11,b=s*m21,c=s*m12,d=s*m22;               // canvas setTransform(a,b,c,d,e,f): x'=a x + c y + e
+  const ox=-sa*p.h*.5*sp*s,oy=ca*p.h*.5*sp*s;         // half-thickness offset of the top face on screen
+  const front=cp>=0,fo=front?1:-1,emit=Math.exp(-tau/.22);
+  const scr=p.q.map(([x,y])=>[a*x+c*y+px,b*x+d*y+py]);
+  // hidden face (body)
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.beginPath();scr.forEach(([x,y],i)=>i?ctx.lineTo(x-fo*ox,y-fo*oy):ctx.moveTo(x-fo*ox,y-fo*oy));ctx.closePath();
+  ctx.fillStyle="#120704";ctx.fill();
+  // the sides: fracture faces glow fire (hot at the break), the seal's own rim edge is dark wax
+  if(Math.abs(sp)>.04){for(let j=0;j<scr.length;j++){const P=scr[j],Q=scr[(j+1)%scr.length];
+    const nx=Q[1]-P[1],ny=P[0]-Q[0],nl=Math.hypot(nx,ny)||1,lit=clamp(.5+.5*(-(nx*.6+ny*.8)/nl));
+    ctx.beginPath();ctx.moveTo(P[0]+ox,P[1]+oy);ctx.lineTo(Q[0]+ox,Q[1]+oy);ctx.lineTo(Q[0]-ox,Q[1]-oy);ctx.lineTo(P[0]-ox,P[1]-oy);ctx.closePath();
+    ctx.fillStyle=p.rim[j]?mix("#6E240C","#B9431A",lit):mix(mix("#B8441A","#FF9A5C",lit),"#FFE0C2",emit*.8);ctx.fill();}}
+  // the visible face
+  ctx.save();ctx.setTransform(a,b,c,d,px+fo*ox,py+fo*oy);
+  ctx.beginPath();p.q.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();
+  if(front){ctx.save();ctx.clip();ctx.drawImage(art,-AR-p.c[0],-AR-p.c[1],AR*2,AR*2);ctx.restore();
+    const dk=.38*(1-Math.abs(cp));if(dk>.01){ctx.fillStyle=`rgba(10,4,2,${dk.toFixed(3)})`;ctx.fill();}}
+  else{ctx.fillStyle="#140805";ctx.fill();ctx.fillStyle=`rgba(232,93,38,${(.1*Math.abs(cp)).toFixed(3)})`;ctx.fill();}
+  ctx.restore();
+  // crisp lit edges on the visible face: fracture edges in fire, brightest toward the light; rim edges stay dark
+  ctx.setTransform(1,0,0,1,0,0);ctx.lineJoin="round";
+  for(let j=0;j<scr.length;j++){if(p.rim[j])continue;const P=scr[j],Q=scr[(j+1)%scr.length];
+    const nx=Q[1]-P[1],ny=P[0]-Q[0],nl=Math.hypot(nx,ny)||1,lit=clamp(.5+.5*(-(nx*.6+ny*.8)/nl));
+    ctx.beginPath();ctx.moveTo(P[0]+fo*ox,P[1]+fo*oy);ctx.lineTo(Q[0]+fo*ox,Q[1]+fo*oy);
+    ctx.strokeStyle=mix(mix("#E85D26","#FFB37A",lit),"#FFF1E2",emit);ctx.lineWidth=1.3+1.6*emit;ctx.stroke();}
+}
 function render(){
-  const t=tl.time(),T=T0+t,p=clamp(t/DUR),p3=p*p*p,u=clamp(t/LD),broke=t>=LD,tau=t-LD;
+  const t=tl.time(),T=T0+t,u=clamp(t/LD),broke=t>=LD,tau=t-LD;
   HR.draw(tl);WOW.draw(tl);stage.apply(T);
-  const jolt=broke?Math.exp(-tau/.12):0;
-  // lines of light rush in toward the seal, faster and longer every frame
-  const U=.25*t+1.7*Math.pow(p,4),op=.08+.5*p*p; // v13: softer, so the seal stays the one light
-  for(const r of rays){const f=fr(r.o+U*r.sp),d=250+1050*(1-f),len=r.len*(1+4*p3);
-    const fade=clamp((d-250)/140)*clamp((1300-d)/200);
-    r.e.setAttribute("x1",(CX+r.c*d).toFixed(1));r.e.setAttribute("y1",(CY+r.s*d).toFixed(1));
-    r.e.setAttribute("x2",(CX+r.c*(d+len)).toFixed(1));r.e.setAttribute("y2",(CY+r.s*(d+len)).toFixed(1));
-    r.e.setAttribute("opacity",(op*fade*r.w).toFixed(3));}
-  hair.setAttribute("stroke-width",(1+10*p3+3*jolt).toFixed(2));hair.setAttribute("opacity",(.18+.4*p3+.3*jolt).toFixed(3));
-  // pressure: swell, tremble, cracks with light leaking through
-  dec.style.opacity=t<LD-.266?0:1;
-  const kk=HR.hit("kick",T,.14),amp=.2+2.4*u*u*u,st=Math.floor(t*60);
-  const sc=1+.14*Math.pow(u,2.2)+.02*kk*u;
-  const jx=(Math.sin(t*97)+.6*Math.sin(t*53+1))*amp*.6,jy=(Math.sin(t*89+2)+.6*Math.sin(t*61))*amp*.6;
-  seal.style.transform=`translate(${(jx*KS).toFixed(1)}px,${(jy*KS).toFixed(1)}px) scale(${sc.toFixed(4)})`;
-  seal.style.display=broke?"none":"";
-  const leak=Math.pow(u,2);
-  for(const c of cl){const q=clamp((t-c.t0)/c.dur),e=1-(1-q)*(1-q),off=(c.len*(1-e)).toFixed(1);
-    for(const el of [c.glow,c.dark,c.core])el.setAttribute("stroke-dashoffset",off);
-    c.glow.setAttribute("stroke-width",(2+8*leak).toFixed(2));c.dark.setAttribute("stroke-width",(1.6+2.2*leak).toFixed(2));
-    c.core.setAttribute("stroke-width",(.35+.9*leak).toFixed(2));c.core.setAttribute("stroke",leak>.7?"#FFE2BE":"#FFB36B");}
-  beams.forEach((b,i)=>{const q=clamp((t-.08-i*.03)/.4),len=40+300*q*q*(0.6+.4*Math.sin(i*2.3)),a=b.a;
-    b.e.setAttribute("x1",(CX+Math.cos(a)*60*sc).toFixed(1));b.e.setAttribute("y1",(CY+Math.sin(a)*60*sc).toFixed(1));
-    b.e.setAttribute("x2",(CX+Math.cos(a)*(60*sc+len)).toFixed(1));b.e.setAttribute("y2",(CY+Math.sin(a)*(60*sc+len)).toFixed(1));
-    b.e.setAttribute("stroke-width",(2+8*q*q).toFixed(1));b.e.setAttribute("opacity",broke?0:(.7*q*q).toFixed(3));});
-  ticks.setAttribute("transform",`rotate(${(t*8+90*u*u*u).toFixed(2)})`);
-  label.style.opacity=broke?0:1;
-  // shards
-  for(const sh of shards){
-    if(!broke){for(const e of [sh.t1,sh.t2,sh.m])e.setAttribute("opacity",0);continue;}
-    const al=1-clamp((tau-.5)/.4),r=place(sh,tau,sh.m,al);
-    place(sh,Math.max(0,tau-.02),sh.t1,tau>.02?.4*al:0);place(sh,Math.max(0,tau-.04),sh.t2,tau>.04?.2*al:0);
-    // shade by facing: lit when the face turns to the top-left light; back faces dark; wax lit from inside at the break
-    const f=Math.sin(r.rot*Math.PI/180+sh.ph),emit=(sh.inner?.85:.5)*Math.max(0,1-tau/.14);
-    let col,o;
-    if(emit>.01){col="#FFB070";o=emit*.8;}else if(r.c<0){col="#1a0a04";o=.35;}else if(f>0){col="#FFE2CE";o=.3*f;}else{col="#1a0a04";o=.24*-f;}
-    sh.ov.setAttribute("fill",col);sh.ov.setAttribute("fill-opacity",o.toFixed(3));
+  if(decEl.offsetWidth)measure();
+  buildArt();
+  const flash=broke&&tau<FL;
+  // type: the cipher slot scrambles faster as the pressure rises; the type inverts to ink under the flash
+  if(!broke){const ph=8*t+30*t*t,st=Math.floor(ph);
+    hexEl.textContent=hexOff.map((o,i)=>HEX[(o+st*7+i*5)%16]).join("");
+    hexEl.style.color=mix("#505048","#9A968E",u*u);}
+  thenEl.style.color=flash?"#0A0A0A":broke?mix("#F0ECE5","#888880",tau/.3):"#F0ECE5";
+  decEl.style.color=flash?"#0A0A0A":"#F0ECE5";
+  kick.textContent=broke?"OPEN":"THE SEAL IS GIVING WAY";kick.style.color=flash?"#0A0A0A":"";
+  label.textContent=broke?"X25519 · SHARED SECRET RECOVERED":"X25519 · RECORDED KEY EXCHANGE";
+  HR.glow(decEl,T,.3,.4);HR.glow(nowEl,T,.6,.4);
+  // ---- canvas
+  ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,1920,1080);
+  const kk=HR.hit("kick",T,.14),sw=1+.07*Math.pow(u,2.2)+.012*kk*u;
+  const amp=.3+2.4*u*u*u,jx=broke?0:(Math.sin(t*61)+.6*Math.sin(t*43+1))*amp,jy=broke?0:(Math.sin(t*57+2)+.6*Math.sin(t*37))*amp;
+  const leak=u*u;
+  // the light behind the seal (a glow on the emitting object, not a wash)
+  const glowA=broke?.55*Math.exp(-tau/.5):.25+.45*leak;
+  let g=ctx.createRadialGradient(CX,CY,0,CX,CY,420*sw);g.addColorStop(0,`rgba(232,93,38,${(glowA*.55).toFixed(3)})`);g.addColorStop(.5,`rgba(232,93,38,${(glowA*.16).toFixed(3)})`);g.addColorStop(1,"rgba(232,93,38,0)");
+  ctx.fillStyle=g;ctx.fillRect(CX-440,CY-440,880,880);
+  // the calibration ring of ticks: turns faster with the pressure, blows off at the break
+  const tickA=broke?clamp(1-tau/.2):1,tickS=broke?1+.06*sstep(tau/.2):1;
+  if(tickA>0){ctx.setTransform(U*tickS,0,0,U*tickS,CX,CY);ctx.rotate((t*8+70*u*u*u)*Math.PI/180+(broke?tau*.8:0));ctx.globalAlpha=tickA;
+    for(let i=0;i<72;i++){const a=i/72*TAU,r0=i%6?78:74;ctx.beginPath();ctx.moveTo(Math.cos(a)*r0,Math.sin(a)*r0);ctx.lineTo(Math.cos(a)*82,Math.sin(a)*82);
+      ctx.strokeStyle=i%18?"#505048":"#E85D26";ctx.lineWidth=(i%6?.6:1.1)/1;ctx.stroke();}ctx.globalAlpha=1;}
+  if(!broke){
+    // light leaking out past the rim along each crack that has reached it
+    ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation="lighter";
+    E.forEach((e,i)=>{const f=grow[i](t),q=clamp((f-.75)/.25)*Math.pow(u,1.5);if(q<=0)return;const a=e.a,r0=rimR(a)*U*sw-6,len=30+100*q;
+      const x0=CX+jx+Math.cos(a)*r0,y0=CY+jy+Math.sin(a)*r0,x1=CX+Math.cos(a)*(r0+len),y1=CY+Math.sin(a)*(r0+len);
+      const lg=ctx.createLinearGradient(x0,y0,x1,y1);lg.addColorStop(0,`rgba(255,214,170,${(.8*q).toFixed(3)})`);lg.addColorStop(1,"rgba(232,93,38,0)");
+      ctx.strokeStyle=lg;ctx.lineWidth=3+13*q;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.stroke();});
+    ctx.globalCompositeOperation="source-over";
+    // the intact seal, swelling and trembling, with its shadow
+    ctx.setTransform(1,0,0,1,0,0);g=ctx.createRadialGradient(CX+10,CY+250*sw,0,CX+10,CY+250*sw,260);g.addColorStop(0,"rgba(0,0,0,.55)");g.addColorStop(1,"rgba(0,0,0,0)");
+    ctx.save();ctx.translate(0,CY+250*sw);ctx.scale(1,.2);ctx.translate(0,-(CY+250*sw));ctx.fillStyle=g;ctx.fillRect(CX-300,CY+250*sw-260,600,520);ctx.restore();
+    sealXf(ctx,sw,jx,jy);ctx.drawImage(art,-AR,-AR,AR*2,AR*2);
+    // the hot bulge under the cracks: the wax lifts toward the impact point
+    g=ctx.createRadialGradient(IMP[0],IMP[1],0,IMP[0],IMP[1],34);g.addColorStop(0,`rgba(255,226,190,${(.32*leak).toFixed(3)})`);g.addColorStop(1,"rgba(255,226,190,0)");
+    ctx.save();rimPath(ctx);ctx.clip();ctx.fillStyle=g;ctx.fillRect(-40,-40,80,80);
+    // the cracks: a glow of light from inside, a dark split, a hot core
+    ctx.lineCap="round";ctx.lineJoin="bevel";
+    for(const[pl,f]of crackLines(t)){if(f<=0)continue;
+      for(const[w,col,op]of[[1+3.2*leak,`rgba(255,150,90,${(.1+.38*leak).toFixed(3)})`,"lighter"],[.42+.3*leak,"#1A0A04","source-over"],[.1+.3*leak,leak>.5?"#FFF2E0":"#FFC28A","source-over"]]){
+        ctx.globalCompositeOperation=op;ctx.beginPath();partial(ctx,pl,f);ctx.strokeStyle=col;ctx.lineWidth=w;ctx.stroke();}}
+    ctx.globalCompositeOperation="source-over";
+    ctx.restore();
+  }else{
+    // the break: shards, chips, sparks, the ring, the light where the seal was
+    const swB=1+.07+.012*HR.hit("kick",T0+LD,.14);
+    ctx.setTransform(1,0,0,1,0,0);
+    const core=.95*Math.exp(-tau/.16)+.3*Math.exp(-tau/.9);
+    g=ctx.createRadialGradient(CX,CY,0,CX,CY,90+200*(1-Math.exp(-tau/.08)));
+    g.addColorStop(0,`rgba(255,236,214,${(core*.9).toFixed(3)})`);g.addColorStop(.35,`rgba(232,93,38,${(core*.45).toFixed(3)})`);g.addColorStop(1,"rgba(232,93,38,0)");
+    ctx.fillStyle=g;ctx.fillRect(CX-320,CY-320,640,640);
+    for(const p of pieces)drawShard(p,tau,swB);
+    for(const ch of chips){const x=CX+ch.p[0]*U*swB+ch.vx*tau,y=CY+ch.p[1]*U*swB+ch.vy*tau+.5*G*tau*tau,r=ch.r0+ch.w*tau,f=Math.cos(ch.tr*tau),s=ch.s*U;
+      if(y>1150)continue;ctx.setTransform(Math.cos(r)*s,Math.sin(r)*s,-Math.sin(r)*s*f,Math.cos(r)*s*f,x,y);
+      ctx.beginPath();ch.sh.forEach(([a,b],i)=>i?ctx.lineTo(a,b):ctx.moveTo(a,b));ctx.closePath();
+      ctx.fillStyle=f>0?"#C94A1C":"#140805";ctx.fill();ctx.lineWidth=1.4/s;ctx.strokeStyle=mix("#E85D26","#FFE0C2",Math.exp(-tau/.2));ctx.stroke();}
+    ctx.setTransform(1,0,0,1,0,0);ctx.globalCompositeOperation="lighter";ctx.lineCap="round";
+    for(const sk of sparks){const life=tau/sk.life;if(life>=1)continue;const dr=Math.exp(-tau*2.2),dd=(1-dr)/2.2;
+      const x=CX+sk.p[0]*U*swB+sk.vx*dd,y=CY+sk.p[1]*U*swB+sk.vy*dd+.5*1400*tau*tau,vx=sk.vx*dr,vy=sk.vy*dr+1400*tau;
+      ctx.strokeStyle=sk.hot?`rgba(255,236,214,${(1-life).toFixed(3)})`:`rgba(232,93,38,${(1-life).toFixed(3)})`;ctx.lineWidth=sk.hot?2.2:1.6;
+      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-vx*.028,y-vy*.028);ctx.stroke();}
+    // one ring: crisp, from the impact, stopping short of the word
+    const rp=1-Math.exp(-tau/.09),ra=Math.pow(clamp(1-tau/.42),2);
+    if(ra>0){const R=lerp(50,ringMax,rp);
+      ctx.beginPath();ctx.arc(CX+IMP[0]*U,CY+IMP[1]*U,R,0,TAU);ctx.strokeStyle=`rgba(232,93,38,${(.35*ra).toFixed(3)})`;ctx.lineWidth=12*ra+2;ctx.stroke();
+      ctx.beginPath();ctx.arc(CX+IMP[0]*U,CY+IMP[1]*U,R,0,TAU);ctx.strokeStyle=`rgba(255,246,236,${(.95*ra).toFixed(3)})`;ctx.lineWidth=2.5;ctx.stroke();}
+    ctx.globalCompositeOperation="source-over";
   }
-  // the light where the seal was
-  const bt=broke?tau:0,eo=broke?(.95*Math.exp(-bt/.5)+.35*Math.exp(-bt/1.4))*(.85+.15*kk):0;
-  ember.style.opacity=clamp(eo).toFixed(3);ember.style.transform=`scale(${broke?(.35+1.3*(1-Math.exp(-bt/.07))-.5*(1-Math.exp(-bt/.9))).toFixed(3):.3})`;
-  HR.glow(seal,T,.5+1.2*p3,.6);HR.glow(now,T,.6,.4);HR.glow(dec,T,.3,.4);
-  lightEl.style.transform=`scale(${(.85+.35*p3+.2*jolt+.15*leak).toFixed(3)})`;lightEl.style.opacity=(.6+.4*p+.5*jolt+.3*leak).toFixed(3);
-  kick.textContent = broke ? "OPEN" : "THE SEAL IS GIVING WAY";
-  label.textContent = "X25519 · RECORDED KEY EXCHANGE";
+  lightEl.style.opacity=(broke?.5+.6*Math.exp(-tau/.4):.6+.4*leak).toFixed(3);
+  lightEl.style.transform=`scale(${(.9+.15*leak).toFixed(3)})`;
 }
 tl.eventCallback("onUpdate",render);tl.seek(0);render();window.__timelines[ID]=tl;
 })();</script></template></body></html>

@@ -17,7 +17,19 @@
          v16 (V16.md §3): three shots. A (16.06–19.74): the camera dollies fast along the real cable and the bare fibre,
          pulses and hex rush past, "read" fails under strike bars, a whip to the open clamp. B (19.74–22.0): the clamp
          slams on "copy" (explosion, shake, flash), Archie prints the copy. C (22.0–23.656): the copy falls into the cold
-         store and the frost shatters on "ice"; the frame drops out. The cutaway inset is screen-fixed so it stays legible. -->
+         store and the frost shatters on "ice"; the frame drops out. The cutaway inset is screen-fixed so it stays legible.
+         v17 (V17.md §16): a quiet verse, two travelling shots joined by one continuous camera move. A (16.06–19.74): a
+         constant-speed glide along the cable onto the open clamp; "read" glides in and a single bar draws through it
+         across the sung word. B (19.74–23.656): the camera cranes back onto Archie's copy machine and travels on to the
+         cold store; the clamp closes on "copy" (soft punch, one thin ring), the copy prints under the scan beam, Archie
+         lifts it over the drawer and it sinks in on "ice" while frost spreads. No shakes, flashes or bursts; glideL in,
+         glideDown out.
+         v20 (V20.md #10): the light travels. A light packet runs the length of the cable on every hat (a comet along the
+         jacket's tracer, then through the bare core, and through the cutaway inset), passing the middle of the frame ON the
+         hat; after "copy" each packet forks down the copy fibre. The tap bites at the fibre on every snare and, once shut,
+         pulses on the snares (squash, leak flare, its COPY plate lights). "read" and "copy" are set at 460 px (2.1×), each
+         line in its own place: line 1 a top-left stack, line 2 a lockup lower down that steps back to make room for the
+         drawer on "put". -->
   </head>
   <body>
     <template>
@@ -41,7 +53,7 @@
         #f16-bg, #f16-mid { will-change: auto; }
         #f16-wA { position: absolute; inset: 0; }
         #f16-inset { position: absolute; inset: 0; pointer-events: none; transform-origin: 1760px 188px; transform: translate(130px, -148px) scale(0.8); }
-        #f16-fxw, #f16-fxs { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
+        #f16-fxw { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
         #f16-rush { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform: rotate(-7deg); transform-origin: 960px 720px; pointer-events: none; overflow: visible; }
         .f16-rl { position: absolute; left: 0; white-space: nowrap; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--cream); opacity: 0; will-change: transform; }
         .f16-streak { position: absolute; left: 0; height: 3px; opacity: 0; will-change: transform;
@@ -64,14 +76,14 @@
           background: linear-gradient(90deg, rgba(240,236,229,0.16), rgba(240,236,229,0.16) 88%, rgba(240,236,229,0)); }
         .f16-row::after { content: ""; position: absolute; left: -560px; right: -90px; top: calc(0.98em + 1px); height: 1px;
           background: linear-gradient(90deg, rgba(232,93,38,0.7), rgba(232,93,38,0.5) 85%, rgba(232,93,38,0)); }
-        .f16-row.f16-hero { left: 160px; font-size: 220px; font-weight: 900; letter-spacing: -0.045em; color: var(--fire); }
-        .f16-row.f16-hero::before { top: 0.9em; }
+        .f16-row.f16-hero { left: 160px; font-size: 460px; font-weight: 900; letter-spacing: -0.045em; color: var(--fire); }
+        .f16-row.f16-hero::before { top: 0.9em; height: 4px; }
         .f16-row.f16-hero::after { top: calc(0.9em + 1px); }
         .f16-word { display: inline-block; position: relative; }
         .f16-txt { display: inline-block; }
         .f16-pulse { position: absolute; left: -0.08em; right: -0.08em; top: calc(0.98em - 3px); height: 9px; background: #FFD9C2; opacity: 0;
           box-shadow: 0 0 14px 4px rgba(232,93,38,0.9), 0 0 44px 12px rgba(232,93,38,0.45); transform-origin: 100% 50%; }
-        .f16-hero .f16-pulse { top: calc(0.9em - 4px); height: 11px; }
+        .f16-hero .f16-pulse { top: calc(0.9em - 6px); height: 16px; }
 
         /* ---- Archie, standing under the tap, looking right at the copy and the cold store ---- */
         #f16-archw { position: absolute; left: 1000px; top: 740px; width: 300px; height: 380px; transform: translateY(560px); transform-origin: 50% 100%; }
@@ -115,14 +127,13 @@
         <!-- the archive's marker voice -->
         <div data-hf-id="hf-yqq2" class="hr-layer" id="f16-markl" data-layout-ignore>
           <svg data-hf-id="hf-t5bv" id="f16-markpath" viewBox="0 0 1920 1080" aria-hidden="true">
-            <path data-hf-id="hf-v6ny" id="f16-arrow" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" d="M560 792 C 560 760, 540 730, 492 700 M492 700 l 20 2 M492 700 l 6 20" fill="none" stroke="#E85D26" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+            <path data-hf-id="hf-v6ny" id="f16-arrow" transform="translate(0 122)" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" d="M560 792 C 560 760, 540 730, 492 700 M492 700 l 20 2 M492 700 l 6 20" fill="none" stroke="#E85D26" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <div data-hf-id="hf-7akb" class="f16-mark" id="f16-mark1" style="left: 200px; top: 742px; transform: rotate(-3deg);">(didn't need to)</div>
+          <div data-hf-id="hf-7akb" class="f16-mark" id="f16-mark1" style="left: 200px; top: 864px; transform: rotate(-3deg);">(didn't need to)</div>
         </div>
         <div data-hf-id="hf-y913" class="hr-layer" id="f16-chrome" data-depth="0.2">
           <div data-hf-id="hf-rb1c" id="f16-kicker">the other end of the wire</div>
         </div>
-        <div id="f16-fxs" data-layout-ignore></div>
       </div>
 
       <script src="assets/kit/env.js"></script>
@@ -143,7 +154,7 @@
           const clamp01 = (x) => Math.max(0, Math.min(1, x));
 
           // story beats (track seconds → local)
-          const READ = L(16.70), KICK = L(17.215), LINE2 = L(19.74), COPY = L(20.74), PUT = L(21.76), ICE = L(22.96);
+          const READ = L(16.70), LINE2 = L(19.74), COPY = L(20.74), PUT = L(21.76), ICE = L(22.96);
 
           // the cable runs at a 7° climb; its geometry is drawn in local axis space (axis y = 720)
           const ANG = -7, CS = Math.cos(ANG * Math.PI / 180), SN = Math.sin(ANG * Math.PI / 180);
@@ -199,6 +210,7 @@
               <stop offset="0.62" stop-color="#111" stop-opacity="0"/><stop offset="1" stop-color="#111" stop-opacity="0.22"/></linearGradient>
             <radialGradient id="f16-gscrew" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#7a7770"/><stop offset="0.55" stop-color="#3e3d39"/><stop offset="1" stop-color="#1c1c1a"/></radialGradient>
             <radialGradient id="f16-gcore" cx="0.4" cy="0.36" r="0.7"><stop offset="0" stop-color="#FFD9C2"/><stop offset="0.25" stop-color="#F68C5C"/><stop offset="0.7" stop-color="#E85D26"/><stop offset="1" stop-color="#B9431A"/></radialGradient>
+            <linearGradient id="f16-comet" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E85D26" stop-opacity="0"/><stop offset="0.72" stop-color="#F68C5C" stop-opacity="0.75"/><stop offset="1" stop-color="#FFEADC"/></linearGradient>
             <linearGradient id="f16-gdrawer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34332f"/><stop offset="0.5" stop-color="#252523"/><stop offset="1" stop-color="#181817"/></linearGradient>
             <linearGradient id="f16-ghandle" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a867e"/><stop offset="0.45" stop-color="#4c4a45"/><stop offset="1" stop-color="#1e1e1c"/></linearGradient>
             `;
@@ -254,10 +266,23 @@
           // pulses
           const pulseGlow = S(cab, "g", { filter: "url(#f16-b4)" }), pulseCore = S(cab, "g", {});
           const pulses = Array.from({ length: 22 }, () => ({
-            g: S(pulseGlow, "rect", { x: -40, y: -10, width: 80, height: 20, fill: "#E85D26" }),
-            c: S(pulseCore, "rect", { x: -26, y: -3, width: 52, height: 6, fill: "#FFD9C2" }),
+            g: S(pulseGlow, "rect", { x: -60, y: -13, width: 120, height: 26, fill: "#E85D26" }),
+            c: S(pulseCore, "rect", { x: -40, y: -4, width: 80, height: 8, fill: "#FFD9C2" }),
           }));
           S(cab, "path", { d: "M1880 768 h18 M1880 768 l-6 -4 M1880 768 l-6 4", stroke: "#888880", "stroke-width": 1.2, fill: "none", opacity: 0 });
+          // v20: a light packet per hat, running the whole cable: along the jacket's tracer stripe, then through the bare core
+          const HATS = HR_ENV.onsets.hat.filter(([h, a]) => h > T0 - 0.6 && h < T0 + DUR + 0.6 && a >= 0.2).map(([h, a]) => ({ th: h - T0, a: Math.min(1, 0.45 + a * 0.65) }));
+          S(cab, "clipPath", { id: "f16-jclip" }).appendChild(S(cab, "rect", { x: -300, y: 600, width: 1280, height: 260 }));
+          S(cab, "clipPath", { id: "f16-fclip" }).appendChild(S(cab, "rect", { x: 1152, y: 600, width: 1100, height: 260 }));
+          const jLane = S(cab, "g", { "clip-path": "url(#f16-jclip)" }), fLane = S(cab, "g", { "clip-path": "url(#f16-fclip)" });
+          for (const h of HATS) {
+            h.jg = S(jLane, "rect", { x: -440, y: 776, width: 440, height: 38, fill: "#E85D26", filter: "url(#f16-b10)", opacity: 0 });
+            h.jc = S(jLane, "rect", { x: -380, y: 792, width: 380, height: 7, fill: "url(#f16-comet)", opacity: 0 });
+            h.fg = S(fLane, "rect", { x: -620, y: 685, width: 640, height: 70, fill: "#E85D26", filter: "url(#f16-b10)", opacity: 0 });
+            h.fc = S(fLane, "rect", { x: -540, y: 711, width: 540, height: 18, fill: "url(#f16-comet)", opacity: 0 });
+          }
+          // v20: a dimmer steady stream on the jacket's tracer, so the light is seen travelling before the bare fibre
+          const tracers = Array.from({ length: 7 }, () => S(jLane, "rect", { x: -200, y: 793, width: 200, height: 5, fill: "url(#f16-comet)", opacity: 0 }));
           mono(cab, 1620, 790, 13, "→ RECIPIENT", { fill: "#888880" });
 
           // ---- the tap clamp (two machined halves, open until "copy") ------------------------------------------
@@ -284,7 +309,7 @@
           S(up, "path", { d: "M1270 612 L1286 596 H1514 L1530 612 V714 H1270 Z", fill: "url(#f16-grake)" });
           S(up, "rect", { x: 1270, y: 708, width: 260, height: 6, fill: "#0e0e0d", opacity: 0.8 });
           S(up, "text", { x: 1391, y: 690.4, "text-anchor": "middle", fill: "#F0ECE5", opacity: 0.16, "font-family": "Barlow", "font-weight": 900, "font-size": 36, "letter-spacing": 1 }, "COPY");
-          S(up, "text", { x: 1391, y: 689, "text-anchor": "middle", fill: "#F0ECE5", "font-family": "Barlow", "font-weight": 900, "font-size": 36, "letter-spacing": 1 }, "COPY");
+          const clampTxt = S(up, "text", { x: 1391, y: 689, "text-anchor": "middle", fill: "#F0ECE5", "font-family": "Barlow", "font-weight": 900, "font-size": 36, "letter-spacing": 1 }, "COPY");
           S(up, "rect", { x: 1462, y: 664, width: 18, height: 18, fill: "#0c0c0b" });
           const lamp = S(up, "rect", { x: 1465, y: 667, width: 12, height: 12, fill: "#3a2418" });
           const lampGlow = S(up, "rect", { x: 1458, y: 660, width: 26, height: 26, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0 });
@@ -340,6 +365,13 @@
           const discCore = S(disc, "path", { d: "M-198 10 H191", fill: "none", stroke: "#FFD9C2", "stroke-width": 2.5 });
           S(disc, "path", { d: "M180 3 L192 10 L180 17", fill: "none", stroke: "#E85D26", "stroke-width": 2 });
           mono(disc, -198, 94, 13, "LIGHT CARRIES THE MESSAGE →", { fill: "#888880", "letter-spacing": 0.5 });
+          // v20: the same packets cross the cutaway, its head at the middle ON the hat
+          S(disc, "clipPath", { id: "f16-dclip" }).appendChild(S(disc, "rect", { x: -198, y: -20, width: 389, height: 60 }));
+          const dLane = S(disc, "g", { "clip-path": "url(#f16-dclip)" });
+          for (const h of HATS) {
+            h.dg = S(dLane, "rect", { x: -130, y: -2, width: 140, height: 24, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0 });
+            h.dc = S(dLane, "rect", { x: -110, y: 6, width: 110, height: 8, fill: "url(#f16-comet)", opacity: 0 });
+          }
 
           // ---- the copy path, the copy, the cold drawer ------------------------------------------------------
           const [px0, py0] = rot(1400, 928);
@@ -352,6 +384,7 @@
           const CPLEN = copyCore.getTotalLength();
           copyCore.setAttribute("stroke-dasharray", CPLEN); copyGlow.setAttribute("stroke-dasharray", CPLEN);
           const copyPulses = Array.from({ length: 4 }, () => S(copyG, "circle", { r: 5, fill: "#FFD9C2", opacity: 0 }));
+          for (const h of HATS) { h.cg = S(copyG, "circle", { r: 20, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0 }); h.cc = S(copyG, "circle", { r: 8, fill: "#FFEADC", opacity: 0 }); }
 
           // the drawer: open, its interior showing older copies
           const DR = { x: 1500, y: 918, w: 320, h: 112 };
@@ -454,11 +487,13 @@
           const lines = [{"i": 2, "section": "Verse 1", "text": "I couldn't read a word of it, I didn't even try", "start": 16.06, "end": 19.74, "words": [{"w": "I", "start": 16.06, "end": 16.18}, {"w": "couldn't", "start": 16.18, "end": 16.7}, {"w": "read", "start": 16.7, "end": 17.04}, {"w": "a", "start": 17.04, "end": 17.16}, {"w": "word", "start": 17.16, "end": 17.48}, {"w": "of", "start": 17.48, "end": 17.57}, {"w": "it,", "start": 17.57, "end": 17.9}, {"w": "I", "start": 17.9, "end": 18.06}, {"w": "didn't", "start": 18.06, "end": 18.56}, {"w": "even", "start": 18.56, "end": 18.98}, {"w": "try", "start": 18.98, "end": 19.74}]}, {"i": 3, "section": "Verse 1", "text": "I made myself a copy and I put it on ice", "start": 19.74, "end": 23.656, "words": [{"w": "I", "start": 19.74, "end": 19.92}, {"w": "made", "start": 19.92, "end": 20.16}, {"w": "myself", "start": 20.16, "end": 20.68}, {"w": "a", "start": 20.68, "end": 20.74}, {"w": "copy", "start": 20.74, "end": 21.42}, {"w": "and", "start": 21.42, "end": 21.62}, {"w": "I", "start": 21.62, "end": 21.76}, {"w": "put", "start": 21.76, "end": 21.98}, {"w": "it", "start": 21.98, "end": 22.06}, {"w": "on", "start": 22.06, "end": 22.96}, {"w": "ice", "start": 22.96, "end": 23.656}]}];
           // each line rides four fibre strands laid parallel to the cable; the hero owns the second strand as a display row
           const LAYOUT = [[[0, 1], [2], [3, 4, 5, 6], [7, 8, 9, 10]], [[0, 1, 2, 3], [4], [5, 6, 7, 8], [9, 10]]];
-          const BASE = [200, 395, 505, 605];   // baselines in the cable's axis space
+          // v20: the heroes at 460 px; each line has its own rows (left x, baseline in the cable's axis space)
+          const HS = 460;
+          const ROWS = [[[170, 150], [150, 520], [170, 640], [170, 745]],
+                        [[560, 300], [120, 600], [110, 760], [110, 860]]];
+          const BASE = ROWS[0].map((r) => r[1]);
           const heroes = [], boxes = [];
-          let iceWe = null, iceTx = null, readWe = null, copyWe = null;
-          const KINDS = ["left", "drop", "right", "zoom", "flip", "pop", "spin"];
-          let kn = 0;
+          let iceWe = null, iceTx = null, readWe = null;
           const path = $("f16-path");
           lines.forEach((line, j) => {
             const box = el("div", "f16-line", path);
@@ -466,27 +501,29 @@
             LAYOUT[j].forEach((row, r) => {
               const isHero = r === 1;
               const re = el("div", "f16-row" + (isHero ? " f16-hero hr-glow" : ""), box);
-              re.style.top = `${BASE[r] - (isHero ? 0.9 * 220 : 0.98 * 84)}px`;
+              if (isHero) re.setAttribute("data-layout-allow-overlap", ""); // v17: the hero row deliberately sits tight on its strand above the next line
+              re.style.top = `${ROWS[j][r][1] - (isHero ? 0.9 * HS : 0.98 * 84)}px`;
+              re.style.left = `${ROWS[j][r][0]}px`;
               for (const wi of row) {
                 const w = line.words[wi], t = L(w.start);
                 const we = el("span", "f16-word", re), tx = el("span", "f16-txt", we, w.w.toLowerCase()), pulse = el("i", "f16-pulse", we);
+                if (isHero) { we.setAttribute("data-layout-allow-overlap", ""); tx.setAttribute("data-layout-allow-overlap", ""); }
                 if (t <= 0) continue;   // the frame opens on "i": on screen at the cut
                 // the light pulse runs in along the strand and lands under the word as it rises out of the fibre
-                tl.fromTo(pulse, { x: -420, scaleX: 2.6, opacity: 0 }, { x: 0, scaleX: 1, opacity: 1, duration: 0.2, ease: "power2.in" }, t - 0.2);
-                tl.fromTo(pulse, { opacity: 1 }, { opacity: 0, duration: 0.26, ease: "power2.out", immediateRender: false }, t + 0.02);
-                if (isHero) {
-                  // v16: the hero is thrown in from outside the frame and lands on its word time (fx are built below, relative to the word)
-                  const gs = HR.glyphs(tx); tx._hrG = gs; tl.set(gs, { opacity: 0 }, 0);
-                  WOW.explode(tl, tx, t, { fx: false, from: w.w === "read" ? "left" : "burst", seed: w.w === "read" ? 16 : 26, pre: 0.2 });
-                  heroes.push([re, we, t]); if (w.w === "read") readWe = we; else copyWe = we; continue;
-                }
+                tl.fromTo(pulse, { x: -300, scaleX: 2.2, opacity: 0 }, { x: 0, scaleX: 1, opacity: 1, duration: 0.3, ease: "power1.in" }, t - 0.3);
+                tl.fromTo(pulse, { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, t + 0.02);
                 tl.set(tx, { opacity: 0 }, 0);
-                WOW.word(tl, tx, t, { kind: w.w === "ice" ? "zoom" : KINDS[kn++ % KINDS.length], dur: 0.26 });
-                tl.fromTo(we, { x: -40 }, { x: 0, duration: 0.3, ease: "expo.out" }, t - 0.04);
-                if (w.w === "ice") {   // v13: "ice" lands cold (a cream-white flash), then frosts over in render()
+                if (isHero) {
+                  // v17: the hero glides in along its strand ("read") or settles onto it ("copy"), readable on its word time
+                  WOW.word(tl, tx, t, { kind: w.w === "read" ? "glide" : "settle", dur: 0.46 });
+                  heroes.push([re, we, t]); if (w.w === "read") readWe = we; continue;
+                }
+                // lead words rise out of their strand; "ice" sinks into it
+                WOW.word(tl, tx, t, { kind: w.w === "ice" ? "sink" : "rise" });
+                if (w.w === "ice") {   // v13: "ice" lands cold, then frosts over in render()
                   iceWe = we; iceTx = tx;
-                  tl.fromTo(we, { color: "#FFFFFF", textShadow: "0 0 22px rgba(225,235,242,0.9)" },
-                    { color: "#F0ECE5", textShadow: "0 0 6px rgba(225,235,242,0.25)", duration: 0.5, ease: "power1.in" }, t + 0.04);
+                  tl.fromTo(we, { color: "#FFFFFF", textShadow: "0 0 18px rgba(225,235,242,0.7)" },
+                    { color: "#F0ECE5", textShadow: "0 0 6px rgba(225,235,242,0.25)", duration: 0.6, ease: "power1.in" }, t + 0.04);
                   continue;
                 }
                 tl.fromTo(we, { color: "#E85D26", textShadow: "0 0 22px rgba(232,93,38,0.95)" },
@@ -495,13 +532,15 @@
             });
             tl.set(box, { opacity: 1 }, Math.max(0, L(line.start)));
           });
-          tl.fromTo(boxes[0], { x: 0, skewX: 0, opacity: 1 }, { x: -420, skewX: 18, opacity: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, LINE2 - 0.22);
-          tl.set(boxes[0], { opacity: 0 }, LINE2);
-          // heroes squash into the strand like a press
-          for (const [, we, t] of heroes) {
-            tl.fromTo(we, { scaleY: 1, scaleX: 1 }, { scaleY: 0.93, scaleX: 1.025, transformOrigin: "50% 90%", duration: 0.05, ease: "power2.out", immediateRender: false }, t);
-            tl.fromTo(we, { scaleY: 0.93, scaleX: 1.025 }, { scaleY: 1, scaleX: 1, transformOrigin: "50% 90%", duration: 0.4, ease: "elastic.out(1, 0.45)", immediateRender: false }, t + 0.05);
-          }
+          // v17: line 1 slides on along its strands and fades as line 2 begins (no whip)
+          // v18: it leaves across the first word of line 2, so the frame never stands without a lyric
+          tl.fromTo(boxes[0], { x: 0, opacity: 1, filter: "blur(0px)" }, { x: -90, opacity: 0, filter: "blur(4px)", duration: 0.3, ease: "power2.in", immediateRender: false }, LINE2 - 0.12);
+          tl.set(boxes[0], { opacity: 0 }, LINE2 + 0.18);
+          // v20: "copy" holds the frame at full size, then steps back on the 21.567 hat (eased, 0.45 s) so Archie and the
+          // cold store have the right of the frame for "put it on ice"
+          const STEPBACK = L(21.567), copyRow = heroes[1][0];
+          copyRow.style.transformOrigin = "0% 90%";
+          tl.fromTo(copyRow, { scale: 1, y: 0 }, { scale: 0.5, y: 80, duration: 0.45, ease: "power2.inOut", immediateRender: false }, STEPBACK);
 
           // ---- "on ice": frost grows across the word's glyphs ------------------------------------------------
           // a seeded crystal texture clipped to the type (a copy of the glyphs over the word), revealed from the
@@ -559,9 +598,8 @@
 
           // the archive's marker: "(didn't need to)", drawn on after "even", leaves with the line
           const NOTE = L(18.62), mark1 = $("f16-mark1"), arrow = $("f16-arrow");
-          tl.fromTo(mark1, { scale: 1.12, rotation: -8 }, { scale: 1, rotation: -5, duration: 0.35, ease: "back.out(2)", immediateRender: false }, NOTE + 0.12);
-          HR.exit(tl, mark1, LINE2 - 0.3);
-          tl.fromTo(arrow, { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power2.in", immediateRender: false }, LINE2 - 0.3);
+          tl.fromTo(mark1, { scale: 1.06, rotation: -7 }, { scale: 1, rotation: -5, duration: 0.5, ease: "power3.out", immediateRender: false }, NOTE + 0.1);
+          tl.fromTo([mark1, arrow], { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, LINE2 - 0.34);
 
           // ---- Archie (v12: replaces the lamp-headed Archivist): rises in from the bottom edge on "myself", lights
           // the copy with his eyes, follows it into the drawer and nods it shut on "ice"
@@ -573,7 +611,8 @@
           archie.to(tl, { drawer: 1, shL: 38, elL: -80, shR: 42, elR: -80 }, COPY-0.25, 0.2);
           archie.to(tl, { drawer: 0, shL: -34, elL: -96, shR: -34, elR: -96, lidL: 0.25, lidR: 0.25 }, COPY+0.58, 0.22);
           archie.to(tl, { shR: 82, elR: -24, shL: 4, elL: 8 }, PUT, 0.23);
-          archie.shiver(tl, ICE, DUR-ICE);
+          archie.shiver(tl, ICE + 0.1, DUR - ICE);
+          archie.to(tl, { jit: 0.45 }, ICE + 0.26, 0.2);   // v17: a small shiver, not a tremor
           // A whole incoming letter slides into his chest. The printed copy emerges from that same slot.
           const copyOverlay = S($("f16-mid"), "svg", { id:"f16-copy-overlay", class:"f16-svg", viewBox:"0 0 1920 1080", "data-layout-ignore":"" });
           copyOverlay.appendChild(card);
@@ -594,115 +633,89 @@
             }
           }
           tl.fromTo(lensFrost,{opacity:0},{opacity:1,duration:0.24,ease:"power2.out"},ICE);
-          tl.fromTo("#f16-archw", { y: 560, rotation: 7 }, { y: 0, rotation: 0, duration: 0.42, ease: "back.out(1.3)" }, RISE - 0.34);
+          tl.fromTo("#f16-archw", { y: 560, rotation: 7 }, { y: 0, rotation: 0, duration: 0.7, ease: "power3.out" }, RISE - 0.5);
 
           // ---- the clamp: hovering open, jolted by the kicks, slammed shut on "copy" (drawn in render) ---------
-          const JOLTS = [[READ, 8], [KICK, 20], [L(17.909), 18], [L(18.570), 14], [L(18.96), 10], [L(19.484), 16]];
+          const CLOSE = 0.34;   // v17: the halves glide shut over a third of a second, meeting ON "copy"
           tl.set("#f16-gaprect", { opacity: 1 }, COPY);
-          tl.fromTo("#f16-clampshadow", { attr: { rx: 180 }, opacity: 0.3 }, { attr: { rx: 150 }, opacity: 0.55, duration: 0.12, ease: "power4.in" }, COPY - 0.12);
+          tl.fromTo("#f16-clampshadow", { attr: { rx: 180 }, opacity: 0.3 }, { attr: { rx: 150 }, opacity: 0.55, duration: CLOSE, ease: "power2.in" }, COPY - CLOSE);
           // the copy fibre draws on from the port; the copy prints under a scanline
           tl.set(copyG, { opacity: 1 }, COPY);
           tl.fromTo([copyCore, copyGlow], { attr: { "stroke-dashoffset": CPLEN } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.28, ease: "power2.out" }, COPY);
-          const PRINT = COPY + 0.18;
+          const PRINT = COPY + 0.18, PRINT_D = 0.55;
           tl.set(cardBody,{opacity:1},PRINT);
           // Print, clasp to the chest, then file: all authored in the archive's world coordinates.
           tl.fromTo(cardBody,{x:-538,y:103,scale:0.04,svgOrigin:"1688 824"},
-            {x:-538,y:64,scale:0.64,duration:0.35,ease:"power2.out"},PRINT);
-          tl.fromTo(cardBody,{x:-538,y:64,rotation:0},{x:-538,y:80,rotation:-8,duration:0.2,ease:"sine.inOut",immediateRender:false},PRINT+0.35);
-          // v16: Archie flings the copy up over the cold store, it falls and slides in behind the drawer front
-          const FALL0 = PUT + 0.28;
+            {x:-538,y:64,scale:0.64,duration:PRINT_D,ease:"power2.out"},PRINT);
+          tl.fromTo(cardBody,{x:-538,y:64,rotation:0},{x:-538,y:80,rotation:-8,duration:PUT-PRINT-PRINT_D,ease:"sine.inOut",immediateRender:false},PRINT+PRINT_D);
+          // v17: Archie lifts the copy over the cold store in one arc, it hovers, then sinks into the drawer, gone ON "ice"
+          const HOVER = PUT + 0.5;
           S(S(art, "defs"), "clipPath", { id: "f16-cardclip" }).appendChild(S(art, "rect", { x: 0, y: -2000, width: 1920, height: 2918 }));
           tl.fromTo(cardBody,{x:-538,y:80,rotation:-8,scale:0.64},
-            {x:0,y:-264,rotation:12,scale:1,duration:0.28,ease:"power2.out",immediateRender:false},PUT);
-          tl.fromTo(cardBody,{x:0,y:-264,rotation:12,scale:1},
-            {x:0,y:168,rotation:2,scale:1,duration:ICE - 0.02 - FALL0,ease:"power2.in",immediateRender:false},FALL0);
-          tl.set(card, { attr: { "clip-path": "url(#f16-cardclip)" } }, FALL0);
-          // "ice": the drawer slams shut and frosts over
-          tl.set([inside, card], { opacity: 0 }, ICE);
-          tl.fromTo([front, frontTxt], { scaleY: 1, scaleX: 1 }, { scaleY: 0.93, scaleX: 0.985, svgOrigin: `${DR.x + DR.w / 2} ${DR.y + DR.h}`, duration: 0.05, ease: "power2.out", immediateRender: false }, ICE);
-          tl.fromTo([front, frontTxt], { scaleY: 0.93, scaleX: 0.985 }, { scaleY: 1, scaleX: 1, svgOrigin: `${DR.x + DR.w / 2} ${DR.y + DR.h}`, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, ICE + 0.05);
-          tl.fromTo(frostTint, { opacity: 0 }, { opacity: 0.1, duration: 0.5, ease: "power2.out" }, ICE);
-          frostLines.forEach(({ p, len, delay }) => tl.fromTo(p, { attr: { "stroke-dashoffset": len } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.32, ease: "power2.out" }, ICE + delay));
+            {x:0,y:-170,rotation:5,scale:1,duration:HOVER-PUT,ease:"sine.inOut",immediateRender:false},PUT);
+          tl.fromTo(cardBody,{x:0,y:-170,rotation:5},
+            {x:0,y:150,rotation:1,duration:ICE - HOVER,ease:"power1.inOut",immediateRender:false},HOVER);
+          tl.set(card, { attr: { "clip-path": "url(#f16-cardclip)" } }, HOVER);
+          tl.set(card, { opacity: 0 }, ICE + 0.05);
+          // "ice": the drawer frosts over, slowly, from its edges in
+          tl.fromTo(inside, { opacity: 1 }, { opacity: 0.4, duration: 0.6, ease: "power2.out", immediateRender: false }, ICE);
+          tl.fromTo(frostTint, { opacity: 0 }, { opacity: 0.32, duration: 0.7, ease: "power2.out" }, ICE);
+          frostLines.forEach(({ p, len, delay }) => tl.fromTo(p, { attr: { "stroke-dashoffset": len } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.5, ease: "power2.out" }, ICE + delay * 1.3));
 
-          // ---- the camera (v16): a fast dolly along the cable, a whip to the clamp, a punch on "copy", a cut to the cold store ----
-          const stage = HR.stage($("root"), { seed: 16, drift: 1 });
+          // ---- the camera (v17): one continuous move. A: a constant-speed glide along the cable onto the open clamp;
+          // then a crane back onto Archie's copy machine (no cut), a slow drift through the print, on to the cold store ----
+          const stage = HR.stage($("root"), { seed: 16, drift: 1, pulse: 0.8 });
           const cam = stage.cam;
           const D = 0.65;   // the world layer's depth
           const cf = (P, S2, z) => { const sc = 1 + (z - 1) * D; return { x: -(S2[0] - 960 - sc * (P[0] - 960)) / D, y: -(S2[1] - 540 - sc * (P[1] - 540)) / D, z }; };
           const AXP = (x, dy = 0) => rot(x, 720 + dy);
-          const CUT_A2 = L(17.9), CUT_B = LINE2, CUT_C = L(22.0);   // the three cuts: 1.84 · 3.68 · 5.94
-          const cseg = (t0, t1, a2, b2, ease, first) => tl.fromTo(cam, a2, Object.assign({}, b2, { duration: t1 - t0, ease, immediateRender: !!first }), t0);
           const SC = [1250, 650];
-          cseg(0, 0.9, cf(AXP(120), SC, 1.7), cf(AXP(1250), SC, 2.0), "power3.inOut", true);                       // along the jacket, yarn and buffer onto the bare fibre
-          cseg(0.9, CUT_A2, cf(AXP(1250), SC, 2.0), cf(AXP(1640), SC, 2.4), "sine.inOut");
-          cseg(CUT_A2, CUT_B - 0.06, cf(AXP(1330, -22), [1300, 650], 2.3), cf(AXP(1420, -12), [1300, 650], 2.8), "power1.in");   // the open clamp, trembling
-          cseg(CUT_B, COPY, cf([1390, 800], [1270, 610], 1.5), cf([1370, 790], [1270, 600], 1.7), "power1.inOut");
-          cseg(COPY, CUT_C, cf([1340, 800], [1250, 610], 2.05), cf([1280, 880], [1200, 650], 1.6), "power2.out");   // the slam punches in, then settles on Archie
-          cseg(CUT_C, ICE - 0.02, cf([1640, 950], [1400, 570], 2.15), cf([1640, 962], [1400, 560], 2.35), "power2.in");
-          cseg(ICE, DUR, cf([1650, 968], [1400, 545], 2.7), cf([1650, 968], [1400, 560], 2.3), "power3.out");
-          const roll = (t, r) => tl.fromTo(cam, { rot: r }, { rot: 0, duration: 0.55, ease: "elastic.out(1, 0.5)", immediateRender: false }, t);
-          [[CUT_A2, 5], [CUT_B, -5], [COPY, 6], [CUT_C, 5], [ICE, -7]].forEach(([t, r]) => roll(t, r));
-          tl.set(cam, { rot: 0 }, 0);
-          tl.fromTo($("f16-archw"), { opacity: 1 }, { opacity: 0.5, duration: 0.15, immediateRender: false }, CUT_C);
+          const KEYS = [
+            // A (v20): three framings on the downbeats: mid at the cut, tight on the strike (17.188), wider onto the clamp (19.028)
+            [0, cf(AXP(470), SC, 1.95)], [L(17.188), cf(AXP(820), SC, 2.4)], [L(19.028) - 0.1, cf(AXP(1250, -20), SC, 1.85)], [3.2, cf(AXP(1350), SC, 1.95)],
+            [4.15, cf([1390, 800], [1520, 610], 1.42)], [COPY, cf([1380, 795], [1520, 605], 1.72)],       // B: the copy machine (v20: right of the giant "copy")
+            [PUT, cf([1150, 880], [1300, 650], 1.5)], [ICE, cf([1660, 974], [1560, 700], 1.85)], [DUR, cf([1660, 974], [1560, 690], 2.0)],   // v18: onto the cold store, large, as it frosts
+          ];
+          // a C1 cubic through the keys (Catmull-Rom tangents on non-uniform times): the camera never stops or jerks
+          const camAt = (t) => {
+            const n = KEYS.length; let i = 0;
+            while (i < n - 2 && t > KEYS[i + 1][0]) i++;
+            const [t0, p0] = KEYS[i], [t1, p1] = KEYS[i + 1], h = t1 - t0, u = Math.max(0, Math.min(1, (t - t0) / h));
+            const tan = (k, c) => { const a = KEYS[Math.max(0, k - 1)], b = KEYS[Math.min(n - 1, k + 1)]; return (b[1][c] - a[1][c]) / (b[0] - a[0]); };
+            const u2 = u * u, u3 = u2 * u, out = {};
+            for (const c of ["x", "y", "z"]) out[c] = (2 * u3 - 3 * u2 + 1) * p0[c] + (u3 - 2 * u2 + u) * h * tan(i, c) + (-2 * u3 + 3 * u2) * p1[c] + (u3 - u2) * h * tan(i + 1, c);
+            return out;
+          };
 
-          // ---- shots, cuts, effects -------------------------------------------------------------------------------------
+          // v20: where each hat's packet passes the middle of the frame (axis x under screen point 1180, 640 at its hat time)
+          for (const h of HATS) {
+            const c = camAt(Math.max(0, Math.min(DUR, h.th))), sc = 1 + (c.z - 1) * D;
+            const px = 960 + (1180 - 960 + D * c.x) / sc - 960, py = 540 + (640 - 540 + D * c.y) / sc - 720;
+            h.xh = 960 + px * CS + py * SN;
+          }
+          const PV = 2900;   // packet speed, axis px per second
+          // v20: "read" keeps failing: on the hats after the strike it flashes and judders for a beat, then snaps back
+          const FAILS = [17.873, 18.338, 18.799, 19.374].map(L), readTx = readWe.querySelector(".f16-txt");
+          readTx.setAttribute("data-layout-allow-occlusion", "");   // under its own strike-through, on purpose
+
+          // ---- accents (verse: soft; every hand-placed time is a word time or a real onset) -------------------------
           const fxw = el("div", "", $("f16-mid")); fxw.id = "f16-fxw"; fxw.setAttribute("data-layout-ignore", "");
-          const fxs = $("f16-fxs"), layersS = [$("f16-bg"), $("f16-mid"), $("f16-lyrics"), $("f16-markl"), $("f16-inset")];
-          const shakeAll = (t, amp, dur = 0.4) => layersS.forEach((e, i) => WOW.shake(tl, e, t, { amp: amp * (i === 2 ? 0.5 : 1), dur, seed: 31 + i * 9, rot: amp * 0.05 }));
-          const atWord = (we) => { const h = we.querySelector(".f16-fxhost") || el("div", "f16-fxhost", we); Object.assign(h.style, { position: "absolute", left: "50%", top: "52%", width: "0", height: "0" }); return h; };
-          const bigIn = (host, o) => { const hs = [WOW.shock(tl, host, Object.assign({ x: 0, y: 0 }, o.shock)), WOW.rays(tl, host, Object.assign({ x: 0, y: 0 }, o.rays))]; if (o.burst) hs.push(WOW.burst(tl, host, Object.assign({ x: 0, y: 0 }, o.burst))); };
-          // kick: a nudge on the world, a bob on the type
-          WOW.pulse(tl, $("f16-lyrics"), { kind: "kick", amt: 0.025, y: 5 });
-          WOW.pulse(tl, $("f16-inset"), { kind: "kick", amt: 0.03 });
-          HR.onsetsIn("kick", T0, T0 + DUR).forEach((tk, i) => { if (HR.hit("kick", tk + 0.0001) > 0.25) WOW.shake(tl, $("f16-mid"), tk - T0, { amp: 4, dur: 0.22, seed: 61 + i, rot: 0.15 }); });
-          // "read" lands, then fails: two strike bars slam through it
-          bigIn(atWord(readWe), { shock: { t: READ, r: 800, n: 2, w: 7, color: "fire" }, rays: { t: READ, n: 22, r0: 110, r1: 950, seed: 16, color: "cream", dur: 0.5 } });
-          shakeAll(READ, 12, 0.35);
-          WOW.flash(tl, fxs, READ, { color: "fire", a: 0.22, dur: 0.12 });
-          const BARS = READ + 0.3;
-          const bars = [0.34, 0.6].map((y) => { const b2 = el("i", "f16-bar", readWe); b2.style.top = `${y * 100}%`; return b2; });
-          bars.forEach((b2, i) => { tl.fromTo(b2, { scaleX: 0 }, { scaleX: 1, duration: 0.09, ease: "power4.out", immediateRender: false }, BARS + i * 0.07);
-            tl.fromTo(b2, { opacity: 1 }, { opacity: 0.85, duration: 0.01, immediateRender: false }, BARS + i * 0.07); });
-          const deny = el("div", "f16-deny", readWe); deny.innerHTML = "read ✗<br>0 bytes decoded";
-          tl.fromTo(deny, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.12, ease: "power3.out", immediateRender: false }, BARS + 0.1);
-          tl.fromTo(deny, { opacity: 1 }, { opacity: 0, duration: 0.15, immediateRender: false }, NOTE - 0.2);
-          bars.forEach((b2) => tl.fromTo(b2, { opacity: 0.85 }, { opacity: 0, duration: 0.15, immediateRender: false }, LINE2 - 0.25));
-          [BARS, BARS + 0.07].forEach((t, i) => { WOW.shock(tl, atWord(readWe), { x: 0, y: 0, t, r: 500, n: 1, w: 4, color: "cream", dur: 0.35 }); shakeAll(t, 7 - i * 2, 0.25); });
-          // cuts: a flash and a ring on each
-          [CUT_A2, CUT_B, CUT_C].forEach((t) => { WOW.flash(tl, fxs, t, { a: 0.3, dur: 0.1 }); });
-          // "copy": the clamp slams shut: an explosion in the world and in the type
+          WOW.pulse(tl, $("f16-lyrics"), { kind: "kick", amt: 0.012, y: 2 });
+          // "read" fails: one bar draws through it across the sung word, done on the snare at 17.181
+          const STRIKE_END = L(WOW.on(17.18)), STRIKE0 = READ + 0.08;
+          const bar = el("i", "f16-bar", readWe); bar.style.top = "52%"; bar.setAttribute("data-layout-allow-occlusion", "");   // the strike-through is meant to cross the word
+          tl.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: STRIKE_END - STRIKE0, ease: "power2.inOut", immediateRender: false }, STRIKE0);
+          const deny = el("div", "f16-deny", readWe); deny.setAttribute("data-layout-allow-overflow", ""); deny.innerHTML = "read ✗<br>0 bytes decoded";
+          tl.fromTo(deny, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, STRIKE_END);
+          tl.fromTo(deny, { opacity: 1 }, { opacity: 0, duration: 0.3, immediateRender: false }, NOTE - 0.3);
+          // "copy": the clamp meets ON the word: a soft punch on the world and one thin ring off the clamp
           const CLX = 1397, CLY = 690;
-          WOW.shock(tl, fxw, { x: CLX, y: CLY, t: COPY, r: 1100, n: 3, w: 10, color: "fire", dur: 0.7, gap: 0.07 });
-          WOW.rays(tl, fxw, { x: CLX, y: CLY, t: COPY, n: 34, r0: 100, r1: 1300, seed: 77, color: "cream", dur: 0.6, w: 6 });
-          WOW.burst(tl, fxw, { x: CLX, y: CLY, t: COPY, n: 44, speed: 1500, size: [6, 18], seed: 78, dur: 0.95, cream: 0.35, gravity: 500 });
-          WOW.flash(tl, fxs, COPY, { a: 0.6, dur: 0.2 });
-          shakeAll(COPY, 18, 0.45);
-          WOW.punch(tl, $("f16-mid"), COPY, { s: 1.06, dur: 0.5 });
-          bigIn(atWord(copyWe), { shock: { t: COPY, r: 900, n: 2, w: 8, color: "fire" }, rays: { t: COPY, n: 26, r0: 130, r1: 1000, seed: 26, color: "cream", dur: 0.55 }, burst: { t: COPY, n: 26, speed: 1200, seed: 27, dur: 0.9, size: [5, 14] } });
-          // the copy fibre fires and the printer starts: sparks at the port
-          WOW.burst(tl, fxw, { x: 1422, y: 873, t: PRINT, n: 16, speed: 700, seed: 79, dur: 0.7, size: [3, 8], spread: 220, aim: 90, gravity: 400 });
-          // "ice": the drawer slams, the frost shatters (cracks, shards, rings), the word goes off
-          WOW.shock(tl, fxw, { x: 1660, y: 960, t: ICE, r: 900, n: 3, w: 7, color: "cream", dur: 0.65, gap: 0.06 });
-          WOW.rays(tl, fxw, { x: 1660, y: 960, t: ICE, n: 28, r0: 80, r1: 1000, seed: 88, color: "cream", dur: 0.5, w: 5 });
-          WOW.burst(tl, fxw, { x: 1660, y: 930, t: ICE, n: 46, speed: 1300, size: [4, 14], seed: 89, dur: 1.0, cream: 0.92, gravity: 900, spread: 240, aim: -90 });
-          WOW.flash(tl, fxs, ICE, { a: 0.45, dur: 0.22 });
-          shakeAll(ICE, 16, 0.45);
-          WOW.punch(tl, $("f16-mid"), ICE, { s: 1.07, dur: 0.5 });
-          bigIn(atWord(iceWe), { shock: { t: ICE, r: 700, n: 2, w: 6, color: "cream" }, rays: { t: ICE, n: 20, r0: 90, r1: 800, seed: 28, color: "cream", dur: 0.5, w: 4 }, burst: { t: ICE, n: 24, speed: 800, seed: 29, dur: 0.9, size: [4, 10], cream: 0.95, gravity: 500 } });
-          const cracks = [];
-          { const cr = HR.rng(1655);
-            for (let i = 0; i < 11; i++) {
-              let a = (i / 11) * Math.PI * 2 + cr() * 0.4, x = 1660, y = 950, d = "M1660 950";
-              const n = 4 + ((cr() * 3) | 0);
-              for (let k = 0; k < n; k++) { a += (cr() - 0.5) * 0.9; const l = 22 + cr() * 38; x += Math.cos(a) * l; y += Math.sin(a) * l * 0.8; d += ` L${x.toFixed(1)} ${y.toFixed(1)}`; }
-              const pth = S(art, "path", { d, fill: "none", stroke: "#F4F6F5", "stroke-width": 2.2, "stroke-linejoin": "bevel", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1, opacity: 0.95 });
-              cracks.push({ pth, i });
-            } }
-          cracks.forEach(({ pth, i }) => { tl.fromTo(pth, { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.14, ease: "power3.out", immediateRender: false }, ICE + i * 0.004);
-            tl.fromTo(pth, { opacity: 0.95 }, { opacity: 0, duration: 0.35, ease: "power2.in", immediateRender: false }, ICE + 0.3); });
-          WOW.transition(tl, document.getElementById("el-16-intercept"), { in: "whipL", out: "drop", dur: 0.3, total: DUR });
+          WOW.punch(tl, $("f16-mid"), COPY, { s: 1.03, dur: 0.6 });
+          WOW.shock(tl, fxw, { x: CLX, y: CLY, t: COPY, r: 560, n: 1, w: 2, color: "fire", dur: 1.0 });
+          // the frame: glides in from 02 (the pan along the wire), the copy sinks out into 03
+          WOW.transition(tl, document.getElementById("el-16-intercept"), { in: "glideL", out: "glideDown", dur: 0.46, total: DUR });
 
-          // ---- rushing hex and speed streaks (screen space, along the cable's axis), strong in A, spiking on the cuts ----------
+          // ---- ciphertext and light streaming along the cable's axis (screen space): steady, a texture of flow ----------
           const rushEl = $("f16-rush"), rr = HR.rng(1650), RUSH = [];
           rushEl.style.webkitMaskImage = rushEl.style.maskImage = "linear-gradient(90deg, transparent 0%, transparent 22%, #000 52%)";
           for (let i = 0; i < 16; i++) {
@@ -711,49 +724,65 @@
             if (streak) { e.style.width = len + "px"; e.style.height = (2 + rr() * 3) + "px"; }
             else { e.style.fontSize = (13 + rr() * 30).toFixed(0) + "px"; e.textContent = HR.cipher(40, 1660 + i).replace(/(.{4})/g, "$1 "); }
             e.style.top = y + "px";
-            RUSH.push({ e, streak, len: streak ? len : 1500, speed: streak ? 3400 + rr() * 3200 : 1500 + rr() * 2200, ph: rr() * 4000, base: streak ? 0.8 : 0.1 + rr() * 0.18 });
+            RUSH.push({ e, streak, len: streak ? len : 1500, speed: streak ? 1300 + rr() * 900 : 380 + rr() * 420, ph: rr() * 4000, base: streak ? 0.7 : 0.18 + rr() * 0.24 });   // v20: brighter flow
           }
-          const rushI = (t) => {   // intensity over the frame
-            let v = t < CUT_B ? 1 : t < COPY ? 0.5 : t < CUT_C ? 0.35 : 0.14;
-            for (const tc of [CUT_A2, CUT_B, COPY, CUT_C]) if (t >= tc && t < tc + 0.5) v = Math.max(v, 1.4 * (1 - (t - tc) / 0.5));
-            return v;
-          };
+          const rushI = (t) => 0.25 + 0.6 * (1 - clamp01((t - 3.2) / 1.0));   // full along the cable, eases back on the machine
 
           // ---- per frame (all from timeline time) --------------------------------------------------------------
-          const FX0 = 1152, FX1 = 2120, lightEl = $("f16-light"), wA = $("f16-wA");
+          const FX0 = 1152, FX1 = 2120, lightEl = $("f16-light");
                     const riderStr = Array.from({ length: 8 }, (_, i) => HR.cipher(8, 1640 + i)).join("  ");
           function render() {
             const t = tl.time(), T = T0 + t, step = Math.floor(t * 15);
-            stage.apply(T);
             HR.draw(tl);
             WOW.draw(tl, 16.06);
-            if (t > 0.3 && t < DUR - 0.3) document.getElementById("el-16-intercept").style.filter = "";
-            // whip cuts: the outgoing view smears away, the incoming one arrives from the side (the world layers only; the type stays put)
-            let cx = 0, cy = 0, cb = 0;
-            for (const [tc, ax, dir] of [[CUT_A2, "x", 1], [CUT_B, "x", -1], [CUT_C, "y", -1]]) {
-              let o = 0, b = 0;
-              if (t > tc - 0.1 && t < tc) { const u = (t - tc + 0.1) / 0.1; o = -dir * 700 * u * u * u; b = 20 * u * u * u; }
-              else if (t >= tc && t < tc + 0.26) { const u = 1 - Math.pow(1 - (t - tc) / 0.26, 4); o = dir * 1100 * (1 - u); b = 24 * (1 - u); }
-              if (ax === "x") cx += o; else cy += o * 0.8;
-              cb = Math.max(cb, b);
-            }
-            wA.style.translate = cx || cy ? `${cx.toFixed(1)}px ${cy.toFixed(1)}px` : "";
-            wA.style.filter = cb > 0.3 ? `blur(${cb.toFixed(1)}px)` : "";
+            const cc = camAt(t); cam.x = cc.x; cam.y = cc.y; cam.z = cc.z;
+            stage.apply(T);
             // rushing hex and streaks
-            const ri = rushI(t);
+            const ri = rushI(t), hat = HR.hit("hat", T, 0.08);
             for (const r of RUSH) {
               const span = 1920 + r.len + 700, x = ((t * r.speed + r.ph) % span) - r.len - 300;
               r.e.style.transform = `translateX(${x.toFixed(1)}px)`;
-              r.e.style.opacity = Math.min(1, r.base * ri).toFixed(3);
+              r.e.style.opacity = Math.min(1, r.base * ri * (1 + 1.4 * hat)).toFixed(3);
             }
             for (const [re] of heroes) HR.glow(re, T, 0.3, 0.6);
-            const bass = HR.band("bass", T), rms = HR.band("rms", T), hat = HR.hit("hat", T, 0.08);
-            const flare = Math.max(HR.hit("kick", T, 0.18), t >= READ && t < READ + 0.5 ? 1 - (t - READ) / 0.5 : 0);
+            const fl = FAILS.find((a) => t >= a && t < a + 0.13);
+            // the letters stay "read": the word flashes cream and judders sideways, a decode that fails again
+            const jt = Math.floor(t * 30);
+            readTx.style.translate = fl != null ? `${(((jt * 7) % 5) - 2) * 9}px 0` : "0px 0";
+            readTx.style.rotate = fl != null ? `${(jt % 2 ? -1.5 : 1.2)}deg` : "0deg";
+            readTx.style.color = fl != null ? "#F0ECE5" : "";
+            const bass = HR.band("bass", T), rms = HR.band("rms", T);
+            const flare = 0.6 * HR.hit("snare", T, 0.2);   // v17: the snares brighten the light; no flare on "read"
+            const snE = clamp01(HR.hit("snare", T, 0.12) / 0.7);   // v20: the tap's snare pulse
             lightEl.style.transform = `scale(${(0.93 + 0.14 * rms).toFixed(3)})`;
             lightEl.style.opacity = (0.7 + 0.45 * rms).toFixed(3);
             coreGlow.setAttribute("opacity", (0.35 + 0.4 * bass + 0.3 * flare).toFixed(3));
             discGlow.setAttribute("opacity", (0.4 + 0.45 * bass + 0.4 * flare).toFixed(3));
             discCore.setAttribute("stroke-width", (2.5 + 0.8 * flare).toFixed(2));
+            // v20: the hat packets: jacket tracer, bare core, the cutaway, and (after "copy") down the copy fibre
+            for (const h of HATS) {
+              const d = t - h.th, live = d > -0.4 && d < 0.75, x = h.xh + PV * d;
+              const fade = live ? h.a * Math.min(1, (d + 0.4) / 0.12) * Math.min(1, (0.75 - d) / 0.2) : 0;
+              const tr = `translate(${x.toFixed(1)} 0)`;
+              for (const e of [h.jg, h.jc, h.fg, h.fc]) e.setAttribute("transform", tr);
+              h.jg.setAttribute("opacity", (0.55 * fade).toFixed(3)); h.jc.setAttribute("opacity", fade.toFixed(3));
+              h.fg.setAttribute("opacity", (0.75 * fade).toFixed(3)); h.fc.setAttribute("opacity", fade.toFixed(3));
+              const dx = -198 + 389 * (0.5 + d / 0.5);   // the cutaway: across in 0.5 s, its middle on the hat
+              const dOn = d > -0.3 && d < 0.4 ? h.a : 0;
+              for (const e of [h.dg, h.dc]) e.setAttribute("transform", `translate(${(dx + 110).toFixed(1)} 0)`);
+              h.dg.setAttribute("opacity", (0.7 * dOn).toFixed(3)); h.dc.setAttribute("opacity", dOn.toFixed(3));
+              const tf = h.th + (1400 - h.xh) / PV, v = (t - tf) / 0.5;   // reaches the tap, then forks down the copy fibre
+              if (t >= COPY + 0.28 && tf >= COPY && v >= 0 && v < 1) {
+                const q = copyCore.getPointAtLength(v * CPLEN), o = h.a * Math.min(1, v * 8, (1 - v) * 5);
+                for (const e of [h.cg, h.cc]) { e.setAttribute("cx", q.x.toFixed(1)); e.setAttribute("cy", q.y.toFixed(1)); }
+                h.cg.setAttribute("opacity", (0.8 * o).toFixed(3)); h.cc.setAttribute("opacity", o.toFixed(3));
+              } else { h.cg.setAttribute("opacity", 0); h.cc.setAttribute("opacity", 0); }
+            }
+            tracers.forEach((e, i) => {
+              const u = frac(t * 1.3 + i / tracers.length), x = -300 + u * 1480;
+              e.setAttribute("transform", `translate(${x.toFixed(1)} 0)`);
+              e.setAttribute("opacity", (Math.min(1, u * 6, (1 - u) * 6) * (0.45 + 0.4 * bass)).toFixed(3));
+            });
             // pulses ride the core left to right
             pulses.forEach(({ g, c }, i) => {
               const u = frac(t * (2.1 + 0.5 * (i % 3)) + i / pulses.length), x = FX0 + u * (FX1 - FX0);
@@ -770,9 +799,13 @@
             riderText.setAttribute("opacity", scr ? 0.85 : (0.3 + 0.25 * hat).toFixed(3));
             // the tap lamp, the leak through the clamp, the copy pulses
             const on = t >= COPY;
-            lamp.setAttribute("fill", on ? "#E85D26" : "#3a2418");
-            lampGlow.setAttribute("opacity", on ? (0.55 + 0.45 * hat).toFixed(3) : 0);
-            leak.setAttribute("opacity", on ? (0.5 + 0.4 * bass).toFixed(3) : 0);
+            lamp.setAttribute("fill", on || snE > 0.35 ? "#E85D26" : "#3a2418");
+            lampGlow.setAttribute("opacity", on ? Math.min(1, 0.55 + 0.45 * hat + 0.6 * snE).toFixed(3) : (0.7 * snE).toFixed(3));
+            leak.setAttribute("opacity", on ? Math.min(1, 0.5 + 0.4 * bass + 0.6 * snE).toFixed(3) : 0);
+            leak.setAttribute("height", on ? (8 + 10 * snE).toFixed(1) : 8); leak.setAttribute("y", on ? (716 - 5 * snE).toFixed(1) : 716);
+            // the COPY plate lights from inside on each snare once the tap is shut
+            const pl = on ? snE : 0;
+            clampTxt.setAttribute("fill", `rgb(${Math.round(240 - 8 * pl)},${Math.round(236 - 143 * pl)},${Math.round(229 - 191 * pl)})`);
             copyPulses.forEach((c, i) => {
               if (!on || t < COPY + 0.28) { c.setAttribute("opacity", 0); return; }
               const v = frac((t - COPY) * 1.7 + i / copyPulses.length), p = copyCore.getPointAtLength(v * CPLEN);
@@ -780,12 +813,13 @@
               c.setAttribute("opacity", Math.min(1, v * 6, (1 - v) * 6).toFixed(3));
             });
             drLampGlow.setAttribute("opacity", (0.4 + 0.5 * hat).toFixed(3));
-            // the clamp halves: open gap, kick jolts, the slam and its squash
+            // the clamp halves (v17): hovering open and breathing, they glide shut ON "copy" and settle with a soft squash
             let open = 0, jolt = 0, sy = 1;
-            if (t < COPY - 0.12) open = 52 - 7 * (0.5 - 0.5 * Math.cos(Math.PI * t / (COPY - 0.12)));
-            else if (t < COPY) open = 45 * (1 - Math.pow((t - COPY + 0.12) / 0.12, 4));
-            if (t < COPY) for (const [tj, k] of JOLTS) { const d = t - tj; if (d >= 0 && d < 0.6) jolt += d < 0.05 ? k * d / 0.05 : k * Math.exp(-(d - 0.05) / 0.08) * Math.cos((d - 0.05) * 28); }
-            else { const d = t - COPY; sy = d < 0.05 ? 1 - 0.07 * d / 0.05 : 1 - 0.07 * Math.exp(-(d - 0.05) / 0.12) * Math.cos((d - 0.05) * 26); }
+            const t1 = COPY - CLOSE;
+            // v20: before "copy" the jaws bite at the fibre on every snare; after, the shut tap squashes on every snare
+            if (t < t1) { open = 52 - 7 * (0.5 - 0.5 * Math.cos(Math.PI * t / t1)); jolt = 2.5 * Math.sin(t * 2.3) * clamp01((t1 - t) / 0.4) - 18 * snE; }
+            else if (t < COPY) { const u = (t - t1) / CLOSE; open = 45 * (1 - u * u); }
+            else { const d = t - COPY; sy = 1 - 0.03 * Math.sin(Math.min(d, 0.6) / 0.6 * Math.PI) * Math.exp(-d / 0.25) - (d > 0.5 ? 0.035 * snE : 0); }
             const sx = 1 + (1 - sy) * 0.3, sq = `translate(1400 720) scale(${sx.toFixed(4)} ${sy.toFixed(4)}) translate(-1400 -720)`;
             up.setAttribute("transform", `${sq} translate(0 ${(-(open + jolt)).toFixed(2)})`);
             lo.setAttribute("transform", `${sq} translate(0 ${(open + jolt).toFixed(2)})`);
@@ -794,11 +828,11 @@
             const sr = 60 * (t < COPY + 0.02 ? 0 : 1 - Math.pow(1 - clamp01((t - COPY - 0.02) / 0.3), 3));
             sockets.forEach((h, i) => h.setAttribute("transform", `rotate(${Math.max(0, sr - i * 6).toFixed(1)})`));
             // the print scanline
-            const sp = (t - PRINT) / 0.42;
+            const sp = (t - PRINT) / PRINT_D;
             const so = sp > 0 && sp < 1 ? Math.sin(Math.PI * sp) : 0;
             const sy2 = 178 * (0.5 - 0.5 * Math.cos(Math.PI * clamp01(sp)));
             for (const e of [scan, scanGlow]) { e.setAttribute("transform", `translate(${sy2.toFixed(1)} 0)`); e.setAttribute("opacity", so.toFixed(3)); }
-            // ice: lamp to cream, labels, flakes thrown off the slam
+            // ice: lamp to cream, labels, flakes drifting off the frost
             const iced = t >= ICE;
             drLamp.setAttribute("fill", iced ? "#F0ECE5" : "#E85D26");
             drLampGlow.setAttribute("fill", iced ? "#F0ECE5" : "#E85D26");
@@ -806,9 +840,9 @@
             drTemp.textContent = iced ? "KEEP FOREVER" : "JUST IN CASE";
             drTemp.setAttribute("fill", iced ? "#F0ECE5" : "#E85D26");
             flakes.forEach(({ c, dx, dy }, i) => {
-              const d = t - ICE - (i % 3) * 0.01, q = clamp01(d / 0.5), e = 1 - Math.pow(1 - q, 3);
+              const d = t - ICE - (i % 3) * 0.06, q = clamp01(d / 1.4), e = 1 - Math.pow(1 - q, 2);
               c.setAttribute("transform", `translate(${(dx * e).toFixed(1)} ${(dy * e).toFixed(1)})`);
-              c.setAttribute("opacity", d < 0 ? 0 : (0.9 * (1 - clamp01((d - 0.2) / 0.4))).toFixed(3));
+              c.setAttribute("opacity", d < 0 ? 0 : (0.8 * clamp01(d / 0.2) * (1 - clamp01((d - 0.5) / 0.9))).toFixed(3));
             });
             // Archie: looks up at the tap, tilts on the slam, lights the copy, follows it down, nods it shut on "ice"
             const ease = (x) => 0.5 - 0.5 * Math.cos(Math.PI * clamp01(x));
@@ -816,7 +850,7 @@
             th += 10 * ease((t - PRINT) / 0.3);                                       // across at the copy as it prints
             th += 22 * ease((t - PUT) / 0.4);                                         // follows it into the drawer
             th -= 18 * ease((t - ICE - 0.6) / 0.5);                                   // then back up, deadpan
-            const dS = t - COPY; if (dS >= 0 && dS < 0.6) th += -7 * Math.exp(-dS / 0.12) * Math.cos(dS * 22);   // tilt on the slam
+            const dS = t - COPY; if (dS >= 0 && dS < 0.8) th += -5 * Math.exp(-dS / 0.2) * Math.cos(dS * 12);   // a small tilt as it closes
             const dN = t - (ICE - 0.12);                                              // the push: one firm nod
             if (dN >= 0 && dN < 0.9) th += dN < 0.12 ? 12 * dN / 0.12 : 12 * Math.exp(-(dN - 0.12) / 0.14) * Math.cos((dN - 0.12) * 18);
             th += 1.6 * Math.sin(t * 2.1);
@@ -842,7 +876,7 @@
             frostEl.style.webkitMaskImage = frostEl.style.maskImage = `radial-gradient(circle at 0% 105%, #000 ${(fr2 - 12).toFixed(1)}%, rgba(0,0,0,0) ${fr2.toFixed(1)}%)`;
             for (const { p, delay, dur } of dends) p.setAttribute("stroke-dashoffset", (1 - clamp01((t - FROST - delay) / dur)).toFixed(3));
             // the copy counter
-            const k = clamp01((t - PRINT) / 0.42);
+            const k = clamp01((t - PRINT) / PRINT_D);
             counter.textContent = t < PRINT ? "0 B" : `${Math.round(k * 2048).toLocaleString("en-US")} / 2,048 B`;
           }
           tl.eventCallback("onUpdate", render);

@@ -2,17 +2,28 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 2 — sent (7.96–16.06), v16 (V16.md §2): five shots. S1 the a-to-b compose window bursts out of 01's seal
-         ("you sent it on a"); S2 the window peels away like a calendar leaf, week pages riffle to Tue 09 and a stamp lands
-         ("tuesday,"); S3 the year drum rolls 2019 → 2021, the TUE · 2021 postmark stamps and the date is typed ("twenty
-         twenty-one"); S4 a giant padlock whips in ("a little green padlock"); S5 the padlock's popover says "the hard part
-         was done", the shackle slams on "done" and the archive's marker answers "(it isn't)". Paired switches: zoom in from
-         01, whipL out to 16. Hero words (tuesday, twenty-one, padlock, done) are WOW.explode'd on their word starts.
-         v13 (SYSTEM.md V7): black ground, flat glowing hero; the padlock *says* the line, its fine print reads "*in transit." -->
+    <!-- Frame 2 — sent (7.96–16.06, verse 1), v18 (V18.md "02-sent"): the film's first cream-paper frame, then the one
+         green moment of the film.
+         A (7.96–12.357) cream: the sent mail, printed. Its RFC 5322 header (Date: Tue, 9 Mar 2021 14:02:17 +0000; the
+         Message-ID carries that instant's epoch, 1615298537) and an encrypted body; "you sent it on a" types onto the page,
+         "tuesday," lands as the hero on its word and the marker circles "Tue," in the header: (patch tuesday) — 9 Mar 2021
+         was Microsoft's March Patch Tuesday, the 2nd Tuesday of the month. On the 10.255 snare the camera dives into the
+         header's year: "20" | "21" full-frame as two odometer reels, the second rolling 19 → 20 → 21 onto "twenty-one";
+         the footer plants SENT 2021 · RECORDED 2021 · READ — (22 answers it).
+         B (12.357–16.06) dark: the browser's real 16-px padlock in the address bar, lit green; the camera pushes in until
+         it fills the frame on "padlock" (13.22). The browser's own popover — "Connection is secure*", Chrome's wording — says
+         "said the hard part was done"; the shackle shuts on "done" (15.10), the frame's one weighted accent; the marker
+         answers "(it isn't)" and the footnote reads "*in transit.". Green is the film's single second colour (V18 rule 1).
+         Verse rules: soft entrances, no shakes or flashes. Switches: pushIn from 01, a hard cut A → B on the line start,
+         glideL out to 16 along the wire.
+         v20 (V20.md #6): no hold after the push. From "padlock" the lock breathes (a slow bar-long swell of scale and
+         glow) and its shackle clicks on the hats (13.246, 13.483, 14.176): it rattles down and springs back up, testing
+         the lock, until it really shuts on "done". -->
   </head>
   <body>
     <template>
       <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-700.woff2") format("woff2"); font-weight: 700; }
         @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
         @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
         @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
@@ -20,436 +31,171 @@
         @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
         #root {
           position: absolute; inset: 0; overflow: hidden; container-type: size;
-          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
-          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          --ink: #0A0A0A; --ink-text: #1A1A18; --fire: #E85D26; --cream: #F0ECE5; --label: #57524A;
+          --cream-muted: #888880; --green: #3DDC7A;
           background: var(--ink); color: var(--cream);
         }
-        .f02-fgtop { transform-origin: 5.5% 16%; }  /* type planes zoom around the lyric's corner, never off the pad */
-        .f02-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
-          font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); white-space: nowrap; }
-        .f02-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
-          vertical-align: middle; margin-right: 16px; }
-        .f02-chip { position: absolute; right: 5.5cqw; top: 3.6cqw; display: flex; align-items: baseline; gap: 16px;
-          font-family: "IBM Plex Mono"; text-transform: uppercase; white-space: nowrap;
-          background: rgba(17, 17, 17, 0.86); padding: 4px 0 6px 14px; }
-        .f02-chip span { font-weight: 500; font-size: 16px; letter-spacing: 0.14em; color: var(--cream-muted); }
-        .f02-chip b { display: inline-block; font-weight: 600; font-size: 36px; letter-spacing: 0.08em; color: var(--fire); }
-        .f02-line { position: absolute; left: 5.5cqw; top: 9cqw; width: 46cqw; font-family: "Barlow"; color: var(--cream);
-          display: flex; flex-direction: column; align-items: flex-start; gap: 0.6cqw; }
-        .f02-row { position: relative; display: flex; flex-wrap: wrap; column-gap: 0.26em; font-weight: 800; font-size: 4.4cqw;
-          line-height: 1.04; letter-spacing: -0.02em; }
-        .f02-row.f02-big { font-weight: 900; font-size: 11.5cqw; line-height: 0.86; letter-spacing: -0.04em;
-          color: var(--fire); margin: 0.3cqw 0 0.5cqw -0.4cqw; }
+        .f02-shot { position: absolute; inset: 0; }
+        .f02-abs { position: absolute; left: 0; top: 0; }
         .f02-w { display: inline-block; position: relative; }
-        .f02-card { position: absolute; left: 0; top: 0; width: 576px; height: 360px; transform-origin: 0 0; }
-        .f02-paper { position: absolute; inset: 0; background-color: var(--cream); background-size: 288px 180px;
-          box-shadow: inset 0 2px 0 rgba(240,236,229,.9), inset 0 -3px 0 rgba(110,100,90,.35), 0 40px 80px rgba(0,0,0,.5),
-            0 6px 14px rgba(0,0,0,.35), 18px 16px 65px rgba(232,93,38,.12); }
-        .f02-flap { position: absolute; inset: 0; width: 100%; height: 100%; }
-        .f02-rake { position: absolute; inset: 0; pointer-events: none;
-          background: linear-gradient(118deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 36%, rgba(17,17,17,0) 58%, rgba(17,17,17,0.13)); }
-        .f02-hex { position: absolute; left: 44px; top: 40px; width: 360px; font-family: "IBM Plex Mono"; font-weight: 500;
-          font-size: 20px; letter-spacing: 0.08em; color: #5F5B54; white-space: pre; }
-        .f02-hr { position: relative; height: 31px; line-height: 31px; }
-        .f02-bar { position: absolute; left: 0; top: 11px; height: 10px; background: rgba(17, 17, 17, 0.16); }
-        .f02-sealpos { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
-        .f02-seal { position: absolute; left: -72px; top: -72px; width: 144px; height: 144px; overflow: visible; }
-        .f02-wallhex { position: absolute; left: -120px; top: -40px; width: 2600px; opacity: 0.06; font-family: "IBM Plex Mono";
-          font-weight: 500; font-size: 26px; line-height: 64px; letter-spacing: 0.14em; color: var(--cream); white-space: pre; }
-        #f02-far { position: absolute; left: 0; top: 0; width: 2800px; height: 1080px; opacity: 0.6; overflow: visible; }
-        .f02-stamp { position: absolute; display: flex; align-items: center; gap: 14px; color: var(--cream-muted); opacity: 0.14; }
-        .f02-stamp div { border: 4px double currentColor; padding: 8px 16px 9px; font-family: "IBM Plex Mono"; text-transform: uppercase; }
-        .f02-stamp b { display: block; font-weight: 600; font-size: 30px; letter-spacing: 0.14em; line-height: 1.1; }
-        .f02-stamp span { display: block; font-weight: 500; font-size: 13px; letter-spacing: 0.14em; }
-        .f02-stamp svg { width: 150px; height: 56px; }
-        /* the racks are the backdrop now: a dimming veil keeps them behind the compose window */
-        #f02-veil { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(17,17,17,0.7), rgba(17,17,17,0.42) 70%, rgba(17,17,17,0.3)); }
-        #f02-route { position: absolute; left: 0; top: -200px; width: 3700px; height: 1080px; overflow: visible; }
-        #f02-c1pos { position: absolute; left: 0; top: 400px; }
-        .f02-clight { position: absolute; border-radius: 50%;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.26), rgba(232, 93, 38, 0.09) 55%, rgba(232, 93, 38, 0) 100%); }
-        /* the packet: a light running in the fibre under the letter, its trail behind */
-        .f02-trail { position: absolute; height: 4px;
-          background: linear-gradient(90deg, rgba(232,93,38,0), rgba(232,93,38,0.18) 45%, rgba(232,93,38,0.95) 93%, #F0ECE5);
-          box-shadow: 0 0 10px 1px rgba(232, 93, 38, 0.55); }
-        .f02-head { position: absolute; width: 70px; height: 22px; border-radius: 50%;
-          background: radial-gradient(closest-side, rgba(240,236,229,0.95), rgba(232,93,38,0.75) 45%, rgba(232,93,38,0) 100%); }
-        .f02-under { position: absolute; border-radius: 50%;
-          background: radial-gradient(closest-side, rgba(232,93,38,0.5), rgba(232,93,38,0.12) 60%, rgba(232,93,38,0) 100%); }
-        .f02-ui0 { transform-origin: 34% 58%; }
-        #f02-win0 { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
-        #f02-l0 { left: 150px; top: 368px; width: 1060px; }
-        #f02-l0 .f02-row { font-size: 4.4cqw; }
-        #f02-field { position: absolute; left: 136px; top: 516px; width: 1064px; height: 364px; transform-origin: 0% 100%; }
-        .f02-caret { display: inline-block; width: 0.075em; height: 0.86em; margin: 0 0 0.06em 0.04em; background: var(--fire);
-          text-shadow: none; box-shadow: 0 0 18px rgba(232, 93, 38, 0.6); }
-        #f02-ph { position: absolute; left: 62px; top: 128px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 4.4cqw;
-          letter-spacing: -0.01em; color: #888880; white-space: nowrap; }
-        .f02-mark { position: absolute; font-family: "Caveat Brush"; font-size: 64px; line-height: 1; color: var(--fire);
-          white-space: nowrap; transform-origin: 0 100%; clip-path: inset(-20% 100% -30% -5%); }
-        #f02-markpath { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
-        .f02-light { position: absolute; border-radius: 50%; }
-        #f02-light2 { left: 560px; top: 110px; width: 1300px; height: 1000px;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.12), rgba(232, 93, 38, 0.035) 50%, rgba(232, 93, 38, 0) 100%); }
-        /* v13: the padlock's security popover — the padlock says the rest of the line */
-        #f02-pop2 { position: absolute; left: 5.5cqw; top: 200px; width: 760px; padding: 22px 30px 20px; background: #161615;
-          border: 1.5px solid #3a3a37; box-shadow: 0 30px 70px rgba(0,0,0,0.7), inset 0 1.5px 0 rgba(240,236,229,0.14);
-          transform-origin: 100% 18%; opacity: 0; }
-        #f02-pop2::after { content: ""; position: absolute; right: -22px; top: 42px; border: 12px solid transparent;
-          border-left: 22px solid #161615; border-right: 0; filter: drop-shadow(1.5px 0 0 #3a3a37); }
-        .f02-ph2 { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 16px; letter-spacing: 0.12em; color: var(--cream-muted);
-          display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-        .f02-ph2 svg { width: 16px; height: 18px; }
-        #f02-l1b { position: relative; left: 0; top: 0; width: auto; }
-        #f02-l1b .f02-row { font-size: 4.2cqw; }
-        #f02-l1b .f02-row.f02-big { font-size: 10.5cqw; margin: 0.4cqw 0 0 -0.3cqw; }
-        .f02-fine { margin-top: 14px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 15px; letter-spacing: 0.1em;
-          color: var(--cream-muted); clip-path: inset(-20% 100% -20% 0); }
-        #f02-log, #f02-win, #f02-out { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
-        #f02-c2pos { position: absolute; left: 1290px; top: 356px; }
-        .f02-pk { position: absolute; left: 0; top: 966px; width: 300px; height: 4px;
-          background: linear-gradient(90deg, rgba(232,93,38,0), rgba(232,93,38,0.9) 92%, #F0ECE5);
-          box-shadow: 0 0 10px 1px rgba(232, 93, 38, 0.5); }
-        #f02-lockpos { position: absolute; left: 880px; top: 330px; width: 345px; height: 460px; transform-origin: 50% 50%; }
-        #f02-lockjolt { position: absolute; inset: 0; transform-origin: 50% 82%; }
-        #f02-lock { position: absolute; inset: 0; width: 345px; height: 460px; overflow: visible; }
-        #f02-khole { filter: drop-shadow(0 0 6px rgba(232, 93, 38, 0.95)) drop-shadow(0 0 18px rgba(232, 93, 38, 0.55)); }
 
-        /* ---- v16: five shots ---- */
-        #f02-world { position: absolute; inset: 0; }
-        .f02-shot { position: absolute; inset: 0; opacity: 0; }
-        #f02-s1 { opacity: 1; transform-origin: 50% 0%; }
-        #f02-s2 { transform-origin: 1198px 460px; }
-        #f02-s3 { transform-origin: 1530px 335px; }
-        #f02-top, #f02-fx { position: absolute; inset: 0; pointer-events: none; }
-        #f02-burst { position: absolute; left: 1059px; top: 70px; width: 900px; height: 900px; border-radius: 50%; opacity: 0;
-          background: radial-gradient(closest-side, rgba(255,226,200,0.95), rgba(232,93,38,0.7) 40%, rgba(232,93,38,0) 100%); }
-        #f02-winw { position: absolute; inset: 0; transform-origin: 34% 58%; }
-        .f02-vticker { position: absolute; top: 0; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 26px; line-height: 64px;
-          letter-spacing: 0.14em; color: var(--cream); opacity: 0.07; white-space: pre; }
-        .f02-glow { position: absolute; border-radius: 50%;
-          background: radial-gradient(closest-side, rgba(232,93,38,0.2), rgba(232,93,38,0.06) 55%, rgba(232,93,38,0) 100%); }
-        #f02-l3 { top: 540px; width: 56cqw; }
-        #f02-l3 .f02-row.f02-big { font-size: 10.5cqw; margin: 0 0 0 -0.4cqw; }
-        #f02-l2 { top: 270px; width: 62cqw; gap: 1.4cqw; }
-        #f02-l2 .f02-row, #f02-l2 .f02-row.f02-big { font-size: 9.5cqw; font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; margin: 0; }
-        #f02-ph { color: #B8B4AC; }
+        /* ---- shot A: the printed mail (cream paper, warm falloff, no grey vignette) ---- */
+        .f02-paper { position: absolute; inset: 0; background-color: #F0ECE5; background-blend-mode: multiply; }
+        #f02-page { position: absolute; inset: 0; transform-origin: 652px 344px; }
+        .f02-mono { position: absolute; font-family: "IBM Plex Mono"; font-weight: 500; white-space: nowrap; }
+        #f02-lh { left: 140px; top: 58px; font-size: 18px; letter-spacing: 0.16em; color: #9A3510; text-transform: uppercase; }
+        #f02-lh::before { content: ""; display: inline-block; width: 36px; height: 2px; background: #9A3510; vertical-align: middle; margin-right: 16px; }
+        #f02-pr { right: 140px; top: 58px; font-size: 18px; letter-spacing: 0.14em; color: var(--label); text-transform: uppercase; }
+        .f02-rule { position: absolute; left: 140px; right: 140px; height: 1.5px; background: rgba(26, 26, 24, 0.16); }
+        .f02-h { left: 140px; font-size: 40px; line-height: 48px; color: var(--ink-text); }
+        .f02-h b { display: inline-block; width: 200px; font-weight: 500; color: var(--label); }
+        #f02-mid { left: 140px; top: 386px; font-size: 18px; letter-spacing: 0.06em; color: var(--label); }
+        .f02-lead { position: absolute; font-family: "Barlow"; font-weight: 800; letter-spacing: -0.025em; white-space: nowrap; }
+        #f02-l0a { left: 132px; top: 456px; font-size: 112px; line-height: 1; color: var(--ink-text); }
+        #f02-l0a .f02-w { margin-right: 0.24em; }
+        #f02-tues { position: absolute; left: 112px; top: 560px; font-family: "Barlow"; font-weight: 900; font-size: 300px; line-height: 0.92;
+          letter-spacing: -0.045em; color: var(--fire); white-space: nowrap; transform-origin: 10% 80%; }
+        #f02-body { left: 140px; top: 902px; font-size: 25px; line-height: 36px; letter-spacing: 0.08em; color: #7A7366; }
+        #f02-bodyl { left: 140px; top: 872px; font-size: 15px; letter-spacing: 0.16em; color: var(--label); text-transform: uppercase; }
+        #f02-pm { position: absolute; left: 1470px; top: 150px; width: 240px; height: 240px; overflow: visible; mix-blend-mode: multiply; transform: rotate(9deg); }
+        .f02-mark { position: absolute; font-family: "Caveat Brush"; font-size: 60px; line-height: 1; color: var(--fire); white-space: nowrap; }
+        #f02-note { left: 470px; top: 380px; transform: rotate(-3deg); transform-origin: 0 100%; }
+        #f02-markA { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
 
-        /* ---- shot 2: the calendar, its pages riffled ---- */
-        #f02-cal { position: absolute; left: 1010px; top: 150px; width: 780px; height: 720px; }
-        .f02-pg { position: absolute; inset: 0; background: linear-gradient(180deg, #262624, #1a1a18); border: 1.5px solid #3a3a37;
-          box-shadow: inset 0 1.5px 0 rgba(240,236,229,0.22), 0 40px 80px rgba(0,0,0,0.6), 0 8px 18px rgba(0,0,0,0.4);
-          font-family: "IBM Plex Mono"; text-transform: uppercase; backface-visibility: hidden; transform-origin: 50% 0%; }
-        .f02-pgm { position: absolute; left: 32px; top: 26px; font-weight: 600; font-size: 46px; letter-spacing: 0.12em; color: var(--cream); white-space: nowrap; }
-        .f02-pga { position: absolute; right: 32px; top: 40px; font-weight: 500; font-size: 15px; letter-spacing: 0.2em; color: #888880; }
-        .f02-pgw, .f02-pgd { position: absolute; width: 104px; text-align: center; }
-        .f02-pgw { top: 118px; font-weight: 500; font-size: 18px; letter-spacing: 0.14em; color: #888880; }
-        .f02-pgd { height: 100px; line-height: 100px; font-weight: 500; font-size: 34px; color: #B8B4AC; border-top: 1px solid #2c2c29; }
-        #f02-tucol { position: absolute; left: 136px; top: 110px; width: 104px; height: 550px; opacity: 0; transform-origin: 50% 0%;
-          background: linear-gradient(180deg, rgba(232,93,38,0.34), rgba(232,93,38,0.1)); border-top: 3px solid var(--fire); }
-        #f02-ring { position: absolute; left: 0; top: 0; width: 780px; height: 720px; overflow: visible; pointer-events: none;
-          -webkit-mask-size: 300px 300px; mask-size: 300px 300px; }
-        #f02-tstamp { position: absolute; left: 350px; top: 480px; width: 380px; height: 150px; opacity: 0; display: flex; flex-direction: column;
-          align-items: center; justify-content: center; color: var(--fire); border: 6px double var(--fire); font-family: "IBM Plex Mono"; text-transform: uppercase;
-          background: rgba(10,10,10,0.55);
-          -webkit-mask-size: 300px 300px; mask-size: 300px 300px; }
-        #f02-tstamp b { font-family: "Barlow"; font-weight: 900; font-size: 74px; line-height: 0.9; letter-spacing: 0.02em; }
-        #f02-tstamp span { font-weight: 600; font-size: 20px; letter-spacing: 0.2em; }
+        /* the year: two odometer reels, full frame */
+        #f02-reels { position: absolute; inset: 0; opacity: 0; transform-origin: 960px 480px; }
+        #f02-yk { left: 290px; top: 128px; font-size: 20px; letter-spacing: 0.18em; color: var(--label); text-transform: uppercase; }
+        #f02-yk::before { content: ""; display: inline-block; width: 36px; height: 2px; background: var(--fire); vertical-align: middle; margin-right: 16px; }
+        .f02-win { position: absolute; top: 180px; width: 640px; height: 560px; overflow: hidden; border-radius: 14px;
+          background: linear-gradient(180deg, #121211, #1d1c1a 50%, #121211);
+          box-shadow: inset 0 0 0 3px #2a2925, inset 0 10px 24px rgba(0, 0, 0, 0.8), 0 26px 50px rgba(60, 40, 20, 0.28), 0 3px 0 rgba(255, 255, 255, 0.7); }
+        .f02-win::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+          background: linear-gradient(180deg, rgba(0,0,0,0.78), rgba(0,0,0,0) 26%, rgba(240,236,229,0.05) 50%, rgba(0,0,0,0) 74%, rgba(0,0,0,0.78)); }
+        .f02-strip { position: absolute; left: 0; top: 0; width: 100%; }
+        .f02-strip b { display: block; height: 560px; line-height: 560px; text-align: center; font-family: "Barlow"; font-weight: 900;
+          font-size: 470px; letter-spacing: -0.03em; color: var(--cream); }
+        #f02-w2 .f02-strip b { color: #FFE3D4; }
+        .f02-cap { position: absolute; top: 770px; font-family: "Barlow"; font-weight: 800; font-size: 124px; line-height: 1; letter-spacing: -0.025em;
+          color: var(--ink-text); white-space: nowrap; }
+        #f02-c2 { color: var(--fire); }
+        #f02-yf { left: 290px; top: 958px; font-size: 24px; letter-spacing: 0.14em; color: var(--ink-text); text-transform: uppercase; }
+        #f02-yf i { font-style: normal; color: var(--label); }
 
-        /* ---- shot 3: the year drum, the postmark, the typed date ---- */
-        #f02-drum { position: absolute; left: 1230px; top: 170px; width: 600px; height: 330px; overflow: hidden;
-          background: linear-gradient(180deg, #2a2a27, #161615 50%, #222220); border: 2px solid #3a3a37;
-          box-shadow: inset 0 2px 0 rgba(240,236,229,0.2), 0 40px 80px rgba(0,0,0,0.6); }
-        #f02-drum::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-          background: linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0) 28%, rgba(0,0,0,0) 72%, rgba(0,0,0,0.7)); }
-        .f02-reel { position: absolute; top: 40px; width: 132px; height: 250px; overflow: hidden; background: #0b0b0a; border: 1.5px solid #3a3a37; }
-        .f02-strip { position: absolute; left: 0; top: 0; width: 100%; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 220px;
-          line-height: 250px; text-align: center; color: var(--fire); text-shadow: 3px 3px #7a2c0e, 6px 6px #451a09; }
-        #f02-pfield { position: absolute; left: 1230px; top: 548px; width: 600px; height: 76px; background: #111111; border: 2px solid var(--fire); }
-        #f02-plab { position: absolute; left: 14px; top: 6px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; letter-spacing: 0.2em; color: #888880; white-space: nowrap; }
-        #f02-pval { position: absolute; left: 14px; top: 28px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 29px; letter-spacing: -0.01em; color: var(--cream); white-space: pre; }
-        #f02-pval i { display: inline-block; width: 0.075em; height: 0.86em; margin-left: 0.06em; vertical-align: -0.04em; background: var(--fire); box-shadow: 0 0 14px rgba(232,93,38,0.7); }
-        #f02-sbtn { position: absolute; left: 1230px; top: 778px; width: 160px; height: 54px; background: #2a2a27; border: 1.5px solid #505048;
-          font-family: "IBM Plex Mono"; font-weight: 600; font-size: 20px; letter-spacing: 0.2em; color: #888880; display: flex; align-items: center; justify-content: center; }
-        #f02-pmw { position: absolute; left: 1450px; top: 650px; width: 300px; height: 300px; }
-        #f02-pm { position: absolute; inset: 0; -webkit-mask-size: 300px 300px; mask-size: 300px 300px; filter: drop-shadow(0 0 14px rgba(232,93,38,0.5)); }
-        #f02-pm svg { width: 300px; height: 300px; overflow: visible; }
-
+        /* ---- shot B: the little green padlock ---- */
+        #f02-sB { opacity: 0; }
+        #f02-gl { position: absolute; left: -140px; top: -170px; width: 1400px; height: 1200px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(61, 220, 122, 0.16), rgba(61, 220, 122, 0.05) 50%, rgba(61, 220, 122, 0) 100%); }
+        #f02-chrome { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+        #f02-lockpos { position: absolute; left: -260px; top: -330px; width: 520px; height: 660px; transform-origin: 50% 50%; }
+        #f02-lock { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
+          filter: drop-shadow(0 0 10px rgba(61, 220, 122, 0.55)) drop-shadow(0 0 40px rgba(61, 220, 122, 0.25)); }
+        #f02-l1 { position: absolute; left: 118px; top: 764px; font-family: "Barlow"; color: var(--cream); white-space: nowrap; }
+        #f02-l1 .f02-r1 { font-weight: 800; font-size: 96px; line-height: 1; letter-spacing: -0.025em; }
+        #f02-l1 .f02-r1 .f02-w { margin-right: 0.22em; }
+        #f02-l1 .f02-r2 { font-weight: 900; font-size: 196px; line-height: 0.9; letter-spacing: -0.04em; margin-left: -6px; }
+        #f02-green { color: var(--green); text-shadow: 0 0 22px rgba(61, 220, 122, 0.5); }
+        #f02-pop { position: absolute; left: 1000px; top: 150px; width: 820px; padding: 30px 40px 34px; box-sizing: border-box; background: #151514;
+          border: 1.5px solid #3a3a37; border-radius: 10px; box-shadow: 0 34px 80px rgba(0, 0, 0, 0.75), inset 0 1.5px 0 rgba(240, 236, 229, 0.12);
+          transform-origin: 0% 40%; opacity: 0; }
+        #f02-pop::before { content: ""; position: absolute; left: -24px; top: 230px; border: 16px solid transparent; border-left: 0;
+          border-right: 24px solid #151514; filter: drop-shadow(-1.5px 0 0 #3a3a37); }
+        #f02-ph { display: flex; align-items: center; gap: 16px; font-family: "Barlow"; font-weight: 700; font-size: 42px; color: var(--cream); }
+        #f02-ph svg { width: 26px; height: 32px; }
+        #f02-ph i { font-style: normal; color: var(--green); opacity: 0; }
+        #f02-pfine { margin: 10px 0 0; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 17px; line-height: 26px; letter-spacing: 0.02em; color: var(--cream-muted); }
+        #f02-psep { height: 1.5px; margin: 24px 0 18px; background: #2c2c29; }
+        #f02-pl { font-family: "Barlow"; color: var(--cream); }
+        #f02-pl .f02-r1 { font-weight: 800; font-size: 92px; line-height: 1.02; letter-spacing: -0.025em; white-space: nowrap; }
+        #f02-pl .f02-r1 .f02-w { margin-right: 0.22em; }
+        #f02-done { display: inline-block; font-weight: 900; font-size: 236px; line-height: 0.86; letter-spacing: -0.045em; color: var(--fire);
+          margin: 6px 0 0 -6px; transform-origin: 20% 80%; }
+        #f02-foot { left: 1004px; top: 896px; font-size: 19px; letter-spacing: 0.1em; color: var(--cream-muted); }
+        #f02-markB { left: 1430px; top: 64px; transform: rotate(-4deg); }
+        #f02-markBp { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
+        #f02-fxB { position: absolute; left: 0; top: 0; width: 0; height: 0; overflow: visible; pointer-events: none; }
       </style>
 
-      <div data-hf-id="hf-72w1" id="root" data-composition-id="02-sent" data-width="1920" data-height="1080" data-duration="8.1">
-        <div id="f02-world">
-          <!-- S3 (10.66-12.357): the year drum rolls to 2021, the postmark stamps, the date is typed -->
-          <div id="f02-s3" class="f02-shot">
-            <div class="hr-layer" data-depth="0.25" data-layout-ignore>
-              <div class="f02-glow" style="left: 1010px; top: 40px; width: 1000px; height: 700px"></div>
-              <div class="f02-vticker" id="f02-years" style="left: 640px"></div>
-            </div>
-            <div class="hr-layer" data-depth="0.8">
-              <div id="f02-drum" data-layout-ignore></div>
-              <div id="f02-pfield" data-layout-allow-overlap><div id="f02-plab">→ PARSED</div><div id="f02-pval"></div></div>
-              <div id="f02-sbtn">SEND</div>
-              <div id="f02-pmw" data-layout-ignore><div id="f02-pm">
-                <svg viewBox="-150 -150 300 300" aria-hidden="true">
-                  <defs><path id="f02-pmarc" d="M-103 0 A103 103 0 1 1 103 0 A103 103 0 1 1 -103 0" /></defs>
-                  <g id="f02-pmring">
-                    <circle r="142" fill="none" stroke="#E85D26" stroke-width="5" /><circle r="130" fill="none" stroke="#E85D26" stroke-width="1.6" />
-                    <text font-family="IBM Plex Mono" font-weight="600" font-size="19" letter-spacing="4.2" fill="#E85D26"><textPath href="#f02-pmarc">A-TO-B MAIL · SENT · A-TO-B MAIL · SENT ·</textPath></text>
-                  </g>
-                  <text x="0" y="-40" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="20" letter-spacing="3" fill="#E85D26">TUE · 09 MAR</text>
-                  <text x="0" y="28" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="74" letter-spacing="-1" fill="#E85D26">2021</text>
-                  <text x="0" y="64" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="17" letter-spacing="3" fill="#E85D26">14:02 GMT</text>
-                </svg></div></div>
-            </div>
-            <div class="hr-layer" data-depth="0.85"><div class="f02-kicker">SENT ON</div><div class="f02-line" id="f02-l2"></div></div>
-          </div>
-          <!-- S2 (9.74-10.66): the calendar page, week pages riffling to Tue 09 -->
-          <div id="f02-s2" class="f02-shot">
-            <div class="hr-layer" data-depth="0.25" data-layout-ignore>
-              <div class="f02-glow" style="left: 760px; top: 20px; width: 1200px; height: 800px"></div>
-              <div class="f02-vticker" id="f02-dates" style="left: 60px"></div>
-            </div>
-            <div class="hr-layer" data-depth="0.8"><div id="f02-cal" data-layout-allow-overlap></div></div>
-            <div class="hr-layer" data-depth="0.2"><div class="f02-kicker">CALENDAR</div></div>
-          </div>
-          <!-- S1 (7.96-9.74): the compose window bursts out of the seal -->
-          <div id="f02-s1" class="f02-shot">
-        <div data-hf-id="hf-10lu" class="hr-layer" data-depth="0.3" data-dof="5" data-layout-ignore>
-          <div data-hf-id="hf-pajg" class="f02-wallhex" id="f02-wall1"></div>
-          <svg data-hf-id="hf-3pdl" id="f02-far" viewBox="0 0 2800 1080" aria-hidden="true"></svg>
-          <div data-hf-id="hf-ms1m" id="f02-pmA"></div>
-        </div>
-        <div data-hf-id="hf-iype" class="hr-layer" data-depth="0.5" data-dof="3" data-layout-ignore>
-          <svg data-hf-id="hf-raj1" id="f02-route" viewBox="0 0 3700 1080" aria-hidden="true">
-            <defs data-hf-id="hf-mh0t">
-              <linearGradient data-hf-id="hf-hhve" id="f02-rface" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-dgut" offset="0" stop-color="#2a2a27"/><stop data-hf-id="hf-cv9t" offset="1" stop-color="#161615"/></linearGradient>
-              <linearGradient data-hf-id="hf-xa60" id="f02-rside" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-vszf" offset="0" stop-color="#151514"/><stop data-hf-id="hf-hp7l" offset="1" stop-color="#0c0c0b"/></linearGradient>
-              <linearGradient data-hf-id="hf-ulhx" id="f02-unit" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-vum5" offset="0" stop-color="#30302c"/><stop data-hf-id="hf-yyg1" offset="0.5" stop-color="#242422"/><stop data-hf-id="hf-8gqt" offset="1" stop-color="#1b1b19"/></linearGradient>
-              <linearGradient data-hf-id="hf-mxc3" id="f02-rrake" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-ohy8" offset="0" stop-color="#ffffff" stop-opacity="0.09"/><stop data-hf-id="hf-mcsa" offset="0.38" stop-color="#ffffff" stop-opacity="0"/><stop data-hf-id="hf-ev4v" offset="0.6" stop-color="#111111" stop-opacity="0"/><stop data-hf-id="hf-6xv8" offset="1" stop-color="#000000" stop-opacity="0.28"/></linearGradient>
-              <radialGradient data-hf-id="hf-mwew" id="f02-cshad" cx="0.5" cy="0.5" r="0.5"><stop data-hf-id="hf-9s9h" offset="0" stop-color="#000" stop-opacity="0.75"/><stop data-hf-id="hf-slqe" offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
-              <linearGradient data-hf-id="hf-ioko" id="f02-cable" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-ygkn" offset="0" stop-color="#5a5a54"/><stop data-hf-id="hf-dzqm" offset="0.35" stop-color="#2e2e2b"/><stop data-hf-id="hf-xh8t" offset="1" stop-color="#121211"/></linearGradient>
-              <pattern data-hf-id="hf-9deq" id="f02-brush" patternUnits="userSpaceOnUse" width="256" height="64"><image data-hf-id="hf-0twp" id="f02-brushimg" width="256" height="64" /></pattern>
-            </defs>
-            <g data-hf-id="hf-lb7u" id="f02-racks"></g>
-          </svg>
-          <div data-hf-id="hf-s1h8" id="f02-veil"></div>
-          <div data-hf-id="hf-rmxm" id="f02-c1pos">
-            <div data-hf-id="hf-zdgt" class="f02-clight" style="left: -260px; top: -30px; width: 940px; height: 520px"></div>
-            <div data-hf-id="hf-7qde" class="f02-trail" style="left: -1100px; top: 303px; width: 1500px"></div>
-            <div data-hf-id="hf-dut6" class="f02-under" style="left: 40px; top: 250px; width: 420px; height: 110px"></div>
-            <div data-hf-id="hf-q2bi" class="f02-head" style="left: 362px; top: 294px"></div>
-          </div>
-        </div>
-        <div data-hf-id="hf-klkg" class="hr-layer f02-ui0" data-depth="0.72">
-          <div id="f02-winw">
-          <svg data-hf-id="hf-38m7" id="f02-win0" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore>
-            <defs data-hf-id="hf-vl9d">
-              <linearGradient data-hf-id="hf-0a9f" id="f02-w0g" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-i3x1" offset="0" stop-color="#22221f"/><stop data-hf-id="hf-e5a6" offset="1" stop-color="#171716"/></linearGradient>
-              <linearGradient data-hf-id="hf-1bl0" id="f02-w0rake" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-3bjw" offset="0" stop-color="#ffffff" stop-opacity="0.05"/><stop data-hf-id="hf-2rtj" offset="0.4" stop-color="#ffffff" stop-opacity="0"/><stop data-hf-id="hf-x69h" offset="1" stop-color="#000000" stop-opacity="0.18"/></linearGradient>
-              <filter data-hf-id="hf-odh4" id="f02-w0soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur data-hf-id="hf-npne" stdDeviation="26" /></filter>
-            </defs>
-            <rect data-hf-id="hf-4hnr" x="126" y="170" width="1154" height="860" fill="#000" opacity="0.62" filter="url(#f02-w0soft)" />
-            <rect data-hf-id="hf-9r82" x="96" y="118" width="1154" height="882" fill="url(#f02-w0g)" stroke="#3a3a37" stroke-width="2" />
-            <!-- title bar and tabs (the same client 15 reopens years later) -->
-            <rect data-hf-id="hf-xta9" x="97" y="119" width="1152" height="46" fill="#262624" />
-            <path data-hf-id="hf-zc3b" d="M97 120 H1249" stroke="rgba(240,236,229,0.32)" stroke-width="1.5" />
-            <circle data-hf-id="hf-g9ue" cx="122" cy="142" r="6.5" fill="#E85D26" /><circle data-hf-id="hf-cr9a" cx="144" cy="142" r="6.5" fill="#505048" /><circle data-hf-id="hf-1tuu" cx="166" cy="142" r="6.5" fill="#505048" />
-            <path data-hf-id="hf-5khe" d="M196 165 L206 127 H506 L516 165 Z" fill="#1f1f1d" />
-            <path data-hf-id="hf-1hpp" d="M206 127.8 H506" stroke="rgba(240,236,229,0.22)" stroke-width="1.2" />
-            <text data-hf-id="hf-vbkv" x="226" y="152" font-family="IBM Plex Mono" font-weight="500" font-size="14" letter-spacing="1.2" fill="#888880">a-to-b mail · compose</text>
-            <path data-hf-id="hf-txpv" d="M484 141 l8 8 m0 -8 l-8 8" stroke="#505048" stroke-width="1.6" />
-            <text data-hf-id="hf-4vcb" x="536" y="152" font-family="IBM Plex Mono" font-weight="500" font-size="14" letter-spacing="1.2" fill="#505048">sent (2,047)</text>
-            <!-- toolbar and the address bar -->
-            <rect data-hf-id="hf-hk1b" x="97" y="165" width="1152" height="62" fill="#1f1f1d" />
-            <path data-hf-id="hf-9bwv" d="M97 227 H1249" stroke="#2c2c29" stroke-width="1.5" />
-            <path data-hf-id="hf-owix" d="M128 188 l-8 8 8 8 M150 188 l8 8 -8 8" fill="none" stroke="#888880" stroke-width="2.2" />
-            <rect data-hf-id="hf-zle5" x="182" y="177" width="1046" height="38" fill="#111111" stroke="#3a3a37" stroke-width="1.5" />
-            <path data-hf-id="hf-qq2o" d="M183 179 H1227" stroke="rgba(0,0,0,0.6)" stroke-width="2" />
-            <g data-hf-id="hf-fm6p" transform="translate(206 196)">
-              <path data-hf-id="hf-bqba" d="M-6 -1 V-6 a6 6 0 0 1 12 0 V-1" fill="none" stroke="#888880" stroke-width="2.6" />
-              <rect data-hf-id="hf-calv" x="-9" y="-1" width="18" height="13" fill="none" stroke="#888880" stroke-width="2" />
-            </g>
-            <text data-hf-id="hf-11fs" x="228" y="202" font-family="IBM Plex Mono" font-weight="500" font-size="17" letter-spacing="0.4"><tspan data-hf-id="hf-v6cc" fill="#888880">https://</tspan><tspan data-hf-id="hf-e03j" fill="#F0ECE5">mail.a-to-b.net</tspan><tspan data-hf-id="hf-c5ey" fill="#888880">/compose/0001</tspan></text>
-            <rect data-hf-id="hf-2pn4" x="1130" y="184" width="88" height="24" fill="none" stroke="#505048" stroke-width="1.5" />
-            <text data-hf-id="hf-ffyg" x="1174" y="201" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="12" letter-spacing="1.6" fill="#888880">TLS 1.3</text>
-            <!-- header fields -->
-            <g data-hf-id="hf-2dgd" font-family="IBM Plex Mono" font-weight="500" font-size="17" letter-spacing="2">
-              <text data-hf-id="hf-990x" x="136" y="260" fill="#888880">FROM</text><text data-hf-id="hf-l5lb" x="300" y="260" fill="#F0ECE5">a.</text>
-              <text data-hf-id="hf-s211" x="136" y="302" fill="#888880">TO</text><text data-hf-id="hf-1ok5" x="300" y="302" fill="#F0ECE5">b.</text>
-              <text data-hf-id="hf-m04a" x="136" y="344" fill="#888880">SUBJECT</text><text data-hf-id="hf-oeax" x="300" y="344" fill="#F0ECE5">my love,</text>
-              <text data-hf-id="hf-kxn9" x="1218" y="260" text-anchor="end" fill="#505048">ATTACH · OBJ 0001 · 2,048 B</text>
-              <text data-hf-id="hf-8dby" x="1218" y="344" text-anchor="end" fill="#505048">ENCRYPT · ON</text>
-            </g>
-            <path data-hf-id="hf-f3p2" d="M120 272 H1226 M120 314 H1226 M120 356 H1226" stroke="#2c2c29" stroke-width="1.2" />
-            <!-- the date field -->
-            <text data-hf-id="hf-8eoz" x="136" y="504" font-family="IBM Plex Mono" font-weight="600" font-size="16" letter-spacing="3" fill="#E85D26">DATE · WHEN DID YOU SEND IT</text>
-            <rect data-hf-id="hf-gi05" id="f02-fbox" x="136" y="516" width="1064" height="364" fill="#111111" stroke="#E85D26" stroke-width="2" />
-            <path data-hf-id="hf-ek99" d="M138 519 H1198" stroke="rgba(0,0,0,0.7)" stroke-width="3" />
-            <path data-hf-id="hf-yeyp" d="M166 760 H1170" stroke="#2c2c29" stroke-width="1.2" stroke-dasharray="4 6" />
-            <!-- send row and status bar -->
-            <rect data-hf-id="hf-yru8" id="f02-send0" x="1080" y="900" width="140" height="42" fill="#2a2a27" stroke="#505048" stroke-width="1.5" />
-            <text data-hf-id="hf-0ju6" x="1150" y="927" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="16" letter-spacing="3" fill="#888880">SEND</text>
-            <rect data-hf-id="hf-82xq" x="97" y="960" width="1152" height="39" fill="#1a1a18" />
-            <path data-hf-id="hf-g01v" d="M97 960 H1249" stroke="#2c2c29" stroke-width="1.5" />
-            <circle data-hf-id="hf-ny4q" id="f02-st0dot" cx="122" cy="980" r="4" fill="#505048" />
-            <text data-hf-id="hf-tuvs" id="f02-st0" x="136" y="985" font-family="IBM Plex Mono" font-weight="500" font-size="12" letter-spacing="2" fill="#888880">DRAFT · NOT SENT · TLS 1.3 · X25519</text>
-            <rect data-hf-id="hf-ajl2" x="96" y="118" width="1154" height="882" fill="url(#f02-w0rake)" />
-          </svg>
-          <div data-hf-id="hf-pjhk" class="f02-line" id="f02-l0"></div>
-            <div id="f02-field" data-layout-allow-overlap><div id="f02-ph">e.g. next friday</div></div>
-          </div>
-          </div>
-        <div data-hf-id="hf-m9xk" class="hr-layer" data-depth="0.2">
-          <div data-hf-id="hf-2e1g" class="f02-kicker">DRAFT</div>
-        </div>
-          </div>
-          <!-- S4 + S5: the browser, the giant padlock, the popover -->
-          <div id="f02-sB" class="f02-shot">
-        <div data-hf-id="hf-y5dt" class="hr-layer" data-depth="0.3" data-dof="5" data-layout-ignore>
-          <div data-hf-id="hf-klke" class="f02-light" id="f02-light2"></div>
-        </div>
-        <div data-hf-id="hf-lkhw" class="hr-layer" data-depth="0.6" data-layout-ignore>
-          <svg data-hf-id="hf-st90" id="f02-out" viewBox="0 0 1920 1080" aria-hidden="true">
-            <path data-hf-id="hf-jth0" d="M1480 826 V912 Q1480 968 1536 968 H1990" fill="none" stroke="#0d0d0c" stroke-width="12" />
-            <path data-hf-id="hf-8bmx" d="M1480 826 V912 Q1480 968 1536 968 H1990" fill="none" stroke="#2e2e2b" stroke-width="7" />
-            <path data-hf-id="hf-uuck" d="M-80 968 H1990" fill="none" stroke="#0d0d0c" stroke-width="12" />
-            <path data-hf-id="hf-8kih" d="M-80 968 H1990" fill="none" stroke="#2e2e2b" stroke-width="7" />
-            <path data-hf-id="hf-ety7" d="M-80 966 H1990" fill="none" stroke="rgba(240,236,229,0.22)" stroke-width="1.2" />
-            <path data-hf-id="hf-c8xf" id="f02-outcore" d="M-80 968.5 H1990 M1480 826 V912 Q1480 968.5 1536 968.5" fill="none" stroke="#E85D26" stroke-width="1.4" opacity="0.35" />
-            <g data-hf-id="hf-z3dv" id="f02-outclips"></g>
-          </svg>
-          <div data-hf-id="hf-2ovi" id="f02-pks"></div>
-          <svg data-hf-id="hf-af62" id="f02-win" viewBox="0 0 1920 1080" aria-hidden="true">
-            <defs data-hf-id="hf-ws6g">
-              <linearGradient data-hf-id="hf-f2py" id="f02-wing" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-idmx" offset="0" stop-color="#22221f"/><stop data-hf-id="hf-2peq" offset="1" stop-color="#171716"/></linearGradient>
-              <linearGradient data-hf-id="hf-hol2" id="f02-wrake" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-bzfr" offset="0" stop-color="#ffffff" stop-opacity="0.06"/><stop data-hf-id="hf-ayc7" offset="0.4" stop-color="#ffffff" stop-opacity="0"/><stop data-hf-id="hf-a8gc" offset="1" stop-color="#000000" stop-opacity="0.2"/></linearGradient>
-              <filter data-hf-id="hf-xr5w" id="f02-wsoft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur data-hf-id="hf-8w1q" stdDeviation="22" /></filter>
-            </defs>
-            <!-- 15-secure's geometry, so the address bar and its padlock sit where the bookend finds them -->
-            <rect data-hf-id="hf-z2dh" x="986" y="214" width="880" height="640" fill="#000" opacity="0.6" filter="url(#f02-wsoft)" />
-            <rect data-hf-id="hf-6fm7" x="960" y="166" width="880" height="660" fill="url(#f02-wing)" stroke="#3a3a37" stroke-width="2" />
-            <!-- title bar and tabs -->
-            <rect data-hf-id="hf-r5a2" x="961" y="167" width="878" height="46" fill="#262624" />
-            <path data-hf-id="hf-721a" d="M961 168 H1839" stroke="rgba(240,236,229,0.32)" stroke-width="1.5" />
-            <circle data-hf-id="hf-zpvn" cx="986" cy="190" r="6.5" fill="#E85D26" /><circle data-hf-id="hf-u6ur" cx="1008" cy="190" r="6.5" fill="#505048" /><circle data-hf-id="hf-usby" cx="1030" cy="190" r="6.5" fill="#505048" />
-            <path data-hf-id="hf-sfxc" d="M1060 213 L1070 175 H1370 L1380 213 Z" fill="#1f1f1d" />
-            <path data-hf-id="hf-ko52" d="M1070 175.8 H1370" stroke="rgba(240,236,229,0.22)" stroke-width="1.2" />
-            <text data-hf-id="hf-07eh" x="1090" y="200" font-family="IBM Plex Mono" font-weight="500" font-size="14" letter-spacing="1.2" fill="#888880">a-to-b mail · compose</text>
-            <path data-hf-id="hf-uupt" d="M1348 189 l8 8 m0 -8 l-8 8" stroke="#505048" stroke-width="1.6" />
-            <text data-hf-id="hf-pec6" x="1400" y="200" font-family="IBM Plex Mono" font-weight="500" font-size="14" letter-spacing="1.2" fill="#505048">sent (2,047)</text>
-            <!-- toolbar: nav and the address bar -->
-            <rect data-hf-id="hf-rddb" x="961" y="213" width="878" height="62" fill="#1f1f1d" />
-            <path data-hf-id="hf-3azx" d="M961 275 H1839" stroke="#2c2c29" stroke-width="1.5" />
-            <path data-hf-id="hf-bw66" d="M992 236 l-8 8 8 8 M1014 236 l8 8 -8 8" fill="none" stroke="#888880" stroke-width="2.2" />
-            <rect data-hf-id="hf-vhoe" x="1046" y="225" width="772" height="38" fill="#111111" stroke="#3a3a37" stroke-width="1.5" />
-            <path data-hf-id="hf-8zjh" d="M1047 227 H1817" stroke="rgba(0,0,0,0.6)" stroke-width="2" />
-            <g data-hf-id="hf-iabx" transform="translate(1070 244)"><g data-hf-id="hf-6o6l" id="f02-icon">
-              <path data-hf-id="hf-kz39" id="f02-icons" d="M-6 -1 V-6 a6 6 0 0 1 12 0 V-1" fill="none" stroke="#888880" stroke-width="2.6" />
-              <rect data-hf-id="hf-zup9" id="f02-iconb" x="-9" y="-1" width="18" height="13" fill="none" stroke="#888880" stroke-width="2" />
-            </g></g>
-            <text data-hf-id="hf-n44b" x="1092" y="250" font-family="IBM Plex Mono" font-weight="500" font-size="17" letter-spacing="0.4"><tspan data-hf-id="hf-6vo4" fill="#888880">https://</tspan><tspan data-hf-id="hf-67zz" fill="#F0ECE5">mail.a-to-b.net</tspan><tspan data-hf-id="hf-xjce" fill="#888880">/compose/0001</tspan></text>
-            <rect data-hf-id="hf-tqht" x="1720" y="232" width="88" height="24" fill="none" stroke="#E85D26" stroke-width="1.5" />
-            <text data-hf-id="hf-0hoj" x="1764" y="249" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="12" letter-spacing="1.6" fill="#E85D26">TLS 1.3</text>
-            <!-- content: header fields, send row, status bar -->
-            <text data-hf-id="hf-2ohu" x="1004" y="312" font-family="IBM Plex Mono" font-weight="500" font-size="13" letter-spacing="2" fill="#888880">FROM A. · TO B. · TUE 09 MAR 2021 · 14:02</text>
-            <path data-hf-id="hf-kbpy" d="M990 326 H1830" stroke="#2c2c29" stroke-width="1.2" />
-            <text data-hf-id="hf-z5lo" x="1300" y="747" font-family="IBM Plex Mono" font-weight="500" font-size="13" letter-spacing="2" fill="#888880">OBJ 0001 · 2,048 B</text>
-            <rect data-hf-id="hf-bb6i" id="f02-send" x="1660" y="718" width="160" height="44" fill="#E85D26" />
-            <path data-hf-id="hf-wbqc" d="M1660 719 H1820" stroke="rgba(255,220,200,0.6)" stroke-width="1.5" />
-            <path data-hf-id="hf-ig00" d="M1660 761 H1820" stroke="rgba(17,17,17,0.45)" stroke-width="2" />
-            <text data-hf-id="hf-nrgo" id="f02-sendt" x="1740" y="747" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="18" letter-spacing="3" fill="#111111">SEND</text>
-            <rect data-hf-id="hf-4saw" x="961" y="786" width="878" height="39" fill="#1a1a18" />
-            <path data-hf-id="hf-1g2y" d="M961 786 H1839" stroke="#2c2c29" stroke-width="1.5" />
-            <circle data-hf-id="hf-mfzq" id="f02-stdot" cx="1216" cy="806" r="4" fill="#505048" />
-            <text data-hf-id="hf-tglg" id="f02-stt" x="1230" y="811" font-family="IBM Plex Mono" font-weight="500" font-size="12" letter-spacing="2" fill="#888880">HANDSHAKE · TLS 1.3 · X25519 · AES-256-GCM</text>
-            <rect data-hf-id="hf-6ix0" x="960" y="166" width="880" height="660" fill="url(#f02-wrake)" />
-          </svg>
-          <div data-hf-id="hf-ar57" id="f02-c2pos"></div>
-          <!-- the archive's marker answers the padlock (15 repeats it: "(it never was)") -->
-          <svg data-hf-id="hf-uee2" id="f02-markpath" viewBox="0 0 1920 1080" aria-hidden="true">
-            <path data-hf-id="hf-l2k4" id="f02-arrow" pathLength="100" d="M1312 128 C 1220 108, 1110 124, 1076 214 M1076 214 l -6 -21 M1076 214 l 18 -13" fill="none" stroke="#E85D26" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="100" stroke-dashoffset="100" />
-          </svg>
-          <div data-hf-id="hf-qubb" class="f02-mark" id="f02-mark1" style="left: 1326px; top: 84px; transform: rotate(-3deg);">(it isn't)</div>
-        </div>
-        <div data-hf-id="hf-dsvb" class="hr-layer" data-depth="0.72" data-layout-ignore>
-          <div data-hf-id="hf-rial" id="f02-lockpos" data-layout-allow-overlap><div data-hf-id="hf-as98" id="f02-lockjolt">
-            <svg data-hf-id="hf-uzk0" id="f02-lock" viewBox="-20 -60 300 400">
-              <defs data-hf-id="hf-wdvf">
-                <linearGradient data-hf-id="hf-0her" id="f02-shg" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-xf93" offset="0" stop-color="#3a3a36"/><stop data-hf-id="hf-n053" offset="0.17" stop-color="#d2cdc3"/><stop data-hf-id="hf-ze0w" offset="0.33" stop-color="#8f8b84"/><stop data-hf-id="hf-60yh" offset="0.66" stop-color="#5a5a54"/><stop data-hf-id="hf-5nn6" offset="0.9" stop-color="#3a3a36"/><stop data-hf-id="hf-tkr9" offset="1" stop-color="#6a6a64"/></linearGradient>
-                <linearGradient data-hf-id="hf-qjz2" id="f02-stf" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-ord8" offset="0" stop-color="#3a3a35"/><stop data-hf-id="hf-jiiw" offset="0.5" stop-color="#2a2a27"/><stop data-hf-id="hf-3epl" offset="1" stop-color="#1c1c1a"/></linearGradient>
-                <linearGradient data-hf-id="hf-yadw" id="f02-fif" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-tkt1" offset="0" stop-color="#F07C4A"/><stop data-hf-id="hf-vjep" offset="0.45" stop-color="#E85D26"/><stop data-hf-id="hf-480m" offset="1" stop-color="#C94A1C"/></linearGradient>
-                <linearGradient data-hf-id="hf-isbr" id="f02-frake" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-tfk8" offset="0" stop-color="#ffffff" stop-opacity="0.16"/><stop data-hf-id="hf-ak16" offset="0.4" stop-color="#ffffff" stop-opacity="0"/><stop data-hf-id="hf-icnt" offset="1" stop-color="#000000" stop-opacity="0.14"/></linearGradient>
-                <radialGradient data-hf-id="hf-mvea" id="f02-cylf" cx="0.38" cy="0.32" r="0.75"><stop data-hf-id="hf-9ji3" offset="0" stop-color="#F68C5C"/><stop data-hf-id="hf-pyqm" offset="0.5" stop-color="#D4521E"/><stop data-hf-id="hf-830a" offset="1" stop-color="#A63B14"/></radialGradient>
-                <radialGradient data-hf-id="hf-2cut" id="f02-cyls" cx="0.38" cy="0.32" r="0.75"><stop data-hf-id="hf-lmzu" offset="0" stop-color="#6a6a64"/><stop data-hf-id="hf-u7l2" offset="0.5" stop-color="#3a3a36"/><stop data-hf-id="hf-p1gi" offset="1" stop-color="#1d1d1b"/></radialGradient>
-                <radialGradient data-hf-id="hf-ml33" id="f02-lshad" cx="0.5" cy="0.5" r="0.5"><stop data-hf-id="hf-yylc" offset="0" stop-color="#000" stop-opacity="0.7"/><stop data-hf-id="hf-aux6" offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
-                <clipPath data-hf-id="hf-9xda" id="f02-bodyclip"><rect data-hf-id="hf-nve9" x="10" y="150" width="240" height="176" /></clipPath>
-              </defs>
-              <ellipse data-hf-id="hf-z3re" cx="134" cy="334" rx="140" ry="16" fill="url(#f02-lshad)" />
-              <g data-hf-id="hf-zo77" id="f02-shackle"><g data-hf-id="hf-vqrj" id="f02-shsway">
-                <path data-hf-id="hf-cypi" d="M62 172 V98 a68 68 0 0 1 136 0 V172" fill="none" stroke="#121211" stroke-width="31" />
-                <path data-hf-id="hf-f3r1" d="M62 172 V98 a68 68 0 0 1 136 0 V172" fill="none" stroke="url(#f02-shg)" stroke-width="24" />
-                <path data-hf-id="hf-hy2z" d="M54.5 168 V98 a75.5 75.5 0 0 1 75.5 -75.5" fill="none" stroke="rgba(240,236,229,0.78)" stroke-width="2.4" />
-                <path data-hf-id="hf-0rlk" d="M67 168 V98 a63 63 0 0 1 20 -46" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.6" />
-                <path data-hf-id="hf-dcjk" d="M193 168 V100" fill="none" stroke="rgba(0,0,0,0.45)" stroke-width="3" />
-                <path data-hf-id="hf-c5vn" d="M209.5 168 V98 a79.5 79.5 0 0 0 -30 -62" fill="none" stroke="rgba(240,236,229,0.32)" stroke-width="1.6" />
-                <rect data-hf-id="hf-nrfn" x="186" y="128" width="24" height="7" fill="#151514" />
-                <path data-hf-id="hf-1b9z" d="M186 135.5 H210" stroke="rgba(240,236,229,0.3)" stroke-width="1" />
-              </g></g>
-              <!-- the body: steel until it locks, then fire; bevel planes, rivets, engraving -->
-              <g data-hf-id="hf-chwt" id="f02-bsteel">
-                <polygon data-hf-id="hf-fnnr" points="10,150 250,150 238,162 22,162" fill="#5a5a54" />
-                <polygon data-hf-id="hf-9y38" points="10,150 22,162 22,314 10,326" fill="#46463f" />
-                <polygon data-hf-id="hf-mhfm" points="250,150 250,326 238,314 238,162" fill="#1a1a18" />
-                <polygon data-hf-id="hf-lu0c" points="10,326 22,314 238,314 250,326" fill="#121211" />
-                <rect data-hf-id="hf-z8lp" x="22" y="162" width="216" height="152" fill="url(#f02-stf)" />
-                <path data-hf-id="hf-k1sp" d="M10 150.8 H250" stroke="rgba(240,236,229,0.55)" stroke-width="1.5" />
-                <text data-hf-id="hf-usvo" x="130" y="293.2" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="17" letter-spacing="3" fill="rgba(240,236,229,0.16)">TLS 1.3</text>
-                <text data-hf-id="hf-dptw" x="130" y="292" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="17" letter-spacing="3" fill="rgba(0,0,0,0.55)">TLS 1.3</text>
-              </g>
-              <g data-hf-id="hf-w21o" id="f02-bfire" class="hr-glowbox" opacity="0">
-                <polygon data-hf-id="hf-clxk" points="10,150 250,150 238,162 22,162" fill="#F7A27C" />
-                <polygon data-hf-id="hf-e42u" points="10,150 22,162 22,314 10,326" fill="#F08A5E" />
-                <polygon data-hf-id="hf-h6ad" points="250,150 250,326 238,314 238,162" fill="#B9431A" />
-                <polygon data-hf-id="hf-f847" points="10,326 22,314 238,314 250,326" fill="#8E3010" />
-                <rect data-hf-id="hf-6z9j" x="22" y="162" width="216" height="152" fill="url(#f02-fif)" />
-                <path data-hf-id="hf-95co" d="M10 150.8 H250" stroke="rgba(255,236,224,0.8)" stroke-width="1.5" />
-                <text data-hf-id="hf-m7j4" x="130" y="293.3" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="17" letter-spacing="3" fill="rgba(255,214,188,0.55)">TLS 1.3</text>
-                <text data-hf-id="hf-nuxo" x="130" y="292" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="17" letter-spacing="3" fill="rgba(17,17,17,0.62)">TLS 1.3</text>
-              </g>
-              <g data-hf-id="hf-39yb" id="f02-bdetail">
-                <path data-hf-id="hf-2vhm" d="M22 162.6 H238" stroke="rgba(0,0,0,0.35)" stroke-width="1.2" />
-                <text data-hf-id="hf-02ce" x="130" y="306" text-anchor="middle" font-family="IBM Plex Mono" font-weight="500" font-size="8.5" letter-spacing="1.6" fill="rgba(17,17,17,0.5)">AES-256 · OBJ 0001</text>
-                <g data-hf-id="hf-7agl" id="f02-rivets"></g>
-                <rect data-hf-id="hf-dko8" x="10" y="150" width="240" height="176" fill="url(#f02-frake)" />
-              </g>
-              <!-- the keyway cylinder -->
-              <circle data-hf-id="hf-owvx" cx="130" cy="214" r="31" fill="rgba(0,0,0,0.32)" />
-              <circle data-hf-id="hf-lg98" id="f02-cyl" cx="130" cy="214" r="27" fill="url(#f02-cyls)" />
-              <path data-hf-id="hf-3apr" d="M108 200 A26 26 0 0 1 128 188" fill="none" stroke="rgba(255,236,224,0.55)" stroke-width="2" stroke-linecap="round" />
-              <circle data-hf-id="hf-rgh8" cx="130" cy="214" r="20.5" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1.5" />
-              <g data-hf-id="hf-1cye" id="f02-khole" fill="#E85D26"><circle data-hf-id="hf-4qet" cx="130" cy="207" r="8" /><path data-hf-id="hf-zvtj" d="M124.5 211 L121 236 H139 L135.5 211 Z" /></g>
-              <path data-hf-id="hf-v7z3" d="M121.5 237.2 H138.5" stroke="rgba(255,220,200,0.5)" stroke-width="1.2" />
-              <g data-hf-id="hf-kbmo" clip-path="url(#f02-bodyclip)"><polygon data-hf-id="hf-ngu6" id="f02-spec" points="0,140 46,140 6,340 -40,340" fill="rgba(240,236,229,0.6)" opacity="0" /></g>
-              <g data-hf-id="hf-k5vw" id="f02-sparks"></g>
+      <div id="root" data-composition-id="02-sent" data-width="1920" data-height="1080" data-duration="8.1">
+        <!-- ===== shot A: the printed mail, then the year ===== -->
+        <div class="f02-shot" id="f02-sA">
+          <div id="f02-page">
+            <div class="f02-paper" data-layout-ignore></div>
+            <div class="f02-mono" id="f02-lh">a-to-b mail · sent · 1 of 1</div>
+            <div class="f02-mono" id="f02-pr">printed 09.03.2021 14:03 · page 1 / 1</div>
+            <div class="f02-rule" style="top: 104px" data-layout-ignore></div>
+            <div class="f02-mono f02-h" style="top: 128px"><b>From:</b>a. &lt;a@a-to-b.net&gt;</div>
+            <div class="f02-mono f02-h" style="top: 192px"><b>To:</b>b. &lt;b@a-to-b.net&gt;</div>
+            <div class="f02-mono f02-h" style="top: 256px"><b>Subject:</b>my love,</div>
+            <div class="f02-mono f02-h" style="top: 320px"><b>Date:</b>Tue, 9 Mar 2021 14:02:17 +0000</div>
+            <div class="f02-mono" id="f02-mid">Message-ID: &lt;0001.1615298537@a-to-b.net&gt; · TLS 1.3</div>
+            <svg id="f02-pm" viewBox="-120 -120 240 240" aria-hidden="true" data-layout-ignore></svg>
+            <div class="f02-rule" style="top: 436px" data-layout-ignore></div>
+            <div class="f02-lead" id="f02-l0a"></div>
+            <div id="f02-tues" data-layout-allow-overlap>tuesday,</div>
+            <div class="f02-mono" id="f02-bodyl">body · 2,048 B · encrypted</div>
+            <div class="f02-mono" id="f02-body"></div>
+            <svg id="f02-markA" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore>
+              <path id="f02-circ" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#E85D26" stroke-width="5" stroke-linecap="round"
+                d="M392 316 C 452 314, 462 360, 410 372 C 362 382, 322 368, 324 344 C 326 320, 366 312, 404 318" />
+              <path id="f02-arA" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#E85D26" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"
+                d="M462 412 C 440 404, 426 394, 414 380 M414 380 l 3 17 M414 380 l 16 5" />
             </svg>
-          </div></div>
-        </div>
-        <div data-hf-id="hf-y7ad" class="hr-layer f02-fgtop" data-depth="0.85">
-          <div data-hf-id="hf-cc0m" class="f02-kicker">IN TRANSIT · TLS 1.3</div>
-          <div data-hf-id="hf-aw8o" class="f02-line" id="f02-l1" style="width: 42cqw"></div>
-          <div data-hf-id="hf-c7rh" id="f02-pop2" data-layout-allow-overlap>
-            <div data-hf-id="hf-txhh" class="f02-ph2"><svg data-hf-id="hf-h4i6" viewBox="-10 -10 20 22" aria-hidden="true"><path data-hf-id="hf-2key" d="M-6 -1 V-6 a6 6 0 0 1 12 0 V-1" fill="none" stroke="#E85D26" stroke-width="2.6"/><rect data-hf-id="hf-vzf6" x="-9" y="-1" width="18" height="13" fill="#E85D26"/></svg>your connection is private.*</div>
-            <div data-hf-id="hf-x1yh" class="f02-line" id="f02-l1b"></div>
-            <div data-hf-id="hf-wta6" class="f02-fine" id="f02-fine">* in transit.</div>
+            <div class="f02-mark" id="f02-note" data-layout-ignore>(patch tuesday)</div>
+          </div>
+          <div id="f02-reels">
+            <div class="f02-paper" data-layout-ignore></div>
+            <div class="f02-mono" id="f02-yk">date · the year it was sent</div>
+            <div class="f02-win" id="f02-w1" style="left: 290px" data-layout-ignore><div class="f02-strip"><b>20</b></div></div>
+            <div class="f02-win" id="f02-w2" style="left: 990px" data-layout-ignore><div class="f02-strip" id="f02-roll"><b>17</b><b>18</b><b>19</b><b>20</b><b>21</b></div></div>
+            <div class="f02-cap" id="f02-c1" style="left: 290px">twenty</div>
+            <div class="f02-cap" id="f02-c2" style="left: 990px">twenty-one</div>
+            <div class="f02-mono" id="f02-yf">sent 2021 · recorded 2021 · <i>read —</i></div>
           </div>
         </div>
-        <div data-hf-id="hf-gd5o" class="hr-layer" data-depth="0.2" style="transform-origin: 94.5% 82%">
-          <div data-hf-id="hf-ic7l" class="f02-chip" style="top: 940px; right: auto; left: 5.5cqw"><span data-hf-id="hf-eela" id="f02-tlsk">CLIENT HELLO</span><b data-hf-id="hf-yst6" id="f02-tls">1/4</b></div>
-        </div>
+
+        <!-- ===== shot B: the little green padlock ===== -->
+        <div class="f02-shot" id="f02-sB">
+          <div id="f02-gl" data-layout-ignore></div>
+          <svg id="f02-chrome" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore>
+            <rect x="160" y="300" width="1600" height="560" fill="#141413" stroke="#3a3a37" stroke-width="2" />
+            <rect x="161" y="301" width="1598" height="72" fill="#1d1d1b" />
+            <circle cx="200" cy="337" r="9" fill="#E85D26" /><circle cx="230" cy="337" r="9" fill="#505048" /><circle cx="260" cy="337" r="9" fill="#505048" />
+            <path d="M300 373 V318 Q300 310 308 310 H600 Q608 310 608 318 V373" fill="#141413" stroke="#3a3a37" stroke-width="2" />
+            <text x="330" y="350" font-family="IBM Plex Mono" font-weight="500" font-size="22" fill="#888880">a-to-b mail · compose</text>
+            <rect x="161" y="373" width="1598" height="96" fill="#141413" />
+            <path d="M200 421 l-12 0 m12 -12 l-12 12 l12 12" fill="none" stroke="#505048" stroke-width="3" />
+            <rect x="250" y="390" width="1460" height="62" rx="31" fill="#0b0b0b" stroke="#2c2c29" stroke-width="2" />
+            <text x="330" y="432" font-family="IBM Plex Mono" font-weight="500" font-size="30"><tspan fill="#888880">https://</tspan><tspan fill="#F0ECE5">mail.a-to-b.net</tspan><tspan fill="#888880">/compose/0001</tspan></text>
+            <path d="M161 469 H1759" stroke="#2c2c29" stroke-width="2" />
+            <text x="220" y="540" font-family="IBM Plex Mono" font-weight="500" font-size="22" fill="#505048">FROM  a.   TO  b.   SUBJECT  my love,</text>
+            <rect x="220" y="580" width="1100" height="14" fill="#232321" /><rect x="220" y="616" width="980" height="14" fill="#232321" /><rect x="220" y="652" width="1040" height="14" fill="#232321" />
+            <rect x="1560" y="780" width="160" height="50" fill="#E85D26" />
+            <text x="1640" y="813" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="20" letter-spacing="3" fill="#111111">SEND</text>
+          </svg>
+          <div id="f02-lockpos"><svg id="f02-lock" viewBox="-130 -165 260 330" aria-hidden="true">
+            <g id="f02-shackle"><path d="M-62 30 V-58 A62 62 0 0 1 62 -58 V30" fill="none" stroke="#3DDC7A" stroke-width="18" stroke-linecap="round" />
+              <path d="M-62 30 V-58 A62 62 0 0 1 62 -58 V30" fill="none" stroke="#D9FFE6" stroke-width="3" stroke-linecap="round" opacity="0.55" transform="translate(-4 -2)" /></g>
+            <rect x="-104" y="18" width="208" height="150" rx="20" fill="#0E1912" stroke="#3DDC7A" stroke-width="9" />
+            <rect x="-90" y="32" width="180" height="122" rx="12" fill="none" stroke="#3DDC7A" stroke-width="2" opacity="0.4" />
+            <g id="f02-kh"><circle cx="0" cy="78" r="17" fill="#3DDC7A" /><path d="M-7 84 L-11 128 H11 L7 84 Z" fill="#3DDC7A" /></g>
+            <text x="0" y="150" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="11" letter-spacing="3" fill="#3DDC7A" opacity="0.7">TLS 1.3</text>
+          </svg></div>
+          <div id="f02-l1"><div class="f02-r1"></div><div class="f02-r2"></div></div>
+          <div id="f02-pop">
+            <div id="f02-ph"><svg viewBox="-13 -16 26 32" aria-hidden="true"><path d="M-7 -1 V-7 a7 7 0 0 1 14 0 V-1" fill="none" stroke="#3DDC7A" stroke-width="3.2" /><rect x="-10" y="-1" width="20" height="15" rx="2" fill="#3DDC7A" /></svg>
+              <span>Connection is secure*</span><i>✓</i></div>
+            <div id="f02-pfine">Your information (for example, passwords or credit card numbers) is private when it is sent to this site.</div>
+            <div id="f02-psep"></div>
+            <div id="f02-pl"><div class="f02-r1" id="f02-p1"></div><div class="f02-r1" id="f02-p2"></div><span id="f02-done" data-layout-allow-overlap>done</span></div>
           </div>
+          <div class="f02-mono" id="f02-foot">*in transit.</div>
+          <svg id="f02-markBp" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore>
+            <path id="f02-arB" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#E85D26" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
+              d="M1452 120 C 1400 150, 1380 168, 1372 196 M1372 196 l -9 -15 M1372 196 l 16 -7" />
+          </svg>
+          <div class="f02-mark" id="f02-markB" data-layout-ignore>(it isn't)</div>
+          <div id="f02-fxB" data-layout-ignore></div>
         </div>
-        <div id="f02-top"><div class="f02-line" id="f02-l3" data-layout-allow-overlap></div></div>
-        <div id="f02-fx" data-layout-ignore><div id="f02-burst"></div></div>
       </div>
 
       <script src="assets/kit/env.js"></script>
@@ -457,641 +203,163 @@
       <script src="assets/kit/wow-kit.js"></script>
       <script>
         (() => {
-          const T0 = 7.96, DUR = 8.1, END = T0 + DUR; // frame span, track seconds
+          const T0 = 7.96, DUR = 8.1;
           const L = (t) => +(t - T0).toFixed(3);
-          // v16 shots: S1 compose window, S2 calendar, S3 year drum, S4 giant padlock, S5 the padlock's verdict
-          const S2 = 9.74, S3 = 10.66, S4 = 12.357, S5 = 14.16;
-          const TUES = 9.74, TW1 = 11.005, SAVE = 11.644, GREEN = 12.706, PAD = 13.22, HARD = 14.317, DONE = 15.1, NOTE = 15.22;
-          const LINES = {
-            l0: { hero: [], words: [["You", 8.351], ["sent", 8.725], ["it", 9.124], ["on", 9.394], ["a", 9.66]] },
-            l3: { hero: ["tuesday,"], words: [["Tuesday,", 9.74]] },
-            l2: { hero: ["twenty-one"], words: [["twenty", 10.66], ["twenty-one", 11.005]] },
-            l1: { hero: ["padlock"], words: [["A", 12.357], ["little", 12.54], ["green", 12.706], ["padlock", 13.22], ["said", 13.844]] },
-            // the rest of L1 is what the padlock says, inside its security popover
-            l1b: { hero: ["done"], words: [["the", 14.16], ["hard", 14.317], ["part", 14.62], ["was", 14.88], ["done", 15.1]] },
-          };
           const $ = (id) => document.getElementById(id);
           const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
           const NS = "http://www.w3.org/2000/svg";
-          const sv = (tag, parent, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const S = (parent, tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
           const clamp01 = (x) => Math.max(0, Math.min(1, x));
-          const grp = (s) => s.replace(/(.{4})/g, "$1 ").trim();
-          const h01 = (a, b) => HR.rng(a * 7919 + b * 104729 + 13)();
-          const MONO = { "font-family": "IBM Plex Mono", "font-weight": 500 };
+          const sineIO = (u) => 0.5 - 0.5 * Math.cos(Math.PI * clamp01(u));
 
-          const PAPER = (() => {
-            const c = document.createElement("canvas"); c.width = 288; c.height = 180;
-            const x = c.getContext("2d"), r = HR.rng(404);
-            x.fillStyle = "#F0ECE5"; x.fillRect(0, 0, 288, 180);
-            const img = x.getImageData(0, 0, 288, 180);
-            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 14; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
+          // the sung words (lyrics.json), track seconds
+          const W0 = [["you", 8.351], ["sent", 8.725], ["it", 9.124], ["on", 9.394], ["a", 9.66]], TUES = 9.74, TW = 10.66, TW1 = 11.005;
+          const W1 = [["a", 12.357], ["little", 12.54], ["green", 12.706]], PAD = 13.22;
+          const WP1 = [["said", 13.844], ["the", 14.16], ["hard", 14.317]], WP2 = [["part", 14.62], ["was", 14.88]], DONE = 15.1;
+          const SB = L(12.357), DIVE = L(10.255), NOTE_B = L(15.33);
+
+          // ---- static build -------------------------------------------------------------------------------------
+          // paper: seeded fibre over a warm falloff (multiply), the same paper on the page and on the reels
+          const fibre = (() => {
+            const c = document.createElement("canvas"); c.width = 320; c.height = 200;
+            const x = c.getContext("2d"), r = HR.rng(2021);
+            x.fillStyle = "#FFFFFF"; x.fillRect(0, 0, 320, 200);
+            const img = x.getImageData(0, 0, 320, 200);
+            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 16; img.data[i] += v; img.data[i + 1] += v; img.data[i + 2] += v * 0.9; }
             x.putImageData(img, 0, 0);
-            x.strokeStyle = "rgba(110,100,90,0.10)"; x.lineWidth = 0.6;
-            for (let k = 0; k < 70; k++) { const px = r() * 288, py = r() * 180, a = r() * Math.PI, l = 6 + r() * 16;
+            x.strokeStyle = "rgba(110,100,90,0.12)"; x.lineWidth = 0.6;
+            for (let k = 0; k < 80; k++) { const px = r() * 320, py = r() * 200, a = r() * Math.PI, l = 6 + r() * 16;
               x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.4); x.stroke(); }
             return c.toDataURL("image/png");
           })();
-          // brushed metal: faint horizontal streaks for the rack faces
-          (() => {
-            const c = document.createElement("canvas"); c.width = 256; c.height = 64;
-            const x = c.getContext("2d"), r = HR.rng(207);
-            for (let k = 0; k < 220; k++) {
-              x.fillStyle = r() < 0.55 ? `rgba(240,236,229,${(0.02 + r() * 0.06).toFixed(3)})` : `rgba(0,0,0,${(0.05 + r() * 0.1).toFixed(3)})`;
-              x.fillRect(r() * 256, r() * 64, 10 + r() * 90, 0.6 + r() * 0.8);
-            }
-            $("f02-brushimg").setAttribute("href", c.toDataURL("image/png"));
-          })();
-          // ink: pinholes and starved streaks so the postmark reads pressed (18's mask)
-          const INK = (() => {
-            const c = document.createElement("canvas"); c.width = c.height = 300;
-            const x = c.getContext("2d"), r = HR.rng(1802);
-            x.fillStyle = "#000"; x.fillRect(0, 0, 300, 300);
-            x.globalCompositeOperation = "destination-out";
-            for (let k = 0; k < 420; k++) { x.fillStyle = `rgba(0,0,0,${(0.3 + r() * 0.45).toFixed(2)})`;
-              x.beginPath(); x.arc(r() * 300, r() * 300, 0.4 + r() * r() * 1.5, 0, Math.PI * 2); x.fill(); }
-            for (let k = 0; k < 18; k++) { x.fillStyle = `rgba(0,0,0,${(0.05 + r() * 0.12).toFixed(2)})`;
-              x.fillRect(r() * 300, r() * 300, 30 + r() * 110, 1 + r() * 3); }
-            return `url(${c.toDataURL("image/png")})`;
-          })();
-
-          // ---- the letter: 01's flaps, rake, sorting barcode and sculpted seal --------------------------------------
-          let RIM = "";
-          for (let k = 0; k <= 120; k++) {
-            const a = (k / 120) * Math.PI * 2;
-            let rr = 55.5 + 1.8 * Math.sin(7 * a + 0.5) + 1.2 * Math.sin(13 * a + 2) + 0.7 * Math.sin(23 * a);
-            for (const [a0, h] of [[0.6, 7], [2.5, 5], [4.4, 8.5]]) { const da = Math.atan2(Math.sin(a - a0), Math.cos(a - a0)); rr += h * Math.exp(-(da * da) / 0.012); }
-            RIM += (k ? "L" : "M") + (Math.cos(a) * rr).toFixed(2) + " " + (Math.sin(a) * rr).toFixed(2);
-          }
-          RIM += "Z";
-          let BEADS = "";
-          for (let i = 0; i < 30; i++) { const a = (i / 30) * Math.PI * 2; BEADS += `<circle cx="${(Math.cos(a) * 36.5).toFixed(2)}" cy="${(Math.sin(a) * 36.5).toFixed(2)}" r="1.35" fill="rgba(17,17,17,0.26)"/>`; }
-          const SEAL = (id) => `<svg class="f02-seal hr-glowbox" viewBox="-64 -64 128 128"><defs>` +
-            `<radialGradient id="${id}wg" cx="0.38" cy="0.34" r="0.78"><stop offset="0" stop-color="#F68C5C"/><stop offset="0.42" stop-color="#E85D26"/><stop offset="0.82" stop-color="#C94A1C"/><stop offset="1" stop-color="#A63B14"/></radialGradient>` +
-            `<radialGradient id="${id}wr" cx="0.5" cy="0.5" r="0.5"><stop offset="0.82" stop-color="#B9431A"/><stop offset="1" stop-color="#8E3010"/></radialGradient></defs>` +
-            `<path d="${RIM}" fill="url(#${id}wr)"/><circle r="50" fill="url(#${id}wg)"/>` +
-            `<circle r="43.5" fill="none" stroke="rgba(255,206,176,0.38)" stroke-width="1.2" transform="translate(0.8 0.8)"/>` +
-            `<circle r="41" fill="rgba(17,17,17,0.06)" stroke="rgba(17,17,17,0.30)" stroke-width="2.4"/>${BEADS}` +
-            `<text x="1.6" y="15.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(17,17,17,0.36)">a.</text>` +
-            `<text x="-1.1" y="12.4" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="rgba(255,214,188,0.5)">a.</text>` +
-            `<text x="0" y="13.8" text-anchor="middle" font-family="Barlow" font-weight="900" font-size="40" fill="#D4521E">a.</text>` +
-            `<path d="M-38 -24 A44 44 0 0 1 -8 -45" fill="none" stroke="rgba(255,236,224,0.6)" stroke-width="3.5" stroke-linecap="round"/>` +
-            `<path d="M30 34 A44 44 0 0 1 12 44" fill="none" stroke="rgba(255,236,224,0.22)" stroke-width="2" stroke-linecap="round"/></svg>`;
-          const FLAP = (id) => {
-            const r = HR.rng(611); let bars = "";
-            for (let x = 330, i = 0; i < 46; i++, x += 4.9) { const tall = r() < 0.5; bars += `<rect x="${x.toFixed(1)}" y="${tall ? 326 : 334}" width="2.2" height="${tall ? 20 : 12}" fill="rgba(232,93,38,0.78)"/>`; }
-            return `<svg class="f02-flap" viewBox="0 0 576 360" preserveAspectRatio="none"><defs>` +
-              `<linearGradient id="${id}gt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#111" stop-opacity="0.015"/><stop offset="1" stop-color="#111" stop-opacity="0.085"/></linearGradient>` +
-              `<linearGradient id="${id}gb" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#111" stop-opacity="0.07"/><stop offset="1" stop-color="#111" stop-opacity="0"/></linearGradient>` +
-              `<linearGradient id="${id}gl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#111" stop-opacity="0.06"/><stop offset="1" stop-color="#111" stop-opacity="0"/></linearGradient>` +
-              `<linearGradient id="${id}gr" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#111" stop-opacity="0.075"/><stop offset="1" stop-color="#111" stop-opacity="0"/></linearGradient>` +
-              `<filter id="${id}sf" x="-10%" y="-10%" width="120%" height="140%"><feGaussianBlur stdDeviation="3.5"/></filter></defs>` +
-              `<path d="M0 0 L250 190 L0 360 Z" fill="url(#${id}gl)"/><path d="M576 0 L326 190 L576 360 Z" fill="url(#${id}gr)"/>` +
-              `<path d="M0 360 L246 174 Q288 150 330 174 L576 360 Z" fill="url(#${id}gb)"/>` +
-              `<path d="M0 360 L246 174 Q288 150 330 174 L576 360" fill="none" stroke="rgba(17,17,17,0.10)" stroke-width="1.5"/>` +
-              `<path d="M2 360 L248 178 M574 360 L328 178" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1"/>` +
-              `<path d="M0 2 L288 190 L576 2" fill="none" stroke="rgba(17,17,17,0.30)" stroke-width="7" filter="url(#${id}sf)"/>` +
-              `<path d="M0 0 L288 180 L576 0 Z" fill="url(#${id}gt)"/><path d="M0 0 L288 180 L576 0" fill="none" stroke="rgba(17,17,17,0.24)" stroke-width="1.6"/>` +
-              `<path d="M8 0 L288 173 L568 0" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1"/><path d="M0 1.2 H576" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>` +
-              `<text x="26" y="340" font-family="IBM Plex Mono" font-weight="500" font-size="11" letter-spacing="2.2" fill="rgba(17,17,17,0.56)">A. · TUE 09.03.2021 · 14:02</text>${bars}</svg>`;
-          };
-          const BARW = [330, 300, 352, 268, 316, 190, 0];
-          function buildCard(parent, seed, scale, o = {}) {
-            const c = el("div", "f02-card", parent);
-            c.style.transform = `scale(${scale})`;
-            const p = el("div", "f02-paper", c);
-            p.style.backgroundImage = `url(${PAPER})`;
-            p.insertAdjacentHTML("beforeend", FLAP("f02-k" + seed));
-            el("div", "f02-rake", p);
-            const hx = el("div", "f02-hex", p);
-            const rows = BARW.map((w) => {
-              const r = el("div", "f02-hr", hx), t = el("span", "", r);
-              let b = null;
-              if (o.bars) { b = el("i", "f02-bar", r); b.style.width = w + "px"; t.style.opacity = 0; }
-              return { t, b };
-            });
-            const sp = el("div", "f02-sealpos", p); sp.insertAdjacentHTML("beforeend", SEAL("f02-s" + seed));
-            return { c, p, rows, seal: sp.firstElementChild, seed, st: { w: o.bars ? 0 : 1 } };
-          }
-          function cardText(k, t, T, live) {
-            const step = Math.floor(t * 15), hat = HR.hit("hat", T, 0.07), front = k.st.w * 7.5;
-            k.rows.forEach((r, i) => {
-              const plain = r.b && i >= front;
-              if (r.b) { r.b.style.opacity = plain ? 1 : 0; r.t.style.opacity = plain ? 0 : 1; }
-              if (plain) return;
-              const lv = live(i) || (hat > 0.45 && i === step % 7) || (r.b && i > front - 1.5 && k.st.w < 1);
-              r.t.textContent = grp(HR.cipher(16, k.seed * 977 + i * 31 + (lv ? step : 0)));
-            });
-          }
-
-          // ---- g1: the far racks (out of focus), postmarks, the wall ----------------------------------------------
-
-          (() => {
-            const far = $("f02-far"), r = HR.rng(55);
-            for (let i = 0; i < 9; i++) {
-              const x = 40 + i * 310 + r() * 40, top = 440 + r() * 40;
-              sv("rect", far, { x, y: top, width: 210, height: 860 - top, fill: "#1d1d1b" });
-              sv("rect", far, { x: x + 210, y: top - 14, width: 26, height: 874 - top, fill: "#121211" });
-              for (let u = 0; u < 12; u++) {
-                const y = top + 20 + u * 30;
-                sv("rect", far, { x: x + 14, y, width: 182, height: 22, fill: "#252523" });
-                for (let j = 0; j < 7; j++) if (r() < 0.45) sv("circle", far, { cx: x + 28 + j * 24, cy: y + 11, r: 2.6, fill: r() < 0.55 ? "#E85D26" : "#F0ECE5", opacity: 0.5 + r() * 0.5 });
-              }
-            }
-          })();
-          const HOPS = ["IN TRANSIT", "ENCRYPTED", "FORWARDED", "ENCRYPTED", "FORWARDED", "DELIVERED"];
-          const WAVES = '<svg viewBox="0 0 150 56"><path d="M0 8 q9 -7 18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 M0 20 q9 -7 18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 M0 32 q9 -7 18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 M0 44 q9 -7 18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0 t18.75 0" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>';
-          const pr = HR.rng(61);
-          for (let i = 0; i < 8; i++) {
-            const s = el("div", "f02-stamp", $("f02-pmA"));
-            s.innerHTML = `<div><b>${HOPS[i % HOPS.length]}</b><span>09 MAR 2021 · 14:02:${String(10 + i * 4 + ((pr() * 3) | 0)).padStart(2, "0")}</span></div>` + WAVES;
-            Object.assign(s.style, { left: (120 + i * 400 + pr() * 80) + "px", top: ([130, 300, 200, 360][i % 4] + pr() * 40) + "px", transform: `rotate(${-8 + pr() * 14}deg) scale(0.9)` });
-          }
-
-          // ---- g1: the route — relay racks in a row, their cabling, the fibre tray --------------------------------
-          const RX0 = 300, RSP = 600, RW = 260, YT = 430, YB = 880, U = 26, FY = 905, ROUTE_W = 3700;
-          const SUB = ["", "", "", "", "", ""];
-          const racks = $("f02-racks"), lamps = [];
-          const lr = HR.rng(73);
-          const lamp = (g, cx, cy, rack, fire, rr = 1.6) => lamps.push({ e: sv("circle", g, { cx, cy, r: rr, fill: fire ? "#E85D26" : "#F0ECE5" }), rack, x: cx, k: lamps.length + 1, rate: 2 + lr() * 5, fire });
-          // the fibre tray and the main fibre (under the racks' cable drops)
-          const tray = sv("g", racks, {});
-          sv("rect", tray, { x: -200, y: FY - 9, width: ROUTE_W + 400, height: 22, fill: "#141413" });
-          sv("path", tray, { d: `M-200 ${FY - 9} H${ROUTE_W + 200}`, stroke: "rgba(240,236,229,0.16)", "stroke-width": 1.2 });
-          sv("path", tray, { d: `M-200 ${FY} H${ROUTE_W + 200}`, stroke: "#0b0b0a", "stroke-width": 10 });
-          sv("path", tray, { d: `M-200 ${FY} H${ROUTE_W + 200}`, stroke: "url(#f02-cable)", "stroke-width": 7 });
-          sv("path", tray, { d: `M-200 ${FY - 2} H${ROUTE_W + 200}`, stroke: "rgba(240,236,229,0.3)", "stroke-width": 1 });
-          sv("path", tray, { d: `M-200 ${FY + 0.5} H${ROUTE_W + 200}`, stroke: "#E85D26", "stroke-width": 1.2, opacity: 0.4 });
-          for (let x = -160; x < ROUTE_W + 200; x += 120) {
-            sv("rect", tray, { x, y: FY - 7, width: 10, height: 18, fill: "#2a2a27", stroke: "#0b0b0a", "stroke-width": 1 });
-            sv("path", tray, { d: `M${x} ${FY - 6.5} H${x + 10}`, stroke: "rgba(240,236,229,0.25)", "stroke-width": 1 });
-          }
-          // under-floor conduit with its printed run labels
-          sv("rect", tray, { x: -200, y: 980, width: ROUTE_W + 400, height: 26, fill: "#151514" });
-          sv("path", tray, { d: `M-200 980.5 H${ROUTE_W + 200}`, stroke: "rgba(240,236,229,0.14)", "stroke-width": 1 });
-          for (let x = 60, i = 0; x < ROUTE_W; x += 600, i++)
-            sv("text", tray, { ...MONO, x, y: 998, "font-size": 12, "letter-spacing": 2.4, fill: "#5F5B54" }, `SMF-28 · 1310 NM · TRAY 07 · ${HOPS[i % 6]} → ${HOPS[(i + 1) % 6]}`);
-
-          HOPS.forEach((name, i) => {
-            const R = RX0 + i * RSP, g = sv("g", racks, {}), rr = HR.rng(900 + i);
-            const x0 = R + 26, w = RW - 52;
-            // contact shadow, side and top faces
-            sv("ellipse", g, { cx: R + RW / 2 + 20, cy: YB + 12, rx: RW * 0.72, ry: 20, fill: "url(#f02-cshad)" });
-            sv("path", g, { d: `M${R + RW} ${YT} l34 -20 V${YB - 20} l-34 20 Z`, fill: "url(#f02-rside)", stroke: "#222220", "stroke-width": 1 });
-            for (let y = YT + 30; y < YB - 40; y += 16) sv("path", g, { d: `M${R + RW + 8} ${y - 5} l18 -10.6`, stroke: "#050505", "stroke-width": 3 });
-            sv("path", g, { d: `M${R} ${YT} l34 -20 H${R + RW + 34} l-34 20 Z`, fill: "#3c3c38", stroke: "#222220", "stroke-width": 1 });
-            sv("path", g, { d: `M${R + 1} ${YT - 0.6} H${R + RW}`, stroke: "rgba(240,236,229,0.45)", "stroke-width": 1.4 });
-            // the front frame and its rails
-            sv("rect", g, { x: R, y: YT, width: RW, height: YB - YT, fill: "url(#f02-rface)", stroke: "#3a3a37", "stroke-width": 1.5 });
-            sv("path", g, { d: `M${R + 1} ${YT + 2} V${YB - 2}`, stroke: "rgba(240,236,229,0.14)", "stroke-width": 1.5 });
-            for (const rx of [R + 9, R + RW - 21]) {
-              sv("rect", g, { x: rx, y: YT + 8, width: 12, height: YB - YT - 16, fill: "#1b1b19", stroke: "#0d0d0c", "stroke-width": 1 });
-              for (let y = YT + 14; y < YB - 12; y += 13) sv("rect", g, { x: rx + 4, y, width: 4, height: 6, fill: "#0a0a09" });
-            }
-            // the units, top to bottom
-            const SEQ = [["tag", 1], ["switch", 1], ["switch", 1], ["patch", 2], ["router", 3], ["blank", 1], ["switch", 1], ["patch", 2], ["psu", 2], ["blank", 1], ["switch", 1]];
-            const cables = [];
-            let y = YT + 12;
-            for (const [type, n] of SEQ) {
-              const h = U * n - 2;
-              sv("rect", g, { x: x0, y, width: w, height: h, fill: "url(#f02-unit)", stroke: "#0d0d0c", "stroke-width": 1 });
-              sv("path", g, { d: `M${x0 + 1} ${y + 0.8} H${x0 + w - 1}`, stroke: "rgba(240,236,229,0.15)", "stroke-width": 1 });
-              for (const sx of [x0 - 7, x0 + w + 7]) { sv("circle", g, { cx: sx, cy: y + h / 2, r: 2.6, fill: "#55554f" }); sv("path", g, { d: `M${sx - 1.6} ${y + h / 2} h3.2`, stroke: "#151514", "stroke-width": 1 }); }
-              if (type === "switch") {
-                for (let j = 0; j < 15; j++) {
-                  const px = x0 + 12 + j * 12.6;
-                  sv("rect", g, { x: px, y: y + 11, width: 9, height: 8, fill: "#0b0b0a", stroke: "#3a3a37", "stroke-width": 0.7 });
-                  lamp(g, px + 4.5, y + 5.5, i, rr() < 0.5);
-                }
-              } else if (type === "patch") {
-                for (const row of [0, 1]) for (let j = 0; j < 12; j++) {
-                  const px = x0 + 14 + j * 15, py = y + 9 + row * 20;
-                  sv("rect", g, { x: px, y: py, width: 10, height: 9, fill: "#0b0b0a", stroke: "#3a3a37", "stroke-width": 0.7 });
-                  if (rr() < 0.3) { sv("rect", g, { x: px + 1, y: py + 1, width: 8, height: 7, fill: "#888880" }); cables.push([px + 5, py + 8, rr() < 0.45]); }
-                }
-              } else if (type === "router") {
-                sv("rect", g, { x: x0 + 10, y: y + 9, width: 112, height: 34, fill: "#121211", stroke: "#3a3a37", "stroke-width": 1 });
-                sv("text", g, { ...MONO, "font-weight": 600, x: x0 + 18, y: y + 32, "font-size": 15, "letter-spacing": 1.4, fill: "#B8B4AC" }, name);
-                sv("text", g, { ...MONO, x: x0 + 10, y: y + 56, "font-size": 7.5, "letter-spacing": 1.2, fill: "#6E6A62" }, "CORE-R0" + (i + 3) + " · BGP");
-                const br = HR.rng(1200 + i);
-                for (let bx = x0 + 10; bx < x0 + 118;) { const bw = 1 + ((br() * 3) | 0); sv("rect", g, { x: bx, y: y + 61, width: bw, height: 10, fill: "rgba(232,93,38,0.8)" }); bx += bw + 1.5 + ((br() * 3) | 0); }
-                for (let m = 0; m < 4; m++) {
-                  const mx = x0 + 132 + m * 18;
-                  sv("rect", g, { x: mx, y: y + 6, width: 14, height: h - 12, fill: "#1a1a18", stroke: "#2e2e2b", "stroke-width": 1 });
-                  sv("path", g, { d: `M${mx + 1} ${y + 7} H${mx + 13}`, stroke: "rgba(240,236,229,0.14)", "stroke-width": 1 });
-                  lamp(g, mx + 7, y + 13, i, m % 2 === 0, 2);
-                  for (let q = 0; q < 3; q++) sv("rect", g, { x: mx + 3, y: y + 24 + q * 14, width: 8, height: 7, fill: "#0b0b0a" });
-                }
-              } else if (type === "blank") {
-                for (let k = 0; k < 11; k++) sv("rect", g, { x: x0 + 22 + k * 15, y: y + 10, width: 9, height: 5, fill: "#0d0d0c" });
-              } else if (type === "psu") {
-                for (let m = 0; m < 2; m++) {
-                  const mx = x0 + 8 + m * 98;
-                  sv("rect", g, { x: mx, y: y + 5, width: 92, height: h - 10, fill: "#1c1c1a", stroke: "#0d0d0c", "stroke-width": 1 });
-                  for (let q = 0; q < 6; q++) sv("path", g, { d: `M${mx + 8} ${y + 11 + q * 6} H${mx + 62}`, stroke: "#0b0b0a", "stroke-width": 2.4 });
-                  sv("path", g, { d: `M${mx + 72} ${y + 10} V${y + h - 10}`, stroke: "#55554f", "stroke-width": 3 });
-                  lamp(g, mx + 84, y + 12, i, false, 2);
-                }
-              } else if (type === "tag") {
-                sv("rect", g, { x: x0 + 10, y: y + 5, width: 94, height: 14, fill: "#E9E4DB" });
-                sv("text", g, { ...MONO, "font-weight": 600, x: x0 + 15, y: y + 15.5, "font-size": 9, "letter-spacing": 1, fill: "#111111" }, `${name} · U01`);
-                const br = HR.rng(1300 + i);
-                for (let bx = x0 + 112; bx < x0 + w - 8;) { const bw = 1 + ((br() * 3) | 0); sv("rect", g, { x: bx, y: y + 5, width: bw, height: 14, fill: "rgba(232,93,38,0.85)" }); bx += bw + 1.5 + ((br() * 3) | 0); }
-              }
-              y += U * n;
-            }
-            // patch jumpers: arc out of the port, into the right-hand cable manager, down to the tray
-            cables.forEach(([cx, cy, fire], k) => {
-              const ex = R + RW - 14 + (k % 4) * 3;
-              const d = `M${cx} ${cy} C${cx} ${cy + 26}, ${ex} ${cy + 6}, ${ex} ${cy + 40} V${YB - 30} Q${ex} ${FY} ${ex + 40} ${FY}`;
-              sv("path", g, { d, fill: "none", stroke: "#0b0b0a", "stroke-width": 3.6 });
-              sv("path", g, { d, fill: "none", stroke: fire ? "#E85D26" : "#888880", "stroke-width": 2.2, opacity: fire ? 0.9 : 0.75 });
-            });
-            // texture and raking light over the face
-            sv("rect", g, { x: R, y: YT, width: RW, height: YB - YT, fill: "url(#f02-brush)", opacity: 0.8 });
-            sv("rect", g, { x: R, y: YT, width: RW, height: YB - YT, fill: "url(#f02-rrake)" });
-            // plinth
-            sv("rect", g, { x: R - 2, y: YB, width: RW + 4, height: 12, fill: "#0d0d0c" });
-            sv("path", g, { d: `M${R - 2} ${YB + 0.5} H${R + RW + 2}`, stroke: "rgba(240,236,229,0.12)", "stroke-width": 1 });
-            // the hop sign hung above the rack
-            const sy = YT - 96;
-            sv("path", g, { d: `M${R + 50} ${sy + 50} V${YT - 14} M${R + RW - 50} ${sy + 50} V${YT - 14}`, stroke: "#3a3a37", "stroke-width": 2 });
-            sv("rect", g, { x: R + 16, y: sy, width: RW - 32, height: 50, fill: "#171716", stroke: "#3a3a37", "stroke-width": 1.5 });
-            sv("path", g, { d: `M${R + 17} ${sy + 1} H${R + RW - 17}`, stroke: "rgba(240,236,229,0.25)", "stroke-width": 1 });
-            sv("text", g, { ...MONO, "font-weight": 600, x: R + 30, y: sy + 26, "font-size": 21, "letter-spacing": 2, fill: "#E85D26" }, name);
-            sv("text", g, { ...MONO, x: R + 30, y: sy + 41, "font-size": 9, "letter-spacing": 1.6, fill: "#888880" }, SUB[i]);
-            lamp(g, R + RW - 30, sy + 18, i, true, 3.2);
+          document.querySelectorAll(".f02-paper").forEach((p) => {
+            p.style.backgroundImage = `url(${fibre}), radial-gradient(ellipse 75% 80% at 42% 40%, #F7F3EB 0%, #F0EADF 52%, #E3DACA 100%)`;
+            p.style.backgroundSize = "320px 200px, 100% 100%";
           });
-
-          // ---- shot 2: the calendar, March 2021 under five riffling week pages ----------------------------------------
-          const WD = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
-          function pageFace(parent, title, first, nd) {
-            const pg = el("div", "f02-pg", parent), cells = [];
-            el("div", "f02-pgm", pg, title); el("div", "f02-pga", pg, "a-to-b · calendar");
-            WD.forEach((d, c) => { const w = el("div", "f02-pgw", pg, d); w.style.left = (32 + c * 104) + "px"; });
-            for (let k = 0; k < 35; k++) {
-              const day = k - first + 1; if (day < 1 || day > nd) continue;
-              const e = el("div", "f02-pgd", pg, String(day).padStart(2, "0"));
-              Object.assign(e.style, { left: (32 + (k % 7) * 104) + "px", top: (160 + ((k / 7) | 0) * 100) + "px" });
-              cells[day] = e;
-            }
-            return { pg, cells };
-          }
-          const cal = $("f02-cal");
-          const base = pageFace(cal, "March 2021", 0, 31); // March 2021 starts on a Monday: the 9th is the second Tuesday
-          const d09 = base.cells[9];
-          el("div", "", cal).id = "f02-tucol";
-          {
-            const rs = document.createElementNS(NS, "svg"); rs.id = "f02-ring"; rs.setAttribute("viewBox", "0 0 780 720"); cal.appendChild(rs);
-            let d = ""; // a hand-drawn, slightly open loop round the 9th (cell centre 188, 310)
-            for (let k = 0; k <= 64; k++) {
-              const a = -2.2 + (k / 64) * Math.PI * 2.18, rr = 40 + 3 * Math.sin(a * 2 + 0.6) + k * 0.05;
-              d += (k ? "L" : "M") + (188 + Math.cos(a) * rr * 1.2).toFixed(1) + " " + (310 + Math.sin(a) * rr).toFixed(1);
-            }
-            const p = sv("path", rs, { id: "f02-ringp", pathLength: 100, d, fill: "none", stroke: "#E85D26", "stroke-width": 6, "stroke-linecap": "round" });
-            rs.style.webkitMaskImage = INK; rs.style.maskImage = INK;
-          }
-          // the first flip is the top-most page, so the pages are built last-flipped first
-          const PAGES = [];
-          [["Feb 2021", 2, 28], ["Jan 2021", 4, 31], ["Nov 2020", 3, 30], ["Sep 2020", 1, 30], ["Jun 2020", 0, 30]]
-            .reverse().forEach(([t, f, n]) => PAGES.unshift(pageFace(cal, t, f, n).pg));
-          const tstamp = el("div", "", cal); tstamp.id = "f02-tstamp";
-          tstamp.innerHTML = "<b>TUE 09</b><span>MAR 2021 · 14:02</span>";
-          tstamp.style.webkitMaskImage = INK; tstamp.style.maskImage = INK;
-          {
-            let s = ""; const dn = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-            for (let k = 0; k < 90; k++) { const day = 1 + (k % 31); s += `${dn[k % 7]} ${String(day).padStart(2, "0")} ${["JAN", "FEB", "MAR", "APR"][(k / 31) | 0]} 2021\n`; }
-            $("f02-dates").textContent = s;
-            let y = ""; for (let k = 0; k < 80; k++) y += `${2005 + (k % 17)}  ${HR.cipher(6, 700 + k)}\n`;
-            $("f02-years").textContent = y;
-          }
-
-          // ---- shot 3: the year drum (four odometer reels), the typed date, the postmark ---------------------------
-          const reels = [];
-          for (let i = 0; i < 4; i++) {
-            const r = el("div", "f02-reel", $("f02-drum")); r.style.left = (21 + i * 142) + "px";
-            const st = el("div", "f02-strip", r);
-            for (let d = 0; d < 20; d++) el("div", "", st, String(d % 10)).style.height = "250px";
-            reels.push(st);
-          }
-          const PV = "TUE 09 MAR 2021 · 14:02 GMT";
-          const pm = $("f02-pm");
-          pm.style.webkitMaskImage = INK; pm.style.maskImage = INK;
-
-          // ---- shot 4/5: the sent-mail fibre, the browser's outgoing packets, the letter in the compose window -----
+          // the encrypted body
+          $("f02-body").textContent = [0, 1].map((i) => HR.cipher(44, 2100 + i).replace(/(.{4})/g, "$1 ")).join("\n");
+          $("f02-body").style.whiteSpace = "pre";
+          // the server's postmark (01's three postmarks, the receiving side)
           (() => {
-            const cl = $("f02-outclips");
-            for (let x = 40; x < 1920; x += 140) { sv("rect", cl, { x, y: 960, width: 10, height: 17, fill: "#2a2a27", stroke: "#0b0b0a", "stroke-width": 1 }); sv("path", cl, { d: `M${x} 960.5 H${x + 10}`, stroke: "rgba(240,236,229,0.25)", "stroke-width": 1 }); }
-            sv("text", cl, { ...MONO, x: 60, y: 1004, "font-size": 12, "letter-spacing": 2.4, fill: "#5F5B54" }, "OUT · PORT 443 · SMF-28 · → AMS-IX → CDN-EDGE → B.");
+            const g = $("f02-pm");
+            g.innerHTML = '<defs><path id="f02-pmp" d="M-82 0 A82 82 0 1 1 82 0 A82 82 0 1 1 -82 0"/></defs>' +
+              '<g fill="none" stroke="#C8481A" opacity="0.8"><circle r="104" stroke-width="5"/><circle r="62" stroke-width="2.5"/></g>' +
+              '<text font-family="IBM Plex Mono" font-weight="600" font-size="19" letter-spacing="3.4" fill="#C8481A" opacity="0.85"><textPath href="#f02-pmp">A-TO-B MAIL · SENT · A-TO-B MAIL · SENT ·</textPath></text>' +
+              '<text y="-6" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="22" fill="#C8481A" opacity="0.85">09 MAR</text>' +
+              '<text y="22" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="22" fill="#C8481A" opacity="0.85">2021</text>';
           })();
-          const pks = [0, 1, 2].map(() => el("div", "f02-pk", $("f02-pks")));
-          const k2 = buildCard($("f02-c2pos"), 23, 0.86, { bars: true });
-          // lock rivets and sparks
-          [[36, 176], [224, 176], [36, 300], [224, 300]].forEach(([cx, cy]) => {
-            sv("circle", $("f02-rivets"), { cx, cy, r: 5, fill: "rgba(0,0,0,0.35)" });
-            sv("circle", $("f02-rivets"), { cx: cx - 0.6, cy: cy - 0.6, r: 3.8, fill: "rgba(240,236,229,0.22)" });
-            sv("circle", $("f02-rivets"), { cx: cx - 1.3, cy: cy - 1.3, r: 1.3, fill: "rgba(255,255,255,0.55)" });
-          });
-          const spr = HR.rng(808);
-          const sparks = Array.from({ length: 12 }, (_, i) => {
-            const side = i % 2 ? 1 : -1, ox = side < 0 ? 62 : 198;
-            const s = sv("circle", $("f02-sparks"), { cx: ox, cy: 150, r: (1.8 + spr() * 3).toFixed(2), fill: spr() < 0.6 ? "#E85D26" : "#F0ECE5", opacity: 0 });
-            return { s, dx: side * (20 + spr() * 70), dy: -(16 + spr() * 60) };
-          });
 
-          function buildLine(key) {
-            const box = $("f02-" + key), words = [];
-            let row = null;
-            for (const [w, t] of LINES[key].words) {
-              const hero = LINES[key].hero.includes(w.toLowerCase());
-              if (hero || !row || row.classList.contains("f02-big")) row = el("div", "f02-row" + (hero ? " f02-big hr-glow" : ""), box);
-              words.push({ s: el("span", "f02-w", row, w.toLowerCase()), t, hero, row });
-            }
-            return words;
-          }
-          const lines = Object.fromEntries(Object.keys(LINES).map((k) => [k, buildLine(k)]));
+          // lyric words
+          const words = [];
+          const addW = (parent, w, t) => { const s = el("span", "f02-w", parent, w); words.push([s, L(t)]); return s; };
+          W0.forEach(([w, t]) => addW($("f02-l0a"), w, t));
+          const r1 = document.querySelector("#f02-l1 .f02-r1"), r2 = document.querySelector("#f02-l1 .f02-r2");
+          W1.forEach(([w, t]) => { const s = addW(r1, w, t); if (w === "green") s.id = "f02-green"; });
+          const padW = el("span", "f02-w", r2, "padlock");
+          WP1.forEach(([w, t]) => addW($("f02-p1"), w, t));
+          WP2.forEach(([w, t]) => addW($("f02-p2"), w, t));
 
-          // ---- timeline -------------------------------------------------------------------------------------
+          // ---- timeline -----------------------------------------------------------------------------------------
           const tl = gsap.timeline({ paused: true });
-          const stage = HR.stage($("root"), { seed: 4 });
-          const cam = stage.cam;
-          const root = document.getElementById("el-02-sent"), world = $("f02-world"), fx = $("f02-fx");
-          const s1 = $("f02-s1"), s2 = $("f02-s2"), s3 = $("f02-s3"), sB = $("f02-sB");
-          const hide = (e, t = 0) => tl.set(e, { opacity: 0 }, t);
-          const ctr = (e) => { const r = e.getBoundingClientRect(), b = root.getBoundingClientRect(); return { x: r.left + r.width / 2 - b.left, y: r.top + r.height / 2 - b.top }; };
-          const SP0 = { x: 1509, y: 520 };
+          tl.fromTo({ t: 0 }, { t: 0 }, { t: DUR, duration: DUR, ease: "none" }, 0); // the timeline spans the frame
+          const host = document.getElementById("el-02-sent") || $("root");
+          WOW.transition(tl, host, { in: "pushIn", out: "glideL", dur: 0.46, total: DUR });
 
-          // the camera: one fromTo per phrase, each with every channel so cuts never inherit a pose
-          const camSeg = (a, b, from, to, ease) => tl.fromTo(cam, { x: 0, y: 0, z: 1, rot: 0, ...from }, { x: 0, y: 0, z: 1, rot: 0, ...to, duration: Math.max(0.01, L(b) - L(a)), ease, immediateRender: false }, L(a));
-          cam.focus = 0.7;
-          tl.fromTo(cam, { x: -150, y: 24, z: 1.22, rot: -1.4 }, { x: 0, y: 0, z: 1.0, rot: 0, duration: 0.55, ease: "expo.out" }, 0);
-          camSeg(8.51, S2, { z: 1.0, x: 0 }, { z: 1.05, x: 36 }, "sine.inOut");
-          camSeg(S2, S3, { z: 1.12, x: -30, rot: 0.8 }, { z: 1.0, x: 0, rot: 0 }, "expo.out");
-          camSeg(S3, S4, { z: 1.0, x: 22 }, { z: 1.07, x: -14 }, "sine.inOut");
-          camSeg(S4, S5, { z: 1.16, x: 80, rot: -0.8 }, { z: 1.02, x: 0, rot: 0 }, "expo.out");
-          camSeg(S5, DONE, { z: 1.07, x: -20, rot: 0.5 }, { z: 1.03, x: 10, rot: 0 }, "expo.out");
-          camSeg(DONE, END, { z: 1.12, rot: -0.5 }, { z: 1.07, rot: 0 }, "power2.out");
+          // lead words: soft entrances on their own times (verse)
+          words.forEach(([s, t]) => WOW.word(tl, s, t, { kind: "rise", dur: 0.4 }));
 
-          // lyrics: leads enter in varied fast moves ON their word start; heroes are thrown in and explode ON theirs
-          const KIND = { l0: ["left", "drop", "flip", "right", "zoom"], l2: ["flip"], l1: ["pop", "left", "zoom", "", "right"], l1b: ["left", "drop", "flip", "right", ""] };
-          for (const k of Object.keys(lines)) lines[k].forEach(({ s, t, hero }, i) => {
-            if (hero) return;
-            hide(s); WOW.word(tl, s, L(t), { kind: KIND[k][i] });
+          // A — the page creeps in while the line types; "tuesday," is the hero (one soft punch on the page)
+          tl.fromTo("#f02-page", { scale: 1, y: 0 }, { scale: 1.05, y: -14, duration: DIVE, ease: "sine.inOut" }, 0);
+          WOW.word(tl, $("f02-tues"), L(TUES), { kind: "settle", dur: 0.46 });
+          WOW.punch(tl, $("f02-tues"), L(TUES), { s: 1.04, dur: 0.5 });
+          // the marker: "Tue," circled on the downbeat kick, the note written after it
+          const CIRC0 = L(9.814), NOTE0 = L(10.0);
+          tl.fromTo("#f02-circ", { attr: { "stroke-dashoffset": 100 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.26, ease: "power2.inOut", immediateRender: false }, CIRC0);
+          tl.fromTo("#f02-arA", { attr: { "stroke-dashoffset": 100 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.16, ease: "power2.out", immediateRender: false }, CIRC0 + 0.2);
+          tl.set("#f02-note", { clipPath: "inset(-30% 100% -40% -5%)" }, 0);
+          tl.fromTo("#f02-note", { clipPath: "inset(-30% 100% -40% -5%)" }, { clipPath: "inset(-30% 0% -40% -5%)", duration: 0.3, ease: "none", immediateRender: false }, NOTE0);
+          // the dive into the year on the 10.255 snare: the page rushes past the camera, the reels arrive
+          const D1 = L(10.6);
+          tl.fromTo("#f02-page", { scale: 1.05, y: -14, filter: "blur(0px)" }, { scale: 7, y: -14, filter: "blur(10px)", duration: D1 - DIVE, ease: "power3.in", immediateRender: false }, DIVE);
+          tl.fromTo("#f02-page", { opacity: 1 }, { opacity: 0, duration: 0.12, ease: "none", immediateRender: false }, DIVE + 0.16);
+          tl.fromTo("#f02-reels", { opacity: 0, scale: 0.42, filter: "blur(8px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: D1 - DIVE - 0.16, ease: "power2.out", immediateRender: false }, DIVE + 0.16);
+          tl.fromTo("#f02-reels", { scale: 1 }, { scale: 1.045, duration: SB - D1, ease: "none", immediateRender: false }, D1);
+          // the second reel rolls 19 → 20 → 21, landing on "twenty-one"; one soft punch on the kick that follows
+          const ROLL = $("f02-roll");
+          tl.set(ROLL, { y: -1120 }, 0);
+          tl.fromTo(ROLL, { y: -1120, filter: "blur(0px)" }, { y: -2264, filter: "blur(3px)", duration: L(TW1) - L(10.62), ease: "power2.in", immediateRender: false }, L(10.62));
+          tl.fromTo(ROLL, { y: -2264, filter: "blur(3px)" }, { y: -2240, filter: "blur(0px)", duration: 0.45, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(TW1));
+          WOW.word(tl, $("f02-c1"), L(TW), { kind: "rise", dur: 0.4 });
+          WOW.word(tl, $("f02-c2"), L(TW1), { kind: "settle", dur: 0.42 });
+          WOW.punch(tl, $("f02-w2"), L(TW1), { s: 1.03, dur: 0.45 });
+          WOW.punch(tl, $("f02-reels"), L(11.179), { s: 1.012, dur: 0.4 });
+          tl.fromTo("#f02-yf", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out", immediateRender: false }, L(11.644));
+
+          // the cut to B on the line start
+          tl.set("#f02-sA", { opacity: 0 }, SB);
+          tl.set("#f02-sB", { opacity: 1 }, SB);
+          tl.set("#f02-sB", { opacity: 0 }, 0);
+
+          // B — "padlock" settles on its word as the push arrives; the popover opens on "said"
+          WOW.word(tl, padW, L(PAD), { kind: "settle", dur: 0.46 });
+          const POP = L(13.844) - 0.12;
+          tl.fromTo("#f02-pop", { opacity: 0, scale: 0.9, x: -30 }, { opacity: 1, scale: 1, x: 0, duration: 0.34, ease: "power3.out", immediateRender: false }, POP);
+          tl.set("#f02-pop", { opacity: 0 }, 0);
+          tl.set("#f02-foot", { opacity: 0 }, 0);
+          tl.fromTo("#f02-foot", { opacity: 0 }, { opacity: 1, duration: 0.4, immediateRender: false }, POP + 0.4);
+          WOW.word(tl, $("f02-done"), L(DONE), { kind: "settle", dur: 0.42 });
+          // "done": the shackle shuts — the frame's one weighted accent (a soft punch, one thin green ring, the tick)
+          const SH = $("f02-shackle");
+          tl.set(SH, { y: -46 }, 0);
+          tl.fromTo(SH, { y: -46 }, { y: 4, duration: 0.12, ease: "power3.in", immediateRender: false }, L(DONE) - 0.12);
+          tl.fromTo(SH, { y: 4 }, { y: 0, duration: 0.35, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(DONE));
+          WOW.punch(tl, $("f02-lockpos"), L(DONE), { s: 1.04, dur: 0.5 });
+          // v20: before "done" the shackle clicks on the hats: a rattle down and a spring back (it stays open)
+          const CLICKS = HR_ENV.onsets.hat.filter(([t, a]) => t > PAD && t < DONE - 0.5 && a > 0.4).map(([t, a]) => [L(t), a]);
+          CLICKS.forEach(([c, a]) => {
+            const d = -46 + 16 * a;
+            tl.fromTo(SH, { y: -46 }, { y: d, duration: 0.05, ease: "power2.in", immediateRender: false }, c - 0.05);
+            tl.fromTo(SH, { y: d }, { y: -46, duration: 0.32, ease: "elastic.out(1, 0.4)", immediateRender: false }, c);
           });
-          function hero(key, o) {
-            const h = lines[key].find((w) => w.hero), c = ctr(h.s);
-            h.s._hrG = HR.glyphs(h.s); tl.set(h.s._hrG, { opacity: 0 }, 0);
-            WOW.explode(tl, h.s, L(h.t), { parent: fx, x: c.x, y: c.y, shake: world, ...o });
-            return c;
-          }
+          tl.fromTo("#f02-ph i", { opacity: 0, scale: 2 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)", immediateRender: false }, L(DONE));
+          const ring = el("div", "", $("f02-fxB"));
+          Object.assign(ring.style, { position: "absolute", left: "-100px", top: "-100px", width: "200px", height: "200px", borderRadius: "50%",
+            border: "3px solid rgba(61,220,122,0.9)", boxShadow: "0 0 24px rgba(61,220,122,0.5)", opacity: "0" });
+          tl.fromTo(ring, { opacity: 1, scale: 0.6 }, { opacity: 0, scale: 5, duration: 0.9, ease: "expo.out", immediateRender: false }, L(DONE));
+          // the marker answers
+          tl.fromTo("#f02-arB", { attr: { "stroke-dashoffset": 100 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.18, ease: "power2.out", immediateRender: false }, NOTE_B);
+          tl.set("#f02-markB", { clipPath: "inset(-30% 100% -40% -5%)" }, 0);
+          tl.fromTo("#f02-markB", { clipPath: "inset(-30% 100% -40% -5%)" }, { clipPath: "inset(-30% 0% -40% -5%)", duration: 0.32, ease: "none", immediateRender: false }, NOTE_B + 0.12);
+          // the verse's kick pulse, small
+          WOW.pulse(tl, $("f02-l1"), { kind: "kick", amt: 0.01, y: 2 });
 
-          // ================= S1 7.96-9.74 "you sent it on a": the compose window bursts out of the seal =================
-          tl.fromTo("#f02-burst", { opacity: 1, scale: 6 }, { opacity: 0, scale: 1.4, duration: 0.5, ease: "power2.out" }, 0);
-          WOW.shock(tl, fx, { x: SP0.x, y: SP0.y, t: 0, r: 1500, n: 3, w: 9, color: "fire", dur: 0.65, gap: 0.07 });
-          WOW.rays(tl, fx, { x: 960, y: 520, t: 0.02, n: 30, r0: 200, r1: 1300, seed: 21, color: "cream", dur: 0.5, w: 6 });
-          WOW.shake(tl, world, 0.05, { amp: 22, dur: 0.5, seed: 9 });
-          tl.fromTo("#f02-winw", { scale: 1.45, rotation: 5, y: -90, opacity: 0 }, { scale: 1, rotation: 0, y: 0, opacity: 1, duration: 0.42, ease: "back.out(1.5)" }, 0.02);
-          lines.l0.forEach(({ s, t }, i) => {
-            const c = ctr(s), tt = L(t), big = i === 1;
-            WOW.shake(tl, world, tt, { amp: big ? 10 : 5, dur: 0.26, seed: 30 + i });
-            WOW.shock(tl, fx, { x: c.x, y: c.y, t: tt, r: big ? 760 : 400, n: big ? 2 : 1, w: big ? 6 : 3, color: i % 2 ? "cream" : "fire", dur: 0.45 });
-            WOW.rays(tl, fx, { x: c.x, y: c.y, t: tt, n: big ? 16 : 9, r0: 60, r1: big ? 700 : 420, seed: 31 + i, color: "cream", dur: 0.38, w: 3 });
-            WOW.punch(tl, s1, tt, { s: big ? 1.045 : 1.025, dur: 0.3 });
-          });
-          // "sent": SEND arms
-          tl.set("#f02-send0", { attr: { fill: "#E85D26", stroke: "#E85D26" } }, L(8.725));
-          tl.set("#f02-send0 + text", { attr: { fill: "#111111" } }, L(8.725));
-          tl.fromTo("#f02-send0", { scale: 1.45, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.45, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(8.725));
-          // behind the window the racks rush past, a packet running down their fibre
-          const ROUTE_S = 1500, CARD_A = 700, CARD_B = 1900;
-          tl.fromTo("#f02-route", { x: 0 }, { x: -ROUTE_S, duration: L(S2), ease: "none" }, 0);
-          tl.fromTo("#f02-far", { x: 0 }, { x: -520, duration: L(S2), ease: "none" }, 0);
-          tl.fromTo("#f02-c1pos", { x: CARD_A }, { x: CARD_B, duration: L(S2), ease: "power1.inOut" }, 0);
-          tl.fromTo("#f02-pmA", { x: 0 }, { x: -900, duration: L(S2), ease: "none" }, 0);
-          tl.fromTo("#f02-wall1", { x: 0 }, { x: -320, duration: L(S2), ease: "none" }, 0);
-          // the cut: the whole window peels away like a calendar leaf, the calendar is underneath
-          tl.fromTo(s1, { rotationX: 0, transformPerspective: 1500 }, { rotationX: -105, duration: 0.25, ease: "power3.in", immediateRender: false }, L(S2));
-          tl.set(s1, { opacity: 0 }, L(S2) + 0.25);
-
-          // ================= S2 9.74-10.66 "tuesday,": week pages riffle to Tue 09, the stamp lands =================
-          tl.set(s2, { opacity: 1 }, L(S2)); tl.set(s2, { opacity: 0 }, L(S3));
-          const tw = lines.l3[0].s;
-          hero("l3", { seed: 5, rays: 22, burst: 26, amp: 16, from: "burst" });
-          HR.exit(tl, tw, L(10.5), { dur: 0.2 });
-          tl.fromTo("#f02-dates", { y: 0 }, { y: -2700, duration: L(S3) - L(S2), ease: "none", immediateRender: false }, L(S2));
-          PAGES.forEach((pg, i) => {
-            const a = L(S2) + 0.06 + i * 0.075;
-            tl.fromTo(pg, { rotationX: 0, opacity: 1, transformPerspective: 1500 }, { rotationX: -112, duration: 0.17, ease: "power2.in", immediateRender: false }, a);
-            tl.set(pg, { opacity: 0 }, a + 0.17);
-            WOW.punch(tl, cal, a + 0.17, { s: 1.025, dur: 0.18 });
-          });
-          tl.fromTo("#f02-tucol", { opacity: 0, scaleY: 0.1 }, { opacity: 1, scaleY: 1, duration: 0.22, ease: "expo.out", immediateRender: false }, L(10.18));
-          const CELL = { x: 1198, y: 460 }, STP = { x: 1010 + 540, y: 150 + 555 };
-          tl.set(d09, { backgroundColor: "#E85D26", color: "#111111", fontWeight: 600 }, L(10.26));
-          tl.fromTo(d09, { scale: 1.6 }, { scale: 1, duration: 0.45, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(10.26));
-          tl.fromTo(tstamp, { opacity: 0, scale: 2.6, rotation: 12 }, { opacity: 1, scale: 1, rotation: -7, duration: 0.12, ease: "power4.in", immediateRender: false }, L(10.26) - 0.12);
-          tl.fromTo(tstamp, { scaleX: 1, scaleY: 1 }, { scaleX: 1.06, scaleY: 0.94, duration: 0.05, ease: "power2.out", immediateRender: false }, L(10.26));
-          tl.fromTo(tstamp, { scaleX: 1.06, scaleY: 0.94 }, { scaleX: 1, scaleY: 1, duration: 0.35, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(10.26) + 0.05);
-          WOW.shock(tl, fx, { x: CELL.x, y: CELL.y, t: L(10.18), r: 600, n: 2, w: 5, color: "fire", dur: 0.5 });
-          WOW.shock(tl, fx, { x: STP.x, y: STP.y, t: L(10.26), r: 1000, n: 2, w: 7, color: "cream", dur: 0.5 });
-          WOW.rays(tl, fx, { x: STP.x, y: STP.y, t: L(10.26), n: 22, r0: 120, r1: 900, seed: 41, color: "fire", dur: 0.45, w: 5 });
-          WOW.burst(tl, fx, { x: STP.x, y: STP.y, t: L(10.26), n: 24, speed: 1100, size: [5, 14], seed: 42, dur: 0.8 });
-          WOW.shake(tl, world, L(10.26), { amp: 18, dur: 0.4, seed: 14 });
-          WOW.flash(tl, fx, L(10.26), { a: 0.4, dur: 0.14, color: "fire" });
-          WOW.punch(tl, cal, L(10.51), { s: 1.05, dur: 0.3 });
-          WOW.shock(tl, fx, { x: CELL.x, y: CELL.y, t: L(10.51), r: 500, n: 1, w: 4, color: "cream", dur: 0.4 });
-          // the cut: the lens dives into the ringed 9th and comes out at the year drum
-          tl.set(s3, { opacity: 1 }, L(S3));
-          WOW.flash(tl, fx, L(S3), { a: 0.55, dur: 0.16, color: "fire" });
-          WOW.transition(tl, s2, { out: "zoom", dur: 0.2, total: L(S3) });
-          WOW.transition(tl, s3, { in: "zoom", dur: 0.22, start: L(S3) });
-
-          // ================= S3 10.66-12.357 "twenty twenty-one": 2019 → 2021, postmark, typed date =================
-          const yr = { v: 1999 };
-          tl.fromTo(yr, { v: 1999 }, { v: 2021, duration: L(TW1) - L(S3), ease: "power3.out" }, L(S3));
-          tl.fromTo("#f02-years", { y: 0 }, { y: -2400, duration: L(S4) - L(S3), ease: "none", immediateRender: false }, L(S3));
-          const drum = $("f02-drum"), pmw = $("f02-pmw"), pmc = { x: 1600, y: 800 };
-          tl.set(pmw, { opacity: 0 }, 0);
-          { const c = ctr(lines.l2[0].s); WOW.shock(tl, fx, { x: c.x, y: c.y, t: L(S3), r: 700, n: 1, w: 5, color: "fire", dur: 0.45 }); }
-          hero("l2", { seed: 7, rays: 20, burst: 30, amp: 20, from: "burst" });
-          tl.fromTo(pmw, { opacity: 0, scale: 2.8, rotation: 18 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.13, ease: "power4.in", immediateRender: false }, L(TW1) - 0.13);
-          tl.fromTo("#f02-pm", { scaleX: 1, scaleY: 1 }, { scaleX: 1.1, scaleY: 0.9, duration: 0.05, ease: "power2.out", immediateRender: false }, L(TW1));
-          tl.fromTo("#f02-pm", { scaleX: 1.1, scaleY: 0.9 }, { scaleX: 1, scaleY: 1, duration: 0.5, ease: "elastic.out(1, 0.4)", immediateRender: false }, L(TW1) + 0.05);
-          WOW.shock(tl, fx, { x: pmc.x, y: pmc.y, t: L(TW1), r: 1300, n: 3, w: 8, color: "fire", dur: 0.6, gap: 0.07 });
-          WOW.shock(tl, fx, { x: 1530, y: 335, t: L(TW1), r: 900, n: 2, w: 6, color: "cream", dur: 0.5 });
-          WOW.rays(tl, fx, { x: pmc.x, y: pmc.y, t: L(TW1), n: 26, r0: 150, r1: 1100, seed: 51, color: "cream", dur: 0.5, w: 5 });
-          WOW.burst(tl, fx, { x: pmc.x, y: pmc.y, t: L(TW1), n: 34, speed: 1300, size: [5, 16], seed: 52, dur: 0.9, cream: 0.35 });
-          WOW.flash(tl, fx, L(TW1), { a: 0.45, dur: 0.18 });
-          WOW.punch(tl, drum, L(TW1), { s: 1.08, dur: 0.4 });
-          // "09 MAR 2021 · 14:02" is typed after the stamp; SAVE arms SEND on the next downbeat
-          tl.set("#f02-sbtn", { backgroundColor: "#E85D26", borderColor: "#E85D26", color: "#111111" }, L(SAVE));
-          tl.fromTo("#f02-sbtn", { scale: 1.5 }, { scale: 1, duration: 0.45, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(SAVE));
-          WOW.shock(tl, fx, { x: 1310, y: 805, t: L(SAVE), r: 700, n: 2, w: 5, color: "fire", dur: 0.5 });
-          WOW.shake(tl, world, L(SAVE), { amp: 9, dur: 0.3, seed: 17 });
-          WOW.punch(tl, drum, L(11.18), { s: 1.04, dur: 0.3 }); WOW.shock(tl, fx, { x: 1530, y: 335, t: L(11.18), r: 600, n: 1, w: 4, color: "cream", dur: 0.4 });
-          WOW.punch(tl, pmw, L(12.11), { s: 1.07, dur: 0.3 }); WOW.shake(tl, world, L(12.11), { amp: 8, dur: 0.25, seed: 19 });
-          tl.fromTo(pmw, { y: 0 }, { y: -14, duration: L(S4) - L(11.3), ease: "sine.inOut", immediateRender: false }, L(11.3));
-          WOW.transition(tl, s3, { out: "whipL", dur: 0.25, total: L(S4) });
-          tl.set(s3, { opacity: 0 }, L(S4));
-          WOW.pulse(tl, drum, { kind: "kick", amt: 0.03 });
-
-          // ================= S4 12.357-14.16 "a little green padlock": the giant padlock whips in =================
-          tl.set(sB, { opacity: 1 }, L(S4) - 0.1);
-          WOW.transition(tl, sB, { in: "whipL", dur: 0.3, start: L(S4) - 0.1 });
-          const lockpos = $("f02-lockpos"), shG = $("f02-shackle"), LK = { x: 1380, y: 540 };
-          tl.set(lockpos, { x: 327.5, y: -20, scale: 2.0 }, 0);
-          tl.set(shG, { y: -70 }, 0);
-          tl.fromTo("#f02-lockjolt", { scale: 1.1, rotation: -3 }, { scale: 1, rotation: 0, duration: 0.6, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(S4) + 0.25);
-          WOW.shake(tl, world, L(S4) + 0.28, { amp: 18, dur: 0.4, seed: 23 });
-          WOW.shock(tl, fx, { x: LK.x, y: LK.y, t: L(S4) + 0.28, r: 1100, n: 2, w: 7, color: "cream", dur: 0.5 });
-          WOW.pulse(tl, $("f02-lock"), { kind: "kick", amt: 0.035 });
-          // "green": the keyhole and the address-bar icon light
-          tl.set("#f02-iconb", { attr: { fill: "#E85D26", stroke: "#E85D26" } }, L(GREEN));
-          tl.set("#f02-icons", { attr: { stroke: "#F0ECE5" } }, L(GREEN));
-          tl.fromTo("#f02-icon", { scale: 1.9 }, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.45)", transformOrigin: "50% 50%", immediateRender: false }, L(GREEN));
-          WOW.shock(tl, fx, { x: LK.x, y: LK.y, t: L(GREEN), r: 800, n: 2, w: 5, color: "fire", dur: 0.5 });
-          WOW.rays(tl, fx, { x: LK.x, y: LK.y, t: L(GREEN), n: 16, r0: 300, r1: 900, seed: 61, color: "fire", dur: 0.4, w: 4 });
-          WOW.punch(tl, sB, L(GREEN), { s: 1.04, dur: 0.3 });
-          // "padlock": the hero explodes, the lock glints and throws sparks
-          hero("l1", { seed: 9, rays: 26, burst: 34, amp: 22, from: "left" });
-          WOW.shock(tl, fx, { x: LK.x, y: LK.y, t: L(PAD), r: 1300, n: 2, w: 8, color: "fire", dur: 0.55 });
-          WOW.flash(tl, fx, L(PAD), { a: 0.35, dur: 0.15, color: "fire" });
-          tl.set("#f02-spec", { opacity: 1 }, L(PAD));
-          tl.fromTo("#f02-spec", { x: -80 }, { x: 340, duration: 0.6, ease: "power2.inOut", immediateRender: false }, L(PAD) + 0.02);
-          tl.fromTo("#f02-lockjolt", { scaleX: 1.06, scaleY: 0.94 }, { scaleX: 1, scaleY: 1, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(PAD));
-          function spark(t0, k) {
-            sparks.forEach(({ s, dx, dy }, i) => {
-              const a = t0 + (i % 3) * 0.01;
-              tl.fromTo(s, { opacity: 1, x: 0, y: 0 }, { x: dx * k, duration: 0.5, ease: "power2.out", immediateRender: false }, a);
-              tl.fromTo(s, { y: 0 }, { y: dy * k, duration: 0.2, ease: "power2.out", immediateRender: false }, a);
-              tl.fromTo(s, { y: dy * k, opacity: 1 }, { y: dy * k + 120, opacity: 0, duration: 0.38, ease: "power2.in", immediateRender: false }, a + 0.2);
-            });
-          }
-          spark(L(PAD), 1.4);
-          WOW.punch(tl, sB, L(13.03), { s: 1.03, dur: 0.25 });
-
-          // ================= S5 14.16-16.06 "the hard part was done": the padlock slams shut on "done" =================
-          WOW.punch(tl, sB, L(S5), { s: 1.07, dur: 0.4 });
-          WOW.shake(tl, world, L(S5), { amp: 14, dur: 0.35, seed: 27 });
-          WOW.flash(tl, fx, L(S5), { a: 0.4, dur: 0.14, color: "fire" });
-          WOW.shock(tl, fx, { x: LK.x, y: LK.y, t: L(S5), r: 1300, n: 2, w: 7, color: "cream", dur: 0.5 });
-          tl.fromTo(lockpos, { scale: 2.0 }, { scale: 1.55, duration: 0.75, ease: "power3.inOut", immediateRender: false }, L(S5));
-          tl.fromTo("#f02-pop2", { opacity: 0, y: -140, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.24, ease: "back.out(1.6)", immediateRender: false }, L(S5) - 0.04);
-          tl.set("#f02-l1", { opacity: 0 }, L(S5) - 0.02);
-          // "hard": the cylinder clicks home
-          tl.fromTo("#f02-lockjolt", { y: 0 }, { y: 6, duration: 0.05, ease: "power2.out", immediateRender: false }, L(HARD));
-          tl.fromTo("#f02-lockjolt", { y: 6 }, { y: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, L(HARD) + 0.05);
-          WOW.shock(tl, fx, { x: LK.x - 20, y: LK.y + 90, t: L(HARD), r: 500, n: 1, w: 4, color: "cream", dur: 0.4 });
-          [14.62, 14.88].forEach((t, i) => {
-            WOW.punch(tl, sB, L(t), { s: 1.03 + i * 0.01, dur: 0.22 });
-            WOW.shake(tl, world, L(t), { amp: 6 + i * 3, dur: 0.22, seed: 40 + i });
-          });
-          // "done": the shackle slams, the body fills fire, the letter turns to ciphertext, SENT
-          hero("l1b", { seed: 11, rays: 28, burst: 44, amp: 30, from: "top" });
-          tl.fromTo(shG, { y: -70 }, { y: 0, duration: 0.1, ease: "power4.in", immediateRender: false }, L(DONE) - 0.1);
-          tl.set("#f02-bsteel", { opacity: 0 }, L(DONE));
-          tl.set("#f02-bfire", { opacity: 1 }, L(DONE));
-          tl.set("#f02-cyl", { attr: { fill: "url(#f02-cylf)" } }, L(DONE));
-          tl.set("#f02-khole", { attr: { fill: "#111111" }, filter: "none" }, L(DONE));
-          tl.fromTo("#f02-lockjolt", { scaleX: 1.08, scaleY: 0.9 }, { scaleX: 1, scaleY: 1, duration: 0.6, ease: "elastic.out(1, 0.4)", immediateRender: false }, L(DONE));
-          tl.fromTo(lockpos, { scale: 1.8 }, { scale: 1.55, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(DONE));
-          WOW.shock(tl, fx, { x: LK.x, y: LK.y + 40, t: L(DONE), r: 1600, n: 3, w: 10, color: "fire", dur: 0.7, gap: 0.07 });
-          WOW.rays(tl, fx, { x: LK.x, y: LK.y + 40, t: L(DONE), n: 36, r0: 220, r1: 1400, seed: 71, color: "cream", dur: 0.6, w: 6 });
-          WOW.burst(tl, fx, { x: LK.x, y: LK.y + 40, t: L(DONE), n: 44, speed: 1500, size: [6, 20], seed: 72, dur: 1.0, cream: 0.35 });
-          WOW.flash(tl, fx, L(DONE), { a: 0.85, dur: 0.22 });
-          WOW.punch(tl, sB, L(DONE), { s: 1.07, dur: 0.5 });
-          spark(L(DONE), 2.2);
-          tl.fromTo(k2.st, { w: 0 }, { w: 1, duration: 0.5, ease: "power1.in" }, L(DONE));
-          tl.set("#f02-send", { attr: { fill: "#F0ECE5" } }, L(DONE));
-          tl.fromTo("#f02-send", { attr: { fill: "#F0ECE5" } }, { attr: { fill: "#E85D26" }, duration: 0.35, ease: "power2.out", immediateRender: false }, L(DONE) + 0.05);
-          // the archive's marker answers: (it isn't)
-          tl.fromTo("#f02-mark1", { scale: 1.12, rotation: -6 }, { scale: 1, rotation: -3, duration: 0.35, ease: "back.out(2)", immediateRender: false }, L(NOTE) + 0.12);
-          WOW.shake(tl, world, L(NOTE) + 0.3, { amp: 8, dur: 0.25, seed: 29 });
-          WOW.punch(tl, sB, L(15.62), { s: 1.03, dur: 0.25 }); WOW.punch(tl, sB, L(15.81), { s: 1.04, dur: 0.25 });
-          tl.fromTo("#f02-light2", { x: 0 }, { x: -60, duration: L(END) - L(S4), ease: "none" }, L(S4));
-          WOW.pulse(tl, $("f02-pop2"), { kind: "kick", amt: 0.02 });
-
-          // the frame: bursts out of 01's seal (zoom in), is yanked down the wire into 16 (whipL out)
-          root.style.transformOrigin = `${(SP0.x / 19.2).toFixed(1)}% ${(SP0.y / 10.8).toFixed(1)}%`;
-          WOW.transition(tl, root, { in: "zoom", dur: 0.3 });
-          WOW.transition(tl, root, { out: "whipL", dur: 0.3, total: DUR });
-          WOW.pulse(tl, cal, { kind: "kick", amt: 0.03 });
-
-          // ---- per-frame draw (all from timeline time) ------------------------------------------------------
-          const heroRows = Object.entries(lines).flatMap(([, ws]) => [...new Set(ws.filter((w) => w.hero).map((w) => w.row))]);
-          const TLS = [[S4, "CLIENT HELLO", "1/4"], [GREEN, "SERVER HELLO", "2/4"], [PAD, "KEYS DERIVED", "3/4"], [HARD, "FINISHED", "4/4"], [DONE, "TLS 1.3", "SECURE"]];
-          const c1pos = $("f02-c1pos"), route = $("f02-route"), arrow = $("f02-arrow"), mark1 = $("f02-mark1");
-          const caret = el("span", "f02-caret", $("f02-ph"));
-          const pvalEl = $("f02-pval"), ringp = $("f02-ringp"), pmring = $("f02-pmring");
+          // ---- per-frame draw -------------------------------------------------------------------------------------
+          // the push into the address bar's padlock: the browser scales about the icon (in log space, so the speed reads
+          // constant) while the icon travels to its place left of the popover; the padlock is drawn big and starts at 1/17
+          const ICON = [292, 421], LOCK = [560, 404], P0 = 36 / 330, ZEND = 0.9 / P0, PUSH0 = SB, PUSH1 = L(PAD);
+          const chrome = $("f02-chrome"), lockpos = $("f02-lockpos"), glow = $("f02-gl");
           function render() {
             const t = tl.time(), T = t + T0;
-            stage.apply(T);
-            HR.draw(tl);
-            WOW.draw(tl, 7.96);
-            const hat = HR.hit("hat", T, 0.07), bass = HR.band("bass", T);
-            for (const r of heroRows) HR.glow(r, T, 0.35, 0.8);
-
-            if (T < S2 + 0.3) {
-              // S1: the caret blinks in the empty date field; the racks' lamps follow the packet
-              caret.style.opacity = Math.floor(t * 3.2) % 2 === 0 ? "1" : "0";
-              $("f02-st0").textContent = T >= 8.725 ? "SENDING · TLS 1.3 · X25519 · AES-256-GCM" : "DRAFT · NOT SENT · TLS 1.3 · X25519";
-              $("f02-st0dot").setAttribute("fill", T >= 8.725 ? "#E85D26" : "#505048");
-              const rx = gsap.getProperty(route, "x"), cx = gsap.getProperty(c1pos, "x") + 390 - rx;
-              for (const l of lamps) {
-                const near = Math.max(0, 1 - Math.abs(l.x - cx) / 280);
-                const on = h01(l.k, Math.floor(t * l.rate)) < 0.5 + 0.45 * near + 0.25 * hat;
-                l.e.setAttribute("opacity", on ? (0.45 + 0.55 * Math.max(near, l.fire ? 0.3 : 0.1)).toFixed(2) : "0.1");
-              }
-            } else if (T < S3) {
-              // S2: the ring round the 9th draws on, the Tuesday column breathes
-              ringp.style.strokeDasharray = "100";
-              ringp.style.strokeDashoffset = (100 * (1 - clamp01((t - L(10.18)) / 0.22))).toFixed(1);
-              $("f02-tucol").style.filter = `brightness(${(1 + 0.5 * bass + 0.5 * HR.hit("kick", T, 0.12)).toFixed(3)})`;
-            } else if (T < S4) {
-              // S3: odometer reels (a reel turns over only as the one below passes 9), the typed date, the rotating postmark text
-              const Y = yr.v, rem = Math.max(0, 2021 - Y);
-              let prev = 0;
-              for (let k = 0; k < 4; k++) { // k = decimal place; reels[3 - k] shows it
-                const p = k === 0 ? Y % 10 : (Math.floor(Y / Math.pow(10, k)) % 10) + Math.max(0, prev - 9);
-                prev = p;
-                reels[3 - k].style.transform = `translateY(${(-p * 250).toFixed(1)}px)`;
-                reels[3 - k].style.filter = rem > 0.5 ? `blur(${Math.min(7, rem * 0.35).toFixed(1)}px)` : "";
-              }
-              const n = t < L(TW1) + 0.12 ? 0 : Math.min(PV.length, Math.floor((t - L(TW1) - 0.12) / 0.016));
-              pvalEl.textContent = n ? PV.slice(0, n) : "";
-              const ic = document.createElement("i"); if (Math.floor(t * 8) % 2 === 0 || n < PV.length) pvalEl.appendChild(ic);
-              $("f02-plab").textContent = T >= SAVE ? "→ DRAFT SAVED" : "→ PARSED";
-              pmring.setAttribute("transform", `rotate(${(Math.max(0, t - L(TW1)) * 40).toFixed(2)})`);
-            } else {
-              cardText(k2, t, T, (i) => i % 3 === 0);
-              HR.glow(k2.seal, T, 0.4, 0.8);
-              const locked = T >= DONE;
-              $("f02-bfire").style.setProperty("--hr-glow", locked ? (0.6 + 0.8 * bass + 0.5 * HR.hit("kick", T, 0.2)).toFixed(3) : "0");
-              $("f02-icon").style.setProperty("--hr-glow", T >= GREEN ? (0.25 + 0.4 * bass).toFixed(3) : "0");
-              const kf = T >= GREEN ? "1" : (1 - 0.55 * hat).toFixed(3);
-              for (const k of $("f02-khole").children) k.style.opacity = kf;
-              $("f02-khole").style.filter = T >= GREEN && !locked ? `drop-shadow(0 0 ${(8 + 14 * bass).toFixed(1)}px rgba(232,93,38,1))` : "";
-              $("f02-shsway").setAttribute("transform", locked ? "" : `rotate(${(Math.sin(t * 2.2) * 2.4).toFixed(2)} 198 172)`);
-              const st = TLS.filter(([a]) => T >= a).pop();
-              $("f02-tlsk").textContent = st[1];
-              $("f02-tls").textContent = st[2];
-              $("f02-sendt").textContent = locked ? "SENT" : "SEND";
-              $("f02-stt").textContent = locked ? "SENT 14:02 · CONNECTION SECURE · TLS 1.3" : T >= PAD ? "CONNECTION SECURE · TLS 1.3 · X25519" : "HANDSHAKE · TLS 1.3 · X25519 · AES-256-GCM";
-              $("f02-stdot").setAttribute("fill", T >= PAD ? "#E85D26" : "#505048");
-              $("f02-light2").style.opacity = ((T >= PAD ? 0.8 : 0.4) + 0.4 * bass).toFixed(3);
-              // outgoing packets on the fibre below: faster and brighter once sent
-              const sp = locked ? 1500 : 900;
-              pks.forEach((e, k) => { e.style.transform = `translateX(${(((t * sp + k * 760) % 2600) - 400).toFixed(1)}px)`; e.style.opacity = (T >= PAD ? 0.95 : 0.5).toFixed(2); });
-              $("f02-outcore").setAttribute("opacity", (0.3 + (T >= PAD ? 0.3 : 0) + 0.3 * bass).toFixed(3));
-              // the marker voice: the arrow draws on, then "(it isn't)" is written left to right
-              const ap = clamp01((t - L(NOTE)) / 0.22), mp = clamp01((t - L(NOTE) - 0.12) / 0.3);
-              arrow.style.strokeDashoffset = (100 * (1 - ap)).toFixed(1);
-              mark1.style.clipPath = `inset(-20% ${(100 - mp * 100).toFixed(1)}% -30% -5%)`;
-              // the popover's fine print types on after "done"
-              $("f02-fine").style.clipPath = `inset(-20% ${(100 - clamp01((T - DONE - 0.25) / 0.35) * 100).toFixed(1)}% -20% 0)`;
-            }
+            WOW.draw(tl, T0);
+            if (t < SB) return;
+            const u = sineIO((t - PUSH0) / (PUSH1 - PUSH0)), Z = Math.exp(u * Math.log(ZEND));
+            const cx = ICON[0] + (LOCK[0] - ICON[0]) * u, cy = ICON[1] + (LOCK[1] - ICON[1]) * u;
+            const drift = t > PUSH1 ? 1 + 0.035 * (t - PUSH1) / (DUR - PUSH1) : 1;
+            // v20: the lock breathes from "padlock" (one swell a bar, eased in) and ticks on each click
+            const bin = clamp01((t - PUSH1) / 0.6), ph = 2 * Math.PI * (T - 13.493) / 1.849;
+            const breath = bin * (0.5 - 0.5 * Math.cos(ph)), sway = bin * Math.sin(ph);   // sway moves while the swell turns
+            let tick = 0; for (const [c, a] of CLICKS) if (t >= c) tick = Math.max(tick, a * Math.exp(-(t - c) / 0.12));
+            chrome.style.transform = `translate(${(cx - Z * ICON[0]).toFixed(2)}px, ${(cy - Z * ICON[1]).toFixed(2)}px) scale(${Z.toFixed(4)})`;
+            chrome.style.opacity = (1 - clamp01((u - 0.72) / 0.22)).toFixed(3);
+            const bz = 1 + 0.045 * breath + 0.025 * tick;
+            lockpos.style.transform = `translate(${(cx + 22 * sway).toFixed(2)}px, ${(cy - 10 * breath).toFixed(2)}px) rotate(${(1.8 * sway).toFixed(3)}deg) scale(${(P0 * Z * drift * bz).toFixed(4)})`;
+            const ft = $("f02-fxB"); ft.style.transform = `translate(${cx.toFixed(1)}px, ${(cy + 60).toFixed(1)}px)`;
+            const g = 0.55 + 0.35 * HR.band("bass", T) + 0.45 * breath + 0.4 * tick + 0.5 * Math.exp(-Math.max(0, t - L(DONE)) * 3) * (t >= L(DONE) ? 1 : 0);
+            glow.style.opacity = (u * g).toFixed(3);
+            glow.style.transform = `translate(${(cx - 560).toFixed(1)}px, ${(cy - 404).toFixed(1)}px)`;
           }
           tl.eventCallback("onUpdate", render);
-          tl.seek(0); render();
+          render();
           window.__timelines["02-sent"] = tl;
         })();
       </script>

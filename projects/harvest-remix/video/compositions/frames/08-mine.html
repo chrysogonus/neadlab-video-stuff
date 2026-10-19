@@ -15,7 +15,11 @@
          the window's fire and the locks; type in cream; the intake's dark glyphs turn fire; no ciphertext wall. The hook's
          lockup (shot 4) is on black too; shot 2's cream flash stays.
          v15: centred rotor bank with a bounded orbit; contact-bound branching electricity charges before each
-         lock, crawls over the toothed seams and releases into a narrow white-core scanning beam. -->
+         lock, crawls over the toothed seams and releases into a narrow white-core scanning beam.
+         v19 (V19.md §1): the lightning, rings and washes are gone. Each lock blows the bank apart along its axle into an
+         exploded view (wiring discs, spring pins, axle, entry wheel, reflector, deadpan callouts) that slams back shut on
+         the next strong kick with sparks from the seams; snares rattle it open a crack before a lock; "later" blows it
+         apart and the parts fly past the lens into the hook. -->
   </head>
   <body>
     <template>
@@ -32,6 +36,8 @@
         /* ---- the chorus (85.147–96.82): the cipher bank, on the orange register ---- */
         #f08-ch { position: absolute; inset: 0; overflow: hidden;
           background: radial-gradient(ellipse 62% 74% at 66% 52%, #26140b 0%, #140d09 42%, #0A0A0A 78%); }
+        /* v21: every canvas sits on the frame (the feed canvas used to flow below the 1080 px box, out of sight) */
+        .f08-cv { position: absolute; left: 0; top: 0; }
         .f08-en { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; mix-blend-mode: screen; }
         #f08-cwall { position: absolute; left: -60px; top: -30px; width: 2600px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 26px;
           line-height: 64px; letter-spacing: 0.14em; color: var(--ink); opacity: 0.035; white-space: pre; }
@@ -48,14 +54,19 @@
           white-space: nowrap; color: var(--fire); }
         #f08-ccount span { font-weight: 600; font-size: 16px; letter-spacing: 0.16em; color: #888880; }
         #f08-cnum { font-weight: 600; font-size: 46px; letter-spacing: 0.06em; }
+        /* v21: the count stays legible when the tight shot puts a drum behind it */
+        #f08-ccount { text-shadow: 0 0 14px rgba(10, 10, 10, 0.95), 0 2px 6px rgba(10, 10, 10, 0.9); }
         .f08-cline { position: absolute; left: 5.5cqw; font-family: "Barlow"; color: var(--cream); display: flex; flex-direction: column;
           align-items: flex-start; gap: 0.5cqw; }
         .f08-crow { display: flex; column-gap: 0.26em; font-weight: 800; font-size: 4.6cqw; line-height: 1.04; letter-spacing: -0.02em;
           white-space: nowrap; }
         .f08-crow.f08-cbig { font-weight: 900; font-size: 15cqw; line-height: 0.86; letter-spacing: -0.04em; margin: 0.3cqw 0 0 -0.5cqw;
           color: var(--fire); }
-        .f08-cw { display: inline-block; position: relative; }
-        #f08-l16, #f08-l17, #f08-l18 { top: 9cqw; }
+        .f08-cw { display: inline-block; position: relative; text-shadow: 0 0 22px rgba(10, 10, 10, 0.95), 0 2px 8px rgba(10, 10, 10, 0.9); }
+        #f08-l17, #f08-l18 { top: 9cqw; }
+        /* v21 (W6): L16 is poster-size in the empty left of the ¾ hero shot, and drops to the lower left in the tight shot */
+        #f08-l16 { top: 300px; }
+        #f08-l16 .f08-crow { font-size: 5.6cqw; }
 
         /* ---- v12: the hook as four full-bleed shots, over everything from 96.82 ---- */
         #f08-hk { position: absolute; inset: 0; opacity: 0; }
@@ -75,6 +86,9 @@
         #f08-hglyphs { position: absolute; inset: 0; }
         #f08-hglyphs b { position: absolute; left: 0; top: 0; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 30px; letter-spacing: 0.06em;
           color: var(--fire); opacity: 0; }
+        /* v17: a calm ink plate behind "harvest": the rings and the beam dim there and no hex runs through the letters */
+        #f08-hcalm { position: absolute; left: 100px; top: 300px; width: 1720px; height: 580px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(10, 10, 10, 0.86), rgba(10, 10, 10, 0.7) 55%, rgba(10, 10, 10, 0) 100%); }
         #f08-hw1 { top: 352px; font-size: 420px; color: var(--fire);
           text-shadow: 0 0 26px rgba(232, 93, 38, 0.6), 0 0 90px rgba(232, 93, 38, 0.3); }
         /* shot 2: now — the flash to cream */
@@ -101,7 +115,8 @@
         .f08-hghostc { position: absolute; border-radius: 50%; opacity: 0; mix-blend-mode: screen;
           background: radial-gradient(closest-side, rgba(232, 93, 38, 0), rgba(232, 93, 38, 0.22) 70%, rgba(255, 214, 186, 0.4) 92%, rgba(232, 93, 38, 0) 100%); }
         /* shot 4: the lockup on orange */
-        #f08-h4 { background: radial-gradient(ellipse 80% 80% at 40% 45%, #1c120c, #0A0A0A 70%); }
+        /* v17: shot 4 pushes in about a point left of the lockup's centre, so the incoming push clips neither end */
+        #f08-h4 { transform-origin: 500px 540px; background: radial-gradient(ellipse 80% 80% at 40% 45%, #1c120c, #0A0A0A 70%); }
         #f08-hlock { position: absolute; left: 110px; top: 262px; font-family: "Barlow"; font-weight: 900; font-size: 290px; line-height: 0.92;
           letter-spacing: -0.04em; white-space: nowrap; }
         #f08-hlock .f08-hl { display: block; }
@@ -120,8 +135,6 @@
             <canvas data-hf-id="hf-wu1q" class="f08-cv" id="f08-rot" width="1920" height="1080" data-layout-ignore></canvas>
             <canvas data-hf-id="hf-8fdt" class="f08-cv" id="f08-vx" width="1920" height="1080" data-layout-ignore></canvas>
             <canvas data-hf-id="hf-dxxo" class="f08-cv f08-en" id="f08-en" width="1920" height="1080" data-layout-ignore></canvas>
-            <canvas class="f08-cv f08-en" id="f08-lt" width="1920" height="1080" data-layout-ignore></canvas>
-            <div class="f08-fxl" id="f08-fx" data-layout-ignore></div>
           </div>
           <div data-hf-id="hf-dqdm" class="f08-cline" id="f08-l16"></div>
           <div data-hf-id="hf-hohn" class="f08-cline" id="f08-l17"></div>
@@ -135,6 +148,7 @@
               <svg data-hf-id="hf-f1aq" id="f08-hrings" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg>
               <div data-hf-id="hf-gymr" id="f08-hsweep" data-layout-ignore></div>
               <div data-hf-id="hf-icss" id="f08-hglyphs" data-layout-ignore></div>
+              <div id="f08-hcalm" data-layout-ignore></div>
               <div class="f08-hfx" id="f08-hfx1" data-layout-ignore></div>
               <div data-hf-id="hf-ol4d" class="f08-hword" id="f08-hw1">harvest</div>
             </div>
@@ -211,8 +225,10 @@
           const drums = order.map((ord, k) => ({ x: (k - (K6 - 1) / 2) * PITCH, ord }));
 
           // ---- what the drums do: step, spin, seek a word, hold it ---------------------------------------------------
-          const KICKS = HR.onsetsIn("kick", T0 - 0.1, HOOK + 0.1);
-          const PER = [8, 6, 4, 3, 2, 1];
+          // v20 (V20.md #8): the bank opens reading "later·" on its lock line — 07 locks "later." on the 85.142 kick, the cut — so the
+          // chorus starts as a match cut on the word; the drums first step on the next kick (85.825)
+          const KICKS = HR.onsetsIn("kick", T0 + 0.1, HOOK + 0.1);
+          const PER = [4, 3, 2, 2, 1, 1];   // v19: every drum steps more often (v18 8/6/4/3/2/1 left the first line still)
           const backOut = (x) => 1 + 2.70158 * Math.pow(x - 1, 3) + 1.70158 * Math.pow(x - 1, 2);
           const stepsIn = (k, a, T) => { let v = 0; KICKS.forEach((kt, i) => { if (kt >= a && kt <= T && i % PER[k] === 0) v += backOut(clamp((T - kt) / 0.13)); }); return v; };
           const SEGS = [["steps", T0 - 0.1, TIME - 0.45], ["seek", TIME - 0.45, TIME, "·time·"], ["hold", TIME, C17],
@@ -229,7 +245,7 @@
           // each rotor's value at every segment start, and its seek targets (at least ~a turn forward, on the letter)
           const plan = drums.map((dr, k) => {
             const starts = [], fins = [];
-            let v = (HR.rng(70 + k)() * N) | 0;
+            let v = dr.ord.indexOf("later·"[k]);
             for (const s of SEGS) {
               starts.push(v);
               let fin = 0;
@@ -248,25 +264,79 @@
           };
           const LOCKS = [TIME, MINE, SOON, OR, LATE], LWORDS = ["·time·", "·mine·", "sooner", "··or··", "later·"];
 
+          // ---- v19 (V19.md §1): the exploded view. On each lock the bank blows apart along its axle into a technical
+          // diagram (wiring discs on spring pins, the axle, the entry wheel and the reflector, deadpan callouts); it holds
+          // while the word is sung, opens further on the downbeat, and slams back shut on the next strong kick with sparks
+          // squirting from the seams. "later" blows it apart for good: the parts fly past the lens into the hook.
+          // Every value is a pure function of track time (keyed tracks, no tweens).
+          const keyed = (evs) => (T) => {
+            let v = 0;
+            for (let i = 0; i < evs.length; i++) {
+              const [t, to, d, ez] = evs[i]; if (T < t) return v;
+              const nt = i + 1 < evs.length ? evs[i + 1][0] : Infinity, nv = v + (to - v) * ez(clamp((Math.min(T, nt) - t) / d));
+              if (T < nt) return nv; v = nv;
+            }
+            return v;
+          };
+          const cube = (x) => x * x * x, sine = (x) => 0.5 - 0.5 * Math.cos(Math.PI * x), outC = (x) => 1 - Math.pow(1 - x, 3);
+          const SLAM = 0.09, SLAMS = [89.479, 93.134, 94.964, 95.651];          // strong kicks after each held word
+          const slamEv = (k) => [[k - SLAM, 0, SLAM, cube], [k, -0.04, 0.05, sine], [k + 0.05, 0, 0.16, sine]];
+          const POPS = [[TIME, 0.6], [88.794, 0.72], [MINE, 1.0], [92.461, 1.3], [SOON, 0.9], [94.278, 1.05], [OR, 0.45], [LATE, 1.1], [96.108, 1.4]];
+          // the snares before a lock rattle the bank open a crack, a little wider each time (anticipation, on the music)
+          const tease = (t, a) => [[t, a, 0.1, backOut], [t + 0.16, 0, 0.12, sine]];
+          const TEASE = [[85.58, 0.08], [86.489, 0.12], [87.405, 0.18], [88.319, 0.1], [90.151, 0.12], [91.069, 0.2]];
+          const EXP = keyed([...TEASE.slice(0, 4).flatMap(([t, a]) => tease(t, a)), [TIME, 0.6, 0.16, backOut], [88.794, 0.72, 0.14, backOut], ...slamEv(SLAMS[0]),
+            ...TEASE.slice(4).flatMap(([t, a]) => tease(t, a)), [MINE, 1.0, 0.16, backOut], [92.461, 1.3, 0.2, backOut], ...slamEv(SLAMS[1]),
+            [SOON, 0.9, 0.16, backOut], [94.278, 1.05, 0.16, backOut], ...slamEv(SLAMS[2]),
+            [OR, 0.45, 0.12, backOut], ...slamEv(SLAMS[3]),
+            [LATE, 1.1, 0.16, backOut], [96.108, 1.4, 0.2, backOut]]);
+          const TWIST = keyed([[SOON, 1, 0.3, outC], [SLAMS[2] - SLAM, 0, SLAM, cube]]);
+          const FLY = keyed([[96.108, 1, HOOK - 96.108, (x) => x * x]]);
+          // the camera's framing follows the bank on its own, softer track: it eases back as the bank opens, pushes in on
+          // the word at each downbeat stage, and both release together over 0.45 s after the slam (no zoom jolt)
+          const PUSH = keyed([[88.794, 1, 0.5, outC], [SLAMS[0], 0, 0.45, sine], [92.461, 1, 0.5, outC], [SLAMS[1], 0, 0.45, sine],
+            [94.278, 1, 0.5, outC], [SLAMS[2], 0, 0.45, sine]]);
+          const FIT = keyed([[TIME, 0.6, 0.35, outC], [88.794, 0.72, 0.3, outC], [SLAMS[0], 0, 0.45, sine], [MINE, 1, 0.35, outC], [92.461, 1.3, 0.3, outC],
+            [SLAMS[1], 0, 0.45, sine], [SOON, 0.9, 0.35, outC], [94.278, 1.05, 0.3, outC], [SLAMS[2], 0, 0.45, sine], [OR, 0.45, 0.3, outC], [SLAMS[3], 0, 0.45, sine],
+            [LATE, 1.1, 0.35, outC], [96.108, 1.3, 0.3, outC]]);
+          const GAP = 150;
+          // c: the part's place along the axle (drums -2.5…2.5, the end discs ±3.4); k seeds its twist and flight
+          const offAt = (c, k, T) => {
+            const e = EXP(T), tw = TWIST(T), f2 = FLY(T) * FLY(T);
+            return { dx: c * GAP * e + c * 460 * f2, dy: Math.sin(k * 1.9 + 0.4) * 70 * tw + (((k + 6) % 3) - 1) * 300 * f2,
+              dz: Math.cos(k * 1.3) * 90 * tw + (760 + 180 * ((k + 6) % 2)) * f2 };
+          };
+
           // ---- projection of a bank-local point to the screen (for the canvases) --------------------------------
-          const CAM = { rx: 0, ry: 0, s: 1 };
-          const project = (x, y, z) => {
-            x *= CAM.s; y *= CAM.s; z *= CAM.s;
+          const CAM = { rx: 0, ry: 0, s: 1, bx: BX, by: BY };
+          const rot3 = (x, y, z, sc = CAM.s) => {
+            x *= sc; y *= sc; z *= sc;
             const cy = Math.cos(CAM.ry * Math.PI / 180), sy = Math.sin(CAM.ry * Math.PI / 180);
             const x1 = x * cy + z * sy; let z1 = -x * sy + z * cy;
             const cx = Math.cos(CAM.rx * Math.PI / 180), sx = Math.sin(CAM.rx * Math.PI / 180);
             const y1 = y * cx - z1 * sx; z1 = y * sx + z1 * cx;
-            const f = 1700 / (1700 - z1);
-            return [BX + x1 * f, BY + y1 * f, f];
+            return [x1, y1, z1];
+          };
+          const project = (x, y, z) => {
+            const [x1, y1, z1] = rot3(x, y, z), f = 1700 / Math.max(120, 1700 - z1);
+            return [CAM.bx + x1 * f, CAM.by + y1 * f, f];
+          };
+          // does the disc in plane x (normal along `side`) face the lens?
+          const faces = (x, o, side) => {
+            const [px, py, pz] = rot3(x + o.dx, o.dy, -R + o.dz), [nx, ny, nz] = rot3(side, 0, 0, 1);
+            return nx * -px + ny * -py + nz * (1700 - pz) > 0;
           };
 
           // The drums are drawn on a canvas: each face is a pre-rendered sprite (gunmetal plate, toothed rim, the glowing
           // glyph) mapped onto its projected position on the cylinder. Sprite modes: 0 crisp, 1 white-hot (a locked
           // word), 2/3 motion-blurred (the drum spinning fast). After the faces: shading, a moving specular band,
-          // a fire bounce from below, and toothed gear rims between the drums that turn with them.
+          // a fire bounce from below, and toothed gear rims that turn with their drum. v19: each drum carries its own
+          // offset; drums, wiring discs, end discs and axle are painted far to near.
           const SS = 2, sprites = new Map();
-          const faceSprite = (ch, tooth, mode) => {
-            const key = ch + tooth + mode;
+          // v21 (W6): speed streaks for the spinning drums up to "mine" (the locks from 92.22 on keep v20's look)
+          let STREAKS = false, curT = T0, lampK = 0;
+          const faceSprite = (ch, tooth, mode, k = 0) => {
+            const key = mode >= 2 && STREAKS ? "s" + k + tooth + mode : ch + tooth + mode;
             if (sprites.has(key)) return sprites.get(key);
             const c = document.createElement("canvas"); c.width = PITCH * SS; c.height = Math.ceil(HF * SS);
             const x = c.getContext("2d"); x.scale(SS, SS);
@@ -283,10 +353,25 @@
             x.fillStyle = "#050404"; x.fillRect(RIM - 2, 0, 2, HF);
             x.font = '900 104px "Barlow"'; x.textAlign = "center"; x.textBaseline = "middle";
             const gx = RIM + DW / 2, gy = HF / 2 + 4;
-            if (mode >= 2) {
-              const sp = mode === 2 ? 22 : 52, n = mode === 2 ? 9 : 15;
-              x.shadowColor = "rgba(232,93,38,0.6)"; x.shadowBlur = 18; x.fillStyle = "#FF8A4F";
-              for (let i = 0; i < n; i++) { x.globalAlpha = 0.22; x.fillText(ch, gx, gy - sp + (2 * sp * i) / (n - 1)); }
+            if (mode >= 2 && STREAKS) {
+              // v21 (W6): a spinning drum reads as vertical speed streaks, not orange blobs: thin lines at fixed places across
+              // the drum (seeded per drum, so they join face to face round the cylinder), white-hot cores in fire glow, broken
+              // into dashes that travel round with the drum
+              const sr = HR.rng(7700 + k * 13 + tooth), n = mode === 2 ? 6 : 9;
+              x.lineCap = "butt";
+              for (let i = 0; i < n; i++) {
+                const lx = RIM + 10 + sr() * (DW - 20), lw = 1.2 + sr() * 2.6, y0 = sr() < 0.35 ? sr() * HF * 0.6 : 0, y1 = sr() < 0.35 ? HF - sr() * HF * 0.5 : HF;
+                const hot = sr() < 0.45, a = (mode === 2 ? 0.55 : 0.85) * (0.55 + 0.45 * sr());
+                x.shadowColor = "rgba(232,93,38,0.9)"; x.shadowBlur = 7;
+                x.strokeStyle = hot ? `rgba(255,236,214,${a.toFixed(3)})` : `rgba(255,138,79,${a.toFixed(3)})`; x.lineWidth = lw;
+                x.beginPath(); x.moveTo(lx, y0); x.lineTo(lx, y1); x.stroke();
+              }
+              x.shadowBlur = 0;
+            } else if (mode >= 2) {
+              // v19: a long, faint streak along the drum (v18's few bright copies with a wide shadow read as blobs)
+              const sp = mode === 2 ? 30 : 66, n = mode === 2 ? 15 : 27;
+              x.shadowColor = "rgba(232,93,38,0.5)"; x.shadowBlur = 5; x.fillStyle = "#FF8A4F";
+              for (let i = 0; i < n; i++) { const u = i / (n - 1); x.globalAlpha = (mode === 2 ? 0.16 : 0.09) * (0.45 + 0.55 * Math.sin(Math.PI * u)); x.fillText(ch, gx, gy - sp + 2 * sp * u); }
               x.globalAlpha = 1;
             } else if (mode === 1) {
               x.shadowColor = "rgba(255,120,50,1)"; x.shadowBlur = 40; x.fillStyle = "#FFB98F"; x.fillText(ch, gx, gy);
@@ -297,92 +382,161 @@
             }
             sprites.set(key, c); return c;
           };
-          const cylR = (x, th, r) => project(x, -r * Math.sin(th), r * Math.cos(th) - R);
-          const cyl = (x, th) => cylR(x, th, R);
           const quadPath = (c, p) => { c.beginPath(); c.moveTo(p[0][0], p[0][1]); for (let q = 1; q < 4; q++) c.lineTo(p[q][0], p[q][1]); c.closePath(); };
           const rot = $("f08-rot").getContext("2d");
-          const drawBank = (positions, vel, hot, windowHot) => {
-            rot.clearRect(0, 0, 1920, 1080);
-            if (!document.fonts.check('900 104px "Barlow"')) return;
-            const da = (2 * Math.PI) / N;
-            // the end caps: heavy discs on the axle at both ends (behind the drums)
-            for (const sx of [-1, 1]) {
-              const xc = sx * (BW / 2 + 10), CR = R + 40;
+          const da = (2 * Math.PI) / N;
+          // a point on the disc in plane x of a part with offset o, at angle a and radius r (the cylinder's parametrisation)
+          const discPt = (x, o, a, r) => project(x + o.dx, -r * Math.sin(a) + o.dy, r * Math.cos(a) - R + o.dz);
+          const ring = (c, x, o, r, n) => { c.beginPath(); for (let q = 0; q <= n; q++) { const [px, py] = discPt(x, o, (q / n) * 2 * Math.PI, r); q ? c.lineTo(px, py) : c.moveTo(px, py); } c.closePath(); };
+          // each rotor's wiring: 12 wires, seeded, pairing its 24 contacts
+          const WIRES = drums.map((_, k) => {
+            const r = HR.rng(5150 + k), p = Array.from({ length: N }, (_, i) => i);
+            for (let i = N - 1; i > 0; i--) { const j = (r() * (i + 1)) | 0; [p[i], p[j]] = [p[j], p[i]]; }
+            return Array.from({ length: N / 2 }, (_, i) => [p[2 * i], p[2 * i + 1]]);
+          });
+          const RC = R * 0.78;
+          // a rotor's face: a gunmetal disc, engraved rings, 24 contacts on spring pins and the wiring between them
+          const drawDisc = (x, o, k, pos, hotK) => {
+            const [hx, hy, hf] = project(x + o.dx, o.dy, -R + o.dz);
+            ring(rot, x, o, R - 2, 56);
+            const cg = rot.createRadialGradient(hx, hy, 0, hx, hy, R * CAM.s * hf);
+            cg.addColorStop(0, "#3a352e"); cg.addColorStop(0.55, "#221f1b"); cg.addColorStop(0.92, "#141210"); cg.addColorStop(1, "#4a443c");
+            rot.fillStyle = cg; rot.fill(); rot.lineWidth = 3; rot.strokeStyle = "#0b0a09"; rot.stroke();
+            for (const rr of [R * 0.9, R * 0.6]) { ring(rot, x, o, rr, 48); rot.lineWidth = 1.4; rot.strokeStyle = "rgba(240,236,229,0.15)"; rot.stroke(); }
+            const rp = pos * da; rot.lineCap = "round";
+            for (const [lw, col] of [[8, `rgba(232,93,38,${(0.06 + 0.45 * hotK).toFixed(3)})`], [2.2, `rgba(${hotK > 0.3 ? "255,220,190" : "240,236,229"},${(0.3 + 0.6 * Math.min(1, hotK)).toFixed(3)})`]]) {
               rot.beginPath();
-              for (let q = 0; q <= 64; q++) { const a = (q / 64) * 2 * Math.PI, [px, py] = project(xc, CR * Math.sin(a), CR * Math.cos(a) - R); q ? rot.lineTo(px, py) : rot.moveTo(px, py); }
-              const [hx, hy] = project(xc, 0, -R);
-              const cg = rot.createRadialGradient(hx, hy, 0, hx, hy, CR * CAM.s);
-              cg.addColorStop(0, "#5a544a"); cg.addColorStop(0.25, "#2a2622"); cg.addColorStop(0.85, "#16140f"); cg.addColorStop(1, "#3a332b");
-              rot.fillStyle = cg; rot.fill(); rot.lineWidth = 6; rot.strokeStyle = "#0b0a09"; rot.stroke();
-              for (const [rr, lw, c] of [[CR - 30, 2, "rgba(240,236,229,0.18)"], [CR * 0.6, 1.5, "rgba(240,236,229,0.1)"]]) {
-                rot.beginPath();
-                for (let q = 0; q <= 48; q++) { const a = (q / 48) * 2 * Math.PI, [px, py] = project(xc, rr * Math.sin(a), rr * Math.cos(a) - R); q ? rot.lineTo(px, py) : rot.moveTo(px, py); }
-                rot.lineWidth = lw; rot.strokeStyle = c; rot.stroke();
+              for (const [i, j] of WIRES[k]) {
+                const ai = i * da - rp, aj = j * da - rp, ac = Math.atan2(Math.sin(ai) + Math.sin(aj), Math.cos(ai) + Math.cos(aj));
+                const [x0, y0] = discPt(x, o, ai, RC - 16), [x1, y1] = discPt(x, o, aj, RC - 16), [qx, qy] = discPt(x, o, ac, RC * 0.3);
+                rot.moveTo(x0, y0); rot.quadraticCurveTo(qx, qy, x1, y1);
               }
-              rot.beginPath();
-              for (let q = 0; q <= 32; q++) { const a = (q / 32) * 2 * Math.PI, [px, py] = project(xc, 70 * Math.sin(a), 70 * Math.cos(a) - R); q ? rot.lineTo(px, py) : rot.moveTo(px, py); }
-              const hg = rot.createRadialGradient(hx, hy, 0, hx, hy, 70 * CAM.s);
-              hg.addColorStop(0, "#FFC9A8"); hg.addColorStop(0.5, "#E85D26"); hg.addColorStop(1, "#7a2a0e");
-              rot.fillStyle = hg; rot.fill(); rot.lineWidth = 4; rot.strokeStyle = "#0b0a09"; rot.stroke();
+              rot.lineWidth = lw * CAM.s * hf; rot.strokeStyle = col; rot.stroke();
             }
-            // the faces, back to front
-            const faces = [];
-            drums.forEach((dr, k) => dr.ord.forEach((ch, j) => {
-              const th = (((j - positions[k]) * da) % (2 * Math.PI) + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
-              if (Math.abs(th) < 1.45) faces.push({ k, j, ch, th });
-            }));
-            faces.sort((a, b) => Math.abs(b.th) - Math.abs(a.th));
-            for (const f of faces) {
-              const x0 = drums[f.k].x - PITCH / 2, x1 = x0 + PITCH, ta = f.th + da / 2, tb = f.th - da / 2;
-              const p00 = cyl(x0, ta), p10 = cyl(x1, ta), p01 = cyl(x0, tb), p11 = cyl(x1, tb);
-              const v = vel[f.k], mode = v > 9 ? 3 : v > 3.5 ? 2 : 0;
+            rot.beginPath();
+            for (let i = 0; i < N; i++) { const a = i * da - rp, [ax, ay] = discPt(x, o, a, RC), [bx, by] = discPt(x, o, a, RC + 34); rot.moveTo(ax, ay); rot.lineTo(bx, by); }
+            rot.lineWidth = 4 * CAM.s * hf; rot.strokeStyle = "#8a8478"; rot.stroke();
+            rot.fillStyle = hotK > 0.3 ? "#FFE2CC" : "#d8d1c4";
+            for (let i = 0; i < N; i++) { const [cx, cy] = discPt(x, o, i * da - rp, RC); rot.beginPath(); rot.arc(cx, cy, 6.5 * CAM.s * hf, 0, 2 * Math.PI); rot.fill(); }
+            ring(rot, x, o, R * 0.19, 28); rot.fillStyle = "#16140f"; rot.fill(); rot.lineWidth = 2; rot.strokeStyle = "rgba(240,236,229,0.25)"; rot.stroke();
+          };
+          // the end discs: the entry wheel (left) and the reflector (right), heavy discs with a fire hub
+          const drawEnd = (x, o) => {
+            const CR = R + 40, [hx, hy, hf] = project(x + o.dx, o.dy, -R + o.dz);
+            ring(rot, x, o, CR, 64);
+            const cg = rot.createRadialGradient(hx, hy, 0, hx, hy, CR * CAM.s * hf);
+            cg.addColorStop(0, "#5a544a"); cg.addColorStop(0.25, "#2a2622"); cg.addColorStop(0.85, "#16140f"); cg.addColorStop(1, "#3a332b");
+            rot.fillStyle = cg; rot.fill(); rot.lineWidth = 6; rot.strokeStyle = "#0b0a09"; rot.stroke();
+            for (const [rr, lw, c] of [[CR - 30, 2, "rgba(240,236,229,0.18)"], [CR * 0.6, 1.5, "rgba(240,236,229,0.1)"]]) { ring(rot, x, o, rr, 48); rot.lineWidth = lw; rot.strokeStyle = c; rot.stroke(); }
+            ring(rot, x, o, 70, 32);
+            const hg = rot.createRadialGradient(hx, hy, 0, hx, hy, 70 * CAM.s * hf);
+            hg.addColorStop(0, "#FFC9A8"); hg.addColorStop(0.5, "#E85D26"); hg.addColorStop(1, "#7a2a0e");
+            rot.fillStyle = hg; rot.fill(); rot.lineWidth = 4; rot.strokeStyle = "#0b0a09"; rot.stroke();
+          };
+          const drawShell = (k, o, pos, vel, hotK) => {
+            const fs = [];
+            drums[k].ord.forEach((ch, j) => {
+              const th = (((j - pos) * da) % (2 * Math.PI) + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
+              if (Math.abs(th) < 1.45) fs.push({ j, ch, th });
+            });
+            fs.sort((a, b) => Math.abs(b.th) - Math.abs(a.th));
+            const x0 = drums[k].x - PITCH / 2, x1 = x0 + PITCH, mode = vel > 9 ? 3 : vel > 3.5 ? 2 : 0;
+            STREAKS = curT < HOOK;   // v21 (lead): speed streaks through every spin of the chorus, not only before "mine"
+            for (const f of fs) {
+              const ta = f.th + da / 2, tb = f.th - da / 2;
+              const p00 = discPt(x0, o, ta, R), p10 = discPt(x1, o, ta, R), p01 = discPt(x0, o, tb, R), p11 = discPt(x1, o, tb, R);
               rot.save();
               rot.setTransform((p10[0] - p00[0]) / PITCH, (p10[1] - p00[1]) / PITCH, (p01[0] - p00[0]) / HF, (p01[1] - p00[1]) / HF, p00[0], p00[1]);
-              rot.drawImage(faceSprite(f.ch, f.j % 2, mode), 0, 0, PITCH, HF);
+              rot.drawImage(faceSprite(f.ch, f.j % 2, mode, k), 0, 0, PITCH, HF);
               const inWin = Math.abs(f.th) < da * 0.6 && f.ch !== "·";
-              if (inWin && mode === 0 && hot[f.k] > 0.01) { rot.globalAlpha = Math.min(1, hot[f.k]); rot.drawImage(faceSprite(f.ch, f.j % 2, 1), 0, 0, PITCH, HF); }
+              if (inWin && mode === 0 && hotK > 0.01) { rot.globalAlpha = Math.min(1, hotK); rot.drawImage(faceSprite(f.ch, f.j % 2, 1), 0, 0, PITCH, HF); }
               rot.restore();
               const quad = [p00, p10, p11, p01];
               const dk = 0.94 * Math.pow(clamp((Math.abs(f.th) * 180 / Math.PI - 7) / 66), 1.1);
               if (dk > 0.01) { quadPath(rot, quad); rot.fillStyle = `rgba(7,5,4,${dk.toFixed(3)})`; rot.fill(); }
               // specular band from the key light above, and the fire bounce from below
-              const sp = 0.26 * Math.exp(-Math.pow((f.th - 0.46) / 0.13, 2)), fb = 0.2 * Math.exp(-Math.pow((f.th + 0.98) / 0.22, 2));
+              const sp = (0.26 + 0.3 * lampK) * Math.exp(-Math.pow((f.th - 0.46) / 0.13, 2)), fb = 0.2 * Math.exp(-Math.pow((f.th + 0.98) / 0.22, 2));
+              // v21 (W6): the bank's work lamp (LAMP: the opening, the tight shot and the ingest): a warm key from above on the front faces
+              const kl = lampK * 0.15 * Math.exp(-Math.pow((f.th - 0.3) / 0.5, 2));
+              if (kl > 0.01) { quadPath(rot, quad); rot.fillStyle = `rgba(255,232,208,${kl.toFixed(3)})`; rot.fill(); }
               if (sp > 0.01) { quadPath(rot, quad); rot.fillStyle = `rgba(255,244,232,${sp.toFixed(3)})`; rot.fill(); }
               if (fb > 0.01) { quadPath(rot, quad); rot.fillStyle = `rgba(232,93,38,${fb.toFixed(3)})`; rot.fill(); }
             }
-            // gear rims between the drums: a band and 4 teeth per face, turning with the drum on their left
-            for (let k = 0; k <= K6; k++) {
-              const xb = k < K6 ? drums[k].x - PITCH / 2 : drums[K6 - 1].x + PITCH / 2, pos = positions[Math.min(k, K6 - 1)];
-              const segs = [];
-              for (let m = 0; m < N * 4; m++) {
-                const a = ((((m / 4 - pos) * da) % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
-                if (Math.abs(a) < 1.5) segs.push(a);
+          };
+          // a toothed gear rim at plane xb of drum k, turning with it
+          const drawRim = (xb, o, pos) => {
+            const segs = [];
+            for (let m = 0; m < N * 4; m++) {
+              const a = ((((m / 4 - pos) * da) % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
+              if (Math.abs(a) < 1.5) segs.push(a);
+            }
+            segs.sort((p, q) => Math.abs(q) - Math.abs(p));
+            const w = da / 8, cp = (x, a, r) => discPt(x, o, a, r);
+            for (const a of segs) {
+              const lit = clamp(0.35 + 0.65 * Math.cos(a - 0.4)) * (1 - 0.8 * clamp((Math.abs(a) - 0.6) / 0.9));
+              quadPath(rot, [cp(xb - 7, a - 2 * w, R + 6), cp(xb + 7, a - 2 * w, R + 6), cp(xb + 7, a + 2 * w, R + 6), cp(xb - 7, a + 2 * w, R + 6)]);
+              rot.fillStyle = `rgb(${Math.round(20 + 60 * lit)},${Math.round(18 + 52 * lit)},${Math.round(15 + 44 * lit)})`; rot.fill();
+              quadPath(rot, [cp(xb - 6, a - w * 0.9, R + 24), cp(xb + 6, a - w * 0.9, R + 24), cp(xb + 6, a + w * 0.9, R + 24), cp(xb - 6, a + w * 0.9, R + 24)]);
+              rot.fillStyle = `rgb(${Math.round(26 + 110 * lit)},${Math.round(24 + 100 * lit)},${Math.round(20 + 88 * lit)})`; rot.fill();
+              rot.lineWidth = 1.2; rot.strokeStyle = "#0b0a09"; rot.stroke();
+            }
+          };
+          const EX = BW / 2 + 10;   // the end discs' planes (assembled)
+          // the parts in axle order: entry wheel, six drums, reflector
+          const PARTS = [{ c: -3.4, k: -1, x: -EX }, ...drums.map((d, k) => ({ c: k - (K6 - 1) / 2, k, x: d.x })), { c: 3.4, k: K6, x: EX }];
+          const drawBank = (T, positions, vel, hot, windowHot, E, F) => {
+            rot.clearRect(0, 0, 1920, 1080);
+            if (!document.fonts.check('900 104px "Barlow"')) return;
+            const offs = PARTS.map((p) => offAt(p.c, p.k, T));
+            const depth = PARTS.map((p, i) => rot3(p.x + offs[i].dx, offs[i].dy, -R + offs[i].dz)[2]);
+            const centre = (i) => project(PARTS[i].x + offs[i].dx, offs[i].dy, -R + offs[i].dz);
+            const order = PARTS.map((_, i) => i).sort((a, b) => depth[a] - depth[b]);
+            const open = E > 0.03 || F > 0;
+            for (const i of order) {
+              const p = PARTS[i], o = offs[i];
+              if (depth[i] > 1450) continue;   // past the lens
+              if (p.k < 0 || p.k >= K6) drawEnd(p.x, o);
+              else {
+                const k = p.k, x0 = p.x - PITCH / 2, x1 = p.x + PITCH / 2;
+                drawShell(k, o, positions[k], vel[k], hot[k]);
+                // the wiring disc on the side facing the lens, once there is a gap to see it through
+                if (open) for (const [xp, side] of [[x0, -1], [x1, 1]]) if (faces(xp, o, side)) drawDisc(xp, o, k, positions[k], hot[k]);
+                drawRim(x0, o, positions[k]);
+                if (k === K6 - 1 || open) drawRim(x1, o, positions[k]);
               }
-              segs.sort((p, q) => Math.abs(q) - Math.abs(p));
-              const w = da / 8;
-              for (const a of segs) {
-                const lit = clamp(0.35 + 0.65 * Math.cos(a - 0.4)) * (1 - 0.8 * clamp((Math.abs(a) - 0.6) / 0.9));
-                const band = [cylR(xb - 7, a - 2 * w, R + 6), cylR(xb + 7, a - 2 * w, R + 6), cylR(xb + 7, a + 2 * w, R + 6), cylR(xb - 7, a + 2 * w, R + 6)];
-                quadPath(rot, band); rot.fillStyle = `rgb(${Math.round(20 + 60 * lit)},${Math.round(18 + 52 * lit)},${Math.round(15 + 44 * lit)})`; rot.fill();
-                const tooth = [cylR(xb - 6, a - w * 0.9, R + 24), cylR(xb + 6, a - w * 0.9, R + 24), cylR(xb + 6, a + w * 0.9, R + 24), cylR(xb - 6, a + w * 0.9, R + 24)];
-                quadPath(rot, tooth); rot.fillStyle = `rgb(${Math.round(26 + 110 * lit)},${Math.round(24 + 100 * lit)},${Math.round(20 + 88 * lit)})`; rot.fill();
-                rot.lineWidth = 1.2; rot.strokeStyle = "#0b0a09"; rot.stroke();
+              // the axle in the gap on this part's nearer side
+              for (const j of [i - 1, i + 1]) {
+                if (j < 0 || j >= PARTS.length || depth[j] < depth[i] || !open) continue;
+                const plane = (n, toward) => PARTS[n].k < 0 || PARTS[n].k >= K6 ? PARTS[n].x : PARTS[n].x + Math.sign(toward - n) * PITCH / 2;
+                const on = (n, x) => project(x + offs[n].dx, offs[n].dy, -R + offs[n].dz);
+                const [ax, ay, af] = on(i, plane(i, j)), [bx, by, bf] = on(j, plane(j, i));
+                rot.lineCap = "butt";
+                for (const [lw, c] of [[34, "#141210"], [20, "#2e2a25"], [4, "rgba(240,236,229,0.3)"]]) {
+                  rot.lineWidth = lw * CAM.s * (af + bf) / 2; rot.strokeStyle = c;
+                  rot.beginPath(); rot.moveTo(ax, ay - (lw === 4 ? 6 * CAM.s * af : 0)); rot.lineTo(bx, by - (lw === 4 ? 6 * CAM.s * bf : 0)); rot.stroke();
+                }
               }
             }
-            // the reading window: glass, fire rails, rotor numbers
-            const W2 = BW / 2 + 24, H2 = HF / 2 + 10;
-            const [ax, ay] = project(-W2, -H2, 12), [bx, by] = project(W2, -H2, 12), [cx, cy] = project(W2, H2, 12), [dx, dy] = project(-W2, H2, 12);
-            quadPath(rot, [[ax, ay], [bx, by], [cx, cy], [dx, dy]]);
-            const gg = rot.createLinearGradient(ax, ay, dx, dy);
-            gg.addColorStop(0, `rgba(255,240,226,${(0.16 + 0.12 * windowHot).toFixed(3)})`); gg.addColorStop(0.35, "rgba(255,240,226,0)"); gg.addColorStop(1, `rgba(255,140,80,${(0.1 + 0.15 * windowHot).toFixed(3)})`);
-            rot.fillStyle = gg; rot.fill();
-            rot.lineCap = "round";
-            for (const [lw, c] of [[18, `rgba(232,93,38,${Math.min(1, 0.25 + 0.3 * windowHot).toFixed(3)})`], [5, "#E85D26"], [1.5, "rgba(255,226,200,0.9)"]]) {
-              rot.lineWidth = lw * CAM.s; rot.strokeStyle = c;
-              rot.beginPath(); rot.moveTo(ax, ay); rot.lineTo(bx, by); rot.moveTo(dx, dy); rot.lineTo(cx, cy); rot.stroke();
+            // the reading window: glass, fire rails, rotor numbers (it spans the opened bank and stays behind when it flies)
+            const wa = 1 - F, o0 = offs[1], o5 = offs[K6];
+            if (wa > 0.01) {
+              rot.globalAlpha = wa;
+              const H2 = HF / 2 + 10, xl = drums[0].x - PITCH / 2 - 24 + o0.dx, xr = drums[K6 - 1].x + PITCH / 2 + 24 + o5.dx;
+              const [ax, ay] = project(xl, -H2, 12), [bx, by] = project(xr, -H2, 12), [cx, cy] = project(xr, H2, 12), [dx, dy] = project(xl, H2, 12);
+              quadPath(rot, [[ax, ay], [bx, by], [cx, cy], [dx, dy]]);
+              const gg = rot.createLinearGradient(ax, ay, dx, dy);
+              gg.addColorStop(0, `rgba(255,240,226,${(0.16 + 0.12 * windowHot).toFixed(3)})`); gg.addColorStop(0.35, "rgba(255,240,226,0)"); gg.addColorStop(1, `rgba(255,140,80,${(0.1 + 0.15 * windowHot).toFixed(3)})`);
+              rot.fillStyle = gg; rot.globalAlpha = wa * (1 - 0.7 * clamp(E)); rot.fill(); rot.globalAlpha = wa;
+              rot.lineCap = "round";
+              for (const [lw, c] of [[18, `rgba(232,93,38,${Math.min(1, 0.25 + 0.3 * windowHot).toFixed(3)})`], [5, "#E85D26"], [1.5, "rgba(255,226,200,0.9)"]]) {
+                rot.lineWidth = lw * CAM.s; rot.strokeStyle = c;
+                rot.beginPath(); rot.moveTo(ax, ay); rot.lineTo(bx, by); rot.moveTo(dx, dy); rot.lineTo(cx, cy); rot.stroke();
+              }
+              rot.font = '600 15px "IBM Plex Mono"'; rot.fillStyle = "rgba(240,236,229,0.55)"; rot.textAlign = "left"; rot.textBaseline = "alphabetic";
+              ["I", "II", "III", "IV", "V", "VI"].forEach((n, k) => { const o = offs[k + 1], [lx, ly] = project(drums[k].x - PITCH / 2 + 22 + o.dx, -H2 - 16 + o.dy, 12 + o.dz); rot.fillText(`ROTOR ${n}`, lx, ly); });
+              rot.globalAlpha = 1;
             }
-            rot.font = '600 15px "IBM Plex Mono"'; rot.fillStyle = "rgba(240,236,229,0.55)"; rot.textAlign = "left"; rot.textBaseline = "alphabetic";
-            ["I", "II", "III", "IV", "V", "VI"].forEach((n, k) => { const [lx, ly] = project(drums[k].x - PITCH / 2 + 22, -H2 - 16, 12); rot.fillText(`ROTOR ${n}`, lx, ly); });
+            return { offs, centre };
           };
 
           // the background: a dark pool behind the machine, big out-of-focus gears clicking on the kicks, hex dust,
@@ -408,17 +562,20 @@
             ({ spr: gearSprite(r, n, i), x, y, a, ratio, step: 360 / n }));
           const dr8 = HR.rng(9911), dust = Array.from({ length: 70 }, () => ({ x: dr8() * 1920, y: dr8() * 1080, r: 1.5 + Math.pow(dr8(), 3) * 14, a: 0.05 + dr8() * 0.16, v: 8 + dr8() * 22, ph: dr8() * 6.3 }));
           const bg = $("f08-bgc").getContext("2d");
-          const drawBg = (t, click, bass) => {
+          const drawBg = (t, click, bass, cv) => {
+            // v21: the far gears and dust drift against the camera (depth behind the bank)
+            // (relative to a steady orbit from the cut to "mine", so the ground matches v20 at both ends)
+            const T = t + T0, px = T < MINE ? -0.35 * cv.ox - 9 * (cv.ry - lerp(-24, 12, (T - T0) / (MINE - T0))) : 0, py = T < MINE ? -0.3 * cv.oy : 0;
             bg.clearRect(0, 0, 1920, 1080);
             const pool = bg.createRadialGradient(BX, BY, 100, BX, BY, 900);
             pool.addColorStop(0, "rgba(232,93,38,0.07)"); pool.addColorStop(1, "rgba(232,93,38,0)");
             bg.fillStyle = pool; bg.fillRect(0, 0, 1920, 1080);
             for (const g of gears) {
-              bg.save(); bg.translate(g.x, g.y); bg.rotate(((click * g.step * g.ratio) / 3 + t * 2 * g.ratio) * Math.PI / 180);
+              bg.save(); bg.translate(g.x + px, g.y + py); bg.rotate(((click * g.step * g.ratio) / 3 + t * 2 * g.ratio) * Math.PI / 180);
               bg.globalAlpha = g.a * (0.85 + 0.3 * bass); bg.drawImage(g.spr, -g.spr.width / 2, -g.spr.height / 2); bg.restore();
             }
             for (const d of dust) {
-              const y = ((d.y - d.v * t) % 1080 + 1080) % 1080, x = d.x + 14 * Math.sin(t * 0.6 + d.ph);
+              const y = ((d.y + py * 1.4 - d.v * t) % 1080 + 1080) % 1080, x0 = d.x + 14 * Math.sin(t * 0.6 + d.ph), x = px ? (((x0 + px * 1.4) % 1920) + 1920) % 1920 : x0;
               bg.fillStyle = `rgba(255,236,214,${(d.a * (0.7 + 0.3 * Math.sin(t * 1.3 + d.ph))).toFixed(3)})`;
               bg.beginPath(); bg.arc(x, y, d.r, 0, 2 * Math.PI); bg.fill();
             }
@@ -427,19 +584,90 @@
             bg.fillStyle = vg; bg.fillRect(0, 0, 1920, 1080);
           };
 
+          // v21 (W6): the foreground — punched paper tapes of ciphertext hanging between the lens and the bank, feeding it.
+          // Cream paper lit by the reading window (paper whites in the dark register), sprocket holes, one hex byte per row;
+          // they advance a row on every kick and sit at their own depth d (1 = the bank's plane), so every camera move
+          // slides them past faster than the bank. They leave past the lens as the camera pushes into "mine".
+          const ROWH = 46;
+          const tapeSprite = (w, seed, blur) => {
+            const rows = 24, H = rows * ROWH, c = document.createElement("canvas"); c.width = w * 2; c.height = H * 2;
+            const x = c.getContext("2d"); x.scale(2, 2); if (blur) x.filter = `blur(${blur}px)`;
+            const r = HR.rng(seed);
+            const pg = x.createLinearGradient(0, 0, w, 0);
+            pg.addColorStop(0, "#b9b2a6"); pg.addColorStop(0.12, "#F3EFE8"); pg.addColorStop(0.8, "#ECE6DC"); pg.addColorStop(1, "#a59d90");
+            x.fillStyle = pg; x.fillRect(0, 0, w, H);
+            for (let i = 0; i < 90; i++) { x.fillStyle = `rgba(120,100,80,${(0.04 + 0.06 * r()).toFixed(3)})`; x.fillRect(r() * w, r() * H, 0.8, 4 + r() * 14); }
+            x.font = `600 ${Math.round(w * 0.3)}px "IBM Plex Mono"`; x.textAlign = "center"; x.textBaseline = "middle";
+            for (let i = 0; i < rows; i++) {
+              const y = i * ROWH + ROWH / 2;
+              x.fillStyle = "#1a1612"; x.beginPath(); x.arc(w * 0.14, y, w * 0.045, 0, 2 * Math.PI); x.fill();
+              for (let b2 = 0; b2 < 3; b2++) if (r() < 0.5) { x.beginPath(); x.arc(w * 0.28 + b2 * w * 0.075, y, w * 0.05, 0, 2 * Math.PI); x.fill(); }
+              x.fillStyle = i % 7 === 3 ? "#D2501E" : "#24201b"; x.fillText(HR.HEX[(r() * 16) | 0] + HR.HEX[(r() * 16) | 0], w * 0.7, y + 1);
+            }
+            return { c, w, H };
+          };
+          // td: when the tape drops in from above (a kick, or one per word of "every byte you": one becomes many); tu: reeled up
+          const TAPES = [{ X: 1692, d: 1.35, w: 92, seed: 61, blur: 0, dir: 1, td: 85.825, tu: 86.966 }, { X: -150, d: 2.3, w: 118, seed: 62, blur: 1.6, dir: -1, td: T0 - 1, tu: SLAMS[0] },
+            { X: 980, d: 1.6, w: 100, seed: 63, blur: 0.8, dir: 1, td: C17 }, { X: 1391, d: 1.15, w: 84, seed: 64, blur: 0, dir: -1, td: 90.36 },
+            { X: 1407, d: 1.4, w: 92, seed: 65, blur: 0, dir: 1, td: 90.84 }];
+          let tapeSpr = null;
+          const tapeBuf = document.createElement("canvas"); tapeBuf.width = 400; tapeBuf.height = 1080;
+          const KSTEP = (T) => KICKS.reduce((v, kt) => v + (T >= kt ? backOut(clamp((T - kt) / 0.14)) : 0), 0);
+          const drawTapes = (T, cv, wy, kick) => {
+            if (!document.fonts.check('600 28px "IBM Plex Mono"')) return;
+            if (!tapeSpr) tapeSpr = TAPES.map((tp) => tapeSprite(tp.w, tp.seed, tp.blur));
+            // the push into "mine" carries the camera through the tapes: they swing out past the frame edges by 92.0
+            const gone = clamp((T - 91.45) / (92.0 - 91.45)), steps = KSTEP(T);
+            TAPES.forEach((tp, i) => {
+              const G = Math.pow(cv.s / 0.98, tp.d) * (1 + 1.2 * gone * gone), W = tp.w * G;
+              const x0 = 1260 + (tp.X - 1260) * G + tp.d * cv.ox + tp.d * 12 * (cv.ry + 24);
+              const xc = x0 + Math.sign(x0 - 1260 - cv.ox) * 1700 * gone * gone;
+              if (xc + W / 2 < 0 || xc - W / 2 > 1920 || W > 900) return;
+              if (T < tp.td) return;
+              // tapes are reeled up out of the frame (tu): the first as the camera dives in, the left one on the slam after "time", clearing the left for L17
+              const drop = -1300 * (1 - backOut(clamp((T - tp.td) / 0.38))) - (tp.tu ? 1300 * Math.pow(clamp((T - tp.tu) / 0.35), 2) : 0);
+              if (drop < -1250) return;
+              const sp = tapeSpr[i], ph = sp.H * G, off = ((tp.dir * (steps * ROWH + 9 * (T - T0)) * G + tp.d * cv.oy) % ph + ph) % ph;
+              // the strip is lit in its own buffer, then laid on the frame
+              const bw = Math.ceil(W) + 2, bx = tapeBuf.getContext("2d");
+              if (tapeBuf.width < bw) tapeBuf.width = bw;
+              bx.setTransform(1, 0, 0, 1, 0, 0); bx.globalCompositeOperation = "source-over"; bx.globalAlpha = 1;
+              bx.clearRect(0, 0, tapeBuf.width, 1080);
+              for (let y = off - ph; y < 1080; y += ph) bx.drawImage(sp.c, 1, y + drop, W, ph);
+              if (drop < 0) bx.clearRect(0, 1080 + drop, tapeBuf.width, -drop);   // the tape's free end, while it drops in or is reeled up
+              // the window's light: a lit band at its height, dark above and below (painted only onto the paper)
+              bx.globalCompositeOperation = "source-atop";
+              for (let y = 0; y < 1080; y += 12) {
+                const a = clamp(0.92 * (1 - Math.exp(-Math.pow((y + 6 - wy) / 300, 2))) - 0.08 * kick);
+                if (a > 0.01) { bx.fillStyle = `rgba(8,6,5,${a.toFixed(3)})`; bx.fillRect(0, y, bw, 12); }
+              }
+              // a fire rim on the side facing the bank
+              const rx = xc < 1260 + cv.ox ? bw - 1 - 3 * G : 1;
+              for (let y = Math.max(0, Math.floor(wy - 420)); y < Math.min(1080, wy + 420); y += 12) {
+                const a = (0.5 + 0.3 * kick) * Math.exp(-Math.pow((y + 6 - wy) / 210, 2));
+                bx.fillStyle = `rgba(255,150,90,${a.toFixed(3)})`; bx.fillRect(rx, y, 3 * G, 12);
+              }
+              bx.globalCompositeOperation = "source-over";
+              vctx.drawImage(tapeBuf, 0, 0, bw, 1080, xc - W / 2 - 1, 0, bw, 1080);
+            });
+          };
+
           // lyric lines: lead words only (the hero words are spelled by the drums)
-          const mkLine = (box, rows2) => rows2.flatMap((words, ri) => {
+          const mkLine = (box, rows2, g = { y0: 173, rh: 96, cw: 46 }) => rows2.flatMap((words, ri) => {
             const row = el("div", "f08-crow", $(box));
             let cx = 0;
-            return words.map(([w, t]) => { const r = { s: el("span", "f08-cw", row, w.toLowerCase()), t: L(t), x: 106 + cx, y: 173 + ri * 96 + 44 };
-              cx += (w.length + 1) * 46; return r; });
+            return words.map(([w, t]) => { const r = { s: el("span", "f08-cw", row, w.toLowerCase()), t: L(t), x: 106 + cx, y: g.y0 + ri * g.rh + g.rh * 0.46, box };
+              cx += (w.length + 1) * g.cw; return r; });
           });
-          const l16 = mkLine("f08-l16", [[["I'll", 85.556], ["wait", 86.04], ["for", 86.354], ["you,", 86.8]], [["I've", 87.391], ["got", 87.86], ["the", 88.14]]]);
+          // v21 (W6): L16 in three poster rows (107 px), so it fits the empty left of the ¾ hero shot
+          const l16 = mkLine("f08-l16", [[["I'll", 85.556], ["wait", 86.04]], [["for", 86.354], ["you,", 86.8]], [["I've", 87.391], ["got", 87.86], ["the", 88.14]]], { y0: 300, rh: 117, cw: 56 });
           const l17 = mkLine("f08-l17", [[["Every", C17], ["byte", 90.36], ["you", 90.84], ["ever", 91.128]], [["sent", 91.367], ["is", 91.991]]]);
           const l18 = mkLine("f08-l18", [[["I'll", C18], ["see", 93.198], ["you", 93.8]]]);
           for (const w of [...l16, ...l17, ...l18]) HR.lead(tl, w.s, w.t);
-          HR.exit(tl, $("f08-l16"), L(C17) - 0.26, { dur: 0.22 });
-          HR.exit(tl, $("f08-l17"), L(C18) - 0.24, { dur: 0.2 });
+          // v17: the lines leave with a soft 0.3 s lift (HR.exit's 10 px blur drop is a snap)
+          // v21 (W6): L16 sinks out as "time" locks (its hero word is spelled by the bank), before the callouts type on
+          tl.fromTo("#f08-l16", { opacity: 1, y: 0, filter: "blur(0px)" }, { opacity: 0, y: 30, filter: "blur(4px)", duration: 0.3, ease: "power2.in", immediateRender: false }, L(TIME) - 0.12);
+          tl.fromTo("#f08-l17", { opacity: 1, y: 0, filter: "blur(0px)" }, { opacity: 0, y: -26, filter: "blur(4px)", duration: 0.3, ease: "power2.in", immediateRender: false }, L(C18) - 0.3);
           const feeds = [...l16, ...l17, ...l18].map((w, i) => ({ ...w, T: w.t + T0, word: w.s.textContent, hex: HR.cipher(6, 900 + i).replace(/(.{2})/g, "$1 ").trim() }));
 
           // the intake vortex (L17): streams of hex bytes converge on the bank's intake and are drawn in
@@ -460,201 +688,8 @@
             return c;
           };
           const vctx = $("f08-vx").getContext("2d"), en = $("f08-en").getContext("2d");
-          // A bounded discharge: attached endpoints, fine branching and a white filament inside fire light.
-          // Geometry is a pure function of the quantized timeline seed, including on reverse seeks.
-          const zap = (ctx, x0, y0, x1, y1, seed, a = 1) => {
-            const r = HR.rng(seed), dx = x1 - x0, dy = y1 - y0, len = Math.hypot(dx, dy) || 1;
-            const pts = Array.from({ length: 17 }, (_, j) => {
-              const u = j / 16, offset = Math.sin(Math.PI * u) * (r() - 0.5) * Math.min(32, len * 0.52);
-              return [x0 + dx * u - dy / len * offset, y0 + dy * u + dx / len * offset];
-            });
-            const stroke = (points, width, color) => {
-              ctx.beginPath(); points.forEach(([x, y], j) => j ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
-              ctx.lineWidth = width; ctx.strokeStyle = color; ctx.stroke();
-            };
-            for (const [w, color] of [[16, `rgba(232,93,38,${0.09 * a})`], [7, `rgba(255,115,45,${0.24 * a})`],
-              [2.8, `rgba(255,190,122,${0.8 * a})`], [1.1, `rgba(255,252,244,${a})`]]) stroke(pts, w, color);
-            for (const j of [5, 11]) {
-              const side = j === 5 ? -1 : 1, p = pts[j], end = pts[Math.min(16, j + 4)];
-              stroke([p, [p[0] + dx * 0.12 + dy / len * side * 18, p[1] + dy * 0.12 - dx / len * side * 18], end],
-                0.8, `rgba(255,218,170,${0.62 * a})`);
-            }
-            // Light falls only onto the contact immediately around each endpoint.
-            for (const [x, y] of [pts[0], pts[16]]) {
-              const g = ctx.createRadialGradient(x, y, 0, x, y, 44);
-              g.addColorStop(0, `rgba(255,174,88,${0.2 * a})`); g.addColorStop(1, "rgba(232,93,38,0)");
-              ctx.fillStyle = g; ctx.fillRect(x - 44, y - 44, 88, 88);
-              ctx.fillStyle = `rgba(255,249,226,${a})`; ctx.beginPath(); ctx.arc(x, y, 2.3, 0, Math.PI * 2); ctx.fill();
-            }
-          };
+          const E8 = window.HR_ENV;
           const rumble = (t, k) => [k * (Math.sin(t * 9.1) * 0.6 + Math.sin(t * 13.7 + 1) * 0.4), k * (Math.sin(t * 10.3 + 2) * 0.6 + Math.sin(t * 15.1) * 0.4)];
-
-
-          // ---- v16 (V16.md §8): the overload. Lightning is drawn lean on one 2D canvas (#f08-lt) as a pure function of
-          // timeline time: seeded midpoint-displacement bolts with forks, re-seeded at ~24 Hz so they flicker, a white
-          // core in a fire halo (a touch of electric blue-white at the very peak of a lock only).
-          const lt = $("f08-lt").getContext("2d");
-          const LW = [1, 1.15, 1.1, 1, 1.5];
-          const W2B = BW / 2 + 24, H2B = HF / 2 + 10;
-          const ovAt = (T) => LOCKS.reduce((m, l, i) => (T >= l ? m + LW[i] * Math.exp(-(T - l) / 0.2) : m), 0);
-          const chargeAt = (T) => { const nl = LOCKS.find((l) => l > T); return nl ? Math.pow(clamp(1 - (nl - T) / 0.65), 2) : 0; };
-          const jag = (r, x0, y0, x1, y1, disp, levels) => {
-            let pts = [[x0, y0], [x1, y1]];
-            for (let l = 0; l < levels; l++) {
-              const n = [pts[0]];
-              for (let i = 1; i < pts.length; i++) {
-                const a = pts[i - 1], b = pts[i], dx = b[0] - a[0], dy = b[1] - a[1], len = Math.hypot(dx, dy) || 1, o = (r() - 0.5) * disp;
-                n.push([(a[0] + b[0]) / 2 - dy / len * o, (a[1] + b[1]) / 2 + dx / len * o], b);
-              }
-              pts = n; disp *= 0.52;
-            }
-            return pts;
-          };
-          const DEPTHW = [1, 0.55, 0.32];
-          const drawBolt = (x0, y0, x1, y1, seed, a, pk, ws = 1) => {
-            const r = HR.rng(seed), groups = [[], [], []];
-            const build = (ax, ay, bx, by, d) => {
-              const L2 = Math.hypot(bx - ax, by - ay); if (L2 < 4) return;
-              const pts = jag(r, ax, ay, bx, by, Math.min(0.3 * L2, 140), d ? 3 : 6);
-              groups[d].push(pts);
-              if (d < 2) {
-                const nb = d ? 1 : 4, base = Math.atan2(by - ay, bx - ax);
-                for (let q = 0; q < nb; q++) {
-                  const p = pts[(2 + r() * (pts.length - 5)) | 0], ang = base + (r() < 0.5 ? -1 : 1) * (0.3 + 0.6 * r()), bl = L2 * (d ? 0.12 : 0.16 + 0.28 * r());
-                  build(p[0], p[1], p[0] + Math.cos(ang) * bl, p[1] + Math.sin(ang) * bl, d + 1);
-                }
-              }
-            };
-            build(x0, y0, x1, y1, 0);
-            for (let d = 0; d < 3; d++) {
-              if (!groups[d].length) continue;
-              const passes = [[14, 0.1, "232,93,38"], [6, 0.28, "255,120,48"], [2.6, 0.85, "255,206,150"], [1.2, 1, "255,255,255"]];
-              if (pk > 0.03) passes.splice(2, 0, [8, 0.4 * pk, "150,190,255"]);
-              for (const [w, al, c] of passes) {
-                lt.beginPath();
-                for (const pts of groups[d]) pts.forEach(([x, y], j) => (j ? lt.lineTo(x, y) : lt.moveTo(x, y)));
-                lt.lineWidth = Math.max(0.6, w * DEPTHW[d] * ws); lt.strokeStyle = `rgba(${c},${Math.min(1, al * a).toFixed(3)})`; lt.stroke();
-              }
-            }
-          };
-          const railPt = (k, sg) => project(drums[k].x, sg * (HF / 2 + 34), 15);
-          // edge targets: top and right for the upper rails, bottom/right/left-low for the lower ones (the lyric corner stays clear)
-          const edgePt = (r, sg, j) => {
-            const s = sg < 0 ? [0, 1][j % 2] : [1, 2, 3][j % 3];
-            if (s === 0) return [1000 + r() * 900, -40];
-            if (s === 1) return [1960, 60 + r() * 900];
-            if (s === 2) return [250 + r() * 1650, 1120];
-            return [-40, 620 + r() * 400];
-          };
-          const edgeGlow = (x, y, a, pk) => {
-            const gx = Math.max(-60, Math.min(1980, x)), gy = Math.max(-60, Math.min(1140, y)), g = lt.createRadialGradient(gx, gy, 0, gx, gy, 150);
-            g.addColorStop(0, `rgba(${pk > 0.3 ? "255,230,220" : "255,190,130"},${(0.5 * a).toFixed(3)})`); g.addColorStop(1, "rgba(232,93,38,0)");
-            lt.fillStyle = g; lt.fillRect(gx - 150, gy - 150, 300, 300);
-          };
-          // the window's cracks: seeded in window-local bank units, one star per lock, growing in the first 0.1 s and staying
-          const cracks = LOCKS.map((_, i) => {
-            const r = HR.rng(333 + i * 17), ix = (r() - 0.5) * BW * 0.8, iy = (r() - 0.5) * H2B * 0.7, n = 7 + i, out = [];
-            for (let q = 0; q < n; q++) {
-              let x = ix, y = iy, a = (q / n) * Math.PI * 2 + r() * 0.6; const len = 60 + r() * 200, pts = [[x, y]];
-              for (let s = 0; s < 4; s++) { a += (r() - 0.5) * 0.9; x = clamp(x + Math.cos(a) * len / 4, -W2B, W2B); y = clamp(y + Math.sin(a) * len / 4 * 0.45, -H2B, H2B); pts.push([x, y]); }
-              out.push(pts);
-            }
-            return out;
-          });
-          const drawStorm = (T, ke, kseed) => {
-            lt.clearRect(0, 0, 1920, 1080);
-            lt.save(); lt.globalCompositeOperation = "lighter"; lt.lineCap = "round"; lt.lineJoin = "round";
-            const ov = ovAt(T), o = Math.min(1, ov), [cx, cy] = project(0, 0, 14);
-            const pkAll = Math.min(1, LOCKS.reduce((m, l, i) => (T >= l ? m + LW[i] * Math.exp(-(T - l) / 0.07) : m), 0));
-            if (o > 0.02) {
-              // lamp bloom, the window flaring white, an anamorphic streak, a wash of fire over the whole frame
-              let g = lt.createRadialGradient(cx, cy, 0, cx, cy, 950);
-              g.addColorStop(0, `rgba(255,176,104,${(0.38 * o).toFixed(3)})`); g.addColorStop(0.35, `rgba(232,93,38,${(0.22 * o).toFixed(3)})`); g.addColorStop(1, "rgba(232,93,38,0)");
-              lt.fillStyle = g; lt.fillRect(0, 0, 1920, 1080);
-              if (pkAll > 0.02) {
-                g = lt.createRadialGradient(cx, cy, 0, cx, cy, 560);
-                g.addColorStop(0, `rgba(190,215,255,${(0.34 * pkAll).toFixed(3)})`); g.addColorStop(1, "rgba(150,190,255,0)");
-                lt.fillStyle = g; lt.fillRect(0, 0, 1920, 1080);
-              }
-              g = lt.createLinearGradient(0, cy - 100, 0, cy + 100);
-              g.addColorStop(0, "rgba(255,226,196,0)"); g.addColorStop(0.5, `rgba(255,226,196,${(0.28 * o).toFixed(3)})`); g.addColorStop(1, "rgba(255,226,196,0)");
-              lt.fillStyle = g; lt.fillRect(0, cy - 100, 1920, 200);
-              lt.fillStyle = `rgba(255,252,246,${(0.8 * o).toFixed(3)})`; lt.fillRect(0, cy - 3 * o, 1920, 6 * o);
-              const q = [project(-W2B, -H2B, 13), project(W2B, -H2B, 13), project(W2B, H2B, 13), project(-W2B, H2B, 13)];
-              quadPath(lt, q); lt.fillStyle = `rgba(255,246,232,${(0.16 * o).toFixed(3)})`; lt.fill();
-              lt.fillStyle = `rgba(232,93,38,${(0.1 * o).toFixed(3)})`; lt.fillRect(0, 0, 1920, 1080);
-            }
-            // the cracks in the reading glass (they stay, cooling)
-            LOCKS.forEach((l, i) => {
-              const age = T - l; if (age < 0) return;
-              const g = clamp(age / 0.1), al = 0.2 + 0.8 * Math.exp(-age / 0.5);
-              for (const [w, c] of [[7, `rgba(255,120,48,${(0.3 * al).toFixed(3)})`], [1.6, `rgba(255,242,228,${al.toFixed(3)})`]]) {
-                lt.beginPath();
-                for (const pts of cracks[i]) {
-                  const nseg = (pts.length - 1) * g;
-                  for (let s = 0; s < pts.length && s <= Math.ceil(nseg); s++) {
-                    let [x, y] = pts[s];
-                    if (s > nseg) { const p = pts[s - 1]; x = p[0] + (x - p[0]) * (nseg - (s - 1)); y = p[1] + (y - p[1]) * (nseg - (s - 1)); }
-                    const [px, py] = project(x, y, 12); s ? lt.lineTo(px, py) : lt.moveTo(px, py);
-                  }
-                }
-                lt.lineWidth = w; lt.strokeStyle = c; lt.stroke();
-              }
-            });
-            // the charge-up: electricity crawls out of the seams and feelers reach for the frame edge
-            const cp = chargeAt(T);
-            if (cp > 0.02) {
-              const nl = LOCKS.find((l) => l > T), step = Math.floor(T * 20), r = HR.rng(step * 53 + Math.round(nl * 10));
-              for (let k = 0; k < K6 - 1; k++) for (const sg of [-1, 1]) {
-                if (r() > cp * 1.2) continue;
-                const seam = drums[k].x + PITCH / 2, [px, py] = project(seam, sg * (HF / 2 + 34), 15), [tx, ty] = project(seam + (r() - 0.5) * 2 * PITCH, sg * (HF / 2 - 20 - r() * 150), 14);
-                drawBolt(px, py, tx, ty, 17000 + step * 31 + k * 7 + sg, 0.3 + 0.6 * cp, 0, 0.55);
-              }
-              const nf = Math.floor(cp * 3.4);
-              for (let j = 0; j < nf; j++) {
-                const k = (r() * K6) | 0, sg = r() < 0.5 ? -1 : 1, [sx, sy] = railPt(k, sg), [ex, ey] = edgePt(r, sg, j), fr = 0.2 + 0.6 * cp;
-                const tx = sx + (ex - sx) * fr, ty = sy + (ey - sy) * fr;
-                drawBolt(sx, sy, tx, ty, 18000 + step * 29 + j * 13, 0.35 + 0.5 * cp, 0, 0.7);
-                if (cp > 0.6) edgeGlow(tx, ty, 0.35 * cp, 0);
-              }
-            }
-            // the strikes: screen-wide bolts from the rails to the frame edges and arcs jumping rotor to rotor
-            LOCKS.forEach((l, i) => {
-              const age = T - l; if (age < 0 || age > 0.62) return;
-              const step = Math.floor(age * 24), pk = Math.exp(-age / 0.07), a = Math.min(1, LW[i] * Math.exp(-age / 0.3) * (0.75 + 0.25 * HR.rng(step * 7 + i)())), r = HR.rng(i * 1009 + step * 31 + 7);
-              if (a < 0.06) return;
-              for (let j = 0; j < 6; j++) {
-                const k = (r() * K6) | 0, sg = r() < 0.5 ? -1 : 1, [sx, sy] = railPt(k, sg), [ex, ey] = edgePt(r, sg, j);
-                drawBolt(sx, sy, ex, ey, i * 7919 + step * 131 + j * 17, a, pk, 0.9 + 0.35 * LW[i]);
-                edgeGlow(ex, ey, a, pk);
-              }
-              for (let j = 0; j < 4; j++) {
-                const k1 = (r() * K6) | 0, k2 = (k1 + 1 + ((r() * (K6 - 1)) | 0)) % K6, s1 = r() < 0.5 ? -1 : 1, s2 = r() < 0.7 ? -s1 : s1, [ax, ay] = railPt(k1, s1), [bx, by] = railPt(k2, s2);
-                drawBolt(ax, ay, bx, by, i * 6151 + step * 97 + j * 11, a * 0.95, pk, 1.1);
-              }
-            });
-            // a rotor-to-rotor arc on every kick, so the bank never sits still
-            if (ke > 0.15) {
-              const r = HR.rng(kseed * 41 + 3), k1 = (r() * K6) | 0, k2 = (k1 + 1 + ((r() * 2) | 0)) % K6, s1 = r() < 0.5 ? -1 : 1, [ax, ay] = railPt(k1, s1), [bx, by] = railPt(k2, -s1);
-              drawBolt(ax, ay, bx, by, 21000 + kseed * 7 + Math.floor(T * 24), 0.55 * ke, 0, 0.8);
-            }
-            // spark showers
-            LOCKS.forEach((l, i) => {
-              const age = T - l; if (age < 0 || age > 1.2) return;
-              const r = HR.rng(i * 771 + 5);
-              const hotP = [], coolP = [];
-              for (let q = 0; q < 64; q++) {
-                const k = (r() * K6) | 0, sg = r() < 0.5 ? -1 : 1, [ox2, oy2] = railPt(k, sg), ang = -Math.PI / 2 * sg + (r() - 0.5) * 2.6, v = 500 + 1300 * r() * LW[i], life = 0.45 + 0.7 * r();
-                if (age > life) continue;
-                const vx = Math.cos(ang) * v, vy = Math.sin(ang) * v, x = ox2 + vx * age, y = oy2 + vy * age + 1500 * age * age, tx = vx * 0.03, ty = (vy + 3000 * age) * 0.03;
-                (age < life * 0.3 ? hotP : coolP).push([x, y, x - tx, y - ty, 1 - age / life]);
-              }
-              for (const [list, c] of [[coolP, "255,150,70"], [hotP, "255,246,230"]]) for (const [x, y, xt, yt, al] of list) {
-                lt.strokeStyle = `rgba(${c},${al.toFixed(3)})`; lt.lineWidth = 2.4; lt.beginPath(); lt.moveTo(xt, yt); lt.lineTo(x, y); lt.stroke();
-              }
-            });
-            lt.restore();
-          };
 
           // ---- the camera: a slow orbit for L16, a push in for the intake, a cut to a low close angle for L18 -------
           const camT = { ry: -24, rx: 8, s: 0.98, roll: 0 };
@@ -665,9 +700,30 @@
           tl.set(camT, { ry: 30, rx: -16, s: 1.06 }, L(C18));
           tl.fromTo(camT, { ry: 30, rx: -16, s: 1.06 }, { ry: 18, rx: -10, s: 1.12, duration: HOOK - C18, ease: "sine.inOut", immediateRender: false }, L(C18) + 0.001);
           tl.set("#f08-ch", { opacity: 0 }, L(HOOK));
+          // v21 (W6): before "mine" the camera is a pure function of track time, three framings on the downbeats: the ¾ hero
+          // (85.147, opens exactly as v20 on "later·"), tight along the reading window (86.966, tracking along the letters),
+          // the orbit to the front landing on "time" (88.068 → 88.52), and a pull back on 90.626 that pushes into "mine",
+          // where it hands over to camT's 92.22 values exactly. o = screen offset of the bank, roll in degrees.
+          const quadIn = (x) => x * x;
+          const track = (v0, evs) => keyed([[T0 - 1, v0, 0.001, sine], ...evs.map(([t, to, d, ez]) => [t, to, d, ez ?? sine])]);
+          const CT = {
+            ry: track(-24, [[T0, -14, 1.75], [86.966, -40, 0.5], [87.466, -33, 0.6], [88.068, -6, 0.45], [88.52, -3, 1.42], [89.946, 3, 0.68], [90.626, 6, 0.5], [91.13, 12, MINE - 91.13, quadIn]]),
+            rx: track(8, [[T0, 6, 1.75], [86.966, 11, 0.5], [87.466, 9, 0.6], [88.068, 4, 0.45], [89.946, 3, 0.68], [90.626, 6, 0.5], [91.13, 2, MINE - 91.13, quadIn]]),
+            s: track(0.98, [[T0, 1.06, 1.75], [86.966, 1.8, 0.5], [87.466, 1.9, 0.6], [88.068, 0.98, 0.45], [88.52, 1.0, 1.42], [89.946, 1.05, 0.68], [90.626, 0.88, 0.5], [91.13, 1.1, MINE - 91.13, quadIn]]),
+            ox: track(0, [[86.966, -300, 0.5], [87.466, -440, 0.6], [88.068, 0, 0.45]]),
+            oy: track(0, [[86.966, -120, 0.5], [88.068, 0, 0.45], [90.626, 30, 0.5], [91.13, 0, MINE - 91.13, quadIn]]),
+            roll: track(0, [[86.966, 1.6, 0.5], [88.068, 0, 0.45], [91.13, -2.5, MINE - 91.13, quadIn]]),
+          };
+          // L16's place: the empty left in the ¾ shot, the lower left (over the shaded lower drums) in the tight shot
+          const L16Y = track(0, [[86.966, 340, 0.5]]);
+          // the work lamp over the bank warms up from the cut, stutters on the first snare, is full on the first kick, dims as
+          // the camera orbits to "time", comes back on with the slam after it and goes dark just before "mine" locks (its flare takes over)
+          const LAMP = track(0, [[T0 + 0.02, 1.15, 0.28, outC], [85.58, 0.45, 0.05], [85.66, 0.9, 0.06], [85.825, 1.1, 0.12, outC], [88.068, 0, 0.45],
+            [SLAMS[0], 0.9, 0.25, outC], [91.95, 0, 0.27]]);
 
           // ---- v12: the hook, four full-bleed shots over the old g2 (which stays hidden) -----------------------
-          const HK = [96.82, 97.653, 98.68, 99.28].map(L), HKEND = DUR;
+          // v17: shot 3 now cuts on the strong kick 98.392 (was 98.68, on nothing); the other cuts are the hook's sung words
+          const HK = [96.82, 97.653, 98.392, 99.28].map(L);
           const hshots = ["f08-h1", "f08-h2", "f08-h3", "f08-h4"].map($);
           const hr8 = HR.rng(9081);
           // v16: hero words are thrown in with WOW.explode (shockwave, rays, shards, shake); the settle's blur is cleared monotonically
@@ -690,14 +746,14 @@
             sv("path", hrings, { d: `M${(HCX + Math.cos(a) * r0).toFixed(1)} ${(HCY + Math.sin(a) * r0).toFixed(1)}L${(HCX + Math.cos(a) * r1).toFixed(1)} ${(HCY + Math.sin(a) * r1).toFixed(1)}`,
               stroke: "#E85D26", "stroke-width": 2, opacity: 0.4 });
           }
-          const SW0 = -120, SWW = 840; // sweep start angle (deg, clockwise from up) and speed (deg/s)
+          const SW0 = -120, SWW = 480; // sweep start angle (deg, clockwise from up) and speed (deg/s); v17: 840 → 480, a calmer beam
           const hglyphs = Array.from({ length: 150 }, (_, i) => {
             const b = el("b", "", $("f08-hglyphs"), HR.cipher(2, 3300 + i));
             const th = hr8() * 360, r = 260 + hr8() * 820;
             const pass = HK[0] + (((th - SW0) % 360) + 360) % 360 / SWW;
             return { b, th, r, pass };
           });
-          xplode($("f08-hw1"), HK[0], { parent: $("f08-hfx1"), x: 960, y: 560, seed: 11, pre: 0.16, r: 1500, rays: 22, burst: 18, shake: $("f08-hc1"), amp: 18 });
+          xplode($("f08-hw1"), HK[0], { parent: $("f08-hfx1"), x: 960, y: 560, seed: 11, pre: 0.16, r: 1500, rays: 22, burst: 18, shake: $("f08-hc1"), amp: 8 });
           // shot 2: a burst of ink lines, a live timestamp
           const hburst = $("f08-hburst");
           const burstG = sv("g", hburst, { transform: "translate(960 560)" });
@@ -706,11 +762,13 @@
             sv("path", burstG, { d: `M${(Math.cos(a) * r0).toFixed(1)} ${(Math.sin(a) * r0 * 0.7).toFixed(1)}L${(Math.cos(a) * r1).toFixed(1)} ${(Math.sin(a) * r1 * 0.7).toFixed(1)}`,
               stroke: k % 5 ? "#111111" : "#E85D26", "stroke-width": (4 + hr8() * 10).toFixed(1), "stroke-linecap": "round" });
           }
-          xplode($("f08-hw2w"), HK[1], { parent: $("f08-hfx2"), x: 940, y: 560, seed: 12, pre: 0.1, r: 1500, rays: 22, burst: 16, color: "17,17,17", shake: $("f08-hc2"), amp: 20 });
+          xplode($("f08-hw2w"), HK[1], { parent: $("f08-hfx2"), x: 940, y: 560, seed: 12, pre: 0.1, r: 1500, rays: 22, burst: 16, color: "17,17,17", shake: $("f08-hc2"), amp: 8 });
           tl.fromTo("#f08-hflash", { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, HK[1]);
           // shot 3: hex resolves to "decrypt" under a flare
           $("f08-hghost").textContent = Array.from({ length: 15 }, (_, i) => HR.cipher(64, 3500 + i).replace(/(.{4})/g, "$1 ")).join("\n");
-          HR.decrypt(tl, $("f08-hw3"), L(98.8), { dur: 0.12, seed: 44 });
+          // v17: "decrypt" stands as seven scrambling cipher slots from the cut (98.392) and resolves left to right on its word (98.8)
+          const dcG = HR.glyphs($("f08-hw3")), DCT = L(98.8) - 0.04;
+          dcG.forEach((g) => { g.dataset.ch = g.textContent; });
           tl.fromTo("#f08-hflare", { opacity: 0, scaleX: 0.15 }, { opacity: 1, scaleX: 1, duration: 0.07, ease: "power3.out", immediateRender: false }, L(98.8) - 0.02);
           tl.fromTo("#f08-hflare", { opacity: 1, scaleY: 1 }, { opacity: 0.25, scaleY: 0.4, duration: 0.45, ease: "power2.out", immediateRender: false }, L(98.8) + 0.05);
           tl.fromTo("#f08-hbloom", { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "power2.out", immediateRender: false }, L(98.8) - 0.02);
@@ -725,11 +783,12 @@
           });
           tl.fromTo("#f08-hw3", { scale: 1.08 }, { scale: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, L(98.8));
           // shot 4: the lockup lands on "later" with a chromatic split, then punches into the cut
-          xplode($("f08-hlater"), HK[3], { parent: $("f08-hfx4"), x: 1290, y: 660, seed: 13, pre: 0.1, r: 1400, rays: 22, burst: 18, shake: $("f08-hc4"), amp: 18 });
+          xplode($("f08-hlater"), HK[3], { parent: $("f08-hfx4"), x: 1290, y: 660, seed: 13, pre: 0.1, r: 1400, rays: 22, burst: 18, shake: $("f08-hc4"), amp: 8 });
           tl.fromTo("#f08-hlr", { x: -18, y: -6 }, { x: 0, y: 0, duration: 0.22, ease: "power3.out", immediateRender: false }, HK[3]);
           tl.fromTo("#f08-hlb", { x: 18, y: 6 }, { x: 0, y: 0, duration: 0.22, ease: "power3.out", immediateRender: false }, HK[3]);
-          tl.fromTo(["#f08-hlr", "#f08-hlb"], { opacity: 1 }, { opacity: 0, duration: 0.22, ease: "power2.in", immediateRender: false }, HK[3]);
-          tl.fromTo("#f08-hc4", { scale: 1, filter: "blur(0px)" }, { scale: 1.16, filter: "blur(6px)", duration: 0.11, ease: "power3.in", immediateRender: false }, HKEND - 0.11);
+          // v17: the split fades out from the word (power2.out), not in a late drop at 99.4; no yank into the cut — a slow push to the end
+          tl.fromTo(["#f08-hlr", "#f08-hlb"], { opacity: 0.85 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, HK[3]);
+          tl.fromTo("#f08-hc4", { scale: 1 }, { scale: 1.05, duration: DUR - HK[3], ease: "none", immediateRender: false }, HK[3]);
           // cuts, and a punch on the snare inside shot 1 and on the kicks inside shot 2
           tl.set("#f08-hk", { opacity: 1 }, HK[0]);
           hshots.forEach((s, i) => {
@@ -741,26 +800,21 @@
           tl.fromTo(hcam, { z2: 1.0 }, { z2: 1.1, duration: HK[2] - HK[1], ease: "none", immediateRender: false }, HK[1]);
           tl.fromTo(hcam, { z3: 1.04 }, { z3: 1.0, duration: HK[3] - HK[2], ease: "power2.out", immediateRender: false }, HK[2]);
 
-          // ---- v16: the overload's DOM layer (shockwaves, rays, shards, flashes, shake, kick pulses on the whole bank) ----
-          const cam = $("f08-cam"), fx = $("f08-fx"), chEl = $("f08-ch");
+          // ---- v19: the bank's DOM layer: a kick pulse, and a small recoil on each pop and on each slam (no rings,
+          // rays, flashes or shakes: the light and the sparks come from the machine, on the canvases)
+          const cam = $("f08-cam"), chEl = $("f08-ch");
           WOW.pulse(tl, cam, { kind: "kick", amt: 0.022, y: 5, decay: 0.15 });
-          LOCKS.forEach((lk, i) => {
-            const t = L(lk), big = i === 4, k = LW[i];
-            WOW.shake(tl, cam, t, { amp: 22 * k, dur: 0.55, rot: 1.1 * k, seed: 5 + i });
-            WOW.punch(tl, cam, t, { s: big ? 1.1 : 1.06, dur: 0.5 });
-            WOW.shock(tl, fx, { x: BX, y: BY, t, r: 1500, n: 3, w: 8, color: "fire", dur: 0.7, gap: 0.07 });
-            WOW.rays(tl, fx, { x: BX, y: BY, t, n: 18, r0: 140, r1: 1300, seed: 60 + i, color: i % 2 ? "cream" : "fire", dur: 0.5, w: 5 });
-            WOW.burst(tl, fx, { x: BX, y: BY, t, n: 14, speed: 1400, size: [5, 14], seed: 80 + i, dur: 0.9, gravity: 900 });
-            WOW.flash(tl, chEl, t, { a: big ? 0.55 : 0.3, dur: 0.14, color: big ? "cream" : "fire" });
-          });
+          for (const [p] of POPS) WOW.punch(tl, cam, L(p), { s: 1.035, dur: 0.4 });
+          for (const s of SLAMS) WOW.punch(tl, cam, L(s), { s: 1.025, dur: 0.3 });
           // the hook: a punch and a spark of shake on every kick, rings on shot 1's hits, a signature burst at each word
           const HKT = HK.concat([DUR]);
           const hcs = ["f08-hc1", "f08-hc2", "f08-hc3", "f08-hc4"].map($), hfx = ["f08-hfx1", "f08-hfx2", "f08-hfx3", "f08-hfx4"].map($);
           HR.onsetsIn("kick", HOOK, T0 + DUR).forEach((kt, n) => {
             const t = L(kt), si = Math.max(0, HKT.findIndex((x, j) => t >= x && t < HKT[j + 1]));
-            if (t < HK[0] - 0.01) return;
-            WOW.punch(tl, hcs[si], t, { s: 1.045, dur: 0.26 });
-            WOW.shake(tl, hcs[si], t, { amp: 6, dur: 0.2, seed: 30 + n });
+            // v17: no punch on a kick that is itself a cut (98.392) or the frame's last instant (99.749); shake only on the downbeat
+            if (t < HK[0] - 0.01 || HKT.some((x) => Math.abs(t - x) < 0.05)) return;
+            WOW.punch(tl, hcs[si], t, { s: 1.035, dur: 0.3 });
+            if (E8.downbeats.some((d) => Math.abs(d - kt) < 0.02)) WOW.shake(tl, hcs[si], t, { amp: 5, dur: 0.3, seed: 30 + n });
             if (si === 0) WOW.shock(tl, hfx[0], { x: HCX, y: HCY, t, r: 1200, n: 1, w: 4, color: "fire", dur: 0.45 });
             if (si === 3) WOW.shock(tl, hfx[3], { x: 1290, y: 660, t, r: 900, n: 1, w: 4, color: "fire", dur: 0.4 });
           });
@@ -770,22 +824,29 @@
           WOW.shock(tl, hfx[2], { x: 960, y: 552, t: L(98.8), r: 1700, n: 3, w: 8, color: "fire", dur: 0.6, gap: 0.06 });
           WOW.rays(tl, hfx[2], { x: 960, y: 552, t: L(98.8), n: 30, r0: 260, r1: 1400, seed: 26, color: "cream", dur: 0.5, w: 6 });
           WOW.burst(tl, hfx[2], { x: 960, y: 552, t: L(98.8), n: 24, speed: 1500, size: [6, 16], seed: 27, dur: 0.9, gravity: 700 });
-          WOW.flash(tl, $("f08-h3"), L(98.8), { color: "cream", a: 0.55, dur: 0.16 });
-          WOW.shake(tl, hcs[2], L(98.8), { amp: 24, dur: 0.4, seed: 29 });
+          WOW.flash(tl, $("f08-h3"), L(98.8), { color: "cream", a: 0.3, dur: 0.16 });
+          WOW.shake(tl, hcs[2], L(98.8), { amp: 8, dur: 0.4, seed: 29 });
           WOW.punch(tl, hcs[2], L(98.8), { s: 1.08, dur: 0.4 });
           WOW.flash(tl, $("f08-h4"), HK[3], { color: "fire", a: 0.28, dur: 0.16 });
-          // in-frame cuts: the outgoing shot is yanked away in its last 0.14 s (the incoming shot lands on its word time, undisturbed)
-          WOW.transition(tl, hshots[0], { out: "zoom", dur: 0.14, total: HK[1] });
-          WOW.transition(tl, hshots[1], { out: "whipL", dur: 0.14, total: HK[2] });
-          WOW.transition(tl, hshots[2], { out: "spin", dur: 0.14, total: HK[3] });
+          // v17 switches (one beat, 0.46 s, each side; the move carries through the cut): the chorus dives into the reading
+          // window → shot 1 (pushIn, cut on "harvest"); shot 1 pulls back to "now," (pullOut); shot 2 glides off from the
+          // downbeat 97.937 and cuts on the kick 98.392 (glideL); shot 3 pushes into the lockup (pushIn, cut on "later");
+          // the frame ends on a hard cut (the music stops).
+          chEl.style.transformOrigin = `${BX}px ${BY}px`;
+          WOW.transition(tl, chEl, { out: "pushIn", dur: 0.46, total: HK[0] });
+          const SW = ["pushIn", "pullOut", "glideL", "pushIn"];
+          hshots.forEach((sh, i) => WOW.transition(tl, sh, { in: SW[i], out: SW[i + 1], dur: 0.46, start: HK[i], total: HK[i + 1] }));
 
           tl.set({}, {}, DUR);
 
           // ---- per-frame draw -------------------------------------------------------------------------------
           function render() {
             const t = tl.time(), T = t + T0, dark = T >= HOOK;
+            curT = T; lampK = T < MINE ? LAMP(T) : 0;
             HR.draw(tl);
             WOW.draw(tl, T0);
+            // v17: an in-move never blurs the hero word landing on its cut (the blur stays on the outgoing approach)
+            hshots.forEach((sh, i) => { if (t >= HK[i] && t < HK[i] + 0.46 && (i === 3 || t < HK[i + 1] - 0.46)) sh.style.filter = ""; });
             if (!dark) {
               const kick = HR.hit("kick", T, 0.14), b = HR.band("bass", T);
               $("f08-cwall").style.transform = `translateX(${(-14 * t).toFixed(1)}px)`;
@@ -796,84 +857,100 @@
               if ($("f08-kick").textContent !== kk) $("f08-kick").textContent = kk;
               // the bank and its drums
               const lock = Math.max(...LOCKS.map((l) => env(T - l, 0.22)));
-              CAM.rx = camT.rx; CAM.ry = camT.ry; const ovv = Math.min(1.6, ovAt(T)), chg = chargeAt(T);
-              CAM.s = camT.s * (1 + 0.012 * kick + 0.045 * lock);
+              const E = EXP(T), F = FLY(T), Ec = FIT(T);
+              // v19: the camera makes room for the opened bank (eases back, recentres) and recoils on each pop and slam
+              const hitE = Math.max(0, ...POPS.map(([p]) => env(T - p, 0.12)), ...SLAMS.map((s) => env(T - s, 0.1)));
+              const cv = T < MINE ? { rx: CT.rx(T), ry: CT.ry(T), s: CT.s(T), ox: CT.ox(T), oy: CT.oy(T), roll: CT.roll(T) } : { ...camT, ox: 0, oy: 0 };
+              CAM.rx = cv.rx; CAM.ry = cv.ry;
+              const pu = PUSH(T);
+              CAM.s = cv.s * (1 + 0.012 * kick + 0.03 * hitE) * (1 - 0.17 * Ec) * (1 + 0.3 * pu);
+              CAM.bx = BX + cv.ox - (270 - 120 * pu) * Ec; CAM.by = BY + cv.oy + 40 * Ec;
+              $("f08-l16").style.translate = `0px ${L16Y(T).toFixed(1)}px`;
               const ks = HR.onsetsIn("kick", T0 - 0.5, T + 0.001), kl = ks[ks.length - 1] ?? T0, ki = ks.length;
               const kq = clamp((T - kl) / 0.16), click = ki - 1 + (1 + 2.2 * Math.pow(kq - 1, 3) + 1.2 * Math.pow(kq - 1, 2));
-              drawBg(t, click, b);
+              drawBg(t, click, b, cv);
               // a locked word burns white-hot in the window, then settles to a held glow
               const si = SEGS.findIndex((s) => T < s[2]), holding = si > 0 && SEGS[si][0] === "hold" ? 1 : 0;
               const li = LOCKS.reduce((m, l, i) => (T >= l ? i : m), -1), lage = li >= 0 ? T - LOCKS[li] : 9;
               const heat = holding * (0.4 + 0.6 * Math.exp(-lage / 0.45) + 0.15 * kick);
               const pos = drums.map((_, k) => posAt(k, T)), vel = drums.map((_, k) => Math.abs(pos[k] - posAt(k, T - 1 / 60)) * 60);
-              drawBank(pos, vel, drums.map(() => heat + 0.6 * ovv), Math.min(3, heat + 1.6 * ovv));
+              const bank = drawBank(T, pos, vel, drums.map(() => heat), Math.min(3, heat + 0.8 * hitE), E, F);
               const ing = T > C17 && T < C18 ? Math.pow(clamp((T - C17) / (MINE - C17)), 2) : 0;
-              const [rx, ry] = rumble(t, 0.8 + 1.5 * kick + 5 * ing + 14 * lock + 8 * chg);
-              $("f08-cam").style.transform = `translate(${rx.toFixed(2)}px, ${ry.toFixed(2)}px) rotate(${camT.roll.toFixed(3)}deg)`;
-              const [ix, iy] = project(-BW / 2 - 40, 0, 12), [ox, oy] = project(BW / 2 + 40, 0, 12), [mx, my, mf] = project(0, 0, 12);
+              const [rx, ry] = rumble(t, 0.8 + 1.5 * kick + 4 * ing + 3 * hitE);
+              $("f08-cam").style.transform = `translate(${rx.toFixed(2)}px, ${ry.toFixed(2)}px) rotate(${cv.roll.toFixed(3)}deg)`;
+              const [ix, iy] = project(-BW / 2 - 40, 0, 12), [ox, oy] = project(BW / 2 + 40, 0, 12), [, , mf] = project(0, 0, 12);
 
-              // light: the window glows (and flares as a word locks); contacts arc between the rotors on the kicks;
-              // a shockwave on each lock; the intake glows during the ingest
+              // the callouts: deadpan labels on hairline leaders while the bank is open (they type on as it opens)
+              const ca = clamp((E - 0.35) / 0.3) * (1 - clamp(F * 3));
+              if (ca > 0.01) {
+                const { offs, centre } = bank;
+                const vis = (k) => { const p = PARTS[k + 1], o = offs[k + 1], x0 = p.x - PITCH / 2; return faces(x0, o, -1) ? x0 : p.x + PITCH / 2; };
+                const [m3x, m3y] = centre(3), [m4x, m4y] = centre(4), [rfx, rfy] = centre(PARTS.length - 1);
+                const [e0x, e0y] = centre(0), [d0x, d0y] = centre(1);
+                const CALLS = [
+                  [[(e0x + d0x) / 2, (e0y + d0y) / 2], "AXLE · STILL TURNING", 0],
+                  [discPt(vis(2), offs[3], -1.25, R - 30), "ROTOR III · 24 CONTACTS", 0],
+                  [discPt(vis(4), offs[5], -1.2, RC + 34), "SPRING · DO NOT LOSE", 0],
+                  [discPt(PARTS[PARTS.length - 1].x, offs[PARTS.length - 1], 1.2, R + 20), "REFLECTOR · NO LETTER EVER BECOMES ITSELF", 1]];
+                rot.save(); rot.font = '600 18px "IBM Plex Mono"'; rot.letterSpacing = "2px"; rot.textBaseline = "alphabetic"; rot.lineCap = "round";
+                let nextX = 96;
+                const laid = CALLS.map(([[ax, ay], txt, top]) => {
+                  const w = rot.measureText(txt).width;
+                  if (top) return { ax, ay, txt, w, lx: clamp(ax - w + 40, 1000, 1824 - w), ly: 158 };
+                  const lx = clamp(Math.max(ax - w / 2, nextX), 96, 1824 - w); nextX = lx + w + 48;
+                  return { ax, ay, txt, w, lx, ly: 1040 };
+                });
+                for (const { ax, ay, txt, w, lx, ly } of laid) {
+                  const shown = txt.slice(0, Math.ceil(txt.length * clamp(ca * 1.6))), ex = clamp(ax, lx, lx + w);
+                  rot.globalAlpha = ca;
+                  rot.strokeStyle = "rgba(240,236,229,0.6)"; rot.lineWidth = 1.5;
+                  rot.beginPath(); rot.moveTo(ax, ay); rot.lineTo(ex, ly + (ly > 540 ? -26 : 10)); rot.stroke();
+                  rot.beginPath(); rot.moveTo(lx, ly + (ly > 540 ? -26 : 10)); rot.lineTo(lx + w, ly + (ly > 540 ? -26 : 10)); rot.stroke();
+                  rot.fillStyle = "#E85D26"; rot.beginPath(); rot.arc(ax, ay, 4.5, 0, 2 * Math.PI); rot.fill();
+                  rot.fillStyle = "rgba(240,236,229,0.92)"; rot.textAlign = "left"; rot.fillText(shown, lx, ly);
+                }
+                rot.restore();
+              }
+
+              // light: the window glows (and flares as a word locks); the intake glows during the ingest
               en.clearRect(0, 0, 1920, 1080);
               en.save(); en.globalCompositeOperation = "lighter"; en.lineCap = "round";
               for (const [lw, a] of [[42, 0.035], [16, 0.065], [4, 0.1]]) {
-                en.strokeStyle = `rgba(255,170,110,${(a * (0.8 + 0.5 * b + 1.4 * lock + ing)).toFixed(3)})`; en.lineWidth = lw * CAM.s * mf;
+                en.strokeStyle = `rgba(255,170,110,${(a * (0.8 + 0.5 * b + 1.4 * lock + ing) * (1 - F)).toFixed(3)})`; en.lineWidth = lw * CAM.s * mf;
                 en.beginPath(); en.moveTo(ix, iy); en.lineTo(ox, oy); en.stroke();
               }
-              const ke = env(T - kl, 0.14);
-              const nextLock = LOCKS.find((l) => l > T), charge = nextLock ? clamp(1 - (nextLock - T) / 0.48) : 0;
-              const arcPower = Math.min(1, 0.35 * ke + 0.62 * charge + 0.95 * lock + 0.32 * ing);
-              if (arcPower > 0.05) {
-                const phase = Math.floor(T * 18);
-                for (let k = 0; k < K6 - 1; k++) for (const sg of [-1, 1]) {
-                  if (lock < 0.08 && (k + phase + (sg + 1) / 2) % 3 === 0) continue;
-                  const seam = drums[k].x + PITCH / 2, railY = sg * (HF / 2 + 34);
-                  const [ax, ay] = project(seam - 24, railY, 15), [bx, by] = project(seam + 24, railY, 15);
-                  // The contacts are physically fixed to the reading rail; the filament alone writhes.
-                  zap(en, ax, ay, bx, by, 6001 + phase * 37 + k * 113 + sg * 7, arcPower);
-                  if (charge > 0.15 || lock > 0.1 || ing > 0.2) {
-                    const th = sg * (0.2 + 0.4 * (0.5 + 0.5 * Math.sin(t * 3 + k))),
-                      p = cylR(seam, th, R + 24), end = project(seam, sg * (HF / 2 + 10), 13);
-                    zap(en, p[0], p[1], end[0], end[1], 9101 + phase * 53 + k * 71 + sg * 11, arcPower * 0.7);
-                  }
-                }
-              }
-              // the lock: a light sweep across the window, sparks from the seams, a glowing echo of the word
-              const W2 = BW / 2 + 24, H2 = HF / 2 + 10;
+              // the lock: a glint sweeps the window glass
+              const W2 = BW / 2 + 24 + 2.5 * GAP * clamp(E, 0, 1.4), H2 = HF / 2 + 10;
               if (li >= 0 && lage < 0.9) {
                 const u = clamp(lage / 0.34), xb = -W2 - 90 + (2 * W2 + 180) * (1 - Math.pow(1 - u, 2));
                 if (u < 1) {
                   const q = [project(xb - 15, -H2, 13), project(xb + 15, -H2, 13), project(xb + 15, H2, 13), project(xb - 15, H2, 13)];
                   const lg = en.createLinearGradient(q[0][0], q[0][1], q[1][0], q[1][1]);
-                  lg.addColorStop(0, "rgba(255,240,226,0)"); lg.addColorStop(0.5, `rgba(255,250,244,${(0.75 * (1 - u)).toFixed(3)})`); lg.addColorStop(1, "rgba(255,240,226,0)");
+                  lg.addColorStop(0, "rgba(255,240,226,0)"); lg.addColorStop(0.5, `rgba(255,250,244,${(0.6 * (1 - u)).toFixed(3)})`); lg.addColorStop(1, "rgba(255,240,226,0)");
                   quadPath(en, q); en.fillStyle = lg; en.fill();
-                  const p = project(xb, -H2 - 8, 14), r = project(xb, H2 + 8, 14);
-                  for (const [width, alpha] of [[9, 0.16], [3, 0.55], [1, 0.95]]) {
-                    en.lineWidth = width; en.strokeStyle = `rgba(255,231,200,${alpha * (1 - u)})`;
-                    en.beginPath(); en.moveTo(p[0], p[1]); en.lineTo(r[0], r[1]); en.stroke();
-                  }
                 }
-                // the locked letters flare: a soft bloom on each, in place (no offset copy)
-                const word = LWORDS[li], fl = Math.exp(-lage / 0.3);
-                en.textAlign = "center"; en.textBaseline = "middle"; en.font = `900 ${(104 * CAM.s * mf).toFixed(1)}px "Barlow"`;
-                en.shadowColor = "rgba(255,150,80,1)"; en.shadowBlur = 50 * CAM.s; en.fillStyle = `rgba(255,220,190,${(0.5 * fl).toFixed(3)})`;
-                drums.forEach((dr, k) => { const ch = word[k]; if (ch === "·") return; const [px, py] = project(dr.x + RIM / 2, 4, 0); en.fillText(ch, px, py); });
-                en.shadowBlur = 0;
-                en.lineCap = "round";
-                for (let s2 = 0; s2 <= K6; s2++) for (const sg of [-1, 1]) {
-                  const sxw = -BW / 2 + s2 * PITCH, [px, py] = project(sxw, sg * H2, 13);
-                  const r8 = HR.rng(li * 911 + s2 * 37 + (sg + 1) * 5);
-                  for (let q = 0; q < 3; q++) {
-                    const vx = (r8() - 0.5) * 560, vy = sg * (100 + 280 * r8()), life = 0.2 + 0.24 * r8(); if (lage > life) continue;
-                    const xx = px + vx * lage, yy = py + vy * lage + 1600 * lage * lage;
-                    en.strokeStyle = `rgba(255,${Math.round(200 + 50 * r8())},${Math.round(150 + 80 * r8())},${(1 - lage / life).toFixed(3)})`; en.lineWidth = 2.2;
-                    en.beginPath(); en.moveTo(xx, yy); en.lineTo(xx - vx * 0.025, yy - (vy + 3200 * lage) * 0.025); en.stroke();
+              }
+              // sparks: out of the opening gaps on each pop, squirting from the seams on each slam (hot white, more of them)
+              const seamPts = (sg) => PARTS.slice(0, -1).map((p, i) => {
+                const q = PARTS[i + 1], a = bank.offs[i], c = bank.offs[i + 1], xa = p.k < 0 ? p.x : p.x + PITCH / 2, xc = q.k >= K6 ? q.x : q.x - PITCH / 2;
+                return project((xa + a.dx + xc + c.dx) / 2, sg * (HF / 2 + 34) + (a.dy + c.dy) / 2, 15 + (a.dz + c.dz) / 2);
+              });
+              const sparkEv = POPS.map(([p], i) => [p, 3, 300 + i, 0]).concat(SLAMS.map((s, i) => [s, 7, 700 + i, 1]));
+              for (const [t0, n, seed, hotS] of sparkEv) {
+                const age = T - t0; if (age < 0 || age > 1.1 || t0 >= HOOK - 0.3) continue;
+                const r8 = HR.rng(seed * 31 + 7);
+                for (const sg of [-1, 1]) seamPts(sg).forEach(([px, py, pf]) => {
+                  for (let q = 0; q < n; q++) {
+                    const vx = (r8() - 0.5) * (hotS ? 900 : 520), vy = sg * (160 + (hotS ? 520 : 300) * r8()), life = (hotS ? 0.35 : 0.28) + 0.4 * r8(); if (age > life) continue;
+                    const sc = Math.min(2, pf * CAM.s), xx = px + vx * age * sc, yy = py + (vy * age + 1500 * age * age) * sc, fade = 1 - age / life;
+                    en.strokeStyle = hotS && age < life * 0.35 ? `rgba(255,248,236,${fade.toFixed(3)})` : `rgba(255,${Math.round(150 + 70 * r8())},${Math.round(70 + 60 * r8())},${fade.toFixed(3)})`;
+                    en.lineWidth = 2.4; en.beginPath(); en.moveTo(xx, yy); en.lineTo(xx - vx * 0.028 * sc, yy - (vy + 3000 * age) * 0.028 * sc); en.stroke();
                   }
-                }
+                });
               }
               // light spilling from the window over the drums: soft shafts above and below
               {
-                const wl = 0.06 + 0.05 * b + 0.12 * heat + 0.1 * ing + 0.3 * Math.min(1, ovv);
+                const wl = (0.06 + 0.05 * b + 0.12 * heat + 0.1 * ing + 0.2 * hitE) * (1 - F);
                 for (const sg of [-1, 1]) {
                   const p0 = project(-W2, sg * H2, 13), p1 = project(W2, sg * H2, 13), p2 = project(W2 + 60, sg * (H2 + 155), 13), p3 = project(-W2 - 60, sg * (H2 + 155), 13);
                   const lg = en.createLinearGradient(0, p0[1], 0, p3[1]);
@@ -887,14 +964,14 @@
                 en.fillStyle = g; en.fillRect(ix - 320, iy - 320, 640, 640);
               }
               en.restore();
-              drawStorm(T, ke, ki);
 
               // the feed: each lead word drops into the intake, and a hex fragment flies out of the far end to the count
               if (!atlas && document.fonts.check('600 52px "IBM Plex Mono"')) atlas = mkAtlas();
               vctx.clearRect(0, 0, 1920, 1080);
               const [cx2, cy2] = [1640, 92];
+              const vxOn = false;   // v21: the v19 feed layer (lead words, hex fragments, cable, intake vortex) was never on screen; it stays off
               // the data cable from the bank's output to the counter: a glowing line with packets flowing along it
-              {
+              if (vxOn) {
                 const c1x = ox + 120, c1y = oy - 40, c2x = cx2 + 40, c2y = cy2 + 260, flow = 0.25 + 0.45 * ing + 0.3 * env(T - kl, 0.2);
                 vctx.lineCap = "round";
                 for (const [lw, c] of [[10, "rgba(17,17,17,0.55)"], [3, `rgba(255,170,110,${flow.toFixed(3)})`]]) {
@@ -907,10 +984,10 @@
                 vctx.setLineDash([]);
               }
               vctx.textAlign = "center"; vctx.textBaseline = "middle";
-              for (const f of feeds) {
+              for (const f of vxOn ? feeds : []) {
                 const u1 = (T - (f.T + 0.12)) / 0.42;
                 if (u1 > 0 && u1 < 1) {
-                  const e = u1 * u1 * (3 - 2 * u1), qx = lerp(f.x + 40, ix, e), qy = lerp(f.y, iy, e) - Math.sin(Math.PI * e) * 120;
+                  const e = u1 * u1 * (3 - 2 * u1), qx = lerp(f.x + 40, ix, e), qy = lerp(f.y + (f.box === "f08-l16" ? L16Y(f.T + 0.12) : 0), iy, e) - Math.sin(Math.PI * e) * 120;
                   vctx.globalAlpha = 0.85 * (1 - 0.6 * e);
                   vctx.font = `800 ${(40 - 22 * e).toFixed(1)}px "Barlow"`; vctx.fillStyle = "#F0ECE5";
                   vctx.fillText(f.word, qx, qy);
@@ -925,7 +1002,7 @@
               }
               vctx.globalAlpha = 1;
               // the intake vortex and the ciphertext pouring out
-              if (atlas && T > V0 && T < MINE + 0.05) {
+              if (vxOn && atlas && T > V0 && T < MINE + 0.05) {
                 const at = (p, T2) => {
                   const a = (Math.min(T2, MINE) - p.b) / p.life;
                   const r = p.R0 * Math.pow(Math.max(0, 1 - a), 1.7);
@@ -961,6 +1038,7 @@
                 }
                 vctx.globalAlpha = 1;
               }
+              if (T < MINE) drawTapes(T, cv, iy, kick);
             }
             if (dark) {
               // the hook: punch envelopes per shot (snare in shot 1, kicks in shot 2)
@@ -980,7 +1058,9 @@
                 const r = g.r * (1 - 0.9 * e), a = (g.th * Math.PI) / 180;
                 const lit = t >= g.pass ? 1 - p : 0;
                 g.b.style.transform = `translate(${(HCX + Math.sin(a) * r - 24).toFixed(1)}px, ${(HCY - Math.cos(a) * r - 18).toFixed(1)}px) scale(${(1 + 0.8 * lit).toFixed(3)})`;
-                g.b.style.opacity = (t < g.pass ? 0.28 : 1 - e).toFixed(3);
+                // v17: the calm zone — a glyph fades out as it nears the word's ellipse, so none crosses the letters
+                const gx = HCX + Math.sin(a) * r, gy = HCY - Math.cos(a) * r, calm = clamp((Math.hypot((gx - 960) / 800, (gy - 590) / 250) - 1) / 0.35);
+                g.b.style.opacity = ((t < g.pass ? 0.28 : 1 - e) * calm).toFixed(3);
                 g.b.style.color = lit > 0.5 ? "#FFF0E2" : "#E85D26";
               }
               HR.glow($("f08-hw1"), T, 0.5, 0.8);
@@ -990,6 +1070,15 @@
               burstG.setAttribute("opacity", (0.15 + 0.85 * kp).toFixed(3));
               const ms = Math.max(0, Math.floor((T - 97.653) * 1000));
               $("f08-htsv").textContent = `14:02:${String(7 + Math.floor(ms / 1000)).padStart(2, "0")}.${String(ms % 1000).padStart(3, "0")}`;
+              // shot 3: cipher slots scramble from the cut and resolve left to right on the word (first glyph 0.04 s early)
+              const scr = Math.floor(t * 12);
+              dcG.forEach((g, i) => {
+                const done = t >= DCT + i * 0.014, ch = done ? g.dataset.ch : HR.HEX[(i * 5 + scr * 7 + ((scr * i) % 5)) % 16];
+                if (g.textContent !== ch) g.textContent = ch;
+                g.classList.toggle("hr-hex", !done);
+                g.style.color = done ? "" : "var(--fire)";
+                g.style.fontSize = done ? "" : "0.82em"; // mono slots are wider than the Barlow word
+              });
               // shot 3: the ghost hex drifts
               $("f08-hghost").style.transform = `translateX(${(-90 * (t - HK[2])).toFixed(1)}px)`;
             }

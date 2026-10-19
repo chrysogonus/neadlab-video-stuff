@@ -332,8 +332,11 @@
       const id = s.idle;
       const breath = Math.sin(T * 2.3 + seed) * 1.6 * id;
       // micro-saccades: the gaze steps to a new nearby point every ~0.7 s
-      const k = Math.floor(T / 0.7 + seed * 0.37);
-      const sx = (hash(k + seed * 13) - 0.5) * 0.22 * id, sy = (hash(k * 1.7 + seed * 7) - 0.5) * 0.16 * id;
+      // v19: each step eases over ~70 ms and is smaller (instant ±0.11 steps added to darting)
+      const sq = T / 0.7 + seed * 0.37, k = Math.floor(sq), se = Math.min(1, (sq - k) * 0.7 / 0.07), su = se * se * (3 - 2 * se);
+      const sac = (n) => [(hash(n + seed * 13) - 0.5) * 0.12, (hash(n * 1.7 + seed * 7) - 0.5) * 0.1];
+      const [s0x, s0y] = sac(k - 1), [s1x, s1y] = sac(k);
+      const sx = (s0x + (s1x - s0x) * su) * id, sy = (s0y + (s1y - s0y) * su) * id;
       // blinks: deterministic, every ~3–4.5 s, with an occasional double
       const per = 3.6, ph = ((T + seed * 1.37) % per + per) % per, bi = Math.floor((T + seed * 1.37) / per);
       const tri = (q) => (q < 0 ? 0 : q < 0.055 ? q / 0.055 : q < 0.15 ? 1 - (q - 0.055) / 0.095 : 0);

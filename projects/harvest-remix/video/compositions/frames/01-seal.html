@@ -8,7 +8,10 @@
          v11: the outbox under the envelope (a-to-b mail, SENDING -> SENT on the stamp) opens the bookend 15 closes.
          SYSTEM.md v4 reference frame.
          v13 (SYSTEM.md V7): black ground, no ghost wall / ghost copies / bokeh; no orange flip on the stamp, the seal's
-         light rakes the card instead; the outbox footer plants TLS 1.3 · X25519 · FORWARD SECRECY (22 strikes it). -->
+         light rakes the card instead; the outbox footer plants TLS 1.3 · X25519 · FORWARD SECRECY (22 strikes it).
+         v20 (V20.md #2): the dolly runs from frame one; "decrypt later" encrypts in groups on the pad's hits (0.97–2.27,
+         done before the first wave instead of over 1.9–4.25); a hot drip falls into the pool on the 2.269 kick; four
+         copies peel off the letter on the build's hits (4.47–5.65). v19: backups/v19-sources/. -->
   </head>
   <body>
     <template>
@@ -55,6 +58,18 @@
           letter-spacing: 0.14em; color: var(--cream-muted); white-space: nowrap; }
         #f01-tls b { font-weight: 600; color: var(--cream); }
         #f01-tls i { font-style: normal; color: var(--fire); }
+        /* v18: the handshake ticks one item per pad hit */
+        #f01-tls span { color: var(--cream-hint); }
+        #f01-tls span i { display: inline-block; opacity: 0; margin-left: 6px; }
+        /* v18: postmarks, struck on the three kicks after the seal (fire ink pressed into the paper) */
+        .f01-pm { position: absolute; width: 0; height: 0; opacity: 0; }
+        .f01-pm svg { position: absolute; left: -84px; top: -84px; width: 168px; height: 168px; overflow: visible; mix-blend-mode: multiply; }
+        /* v18: the plant — a second outline of the letter peels off behind it in the snare fill */
+        #f01-ghost { position: absolute; left: 0; top: 0; width: 646px; height: 404px; opacity: 0; pointer-events: none;
+          border: 2px dashed rgba(240, 236, 229, 0.7); box-sizing: border-box; }
+        #f01-ghost svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #f01-ghost b { position: absolute; left: 0; top: -34px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 17px;
+          letter-spacing: 0.16em; color: var(--fire); white-space: nowrap; }
         #f01-label { position: absolute; left: 0; top: 426px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 15px;
           letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); white-space: nowrap; }
         /* the seal sits on the flap's point */
@@ -112,6 +127,7 @@
         <div class="hr-layer" id="f01-streams" data-depth="0.5" data-layout-ignore></div>
         <div data-hf-id="hf-pokw" class="hr-layer" id="f01-mid" data-depth="0.65">
           <div data-hf-id="hf-pmsn" id="f01-cardpos">
+            <div id="f01-ghost" data-layout-ignore><svg viewBox="0 0 646 404" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 L323 202 L646 0" fill="none" stroke="rgba(240,236,229,0.6)" stroke-width="2" stroke-dasharray="8 6"/></svg><b>COPY 1/1 · JUST IN CASE</b></div>
             <div data-hf-id="hf-dsib" id="f01-card">
               <svg data-hf-id="hf-xby7" class="f01-flap" id="f01-flap" viewBox="0 0 576 360" preserveAspectRatio="none">
                 <defs data-hf-id="hf-mh0t">
@@ -136,6 +152,7 @@
               </svg>
               <div data-hf-id="hf-moja" id="f01-rake"></div>
               <div data-hf-id="hf-m3t4" id="f01-hex"></div>
+              <div id="f01-pms" data-layout-ignore></div>
               <div data-hf-id="hf-3gac" id="f01-sealpos">
                 <div data-hf-id="hf-ts50" id="f01-flare" data-layout-ignore></div>
                 <div data-hf-id="hf-skci" id="f01-spokes"></div>
@@ -161,7 +178,7 @@
               </div>
             </div>
             <div data-hf-id="hf-ch6k" id="f01-label">OBJ 0001 · OPEN</div>
-            <div data-hf-id="hf-qnwl" id="f01-tls"><b data-hf-id="hf-beoe">TLS 1.3</b> · X25519 · FORWARD SECRECY <i data-hf-id="hf-q7i5">✓</i></div>
+            <div data-hf-id="hf-qnwl" id="f01-tls"><span id="f01-t1">TLS 1.3<i>✓</i></span> · <span id="f01-t2">X25519<i>✓</i></span> · <span id="f01-t3">FORWARD SECRECY<i>✓</i></span></div>
             <svg data-hf-id="hf-k2fc" id="f01-outbox" viewBox="0 0 646 100" aria-hidden="true">
               <defs data-hf-id="hf-ws6g">
                 <linearGradient data-hf-id="hf-anaq" id="f01-obg" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-i3x1" offset="0" stop-color="#22221f"/><stop data-hf-id="hf-e5a6" offset="1" stop-color="#171716"/></linearGradient>
@@ -220,7 +237,7 @@
           const DUR = 7.96;
           const STAMP = 6.117; // the first kick
           const RINGS = [6.439, 6.737, 7.044];
-          const FILL = [7.036, 7.175, 7.338, 7.477, 7.593, 7.732, 7.918];
+          const FILL = [7.022, 7.172, 7.325, 7.477, 7.629, 7.778, 7.94].filter((t) => t < 7.96 - 0.05); // the snare/hat fill (HR_ENV onsets)
           const $ = (id) => document.getElementById(id);
           const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
           const h01 = (a, b) => HR.rng(a * 7919 + b * 104729 + 13)();
@@ -321,11 +338,16 @@
           const cam = stage.cam;
           cam.focus = 0.35;
 
-          // the camera: one slow dolly over the pad, a kick on the stamp, a lean through the fill
-          tl.fromTo(cam, { z: 1, x: 18 }, { z: 1.05, x: -6, duration: STAMP, ease: "sine.inOut" }, 0);
-          tl.fromTo(cam, { z: 1.05, rot: 0 }, { z: 1.09, rot: -0.5, duration: 0.06, ease: "power3.out", immediateRender: false }, STAMP);
-          tl.fromTo(cam, { z: 1.09, rot: -0.5 }, { z: 1.065, rot: 0, duration: 0.55, ease: "elastic.out(1, 0.5)", immediateRender: false }, STAMP + 0.06);
-          tl.fromTo(cam, { z: 1.065, x: -6 }, { z: 1.085, x: -20, duration: DUR - STAMP - 0.61, ease: "power2.in", immediateRender: false }, STAMP + 0.61);
+          // v18 (V18.md §01): the poster holds one bar, then a dolly you can see, accelerating into the letter and its outbox
+          // (mid layer ×1 → ×1.6 on the stamp); the title is foreground and leaves the frame on the left. aim(P, s): the camera
+          // that puts mid-layer point P at the frame's centre with the mid layer at scale s.
+          const DM = 0.65, aim = (P, s) => ({ z: 1 + (s - 1) / DM, x: (s * (P[0] - 960)) / DM, y: (s * (P[1] - 540)) / DM });
+          const C0 = { z: 1, x: 18, y: 0 }, C1 = aim([1509, 640], 1.6), C2 = aim([1509, 600], 1.74);
+          // v20 (V20.md #2): the dolly runs from frame one (it starts at 0.2× its average speed and accelerates into the stamp)
+          tl.fromTo(cam, C0, { ...C1, duration: STAMP, ease: (u) => 0.2 * u + 0.8 * u * u }, 0);
+          tl.fromTo(cam, { rot: 0 }, { rot: -0.5, duration: 0.06, ease: "power3.out", immediateRender: false }, STAMP);
+          tl.fromTo(cam, { rot: -0.5 }, { rot: 0, duration: 0.55, ease: "elastic.out(1, 0.5)", immediateRender: false }, STAMP + 0.06);
+          tl.fromTo(cam, C1, { ...C2, duration: DUR - STAMP, ease: "power1.inOut", immediateRender: false }, STAMP);
           tl.fromTo("#f01-wall", { x: 0 }, { x: -120, duration: DUR, ease: "none" }, 0);
           tl.fromTo("#f01-near", { x: 0 }, { x: -260, duration: DUR, ease: "none" }, 0);
           tl.fromTo("#f01-ghosts", { x: 0, y: 0 }, { x: -70, y: -14, duration: DUR, ease: "none" }, 0);
@@ -413,65 +435,104 @@
             });
           }
 
-          // the pad's three soft events: sweep, glyph wave, tilt of the letter, embers
-          sweep(0.12);
+          // ---- v17 (V17.md §01): one continuous build over the pad; the music's own events stay small; the stamp is the hit ----
+          // the pad's three events (two downbeats and the soft kick): a small glyph wave and a thin ring — no shakes.
+          // v18: no light sweeps over the poster (they read as glitches); the camera is the build.
           [0.498, 2.269, 4.253].forEach((t, k) => {
-            const amp = [8, 12, 16][k];
-            wave(t, amp); shakeAll(t, [4, 6, 8][k], 0.32); WOW.punch(tl, $("f01-mid"), t, { s: 1.025, dur: 0.4 });
-            WOW.shock(tl, fx, { x: SEAL.x, y: SEAL.y, t, r: 520 + k * 120, n: 1, w: 3, color: "fire", dur: 0.7 });
-            WOW.rays(tl, fx, { x: SEAL.x, y: SEAL.y, t, n: 12 + k * 4, r0: 120, r1: 700, seed: 40 + k, color: "cream", dur: 0.5 });
-            if (k) sweep(t - 0.05);
+            wave(t, [6, 8, 10][k]);
+            WOW.punch(tl, $("f01-mid"), t, { s: 1.012, dur: 0.7 });
+            WOW.shock(tl, fx, { x: SEAL.x, y: SEAL.y, t, r: 420 + k * 80, n: 1, w: 2, color: "fire", dur: 1.0 });
           });
-          tl.fromTo("#f01-cardpos", { rotationY: 0, transformPerspective: 1400 }, { rotationY: -15, duration: 0.5, ease: "power2.out", immediateRender: false }, 1.25);
-          tl.fromTo("#f01-cardpos", { rotationY: -15 }, { rotationY: 0, duration: 0.9, ease: "elastic.out(1, 0.5)", immediateRender: false }, 1.75);
-          tl.fromTo("#f01-cardpos", { rotationX: 0 }, { rotationX: 10, duration: 0.4, ease: "power2.out", immediateRender: false }, 3.4);
-          tl.fromTo("#f01-cardpos", { rotationX: 10 }, { rotationX: 0, duration: 0.9, ease: "elastic.out(1, 0.5)", immediateRender: false }, 3.8);
-          [1.0, 1.9, 3.0, 3.7, 4.6].forEach((t, k) => WOW.burst(tl, fx, { x: SEAL.x, y: SEAL.y + 20, t, n: 10, speed: 520, size: [4, 9], gravity: -260, spread: 150, aim: -90, seed: 70 + k, dur: 1.2 }));
-          WOW.pulse(tl, $("f01-title"), { band: "bass", amt: 0.03, y: 4 });
-          WOW.pulse(tl, $("f01-title"), { kind: "kick", amt: 0.05, y: 8 });
-          WOW.pulse(tl, $("f01-cardpos"), { band: "bass", amt: 0.02 });
-
-          // the build: bursts of speed lines and tremors tighten toward the stamp, and the camera dollies in
-          [[5.15, 4], [5.45, 6], [5.7, 9], [5.88, 12], [6.0, 16]].forEach(([t, a], k) => {
-            shakeAll(t, a, 0.28);
-            WOW.rays(tl, fx, { x: SEAL.x, y: SEAL.y, t, n: 14 + k * 3, r0: 160, r1: 900, seed: 80 + k, color: k < 3 ? "fire" : "cream", dur: 0.4 });
-            WOW.shock(tl, fx, { x: SEAL.x, y: SEAL.y, t, r: 380, n: 1, w: 3, color: "cream", dur: 0.4 });
+          // v18: the handshake ticks on the pad's own hits; the send steps forward with them
+          const TICKS = [[2.269, "#f01-t1"], [4.472, "#f01-t2"], [5.651, "#f01-t3"]];
+          TICKS.forEach(([t, id]) => {
+            tl.fromTo(id, { color: "#505048" }, { color: "#F0ECE5", duration: 0.25, ease: "power2.out", immediateRender: false }, t);
+            tl.fromTo(id + " i", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)", immediateRender: false }, t);
           });
-          tl.fromTo(cam, { x: -6 }, { x: -2, duration: 0.9, ease: "power3.in", immediateRender: false }, 5.2);
+          const SEND = [[1.906, 0.08], [2.269, 0.3], [4.472, 0.6], [5.651, 0.86], [STAMP, 1]];
+          const sendAt = (t) => { let v = 0; for (const [a, p] of SEND) { const prev = v; if (t >= a) v = prev + (p - prev) * Math.min(1, (t - a) / 0.22); } return v; };
+          // v18: three postmarks on the three kicks after the seal (card coordinates)
+          const PMS = [[6.439, 486, 118, -11, "TUE 09 MAR 2021", "A-TO-B MAIL"], [6.737, 548, 262, 8, "14:02 GMT", "SENT · TLS 1.3"], [7.044, 136, 318, -6, "A. → B.", "OBJ 0001"]];
+          PMS.forEach(([t, x, y, rot, mid, ring], k) => {
+            const pm = el("div", "f01-pm", $("f01-pms"));
+            Object.assign(pm.style, { left: x + "px", top: y + "px" });
+            const id = `f01-pmp${k}`;
+            pm.innerHTML = `<svg viewBox="-84 -84 168 168"><defs><path id="${id}" d="M-58 0 A58 58 0 1 1 58 0 A58 58 0 1 1 -58 0"/></defs>` +
+              `<g fill="none" stroke="#C8481A" opacity="0.88"><circle r="72" stroke-width="4"/><circle r="44" stroke-width="2"/>` +
+              `<path d="M80 -14 h70 M80 0 h84 M80 14 h70 M-80 -14 h-56 M-80 0 h-70 M-80 14 h-56" stroke-width="3"/></g>` +
+              `<text font-family="IBM Plex Mono" font-weight="600" font-size="13" letter-spacing="2.4" fill="#C8481A" opacity="0.9"><textPath href="#${id}">${ring} · ${ring} ·</textPath></text>` +
+              `<text y="5" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="13.5" fill="#C8481A">${mid}</text></svg>`;
+            tl.fromTo(pm, { opacity: 0, scale: 1.35, rotation: rot - 8 }, { opacity: 1, scale: 0.97, rotation: rot, duration: 0.07, ease: "power2.in", immediateRender: false }, t - 0.07);
+            tl.fromTo(pm, { scale: 0.97 }, { scale: 1, duration: 0.25, ease: "power2.out", immediateRender: false }, t);
+          });
+          // v18: the plant — in the snare fill a second outline of the letter peels off behind it, labelled, and is gone
+          tl.fromTo("#f01-ghost", { opacity: 0, x: 0, y: 0, rotation: 0 }, { opacity: 1, x: -150, y: 70, rotation: -3, duration: 0.3, ease: "power2.out", immediateRender: false }, 7.325);
+          tl.fromTo("#f01-ghost", { opacity: 1 }, { opacity: 0, x: -230, y: 110, duration: 0.3, ease: "power2.in", immediateRender: false }, 7.629);
+          // the letter sways once, slowly, over the whole pad (no elastic flips)
+          tl.fromTo("#f01-cardpos", { rotationY: 0, rotationX: 0, transformPerspective: 1400 }, { rotationY: -9, rotationX: 4, duration: 3.0, ease: "sine.inOut", immediateRender: false }, 0.2);
+          tl.fromTo("#f01-cardpos", { rotationY: -9, rotationX: 4 }, { rotationY: 0, rotationX: 0, duration: 2.8, ease: "sine.inOut", immediateRender: false }, 3.2);
+          // embers rise from the wax on the strong hats: slow, small
+          [0.966, 1.427, 2.139, 4.835, 5.166].forEach((t, k) => WOW.burst(tl, fx, { x: SEAL.x, y: SEAL.y + 20, t, n: 8, speed: 170, size: [3, 7], gravity: -120, spread: 120, aim: -90, seed: 70 + k, dur: 2.2 }));
+          WOW.pulse(tl, $("f01-title"), { band: "bass", amt: 0.012, y: 2 });
+          WOW.pulse(tl, $("f01-title"), { kind: "kick", amt: 0.04, y: 6 });
+          WOW.pulse(tl, $("f01-cardpos"), { band: "bass", amt: 0.01 });
 
-          // 6.117: the detonation
-          shakeAll(STAMP, 30, 0.6);
-          WOW.punch(tl, document.getElementById("el-01-seal"), STAMP, { s: 1.06, dur: 0.5 });
-          WOW.shock(tl, fx, { x: SEAL.x, y: SEAL.y, t: STAMP, r: 1500, n: 3, w: 9, color: "fire", dur: 0.7, gap: 0.07 });
-          WOW.rays(tl, fx, { x: SEAL.x, y: SEAL.y, t: STAMP, n: 34, r0: 100, r1: 1400, seed: 91, color: "cream", dur: 0.6, w: 6 });
-          WOW.burst(tl, fx, { x: SEAL.x, y: SEAL.y, t: STAMP, n: 44, speed: 1500, size: [6, 20], seed: 92, dur: 1.0, cream: 0.35 });
-          WOW.flash(tl, fx, STAMP, { a: 0.85, dur: 0.22 });
+          // ---- v20 (V20.md #2): the hook hits from the first second -------------------------------------------------
+          // "decrypt later" encrypts in groups on the pad's own hits (hats 0.97–2.14, the 1.91 snare, the 2.27 kick), each
+          // group kicked up as it flips, so the title is visibly working before the first downbeat's wave lands
+          const ENC_HITS = [[0.966, 2, "hat"], [1.2, 2, "hat"], [1.427, 2, "hat"], [1.67, 1, "hat"], [1.906, 2, "snare"], [2.139, 2, "hat"], [2.269, 1, "kick"]];
+          const encAt = [];
+          ENC_HITS.forEach(([t, n, k]) => { const at = WOW.on(t, { kinds: [k] }); for (let j = 0; j < n; j++) encAt.push(at); });
+          chars.forEach((c, i) => {
+            tl.fromTo(c.c, { scale: 1.32 }, { scale: 1, duration: 0.3, ease: "back.out(2.4)", immediateRender: false }, encAt[i]);
+          });
+          // a hot drip falls into the pool on the 2.269 kick: the pool squashes and throws wax
+          const fall = el("div", "f01-drop", $("f01-sealpos"));
+          tl.fromTo(fall, { opacity: 1, y: -460, scaleX: 0.8, scaleY: 1.9 }, { y: 0, scaleX: 1.2, scaleY: 1.4, duration: 0.3, ease: "power2.in", immediateRender: false }, 2.269 - 0.3);
+          tl.set(fall, { opacity: 0 }, 2.269);
+          const splash = { v: 0 };
+          tl.fromTo(splash, { v: 0 }, { v: 1, duration: 0.04, ease: "power2.out", immediateRender: false }, 2.269);
+          tl.fromTo(splash, { v: 1 }, { v: 0, duration: 0.7, ease: "elastic.out(1, 0.35)", immediateRender: false }, 2.309);
+          WOW.burst(tl, fx, { x: SEAL.x, y: SEAL.y, t: 2.269, n: 16, speed: 520, gravity: 1100, spread: 150, aim: -90, size: [4, 11], seed: 61, dur: 0.75, cream: 0 });
+          // copies peel off the letter on the build's hits (the film's idea, planted before the stamp)
+          [[4.472, -130, 64, -3], [4.835, 150, -54, 2.5], [5.166, -86, -96, -2], [5.651, 176, 88, 3.5]].forEach(([t, dx, dy, rot], k) => {
+            const g = el("div", "", $("f01-cardpos"));
+            g.innerHTML = $("f01-ghost").innerHTML; g.querySelector("b").textContent = `COPY ${k + 1}`;
+            Object.assign(g.style, { position: "absolute", left: "0", top: "0", width: "646px", height: "404px", opacity: "0", pointerEvents: "none",
+              border: "2px dashed rgba(240, 236, 229, 0.55)", boxSizing: "border-box" });
+            g.setAttribute("data-layout-ignore", "");
+            g.querySelector("b").style.cssText = "position:absolute;left:0;top:-30px;font-family:'IBM Plex Mono';font-weight:600;font-size:15px;letter-spacing:0.16em;color:#E85D26;white-space:nowrap";
+            $("f01-cardpos").insertBefore(g, $("f01-card"));
+            tl.fromTo(g, { opacity: 0, x: 0, y: 0, rotation: 0 }, { opacity: 0.9, x: dx, y: dy, rotation: rot, duration: 0.22, ease: "power3.out", immediateRender: false }, t);
+            tl.fromTo(g, { opacity: 0.9 }, { opacity: 0, x: dx * 1.5, y: dy * 1.5, duration: 0.5, ease: "power2.in", immediateRender: false }, t + 0.3);
+          });
+
+          // the build: light gathers at the seal on the last hats and the snare before the stamp (no tremors)
+          [4.835, 5.166, 5.651].forEach((t, k) => WOW.rays(tl, fx, { x: SEAL.x, y: SEAL.y, t, n: 10 + k * 4, r0: 150, r1: 700 + k * 150, seed: 80 + k, color: "cream", dur: 0.6, w: 3 }));
+
+          // 6.117: the detonation, the first kick of the song
+          shakeAll(STAMP, 14, 0.5);
+          WOW.punch(tl, document.getElementById("el-01-seal"), STAMP, { s: 1.05, dur: 0.6 });
+          WOW.shock(tl, fx, { x: SEAL.x, y: SEAL.y, t: STAMP, r: 1500, n: 3, w: 9, color: "fire", dur: 0.8, gap: 0.07 });
+          WOW.rays(tl, fx, { x: SEAL.x, y: SEAL.y, t: STAMP, n: 34, r0: 100, r1: 1400, seed: 91, color: "cream", dur: 0.7, w: 6 });
+          WOW.burst(tl, fx, { x: SEAL.x, y: SEAL.y, t: STAMP, n: 44, speed: 1300, size: [6, 20], seed: 92, dur: 1.1, cream: 0.35 });
+          WOW.flash(tl, fx, STAMP, { a: 0.45, dur: 0.24 });
           sweep(STAMP - 0.1);
+          // the next three kicks: a ring and a gentle punch each
           RINGS.forEach((t, k) => {
-            shakeAll(t, 12, 0.3); WOW.punch(tl, $("f01-mid"), t, { s: 1.06, dur: 0.3 });
-            WOW.shock(tl, fx, { x: SEAL.x, y: SEAL.y, t, r: 1000, n: 1, w: 6, color: k % 2 ? "cream" : "fire", dur: 0.55 });
-            WOW.rays(tl, fx, { x: SEAL.x, y: SEAL.y, t, n: 14, r0: 130, r1: 900, seed: 100 + k, color: "fire", dur: 0.4 });
+            shakeAll(t, 5, 0.35); WOW.punch(tl, $("f01-mid"), t, { s: 1.03, dur: 0.4 });
+            WOW.shock(tl, fx, { x: SEAL.x, y: SEAL.y, t, r: 1000, n: 1, w: 5, color: k % 2 ? "cream" : "fire", dur: 0.6 });
           });
-          // the fill: a strobing roll, then the camera dives into the seal (zoom out of this frame, into 02)
+          // the snare fill: a soft strobe on its hits, then the camera keeps pushing into the seal (pushIn → 02)
           FILL.forEach((t, k) => {
-            WOW.flash(tl, fx, t, { a: 0.14 + k * 0.025, dur: 0.07 });
-            shakeAll(t, 5 + k, 0.1);
-            WOW.shock(tl, fx, { x: SEAL.x, y: SEAL.y, t, r: 520 + k * 60, n: 1, w: 4, color: "fire", dur: 0.3 });
+            WOW.flash(tl, fx, t, { a: 0.06 + k * 0.02, dur: 0.1 });
+            WOW.shock(tl, fx, { x: SEAL.x, y: SEAL.y, t, r: 520 + k * 60, n: 1, w: 3, color: "fire", dur: 0.35 });
           });
-          document.getElementById("el-01-seal").style.transformOrigin = `${(SEAL.x / 19.2).toFixed(1)}% ${(SEAL.y / 10.8).toFixed(1)}%`;
-          WOW.transition(tl, document.getElementById("el-01-seal"), { out: "zoom", dur: 0.9, total: DUR });
+          // the pushIn dives at the seal where the camera leaves it (mid layer at C2: x 960, y 540 − s·60 + s·(520 − 540))
+          document.getElementById("el-01-seal").style.transformOrigin = `50% ${((540 - 1.74 * 80) / 10.8).toFixed(1)}%`;
+          WOW.transition(tl, document.getElementById("el-01-seal"), { out: "pushIn", dur: 0.46, total: DUR });
 
           // ---- per-frame draw (all from timeline time) ------------------------------------------------------
-          const ANCHORS = [[0.498, 0.12], [2.269, 0.08], [4.253, 0.03]];
-          function density(t) {
-            if (t >= STAMP) return Math.min(1, 0.45 + 0.55 * Math.pow((t - STAMP) / (DUR - 0.1 - STAMP), 1.6));
-            let p = 0.3;
-            for (const [a, lo] of ANCHORS) {
-              const d = t - a;
-              if (d >= 0 && d < 1.0) { const w = d < 0.12 ? d / 0.12 : d < 0.45 ? 1 : 1 - (d - 0.45) / 0.55; p = Math.min(p, 0.3 - (0.3 - lo) * w); }
-            }
-            return p;
-          }
           function waxPath(r, t) {
             let d = "";
             for (let k = 0; k <= 48; k++) {
@@ -488,7 +549,7 @@
             stage.apply(t);
             WOW.draw(tl);
             // wax: a living pool with a wet highlight; glow with the pad, then the seal glows with the bass
-            waxEl.setAttribute("d", waxPath(wax.r, t));
+            waxEl.setAttribute("d", waxPath(wax.r * (1 + 0.16 * splash.v), t));
             const hr = wax.r * 0.62;
             waxHi.setAttribute("d", `M${(-hr * 0.8).toFixed(1)} ${(-hr * 0.45).toFixed(1)} A${hr.toFixed(1)} ${hr.toFixed(1)} 0 0 1 ${(-hr * 0.1).toFixed(1)} ${(-hr * 0.85).toFixed(1)}`);
             HR.glow($("f01-wax"), t, 0.35, 0.9);
@@ -501,7 +562,7 @@
             $("f01-flare").style.opacity = (flare.v * (0.85 + 0.3 * HR.band("bass", t))).toFixed(3);
 
             // the outbox progress bar fills with the wax, full on the stamp
-            $("f01-obprog").setAttribute("width", (644 * Math.min(1, Math.max(0, (t - 0.25) / (STAMP - 0.25)))).toFixed(1));
+            $("f01-obprog").setAttribute("width", (644 * sendAt(t)).toFixed(1));
             $("f01-label").textContent = t >= STAMP ? "OBJ 0001 · SEALED · TLS 1.3" : "OBJ 0001 · OPEN";
             // the letter's body: a few rows scramble; in the fill every row churns, reshuffled per hit
             const fill = t >= FILL[0], hits = FILL.filter((f) => t >= f).length;
@@ -510,12 +571,10 @@
               return HR.cipher(16, 977 + i * 31 + (live ? step + hits * 101 : 0)).replace(/(.{4})/g, "$1 ");
             }).join("\n");
 
-            // "decrypt later": letters drift in and out of hex, never all settling; hats flick one glyph
-            const p = Math.min(1, density(t) + 0.25 * HR.hit("hat", t, 0.08));
-            const states = chars.map((c, i) => h01(i + 1, Math.floor(t * (2.2 + (i % 3) * 0.7) + i * 0.37)) < p);
-            if (!states.some(Boolean)) states[Math.floor(t * 1.5) % chars.length] = true;
+            // v18: "decrypt later" is encrypted once, left to right, from the 1.906 snare to the 4.253 downbeat; a hex glyph
+            // keeps churning once its letter is gone
             chars.forEach((c, i) => {
-              const hx = t >= 2.269 && states[i];
+              const hx = t >= encAt[i];
               c.p.style.opacity = hx ? 0 : 1;
               c.x.style.opacity = hx ? 1 : 0;
               if (hx) c.x.textContent = HR.HEX[(h01(i + 41, step) * 16) | 0];

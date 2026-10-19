@@ -1,3 +1,7 @@
+> Delivered as v21 (DELIVERY.md). The sections below are the contract's revisions, newest first, up to v15; v16–v21
+> changed frames, not this contract (their plans: V16.md … V21.md; their rules went into docs/HOUSE-STYLE.md and
+> docs/visual-guidelines.md). The `renders/` and `backups/` files cited below were removed in the 2026-10-19 cleanup.
+
 # V9 — harvest-remix v15 (overrides earlier sections where stated)
 
 Approved scope: V15.md. Preserve scene spans and aligned words. 11-petabytes may change only for framing, explicitly superseding its earlier byte lock. Orange remains dominant; cyan and violet are allowed locally on active breach electricity/extraction in 22/23. Effects are code-rendered, contact-bound, timeline-driven and seek-safe; software WebGL, no post passes. Archie’s final acting is restrained and continuous. Preserve v14 in backups/v14-sources/.

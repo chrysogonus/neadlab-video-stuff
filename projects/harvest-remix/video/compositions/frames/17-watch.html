@@ -10,7 +10,8 @@
          engraved control plate with its f-stop drum. SYSTEM.md v4 detail pass.
          v13 (SYSTEM.md V7): black ground (no wall, ghost irises or bokeh), flat glowing "later", a tighter warm light; the
          turning f-stop scale is engraved SOONER at its open end and LATER in the closed zone, so it turns from one to the
-         other as the aperture shuts. -->
+         other as the aperture shuts.
+         v17 (V17.md): `pushIn` in from 04, no hit on the 41.853 kick (the iris opening carries it), `pullOut` out into 18. -->
   </head>
   <body>
     <template>
@@ -464,11 +465,8 @@
           tl.fromTo("#f17-wall", { x: 0 }, { x: -110, duration: DUR, ease: "none" }, 0);
           tl.fromTo("#f17-near", { x: 0 }, { x: -240, duration: DUR, ease: "none" }, 0);
           tl.fromTo("#f17-ghosts", { x: 0 }, { x: -50, duration: DUR, ease: "none" }, 0);
-          // shot a snaps open on the kick: shock + shake + punch; every click after it hits something
-          WOW.shock(tl, fx, { x: CX, y: CY, t: L(41.853), r: 900, n: 2, w: 6, color: "fire", dur: 0.5 });
-          WOW.rays(tl, fx, { x: CX, y: CY, t: L(41.853), n: 18, r0: 200, r1: 900, seed: 61, color: "cream", dur: 0.4 });
-          WOW.flash(tl, fx, L(41.853) - 0.04, { a: 0.4, dur: 0.14 });
-          [41.853, 42.51].forEach((t, k) => { WOW.shake(tl, midL, L(t) - 0.04, { amp: k ? 7 : 12, dur: 0.3, seed: 21 + k }); WOW.punch(tl, midL, L(t) - 0.04, { s: 1.05, dur: 0.3 }); });
+          // shot a: the iris opens on the 41.853 kick inside the pushIn (v17: no hit there); every click after it hits something
+          [42.51].forEach((t) => { WOW.shake(tl, midL, L(t) - 0.04, { amp: 7, dur: 0.3, seed: 22 }); WOW.punch(tl, midL, L(t) - 0.04, { s: 1.05, dur: 0.3 }); });
           WOW.shock(tl, fx, { x: CX, y: CY, t: L(42.28), r: 600, n: 1, w: 4, color: "cream", dur: 0.35 });
           WOW.shock(tl, fx, { x: CX, y: CY, t: L(42.52), r: 800, n: 1, w: 5, color: "fire", dur: 0.4 });
           // the cut into the array (CUT): the iris blows open wide, the grid takes over
@@ -485,10 +483,8 @@
           WOW.shock(tl, fx, { x: CX, y: CY, t: LATER + 0.05, r: 1200, n: 1, w: 5, color: "cream", dur: 0.5 });
           WOW.shake(tl, gridw, LATER, { amp: 26, dur: 0.5, seed: 33 });
           [44.82, 45.28].forEach((t, k) => { WOW.shock(tl, fx, { x: CX, y: CY, t: L(t), r: 1300, n: 1, w: 6, color: k ? "cream" : "fire", dur: 0.45 }); WOW.shake(tl, gridw, L(t), { amp: 12, dur: 0.3, seed: 50 + k }); WOW.flash(tl, fx, L(t), { a: 0.18, dur: 0.1 }); });
-          // the scene switch out is a hard cut on a flash
-          const cutFlash = el("div", "", fx); Object.assign(cutFlash.style, { position: "absolute", inset: "0", background: "#F0ECE5", opacity: "0" });
-          tl.fromTo(cutFlash, { opacity: 0 }, { opacity: 1, duration: 0.09, ease: "power2.in", immediateRender: false }, DUR - 0.09);
-          WOW.transition(tl, document.getElementById("el-17-watch"), { in: "zoom", dur: 0.3, total: DUR });
+          // v17 switches: pushIn from 04 (into the iris), pullOut into 18 (the irises shut, pull back to the title)
+          WOW.transition(tl, document.getElementById("el-17-watch"), { in: "pushIn", out: "pullOut", dur: 0.46, total: DUR });
 
           // ---- the iris's motion: a pure function of track time --------------------------------------------------
           // [beat, target inradius, lead, duration, kind]: clicks on the kicks, wide open on "sooner", slam on "later"

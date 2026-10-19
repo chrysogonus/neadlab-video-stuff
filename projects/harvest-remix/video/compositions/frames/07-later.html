@@ -7,7 +7,11 @@
          aside. g2: the kick roll is a word-per-kick cut — one excuse per kick, alternating register, accelerating —
          resolving on "later." locked in ink on orange, accelerating into chorus 2.
          v13 (SYSTEM.md V7): g1 on black (#0A0A0A): no ciphertext wall, spec-sheet ghost or bokeh; the lattice's light is a
-         tight warm pool (alpha 0.12) behind it. The cream sprint board (g2) and its SEC-0001 ticket are unchanged. -->
+         tight warm pool (alpha 0.12) behind it. The cream sprint board (g2) and its SEC-0001 ticket are unchanged.
+         v17 (V17.md): the lattice is a true 3D object on one canvas, frame-filling, orbiting slowly from the first instant,
+         packing on the kicks; the camera pulls back onto the card as it prints. Soft word entrances, one ring on "math",
+         no punches or nudges in g1 except the stamp; glideL in from 06; the board's kick roll is unchanged. -->
+
   </head>
   <body>
     <template>
@@ -33,7 +37,7 @@
         #f07-wall { width: 2600px; opacity: 0.07; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 26px;
           line-height: 64px; letter-spacing: 0.14em; color: var(--cream); white-space: pre; }
         .f07-light { position: absolute; border-radius: 50%; }
-        #f07-light { left: 1000px; top: 230px; width: 900px; height: 700px;
+        #f07-light { left: 560px; top: 60px; width: 1360px; height: 1040px;
           background: radial-gradient(closest-side, rgba(232, 93, 38, 0.12), rgba(232, 93, 38, 0.035) 55%, rgba(232, 93, 38, 0) 100%); }
 
         /* ---- midground: the lattice and its file card ---- */
@@ -61,47 +65,21 @@
         #f07-card .f07-bar { position: absolute; right: 0; top: 16px; width: 170px; height: 52px; }
         #f07-card .f07-barn { position: absolute; right: 0; top: 74px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 11px;
           letter-spacing: 0.2em; color: #6a655c; }
-        #f07-lat { position: absolute; left: 0; top: 0; width: 800px; height: 640px; overflow: visible; }
-        #f07-lglow { filter: blur(5px); opacity: 0.45; }
-        #f07-lglow line { stroke: #E85D26; stroke-width: 7; stroke-linecap: round; }
-        #f07-lcrisp { opacity: 0.55; }
-        #f07-lcrisp line { stroke: #F0ECE5; stroke-width: 2.6; stroke-linecap: round; }
-        #f07-basis line { stroke: #E85D26; stroke-width: 5; stroke-linecap: round; }
-        .f07-node { position: absolute; width: 0; height: 0; }
-        .f07-core { position: absolute; left: -10px; top: -10px; width: 20px; height: 20px; box-sizing: border-box; border: 4px solid var(--ink); border-radius: 50%; background: var(--cream);
-          box-shadow: 0 0 6px 1px rgba(240, 236, 229, 0.7), 0 0 18px 4px rgba(232, 93, 38, 0.35); }
-        .f07-halo { position: absolute; left: -34px; top: -34px; width: 68px; height: 68px; border-radius: 50%; opacity: 0;
-          background: radial-gradient(closest-side, rgba(240, 236, 229, 0.8), rgba(232, 93, 38, 0.45) 35%, rgba(232, 93, 38, 0) 100%); }
-        .f07-lab { position: absolute; left: 13px; top: -27px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 13px;
-          letter-spacing: 0.06em; color: rgba(240, 236, 229, 0.62); white-space: nowrap; }
+        /* v17: the lattice is one canvas in frame coordinates (the wrap undoes #f07-filepos's offset), re-projected every
+           frame; its labels are DOM tags placed on the projected points */
+        #f07-latwrap { position: absolute; left: -1040px; top: -245px; width: 1920px; height: 1080px; }
+        #f07-lc { position: absolute; left: -60px; top: -60px; width: 2040px; height: 1200px; } /* v21: 60 px bleed */
+        .f07-node { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+        .f07-lab { position: absolute; left: 14px; top: -30px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 14px;
+          letter-spacing: 0.06em; color: rgba(240, 236, 229, 0.7); white-space: nowrap; }
         .f07-route-node .f07-lab { color: #E85D26; }
-        .f07-blab { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 17px; letter-spacing: 0.1em;
+        .f07-blab { position: absolute; left: 0; top: 0; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 17px; letter-spacing: 0.1em;
           color: #E85D26; white-space: nowrap; opacity: 0; }
-        #f07-lockt { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 14px; letter-spacing: 0.16em;
+        #f07-lockt { position: absolute; left: 0; top: 0; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 14px; letter-spacing: 0.16em;
           color: var(--ink); background: var(--fire); padding: 5px 10px 4px; white-space: nowrap; opacity: 0; }
         .f07-printed .f07-lab { color: #5F5B54; }
         .f07-printed .f07-route-node .f07-lab, .f07-printed .f07-blab { color: #C24A1C; }
         .f07-printed #f07-lockt { background: #C24A1C; color: var(--cream); }
-        #f07-rglow { fill: none; stroke: #E85D26; stroke-width: 16; stroke-linecap: round; stroke-linejoin: round; filter: blur(7px); opacity: 0.5; }
-        #f07-spark { fill: none; stroke: #F0ECE5; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round;
-          filter: drop-shadow(0 0 6px rgba(240,236,229,0.9)); }
-        .f07-printed #f07-rglow, .f07-printed #f07-spark { display: none; }
-        #f07-facets polygon { fill: #F0ECE5; fill-opacity: 0.025; stroke: #888880; stroke-width: 1; stroke-opacity: 0.28; }
-        #f07-struts line { stroke: #111111; stroke-width: 10; stroke-linecap: round; }
-        #f07-route { fill: none; stroke: #E85D26; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round;
-          filter: drop-shadow(0 0 8px rgba(232,93,38,0.7)); }
-        .f07-route-node .f07-core { box-shadow: 0 0 18px rgba(232,93,38,0.65); }
-        .f07-printed #f07-facets polygon { fill: #111111; fill-opacity: 0.035; stroke: #505048; stroke-opacity: 0.3; }
-        .f07-printed #f07-struts line { stroke: #F0ECE5; }
-        .f07-printed #f07-route { filter: none; stroke-width: 4; }
-        .f07-printed .f07-core { border-color: var(--cream); }
-        /* printed onto the card: the light goes out, the lattice is ink */
-        .f07-printed .f07-core { background: var(--ink) !important; box-shadow: none; }
-        .f07-printed .f07-route-node .f07-core { background: #C24A1C !important; }
-        .f07-printed .f07-halo { opacity: 0 !important; }
-        .f07-printed #f07-lglow { display: none; }
-        .f07-printed #f07-lcrisp line { stroke: #111111; stroke-width: 1.4; }
-        .f07-printed #f07-basis { filter: none !important; }
         #f07-stamp { position: absolute; left: 352px; top: 540px; width: 460px; height: 184px; color: var(--fire);
           transform-origin: 50% 50%; opacity: 0; -webkit-mask-size: 420px 420px; mask-size: 420px 420px; }
         #f07-stamp svg, .f07-pst svg { display: block; width: 100%; height: 100%; overflow: visible; }
@@ -155,6 +133,7 @@
         .f07-row { display: flex; flex-wrap: nowrap; column-gap: 0.26em; font-weight: 800; font-size: 4.4cqw; line-height: 1.04;
           letter-spacing: -0.02em; white-space: nowrap; }
         .f07-row.f07-big { font-weight: 900; font-size: 11.5cqw; line-height: 0.86; letter-spacing: -0.04em; margin: 0.3cqw 0 0 -0.4cqw; }
+        #f07-l14 .f07-row.f07-big { font-size: 13.6cqw; } /* v21: "new math" spans ≥ 60 % of the width */
         #f07-roll-lyric { position: absolute; left: 5.5cqw; top: 8cqw; font-family: "Barlow"; font-weight: 800; font-size: 4cqw; line-height: 1.1; letter-spacing: -0.025em; white-space: nowrap; color: var(--ink); opacity: 0; }
         .f07-w { display: inline-block; position: relative; }
         .f07-fire { color: var(--fire); }
@@ -208,12 +187,11 @@
                   <div data-hf-id="hf-39jm" class="f07-band" id="f07-band"></div>
                   <div data-hf-id="hf-gwg5" class="f07-rake"></div>
                 </div>
-                <svg data-hf-id="hf-8hng" id="f07-lat" viewBox="0 0 800 640">
-                  <g data-hf-id="hf-iz29" id="f07-facets"></g><g data-hf-id="hf-vsvs" id="f07-struts"></g><g data-hf-id="hf-dzj0" id="f07-lglow"></g>
-                  <g data-hf-id="hf-9re8" id="f07-lcrisp"></g>
-                  <g data-hf-id="hf-9dsp" id="f07-basis" class="hr-glowbox"></g><g data-hf-id="hf-3w87" id="f07-routeg"></g>
-                </svg>
-                <div data-hf-id="hf-zv2m" id="f07-nodes"></div>
+                <div data-hf-id="hf-8hng" id="f07-latwrap">
+                  <canvas data-hf-id="hf-iz29" id="f07-lc" width="2040" height="1200"></canvas>
+                  <div data-hf-id="hf-zv2m" id="f07-nodes"></div>
+                  <div data-hf-id="hf-vsvs" id="f07-lfx"></div>
+                </div>
                 <div data-hf-id="hf-2vck" id="f07-stamp"><svg data-hf-id="hf-19oe" viewBox="0 0 460 184"></svg></div>
               </div>
             </div>
@@ -243,6 +221,7 @@
 
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
       <script>
         (() => {
           const T0 = 75.987, DUR = 9.16;
@@ -258,7 +237,9 @@
           const K = KICKS.map(L);
           const G2 = K[0], LOCK = K[17];
           const MATH = L(78.72), CARD = L(79.84), STAMP = L(80.92), SHOVE = L(81.26);
-          const LANDS = [76.678, 76.911, 77.143, 77.376, 77.598, 77.829, 78.52, 78.72].map(L);
+          // v21 (W3): the loose points drop onto the folder's page in waves, one wave per kick
+          const LANDS = [76.335, 76.678, 76.911, 77.143, 77.376, 77.598].map(L);
+          const HANDED = L(76.84), POP = L(77.7), PRE = L(78.52), STAMP2 = L(78.959), FOLD_OUT = L(79.0), FOLD_GONE = L(79.45);
           // rows: [display?, [[word, start, cls], ...]]
           const L13 = [[false, [["as", 74.88], ["true", 75.02], ["as", 75.598], ["true", 75.96]]]]; // carried tail of L13, already sung
           const L14 = [[false, [["They", 76.46], ["handed", 76.84], ["you", 77.384], ["the", 77.58]]],
@@ -368,70 +349,117 @@
           }
           const l13 = buildLine("f07-l13", L13), l14 = buildLine("f07-l14", L14), l15 = buildLine("f07-l15", L15);
 
-          // The lattice volume: a 5 x 5 x 4 integer lattice in three basis directions, triangulated braces, ink strut
-          // undersides, slices further back dimmer and softer. Every node point is engraved with its integer
+          // The lattice volume (v17): a 5 x 5 x 4 module lattice on a skewed basis B1..B3, a true 3D object drawn as lines
+          // on one canvas and re-projected every frame: it fills the frame and orbits slowly, then the camera pulls back
+          // onto the paper card and the light goes out (printed). Every node point is engraved with its integer
           // coordinates; the lit route runs from the origin to (4,4,3). All geometry is index-derived.
+          // v21 (W3): the lattice is handed over printed flat on a page of a cream folder (FIPS 203) that slides in on
+          // "handed"; its points drop onto the page one wave per kick; on "new" it pops up off the page like a pop-up
+          // book; on "math" the skewed basis snaps square (a cube, sparks off the joints) and DEFERRED is stamped on the
+          // page; the folder is pulled away as the v20 card rises and the cube prints onto it.
           const SI = 5, SK = 4;
-          const P = (i, j, k = 0) => [150 + i * 100 + j * 54 - k * 44, 622 - i * 16 - j * 98 - k * 50];
+          const BAS = [[1, 0.08, 0], [0.34, 0, 1], [-0.24, 0.92, 0.2]];
+          const CUBE = [[1, 0, 0], [0, 0, 1], [0, 4 / 3, 0]];
+          const centreOf = (B) => [0, 1, 2].map((a) => 2 * B[0][a] + 2 * B[1][a] + 1.5 * B[2][a]);
+          const C0 = centreOf(BAS);
+          const homeB = (B, C, i, j, k) => [0, 1, 2].map((a) => i * B[0][a] + j * B[1][a] + k * B[2][a] - C[a]);
+          const home = (i, j, k) => homeB(BAS, C0, i, j, k);
+          const idx = (i, j, k) => (k * SI + j) * SI + i;
           const routeCoords = [[0,0,0],[1,0,0],[1,1,0],[2,1,0],[2,1,1],[2,2,1],[3,2,1],[3,3,1],[3,3,2],[4,3,2],[4,4,2],[4,4,3]];
           const routeIdx = new Map(routeCoords.map((q, n) => [q.join(','), n]));
           const RSTART = L(77.7), RSTEP = (MATH - 0.06 - RSTART) / (routeCoords.length - 1);
-          const nodes = [];
-          for (let k = SK - 1; k >= 0; k--) for (let j = 0; j < SI; j++) for (let i = 0; i < SI; i++) {
-            const [px, py] = P(i, j, k), key = [i,j,k].join(','), onR = routeIdx.has(key);
-            const n = el("div", "f07-node" + (onR ? " f07-route-node" : ""), $("f07-nodes"));
-            n.style.left = px + "px"; n.style.top = py + "px";
-            const core = el("b", "f07-core", n), halo = el("i", "f07-halo", n);
-            // labels on the front slice's lattice points and the whole route, so the volume stays legible
-            if (onR || (k === 0 && (i + j) % 2 === 0) || (k === SK - 1 && i === SI - 1 && j % 2 === 0)) el("span", "f07-lab", n, `(${i},${j},${k})`);
-            const ax = (k - 1.5) * 82 + (i - 2) * 22, ay = (j - 2) * 40 - k * 36;
-            const wave = Math.min(7, Math.floor((i + j + (SK - 1 - k)) * 8 / 12));
-            nodes.push({ n, core, halo, i, j, k, ax, ay, bx: ax * 0.3, by: ay * 0.3, z: 1 + k * 0.1, land: LANDS[wave],
-              d: Math.hypot(px - 150, py - 622), flick: (i + j + k) % 5 === 0, lit: onR ? RSTART + routeIdx.get(key) * RSTEP : null,
-              op: 1 - k * 0.13, blur: k === SK - 1 ? 0.9 : 0 });
+          const nodes = [], lr = HR.rng(7171), H0 = home(0, 0, 0);
+          for (let k = 0; k < SK; k++) for (let j = 0; j < SI; j++) for (let i = 0; i < SI; i++) {
+            const h = home(i, j, k), key = [i, j, k].join(','), onR = routeIdx.has(key);
+            const wave = Math.min(LANDS.length - 1, Math.floor((i + j + (SK - 1 - k)) * LANDS.length / 12));
+            // before it packs, every point floats loose: the lattice spread 12 % wider plus a seeded offset
+            const st = h.map((v) => v * 1.12 + (lr() - 0.5) * 0.5);
+            let lab = null;
+            if (onR || (k === 0 && (i + j) % 2 === 0) || (k === SK - 1 && i === SI - 1 && j % 2 === 0)) {
+              lab = el("div", "f07-node" + (onR ? " f07-route-node" : ""), $("f07-nodes"));
+              el("span", "f07-lab", lab, `(${i},${j},${k})`);
+            }
+            nodes.push({ i, j, k, h, st, onR, lab, land: LANDS[wave], flick: (i + j + k) % 5 === 0,
+              lit: onR ? RSTART + routeIdx.get(key) * RSTEP : null,
+              front: MATH + Math.hypot(h[0] - H0[0], h[1] - H0[1], h[2] - H0[2]) * 0.05,
+              x: 0, y: 0, ps: 1, z: 0, fog: 1, m: 1 });
           }
-          const nodeAt = (i,j,k) => nodes.find(p => p.i===i && p.j===j && p.k===k);
           const edges = [];
-          for (let k = SK - 1; k >= 0; k--) for (let j = 0; j < SI; j++) for (let i = 0; i < SI; i++) {
-            if (i < SI - 1) edges.push([nodeAt(i,j,k),nodeAt(i+1,j,k),false]);
-            if (j < SI - 1) edges.push([nodeAt(i,j,k),nodeAt(i,j+1,k),false]);
-            if (k < SK - 1) edges.push([nodeAt(i,j,k),nodeAt(i,j,k+1),false]);
-            if (i < SI - 1 && j < SI - 1 && (i+j+k)%2===0) edges.push([nodeAt(i,j,k),nodeAt(i+1,j+1,k),true]);
+          for (let k = 0; k < SK; k++) for (let j = 0; j < SI; j++) for (let i = 0; i < SI; i++) {
+            const a = nodes[idx(i, j, k)], add = (b, brace) => edges.push({ a, b, brace, at: Math.max(a.land, b.land) });
+            if (i < SI - 1) add(nodes[idx(i + 1, j, k)], false);
+            if (j < SI - 1) add(nodes[idx(i, j + 1, k)], false);
+            if (k < SK - 1) add(nodes[idx(i, j, k + 1)], false);
+            if (i < SI - 1 && j < SI - 1 && (i + j + k) % 2 === 0) add(nodes[idx(i + 1, j + 1, k)], true);
           }
-          const facets = [];
-          for (let k = SK - 1; k >= 0; k--) {
-            const coords = [[0,0,k],[SI-1,0,k],[SI-1,SI-1,k],[0,SI-1,k]].map(q=>P(...q).join(',')).join(' ');
-            facets.push({ face: sv("polygon", {points: coords}, $("f07-facets")), k });
+          const route = routeCoords.map((q) => nodes[idx(...q)]);
+          const ORIGIN = nodes[0], BTIPS = [nodes[idx(SI - 1, 0, 0)], nodes[idx(0, SI - 1, 0)], nodes[idx(0, 0, SK - 1)]];
+          const blabs = BTIPS.map((_, n) => el("div", "f07-blab", $("f07-nodes"), "B" + (n + 1)));
+          const END = nodes[idx(SI - 1, SI - 1, SK - 1)], lockt = el("div", "", $("f07-nodes"), "LOCKED");
+          lockt.id = "f07-lockt";
+          // the halo sprite: cream core into fire, added with 'lighter'
+          const HALO = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 128;
+            const x = c.getContext("2d"), g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+            g.addColorStop(0, "rgba(240,236,229,0.85)"); g.addColorStop(0.3, "rgba(232,93,38,0.45)"); g.addColorStop(1, "rgba(232,93,38,0)");
+            x.fillStyle = g; x.fillRect(0, 0, 128, 128); return c;
+          })();
+
+          // the view, a pure function of local time: a slow orbit that eases to rest as the card arrives; the fit moves
+          // from the frame-filling lattice to the card's printed area (frame px)
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const lerp = (a, b, u) => a + (b - a) * u;
+          const sIO = (u) => 0.5 - 0.5 * Math.cos(Math.PI * u), sOut = (u) => Math.sin(u * Math.PI / 2);
+          const BIG = { cx: 1250, cy: 640, s: 176 }, ONCARD = { cx: 1452, cy: 548, s: 108 };
+          // v21: the camera looks down on the desk (negative pitch = from above). Keys: the loose cloud at the first
+          // instant; the folder on the desk by "handed"; craned low to see the pop-up stand by "math"; the card fit.
+          const VK = [
+            { yaw: -0.95, pitch: -0.5, cx: 1250, cy: 640, s: 176 },
+            { yaw: -0.34, pitch: -1.0, cx: 1130, cy: 620, s: 124 },
+            { yaw: -0.16, pitch: -0.52, cx: 1210, cy: 690, s: 150 },
+            { yaw: -0.1, pitch: -0.36, cx: ONCARD.cx, cy: ONCARD.cy, s: ONCARD.s },
+          ];
+          function view(t) {
+            const a = sIO(clamp01(t / (HANDED + 0.2))), b = sIO(clamp01((t - (HANDED + 0.1)) / (MATH + 0.15 - (HANDED + 0.1)))); // v21: one continuous crane down
+            const c = sIO(clamp01((t - FOLD_OUT) / (CARD - 0.12 - FOLD_OUT)));
+            const o = {};
+            for (const k of ["yaw", "pitch", "cx", "cy", "s"]) o[k] = lerp(lerp(lerp(VK[0][k], VK[1][k], a), VK[2][k], b), VK[3][k], c);
+            o.yaw += 0.1 * Math.sin(Math.PI * clamp01(t / CARD)); // a slow creep around the folder, gone by the card
+            return o;
           }
-          const lines = edges.map(([a,b,brace]) => {
-            const pa=P(a.i,a.j,a.k),pb=P(b.i,b.j,b.k),len=Math.hypot(pb[0]-pa[0],pb[1]-pa[1]);
-            const at={x1:pa[0],y1:pa[1],x2:pb[0],y2:pb[1],"stroke-dasharray":len,"stroke-dashoffset":len};
-            const depth = Math.max(a.k,b.k), opacity = brace ? 0.22 : 0.92-depth*0.19;
-            const under=sv("line",at,$("f07-struts"));
-            const line=sv("line",{...at,opacity},$("f07-lcrisp"));
-            line.style.strokeWidth = brace ? "1.3px" : (depth===0 ? "3.4px" : "1.9px");
-            if(depth===SK-1) line.style.filter="blur(0.8px)";
-            const glow = depth <= 1 && !brace ? sv("line",at,$("f07-lglow")) : null;
-            return {els: glow ? [under,line,glow] : [under,line],len,at:Math.max(a.land,b.land)};
-          });
-          const O=P(0,0,0);
-          const BASIS = [[SI-1,0,0],[0,SI-1,0],[0,0,SK-1]];
-          const basis=BASIS.map(q=>{
-            const p=P(...q),len=Math.hypot(p[0]-O[0],p[1]-O[1]);
-            return {e:sv("line",{x1:O[0],y1:O[1],x2:p[0],y2:p[1],"stroke-dasharray":len,"stroke-dashoffset":len},$("f07-basis")),len};
-          });
-          const blabs = BASIS.map((q, n) => { const p = P(...q), b = el("div", "f07-blab", $("f07-nodes"), "B" + (n + 1));
-            const off = [[18, 10], [-18, -42], [-52, -14]][n]; b.style.left = p[0] + off[0] + "px"; b.style.top = p[1] + off[1] + "px"; return b; });
-          const rpts = routeCoords.map(q=>P(...q).join(',')).join(' ');
-          const rglow=sv("polyline",{id:"f07-rglow",points:rpts},$("f07-routeg"));
-          const route=sv("polyline",{id:"f07-route",points:rpts},$("f07-routeg"));
-          const spark=sv("polyline",{id:"f07-spark",points:rpts},$("f07-routeg"));
-          // route length from the index-derived points (no DOM measurement)
-          const routeLen = routeCoords.slice(1).reduce((s, q, n) => { const a = P(...routeCoords[n]), b = P(...q); return s + Math.hypot(b[0]-a[0], b[1]-a[1]); }, 0);
-          for (const e of [route, rglow]) { e.setAttribute("stroke-dasharray", routeLen); e.setAttribute("stroke-dashoffset", routeLen); }
-          spark.setAttribute("stroke-dasharray", `70 ${routeLen + 80}`); spark.setAttribute("stroke-dashoffset", 70);
-          const END = P(SI-1, SI-1, SK-1), lockt = el("div", "", $("f07-nodes"), "LOCKED");
-          lockt.id = "f07-lockt"; lockt.style.left = END[0] + 18 + "px"; lockt.style.top = END[1] - 62 + "px";
+          // the lock: the skewed basis is squeezed from the kick before "math", then snaps square on "math"
+          const backOut = (u, c1 = 1.70158) => { const x = u - 1; return 1 + (c1 + 1) * x * x * x + c1 * x * x; };
+          function basisAt(t) {
+            const u = t < MATH ? 0 : backOut(clamp01((t - MATH) / 0.16), 2.4);
+            const sq = t < MATH ? 1 - 0.07 * sIO(clamp01((t - PRE) / (MATH - PRE))) : 1 - 0.07 * Math.max(0, 1 - (t - MATH) / 0.08);
+            const B = BAS.map((r, a) => r.map((v, c) => (v + (CUBE[a][c] - v) * u) * sq));
+            return { B, C: centreOf(B) };
+          }
+          // the folder: slid in from the far right, landing on "handed"; pulled off to the left as the card rises
+          const YP = -2.25;
+          const foIn = (t) => { const e = 1 - Math.pow(1 - clamp01(t / HANDED), 3); return [9 * (1 - e), 0, 7 * (1 - e)]; };
+          const foOut = (t) => { const u = clamp01((t - FOLD_OUT) / (FOLD_GONE - FOLD_OUT)), e = u * u * u; return [-17 * e, 0, -5 * e]; };
+          const popE = (t, k) => (t < POP ? 0 : backOut(clamp01((t - POP - (SK - 1 - k) * 0.03) / 0.32), 1.4));
+          const DCAM = 9;
+          function project(p, v, n) {
+            const cy = Math.cos(v.yaw), sy = Math.sin(v.yaw), cp = Math.cos(v.pitch), sp = Math.sin(v.pitch);
+            const x1 = p[0] * cy + p[2] * sy, z1 = -p[0] * sy + p[2] * cy;
+            const y2 = p[1] * cp - z1 * sp, z2 = p[1] * sp + z1 * cp, ps = DCAM / (DCAM + z2);
+            n.x = v.cx + x1 * ps * v.s; n.y = v.cy - y2 * ps * v.s; n.ps = ps * v.s / BIG.s; n.z = z2;
+            n.fog = Math.max(0.22, Math.min(1, 0.6 - z2 / 6));
+          }
+          // where a node is at local time t: loose → packed, one continuous ease that lands on its wave's kick
+          // v21: loose → printed flat on the page (riding the folder in) → popped up → squared (the basis of the moment)
+          const pos = (n, t, BC) => {
+            const fo = foIn(t), flat = [n.h[0] + fo[0], YP + 0.02, n.h[2] + fo[2]];
+            n.flat = flat;
+            if (t < n.land) { const s0 = Math.max(0, n.land - 0.5), e = sIO(clamp01((t - s0) / (n.land - s0))); return [0, 1, 2].map((a) => lerp(n.st[a], flat[a], e)); }
+            const p = popE(t, n.k), hb = homeB(BC.B, BC.C, n.i, n.j, n.k);
+            return [0, 1, 2].map((a) => lerp(flat[a], hb[a], p));
+          };
+          // the lyric's corner: lattice lines fade there so the sung line stays the most legible thing on screen
+          const smooth = (a, b, x) => { const u = clamp01((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+          const textMask = (x, y, lp) => 1 - 0.86 * lp * (1 - smooth(0.5, 1.15, Math.hypot((x - 620) / 760, (y - 400) / 270))); // v21: the bigger hero row
 
           // g2: the sprint board. The ticket is dragged one column per kick; every column is the excuse it lands on.
           // Before it: DONE and THIS SPRINT; after the roll: the hatched LATER. column. The years climb each lap.
@@ -494,25 +522,27 @@
           const tl = gsap.timeline({ paused: true });
           const stage = HR.stage($("root"), { seed: 7 });
           const cam = stage.cam;
+          const host = document.getElementById("el-07-later");
           const A = { x: -14, y: 0, z: 1, rot: 0, focus: 0.35 }; // the phrase camera
           const N = { x: 0, y: 0, z: 0, rot: 0 };                // hit nudges on top
           const seg = (at, dur, ease, from, to) => tl.fromTo(A, from, { ...to, duration: dur, ease, immediateRender: false }, at);
           const nudge = (at, from, dur = 0.2) => tl.fromTo(N, from, { x: 0, y: 0, z: 0, rot: 0, duration: dur, ease: "power3.out", immediateRender: false }, at);
 
-          // the camera: a creep toward the lattice through L14; a punch on "math"; it drifts while the card files it;
-          // the shove leans into the cut. On the roll: a fresh frame, an accelerating push, a nudge per kick,
-          // a punch on the lock and the acceleration into chorus 2.
-          seg(0, MATH - 0.05, "sine.inOut", { x: -14, z: 1, focus: 0.35 }, { x: 26, z: 1.045 });
-          seg(MATH - 0.05, 0.05, "power3.in", { z: 1.045, rot: 0, focus: 0.35 }, { z: 1.085, rot: -0.45, focus: 0.15 });
-          seg(MATH, 0.65, "elastic.out(1, 0.45)", { z: 1.085, rot: -0.45 }, { z: 1.06, rot: 0 });
-          seg(MATH + 0.65, CARD - MATH - 0.65, "sine.inOut", { z: 1.06, x: 26, focus: 0.15 }, { z: 1.07, x: 12, focus: 0.3 });
-          seg(CARD, G2 - CARD, "power2.in", { z: 1.07, x: 12 }, { z: 1.095, x: 34 });
-          seg(G2, 0.001, "none", { z: 1.095, x: 34, y: 0, rot: 0, focus: 0.3 }, { z: 1.0, x: 0, y: 0, rot: 0, focus: 0.5 });
+          // the camera (v17): g1 is one slow continuous push while the lattice orbits (no punch on "math", the light
+          // does that); the shove leans into the cut. On the roll: a fresh frame, an accelerating push, a nudge per
+          // kick, a punch on the lock and the acceleration into chorus 2.
+          seg(0, CARD, "sine.inOut", { x: -14, z: 1, focus: 0.35 }, { x: 22, z: 1.06, focus: 0.2 });
+          seg(CARD, G2 - CARD, "power2.in", { z: 1.06, x: 22, focus: 0.2 }, { z: 1.09, x: 34, focus: 0.3 });
+          seg(G2, 0.001, "none", { z: 1.09, x: 34, y: 0, rot: 0, focus: 0.3 }, { z: 1.0, x: 0, y: 0, rot: 0, focus: 0.5 });
           seg(G2 + 0.001, LOCK - G2 - 0.001, "power2.in", { z: 1.0 }, { z: 1.065 });
           seg(LOCK, DUR - LOCK, "power3.in", { z: 1.065 }, { z: 1.11 });
-          nudge(MATH, { y: 4 }, 0.3);
-          nudge(CARD, { y: 4, z: 0.008 }, 0.3);
-          nudge(STAMP, { y: 7, z: 0.018, rot: 0.35 }, 0.32);
+          nudge(STAMP, { y: 4, z: 0.008, rot: 0.2 }, 0.45);
+          // v21 (W3): the folder's arrival, each wave landing on its kick, the pop-up, the lock and the DEFERRED stamp
+          nudge(HANDED, { y: 5, z: 0.012, rot: -0.15 }, 0.35);
+          LANDS.slice(1).forEach((k, i) => nudge(k, { y: 2.5, z: 0.005, rot: (i % 2 ? 0.08 : -0.08) }, 0.18));
+          nudge(POP, { y: -6, z: 0.018 }, 0.4);
+          nudge(MATH, { z: 0.03, rot: 0.35, y: 5 }, 0.32);
+          nudge(STAMP2, { y: 6, z: 0.012, rot: -0.2 }, 0.3);
           K.slice(0, 17).forEach((k, i) => {
             const s = i % 2 ? -1 : 1, a = Math.min(1, i / 14);
             nudge(k, { x: s * (7 + 9 * a), rot: s * (0.25 + 0.3 * a), z: 0.014 + 0.012 * a }, Math.min(0.2, K[i + 1] - k));
@@ -520,76 +550,48 @@
           nudge(LOCK, { z: 0.05, rot: -0.6, y: 6 }, 0.28);
           tl.fromTo("#f07-wall", { x: 0 }, { x: -130, duration: G2, ease: "none" }, 0);
           tl.fromTo("#f07-near", { x: 0 }, { x: -260, duration: DUR, ease: "none" }, 0);
+          // in from 06: glideL, the frame already composed; out to 08: a hard cut on the chorus downbeat
+          WOW.transition(tl, host, { in: "glideL", dur: 0.46 });
 
           // ---- lyrics -----------------------------------------------------------------------------------------
+          // a line leaves softly: it sinks and fades (v17: no blur snap)
+          const softExit = (line, at) => tl.fromTo(line, { y: 0, opacity: 1, filter: "blur(0px)" },
+            { y: 26, opacity: 0, filter: "blur(4px)", duration: 0.3, ease: "power2.in", immediateRender: false }, at);
           // the carried tail of L13 is on screen at the cut; its last "true" is still rising
           const lastTrue = l13[3].s, ltG = lastTrue._hrG = HR.glyphs(lastTrue);
           lastTrue.classList.add("hr-clip");
-          tl.fromTo(ltG, { yPercent: 45, opacity: 0.55, filter: "blur(3px)" }, { yPercent: 0, opacity: 1, filter: "blur(0px)", duration: 0.24, ease: "expo.out", stagger: 0.012 }, 0);
-          l13.slice(0, 3).forEach((w) => HR.glyphs(w.s));
-          HR.exit(tl, $("f07-l13"), L(76.46) - 0.26);
+          tl.fromTo(ltG, { yPercent: 45, opacity: 0.55, filter: "blur(3px)" }, { yPercent: 0, opacity: 1, filter: "blur(0px)", duration: 0.3, ease: "power3.out", stagger: 0.012 }, 0);
+          softExit($("f07-l13"), L(76.46) - 0.4);
           tl.set("#f07-l13", { opacity: 0 }, L(76.46));
-          for (const w of l14.concat(l15)) w.hero ? HR.hero(tl, w.s, w.t, { spread: w.s.textContent === "math" ? 46 : 18, over: 1.28, sharp: true }) : HR.lead(tl, w.s, w.t);
-          HR.exit(tl, $("f07-l14"), L(79.84) - 0.26);
+          // lead words glide up softly; the hero words ("math", "around") settle in on their own word times, their weight
+          // comes from the light (the lattice locks on "math", LATER is stamped on "around")
+          for (const w of l14.concat(l15)) WOW.word(tl, w.s, w.t, w.hero ? { kind: "settle", dur: w.s === l14[5].s ? 0.2 : undefined } : { kind: "rise" }); // v21: "math" lands with the lock
+          softExit($("f07-l14"), L(79.84) - 0.4);
           tl.set("#f07-l14", { opacity: 0 }, L(79.84));
           tl.fromTo("#f07-l14", { scale: 1 }, { scale: 1.035, duration: L(79.84) - L(76.46), ease: "none" }, L(76.46));
           tl.fromTo("#f07-l15", { scale: 1 }, { scale: 1.03, duration: G2 - L(79.84), ease: "none" }, L(79.84));
 
-          // ---- g1: the lattice packs in a wave, wired with light ------------------------------------------------
-          const SNAP = 0.2;
-          for (const p of nodes) {
-            tl.fromTo(p.n, { x: p.ax, y: p.ay, scale: p.z, opacity: 0.38, filter: `blur(${(Math.abs(p.z - 1) * 3.2).toFixed(1)}px)` },
-              { x: p.bx, y: p.by, scale: 1 + (p.z - 1) * 0.5, duration: p.land - SNAP - L(76.46), ease: "sine.inOut" }, L(76.46));
-            tl.fromTo(p.n, { x: p.bx, y: p.by, scale: 1 + (p.z - 1) * 0.5 },
-              { x: 0, y: 0, scale: 1, opacity: p.op, filter: `blur(${p.blur}px)`, duration: SNAP, ease: "power3.in", immediateRender: false }, p.land - SNAP);
-            tl.fromTo(p.halo, { opacity: 1, scale: 1.7 }, { opacity: 0.22, scale: 1, duration: 0.4, ease: "power2.out", immediateRender: false }, p.land);
-            tl.fromTo(p.core, { scale: 1.8 }, { scale: 1, duration: 0.3, ease: "elastic.out(1, 0.5)", immediateRender: false }, p.land);
-          }
-          for (const { els, len, at } of lines) {
-            tl.fromTo(els, { attr: { "stroke-dashoffset": len } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.18, ease: "power2.out", immediateRender: false }, at - 0.18);
-          }
-          facets.forEach(({face,k}) => tl.fromTo(face, {opacity:0,y:-36-k*24},
-            {opacity:1,y:0,duration:0.65,ease:"power2.out",immediateRender:false}, L(76.46)+k*0.34));
-          // the lit path: it draws node by node from the origin and each route point catches fire as the light reaches it
-          tl.fromTo([route, rglow], {attr:{"stroke-dashoffset":routeLen}},
-            {attr:{"stroke-dashoffset":0},duration:MATH-0.06-RSTART,ease:"none",immediateRender:false}, RSTART);
-          for (const p of nodes) if (p.lit != null) {
-            tl.fromTo(p.core, { backgroundColor: "#F0ECE5" }, { backgroundColor: "#E85D26", duration: 0.08, ease: "none", immediateRender: false }, p.lit);
-            tl.fromTo(p.halo, { opacity: 1, scale: 1.9 }, { opacity: 0.3, scale: 1, duration: 0.35, ease: "power2.out", immediateRender: false }, p.lit);
-          }
-          // on "math": the route flares, a spark runs it twice, the end point reads LOCKED, the basis vectors are named
-          tl.fromTo(rglow, { opacity: 1 }, { opacity: 0.5, duration: 0.8, ease: "power2.out", immediateRender: false }, MATH);
-          tl.fromTo(spark, { attr: { "stroke-dashoffset": 70 } }, { attr: { "stroke-dashoffset": -routeLen - 10 }, duration: 0.5, ease: "power2.in", immediateRender: false }, MATH);
-          tl.fromTo(spark, { attr: { "stroke-dashoffset": 70 } }, { attr: { "stroke-dashoffset": -routeLen - 10 }, duration: 0.5, ease: "power2.in", immediateRender: false }, MATH + 0.55);
-          tl.fromTo(lockt, { opacity: 0, scale: 1.6, x: -10 }, { opacity: 1, scale: 1, x: 0, duration: 0.18, ease: "back.out(2)", immediateRender: false }, MATH);
-          tl.fromTo(blabs, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.25, ease: "power3.out", stagger: 0.05, immediateRender: false }, MATH);
-          // the lock on "math": the basis vectors light, a light front runs out from the origin, a ring expands
-          basis.forEach(({ e, len }) => tl.fromTo(e, { attr: { "stroke-dashoffset": len } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.1, ease: "power3.in", immediateRender: false }, MATH - 0.1));
-          for (const p of nodes) {
-            const at = MATH + p.d * 0.00045;
-            tl.fromTo(p.halo, { opacity: 0.55, scale: 1.25 }, { opacity: 0.12, scale: 1, duration: 0.55, ease: "power2.out", immediateRender: false }, at);
-            tl.fromTo(p.core, { scale: 1.35 }, { scale: 1, duration: 0.45, ease: "elastic.out(1, 0.45)", immediateRender: false }, at);
-          }
-          tl.fromTo("#f07-lcrisp", { opacity: 0.55 }, { opacity: 1, duration: 0.06, ease: "power2.out", immediateRender: false }, MATH);
-          tl.fromTo("#f07-lcrisp", { opacity: 1 }, { opacity: 0.72, duration: 0.7, ease: "power2.out", immediateRender: false }, MATH + 0.06);
-          tl.fromTo("#f07-lglow", { opacity: 0.45 }, { opacity: 1, duration: 0.06, ease: "power2.out", immediateRender: false }, MATH);
-          tl.fromTo("#f07-lglow", { opacity: 1 }, { opacity: 0.6, duration: 0.8, ease: "power2.out", immediateRender: false }, MATH + 0.06);
+          // ---- g1: the lattice packs in a wave on the kicks, wired with light (drawn in render()) ----------------
+          // on "math": the basis is named, the end point reads LOCKED, one ring runs out from it, the light flares
+          const lit = { glow: 1, crisp: 1, route: 1 };
+          tl.fromTo(lit, { glow: 1.9, crisp: 1.35, route: 2 }, { glow: 1, crisp: 1, route: 1, duration: 0.9, ease: "power2.out", immediateRender: false }, MATH);
+          tl.fromTo(lockt, { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, MATH);
+          tl.fromTo(blabs, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", stagger: 0.06, immediateRender: false }, MATH);
+          // v21: no flat ring; the lock is mechanical (the basis snaps square, sparks off the joints, drawn in render())
           const flare = { o: 1 };
-          tl.fromTo(flare, { o: 1.9 }, { o: 1, duration: 0.9, ease: "power2.out", immediateRender: false }, MATH);
-          tl.fromTo("#f07-file", { scale: 1.05 }, { scale: 1, duration: 0.5, ease: "elastic.out(1, 0.5)", immediateRender: false }, MATH);
-          tl.fromTo("#f07-file", { rotation: 0, x: 0 }, { rotation: -1.2, x: -14, duration: CARD - MATH - 0.5, ease: "sine.inOut", immediateRender: false }, MATH + 0.5);
+          tl.fromTo(flare, { o: 1.5 }, { o: 1, duration: 0.9, ease: "power2.out", immediateRender: false }, MATH);
+          tl.fromTo("#f07-file", { rotation: 0, x: 0 }, { rotation: -1.2, x: -14, duration: L(80.54) - MATH - 0.5, ease: "sine.inOut", immediateRender: false }, MATH + 0.5);
 
-          // ---- g1: filed. The paper card rises under it on "you'd" and the lattice prints onto it; it shrinks on
-          // "get"; LATER is stamped on "around"; it is shoved aside on "to" ---------------------------------------
-          tl.set("#f07-card", { opacity: 1 }, CARD - 0.2);
-          tl.fromTo("#f07-card", { y: 760, rotation: 5, filter: "blur(6px)" }, { y: 0, rotation: 0, filter: "blur(0px)", duration: 0.24, ease: "power3.out" }, CARD - 0.2);
+          // ---- g1: filed. The camera pulls back onto a paper card that rises under the lattice on "you said", and the
+          // lattice prints onto it; it shrinks on "get"; LATER is stamped on "around"; it is shoved aside on "to" ---
+          tl.set("#f07-card", { opacity: 1 }, CARD - 0.75);
+          tl.fromTo("#f07-card", { y: 980, rotation: 4, filter: "blur(3px)" }, { y: 0, rotation: 0, filter: "blur(0px)", duration: 0.75, ease: "sine.out" }, CARD - 0.75);
           tl.set("#f07-file", { className: "f07-printed" }, CARD);
-          tl.fromTo("#f07-file", { y: 0 }, { y: 6, duration: 0.05, ease: "power2.out", immediateRender: false }, CARD + 0.04);
-          tl.fromTo("#f07-file", { y: 6 }, { y: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, CARD + 0.09);
           tl.fromTo("#f07-filepos", { x: 0, y: 0, scale: 1, rotation: 0 }, { x: 10, y: 70, scale: 0.74, rotation: -4, duration: STAMP - 0.14 - L(80.54), ease: "power3.inOut", immediateRender: false }, L(80.54));
-          tl.fromTo("#f07-stamp", { opacity: 0, scale: 2.3, rotation: -15, filter: "blur(10px)" }, { opacity: 1, scale: 1, rotation: -8, filter: "blur(0px)", duration: 0.12, ease: "power4.in" }, STAMP - 0.12);
-          tl.fromTo("#f07-stamp", { scaleX: 1, scaleY: 1 }, { scaleX: 1.07, scaleY: 0.9, duration: 0.05, ease: "power2.out", immediateRender: false }, STAMP);
-          tl.fromTo("#f07-stamp", { scaleX: 1.07, scaleY: 0.9 }, { scaleX: 1, scaleY: 1, duration: 0.4, ease: "elastic.out(1, 0.4)", immediateRender: false }, STAMP + 0.05);
+          tl.set("#f07-stamp", { opacity: 0 }, 0);
+          tl.fromTo("#f07-stamp", { opacity: 0, scale: 1.7, rotation: -14, filter: "blur(5px)" }, { opacity: 1, scale: 1, rotation: -8, filter: "blur(0px)", duration: 0.16, ease: "power3.in", immediateRender: false }, STAMP - 0.16);
+          tl.fromTo("#f07-stamp", { scaleX: 1, scaleY: 1 }, { scaleX: 1.05, scaleY: 0.93, duration: 0.06, ease: "power2.out", immediateRender: false }, STAMP);
+          tl.fromTo("#f07-stamp", { scaleX: 1.05, scaleY: 0.93 }, { scaleX: 1, scaleY: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, STAMP + 0.06);
           const dr = HR.rng(7170);
           for (let i = 0; i < 9; i++) {
             // outside the stamp's mask box, on the card: 352/540 is the stamp's corner, 460 x 184 its size
@@ -599,9 +601,9 @@
             tl.fromTo(d, { opacity: 0, x: -dx * 0.6, y: 0, scale: 0.3 }, { opacity: 0.9, x: 0, y: dy * 0.3, scale: 1, duration: 0.09, ease: "power3.out", immediateRender: false }, STAMP);
             tl.to(d, { x: dx * 0.25, y: dy * 0.4, duration: 0.5, ease: "power2.out" }, STAMP + 0.09);
           }
-          tl.fromTo("#f07-file", { y: 0, rotation: -1.2 }, { y: 12, rotation: -2.2, duration: 0.05, ease: "power2.out", immediateRender: false }, STAMP);
-          tl.fromTo("#f07-file", { y: 12, rotation: -2.2 }, { y: 0, rotation: -1.2, duration: 0.4, ease: "power3.out", immediateRender: false }, STAMP + 0.05);
-          tl.fromTo("#f07-filepos", { x: 10, rotation: -4, filter: "blur(0px)" }, { x: 1150, rotation: 9, filter: "blur(9px)", duration: 0.3, ease: "power3.in", immediateRender: false }, SHOVE - 0.04);
+          tl.fromTo("#f07-file", { y: 0, rotation: -1.2 }, { y: 6, rotation: -1.8, duration: 0.07, ease: "power2.out", immediateRender: false }, STAMP);
+          tl.fromTo("#f07-file", { y: 6, rotation: -1.8 }, { y: 0, rotation: -1.2, duration: 0.45, ease: "power3.out", immediateRender: false }, STAMP + 0.07);
+          tl.fromTo("#f07-filepos", { x: 10, rotation: -4, filter: "blur(0px)" }, { x: 1150, rotation: 9, filter: "blur(7px)", duration: 0.3, ease: "power3.in", immediateRender: false }, SHOVE - 0.04);
           tl.set("#f07-mid", { opacity: 0 }, G2);
 
           tl.set("#f07-l15", { opacity: 0 }, G2);
@@ -646,16 +648,297 @@
           K.slice(0, 18).forEach((k) => tl.fromTo("#f07-num", { scale: 1.22 }, { scale: 1, duration: 0.14, ease: "power3.out", immediateRender: false }, k));
           LANDS.forEach((t) => tl.fromTo("#f07-num", { scale: 1.2 }, { scale: 1, duration: 0.2, ease: "power3.out", immediateRender: false }, t));
 
+          // ---- the lattice and the folder, drawn from timeline time (g1 only) ----------------------------------
+          // v21: one canvas, 60 px bleed on every side (the camera drift never shows its edge), at 2x on a 2x render
+          const PAD = 60, DPR = Math.min(2, Math.max(1, Math.round(window.devicePixelRatio || 1)));
+          const cv = $("f07-lc"); cv.width = (1920 + 2 * PAD) * DPR; cv.height = (1080 + 2 * PAD) * DPR;
+          const ctx = cv.getContext("2d");
+          const BASE = () => ctx.setTransform(DPR, 0, 0, DPR, DPR * PAD, DPR * PAD);
+          const rgba = (c, a) => `rgba(${c},${Math.max(0, Math.min(1, a)).toFixed(3)})`;
+          const CR = "240,236,229", FI = "232,93,38", INK = "17,17,17", RED = "194,74,28", HOT = "255,246,226";
+          const decay = (t, at, d) => (t >= at ? Math.exp(-(t - at) / d) : 0);
+          function seg2(a, b, q) { ctx.moveTo(a.x, a.y); ctx.lineTo(a.x + (b.x - a.x) * q, a.y + (b.y - a.y) * q); }
+          // a polyline through projected nodes up to fractional index f
+          function polyTo(pts, f) {
+            ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+            const n = Math.floor(f);
+            for (let i = 1; i <= Math.min(n, pts.length - 1); i++) ctx.lineTo(pts[i].x, pts[i].y);
+            if (n < pts.length - 1 && f > n) { const a = pts[n], b = pts[n + 1], q = f - n; ctx.lineTo(a.x + (b.x - a.x) * q, a.y + (b.y - a.y) * q); }
+          }
+          // a fire-only halo for paper (a cream core would vanish on cream)
+          const HALO_F = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 128;
+            const x = c.getContext("2d"), g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+            g.addColorStop(0, "rgba(232,93,38,0.9)"); g.addColorStop(0.35, "rgba(232,93,38,0.35)"); g.addColorStop(1, "rgba(232,93,38,0)");
+            x.fillStyle = g; x.fillRect(0, 0, 128, 128); return c;
+          })();
+
+          // ---- the folder on the desk plane y = YP: [x0, x1, z0 (near), z1 (far)] in world units, before the slide
+          const FD = { cover: [-12.1, -4.05, -4.0, 3.9], back: [-3.95, 4.15, -4.0, 3.9], tab: [1.4, 3.9, 3.9, 4.5],
+            page: [-3.6, 3.7, -3.62, 3.6], slip: [-11.1, -5.0, -3.35, 3.15] };
+          const P3 = (x, z, fo, v, y = YP) => { const o = {}; project([x + fo[0], y, z + fo[2]], v, o); return o; };
+          const quad = (r, fo, v, y) => { const [x0, x1, z0, z1] = r; return [P3(x0, z0, fo, v, y), P3(x1, z0, fo, v, y), P3(x1, z1, fo, v, y), P3(x0, z1, fo, v, y)]; };
+          const pathQ = (q) => { ctx.moveTo(q[0].x, q[0].y); for (let i = 1; i < 4; i++) ctx.lineTo(q[i].x, q[i].y); ctx.closePath(); };
+          const fillQ = (q, c) => { ctx.beginPath(); pathQ(q); ctx.fillStyle = c; ctx.fill(); };
+          // a page-px frame (100 px per world unit) at the far-left corner (x, z) of a sheet: u along +x, v toward the viewer
+          function onPlane(x, z, fo, v) {
+            const p0 = P3(x, z, fo, v), pu = P3(x + 0.5, z, fo, v), pv = P3(x, z - 0.5, fo, v);
+            ctx.setTransform(DPR * (pu.x - p0.x) / 50, DPR * (pu.y - p0.y) / 50, DPR * (pv.x - p0.x) / 50, DPR * (pv.y - p0.y) / 50, DPR * (p0.x + PAD), DPR * (p0.y + PAD));
+          }
+          const txt = (s, x, y, font, color, align = "left", ls = "0px") => { ctx.font = font; ctx.fillStyle = color; ctx.textAlign = align; ctx.letterSpacing = ls; ctx.fillText(s, x, y); };
+          const hline = (x0, x1, y, w, c) => { ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.lineWidth = w; ctx.strokeStyle = c; ctx.stroke(); };
+          const MONO5 = '500 13px "IBM Plex Mono"', MONO6 = '600 13px "IBM Plex Mono"';
+          // the DEFERRED stamp, inked once (rebuilt once the fonts are in), pressed with pinholes like 18's stamps
+          let stampImg = null, stampFonts = false;
+          function stampImage() {
+            const ok = document.fonts ? document.fonts.check('900 120px "Barlow"') : true;
+            if (stampImg && (stampFonts || !ok)) return stampImg;
+            const c = document.createElement("canvas"); c.width = 640; c.height = 250;
+            const x = c.getContext("2d"), r = HR.rng(7181);
+            x.strokeStyle = x.fillStyle = "#C24A1C"; x.lineJoin = "round";
+            x.lineWidth = 12; x.strokeRect(8, 8, 624, 234); x.lineWidth = 3; x.strokeRect(27, 27, 586, 196);
+            x.font = '900 122px "Barlow"'; x.textAlign = "center"; x.letterSpacing = "6px"; x.fillText("DEFERRED", 323, 160);
+            x.lineWidth = 2.5; x.beginPath(); x.moveTo(50, 180); x.lineTo(590, 180); x.stroke();
+            x.font = '600 19px "IBM Plex Mono"'; x.letterSpacing = "4px"; x.fillText("FIPS 203 · MIGRATION · NO DATE", 322, 208);
+            x.globalCompositeOperation = "destination-out";
+            for (let k = 0; k < 900; k++) { x.fillStyle = `rgba(0,0,0,${(0.3 + r() * 0.6).toFixed(2)})`; x.beginPath(); x.arc(r() * 640, r() * 250, 0.4 + r() * r() * 2.2, 0, Math.PI * 2); x.fill(); }
+            for (let k = 0; k < 26; k++) { x.fillStyle = `rgba(0,0,0,${(0.08 + r() * 0.2).toFixed(2)})`; x.fillRect(r() * 640, r() * 250, 40 + r() * 200, 1 + r() * 3); }
+            stampImg = c; stampFonts = ok; return c;
+          }
+
+          // the folder: boards with a visible edge, the routing slip with a clip, the FIPS 203 page with its engraved
+          // figure, the tab; then the desk lamp's pool multiplied over it (paper whites in the middle, dark at the rim)
+          function drawFolder(t, v, fo) {
+            BASE();
+            const edgeY = YP - 0.07;
+            for (const r of [FD.cover, FD.back]) fillQ(quad(r, fo, v, edgeY), "#3B3832");
+            fillQ(quad(FD.tab, fo, v), "#CFC5B3");
+            fillQ(quad(FD.cover, fo, v), "#D6CDBC"); fillQ(quad(FD.back, fo, v), "#D9D0BF");
+            // the spine crease
+            const s0 = P3(-4.0, -4.0, fo, v), s1 = P3(-4.0, 3.9, fo, v);
+            ctx.beginPath(); ctx.moveTo(s0.x, s0.y); ctx.lineTo(s1.x, s1.y); ctx.lineWidth = 3 * v.s / 124; ctx.strokeStyle = "rgba(60,52,40,0.45)"; ctx.stroke();
+            fillQ(quad(FD.slip, fo, v, YP + 0.005), "#F4F0E8");
+            fillQ(quad(FD.page, fo, v, YP + 0.01), "#F2EEE7");
+            // the routing slip
+            onPlane(FD.slip[0], FD.slip[3], fo, v);
+            txt("ROUTING SLIP", 34, 74, '900 46px "Barlow"', "#111111", "left", "1px");
+            txt("NIST · CSD · FORM 203-A", 576, 40, MONO5, "#6a655c", "right", "2px");
+            hline(34, 576, 100, 2.5, "#111111");
+            [["TO", "YOU"], ["FROM", "NIST"], ["RE", "THE NEW MATH"], ["ACTION", "MIGRATE"], ["DUE", "—"], ["READ", "☐"]].forEach(([k, val], i) => {
+              const y = 160 + i * 72;
+              txt(k, 34, y, '500 15px "IBM Plex Mono"', "#6a655c", "left", "3px");
+              txt(val, 190, y, '600 30px "IBM Plex Mono"', "#111111", "left", "1px");
+              hline(34, 576, y + 22, 1, "rgba(17,17,17,0.25)");
+            });
+            txt("(later)", 330, 518, '400 64px "Caveat Brush"', "#C8481A");
+            txt("PAGES: 47 · PAGES READ: 0", 34, 618, MONO5, "#6a655c", "left", "2px");
+            // the paper clip over the slip's top edge
+            ctx.beginPath(); ctx.lineWidth = 5; ctx.strokeStyle = "#8C877E"; ctx.lineCap = "round";
+            ctx.moveTo(470, 34); ctx.lineTo(470, -58); ctx.arc(496, -58, 26, Math.PI, 0); ctx.lineTo(522, 52); ctx.arc(503, 52, 19, 0, Math.PI); ctx.lineTo(484, -40); ctx.stroke();
+            // the tab
+            onPlane(FD.tab[0], FD.tab[3], fo, v);
+            txt("ML-KEM · FIPS 203", 125, 40, '600 21px "IBM Plex Mono"', "#111111", "center", "2px");
+            // the page: header, the engraved figure (the lattice's footprint), footer
+            onPlane(FD.page[0], FD.page[3], fo, v);
+            txt("FIPS 203", 30, 62, '900 58px "Barlow"', "#111111", "left", "0px");
+            txt("MODULE-LATTICE-BASED KEY-ENCAPSULATION", 268, 38, MONO6, "#111111", "left", "1.5px");
+            txt("MECHANISM STANDARD · NIST · 13 AUG 2024", 268, 60, MONO5, "#6a655c", "left", "1.5px");
+            hline(30, 700, 80, 2.5, "#111111");
+            hline(30, 700, 640, 1.2, "rgba(17,17,17,0.5)");
+            txt("FIG. 1 — A MODULE LATTICE, RANK 3 (NOT TO SCALE)", 30, 666, MONO6, "#111111", "left", "1.5px");
+            txt("HARD FOR A QUANTUM COMPUTER. EASY TO PUT OFF.", 30, 690, MONO5, "#6a655c", "left", "1.5px");
+            txt("ML-KEM-768", 700, 666, MONO6, "#C24A1C", "right", "2px");
+            BASE();
+            // the engraved figure: every bond and point of the lattice printed flat where its points will land
+            for (const n of nodes) { const p = P3(n.h[0], n.h[2], fo, v, YP + 0.01); n.ex = p.x; n.ey = p.y; }
+            ctx.beginPath();
+            for (const e of edges) if (!e.brace) { ctx.moveTo(e.a.ex, e.a.ey); ctx.lineTo(e.b.ex, e.b.ey); }
+            ctx.lineWidth = 1.3 * v.s / 124; ctx.strokeStyle = "rgba(17,17,17,0.3)"; ctx.stroke();
+            for (const n of nodes) { ctx.beginPath(); ctx.arc(n.ex, n.ey, 5 * v.s / 124, 0, Math.PI * 2); ctx.lineWidth = 1.3 * v.s / 124; ctx.strokeStyle = "rgba(17,17,17,0.45)"; ctx.stroke(); }
+            // DEFERRED, stamped on the hat after "math": it drops, presses, stays
+            if (t >= STAMP2 - 0.09) {
+              const u = clamp01((t - (STAMP2 - 0.09)) / 0.09), e = u * u * u, squash = decay(t, STAMP2, 0.06);
+              onPlane(FD.page[0], FD.page[3], fo, v);
+              ctx.translate(500, 420); ctx.rotate(-0.13); ctx.scale((1.7 - 0.7 * e) * 0.6 * (1 + 0.05 * squash), (1.7 - 0.7 * e) * 0.6 * (1 - 0.07 * squash));
+              ctx.globalAlpha = 0.25 + 0.7 * e; ctx.globalCompositeOperation = "multiply";
+              ctx.drawImage(stampImage(), -320, -125);
+              ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+              BASE();
+            }
+            // the desk lamp: a warm pool over the paper, falling off to dark at the folder's rim
+            const lc = P3(0.4, 0.6, fo, v), R = 7.4 * v.s;
+            ctx.save(); ctx.beginPath(); for (const r of [FD.cover, FD.back, FD.tab]) pathQ(quad(r, fo, v, edgeY + (r === FD.tab ? 0.07 : 0))); ctx.clip();
+            const g = ctx.createRadialGradient(lc.x, lc.y, 0, lc.x, lc.y, R);
+            g.addColorStop(0, "#FFFFFF"); g.addColorStop(0.42, "#F3EDE3"); g.addColorStop(0.75, "#9C958A"); g.addColorStop(1, "#2A2724");
+            ctx.globalCompositeOperation = "multiply"; ctx.fillStyle = g; ctx.fillRect(-PAD, -PAD, 1920 + 2 * PAD, 1080 + 2 * PAD);
+            ctx.restore(); ctx.globalCompositeOperation = "source-over";
+          }
+
+          // the sparks thrown off the cube's eight corners as the basis snaps square on "math"
+          const SPARKS = (() => {
+            const r = HR.rng(7191), out = [];
+            const corners = nodes.filter((n) => (n.i % (SI - 1) === 0) && (n.j % (SI - 1) === 0) && (n.k % (SK - 1) === 0));
+            for (const n of corners) for (let s = 0; s < 8; s++) {
+              const a = r() * Math.PI * 2, sp = 2.5 + r() * 4.5;
+              out.push({ n, vx: Math.cos(a) * sp, vy: 1.5 + r() * 4, vz: Math.sin(a) * sp, life: 0.3 + r() * 0.45, d: r() * 0.03 });
+            }
+            return out;
+          })();
+          function drawSparks(t, v) {
+            if (t < MATH || t > MATH + 0.85) return;
+            const at = (s, tau) => { const o = {}; project([s.n.lock[0] + s.vx * tau, s.n.lock[1] + s.vy * tau - 6 * tau * tau, s.n.lock[2] + s.vz * tau], v, o); return o; };
+            ctx.lineCap = "round";
+            for (const s of SPARKS) {
+              const tau = t - MATH - s.d; if (tau < 0 || tau > s.life) continue;
+              const a = at(s, Math.max(0, tau - 0.04)), b = at(s, tau), fade = 1 - tau / s.life;
+              ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.lineWidth = 5 * b.ps; ctx.strokeStyle = rgba(FI, 0.85 * fade); ctx.stroke();
+              ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.lineWidth = 2 * b.ps; ctx.strokeStyle = rgba(HOT, fade); ctx.stroke();
+            }
+          }
+
+          // one pass of the lattice: 'dark' (v17's light on black, then printed ink on the card) or 'ink' (over the
+          // folder's paper: ink bonds, fire route and lit points, paper struts down to the page)
+          function drawPass(mode, t, hat, v, lp, pr, W, foFull) {
+            const ink = mode === "ink";
+            if (!ink) for (let k = 0; k < SK; k++) {
+              const q = [[0, 0], [SI - 1, 0], [SI - 1, SI - 1], [0, SI - 1]].map(([i, j]) => nodes[idx(i, j, k)]);
+              ctx.beginPath(); q.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y))); ctx.closePath();
+              ctx.fillStyle = rgba(lp > 0.5 ? CR : INK, 0.028); ctx.fill();
+              ctx.lineWidth = 1; ctx.strokeStyle = lp > 0.5 ? rgba("136,136,128", 0.3 * lp) : rgba("80,80,72", 0.3 * pr); ctx.stroke();
+            }
+            if (ink) {
+              // the pop-up's paper struts: each bottom point is held to its printed spot on the page
+              const sa = 1 - clamp01((t - FOLD_OUT) / 0.2);
+              ctx.beginPath();
+              for (const n of nodes) if (n.k === 0 && popE(t, 0) > 0.02) { ctx.moveTo(n.x, n.y); ctx.lineTo(n.ex, n.ey); }
+              ctx.lineWidth = 2.2 * W; ctx.strokeStyle = rgba("90,84,74", 0.55 * sa); ctx.stroke();
+              for (const e of edges) {
+                const q = smooth(e.at - 0.2, e.at, t); if (q <= 0) continue;
+                const f = (e.a.fog + e.b.fog) / 2, ps = (e.a.ps + e.b.ps) / 2;
+                ctx.beginPath(); seg2(e.a, e.b, q);
+                ctx.lineWidth = (e.brace ? 1.3 : 2.8) * ps; ctx.strokeStyle = rgba(INK, (e.brace ? 0.35 : 0.5 + 0.4 * f) * lit.crisp); ctx.stroke();
+              }
+            } else if (lp > 0) {
+              for (const e of edges) {
+                const m = (e.a.m + e.b.m) / 2, f = (e.a.fog + e.b.fog) / 2;
+                ctx.beginPath(); seg2(e.a, e.b, 1); ctx.lineWidth = 1.3 * W; ctx.strokeStyle = rgba(CR, (e.brace ? 0.1 : 0.24) * f * m * lp); ctx.stroke();
+              }
+              ctx.globalCompositeOperation = "lighter";
+              for (const e of edges) {
+                if (e.brace) continue;
+                const q = smooth(e.at - 0.2, e.at, t); if (q <= 0) continue;
+                const m = (e.a.m + e.b.m) / 2, f = (e.a.fog + e.b.fog) / 2, ps = (e.a.ps + e.b.ps) / 2;
+                ctx.beginPath(); seg2(e.a, e.b, q); ctx.lineWidth = 11 * ps; ctx.strokeStyle = rgba(FI, 0.16 * f * m * lp * lit.glow); ctx.stroke();
+              }
+              ctx.globalCompositeOperation = "source-over";
+              for (const e of edges) {
+                const q = smooth(e.at - 0.2, e.at, t); if (q <= 0) continue;
+                const m = (e.a.m + e.b.m) / 2, f = (e.a.fog + e.b.fog) / 2, ps = (e.a.ps + e.b.ps) / 2;
+                ctx.beginPath(); seg2(e.a, e.b, q);
+                ctx.lineWidth = (e.brace ? 1.4 : 3) * ps; ctx.strokeStyle = rgba(CR, (e.brace ? 0.3 : 0.45 + 0.5 * f) * m * lp * lit.crisp); ctx.stroke();
+              }
+            }
+            if (!ink && pr > 0) for (const e of edges) {
+              const f = (e.a.fog + e.b.fog) / 2;
+              ctx.beginPath(); seg2(e.a, e.b, 1); ctx.lineWidth = (e.brace ? 0.9 : 1.6) * W; ctx.strokeStyle = rgba(INK, (e.brace ? 0.22 : 0.32 + 0.5 * f) * pr); ctx.stroke();
+            }
+            // the basis vectors light on the kick before "math"
+            const bq = smooth(PRE - 0.02, PRE + 0.14, t);
+            if (bq > 0) for (const b of BTIPS) {
+              ctx.beginPath(); seg2(ORIGIN, b, bq);
+              if (lp > 0 && !ink) { ctx.globalCompositeOperation = "lighter"; ctx.lineWidth = 14 * ORIGIN.ps; ctx.strokeStyle = rgba(FI, 0.25 * lp * lit.glow); ctx.stroke(); ctx.globalCompositeOperation = "source-over"; }
+              ctx.lineWidth = (lp > 0.5 ? 5.5 : 3) * ORIGIN.ps; ctx.strokeStyle = lp > 0.5 ? rgba(FI, 0.95) : rgba(RED, 0.9 * pr); ctx.stroke();
+            }
+            // the lit route: it draws node by node from the origin, then a spark runs it twice on "math"
+            const rf = clamp01((t - RSTART) / (MATH - 0.06 - RSTART)) * (route.length - 1);
+            if (rf > 0) {
+              const rm = ink ? 1 : route.reduce((s, p) => s + p.m, 0) / route.length;
+              if (lp > 0) {
+                if (!ink) { ctx.globalCompositeOperation = "lighter"; polyTo(route, rf); ctx.lineWidth = 22 * W; ctx.strokeStyle = rgba(FI, 0.22 * lp * lit.route * rm); ctx.stroke(); ctx.globalCompositeOperation = "source-over"; }
+                polyTo(route, rf); ctx.lineWidth = 6.5 * W; ctx.strokeStyle = rgba(FI, lp * rm); ctx.stroke();
+                for (const s0 of [MATH, MATH + 0.55]) {
+                  const u = (t - s0) / 0.5; if (u < 0 || u > 1) continue;
+                  const f = u * u * (route.length - 1 + 0.6);
+                  if (!ink) ctx.globalCompositeOperation = "lighter";
+                  const a = Math.max(0, f - 0.6), b = Math.min(route.length - 1, f);
+                  ctx.beginPath();
+                  for (let x = a; x <= b + 1e-6; x += 0.1) {
+                    const n = Math.min(route.length - 2, Math.floor(x)), q = x - n, p = route[n], r = route[n + 1];
+                    const px = p.x + (r.x - p.x) * q, py = p.y + (r.y - p.y) * q;
+                    x === a ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+                  }
+                  if (ink) { ctx.lineWidth = 9 * W; ctx.strokeStyle = rgba(FI, 0.9); ctx.stroke(); }
+                  ctx.lineWidth = 6 * W; ctx.strokeStyle = rgba(ink ? HOT : CR, 0.95 * lp); ctx.stroke();
+                  ctx.globalCompositeOperation = "source-over";
+                }
+              }
+              if (!ink && pr > 0) { polyTo(route, rf); ctx.lineWidth = 4 * W; ctx.strokeStyle = rgba(RED, pr); ctx.stroke(); }
+            }
+            // the nodes, far to near: a ring that occludes the bonds behind, a cream (or lit fire) core, a halo; each
+            // wave flashes as it lands on its kick, every point flashes white-hot on the lock
+            const order = nodes.slice().sort((p, q) => q.z - p.z);
+            for (const n of order) {
+              const landE = smooth(0, n.land, t) * 0.5 + (t >= n.land ? 0.5 : 0);
+              const fire = n.lit != null && t >= n.lit, hotE = decay(t, n.front, 0.2);
+              if (lp > 0) {
+                const m = ink ? 1 : n.m;
+                const op = (0.5 + 0.5 * landE) * m * (0.55 + 0.45 * n.fog) * (t >= MATH && t < CARD && n.flick ? 1 - 0.6 * hat : 1) * lp;
+                const r = 8.5 * n.ps * (1 + 0.5 * decay(t, n.land, 0.12) + 0.5 * hotE);
+                ctx.beginPath(); ctx.arc(n.x, n.y, r + 3.5 * n.ps, 0, Math.PI * 2); ctx.fillStyle = ink ? rgba(INK, op) : rgba("10,10,10", op); ctx.fill();
+                ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2); ctx.fillStyle = hotE > 0.3 ? rgba(HOT, op) : rgba(fire ? FI : ink ? "247,243,236" : CR, op); ctx.fill();
+                const ha = (0.12 + 0.88 * decay(t, n.land, 0.16)) * (t >= n.land ? 1 : 0.4) + (fire ? 0.7 * decay(t, n.lit, 0.18) + 0.2 : 0) + 0.8 * hotE;
+                if (ha > 0.02) {
+                  const hs = 74 * n.ps * (1 + 0.5 * decay(t, n.land, 0.2) + 0.6 * hotE);
+                  if (ink) { ctx.globalAlpha = Math.max(0, Math.min(1, (ha - 0.12) * 0.9 * lp)); }
+                  else { ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = Math.max(0, Math.min(1, ha * m * n.fog * lp)); }
+                  if (ctx.globalAlpha > 0.01) ctx.drawImage(ink ? HALO_F : HALO, n.x - hs / 2, n.y - hs / 2, hs, hs);
+                  ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+                }
+              }
+              if (!ink && pr > 0) { ctx.beginPath(); ctx.arc(n.x, n.y, 5 * n.ps, 0, Math.PI * 2); ctx.fillStyle = rgba(n.onR ? RED : INK, pr); ctx.fill(); }
+            }
+          }
+
+          const inQuad = (q, x, y) => { let s = 0; for (let i = 0; i < 4; i++) { const a = q[i], b = q[(i + 1) % 4], c = (b.x - a.x) * (y - a.y) - (b.y - a.y) * (x - a.x); if (c !== 0) { if (s === 0) s = Math.sign(c); else if (Math.sign(c) !== s) return false; } } return true; };
+          function drawLattice(t, hat) {
+            const v = view(t), pr = smooth(CARD - 0.42, CARD - 0.05, t), lp = 1 - pr, BC = basisAt(t);
+            for (const n of nodes) { const w = pos(n, t, BC); n.lock = w; project(w, v, n); n.m = textMask(n.x, n.y, lp); }
+            BASE(); ctx.clearRect(-PAD, -PAD, 1920 + 2 * PAD, 1080 + 2 * PAD);
+            ctx.lineCap = "round"; ctx.lineJoin = "round";
+            const W = v.s / BIG.s; // line widths follow the fit
+            const fi = foIn(t), fx = foOut(t), fo = [fi[0] + fx[0], 0, fi[2] + fx[2]];
+            const folder = t < FOLD_GONE + 0.05;
+            let quads = null;
+            if (folder) {
+              drawFolder(t, v, fo); BASE();
+              quads = [FD.cover, FD.back, FD.tab].map((r) => quad(r, fo, v));
+              ctx.save(); ctx.beginPath(); ctx.rect(-PAD, -PAD, 1920 + 2 * PAD, 1080 + 2 * PAD); quads.forEach(pathQ); ctx.clip("evenodd");
+              drawPass("dark", t, hat, v, lp, pr, W, fo); ctx.restore();
+              ctx.save(); ctx.beginPath(); quads.forEach(pathQ); ctx.clip();
+              drawPass("ink", t, hat, v, lp, pr, W, fo); ctx.restore();
+            } else drawPass("dark", t, hat, v, lp, pr, W, fo);
+            drawSparks(t, v);
+            // the engraved coordinates, the basis names and the lock tag ride the projected points
+            for (const n of nodes) if (n.lab) {
+              n.lab.style.transform = `translate(${n.x.toFixed(1)}px, ${n.y.toFixed(1)}px) scale(${Math.max(0.75, Math.min(1.15, n.ps)).toFixed(3)})`;
+              const onPaper = quads && quads.some((q) => inQuad(q, n.x, n.y));
+              n.lab.firstChild.style.color = onPaper ? (n.onR ? "#C24A1C" : "#4A463F") : "";
+              n.lab.style.opacity = ((onPaper ? 1 : n.m) * lp * (0.35 + 0.65 * smooth(0, n.land, t)) * (0.5 + 0.5 * n.fog) + pr).toFixed(3);
+            }
+            BTIPS.forEach((b, i) => { const o = [[18, 8], [-10, -40], [-50, -16]][i]; blabs[i].style.transform = `translate(${(b.x + o[0]).toFixed(1)}px, ${(b.y + o[1]).toFixed(1)}px)`; });
+            lockt.style.left = (END.x + 20).toFixed(1) + "px"; lockt.style.top = (END.y - 58).toFixed(1) + "px";
+          }
+
           // ---- per-frame draw -------------------------------------------------------------------------------
           const root = $("root"), num = $("f07-num"), kickEl = $("f07-kick"), clabel = $("f07-clabel"), wallbox = $("f07-wallbox");
           const light = $("f07-light"), sure = $("f07-sure"), cntLabel = $("f07-clabel");
-          const clamp01 = (x) => Math.max(0, Math.min(1, x));
           let wasG2 = null;
           const mathRow = l14.find((w) => w.hero).s, aroundW = l15.find((w) => w.hero).s;
           function render() {
             const t = tl.time(), T = t + T0;
             cam.x = A.x + N.x; cam.y = A.y + N.y; cam.z = A.z + N.z; cam.rot = A.rot + N.rot; cam.focus = A.focus;
             stage.apply(T);
+            WOW.draw(tl, T0);
             HR.draw(tl);
             const rms = HR.band("rms", T), kick = HR.hit("kick", T, 0.14), hat = HR.hit("hat", T, 0.07);
             let k = -1;
@@ -675,8 +958,7 @@
             // glow: "math" and "around" on dark, the fire excuses, the basis; settled nodes twinkle on hats
             HR.glow(mathRow, T, 0.4, 0.8);
             HR.glow(aroundW, T, 0.4, 0.8);
-            HR.glow($("f07-basis"), T, 0.5, 0.6);
-            if (t >= MATH && t < CARD) for (const p of nodes) p.core.style.opacity = p.flick ? (1 - 0.7 * hat).toFixed(2) : "1";
+            if (!g2) drawLattice(t, hat);
 
             // the roll: only the current excuse is on screen; the lock holds into the cut
             const kk = Math.min(k, 17), cur = g2 ? START + 1 + kk : -1, since = g2 ? t - K[kk] : 0;

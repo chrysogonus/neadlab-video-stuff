@@ -79,10 +79,39 @@
       pop: { scale: 0.3, opacity: 0, filter: "blur(8px)" }, drop: { y: -90, opacity: 0, scaleY: 1.3, filter: "blur(6px)" },
       left: { x: -220, skewX: 24, opacity: 0, filter: "blur(10px)" }, right: { x: 220, skewX: -24, opacity: 0, filter: "blur(10px)" },
       flip: { rotationX: -90, opacity: 0, transformPerspective: 600 }, zoom: { scale: 2.4, opacity: 0, filter: "blur(16px)" }, spin: { rotation: -18, scale: 0.4, opacity: 0, filter: "blur(8px)" },
-    }[kind];
-    const to = { x: 0, y: 0, scale: 1, scaleY: 1, skewX: 0, rotation: 0, rotationX: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: kind === "drop" ? "bounce.out" : "back.out(2.2)", immediateRender: false };
-    tl.fromTo(el, from, to, Math.max(0, t - 0.03));
+    }[kind] || WOW.SOFT[kind];
+    const soft = !!WOW.SOFT[kind];
+    // v17: hidden from the frame's start until its entrance (a delayed fromTo otherwise leaves the word showing early).
+    // Pass hide: false for a word that is already on screen before this entrance (a re-entry).
+    if (o.hide !== false) tl.set(el, { opacity: 0 }, 0);
+    const to = { x: 0, y: 0, scale: 1, scaleY: 1, skewX: 0, rotation: 0, rotationX: 0, opacity: 1, filter: "blur(0px)", duration: soft ? (o.dur ?? 0.42) : d,
+      ease: soft ? "power3.out" : kind === "drop" ? "bounce.out" : "back.out(2.2)", immediateRender: false };
+    tl.fromTo(el, from, to, Math.max(0, t - (soft ? 0.06 : 0.03)));
   };
+  /** v17 soft entrances for WOW.word (verses, lead words): a short eased glide, ≤ 4 px blur, readable from t − 0.06. */
+  WOW.SOFT = {
+    rise: { y: 38, opacity: 0, filter: "blur(4px)" }, sink: { y: -38, opacity: 0, filter: "blur(4px)" },
+    glide: { x: -56, opacity: 0, filter: "blur(4px)" }, glideR: { x: 56, opacity: 0, filter: "blur(4px)" },
+    settle: { scale: 1.12, opacity: 0, filter: "blur(3px)" }, fade: { opacity: 0 },
+  };
+
+  // ---- v17: the music as data (track seconds) ------------------------------------------------------------------
+  /**
+   * Snap a track time to the nearest real musical event: o.kinds ⊂ ['kick','snare','hat','down'] (default kick, snare, down),
+   * within o.tol s (default 0.12). Returns the event time, or t unchanged when nothing is near. Use it for every accent time
+   * you choose by hand (sung-word times stay the word's own time).
+   */
+  WOW.on = (t, o = {}) => {
+    const E = window.HR_ENV, kinds = o.kinds ?? ["kick", "snare", "down"], tol = o.tol ?? 0.12;
+    let best = t, bd = tol + 1e-9;
+    for (const k of kinds) {
+      const xs = k === "down" ? E.downbeats : E.onsets[k].map((p) => p[0]);
+      for (const x of xs) { const d = Math.abs(x - t); if (d < bd) { bd = d; best = x; } }
+    }
+    return best;
+  };
+  /** The music's loudness around track time t, 0..1 (rms averaged over ±0.5 s): size accents and pulses by it. */
+  WOW.energy = (t) => { let s = 0; for (let i = -5; i <= 5; i++) s += HR.band("rms", t + i * 0.1); return clamp01(s / 11 / 0.45); };
   /**
    * The explosive hero word: glyphs are thrown in from outside the word with spin and blur, converge and overshoot ON t,
    * then the word lands with a shockwave, rays and a micro-shake. o: {parent (effects layer, default el's offsetParent),
@@ -128,8 +157,19 @@
     drop: { out: (u, e) => ({ y: 1200 * e.in3(u), blur: 18 * e.in3(u), op: 1 }), in: (u, e) => ({ y: -1200 * (1 - e.out4(u)), blur: 18 * (1 - e.out4(u)), op: 1 }) },
     rise: { out: (u, e) => ({ y: -1200 * e.in3(u), blur: 18 * e.in3(u), op: 1 }), in: (u, e) => ({ y: 1200 * (1 - e.out4(u)), blur: 18 * (1 - e.out4(u)), op: 1 }) },
     cut: { out: () => ({ op: 1 }), in: () => ({ op: 1 }) },
+    // v17 smooth switches: quadratic in/out so the speed is continuous through the cut, ≤ 8 px blur, and the frame ALWAYS
+    // covers the canvas (scale ≥ 1, and a glide's offset is paired with just enough scale to cover the exposed edge) —
+    // no black border, no dip. Use dur ≈ one beat (0.46 s) on each side; the incoming frame is fully composed at its first instant.
+    pushIn: { out: (u, e) => ({ scale: 1 + 0.22 * e.in2(u), blur: 6 * e.in2(u) }), in: (u, e) => ({ scale: 1.16 - 0.16 * e.out2(u), blur: 6 * (1 - e.out2(u)) }) },
+    pullOut: { out: (u, e) => ({ scale: 1 + 0.1 * e.in2(u), blur: 6 * e.in2(u) }), in: (u, e) => ({ scale: 1.22 - 0.22 * e.out2(u), blur: 6 * (1 - e.out2(u)) }) },
+    glideL: { out: (u, e) => slide(-140 * e.in2(u), 0, 8 * e.in2(u)), in: (u, e) => slide(140 * (1 - e.out2(u)), 0, 8 * (1 - e.out2(u))) },
+    glideR: { out: (u, e) => slide(140 * e.in2(u), 0, 8 * e.in2(u)), in: (u, e) => slide(-140 * (1 - e.out2(u)), 0, 8 * (1 - e.out2(u))) },
+    glideUp: { out: (u, e) => slide(0, -80 * e.in2(u), 7 * e.in2(u)), in: (u, e) => slide(0, 80 * (1 - e.out2(u)), 7 * (1 - e.out2(u))) },
+    glideDown: { out: (u, e) => slide(0, 80 * e.in2(u), 7 * e.in2(u)), in: (u, e) => slide(0, -80 * (1 - e.out2(u)), 7 * (1 - e.out2(u))) },
   };
-  const EASE = { in3: (u) => u * u * u, out4: (u) => 1 - Math.pow(1 - u, 4) };
+  // an offset (x, y) plus the scale that keeps a 1920×1080 frame (centre origin) covering the canvas, with 4 % margin
+  function slide(x, y, blur) { return { x, y, blur, scale: 1 + Math.max(Math.abs(x) / 960, Math.abs(y) / 540) * 1.04 }; }
+  const EASE = { in3: (u) => u * u * u, out4: (u) => 1 - Math.pow(1 - u, 4), in2: (u) => u * u, out2: (u) => 1 - (1 - u) * (1 - u) };
   /**
    * The scene switch of this frame, as seen from its own side. `root` is the frame's #root. Pair kinds across a cut:
    * the outgoing frame's `out` and the next frame's `in` use the same kind, so the move carries through the cut
@@ -147,8 +187,12 @@
     for (const k of r.trans) get(k.root).blur = 0; // an idle transition clears its blur (a seek may skip the frames that would)
     for (const k of r.shakes) {
       const d = T - k.t; if (d < 0 || d > k.dur) continue;
-      const w = Math.pow(1 - d / k.dur, 2), step = Math.floor(T * 30), a = HR.rng(step * 131 + k.seed), s = get(k.target);
-      s.x += (a() - 0.5) * 2 * k.amp * w; s.y += (a() - 0.5) * 2 * k.amp * w; s.r += (a() - 0.5) * 2 * k.rot * w;
+      // v17: smooth value noise at 11 Hz (smoothstep between seeded keys) instead of a new random offset every 1/30 s,
+      // so a shake reads as a rumble, not as a string of jolts
+      const w = Math.pow(1 - d / k.dur, 2), f = T * 11, i0 = Math.floor(f), u = f - i0, sm = u * u * (3 - 2 * u), s = get(k.target);
+      const a0 = HR.rng(i0 * 131 + k.seed), a1 = HR.rng((i0 + 1) * 131 + k.seed);
+      const n = () => { const p = a0() - 0.5, q = a1() - 0.5; return (p + (q - p) * sm) * 2; };
+      s.x += n() * k.amp * w; s.y += n() * k.amp * w; s.r += n() * k.rot * w;
     }
     for (const k of r.punches) {
       const d = T - k.t; if (d < 0 || d > k.dur) continue;

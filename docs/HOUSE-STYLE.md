@@ -1,7 +1,8 @@
 # House style — the Neadlab look
 
 The look every NEAD video uses. harvest-remix (`projects/harvest-remix/video/`) proved the base, which the user
-approved as the model for future videos. Revision 2 (2026-10-17) raises it to the level of the two reference
+approved as the model for future videos. Revision 3 (2026-10-18, harvest-remix V18.md) adds five rules from the
+v17 analysis. Revision 2 (2026-10-17) raises it to the level of the two reference
 videos, "LGTM" and "i'm upping my p(doom)": the evidence and the reasons are in
 [REFERENCE-VIDEOS.md](REFERENCE-VIDEOS.md). Read both before planning a new song (music-to-video Step 3) and
 before writing its `SYSTEM.md`.
@@ -31,7 +32,10 @@ restrained and lit by one accent; 3D only as line drawing.
    - Every sung word appears on its own aligned time (`lyrics.json`) and fills letter by letter in the accent; the
      rest of the line waits dim or in outline. Legible on a phone (≥ 72 px).
    - Layouts vary per line (stacked, compare panels, pull quote, lockup, word per cut, text on a path or
-     surface, full-bleed); neighbouring scenes never share one.
+     surface, full-bleed); neighbouring scenes never share one, and **neighbouring shots never put the lyric in
+     the same position** (rev 3: harvest-remix v17 had a small lead line top left in five shots in a row).
+   - **Every section has at least one sung word set across ≥ 60 % of the frame width** (up to ~25cqw for that
+     word), the way p(doom) sets SERVANT, I'M and P(DOOM) full-frame.
 4. **Three type voices.** One grotesk for the sung voice (big, tight, animated on width and weight where the font
    allows), one mono for the machine (labels, data, forms, footnotes), one serif italic for the rare tender or
    sacred line. Add a marker hand for the human heckle ("(it isn't)", "(sure.)") when the song suits it.
@@ -52,20 +56,26 @@ restrained and lit by one accent; 3D only as line drawing.
      appearances.
 7. **Restraint: black ground, one small accent.**
    - Pick one `hyperframes-creative` frame preset per song and copy it verbatim as `frame.md`. One accent hue
-     only; harvest-remix uses `broadside`: ink, fire-orange and cream.
+     only; harvest-remix uses `broadside`: ink, fire-orange and cream. **One exception per film:** a single
+     literal second-colour moment when the lyric names the colour (p(doom)'s 2 s of acid green; harvest-remix's
+     "little green padlock"), ideally planted for a payoff.
    - The ground is near-black (ink about `#0A0A0A`) and mostly empty: **ground luma ≤ 0.05** (the 20th-percentile
      luma of each frame, median over the film) and **at least 40 % of pixels darker than 0.09**. Texture lives on
      objects, never on the ground.
    - **The accent is light and pointer, never a ground:** about 5 % of the frame or less (median). It marks the
      sung word, the spark, the number that matters.
    - Two registers: the dark register, and a light **cream-paper** register for documents, forms and diagrams
-     (**10–20 % of frames**), cut between on downbeats. The accent keeps its colour on both.
+     (**10–20 % of frames**), cut between on downbeats. The accent keeps its colour on both. **The first
+     cream frame comes in verse 1**, so the opening has the light/dark rhythm too.
    - Check the figures on the render as described in REFERENCE-VIDEOS.md ("Measuring a render").
 8. **Everything moves, through one motion grammar** (the kit, `assets/kit/hr-kit.js`):
    - words build glyph by glyph, hero words hit in three phases (anticipation, slam on the word, elastic
      settle), lines leave;
    - a camera move once per phrase, with micro-drift and a kick pulse; one element often transforms into the
      next scene;
+   - **effects are sized by the measured drums** (`HR.band("drums")`, `WOW.energy`), not by the section's name:
+     a pre-chorus roll that is louder than the chorus gets the chorus kit, and the biggest build is never the
+     stillest picture;
    - **motion blur on whips, slams and fast zooms** (`hyperframes-animation`, `references/motion-blur.md`), so fast
      type streaks instead of strobing.
 
@@ -95,6 +105,7 @@ restrained and lit by one accent; 3D only as line drawing.
 | The lyric as a caption beside a prop, one layout template | The lyric must be on or be the object (item 2). |
 | Words that pop in and freeze, static frames, plain hard cuts everywhere | This was v7's "meh". |
 | Full-frame light washes | Leaks are edge-weighted, at most 0.4 opacity. |
+| Abstract energy effects on an object: lightning, flat CSS shock rings, colour washes over the frame | harvest-remix v18's cipher-rotor locks read "weird, underwhelming, low quality" to the user. Explosions are mechanical: the object comes apart, its parts and sparks and its own light carry the hit (v19's exploded view). |
 
 ## How to make one
 
@@ -107,7 +118,8 @@ restrained and lit by one accent; 3D only as line drawing.
    the lyric rule and the kit rules.
 4. **Prove before scaling:**
    - build two reference frames yourself, the opening and the first chorus with its hook. The default opening
-     is a narrative cold open with a designed YouTube thumbnail; a poster first frame is also fine;
+     is a narrative cold open with a designed YouTube thumbnail; a poster first frame is also fine, but it
+     **holds at most one bar** before the story starts moving;
    - render `./vid proof <id> --to <end of the first drop>`;
    - get the user's verdict before dispatching frame-workers.
 5. Dispatch frame-workers three at a time, each with `SYSTEM.md`, the two reference frames and `./vid snap`.

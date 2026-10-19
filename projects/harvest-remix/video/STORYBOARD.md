@@ -24,6 +24,10 @@ comic · HIT · stillness · the reading · hush-HIT · coda.
 
 Lines are named by their `lyrics.json` index (`L0` … `L30`); every word appears at its own `start`.
 
+> Delivered as v21 (DELIVERY.md); the frames in `compositions/frames/` are the final state. The revision notes
+> below are history: the `renders/` proofs and hash files and the `backups/` they cite were removed in the
+> 2026-10-19 cleanup, and the V*.md plans hold the reasons.
+
 ## V12 revision — 2026-10-17
 
 All scene spans and sung-word times are unchanged. The changes from v11:

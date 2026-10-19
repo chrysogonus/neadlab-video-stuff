@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<!-- YouTube thumbnails for harvest-remix v21 (Banger Remix): three variants for Test & Compare, one per second
+     (t = 0.5 "sealed / READ", 1.5 "every byte is mine", 2.5 "decrypted now"). Backgrounds are the film's own 4K frames
+     (out/harvest-remix.mp4 at 158.95, 92.4, 153.5 s); type in the film's fonts. Snapshot, then scale to 1280×720. -->
+<script src="assets/vendor/gsap-3.14.2.min.js"></script>
+<style>
+@font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+@font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+@font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+@font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0A0A0A; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; }
+.th { position: absolute; inset: 0; overflow: hidden; opacity: 0; background: var(--ink); }
+.bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.shade { position: absolute; inset: 0; pointer-events: none; }
+.tag { position: absolute; left: 70px; top: 58px; font: 600 30px "IBM Plex Mono"; letter-spacing: .16em; color: var(--cream); white-space: nowrap; text-shadow: 0 2px 10px #000; }
+.tag::before { content: ""; display: inline-block; width: 54px; height: 4px; background: var(--fire); vertical-align: middle; margin-right: 20px; }
+.pill { position: absolute; right: 64px; top: 50px; padding: 10px 20px 8px; border: 4px solid var(--fire); background: rgba(10,10,10,.82);
+  font: 600 34px "IBM Plex Mono"; letter-spacing: .18em; color: var(--fire); white-space: nowrap; }
+.big { position: absolute; font-family: "Barlow"; font-weight: 900; line-height: .86; letter-spacing: -.04em; white-space: nowrap; }
+.glow { text-shadow: 0 0 34px rgba(232,93,38,.55), 0 0 90px rgba(232,93,38,.3); }
+.drop { text-shadow: 0 6px 0 rgba(0,0,0,.45), 0 18px 40px rgba(0,0,0,.7); }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="3" data-width="1920" data-height="1080">
+
+  <!-- 1. "sealed" struck through, over the letter that came back stamped READ, Archie holding it -->
+  <div class="th" id="t1">
+    <img class="bg" src="bg-read.jpg" style="transform-origin: 96% 56%; transform: scale(1.16);" />
+    <div class="shade" style="background: linear-gradient(90deg, rgba(10,10,10,.96) 0%, rgba(10,10,10,.86) 30%, rgba(10,10,10,0) 52%);"></div>
+    <div class="big drop" style="left: 78px; top: 300px; font-size: 270px; color: var(--cream);">sealed</div>
+    <div style="position: absolute; left: 58px; top: 418px; width: 790px; height: 30px; background: var(--fire); transform: rotate(-5deg); box-shadow: 0 0 30px rgba(232,93,38,.6);"></div>
+    <div style="position: absolute; left: 96px; top: 600px; font: 400 128px/1 'Caveat Brush'; color: var(--fire); transform: rotate(-4deg);" class="glow">(it got read.)</div>
+    <div class="tag">NEAD · HARVEST NOW, DECRYPT LATER</div>
+    <div class="pill">BANGER REMIX</div>
+  </div>
+
+  <!-- 2. the exploded cipher bank, "mine" on its lock line; the claim as a poster above it -->
+  <div class="th" id="t2">
+    <img class="bg" src="bg-mine.jpg" style="transform-origin: 62% 78%; transform: scale(1.22);" />
+    <div class="shade" style="background: linear-gradient(180deg, rgba(10,10,10,1) 0%, rgba(10,10,10,1) 29%, rgba(10,10,10,0) 47%);"></div>
+    <div class="big drop" style="left: 74px; top: 150px; font-size: 200px; color: var(--cream);">every byte</div>
+    <div class="big glow" style="left: 1060px; top: 150px; font-size: 200px; color: var(--fire);">is mine.</div>
+    <div class="tag">NEAD · HARVEST NOW, DECRYPT LATER</div>
+    <div class="pill">BANGER REMIX</div>
+  </div>
+
+  <!-- 3. the archive, fully read; "now" as the poster -->
+  <div class="th" id="t3">
+    <img class="bg" src="bg-now.jpg" style="transform-origin: 55% 60%; transform: scale(1.08);" />
+    <div class="shade" style="background: radial-gradient(ellipse 60% 70% at 0% 30%, rgba(10,10,10,.9), rgba(10,10,10,0) 70%);"></div>
+    <div class="big drop" style="left: 74px; top: 170px; font-size: 118px; color: var(--cream); font-weight: 800;">harvested then,</div>
+    <div class="big drop" style="left: 70px; top: 290px; font-size: 168px; color: var(--cream);">decrypted</div>
+    <div class="tag">NEAD · HARVEST NOW, DECRYPT LATER</div>
+    <div class="pill">BANGER REMIX</div>
+  </div>
+</div>
+<script>
+  const tl = gsap.timeline({ paused: true });
+  ["#t1", "#t2", "#t3"].forEach((id, i) => { tl.set(id, { opacity: 1 }, i); tl.set(id, { opacity: 0 }, i + 1); });
+  tl.set({}, {}, 3);
+  window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl;
+</script>
+</body>
+</html>

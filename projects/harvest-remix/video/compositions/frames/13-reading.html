@@ -11,7 +11,14 @@
          v13 (SYSTEM.md V7): black ground (#0A0A0A) around the card and the paper: no ciphertext wall, harvested ghost copies
          or bokeh; the warm pool behind the card is tight and low (alpha 0.12). Paper, letter, seal, Archie, marker unchanged.
          Check fixes: the g2 kicker is ink on the paper and turns cream as the room dims; the card's date line at 01's 0.72;
-         the dimmed letter body is marked data-layout-allow-occlusion (the room light covers it on purpose). -->
+         the dimmed letter body is marked data-layout-allow-occlusion (the room light covers it on purpose).
+         v17 (V17.md §13): two shots. (A) 134.514–137.54 the sealed envelope centred and large under one slow push into the
+         seal; the sung line is the poster ("so that's what you" over it, "were on about" under it, "about" the fire hero).
+         The key seats on "were", turns from "on" to the kick 136.548 (the fractures run out on it), the seal splits on
+         "about" (a thin ring, a soft punch). pushIn into (B) 137.54–143.604: the letter on warm cream paper, full bleed (no
+         desk, no black band, no grey room-dim); the sung lines are the biggest type on the page, the letter's sentence is
+         secondary; Archie reads from the bottom-right corner, clear of the letter's text, and stamps READ on the
+         downbeat 141.739. glideL in from 21; hard cut (with the fire swell) into 14. -->
   </head>
   <body>
     <template>
@@ -31,22 +38,32 @@
           background: var(--ink); color: var(--cream);
         }
         .f13-grp { position: absolute; inset: 0; opacity: 0; }
-        /* the letter and its held sentence share one origin (the sentence's left edge), so they stay in register */
-        #f13-paperL, #f13-held { transform-origin: 5.5% 36%; }
-        #f13-type { transform-origin: 5.5% 90%; } /* the lyric plane zooms around its own corner, never off the pad */
+        #f13-g1, #f13-a, #f13-push { transform-origin: 960px 525px; } /* shot A pushes into the seal */
+        #f13-paperL { transform-origin: 30% 55%; }
+        #f13-type { transform-origin: 12% 70%; } /* the lyric plane zooms around the sung zone, never off the pad */
+        #f13-typeA { transform-origin: 50% 50%; }
+        #f13-push { position: absolute; inset: 0; }
+        /* shot A: the sung line as the poster around the envelope */
+        .f13-rowA { position: absolute; left: 0; right: 0; display: flex; justify-content: center; align-items: baseline;
+          column-gap: 0.26em; white-space: nowrap; font-family: "Barlow"; font-weight: 700; font-size: 4.6cqw; line-height: 1.04;
+          letter-spacing: -0.01em; color: var(--cream); }
+        #f13-r1 { top: 38px; }
+        #f13-r2 { bottom: 6px; }
+        .f13-hw { display: inline-block; transform-origin: 50% 70%; }
+        .f13-about { font-weight: 900; font-size: 9.6cqw; line-height: 1; letter-spacing: -0.025em; color: var(--fire); }
 
         /* ---- background plane: ghost ciphertext wall, harvested copies, the warm light behind the card ---- */
         #f13-wall { position: absolute; left: -120px; top: -40px; width: 2400px; opacity: 0.065;
           font-family: "IBM Plex Mono"; font-weight: 500; font-size: 26px; line-height: 64px;
           letter-spacing: 0.14em; color: var(--cream); white-space: pre; }
-        #f13-light { position: absolute; left: 692px; top: 50px; width: 1000px; height: 720px; border-radius: 50%;
+        #f13-light { position: absolute; left: 360px; top: 105px; width: 1200px; height: 840px; border-radius: 50%;
           background: radial-gradient(closest-side, rgba(232, 93, 38, 0.12), rgba(232, 93, 38, 0.035) 55%, rgba(232, 93, 38, 0) 100%); }
         .f13-ghost { position: absolute; width: 576px; height: 360px; background-color: #F0ECE5; background-size: 288px 180px;
           filter: brightness(0.24) blur(3px); opacity: 0.42; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
         .f13-ghost svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 
         /* ---- g1 midground: the sealed card (01's object) and the key ---- */
-        #f13-cardpos { position: absolute; left: 760px; top: 140px; width: 576px; height: 360px; transform: scale(1.5); transform-origin: 0 0; }
+        #f13-cardpos { position: absolute; left: 485px; top: 228px; width: 576px; height: 360px; transform: scale(1.65); transform-origin: 0 0; }
         #f13-cardpos::before { content: ""; position: absolute; left: 3%; right: 3%; bottom: -40px; height: 62px; border-radius: 50%;
           background: radial-gradient(closest-side, rgba(0,0,0,0.55), rgba(0,0,0,0)); }
         #f13-card { position: absolute; inset: 0; background-color: var(--cream); background-size: 288px 180px;
@@ -56,43 +73,39 @@
           background: linear-gradient(118deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 36%, rgba(17,17,17,0) 58%, rgba(17,17,17,0.13)); }
         #f13-cardhex { position: absolute; left: 40px; top: 36px; width: 360px; font-family: "IBM Plex Mono"; font-weight: 500;
           font-size: 20px; line-height: 31px; letter-spacing: 0.08em; color: #5F5B54; white-space: pre; }
-        #f13-obj { position: absolute; left: 0; top: 376px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px;
-          letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); white-space: nowrap; }
+        /* v20: the card fills the frame, so its status label is printed on the card's top-right corner (ink on paper) */
+        #f13-obj { position: absolute; right: 24px; top: 18px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 11px;
+          letter-spacing: 0.2em; text-transform: uppercase; color: rgba(17, 17, 17, 0.62); white-space: nowrap; }
         #f13-sealpos { position: absolute; left: 288px; top: 180px; width: 0; height: 0; }
         #f13-seal { position: absolute; left: -72px; top: -72px; width: 144px; height: 144px; overflow: visible; }
         .f13-shard { transform-box: fill-box; transform-origin: 50% 50%; }
         .f13-crumb { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; opacity: 0;
           background: linear-gradient(135deg, #F68C5C, #E85D26 45%, #A63B14); }
-        #f13-keyclip { position: absolute; inset: 0; clip-path: polygon(1279px -200px, 2400px -200px, 2400px 1300px, 1279px 1300px); }
-        #f13-keywrap { position: absolute; left: 1290px; top: 349px; width: 400px; height: 125px;
+        #f13-keyclip { position: absolute; inset: 0; clip-path: polygon(1056px -200px, 2400px -200px, 2400px 1300px, 1056px 1300px); }
+        #f13-keywrap { position: absolute; left: 1068px; top: 458px; width: 440px; height: 137.5px;
           filter: drop-shadow(0 22px 18px rgba(0, 0, 0, 0.5)); }
         #f13-keyturn { position: absolute; inset: 0; transform-origin: 50% 48.6%; }
         #f13-key { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 
         /* ---- g2: the letter as paper, lying on the desk ---- */
         #f13-sheet { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 600px 400px; }
-        #f13-desk { position: absolute; left: 1430px; top: 655px; width: 640px; height: 600px; transform: rotate(-8deg);
-          filter: brightness(0.3) blur(1.5px); }
-        #f13-desk svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-        #f13-pshadow { position: absolute; left: -60px; top: -40px; width: 2040px; height: 960px; background: rgba(0, 0, 0, 0.72);
-          filter: blur(26px); transform: translateY(24px); }
-        #f13-paper { position: absolute; left: -80px; top: -60px; width: 2080px; height: 980px; background-color: var(--cream);
+        #f13-paper { position: absolute; left: -80px; top: -80px; width: 2080px; height: 1240px; background-color: var(--cream);
           background-size: 512px 512px; overflow: hidden; }
         #f13-panels { position: absolute; inset: 0; }
         .f13-crease { position: absolute; left: 0; right: 0; height: 64px; }
         #f13-rake { position: absolute; inset: 0;
-          background: linear-gradient(104deg, rgba(232, 93, 38, 0.10) 0%, rgba(232, 93, 38, 0.03) 28%, rgba(17, 17, 17, 0) 48%, rgba(17, 17, 17, 0.17) 100%); }
+          background: linear-gradient(104deg, rgba(232, 93, 38, 0.10) 0%, rgba(232, 93, 38, 0.03) 28%, rgba(196, 120, 60, 0) 48%, rgba(196, 120, 60, 0.10) 100%); }
         #f13-sun { position: absolute; left: -500px; top: -300px; width: 1500px; height: 1300px; border-radius: 50%;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.13), rgba(232, 93, 38, 0) 100%); }
-        #f13-stain { position: absolute; left: 1560px; top: 245px; width: 260px; height: 250px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(255, 214, 160, 0.30), rgba(232, 93, 38, 0.06) 60%, rgba(232, 93, 38, 0) 100%); }
+        #f13-stain { position: absolute; left: 1580px; top: 210px; width: 260px; height: 250px; border-radius: 50%;
           background: radial-gradient(closest-side, rgba(232, 93, 38, 0) 62%, rgba(232, 93, 38, 0.13) 80%, rgba(232, 93, 38, 0.05) 90%, rgba(232, 93, 38, 0) 100%); }
-        #f13-edge { position: absolute; inset: 0; box-shadow: inset 0 -5px 0 rgba(17,17,17,.16), inset 0 0 160px rgba(17,17,17,.12); }
+        #f13-edge { position: absolute; inset: 0; box-shadow: inset 0 0 260px rgba(176, 104, 48, 0.16); } /* warm falloff, never grey */
         .f13-meta { position: absolute; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 14px; letter-spacing: 0.16em;
           color: #5F5B54; white-space: nowrap; }
         .f13-ln { position: absolute; left: 5.5cqw; white-space: nowrap; font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 32px;
           line-height: 39px; color: var(--ink); perspective: 420px; }
         .f13-sig { font-weight: 400; font-size: 46px; line-height: 50px; }
-        .f13-big { font-weight: 400; font-size: 8.3cqw; line-height: 0.92; letter-spacing: -0.03em; color: var(--ink);
+        .f13-big { font-weight: 400; font-size: 4.3cqw; line-height: 1; letter-spacing: -0.03em; color: var(--ink);
           margin-left: -0.3cqw; perspective: 1100px; }
         .f13-g { display: inline-block; position: relative; transform-origin: 50% 58%; }
         .f13-plain { display: inline-block; }
@@ -103,11 +116,7 @@
         .f13-g.f13-enc .f13-plain { opacity: 0; }
         .f13-g.f13-enc i { display: block; }
         .f13-g.f13-fl i { color: var(--fire); }
-        #f13-seal2 { position: absolute; left: 1580px; top: 262px; width: 220px; height: 220px; overflow: visible; transform: rotate(7deg); }
-        #f13-dim { position: absolute; left: -900px; top: -700px; width: 3720px; height: 2480px; opacity: 0; transform-origin: 1480px 1095px;
-          background: radial-gradient(ellipse 760px 320px at 1480px 1095px, rgba(17, 17, 17, 0) 0%, rgba(17, 17, 17, 0) 42%,
-            rgba(17, 17, 17, 0.5) 80%, rgba(17, 17, 17, 0.62) 100%);
-          mask-image: radial-gradient(ellipse 620px 240px at 1770px 1490px, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.2) 50%, #000 100%); }
+        #f13-seal2 { position: absolute; left: 1600px; top: 160px; width: 220px; height: 220px; overflow: visible; transform: rotate(7deg); }
 
         /* ---- chrome (low depth) and lyrics ---- */
         .f13-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
@@ -118,17 +127,17 @@
         #f13-kick3::before { background: var(--fire); }
         .f13-lyr { position: absolute; left: 5.5cqw; bottom: 5.5cqw; display: flex; column-gap: 0.26em; white-space: nowrap;
           font-family: "Barlow"; font-weight: 600; font-size: 3.75cqw; line-height: 1.04; margin-bottom: -0.22em; letter-spacing: -0.01em; color: var(--cream); }
-        #f13-l28 { display: block; left: 470px; top: 658px; bottom: auto;
+        #f13-l28 { display: block; left: 230px; top: 556px; bottom: auto;
           font-family: "Caveat Brush"; font-weight: 400; color: #C8481A; transform: rotate(-2deg); }
         .f13-row { display: flex; column-gap: 0.26em; white-space: nowrap; }
-        .f13-r1 { font-size: 4.4cqw; font-weight: 400; margin-bottom: -0.08em; }
-        .f13-r2 { font-size: 8.4cqw; font-weight: 400; line-height: 0.94; letter-spacing: -0.02em; column-gap: 0.18em; }
-        #f13-l29 { left: 470px; top: 740px; bottom: auto; font-size: 6cqw; font-weight: 800;
+        .f13-r1 { font-size: 6cqw; font-weight: 400; margin-bottom: -0.08em; }
+        .f13-r2 { font-size: 11cqw; transform-origin: 0% 60%; font-weight: 400; line-height: 0.94; letter-spacing: -0.02em; column-gap: 0.18em; }
+        #f13-l29 { left: 230px; top: 650px; bottom: auto; font-size: 8.5cqw; font-weight: 800;
           letter-spacing: -0.03em; column-gap: 0.22em; color: var(--ink); }
-        #f13-actor { transform-origin: 12% 90%; }
-        #f13-arch { position: absolute; left: 55px; top: 600px; width: 330px; height: 418px;
+        #f13-actor { transform-origin: 88% 90%; }
+        #f13-arch { position: absolute; left: 1545px; top: 628px; width: 330px; height: 418px;
           overflow: visible; transform-origin: 50% 100%; }
-        #f13-beam { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: 0; filter: blur(10px); }
+        #f13-beam { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: 0; filter: blur(16px); }
         #f13-markpath { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; }
         .f13-w { display: inline-block; position: relative; padding-bottom: 0.22em; } /* room for descenders under the rise mask */
 
@@ -246,28 +255,19 @@
           </div>
         </div>
 
+        <!-- shot A's sung line: the poster around the envelope (rides the push into the seal) -->
+        <div class="hr-layer" id="f13-typeA" data-depth="0.25">
+          <div class="f13-grp" id="f13-a">
+            <div id="f13-fxA" data-layout-ignore style="position: absolute; inset: 0; pointer-events: none"></div>
+            <div class="f13-rowA" id="f13-r1"></div>
+            <div class="f13-rowA" id="f13-r2"></div>
+          </div>
+        </div>
+
         <!-- g2: the letter fills the frame -->
-        <div data-hf-id="hf-qvpi" class="hr-layer" id="f13-paperL" data-depth="0.7" data-dof="6" data-layout-allow-overlap>
+        <div data-hf-id="hf-qvpi" class="hr-layer" id="f13-paperL" data-depth="0.7" data-layout-allow-overlap>
           <div data-hf-id="hf-7rxq" class="f13-grp" id="f13-g2">
             <div data-hf-id="hf-sd77" id="f13-sheet">
-              <div data-hf-id="hf-gauc" id="f13-desk" data-layout-ignore>
-                <svg data-hf-id="hf-xowb" viewBox="0 -190 576 560">
-                  <path data-hf-id="hf-49w6" d="M0 0 L288 -170 L576 0 Z" fill="#D9D4CC" />
-                  <path data-hf-id="hf-a2vr" d="M0 0 L288 -170 L576 0" fill="none" stroke="rgba(17,17,17,0.3)" stroke-width="2" />
-                  <path data-hf-id="hf-e2dc" d="M40 0 L288 -146 L536 0" fill="none" stroke="rgba(17,17,17,0.12)" stroke-width="6" />
-                  <path data-hf-id="hf-jn3n" d="M262 -150 L288 -170 L316 -148 L300 -140 L292 -152 L278 -138 Z" fill="#B9431A" />
-                  <rect data-hf-id="hf-xs3o" x="0" y="0" width="576" height="360" fill="#F0ECE5" />
-                  <path data-hf-id="hf-gl10" d="M0 0 L250 190 L0 360 Z" fill="rgba(17,17,17,0.06)" />
-                  <path data-hf-id="hf-2ohw" d="M576 0 L326 190 L576 360 Z" fill="rgba(17,17,17,0.08)" />
-                  <path data-hf-id="hf-xiej" d="M0 360 L246 174 Q288 150 330 174 L576 360" fill="none" stroke="rgba(17,17,17,0.14)" stroke-width="2" />
-                  <rect data-hf-id="hf-8ph8" x="0" y="0" width="576" height="10" fill="rgba(17,17,17,0.28)" />
-                  <g data-hf-id="hf-ftrf" transform="translate(150 230) rotate(14) scale(1.4)">
-                    <use data-hf-id="hf-9y57" href="#f13-keyp" fill="#888880" transform="translate(4 6)" />
-                    <use data-hf-id="hf-qcqc" href="#f13-keyp" fill="#F0ECE5" stroke="#111111" stroke-width="1.4" />
-                  </g>
-                </svg>
-              </div>
-              <div data-hf-id="hf-xgym" id="f13-pshadow"></div>
               <div data-hf-id="hf-zby0" id="f13-paper">
                 <div data-hf-id="hf-7bkf" id="f13-panels"></div>
                 <div data-hf-id="hf-3l2g" id="f13-sun"></div>
@@ -275,24 +275,20 @@
                 <div data-hf-id="hf-j0jh" id="f13-stain"></div>
                 <div data-hf-id="hf-4e5h" id="f13-edge"></div>
               </div>
-              <div data-hf-id="hf-dz7h" class="f13-meta" data-layout-allow-occlusion style="left: 1380px; top: 128px">TUE 09.03.2021 · 14:02 · P. 1/1</div>
+              <div data-hf-id="hf-dz7h" class="f13-meta" data-layout-allow-occlusion style="left: 1400px; top: 84px">TUE 09.03.2021 · 14:02 · P. 1/1</div>
               <div data-hf-id="hf-gyg6" id="f13-letter"></div>
               <svg data-hf-id="hf-7xhb" id="f13-seal2" class="hr-glowbox" viewBox="-64 -64 128 128">
                 <use data-hf-id="hf-l53l" href="#f13-rimonly" fill="url(#f13-wd)" opacity="0.85" />
                 <g data-hf-id="hf-9fnr" id="f13-shards2"></g>
               </svg>
-              <div data-hf-id="hf-t7c8" id="f13-dim"></div>
             </div>
           </div>
-        </div>
-        <div data-hf-id="hf-epgg" class="hr-layer" id="f13-held" data-depth="0.7" data-layout-allow-overlap>
-          <div data-hf-id="hf-anyo" class="f13-grp" id="f13-g2b"></div>
         </div>
 
         <div data-hf-id="hf-z7bj" class="hr-layer" id="f13-actor" data-depth="0.65" data-layout-ignore>
           <svg data-hf-id="hf-37zj" id="f13-beam" viewBox="0 0 1920 1080" aria-hidden="true">
-            <defs data-hf-id="hf-wdvf"><linearGradient data-hf-id="hf-opy8" id="f13-beamg" x1="0" y1="0" x2="1" y2="1"><stop data-hf-id="hf-795j" offset="0" stop-color="#F0ECE5" stop-opacity="0.42"/><stop data-hf-id="hf-qr10" offset="1" stop-color="#F0ECE5" stop-opacity="0"/></linearGradient></defs>
-            <polygon data-hf-id="hf-pdqw" points="250,688 980,636 1320,880 290,904" fill="url(#f13-beamg)" />
+            <defs data-hf-id="hf-wdvf"><linearGradient data-hf-id="hf-opy8" id="f13-beamg" x1="0" y1="0" x2="1" y2="0"><stop data-hf-id="hf-795j" offset="0" stop-color="#E85D26" stop-opacity="0"/><stop data-hf-id="hf-qr10" offset="1" stop-color="#E85D26" stop-opacity="0.16"/></linearGradient></defs>
+            <polygon data-hf-id="hf-pdqw" points="1690,770 190,520 150,1000 1640,830" fill="url(#f13-beamg)" />
           </svg>
             <svg data-hf-id="hf-8645" id="f13-arch" viewBox="0 0 300 380" aria-hidden="true"></svg>
         </div>
@@ -303,9 +299,8 @@
           <div data-hf-id="hf-wq5s" class="f13-kicker" id="f13-kick3" style="opacity: 0">OPENED · READ</div>
         </div>
         <div data-hf-id="hf-0xe2" class="hr-layer" id="f13-type" data-depth="0.75">
-          <div data-hf-id="hf-7qnu" class="f13-lyr" id="f13-l27"></div>
-          <svg data-hf-id="hf-a0qp" id="f13-markpath" viewBox="0 0 1920 1080" data-layout-ignore aria-hidden="true">
-            <path data-hf-id="hf-9ris" id="f13-marker" d="M465 651 C414 623 396 572 470 547 M470 547 l-24 -2 M470 547 l-10 23" fill="none" stroke="#C8481A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" pathLength="100" />
+                    <svg data-hf-id="hf-a0qp" id="f13-markpath" viewBox="0 0 1920 1080" data-layout-ignore aria-hidden="true">
+            <path data-hf-id="hf-9ris" id="f13-marker" d="M214 618 C120 618 62 560 62 460 C62 380 70 336 98 322 M98 322 l-19 -5 M98 322 l-10 17" fill="none" stroke="#C8481A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" pathLength="100" />
           </svg>
           <div data-hf-id="hf-im5h" class="f13-lyr" id="f13-l28">
             <div data-hf-id="hf-qhyl" class="f13-row f13-r1" id="f13-l28a"></div>
@@ -318,30 +313,33 @@
 
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
       <script src="assets/kit/archie.js"></script>
       <script>
         (() => {
           const T0 = 134.514, DUR = 9.09; // frame span, track seconds
           const L = (t) => +(t - T0).toFixed(3);
-          const IN = L(135.94), HIT = L(136.19), BURST = L(136.548), CUT = L(136.72), HOLD = L(137.54);
+          // shot A: the key seats ON "were", turns from "on" to the kick 136.548 (fractures run out), the seal splits ON "about";
+          // shot B (the letter) from "I" 137.54, the line start
+          const IN = L(135.94), ON = L(136.215), K2 = L(136.548), ABOUT = L(136.72), SHOT = L(137.54), DOWN = L(138.018);
           const LYRICS = {
-            l27: [["So", 134.514], ["that's", 134.8], ["what", 135.203], ["you", 135.68], ["were", 135.94], ["on", 136.215], ["about", 136.72]],
+            r1: [["So", 134.514], ["that's", 134.8], ["what", 135.203], ["you", 135.68]],
+            r2: [["were", 135.94], ["on", 136.215], ["about", 136.72]],
             l28a: [["I", 137.54], ["said", 137.637]],
             l28b: [["sooner", 138.78], ["or", 139.48], ["later", 139.64]],
             l29: [["Harvested", 140.675], ["then,", 141.96]],
           };
           // the letter, as written; top = y of the line box (px); big = the display sentence (on its own still plane)
           const LETTER = [
-            { text: "my love,", top: 128 },
-            { text: "i am writing this the old way, because some things should be sealed by hand.", top: 176 },
-            { text: "the little green padlock says", top: 215 },
-            { text: "no one else will", top: 268, big: true },
-            { text: "ever read it.", top: 399, big: true },
-            { text: "and tonight i choose to believe it. i keep thinking of the station in the rain,", top: 545 },
-            { text: "the umbrella that gave up, and how you laughed anyway.", top: 584 },
-            { text: "whatever happens, wherever this finds you, i meant every word. keep it somewhere safe.", top: 623 },
-            { text: "always yours,", top: 548, left: 1400 },
-            { text: "a.", top: 590, left: 1404, sig: true },
+            { text: "my love,", top: 146 },
+            { text: "i am writing this the old way, because some things should be sealed by hand.", top: 192 },
+            { text: "the little green padlock says", top: 231 },
+            { text: "no one else will ever read it.", top: 276, big: true },
+            { text: "and tonight i choose to believe it. i keep thinking of the station in the rain,", top: 374 },
+            { text: "the umbrella that gave up, and how you laughed anyway.", top: 413 },
+            { text: "whatever happens, wherever this finds you, i meant every word. keep it somewhere safe.", top: 452 },
+            { text: "always yours,", top: 400, left: 1400 },
+            { text: "a.", top: 442, left: 1404, sig: true },
           ];
           const NS = "http://www.w3.org/2000/svg";
           const $ = (id) => document.getElementById(id);
@@ -376,28 +374,22 @@
           const cardTile = bake(288, 180, 404, 70, 14, 0);
           $("f13-card").style.backgroundImage = cardTile;
           $("f13-paper").style.backgroundImage = bake(512, 512, 1313, 340, 16, 60);
-          // a deckled bottom edge
-          (() => {
-            const r = HR.rng(77), W = 2080, H = 980, p = ["0 0", `${W}px 0`];
-            for (let x = W; x >= 0; x -= 18) p.push(`${x}px ${(H - 5 + (r() - 0.5) * 6).toFixed(1)}px`);
-            $("f13-paper").style.clipPath = `polygon(${p.join(", ")})`;
-          })();
           // the letter was folded in three: panels tilt to the light differently, each crease a valley with a lit lip
           (() => {
             const panels = $("f13-panels");
-            [[0, 253, "linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 60%, rgba(17,17,17,0.05))"],
-             [253, 253, "linear-gradient(180deg, rgba(17,17,17,0.07), rgba(17,17,17,0.02) 50%, rgba(255,255,255,0.05))"],
-             [506, 474, "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(17,17,17,0.03))"]].forEach(([top, h, bg]) => {
+            [[0, 445, "linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 60%, rgba(17,17,17,0.05))"],
+             [445, 460, "linear-gradient(180deg, rgba(17,17,17,0.07), rgba(17,17,17,0.02) 50%, rgba(255,255,255,0.05))"],
+             [905, 335, "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(17,17,17,0.03))"]].forEach(([top, h, bg]) => {
               const d = el("div", "", panels); Object.assign(d.style, { position: "absolute", left: 0, right: 0, top: top + "px", height: h + "px", background: bg });
             });
-            [253, 506].forEach((y) => {
+            [445, 905].forEach((y) => {
               const c = el("div", "f13-crease", panels);
               c.style.top = (y - 32) + "px";
               c.style.background = "linear-gradient(180deg, rgba(17,17,17,0) 0%, rgba(17,17,17,0.06) 40%, rgba(17,17,17,0.17) 49.5%, rgba(255,255,255,0.75) 51%, rgba(255,255,255,0.18) 56%, rgba(17,17,17,0) 80%)";
             });
             // a soft vertical crease where it was pressed into the envelope
             const v = el("div", "", panels);
-            Object.assign(v.style, { position: "absolute", top: 0, bottom: 0, left: "1180px", width: "70px",
+            Object.assign(v.style, { position: "absolute", top: 0, bottom: 0, left: "1300px", width: "70px",
               background: "linear-gradient(90deg, rgba(17,17,17,0) 0%, rgba(17,17,17,0.05) 48%, rgba(255,255,255,0.4) 51%, rgba(17,17,17,0) 100%)" });
           })();
 
@@ -530,7 +522,7 @@
           let bigK = 0;
           const gr = HR.rng(4242), hand = HR.rng(5151);
           LETTER.forEach((d, r) => {
-            const ln = el("div", "f13-ln" + (d.big ? " f13-big" : "") + (d.sig ? " f13-sig" : ""), d.big ? $("f13-g2b") : $("f13-letter"));
+            const ln = el("div", "f13-ln" + (d.big ? " f13-big" : "") + (d.sig ? " f13-sig" : ""), $("f13-letter"));
             ln.style.top = d.top + "px";
             if (d.left) ln.style.left = d.left + "px";
             const chars = Array.from(d.text);
@@ -547,8 +539,8 @@
               }
               const x = el("i", "", g);
               let t, fd;
-              if (d.big) { t = L(137.309) + (bigK / (bigTotal - 1)) * (HOLD - L(137.309)); fd = 0.22; bigK++; } // the last glyph lands ON 137.54
-              else { t = L(136.939) + (rank / (bodyRows.length - 1)) * 0.46 + (c / 86) * 0.1; fd = 0.16; } // top to bottom, 136.78–137.5
+              if (d.big) { t = L(137.66) + (bigK / (bigTotal - 1)) * (DOWN - L(137.66)); fd = 0.22; bigK++; } // the last glyph lands ON the downbeat 138.018
+              else { t = SHOT + 0.2 + (rank / (bodyRows.length - 1)) * 0.36 + (c / 86) * 0.1; fd = 0.16; } // top to bottom, 137.58–138.2
               glyphs.push({ g, x, t, fd, big: !!d.big, seed: Math.floor(gr() * 9973), st: "", hx: "", rot: "" });
             });
           });
@@ -559,27 +551,32 @@
           // ---- Archie reads the letter (v12: replaces the lamp-headed Archivist); his eyes light the page
           const archie = HR.archie($("f13-arch"), { id: "f13a", x: 150, y: 372, scale: 0.68, seed: 8 });
 
-          const stampProp = AS("g", archie.hand("R", { upright: true }), { opacity: 0 });
+          const stampProp = AS("g", archie.hand("L", { upright: true }), { opacity: 0 });
           AS("rect", stampProp, { x: -12, y: -26, width: 24, height: 32, rx: 5, fill: "#888880", stroke: "#111111", "stroke-width": 2 });
           AS("rect", stampProp, { x: -50, y: 5, width: 100, height: 27, fill: "#0A0A0A", stroke: "#888880", "stroke-width": 2 });
           AS("text", stampProp, { x: 0, y: 25, "text-anchor": "middle", "font-family": "IBM Plex Mono", "font-size": 20, fill: "#F0ECE5" }, "READ");
           const clothArm = AS("path", $("f13-arch"), { fill: "none", stroke: "#888880", "stroke-width": 8, opacity: 0 });
           const cloth = AS("path", $("f13-arch"), { d: "M-25 -16 L20 -24 L32 14 L-15 25 Z", fill: "#F0ECE5", stroke: "#888880", "stroke-width": 2, opacity: 0 });
-          const readImpression = el("div", "f13-read-stamp", $("f13-g2b"), "READ");
+          const readImpression = el("div", "f13-read-stamp", $("f13-g2"), "READ");
           readImpression.setAttribute("data-layout-ignore", "");
-          Object.assign(readImpression.style, { position: "absolute", left: "1200px", top: "690px", font: '600 62px "IBM Plex Mono"', color: "#E85D26", border: "4px solid #E85D26", padding: "1px 12px", opacity: 0, transform: "rotate(-8deg)" });
+          Object.assign(readImpression.style, { position: "absolute", left: "1250px", top: "880px", font: '600 62px "IBM Plex Mono"', color: "#E85D26", border: "4px solid #E85D26", padding: "1px 12px", opacity: 0 });
 
           // lyric lines: one span per word, lowercased
           const lyr = {};
-          for (const key of Object.keys(LYRICS)) lyr[key] = LYRICS[key].map(([w, t]) => [el("span", "f13-w", $("f13-" + key), w.toLowerCase()), L(t)]);
+          for (const key of Object.keys(LYRICS)) lyr[key] = LYRICS[key].map(([w, t]) => {
+            if (w === "about") { const hw = el("span", "f13-hw", $("f13-r2")); return [el("span", "f13-w f13-about hr-glow", hw, w), L(t), hw]; }
+            return [el("span", "f13-w", $("f13-" + key), w.toLowerCase()), L(t)];
+          });
           lyr.l28b[2][0].id = "f13-later";
+          lyr.l29[0][0].style.color = "var(--fire)"; // "harvested": the accent keeps its colour on the cream page
 
           // ---- timeline -------------------------------------------------------------------------------------
           const tl = gsap.timeline({ paused: true });
+          // Archie (shot B), authored in time order: he swoons on the downbeat after "I", wipes a lens, stamps READ on the
+          // downbeat 141.739
           archie.mood(tl, "curious", 0, 0.01);
-          archie.swoon(tl, HOLD + 0.5);
-          // Overcome by the line, wipe one lens, then return to bureaucracy.
-          const WIPE = L(139.1), STAMP = L(140.34);
+          archie.swoon(tl, DOWN);
+          const WIPE = L(139.1), STAMP = L(141.739);
           tl.set(cloth, { opacity: 1 }, WIPE);
           archie.to(tl, { shL: 156, elL: -70, lidL: 0.9, lidR: 0.3, sway: 0 }, WIPE, 0.22, "power2.inOut");
           archie.to(tl, { shL: 169, elL: -80 }, WIPE + 0.23, 0.13, "sine.inOut");
@@ -587,100 +584,122 @@
           archie.to(tl, { shL: 8, elL: 10, lidL: 0.2, lidR: 0.2 }, WIPE + 0.54, 0.25, "power2.inOut");
           tl.set(cloth, { opacity: 0 }, WIPE + 0.8);
           tl.set(stampProp, { opacity: 1 }, STAMP - 0.45);
-          archie.stamp(tl, STAMP);
+          archie.stamp(tl, STAMP, { side: "L" });
+          gsap.set(readImpression, { rotation: -8 });
           tl.set(readImpression, { opacity: 1 }, STAMP);
+          tl.fromTo(readImpression, { scale: 1.14 }, { scale: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, STAMP);
           tl.set(stampProp, { opacity: 0 }, STAMP + 0.9);
           const stage = HR.stage($("root"), { seed: 13, drift: 0.7, pulse: 0 });
           const cam = stage.cam;
-          cam.focus = 0.4;
-          tl.set("#f13-g1", { opacity: 1 }, 0);
-          tl.set("#f13-g1", { opacity: 0 }, CUT);
-          tl.set(["#f13-g2", "#f13-g2b"], { opacity: 1 }, CUT);
-          tl.set("#f13-kick1", { opacity: 0 }, HIT);
-          tl.set("#f13-kick2", { opacity: 1 }, HIT);
-          tl.set("#f13-kick2", { opacity: 0 }, CUT);
-          tl.set("#f13-kick3", { opacity: 1 }, CUT);
-          tl.set("#f13-l27", { color: "#111111", y: -120 }, CUT);
-          tl.set(["#f13-light", "#f13-ghosts"], { opacity: 0 }, CUT);
+          tl.set(["#f13-g1", "#f13-a"], { opacity: 1 }, 0);
+          tl.set(["#f13-g1", "#f13-a", "#f13-light"], { opacity: 0 }, SHOT);
+          tl.set("#f13-g2", { opacity: 1 }, SHOT);
+          tl.set("#f13-kick1", { opacity: 0 }, ABOUT);
+          tl.set("#f13-kick2", { opacity: 1 }, ABOUT);
+          tl.set("#f13-kick2", { opacity: 0 }, SHOT);
+          tl.set("#f13-kick3", { opacity: 1 }, SHOT);
 
-          // the camera: a slow push onto the seal; a kick on the crack; it pushes through the card into the letter,
-          // lands decelerating, holds, and racks focus off the page onto the sentence
-          tl.fromTo(cam, { z: 1, x: 30 }, { z: 1.06, x: -10, duration: HIT - 0.12, ease: "sine.inOut" }, 0);
-          tl.fromTo(cam, { z: 1.06, rot: 0 }, { z: 1.1, rot: -0.5, duration: 0.06, ease: "power3.out", immediateRender: false }, HIT);
-          tl.fromTo(cam, { z: 1.1 }, { z: 1.075, duration: 0.12, ease: "power2.out", immediateRender: false }, HIT + 0.06);
-          tl.fromTo(cam, { rot: -0.5 }, { rot: 0, duration: 0.4, ease: "elastic.out(1, 0.5)", immediateRender: false }, HIT + 0.06);
-          tl.fromTo(cam, { z: 1.075, x: -10 }, { z: 1.24, x: 150, duration: CUT - L(136.379), ease: "power3.in", immediateRender: false }, L(136.379));
-          tl.fromTo("#f13-push", { filter: "blur(0px)" }, { filter: "blur(5px)", duration: 0.1, ease: "power2.in" }, CUT - 0.1);
-          tl.fromTo(cam, { z: 1.05, x: 24, focus: 1 }, { z: 1.0, x: 0, focus: 1, duration: 0.8, ease: "expo.out", immediateRender: false }, CUT);
-          tl.fromTo(cam, { focus: 1 }, { focus: 0, duration: 1.8, ease: "sine.inOut", immediateRender: false }, HOLD);
-          tl.fromTo(cam, { z: 1.0, x: 0 }, { z: 1.035, x: -18, duration: DUR - HOLD, ease: "sine.inOut", immediateRender: false }, HOLD);
-          tl.fromTo("#f13-wall", { x: 0 }, { x: -130, duration: DUR, ease: "none" }, 0);
-          tl.fromTo("#f13-near", { x: 0 }, { x: -240, duration: DUR, ease: "none" }, 0);
-          tl.fromTo("#f13-ghosts", { x: 0, y: 0 }, { x: -50, y: -10, duration: CUT, ease: "none" }, 0);
+          // the carriers: shot A is one slow push into the seal over the whole line; shot B a slow push and pan over the page
+          // v20: the envelope and key fill the frame (≥ 40 %): the push group starts at 1.15 and pushes on to 1.21 into the seal
+          tl.fromTo("#f13-push", { scale: 1.15, rotation: -0.4 }, { scale: 1.21, rotation: 0.3, duration: SHOT, ease: "sine.inOut" }, 0);
+          tl.fromTo(cam, { x: 24 }, { x: -12, duration: SHOT, ease: "sine.inOut" }, 0);
+          // v20 shot B: the camera drifts along the handwriting, left to right with the pen, and on to Archie's READ;
+          // one continuous eased move, a slow push under it; the letter stays inside the frame
+          tl.fromTo(cam, { x: -70 }, { x: 60, duration: DUR - SHOT, ease: "none", immediateRender: false }, SHOT);
+          tl.fromTo(cam, { z: 1.06 }, { z: 1.14, duration: DUR - SHOT, ease: "none", immediateRender: false }, SHOT);
+          // the switches: glideL in from 21-fridge; pushIn through the seal into the letter; a hard cut into 14
+          const host = document.getElementById("el-13-reading") || $("root");
+          WOW.transition(tl, host, { in: "glideL", dur: 0.46 });
+          WOW.transition(tl, $("f13-g1"), { out: "pushIn", dur: 0.46, total: SHOT });
+          WOW.transition(tl, $("f13-a"), { out: "pushIn", dur: 0.46, total: SHOT });
+          WOW.transition(tl, $("f13-g2"), { in: "pushIn", dur: 0.46, start: SHOT });
 
-          // g1 — the key slides in, gathers, and drives into the keyway ON "were"
-          tl.fromTo("#f13-keywrap", { x: 780, rotation: -4 }, { x: 30, rotation: 0, duration: IN - 0.2, ease: "power2.out" }, 0);
-          tl.fromTo("#f13-keywrap", { x: 30 }, { x: 48, duration: 0.08, ease: "sine.out", immediateRender: false }, IN - 0.2);
-          tl.fromTo("#f13-keywrap", { x: 48 }, { x: -44, duration: 0.12, ease: "power4.in", immediateRender: false }, IN - 0.12);
-          tl.fromTo("#f13-card", { x: 0 }, { x: -4, duration: 0.04, ease: "power2.out" }, IN);
-          tl.fromTo("#f13-card", { x: -4 }, { x: 0, duration: 0.3, ease: "power3.out", immediateRender: false }, IN + 0.04);
-          // the key turns (a half turn about its shaft: the bits come over the top), torquing the seal; a first hairline runs
-          tl.fromTo("#f13-keyturn", { scaleY: 1 }, { scaleY: -1, duration: HIT - IN - 0.02, ease: "power2.inOut" }, IN + 0.02);
-          tl.fromTo("#f13-kshade", { opacity: 0 }, { opacity: 0.5, duration: (HIT - IN) / 2, ease: "sine.in" }, IN + 0.02);
-          tl.fromTo("#f13-kshade", { opacity: 0.5 }, { opacity: 0, duration: (HIT - IN) / 2, ease: "sine.out", immediateRender: false }, IN + 0.02 + (HIT - IN) / 2);
-          tl.set("#f13-ktext", { opacity: 0 }, IN + 0.02 + (HIT - IN) / 2); // the far face of the blade carries no engraving
-          tl.fromTo("#f13-seal", { rotation: 0 }, { rotation: -3.5, duration: HIT - IN, ease: "power2.in" }, IN);
-          crackPaths[2].forEach((p) => tl.fromTo(p, { strokeDashoffset: 1 }, { strokeDashoffset: 0.55, duration: HIT - IN - 0.04, ease: "power1.in" }, IN + 0.04));
-          // ON the hit: every fracture runs out to the rim; the seal snaps back, splits into shards (they part a few px)
-          crackPaths.forEach((pp, k) => pp.forEach((p) => tl.fromTo(p, { strokeDashoffset: k === 2 ? 0.55 : 1 }, { strokeDashoffset: 0, duration: 0.07, ease: "expo.out", immediateRender: false }, HIT - 0.04 + (k === 2 ? 0 : 0.012 * Math.abs(k - 2)))));
-          branches.forEach((p, i) => tl.fromTo(p, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.06, ease: "power2.out" }, HIT + 0.01 + i * 0.008));
-          tl.fromTo("#f13-seal", { rotation: -3.5 }, { rotation: 0, duration: 0.5, ease: "elastic.out(1, 0.4)", immediateRender: false }, HIT);
-          tl.set("#f13-whole", { opacity: 0 }, HIT + 0.07);
-          tl.set(["#f13-shards", "#f13-residue"], { opacity: 1 }, HIT + 0.07);
+          // g1 — the key glides in from the right and seats in the keyway ON "were"
+          tl.fromTo("#f13-keywrap", { x: 600, rotation: -3 }, { x: 24, rotation: 0, duration: IN - 0.16, ease: "power2.out" }, 0);
+          tl.fromTo("#f13-keywrap", { x: 24 }, { x: -48, duration: 0.2, ease: "power2.inOut", immediateRender: false }, IN - 0.16);
+          tl.fromTo("#f13-card", { x: 0 }, { x: -3, duration: 0.06, ease: "power2.out" }, IN);
+          tl.fromTo("#f13-card", { x: -3 }, { x: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, IN + 0.06);
+          // v20: ON "on" (kick 136.19) the key starts to turn against the wax and stalls a third of the way; ON the kick
+          // 136.548 the fractures run out and it shudders; ON "about" it snaps through the rest of its half turn and the
+          // seal splits. KT.s is the blade's scaleY (1 → −1 = a half turn about the shaft); render() shades it edge-on.
+          const KT = { s: 1 };
+          tl.fromTo(KT, { s: 1 }, { s: 0.42, duration: K2 - ON, ease: "power2.out" }, ON);
+          tl.fromTo(KT, { s: 0.42 }, { s: 0.5, duration: 0.05, ease: "power2.out", immediateRender: false }, K2);
+          tl.fromTo(KT, { s: 0.5 }, { s: 0.38, duration: ABOUT - 0.12 - K2 - 0.05, ease: "sine.inOut", immediateRender: false }, K2 + 0.05);
+          tl.fromTo(KT, { s: 0.38 }, { s: -1.06, duration: 0.12, ease: "power3.in", immediateRender: false }, ABOUT - 0.12);
+          tl.fromTo(KT, { s: -1.06 }, { s: -1, duration: 0.3, ease: "power2.out", immediateRender: false }, ABOUT);
+          tl.fromTo("#f13-seal", { rotation: 0 }, { rotation: -3.5, duration: K2 - ON, ease: "power2.in" }, ON);
+          crackPaths[2].forEach((p) => tl.fromTo(p, { strokeDashoffset: 1 }, { strokeDashoffset: 0.55, duration: K2 - ON - 0.07, ease: "power1.in" }, ON + 0.03));
+          // ON the kick: every fracture runs out to the rim, the seal eases back, a glint runs along the key
+          crackPaths.forEach((pp, k) => pp.forEach((p) => tl.fromTo(p, { strokeDashoffset: k === 2 ? 0.55 : 1 }, { strokeDashoffset: 0, duration: 0.08, ease: "expo.out", immediateRender: false }, K2 - 0.04 + (k === 2 ? 0 : 0.012 * Math.abs(k - 2)))));
+          branches.forEach((p, i) => tl.fromTo(p, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.08, ease: "power2.out" }, K2 + 0.01 + i * 0.008));
+          tl.fromTo("#f13-seal", { rotation: -3.5 }, { rotation: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, K2);
+          tl.fromTo("#f13-card", { y: 0 }, { y: 4, duration: 0.06, ease: "power2.out" }, K2);
+          tl.fromTo("#f13-card", { y: 4 }, { y: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, K2 + 0.06);
+          tl.fromTo("#f13-glint", { x: -40, opacity: 0.85 }, { x: 290, opacity: 0.85, duration: 0.42, ease: "power2.inOut", immediateRender: false }, K2);
+          tl.set("#f13-glint", { opacity: 0 }, K2 + 0.42);
+          // ON "about": the seal splits; its shards part, then drift apart as the camera pushes through
+          tl.set("#f13-whole", { opacity: 0 }, ABOUT);
+          tl.set(["#f13-shards", "#f13-residue"], { opacity: 1 }, ABOUT);
           shards.forEach((s, i) => {
             const { c } = shardDefs[i], m = Math.hypot(c[0] - O[0] * 0.4, c[1]) || 1, ux = (c[0] - O[0] * 0.4) / m, uy = c[1] / m;
-            const r1 = (i % 2 ? 1 : -1) * (2 + i * 0.4), r2 = (i % 2 ? 1 : -1) * (9 + i * 2.5), v2 = 11 + (i % 3) * 4;
-            tl.fromTo(s, { x: 0, y: 0, rotation: 0 }, { x: ux * 2.6, y: uy * 2.6, rotation: r1, duration: 0.06, ease: "power3.out", immediateRender: false }, HIT + 0.07);
-            tl.fromTo(s, { x: ux * 2.6, y: uy * 2.6, rotation: r1 }, { x: ux * 3.4, y: uy * 3.4, rotation: r1 * 1.2, duration: 0.2, ease: "elastic.out(1, 0.45)", immediateRender: false }, HIT + 0.13);
-            // the next kick: the shards burst off the card
-            tl.fromTo(s, { x: ux * 3.4, y: uy * 3.4, rotation: r1 * 1.2 }, { x: ux * v2, y: uy * v2 + 2, rotation: r2, duration: 0.17, ease: "power3.out", immediateRender: false }, BURST);
+            const r1 = (i % 2 ? 1 : -1) * (2 + i * 0.4), r2 = (i % 2 ? 1 : -1) * (8 + i * 2), v2 = 13 + (i % 3) * 4;
+            tl.fromTo(s, { x: 0, y: 0, rotation: 0 }, { x: ux * 3.4, y: uy * 3.4, rotation: r1, duration: 0.08, ease: "power3.out", immediateRender: false }, ABOUT);
+            tl.fromTo(s, { x: ux * 3.4, y: uy * 3.4, rotation: r1 }, { x: ux * v2, y: uy * v2 + 2, rotation: r2, duration: SHOT - ABOUT - 0.08, ease: "power2.out", immediateRender: false }, ABOUT + 0.08);
           });
-          tl.fromTo("#f13-keywrap", { x: -44 }, { x: -30, duration: 0.15, ease: "power3.out", immediateRender: false }, BURST);
-          tl.fromTo("#f13-card", { y: 0 }, { y: 5, duration: 0.05, ease: "power2.out" }, HIT);
-          tl.fromTo("#f13-card", { y: 5 }, { y: 0, duration: 0.3, ease: "power3.out", immediateRender: false }, HIT + 0.05);
-          tl.fromTo("#f13-glint", { x: -40, opacity: 0.85 }, { x: 290, opacity: 0.85, duration: 0.42, ease: "power2.inOut", immediateRender: false }, HIT);
-          tl.set("#f13-glint", { opacity: 0 }, HIT + 0.42);
+          tl.fromTo("#f13-keywrap", { x: -48 }, { x: -33, duration: 0.5, ease: "power2.out", immediateRender: false }, ABOUT);
           crumbs.forEach(({ d, dx, dy, s, burst, x0, y0 }, i) => {
-            const t0 = (burst ? BURST : HIT + 0.05) + (i % 3) * 0.01, dur = burst ? 0.36 : 0.45;
-            tl.fromTo(d, { opacity: 1, x: x0, rotation: 0, scale: s }, { x: x0 + dx, rotation: (i % 2 ? 1 : -1) * 260, duration: dur, ease: "power2.out", immediateRender: false }, t0);
+            const t0 = (burst ? ABOUT : K2 + 0.03) + (i % 3) * 0.01, dur = burst ? 0.7 : 0.5;
+            tl.fromTo(d, { opacity: 1, x: x0, rotation: 0, scale: s }, { x: x0 + dx, rotation: (i % 2 ? 1 : -1) * 200, duration: dur, ease: "power2.out", immediateRender: false }, t0);
             tl.fromTo(d, { y: y0 }, { y: y0 + dy, duration: dur * 0.4, ease: "power2.out", immediateRender: false }, t0);
             tl.fromTo(d, { y: y0 + dy }, { y: y0 + dy + 110, opacity: 0, scale: s * 0.5, duration: dur * 0.6, ease: "power2.in", immediateRender: false }, t0 + dur * 0.4);
           });
+          WOW.punch(tl, $("f13-g1"), ABOUT, { s: 1.035, dur: 0.6 });
+          // v20: the split throws wax chips off the seal (mechanical; was a flat ring)
+          WOW.burst(tl, $("f13-fxA"), { x: 960, y: 525, t: ABOUT, n: 22, speed: 900, size: [5, 13], spread: 300, aim: -90, gravity: 1500, dur: 0.85, cream: 0.12, seed: 1372 });
 
-          // g2 — the room light lowers onto the sentence; the page recedes a hair behind it
-          tl.fromTo("#f13-dim", { opacity: 0 }, { opacity: 1, duration: 1.6, ease: "sine.inOut" }, HOLD);
-          tl.fromTo("#f13-dim", { scale: 1 }, { scale: 0.86, duration: DUR - HOLD, ease: "sine.inOut" }, HOLD);
-          // v13: the kicker turns from ink to cream as the room darkens around it, so it stays legible on the dimmed page
-          tl.fromTo("#f13-kick3", { color: "#111111" }, { color: "#F0ECE5", duration: 0.6, ease: "none" }, HOLD + 0.5);
-          tl.fromTo("#f13-sheet", { scale: 1 }, { scale: 0.985, duration: 1.8, ease: "sine.inOut" }, HOLD);
-          tl.fromTo("#f13-sun", { x: 0, y: 0 }, { x: 900, y: 120, duration: DUR - CUT, ease: "sine.inOut" }, CUT);
-          tl.fromTo("#f13-arch", { x: -430, rotation: -3 },
-            { x: 0, rotation: 0, duration: 0.58, ease: "power3.out" }, HOLD);
-          tl.fromTo("#f13-beam", { opacity: 0 }, { opacity: 1, duration: 0.48, ease: "power2.out" }, HOLD + 0.16);
-          // the late kicks rock the broken seal on the page (the sentence never moves)
+          // g2 — the page: the warm light drifts across it, Archie rolls in from the right edge, his eyes light the sung zone
+          tl.fromTo("#f13-sun", { x: 0, y: 0 }, { x: 700, y: 140, duration: DUR - SHOT, ease: "sine.inOut" }, SHOT);
+          tl.fromTo("#f13-arch", { x: 470, rotation: 3 }, { x: 0, rotation: 0, duration: 0.8, ease: "power3.out" }, SHOT + 0.06);
+          tl.fromTo("#f13-beam", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out", immediateRender: false }, SHOT + 0.5);
+          // the late kicks rock the broken seal on the page
           [L(141.732), L(142.229)].forEach((t, k) => {
             const r = 7 + (k ? -1.6 : 1.4);
-            tl.fromTo("#f13-seal2", { rotation: 7 }, { rotation: r, duration: 0.05, ease: "power2.out", immediateRender: false }, t);
-            tl.fromTo("#f13-seal2", { rotation: r }, { rotation: 7, duration: 0.4, ease: "elastic.out(1, 0.4)", immediateRender: false }, t + 0.05);
+            tl.fromTo("#f13-seal2", { rotation: 7 }, { rotation: r, duration: 0.06, ease: "power2.out", immediateRender: false }, t);
+            tl.fromTo("#f13-seal2", { rotation: r }, { rotation: 7, duration: 0.45, ease: "power2.out", immediateRender: false }, t + 0.06);
           });
 
-          // lyrics: every word builds on its own time; "sooner" and "later" hit as the display row
-          for (const key of ["l27", "l29"]) for (const [s, t] of lyr[key]) HR.lead(tl, s, t);
+          // lyrics, shot A: soft rises on each word's time; "about" settles in fire with a soft punch (the ring is the seal's)
+          for (const [s, t] of lyr.r1.concat(lyr.r2.slice(0, 2))) WOW.word(tl, s, t, { kind: "rise" });
+          {
+            const [ab, abT, abW] = lyr.r2[2];
+            WOW.word(tl, ab, abT, { kind: "settle", dur: 0.5 });
+            WOW.punch(tl, abW, abT, { s: 1.05, dur: 0.6 });
+          }
+          // shot B: the marker writes "i said", "sooner" and "later" land as the display row; "harvested then," builds
+          for (const [s, t] of lyr.l29) HR.lead(tl, s, t);
           for (const [s, t] of lyr.l28a) HR.lead(tl, s, t, { from: 0, stagger: 0.003, dur: 0.12 });
           HR.hero(tl, lyr.l28b[0][0], lyr.l28b[0][1], { spread: 0, pre: 0.04, over: 1.02, skew: false, sharp: true });
           HR.lead(tl, lyr.l28b[1][0], lyr.l28b[1][1], { from: 0, stagger: 0.003, dur: 0.12 });
           HR.hero(tl, lyr.l28b[2][0], lyr.l28b[2][1], { spread: 0, pre: 0.04, over: 1.02, skew: false, sharp: true });
-          HR.exit(tl, $("f13-l27"), HOLD - 0.34, { stagger: 0.004, dur: 0.22 });
+          {
+            const lt = lyr.l28b[2][0], fxB = el("div", "", $("f13-type"));
+            fxB.setAttribute("data-layout-ignore", ""); Object.assign(fxB.style, { position: "absolute", inset: "0", pointerEvents: "none" });
+            $("f13-type").insertBefore(fxB, $("f13-type").firstChild); // behind the words
+            WOW.punch(tl, $("f13-l28b"), lyr.l28b[2][1], { s: 1.04, dur: 0.6 });
+          }
+          // v20: on the downbeat 139.888 the marker slashes a swash under "sooner or later" (was a flat ring on "later")
+          const SWASH = L(139.888), rowB = $("f13-l28b");
+          const swSvg = document.createElementNS(NS, "svg");
+          swSvg.setAttribute("data-layout-ignore", ""); swSvg.setAttribute("aria-hidden", "true");
+          {
+            const w = rowB.offsetWidth, y0 = rowB.offsetTop + rowB.offsetHeight * 0.9;
+            Object.assign(swSvg.style, { position: "absolute", left: "0px", top: (y0 - 30) + "px", width: (w + 60) + "px", height: "70px", overflow: "visible", pointerEvents: "none" });
+            swSvg.setAttribute("viewBox", `0 0 ${w + 60} 70`);
+            S("path", { id: "f13-swash", d: `M14 40 C ${w * 0.25} 52, ${w * 0.55} 26, ${w * 0.82} 34 S ${w + 20} 46, ${w + 44} 20`, fill: "none", stroke: "#C8481A",
+              "stroke-width": 9, "stroke-linecap": "round", pathLength: 100, "stroke-dasharray": 100, "stroke-dashoffset": 100 }, swSvg);
+            $("f13-l28").appendChild(swSvg);
+          }
           HR.exit(tl, $("f13-l28"), L(140.675) - 0.3, { stagger: 0.004, dur: 0.22 });
 
           // v16: the last 0.15 s swell to fire; 14-now opens on the same fire (0.35) and the seal breaks on "decrypted"
@@ -690,38 +709,77 @@
           tl.fromTo(swell, { opacity: 0 }, { opacity: 0.35, duration: 0.15, ease: "power2.in", immediateRender: false }, DUR - 0.15);
 
           // ---- per-frame draw -------------------------------------------------------------------------------
-          const HATS = HR.onsetsIn("hat", T0 + HOLD, T0 + DUR);
+          const HATS = HR.onsetsIn("hat", T0 + DOWN + 0.3, T0 + DUR);
           const cardHex = $("f13-cardhex"), sealEl = $("f13-seal"), seal2 = $("f13-seal2"), keyEl = $("f13-key"), lightEl = $("f13-light");
           const objEl = $("f13-obj"), marker = $("f13-marker"), archEl = $("f13-arch");
           const clamp01 = (v) => Math.max(0, Math.min(1, v));
           const markerWords = lyr.l28a.concat(lyr.l28b);
+          // v20: the marker writes in real time: each word's glyphs are written left to right in turn at a pen's pace
+          // (narrow glyphs quicker), starting ON the word's time ("later" is a fast slash, done by the downbeat 139.888)
+          const WRITE = { i: 0.09, said: 0.42, sooner: 0.5, or: 0.14, later: 0.24 };
+          const WIDE = { m: 1.4, w: 1.3, i: 0.55, r: 0.75, s: 0.85, o: 0.95 };
+          const pen = [];
+          for (const [word, at] of markerWords) {
+            word.style.clipPath = "none";
+            const gs = Array.from(word.querySelectorAll(".hr-g")), units = gs.map((g) => WIDE[g.textContent] ?? 1);
+            const k = (WRITE[word.textContent.trim()] ?? 0.3) / units.reduce((a, b) => a + b, 0);
+            let tt = at;
+            gs.forEach((g, i) => { pen.push({ g, t: tt, d: units[i] * k * 0.92 }); tt += units[i] * k; });
+          }
+          const swash = $("f13-swash");
+          // v20: Archie leans in on the hits (additive on his pose in render, a pure function of time): the double hat
+          // into the downbeat, the downbeat 139.888, the kick 142.229 and the hat 143.131
+          const LEANS = [[137.889, 0.7], [139.888, 1], [142.229, 0.8], [143.131, 1]].map(([h, a]) => [L(h), a]);
+          const leanAt = (t) => LEANS.reduce((v, [h, a]) => {
+            const u = t - h + 0.06;
+            return v + (u <= 0 ? 0 : u < 0.16 ? a * (1 - Math.pow(1 - u / 0.16, 3)) : a * Math.exp(-(u - 0.16) / 0.55));
+          }, 0);
+          const smooth = (u) => u * u * (3 - 2 * u);
           function render() {
             const t = tl.time(), T = t + T0, step = Math.floor(t * 15);
-            // kick pulse only before the hold: the held sentence never moves with the music
-            const k = t < HOLD ? HR.hit("kick", T, 0.14) * 0.012 : 0;
+            // a small kick pulse on the envelope shot only: the page never moves with the music
+            const k = t < SHOT ? HR.hit("kick", T, 0.14) * 0.012 : 0;
             cam.z += k; stage.apply(T); cam.z -= k;
+            WOW.draw(tl, T0);
+            HR.draw(tl);
 
             // light: the warm pool behind the card breathes and flares on the crack; the seal and key catch it
-            const flare = t >= HIT ? Math.exp(-(t - HIT) / 0.22) : 0;
+            const flare = Math.max(t >= K2 ? 0.7 * Math.exp(-(t - K2) / 0.22) : 0, t >= ABOUT ? Math.exp(-(t - ABOUT) / 0.4) : 0);
             const rms = HR.band("rms", T);
             lightEl.style.transform = `scale(${(0.94 + 0.12 * rms + 0.12 * flare).toFixed(3)})`;
-            if (t < CUT) lightEl.style.opacity = (0.7 + 0.4 * rms + 0.6 * flare).toFixed(3);
+            if (t < SHOT) lightEl.style.opacity = (0.7 + 0.4 * rms + 0.6 * flare).toFixed(3);
             HR.glow(sealEl, T, 0.4 + 1.4 * flare, 0.7);
             HR.glow(seal2, T, 0.25, 0.5);
             keyEl.style.setProperty("--hr-glow", (0.08 + 1.3 * flare + 0.15 * HR.band("bass", T)).toFixed(3));
             // The reference’s draw-on treatment: path and word masks are pure functions of timeline time.
-            const ap = clamp01((t - HOLD) / 0.3);
+            const ap = clamp01((t - SHOT) / 0.3);
             marker.style.strokeDasharray = "100";
             marker.style.strokeDashoffset = (100 * (1 - ap)).toFixed(2);
             marker.style.opacity = (1 - clamp01((t - (L(140.675) - 0.3)) / 0.22)).toFixed(3);
-            markerWords.forEach(([word, at]) => {
-              const mp = clamp01((t - at) / 0.12);
-              word.style.clipPath = `inset(-20% ${(100 - mp * 100).toFixed(1)}% -30% -5%)`;
-            });
-            const nod = markerWords.reduce((v, [, at]) => Math.max(v, t >= at ? Math.exp(-(t - at) / 0.16) * 3 : 0), 0);
-            archie.s.lookX = 0.9; archie.s.lookY = 0.45; archie.s.turn = 0.45;
+            for (const { g, t: t0, d } of pen) {   // a glyph is written left to right; its overhangs show once it is done
+              const p = clamp01((t - t0) / d);
+              const cp = p <= 0 ? "inset(0 100% 0 0)" : p >= 1 ? "none" : `inset(-45% ${(130 - 160 * smooth(p)).toFixed(1)}% -50% -30%)`;
+              if (g._cp !== cp) { g.style.clipPath = cp; g._cp = cp; }
+            }
+            swash.setAttribute("stroke-dashoffset", (100 * (1 - smooth(clamp01((t - SWASH + 0.03) / 0.2)))).toFixed(1));
+            swSvg.style.opacity = marker.style.opacity;
+            archie.s.lookX = -0.85; archie.s.lookY = 0.3; archie.s.turn = -0.45; // he reads leftwards, across the page
+            // his eye-light on the sung zone breathes with the song, and flares as he leans in
+            const lean = leanAt(t);
+            $("f13-beam").style.filter = `blur(16px) brightness(${(0.85 + 0.3 * rms + 0.35 * lean).toFixed(3)})`;
 
-            if (t >= HOLD - 0.2) archie.apply(T);
+            if (t >= SHOT - 0.1) {
+              // the lean: neck out, head dipped toward the page, the upper body tipped left, pupils wide; restored after
+              const a = archie.s, d = { neck: 0.32 * lean, tilt: -9 * lean, rot: -5 * lean, pupil: 0.3 * lean, lookY: 0.25 * lean };
+              for (const key in d) a[key] += d[key];
+              archie.apply(T);
+              for (const key in d) a[key] -= d[key];
+            }
+            // the key's half turn about its shaft: shaded edge-on, the engraving only on its near face
+            const ks = KT.s;
+            $("f13-keyturn").style.transform = `scaleY(${ks.toFixed(4)})`;
+            $("f13-kshade").setAttribute("opacity", (0.5 * clamp01(1 - Math.abs(ks))).toFixed(3));
+            $("f13-ktext").setAttribute("opacity", ks > 0 ? 1 : 0);
             const wiping = t >= WIPE && t < WIPE + 0.8;
             const grip = archie.handAt("L"), lens = archie.headAt();
             const reach = clamp01((t - WIPE) / 0.2) * (1 - clamp01((t - WIPE - 0.54) / 0.24));
@@ -732,9 +790,9 @@
             clothArm.setAttribute("opacity", wiping ? 1 : 0);
 
             // the card's ciphertext body: a few rows scramble, hats flick more
-            const objText = t >= HIT ? "THE SEAL IS BROKEN" : "SEALED · TLS 1.3";
+            const objText = t >= ABOUT ? "THE SEAL IS BROKEN" : "SEALED · TLS 1.3";
             if (objEl.textContent !== objText) objEl.textContent = objText;
-            if (t < CUT) cardHex.textContent = Array.from({ length: 7 }, (_, i) =>
+            if (t < SHOT) cardHex.textContent = Array.from({ length: 7 }, (_, i) =>
               HR.cipher(16, 977 + i * 31 + (i % 3 === 0 || HR.hit("hat", T, 0.08) > 0.4 ? step * 1000 : 0)).replace(/(.{4})/g, "$1 ")).join("\n");
 
             // the decrypt: each glyph flips over in X (hex face away, plaintext face in), resolving ON its time

@@ -46,6 +46,9 @@
 
 #f23-lock{left:5.5cqw;top:28cqh;font-size:6.7cqw;opacity:1;line-height:1.02}
 #f23-lock strong{font-size:13cqw}
+/* v19: a calm ink plate behind the giant "now" so it reads over the globe's lamps */
+#f23-plate{position:absolute;left:10cqw;top:50cqh;width:80cqw;height:46cqh;border-radius:50%;opacity:0;
+  background:radial-gradient(closest-side,rgba(10,10,10,.62),rgba(10,10,10,.4) 55%,rgba(10,10,10,0) 100%)}
 #f23-counter{position:absolute;left:63cqw;top:83cqh;font:500 18px/1.5 "IBM Plex Mono";letter-spacing:.1em;color:#F0ECE5}
 #f23-counter b{font-weight:500;color:#E85D26;display:block;font-size:28px;letter-spacing:0}
 #f23-arch{position:absolute;inset:0;width:100%;height:100%;opacity:0}
@@ -61,6 +64,7 @@
 <div data-hf-id="hf-nxsq" id="root" data-composition-id="23-library" data-width="1920" data-height="1080" data-duration="9.135">
 <canvas data-hf-id="hf-is9q" id="f23-gl" width="1920" height="1080" data-layout-ignore></canvas>
 <div id="f23-fx" data-layout-ignore></div>
+<div id="f23-plate" data-layout-ignore></div>
 <div data-hf-id="hf-cksg" id="f23-lock"><div data-hf-id="hf-8i1t">harvested then,</div><div data-hf-id="hf-xba0">decrypted</div><strong data-hf-id="hf-pni8" id="f23-lnow" class="hr-glow">now</strong></div>
 <div data-hf-id="hf-ul5e" id="f23-counter">BYTES READ<b data-hf-id="hf-5lad" id="f23-bytes">0</b></div>
 <div id="f23-pool" class="f23-poolbox" data-layout-ignore style="position:absolute;opacity:0;border-radius:50%;background:radial-gradient(closest-side,rgba(240,236,229,.20),rgba(240,236,229,.07) 55%,rgba(240,236,229,0) 100%)"></div>
@@ -174,22 +178,33 @@ const lat=-Math.PI/2+r*Math.PI/96,lon=c*2*Math.PI/193;
 pos.push(12*Math.cos(lat)*Math.sin(lon),12*Math.sin(lat),12*Math.cos(lat)*Math.cos(lon));rows.push(r);hero.push(r===48&&c===0?1:0);
 }
 const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('aRow',new THREE.Float32BufferAttribute(rows,1));geo.setAttribute('aHero',new THREE.Float32BufferAttribute(hero,1));
-const uni={uTime:{value:0},uOff:{value:0},uBloom:{value:0},uPulse:{value:0},uThreatTime:{value:5.479}};
-const vs=`attribute float aRow,aHero;uniform float uTime,uOff,uBloom,uPulse,uThreatTime;varying vec3 vCol;varying float vA;
+const uni={uTime:{value:0},uOff:{value:0},uBloom:{value:0},uPulse:{value:0},uThreatTime:{value:5.479},uScan:{value:0},uScanA:{value:0},uBand:{value:-20},uBandA:{value:0},uHit:{value:new THREE.Vector4(0,0,0,0)}};
+const vs=`attribute float aRow,aHero;uniform float uTime,uOff,uBloom,uPulse,uThreatTime,uScan,uScanA,uBand,uBandA;uniform vec4 uHit;varying vec3 vCol;varying float vA;
 ${threatGLSL}
-void main(){vec4 mv=modelViewMatrix*vec4(archivePosition(position,uThreatTime),1.);float facing=smoothstep(-.05,.13,dot(normalize(position),normalize(cameraPosition-position)));
+void main(){float hh=fract(sin(dot(position,vec3(12.9898,78.233,37.719)))*43758.5453);
+float bd=uBandA*exp(-pow((aRow-uBand)/3.2,2.))+uHit.y*step(fract(hh*7.13+uHit.x*.618),.14)+uHit.w*step(fract(hh*7.13+uHit.z*.618),.14);vec3 ap=archivePosition(position,uThreatTime)*(1.+uPulse*.035*(.5+.5*sin(aRow*.55))+.05*bd);vec4 mv=modelViewMatrix*vec4(ap,1.);
+vec3 wp=(modelMatrix*vec4(position,1.)).xyz;float facing=smoothstep(-.05,.13,dot(normalize(wp),normalize(cameraPosition-wp)));
 float ang=acos(clamp(position.z/12.,-1.,1.));float wave=1.45+uTime*.65;float read=1.-smoothstep(wave-.035,wave+.035,ang);
 vCol=mix(vec3(.9098,.3647,.149),vec3(.9412,.9255,.898),read);
-vCol=archiveExposure(position,uThreatTime,vCol);
+vCol=archiveExposure(position,uThreatTime,vCol);float sc=uScanA*exp(-pow((ang-uScan)/.07,2.));vCol=mix(vCol,vec3(1.,.97,.93),min(1.,sc+bd));
 float alive=max(aHero,1.-step(97.-uOff*98.,aRow));vA=alive*facing;
-float px=max(2.8,.045*1371./max(-mv.z,.1));gl_PointSize=px*(uBloom>.5?4.:1.);gl_Position=projectionMatrix*mv;}`;
+float px=max(2.8,.045*1371./max(-mv.z,.1));gl_PointSize=px*(1.+1.6*sc+1.8*bd)*(uBloom>.5?4.:1.);gl_Position=projectionMatrix*mv;}`;
 function material(bloom){return new THREE.ShaderMaterial({uniforms:{...uni,uBloom:{value:bloom?1:0}},transparent:true,depthWrite:false,blending:bloom?THREE.AdditiveBlending:THREE.NormalBlending,vertexShader:vs,fragmentShader:bloom?`varying vec3 vCol;varying float vA;void main(){float r=length(gl_PointCoord-.5)*2.;float a=vA*.19*exp(-r*r*5.)*(1.-smoothstep(.75,1.,r));gl_FragColor=vec4(vCol,a);}`:`varying vec3 vCol;varying float vA;void main(){float r=length(gl_PointCoord-.5)*2.;float a=vA*(1.-smoothstep(.55,1.,r));if(a<.004)discard;gl_FragColor=vec4(vCol,a);}`});}
-const core=new THREE.Mesh(new THREE.SphereGeometry(11.96,64,40),new THREE.MeshBasicMaterial({color:'#0A0A0A'}));scene.add(core);
-const bloom=new THREE.Points(geo,material(true)),sharp=new THREE.Points(geo,material(false));scene.add(bloom,sharp);
+const globe=new THREE.Group();scene.add(globe);
+const core=new THREE.Mesh(new THREE.SphereGeometry(11.96,64,40),new THREE.MeshBasicMaterial({color:'#0A0A0A'}));globe.add(core);
+const bloom=new THREE.Points(geo,material(true)),sharp=new THREE.Points(geo,material(false));globe.add(bloom,sharp);
 // Sparse engraved latitude rings carry the structure without filling the ground.
 const lp=[];for(let r=1;r<96;r+=4)for(let c=0;c<193;c++){let i=(r*193+c)*3,j=(r*193+(c+1)%193)*3;lp.push(...pos.slice(i,i+3),...pos.slice(j,j+3));}
-const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(lp,3));const lm=new THREE.LineBasicMaterial({color:'#505048',transparent:true,opacity:.21});scene.add(new THREE.LineSegments(lg,lm));
-const threat=createArchiveThreat(THREE,scene);
+const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(lp,3));const lm=new THREE.LineBasicMaterial({color:'#505048',transparent:true,opacity:.21});globe.add(new THREE.LineSegments(lg,lm));
+const threat=createArchiveThreat(THREE,globe);
+// v19: the final drop turns the archive like a vault dial, one click per kick (149.09 → 155.95), a roll about the camera axis
+// so the front lamp (0,0,12) never moves. Same function of track time as 22's tail, so the cut is continuous.
+const DIAL=HR.onsetsIn('kick',149.0,156.0),dialAt=T=>DIAL.reduce((a,k)=>{const u=T-k;return u<=0?a:a-Math.PI/10*(1-(1+u/.09)*Math.exp(-u/.09))},0);
+// a white-hot read scan sweeps the globe front to back on each downbeat until Archie reads
+const SCANS=[150.923,152.746,154.574];
+// and on each kick the next band of drawer rows flares and lifts, top to bottom: the archive read line by line
+const BANDK=HR.onsetsIn('kick',150.9,155.95);
+const HITS=[...HR.onsetsIn('kick',150.9,155.95),...HR.onsetsIn('snare',150.9,155.95)].sort((a,b)=>a-b);
 // One lamp leaves the globe and becomes the letter's broken wax seal, then15's thumbnail seal.
 const seal=$('f23-finalseal');for(const node of $('f23-seal').querySelector('defs').children)seal.appendChild(node.cloneNode(true));
 const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href','#f23-sealg');seal.appendChild(use);
@@ -213,30 +228,31 @@ const ring=(t,x,y,r0,r1,w,color,dur)=>{const el=document.createElement('div'),c=
     border:`${w}px solid rgba(${c},.9)`,boxShadow:`0 0 24px rgba(${c},.5)`});fx.appendChild(el);
   tl.fromTo(el,{opacity:1,scale:r0/100},{scale:r1/100,opacity:0,borderWidth:.5,duration:dur,ease:'expo.out',immediateRender:false},t)};
 KICKS.forEach((tk,i)=>{const t=L(tk),c=screenOf(t,0,0,0),R=globeR(t),f=i/Math.max(1,KICKS.length-1);
-  WOW.punch(tl,$('f23-gl'),t,{s:1.025+.03*f,dur:.34});WOW.shake(tl,$('f23-gl'),t,{amp:3+7*f,dur:.26,seed:30+i,rot:.12});
-  WOW.punch(tl,$('f23-lock'),t,{s:1.035+.02*f,dur:.3});WOW.shake(tl,$('f23-lock'),t,{amp:3+4*f,dur:.22,seed:50+i,rot:.2});
-  WOW.punch(tl,$('f23-counter'),t,{s:1.08,dur:.3});
-  ring(t,c.x,c.y,R*.9,R*(1.45+.5*f),3+3*f,i%2?'cream':'fire',.6)});
+  // v17 outro: soft kick breaths, no shakes
+  WOW.punch(tl,$('f23-gl'),t,{s:1.012+.012*f,dur:.42});
+  WOW.punch(tl,$('f23-lnow'),t,{s:1.05,dur:.32});   // v20: the poster word hits on every kick
+  WOW.punch(tl,$('f23-counter'),t,{s:1.025,dur:.36});
+  ring(t,c.x,c.y,R*.95,R*(1.3+.3*f),2+2*f,i%2?'cream':'fire',.7)});
 SNARES.forEach((tk,i)=>{const t=L(tk),c=screenOf(t,0,0,0),R=globeR(t),a=[-35,200,-150,20][i%4];
-  ring(t,c.x,c.y,R*.85,R*2.2,7,'fire',.7);
-  const h=WOW.rays(tl,fx,{x:c.x,y:c.y,t,n:14,r0:R*.95,r1:R*2,seed:200+i,color:'cream',dur:.45});
-  const rx=c.x+Math.cos(a*Math.PI/180)*R,ry=c.y+Math.sin(a*Math.PI/180)*R;
-  WOW.burst(tl,fx,{x:rx,y:ry,t,n:9,speed:620,size:[4,10],spread:80,aim:a,seed:300+i,dur:.8});
-  WOW.shake(tl,$('f23-gl'),t,{amp:9+i*2,dur:.34,seed:70+i,rot:.2});WOW.flash(tl,fx,t,{a:.04+.01*i,dur:.08})});
+  ring(t,c.x,c.y,R*.85,R*1.9,5,'fire',.8);
+  WOW.rays(tl,fx,{x:c.x,y:c.y,t,n:12,r0:R*.95,r1:R*1.8,seed:200+i,color:'cream',w:3,dur:.6})});
 // ---- Archie rolls in with the letter and reads it by the globe's light
 const archie=HR.archie($('f23-arch'),{id:'f23a',x:2300,y:1040,scale:.7,seed:23,pose:{...HR.archie.MOODS.curious,shR:80,elR:-30,clawR:.9,lookX:-1,lookY:-.2}});
 const ARM={shR:80,elR:-30,clawR:.9};
+const STAMP=L(WOW.on(158.85)),st=$('f23-stamp');   // the READ stamp lands on the 158.853 kick
 archie.rollTo(tl,930,L(155.4),.95,'power2.out');
 archie.to(tl,{lookX:-1,lookY:-.1,turn:-.4},L(155.4),.2);
 archie.to(tl,{lookX:-.9,lookY:-.9,turn:-.3,...ARM},L(156.45),.12);       // eyes snap up to the letter
 archie.to(tl,{lookX:-.9,lookY:-1,turn:-.3,glow:1.1},L(157.1),.1);
-const LINES=[[157.2,157.45],[157.45,157.85],[157.85,158.1],[158.1,158.33],[158.33,158.58],[158.58,158.78]];
-LINES.forEach(([a,b],k)=>{const y=-1+.14*k;
-  archie.to(tl,{lookX:-1.3,lookY:y,turn:-.6},L(a),.06,'power3.out');                         // carriage return
-  archie.to(tl,{lookX:1.5,lookY:y+.08,turn:.55},L(a)+.06,b-a-.07,'none')});               // along the line
+// v19: three calm reads (two lines each) instead of six full-width sweeps at ~4 Hz, which read as darting eyes
+const READS=[[157.2,157.73],[157.73,158.26],[158.26,158.78]];
+READS.forEach(([a,b],k)=>{const y=-1+.26*k;
+  archie.to(tl,{lookX:-.45,lookY:y,turn:-.12},L(a),.2,'power2.inOut');                        // back to the line start
+  archie.to(tl,{lookX:.45,lookY:y+.1,turn:.12},L(a)+.2,b-a-.22,'power1.inOut')});           // along the lines
+const LINES=READS.flatMap(r=>[r,r]);   // the marker fills both lines of a read together
 archie.blink(tl,L(158.8));
-archie.to(tl,{...HR.archie.MOODS.surprised,lookX:.4,lookY:-.4,turn:0,...ARM},L(158.85),.06,'power3.out'); // the stamp lands
-archie.bump(tl,L(158.85),.09);
+archie.to(tl,{...HR.archie.MOODS.surprised,lookX:.4,lookY:-.4,turn:0,...ARM},STAMP,.12,'power2.out'); // the stamp lands
+archie.bump(tl,STAMP,.09);
 archie.to(tl,{...HR.archie.MOODS.sad,lookX:.6,lookY:-.1,...ARM},L(159.12),.3,'power2.inOut');
 // ---- the letter: 13's paper, unfolded, held in Archie's claw; a marker follows his eyes line by line
 const paper=$('f23-paper'),body=$('f23-body'),letter=$('f23-letter'),hl=$('f23-panels');
@@ -248,38 +264,57 @@ const bars=order.map(el=>{const m=document.createElement('span'),cs=getComputedS
   Object.assign(b.style,{left:body.offsetLeft+el.offsetLeft-6+'px',top:body.offsetTop+el.offsetTop+el.offsetHeight*.16+'px',width:w+14+'px',height:el.offsetHeight*.7+'px'});
   hl.appendChild(b);return b});
 const LH=letter.offsetHeight;
+// the giant "now": its centre goes to (960, 735), the lower third under the globe; G makes it ~61 % of the frame width
+const NOW=(()=>{const n=$('f23-lnow'),rg=document.createRange();rg.selectNodeContents(n);
+  const rt=$('root').getBoundingClientRect(),k=rt.width/1920,g=rg.getBoundingClientRect(),nb=n.getBoundingClientRect();
+  const cx=(g.left+g.width/2-rt.left)/k,cy=(g.top+g.height/2-rt.top)/k;
+  n.style.transformOrigin=`${(cx-(nb.left-rt.left)/k).toFixed(1)}px ${(cy-(nb.top-rt.top)/k).toFixed(1)}px`;
+  return{dx:960-cx,dy:735-cy,G:1180/(g.width/k)}})();
 // the READ stamp lands on a kick; the receipt's counter flips with it
-const STAMP=L(158.85),st=$('f23-stamp');
-tl.fromTo(st,{opacity:0,scale:2.6,rotation:-18},{opacity:.92,scale:1,rotation:-8,duration:.1,ease:'power4.in',immediateRender:false},STAMP-.1);
+tl.fromTo(st,{opacity:0,scale:2,rotation:-16},{opacity:.92,scale:1,rotation:-8,duration:.14,ease:'power3.in',immediateRender:false},STAMP-.14);
 tl.fromTo(st,{scale:1},{scale:1,duration:.01,immediateRender:false},STAMP);
 const sx=letter.offsetWidth*.62,sy=letter.offsetHeight*.43;
-const sh=WOW.shock(tl,letter,{x:sx,y:sy,t:STAMP,r:700,n:2,w:7,color:'fire',dur:.6});sh.setAttribute('data-layout-ignore','');
-const sr=WOW.rays(tl,letter,{x:sx,y:sy,t:STAMP,n:22,r0:90,r1:900,seed:158,color:'cream',w:5,dur:.5});sr.setAttribute('data-layout-ignore','');
-const sb=WOW.burst(tl,letter,{x:sx,y:sy,t:STAMP,n:22,speed:1100,size:[5,14],seed:159,dur:.9});sb.setAttribute('data-layout-ignore','');
-WOW.flash(tl,fx,STAMP,{a:.4,dur:.2});
-WOW.shake(tl,letter,STAMP,{amp:16,dur:.45,seed:9,rot:1.2});WOW.punch(tl,$('f23-gl'),STAMP,{s:1.06,dur:.45});WOW.shake(tl,$('f23-gl'),STAMP,{amp:14,dur:.4,seed:19,rot:.3});
-WOW.shake(tl,letter,L(156.87),{amp:5,dur:.2,seed:4,rot:.4});WOW.shake(tl,letter,L(157.12),{amp:6,dur:.22,seed:5,rot:.4});
+// v17: the stamp is the outro's one accent (on the 158.853 kick): one ring, rays and a few crumbs, a soft punch, no shakes or grey flash
+const sh=WOW.shock(tl,letter,{x:sx,y:sy,t:STAMP,r:560,n:1,w:5,color:'fire',dur:.7});sh.setAttribute('data-layout-ignore','');
+const sr=WOW.rays(tl,letter,{x:sx,y:sy,t:STAMP,n:16,r0:90,r1:700,seed:158,color:'cream',w:4,dur:.6});sr.setAttribute('data-layout-ignore','');
+const sb=WOW.burst(tl,letter,{x:sx,y:sy,t:STAMP,n:12,speed:700,size:[4,10],seed:159,dur:.9});sb.setAttribute('data-layout-ignore','');
+WOW.punch(tl,letter,STAMP,{s:1.03,dur:.5});WOW.punch(tl,$('f23-gl'),STAMP,{s:1.025,dur:.5});
 // the letter leaves the globe's front lamp on 156.4 and unfolds in two steps as it reaches Archie's claw
-const flash=(t)=>{WOW.flash(tl,fx,t,{a:.35,dur:.2});const c=screenOf(t,0,0,12);ring(t,c.x,c.y,40,420,6,'fire',.5);
+const flash=(t)=>{const c=screenOf(t,0,0,12);ring(t,c.x,c.y,40,420,6,'fire',.5);
   const h=WOW.rays(tl,fx,{x:c.x,y:c.y,t,n:16,r0:40,r1:800,seed:156,color:'cream',dur:.45})};flash(L(156.4));
 function render(){const t=tl.time(),T=T0+t,ramp=clamp(t/.4);
 const cs=camAt(t),kick=HR.hit('kick',T,.12)*ramp*(T<156.45?1:0);
 camera.position.set(cs.x,cs.y,cs.z-1.1*kick);camera.lookAt(cs.lx,0,0);camera.updateMatrixWorld();
-uni.uTime.value=t;uni.uPulse.value=kick;uni.uThreatTime.value=T-145.444;threat.update(T-145.444);const off=clamp((T-158.85)/.8);uni.uOff.value=Math.floor(off*12)/12;lm.opacity=.21*(1-off);
-sharp.visible=bloom.visible=T<159.45;renderer.render(scene,camera);
+globe.rotation.z=dialAt(T);
+const sd=SCANS.reduce((m,d)=>T>=d?d:m,-9),su=(T-sd)/.95;uni.uScan.value=Math.PI*(1-Math.pow(1-clamp(su),2));uni.uScanA.value=su>=0&&su<1?(1-su*su*su):0;
+const bi=BANDK.reduce((m,k,i)=>T>=k?i:m,-1),ba=bi<0?0:Math.exp(-(T-BANDK[bi])/.22);
+uni.uBand.value=bi<0?-20:92-bi*7.5;
+{const hi=HITS.reduce((m,k,i)=>T>=k?i:m,-1),fade=1-ease((T-155.6)/.4),en=i=>i<0?0:Math.exp(-(T-HITS[i])/.24)*fade;uni.uHit.value.set(hi,en(hi),hi-1,en(hi-1));}uni.uBandA.value=ba*(1-ease((T-155.6)/.4));
+uni.uTime.value=t;uni.uPulse.value=kick;uni.uThreatTime.value=T-145.444;threat.update(T-145.444);const off=ease((T-T0-STAMP)/.45);uni.uOff.value=off;lm.opacity=.21*(1-off);
+sharp.visible=bloom.visible=T<159.3;renderer.render(scene,camera);
 //29 has already reached its held final word at this scene's start; no replayed word onsets.
 const lk=$('f23-lock'),out=ease((T-155.6)/.6);lk.style.opacity=1-out;lk.style.transform=`translate(${-300*out}px,${-8*t}px) scale(${1+.004*t})`;
+// v19: on the 152.746 downbeat the held "now" grows to the poster (≥ 60 % of the width) over the globe and the already-sung
+// lines step aside; it breathes on the kicks and leaves with the block at 155.6
+// v20 (V20.md #3): the poster holds from the cut (22 grows it into this pose on the kicks), swelling to +5 % by 155.2
+const gN=1,ln=$('f23-lnow');
+lk.children[0].style.opacity=lk.children[1].style.opacity=(1-gN).toFixed(3);
+lk.children[0].style.transform=lk.children[1].style.transform=`translateY(${(-40*gN).toFixed(1)}px)`;
+const gO=ease((T-155.25)/.35);ln.style.opacity=(1-gO).toFixed(3);   // the giant word clears before Archie rolls in
+ln.style.transform=`translate(${(NOW.dx*gN).toFixed(1)}px,${((NOW.dy+8*t)*gN-120*gO).toFixed(1)}px) scale(${(NOW.G*(1+.05*clamp((T-T0)/4.3))).toFixed(4)})`;
+$('f23-plate').style.opacity=(.5*ease(t/.5)*(1-out)).toFixed(3);   // v20: eased in after the cut (22 has no plate)
+
 HR.glow($('f23-lnow'),T,.3+.3*HR.band('vocal',T),.65);
-$('f23-counter').style.opacity=(1-ease((T-155.6)/.4));$('f23-bytes').textContent=Math.floor(8796093022208).toLocaleString('en-US');
+$('f23-counter').style.opacity=0;   // v20: the poster word holds the lower third from the cut   // v19: it clears for the poster word$('f23-bytes').textContent=Math.floor(8796093022208).toLocaleString('en-US');
 archie.apply(T);const hand=archie.handAt('R');
-const ar=ease((T-156.4)/.5),leave=ease((T-159.3)/.35),spot0=screenOf(t,0,0,12);
+const ar=ease((T-156.4)/.5),leave=ease((T-159.3)/.6),spot0=screenOf(t,0,0,12);
 const gx=hand.x-10,gy=hand.y+8,u=ar,px=lerp(spot0.x-30,gx,1-Math.pow(1-u,3)),py=lerp(spot0.y+10,gy,1-Math.pow(1-u,3)),sc=lerp(.07,1.12,u);
 letter.style.opacity=T>=156.4?1-leave:0;
 letter.style.transform=`translate(${px}px,${py-LH+40*leave}px) rotate(${lerp(-28,-3,u)}deg) scale(${sc})`;
-const vis=.34+.33*ease((T-156.87)/.12)+.33*ease((T-157.12)/.15);
+const vis=.34+.33*ease((T-156.865)/.26)+.33*ease((T-157.0)/.28);
 letter.style.clipPath=vis>=1?'none':`inset(-80px -80px ${((1-vis)*100).toFixed(2)}% -80px)`;
 LINES.forEach(([a,b],k)=>{const p=clamp((T-a)/(b-a)),el=bars[k];el.style.transform=`scaleX(${p.toFixed(3)})`;el.style.boxShadow=p>0&&p<1?'inset -4px 0 0 rgba(232,93,38,.95)':'none'});
-$('f23-read').textContent=T>=158.85?'READ · 1 TIME':'READ · 0 TIMES';
+$('f23-read').textContent=t>=STAMP?'READ · 1 TIME':'READ · 0 TIMES';
 const pool=$('f23-pool');pool.style.opacity=ar*(1-leave)*(.6+.4*HR.hit('kick',T,.2));
 const a=ease((T-155.4)/.1)*(1-leave);$('f23-arch').style.opacity=a;
 // A descending row-front leaves exactly one surviving lamp. The final arc lands on15's thumbnail at its initial pose.

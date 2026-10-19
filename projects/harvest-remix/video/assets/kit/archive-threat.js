@@ -7,7 +7,7 @@ vec3 archiveExposure(vec3 p, float t, vec3 base) {
   float scan = abs(sin(longitude * 1.5 - t * .68 + p.y * .035));
   float edge = exp(-scan * scan * 95.);
   float ripple = pow(.5 + .5 * sin(p.y * 4. + longitude * 11. - t * 4.), 12.);
-  vec3 hot = mix(vec3(.14,.77,.94), vec3(.65,.28,.98), .5 + .5 * sin(p.y * .24 + t));
+  vec3 hot = mix(vec3(.9412,.9255,.898), vec3(1.,.66,.42), .5 + .5 * sin(p.y * .24 + t));
   vec3 exposed = mix(base, vec3(1.,.24,.035), exposureGain * (.70 + .22 * ripple));
   return mix(exposed, hot * 1.2, exposureGain * edge);
 }
@@ -30,7 +30,7 @@ export function createArchiveThreat(THREE, scene) {
   const ringUniforms = {uTime: clock, uGain: gain};
   const ringVertex = `attribute float aU; uniform float uTime,uGain;
     varying vec3 vColor; varying float vAlpha;
-    void main(){vColor=mix(vec3(.15,.8,1.),vec3(.72,.25,1.),aU);vColor=mix(vColor,vec3(1.),pow(aU,10.));
+    void main(){vColor=mix(vec3(.9412,.9255,.898),vec3(.9098,.3647,.149),aU);vColor=mix(vColor,vec3(1.),pow(aU,10.));
     vAlpha=uGain*pow(max(0.,sin(aU*3.14159265)),.6)*(.66+.34*sin(aU*24.-uTime*7.));
     gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`;
   const lineFragment = `varying vec3 vColor;varying float vAlpha;void main(){gl_FragColor=vec4(vColor,vAlpha);}`;
@@ -71,7 +71,7 @@ export function createArchiveThreat(THREE, scene) {
     vertexShader:`attribute float aU,aRoute;uniform float uTime,uGain;varying vec3 vColor;varying float vAlpha;
     void main(){float head=fract(uTime*.24+aRoute*.071);float d=abs(aU-head);
     float pulse=exp(-d*d*210.);vAlpha=uGain*(.04+.8*pulse)*smoothstep(3.4,6.,uTime);
-    vColor=mix(vec3(.97,.27,.055),vec3(.63,.25,1.),pulse*.75);
+    vColor=mix(vec3(.97,.27,.055),vec3(.9412,.9255,.898),pulse*.75);
     gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,fragmentShader:lineFragment});
   group.add(new THREE.LineSegments(fg,fractureMat));
   // Extraction is made of the archive's own lit records, carried along curved trajectories.
@@ -92,7 +92,7 @@ export function createArchiveThreat(THREE, scene) {
     void main(){float launch=7.25+aRoute*.032;float alive=smoothstep(launch,launch+.5,uTime)*(1.-smoothstep(11.1,11.7,uTime));
     float head=fract(max(0.,uTime-launch)*.42+aRoute*.173);float d=mod(head-aU+1.,1.);
     float tail=exp(-d*35.);vAlpha=alive*uGain*tail*(uHalo>.5?.38:1.);
-    vColor=mix(vec3(1.,.28,.055),mix(vec3(.2,.8,1.),vec3(.72,.25,1.),.5+.5*sin(aRoute)),aU);
+    vColor=mix(vec3(1.,.28,.055),mix(vec3(.9412,.9255,.898),vec3(1.,.55,.3),.5+.5*sin(aRoute)),aU);
     vec4 mv=modelViewMatrix*vec4(position,1.);gl_Position=projectionMatrix*mv;
     gl_PointSize=(uHalo>.5?20.:4.2)*min(1.5,27./max(1.,-mv.z));}`;
   for(const halo of [true,false]) {
