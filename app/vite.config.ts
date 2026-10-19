@@ -23,7 +23,8 @@ function repoAssets(): Plugin {
       for (const dir of assetDirs) {
         cpSync(path.join(repoRoot, dir), path.join(options.dir, dir), {
           recursive: true,
-          filter: (src) => !['work', '__pycache__'].includes(path.basename(src)),
+          // video/ is the HyperFrames project (renders, backups: gigabytes); the engine never reads it
+          filter: (src) => !['work', 'video', '__pycache__'].includes(path.basename(src)),
         });
       }
     },
