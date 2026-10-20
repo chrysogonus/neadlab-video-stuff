@@ -22,14 +22,53 @@ together. Refresh the whole set with `npx hyperframes skills update`, then copy 
 
 ## Making a video
 
-1. `./vid new <id> --audio <master> --transcript <lyrics.txt>`, then `./vid analyze <id>` — stems, word-level
-   lyric alignment, sung-line detection, the tracked beat grid. Done when `projects/<id>/data/lyrics.json`
-   exists and `work/qa/align_report.md` flags nothing you have not resolved.
-2. `./vid video <id>` — scaffolds the HyperFrames project at **`projects/<id>/video/`** (the skill's
-   `PROJECT_DIR`) and refreshes `assets/bgm.mp3`, `audiomap.json` and `lyrics.json`. Rerun it after any change
-   to the analysis; it never touches the brief, storyboard or frames.
-3. Run `/music-to-video` in `projects/<id>/video/`, with this repo's deviations (below).
-4. `./vid master <id>` — `out/<id>.mp4`, the render with the master's audio (AAC 320k), the file to upload.
+Seven stages, run with `/music-to-video` in `projects/<id>/video/` and this repo's deviations (below). Stages 3 and
+4 end on the user's verdict; nothing else stops. At every check, ask of each scene: does it express its lyric, does
+it belong to this film's world, does its motion express this moment of the music, does it develop something across
+the song?
+
+1. **Analyze.** `./vid new <id> --audio <master> --transcript <lyrics.txt>`, then `./vid analyze <id>`: stems,
+   word-level lyric alignment, sung-line detection, the tracked beat grid. Done when `projects/<id>/data/lyrics.json`
+   exists and `work/qa/align_report.md` flags nothing you have not resolved. Then `./vid video <id>`: it scaffolds
+   the HyperFrames project at **`projects/<id>/video/`** (the skill's `PROJECT_DIR`) and refreshes
+   `assets/bgm.mp3`, `audiomap.json` and `lyrics.json`. Rerun it after any change to the analysis; it never touches
+   the brief, storyboard or frames.
+2. **Interpret.** The skill's Steps 2–3 with the house style: the song's world, a literal pun for each sung line,
+   and what develops across the song (counters, plants and payoffs, the bookend). Write `BRIEF.md`,
+   `STORYBOARD.md` and the video's `SYSTEM.md` (how this video uses `frame.md`: its idea, tokens, lyric rule,
+   motion, code conventions). Post the plan summary and keep going.
+3. **Look.** Build 3–4 representative scenes as stills (the opening, a verse, the first chorus and a contrasting
+   section) and show them with `./vid snap <id> <frame_id> --at …`. **Stop for the user's verdict on the look.**
+   Then make a rough still for every scene (composition, type, the lyric on its object; not finished detail) and
+   check the contact sheet against the four questions and for repeated layouts. Stills judge the look, not the
+   motion.
+4. **Motion.** Animate the opening and the first chorus with its hook yourself: they are the reference frames.
+   Render `./vid proof <id> --to <end of the first chorus>`. **Stop for the user's verdict on the motion.**
+5. **Build.** Dispatch frame-workers (the skill's Step 4) three at a time, each with `SYSTEM.md`, both reference
+   frames and the rough still of its scene. Each worker checks its own scene: `./vid snap <id> <frame_id> --at …`,
+   then `npx hyperframes check projects/<id>/video/.hyperframes/solo/<frame_id> --no-browser-gpu`. A runtime error
+   can silently kill a scene, and only this shows it. Review the signals in
+   [docs/visual-guidelines.md](docs/visual-guidelines.md); never game them.
+6. **Review.** `./vid assemble <id>`, then `npx hyperframes check --no-browser-gpu`, then the whole film against
+   [docs/visual-guidelines.md](docs/visual-guidelines.md): a broken rule is a defect and gets fixed; a signal is a
+   flag you go and look at. Watch a proof around each drop. Render `renders/video.mp4` once the review passes and
+   you have inspected the snapshots yourself (that answers the skill's render question).
+7. **Deliver.** `./vid master <id>` writes `out/<id>.mp4`, the render with the master's audio (AAC 320k): the file
+   to upload. With it come:
+   - subtitles (`.srt`) built from `lyrics.json`;
+   - a technical check with ffprobe: duration equals the master's, constant fps, audio present;
+   - the thumbnail, exported from its approved composition.
+
+   Loudness is the user's choice: report the master's LUFS and change nothing unless asked. Shorts are not part of
+   this pipeline yet.
+
+**Not built yet.** Until these exist, do the work by hand:
+- **Range proofs.** `./vid proof` renders from 0 and takes only `--to`.
+- **`./vid audit`.** It will report the signals. Until then, measure them as described in visual-guidelines.md.
+- **Lyric-event registration.** It will let the audit check that the right word appears on its time.
+- **`./vid deliver`.** It will build stage 7's package.
+
+When one lands, update its stage here.
 
 `./vid snap <id> [<frame_id>] --at <track seconds,…>` writes stills and a contact sheet to
 `projects/<id>/video/snapshots/`; with a frame id it mounts that frame alone at its storyboard span, so a frame
@@ -43,11 +82,8 @@ can be judged before the others exist. Read the sheet after every change you wan
 - **Lyrics come from `lyrics.json`**, never from transcription: each sung line and word with its track-second
   start/end and its section. Every lyric on screen appears on its word's `start`, the hero word of a line lands
   on its own word time, and the line text is the sung text exactly.
-- **One film, many workers.** Before Step 4, write the video's `SYSTEM.md` (how this video uses `frame.md`:
-  its idea, tokens, lyric rule, motion, code conventions) and build two reference frames yourself (the opening
-  and the first chorus with its hook). Render `./vid proof` and get the user's verdict, then dispatch the
-  frame-workers three at a time with both frames, plus `./vid snap` to look at their own frame.
-  `projects/harvest-remix/video/` is the worked example.
+- **One film, many workers.** The skill's Step 4 waits for stage 4's verdict. Workers then run three at a time
+  with both reference frames (stage 5). `projects/harvest-remix/video/` is the worked example.
 - **Software WebGL.** Headless Chrome gets no GPU context under WSL: pass `--no-browser-gpu` to every
   `hyperframes check`, `snapshot` and `render` (`./vid snap` does). Keep three.js frames lean (instancing,
   simple materials, no post passes) and drive them from the timeline (`tl.eventCallback("onUpdate", …)`).
@@ -58,9 +94,9 @@ can be judged before the others exist. Read the sheet after every change you wan
   ignores the YAML flow form.
 - **Imagery is code-rendered only** (user decision): type, shapes, SVG, canvas, shaders, three.js, registry
   blocks. No generated or supplied photos or video clips.
-- **Runs are autonomous.** The user wants finished work, not checkpoints: write `BRIEF.md` with
-  `flow: automation`, `storyboard: no`; post the plan summary and keep going; render once `check` passes and
-  you have inspected the snapshots yourself (that answers the skill's render question).
+- **Runs are autonomous apart from two verdicts.** The user wants finished work, not checkpoints: write
+  `BRIEF.md` with `flow: automation`, `storyboard: no`. The user's verdicts come at stage 3 (the look) and
+  stage 4 (the motion), and nowhere else.
 - **Canvas** 1920×1080 (YouTube). Artist name on title and end cards: NEAD.
 
 ## House style
@@ -78,7 +114,8 @@ work are in [docs/REFERENCE-VIDEOS.md](docs/REFERENCE-VIDEOS.md).
 Before calling a video done, look at the snapshots at `t=0`, every frame start, every drop and the last frame,
 and confirm each one: the line on screen is legible at phone size; nothing sits in an empty frame for more than a
 beat; the frame matches the line being sung. The opening hooks in its first seconds: a poster first frame, or a
-narrative cold open backed by a designed YouTube thumbnail.
+narrative cold open backed by a designed YouTube thumbnail. The full checklist, firm rules and reviewed
+signals, is [docs/visual-guidelines.md](docs/visual-guidelines.md).
 
 ## Repository checks
 

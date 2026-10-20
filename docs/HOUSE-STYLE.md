@@ -34,8 +34,9 @@ restrained and lit by one accent; 3D only as line drawing.
    - Layouts vary per line (stacked, compare panels, pull quote, lockup, word per cut, text on a path or
      surface, full-bleed); neighbouring scenes never share one, and **neighbouring shots never put the lyric in
      the same position** (rev 3: harvest-remix v17 had a small lead line top left in five shots in a row).
-   - **Every section has at least one sung word set across ≥ 60 % of the frame width** (up to ~25cqw for that
-     word), the way p(doom) sets SERVANT, I'M and P(DOOM) full-frame.
+   - **Hooks are posters:** the hook and the song's key words are set full-frame (up to ~25cqw), the way p(doom)
+     sets SERVANT, I'M and P(DOOM). A section with no word across 60 % of the frame width is a review flag
+     ([visual-guidelines.md](visual-guidelines.md)), not a target.
 4. **Three type voices.** One grotesk for the sung voice (big, tight, animated on width and weight where the font
    allows), one mono for the machine (labels, data, forms, footnotes), one serif italic for the rare tender or
    sacred line. Add a marker hand for the human heckle ("(it isn't)", "(sure.)") when the song suits it.
@@ -59,15 +60,15 @@ restrained and lit by one accent; 3D only as line drawing.
      only; harvest-remix uses `broadside`: ink, fire-orange and cream. **One exception per film:** a single
      literal second-colour moment when the lyric names the colour (p(doom)'s 2 s of acid green; harvest-remix's
      "little green padlock"), ideally planted for a payoff.
-   - The ground is near-black (ink about `#0A0A0A`) and mostly empty: **ground luma ≤ 0.05** (the 20th-percentile
-     luma of each frame, median over the film) and **at least 40 % of pixels darker than 0.09**. Texture lives on
-     objects, never on the ground.
-   - **The accent is light and pointer, never a ground:** about 5 % of the frame or less (median). It marks the
-     sung word, the spark, the number that matters.
+   - The ground is near-black (ink about `#0A0A0A`) and mostly empty; the references measure a ground luma of
+     0.047–0.063 (the 20th-percentile luma of each frame, median over the film) and 42–57 % of pixels darker than
+     0.09. Texture lives on objects, never on the ground.
+   - **The accent is light and pointer, never a ground:** about 3 % of the frame in the references (median). It
+     marks the sung word, the spark, the number that matters.
    - Two registers: the dark register, and a light **cream-paper** register for documents, forms and diagrams
-     (**10–20 % of frames**), cut between on downbeats. The accent keeps its colour on both. **The first
-     cream frame comes in verse 1**, so the opening has the light/dark rhythm too.
-   - Check the figures on the render as described in REFERENCE-VIDEOS.md ("Measuring a render").
+     (9 % of p(doom)'s frames, 20 % of LGTM's), cut between on downbeats. The accent keeps its colour on both.
+     **The first cream frame comes in verse 1**, so the opening has the light/dark rhythm too.
+   - These figures are signals to compare against, not targets ([visual-guidelines.md](visual-guidelines.md)).
 8. **Everything moves, through one motion grammar** (the kit, `assets/kit/hr-kit.js`):
    - words build glyph by glyph, hero words hit in three phases (anticipation, slam on the word, elastic
      settle), lines leave;
@@ -109,21 +110,16 @@ restrained and lit by one accent; 3D only as line drawing.
 
 ## How to make one
 
-1. Run `./vid new`, `./vid analyze`, then `./vid video`. The last one installs the kit (`hr-kit.js`, `env.js`)
-   and the finish layer from `templates/hyperframes/`.
-2. Plan with `/music-to-video` Steps 2–3: the song's world, its idea and preset; a line table (each sung line
-   and its literal pun); the running devices (counter, plants and payoffs, the bookend, a character only if the
-   story needs one); the small-text jokes.
-3. Write the song's `SYSTEM.md`, using harvest-remix's as the model: the world, the tokens, the three voices,
-   the lyric rule and the kit rules.
-4. **Prove before scaling:**
-   - build two reference frames yourself, the opening and the first chorus with its hook. The default opening
-     is a narrative cold open with a designed YouTube thumbnail; a poster first frame is also fine, but it
-     **holds at most one bar** before the story starts moving;
-   - render `./vid proof <id> --to <end of the first drop>`;
-   - get the user's verdict before dispatching frame-workers.
-5. Dispatch frame-workers three at a time, each with `SYSTEM.md`, the two reference frames and `./vid snap`.
-   Review every contact sheet and motion strip yourself.
-6. Fill the finish layer's `LEAKS` and `FLASHES` with the song's flips and drops, then run `./vid assemble`,
-   `hyperframes check --no-browser-gpu`, the 60 fps render, and `./vid master`. Measure the render against
-   item 7's figures and design the thumbnail.
+The stages are in [AGENTS.md](../AGENTS.md) ("Making a video"). What the house style adds to them:
+
+- **Analyze:** `./vid video` installs the kit (`hr-kit.js`, `env.js`) and the finish layer from
+  `templates/hyperframes/`.
+- **Interpret:** the song's world, its idea and preset; a line table (each sung line and its literal pun); the
+  running devices (counter, plants and payoffs, the bookend, a character only if the story needs one); the
+  small-text jokes. The song's `SYSTEM.md` follows harvest-remix's: the world, the tokens, the three voices, the
+  lyric rule and the kit rules.
+- **Motion:** the default opening is a narrative cold open with a designed YouTube thumbnail. A poster first frame
+  is also fine, but it **holds at most one bar** before the story starts moving.
+- **Review:** fill the finish layer's `LEAKS` and `FLASHES` with the song's flips and drops before the 60 fps
+  render. Check the render against [visual-guidelines.md](visual-guidelines.md) (rules firm, signals reviewed),
+  and design the thumbnail.
