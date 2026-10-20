@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 3 — stash (verse 1, 19.885–23.696). L4 "Hid me in your stash, said we'd get to it".
+         The cut comes in on a fresh prompt after 02's aborted commit. "hid me in your" builds over the idle cursor; on
+         "stash," (21.366) the sung word slams display-scale as the command types `stash` at the same instant, and the
+         rest of `git stash list --date=relative` types at a human rhythm. Enter on the 22.509 downbeat: git answers with
+         one row, the singer stashed and forgotten, `stash@{3 years ago}: On main: me` (plant 3). On "get" (22.72) the
+         accent passes from "stash," to "get", the frame's biggest punch; "it" lands on the cut. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f03-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f03-strip b { color: var(--fire); font-weight: 600; }
+        /* the terminal: the command, then git's one-row answer */
+        #f03-term { position: absolute; left: 5.5cqw; top: 7.4cqw; font: 500 2cqw/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f03-term .f03-cmd { color: var(--cream); }
+        #f03-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        #f03-row { font-weight: 400; color: var(--cream-muted); }
+        #f03-row .f03-ref { color: var(--cream); font-weight: 500; }
+        #f03-row .f03-me { color: var(--fire); font-weight: 600; }
+        /* the sung line, poster scale: two hero words, one accent at a time */
+        #f03-l1 { position: absolute; left: 5.1cqw; top: 15.2cqw; font: 800 7.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
+        #f03-stash { position: absolute; left: 4.4cqw; top: 23.4cqw; font: 900 19cqw/0.84 "Barlow", sans-serif; letter-spacing: -0.045em;
+          color: var(--fire); white-space: nowrap; }
+        #f03-l3 { position: absolute; left: 5.1cqw; top: 39.2cqw; display: flex; align-items: baseline; font: 800 7.6cqw/1 "Barlow", sans-serif;
+          letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
+        #f03-l3 .f03-w { margin-right: 0.24em; }
+        #f03-l3 .f03-get { font: 900 13.5cqw/0.86 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--fire); margin-right: 0.12em; }
+      </style>
+      <div id="root" data-composition-id="03-stash" data-width="1920" data-height="1080" data-duration="3.811">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f03-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.5">
+          <div id="f03-term"><div><span>~/us (main) $ </span><span class="f03-cmd" id="f03-cmd"></span><span id="f03-cursor"></span></div><div id="f03-row"><span class="f03-ref">stash@{3 years ago}</span>: On main: <span class="f03-me">me</span></div></div>
+        </div>
+        <div class="hr-layer" data-depth="0.85">
+          <div id="f03-l1"><span class="f03-w">hid</span> <span class="f03-w">me</span> <span class="f03-w">in</span> <span class="f03-w">your</span></div>
+          <div id="f03-stash" class="hr-glow">stash,</div>
+          <div id="f03-l3"><span class="f03-w">said</span><span class="f03-w">we'd</span><span class="f03-w f03-get hr-glow">get</span><span class="f03-w">to</span><span class="f03-w">it</span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.811, T0 = 19.885;
+          const root = document.querySelector('[data-composition-id="03-stash"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 3 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const STASH = at(21.366), ENTER = at(22.509), GET = at(22.72); // ENTER: the downbeat kick
+
+          // ---- the sung line: every word on its own start ----
+          const w = root.querySelectorAll(".f03-w");
+          HR.lead(tl, w[0], at(19.945)); HR.lead(tl, w[1], at(20.38)); HR.lead(tl, w[2], at(20.78)); HR.lead(tl, w[3], at(21.1));
+          HR.hero(tl, $("f03-stash"), STASH, { spread: 30, over: 1.2, pre: 0.12, sharp: true });
+          HR.lead(tl, w[4], at(21.955)); HR.lead(tl, w[5], at(22.28));
+          HR.hero(tl, w[6], GET, { spread: 36, over: 1.26, pre: 0.14, sharp: true });
+          HR.lead(tl, w[7], at(23.16));
+          // "it" lands 56 ms before the cut: a 0 ms reveal, so it is whole for every frame it is on screen
+          tl.fromTo(w[8], { opacity: 0 }, { opacity: 1, duration: 0.001, ease: "none" }, at(23.64));
+          // the accent is a pointer: it leaves "stash," for "get"
+          tl.fromTo($("f03-stash"), { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.22, ease: "power2.out", immediateRender: false }, GET);
+
+          // ---- the command: `git ` before the line's turn, `stash` ON the sung "stash,", the flags after ----
+          const keys = [[0, ""]];
+          const type = (t0, t1, text) => {
+            const base = keys[keys.length - 1][1];
+            for (let i = 0; i < text.length; i++) keys.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
+          };
+          type(at(20.42), at(20.6), "git ");
+          type(STASH, STASH + 0.27, "stash");
+          type(STASH + 0.36, at(22.42), " list --date=relative");
+          // git's answer arrives whole on the Enter's kick
+          tl.fromTo($("f03-row"), { opacity: 0 }, { opacity: 1, duration: 0.001, ease: "none" }, ENTER);
+
+          // ---- the camera: a slow lean in, a punch on "stash,", a nudge on the Enter, the biggest punch on "get" ----
+          tl.fromTo(stage.cam, { z: 1.0, x: 0 }, { z: 1.02, x: -10, duration: STASH - 0.06, ease: "sine.inOut" }, 0);
+          tl.to(stage.cam, { z: 1.05, y: -6, duration: 0.06, ease: "power2.in" }, STASH - 0.06);
+          tl.to(stage.cam, { z: 1.02, y: 0, duration: 0.5, ease: "elastic.out(1, 0.55)" }, STASH);
+          tl.to(stage.cam, { z: 1.025, x: -18, duration: ENTER - STASH - 0.5, ease: "none" }, STASH + 0.5);
+          tl.to(stage.cam, { z: 1.07, y: -10, duration: 0.06, ease: "power2.in" }, GET - 0.06);
+          tl.to(stage.cam, { z: 1.03, y: 4, duration: 0.55, ease: "elastic.out(1, 0.5)" }, GET);
+          tl.to(stage.cam, { z: 1.035, x: -26, y: 8, duration: DUR - GET - 0.55, ease: "none" }, GET + 0.55);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: typing, the cursor, the glow, the camera ----
+          const cmd = $("f03-cmd"), cur = $("f03-cursor"), stash = $("f03-stash"), get = root.querySelector(".f03-get");
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            let s = keys[0]; for (const k of keys) if (k[0] <= t) s = k;
+            cmd.textContent = s[1];
+            cur.style.opacity = t < ENTER && (t - s[0] < 0.35 || Math.floor((t - s[0]) * 2) % 2 === 0) ? 1 : 0;
+            if (t < GET) HR.glow(stash, T); else stash.style.setProperty("--hr-glow", Math.max(0, 0.6 - (t - GET) * 3).toFixed(3));
+            HR.glow(get, T, 0.3, 0.45);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["03-stash"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

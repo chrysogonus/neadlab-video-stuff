@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 36 — reflog (outro, 191.895–197.431). Spoken, the beat cut out; back to the terminal of 01 (the bookend's
+         first half). L61: the prompt idles, "oh, and the ref-log?" arrives under it while `git reflog` types on "ref-log?";
+         the Enter on L62's first word prints the reflog whole, and there you still are: `3f2a1c9 HEAD@{2}: commit: you and
+         me` (plant 5 pays off). L62 is git's answer under it; a fire hairline draws under the row on "you", the default
+         `gc.reflogExpireUnreachable = 30.days` arrives on "thirty". L63: the screen clears (Ctrl-L) to the fresh prompt and
+         its cursor, alone, blinking, with "i can wait." in the soft voice (01's "story of your life."). No drums: the
+         carrier is the typing, the cursor and one slow push; 37's downbeat is the hard cut. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f36-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f36-strip b { color: var(--fire); font-weight: 600; }
+        /* the prompt: 01's risen prompt, same place and size */
+        #f36-prompt { position: absolute; left: 5.5cqw; top: 8cqw; font: 500 3.6cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f36-prompt .f36-cmd { color: var(--cream); }
+        #f36-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        /* L61: the question, under the prompt */
+        #f36-l1 { position: absolute; left: 5.1cqw; top: 14.6cqw; color: var(--cream); white-space: nowrap; }
+        #f36-l1 .f36-a { font: 800 8.6cqw/1.05 "Barlow", sans-serif; letter-spacing: -0.035em; }
+        #f36-l1 .f36-b { font: 900 15.5cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        .f36-hero { color: var(--fire); }
+        /* git's output: the reflog, printed whole */
+        #f36-log { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 13.6cqw; font: 400 1.5cqw/2.3cqw "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
+        #f36-log .f36-row { height: 2.3cqw; }
+        #f36-log .f36-h { color: var(--cream-muted); }
+        #f36-sel { display: flex; align-items: baseline; height: 3.9cqw; padding-top: 0.5cqw; font: 500 2.4cqw/1 "IBM Plex Mono", monospace; color: var(--cream); }
+        #f36-sel .f36-h { color: var(--fire); font-weight: 600; }
+        #f36-sel b { font-weight: 600; }
+        #f36-txt { position: relative; }
+        #f36-ul { position: absolute; left: 0; right: 0; bottom: -0.45cqw; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
+        #f36-note { margin-left: 4cqw; font: 500 1.3cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        #f36-note b { color: var(--cream); font-weight: 600; }
+        /* L62: git's answer, under the listing */
+        #f36-l2 { position: absolute; left: 5.1cqw; top: 32.2cqw; color: var(--cream); white-space: nowrap; }
+        #f36-l2 .f36-a { font: 800 6.4cqw/1.05 "Barlow", sans-serif; letter-spacing: -0.035em; }
+        #f36-l2 .f36-b { font: 900 11cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        /* L63: the soft voice, alone with the cursor */
+        #f36-l3 { position: absolute; left: 5.2cqw; top: 20cqw; font: italic 400 16cqw/1.05 "Instrument Serif", serif; color: var(--cream); white-space: nowrap; }
+      </style>
+      <div id="root" data-composition-id="36-reflog" data-width="1920" data-height="1080" data-duration="5.536">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f36-strip"><span>~/us &nbsp;·&nbsp; main</span><span>reflog: unreachable &nbsp;<b>1,095</b></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.6">
+          <div id="f36-prompt"><span>~/us (main) $ </span><span class="f36-cmd" id="f36-cmd"></span><span id="f36-cursor"></span></div>
+          <div id="f36-log">
+            <div class="f36-row" data-layout-ignore style="opacity: 0"><span class="f36-h">d4c7e19</span> HEAD@{0}: rebase (finish): returning to refs/heads/main</div>
+            <div class="f36-row" data-layout-ignore style="opacity: 0"><span class="f36-h">d4c7e19</span> HEAD@{1}: rebase (pick): ready.</div>
+            <div id="f36-sel" style="opacity: 0"><span id="f36-txt"><span class="f36-h">3f2a1c9</span> <b>HEAD@{2}</b>: commit: you and me<i id="f36-ul"></i></span><span id="f36-note" style="opacity: 0">gc.reflogExpireUnreachable = <b>30.days</b></span></div>
+            <div class="f36-row" data-layout-ignore style="opacity: 0"><span class="f36-h">a7c21f0</span> HEAD@{3}: commit: we'll get to it</div>
+            <div class="f36-row" data-layout-ignore style="opacity: 0"><span class="f36-h">4c9d7a1</span> HEAD@{4}: commit: just a feature</div>
+            <div class="f36-row" data-layout-ignore style="opacity: 0"><span class="f36-h">91be33a</span> HEAD@{5}: commit: moved in</div>
+            <div class="f36-row" data-layout-ignore style="opacity: 0"><span class="f36-h">0b5f6e2</span> HEAD@{6}: commit: nothing on the side</div>
+          </div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.85">
+          <div id="f36-l1">
+            <div class="f36-a"><span class="f36-w1">oh,</span> <span class="f36-w1">and</span> <span class="f36-w1">the</span></div>
+            <div class="f36-b"><span class="f36-w1 f36-hero hr-glowbox">ref-log?</span></div>
+          </div>
+          <div id="f36-l2">
+            <div class="f36-a"><span class="f36-w2">it</span> <span class="f36-w2">forgets</span> <span class="f36-w2">you</span> <span class="f36-w2">in</span></div>
+            <div class="f36-b"><span class="f36-w2 f36-hero hr-glowbox">thirty</span> <span class="f36-w2">days.</span></div>
+          </div>
+          <div id="f36-l3"><span class="f36-w3">i</span> <span class="f36-w3">can</span> <span class="f36-w3 f36-hero">wait.</span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 5.536, T0 = 191.895;
+          const root = document.querySelector('[data-composition-id="36-reflog"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 36, drift: 0.8 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          // ---- keystrokes (01's pattern): `git reflog` types across "the ref-log?"; Enter on L62; Ctrl-L on L63 ----
+          const ENTER = at(194.403), CLEAR = at(196.803);
+          const keys = [[0, ""]];
+          const type = (t0, t1, text) => {
+            const base = keys[keys.length - 1][1];
+            for (let i = 0; i < text.length; i++) keys.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
+          };
+          type(at(193.04), at(193.24), "git ");
+          type(at(193.26), at(193.6), "reflog"); // "ref-log?" 193.26
+          keys.push([CLEAR, ""]);                 // the screen clears: a fresh prompt
+
+          // ---- L61: the question builds under the idle prompt; "ref-log?" is the hero ----
+          const w1 = root.querySelectorAll(".f36-w1");
+          HR.lead(tl, w1[0], at(192.328)); HR.lead(tl, w1[1], at(193.06)); HR.lead(tl, w1[2], at(193.14));
+          HR.hero(tl, w1[3], at(193.26), { spread: 14, over: 1.12, pre: 0.12, sharp: true });
+          tl.set($("f36-l1"), { opacity: 0 }, ENTER);
+
+          // ---- Enter: the reflog prints whole (a terminal's fast top-down print), and there you still are ----
+          const rows = root.querySelectorAll("#f36-log > div");
+          rows.forEach((r, i) => tl.set(r, { opacity: 1 }, ENTER + 0.012 * i));
+          tl.fromTo($("f36-ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.inOut" }, at(195.0)); // "you"
+          tl.set($("f36-note"), { opacity: 1 }, at(195.3));             // "thirty"
+
+          // ---- L62: git's answer; "thirty" is the hero ----
+          const w2 = root.querySelectorAll(".f36-w2");
+          [194.403, 194.503, 195.0, 195.18].forEach((T, i) => HR.lead(tl, w2[i], at(T)));
+          HR.hero(tl, w2[4], at(195.3), { spread: 12, over: 1.1, pre: 0.1, sharp: true });
+          HR.lead(tl, w2[5], at(195.62));
+
+          // ---- Ctrl-L on L63: everything goes but the prompt and its cursor; the soft voice says the rest ----
+          tl.set([$("f36-log"), $("f36-l2")], { opacity: 0 }, CLEAR);
+          const w3 = root.querySelectorAll(".f36-w3");
+          HR.lead(tl, w3[0], at(196.803), { from: 60, dur: 0.4 }); HR.lead(tl, w3[1], at(196.98), { from: 60, dur: 0.4 });
+          HR.hero(tl, w3[2], at(197.16), { spread: 8, over: 1.07, pre: 0.1, skew: false, sharp: true });
+
+          // ---- the camera: one slow push toward the reflog, a breath back on the clear, a last lean to the downbeat ----
+          tl.fromTo(stage.cam, { z: 1.0, y: 0 }, { z: 1.05, y: 16, duration: CLEAR, ease: "sine.inOut" }, 0);
+          tl.set(stage.cam, { z: 1.0, y: 0 }, CLEAR);
+          tl.fromTo(stage.cam, { z: 1.0 }, { z: 1.025, duration: DUR - CLEAR, ease: "power1.in", immediateRender: false }, CLEAR);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame: typing, the cursor, the camera ----
+          const cmd = $("f36-cmd"), cur = $("f36-cursor");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          function render() {
+            const t = tl.time();
+            let k = keys[0]; for (const s of keys) if (s[0] <= t) k = s;
+            cmd.textContent = k[1];
+            // after the clear the cursor is lit, blinks off once across "can", and is lit again for the last frames
+            const BLINK = at(197.0);
+            cur.style.opacity = t >= CLEAR ? (t >= BLINK && t < BLINK + 0.22 ? 0 : 1) : t < ENTER && blink(t, k[0]) ? 1 : 0;
+            root.querySelectorAll(".f36-hero.hr-glowbox").forEach((el) => HR.glow(el, T0 + t, 0.35, 0.4));
+            stage.apply(T0 + t);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["36-reflog"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 21 — ignore (verse 2's last couplet, 103.465–107.370). An editor, not vim: a tab, a line-number gutter, an
+         active-line band. L31: the singer opens lines at the very top of `.gitignore` and the lyric is written there as
+         a comment block, the old file (`# ignore`, `node_modules/` …) shoved down a line at a time; `you` goes in right
+         under it. L32 hard-cuts to the wide view: the file tree, where whatever you sends lands in `you/` and greys out
+         as it lands (ignored), and the terminal: `git status you/` answers `nothing to commit, working tree clean` on
+         "anymore". The last file to land is `one-more-try.patch`, into 22's "no more patches". -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f21-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f21-strip b { color: var(--fire); font-weight: 600; }
+        .f21-scene { position: absolute; inset: 0; }
+        #f21-b, .f21-in, #f21-r1, #f21-r2, #f21-r3, #f21-r4, #f21-dotA, #f21-o1, #f21-o2, #f21-p2 { opacity: 0; }
+        #f21-b { visibility: hidden; }
+        /* the editor's tab bar */
+        .f21-tabs { position: absolute; top: 6.1cqw; display: flex; gap: 2.4cqw; font: 400 1.0cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        .f21-tabs .f21-on { color: var(--cream); padding-bottom: 0.45cqw; border-bottom: 1px solid var(--cream); }
+        .f21-dot { display: inline-block; width: 0.45cqw; height: 0.45cqw; margin-left: 0.6cqw; border-radius: 50%; background: var(--cream); vertical-align: 0.15em; }
+        #f21-tabsA { left: 5.5cqw; }
+        /* L31: the file, line by line; every row is gutter number · comment mark · text, on one baseline */
+        .f21-row { position: absolute; left: 5.5cqw; right: 5.5cqw; display: flex; align-items: baseline; white-space: nowrap; }
+        .f21-n { flex: 0 0 3.6cqw; font: 400 1.35cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        .f21-h { flex: 0 0 2.6cqw; font: 500 2.2cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        .f21-lyr { font: 800 6.2cqw/1.1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); }
+        #f21-r4 { top: 9.2cqw; height: 8.6cqw; }
+        #f21-you { font: 600 7.4cqw/1.16 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--fire); }
+        #f21-r1 { top: 17.8cqw; height: 6.82cqw; }
+        #f21-r2 { top: 24.62cqw; height: 6.82cqw; }
+        #f21-r3 { top: 31.44cqw; height: 13.4cqw; }
+        #f21-r3 .f21-lyr { font-size: 12.6cqw; line-height: 1; letter-spacing: -0.045em; }
+        #f21-r3 > span { position: relative; top: -1.5cqw; }
+        .f21-fire { color: var(--fire); }
+        .f21-cursor { display: inline-block; width: 0.6em; height: 1.05em; margin-left: 0.08em; background: var(--fire); vertical-align: -0.18em; }
+        #f21-band { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 9.2cqw; height: 3.2cqw; background: var(--ink-alt); }
+        #f21-old { position: absolute; left: 0; right: 0; top: 9.2cqw; }
+        #f21-old .f21-row { position: relative; left: 5.5cqw; height: 3.2cqw; }
+        #f21-old .f21-code { font: 400 2cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        /* L32: the wide view — file tree on the left, the lyric in the pane, the terminal underneath */
+        #f21-tabsB { left: 38cqw; }
+        #f21-split { position: absolute; left: 35cqw; top: 6.1cqw; bottom: 0; width: 1px; background: var(--border); }
+        #f21-tree { position: absolute; left: 5.5cqw; top: 9.4cqw; width: 28cqw; font: 400 1.75cqw/1.7 "IBM Plex Mono", monospace; color: var(--cream); }
+        #f21-tree .f21-head { font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 0.9cqw; }
+        .f21-f { position: relative; white-space: nowrap; height: 2.98cqw; }
+        .f21-f.f21-i1 { padding-left: 2.2cqw; } .f21-f.f21-i2 { padding-left: 4.4cqw; }
+        .f21-f .f21-m { position: absolute; right: 0; color: var(--cream-muted); font-size: 1.3cqw; }
+        #f21-l2 { position: absolute; right: 5.5cqw; top: 11.2cqw; text-align: right; }
+        #f21-l2 div { white-space: nowrap; }
+        #f21-l2 .f21-lyr { line-height: 1.04; }
+        #f21-l2 .f21-big { font: 900 15.5cqw/0.92 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        #f21-term { position: absolute; left: 5.5cqw; top: 44.6cqw; font: 400 1.3cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f21-term .f21-cmd { color: var(--cream); }
+        #f21-term .f21-out { color: var(--cream); }
+      </style>
+      <div id="root" data-composition-id="21-ignore" data-width="1920" data-height="1080" data-duration="3.905">
+        <div class="hr-layer" data-depth="0.12">
+          <div id="f21-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>3</b></span></div>
+        </div>
+
+        <!-- L31: .gitignore, written from the top -->
+        <div class="f21-scene" id="f21-a">
+          <div class="hr-layer" data-depth="0.35">
+            <div class="f21-tabs" id="f21-tabsA"><span class="f21-on">.gitignore<i class="f21-dot" id="f21-dotA"></i></span><span>us.txt</span></div>
+          </div>
+          <div class="hr-layer" data-depth="0.8">
+            <div id="f21-band" data-layout-ignore></div>
+            <div id="f21-old" data-layout-ignore>
+              <div class="f21-row"><span class="f21-n f21-on0">1</span><span class="f21-code"><span id="f21-cur0" class="f21-cursor"></span># ignore</span></div>
+              <div class="f21-row"><span class="f21-n f21-on0">2</span><span class="f21-code">node_modules/</span></div>
+              <div class="f21-row"><span class="f21-n f21-on0">3</span><span class="f21-code">.DS_Store</span></div>
+            </div>
+            <div class="f21-row" id="f21-r1"><span class="f21-n">2</span><span class="f21-h">#</span>
+              <span class="f21-lyr"><span class="f21-w">wrote</span> <span class="f21-w">your</span> <span class="f21-w">name</span></span></div>
+            <div class="f21-row" id="f21-r2"><span class="f21-n">3</span><span class="f21-h">#</span>
+              <span class="f21-lyr"><span class="f21-w">at</span> <span class="f21-w">the</span> <span class="f21-w">top</span> <span class="f21-w">of</span> <span class="f21-w">my</span></span></div>
+            <div class="f21-row" id="f21-r3"><span class="f21-n">4</span><span class="f21-h">#</span>
+              <span class="f21-lyr"><span class="f21-w f21-fire hr-glowbox" id="f21-gi">git-ignore</span></span></div>
+            <div class="f21-row" id="f21-r4"><span class="f21-n">1</span><span class="f21-h"></span><span id="f21-you"><span class="hr-glowbox" id="f21-youtxt">you</span><span class="f21-cursor" id="f21-cur4"></span></span></div>
+          </div>
+        </div>
+
+        <!-- L32: the wide view -->
+        <div class="f21-scene" id="f21-b">
+          <div class="hr-layer" data-depth="0.35">
+            <div id="f21-split" data-layout-ignore></div>
+            <div class="f21-tabs" id="f21-tabsB"><span class="f21-on">.gitignore</span><span>us.txt</span></div>
+            <div id="f21-tree">
+              <div class="f21-head">files</div>
+              <div class="f21-f">us/</div>
+              <div class="f21-f f21-i1">.gitignore<span class="f21-m">M</span></div>
+              <div class="f21-f f21-i1">us.txt</div>
+              <div class="f21-f f21-i1 f21-in">you/</div>
+              <div class="f21-f f21-i2 f21-in">sorry.txt</div>
+              <div class="f21-f f21-i2 f21-in">flowers.svg</div>
+              <div class="f21-f f21-i2 f21-in">letter.md</div>
+              <div class="f21-f f21-i2 f21-in">voicemail.m4a</div>
+              <div class="f21-f f21-i2 f21-in">one-more-try.patch</div>
+            </div>
+            <div id="f21-term"><span>~/us (main) $ </span><span class="f21-cmd" id="f21-cmd"></span><span class="f21-cursor" id="f21-cur5"></span>
+<span id="f21-o1">On branch main</span>
+<span class="f21-out" id="f21-o2">nothing to commit, working tree clean</span>
+<span id="f21-p2">~/us (main) $ <span class="f21-cursor" id="f21-cur6"></span></span></div>
+          </div>
+          <div class="hr-layer" data-depth="0.85">
+            <div id="f21-l2">
+              <div class="f21-lyr"><span class="f21-v">whatever</span> <span class="f21-v">you</span> <span class="f21-v">send,</span></div>
+              <div class="f21-lyr"><span class="f21-v">i</span> <span class="f21-v">don't</span> <span class="f21-v">see</span> <span class="f21-v">it</span></div>
+              <div class="f21-big"><span class="f21-v f21-fire hr-glowbox" id="f21-any">anymore</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.905, T0 = 103.465, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="21-ignore"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 21 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const CUT = at(105.46); // L32 starts: hard cut to the wide view
+
+          // ---- the two views ----
+          tl.set($("f21-a"), { autoAlpha: 0 }, CUT);
+          tl.set($("f21-b"), { autoAlpha: 1 }, CUT);
+
+          // ---- L31: lines open at the top of the file; the old file is shoved down one line at a time ----
+          // [insert time, row top (cqw), row height (cqw)]
+          // line 1 (empty, the cursor waiting) and line 2 open together on "wrote"; `you` lands on line 1 on "name"
+          const ins = [[at(103.525), 9.2, 8.6], [at(103.525), 17.8, 6.82], [at(103.98), 24.62, 6.82], [at(104.62), 31.44, 13.4]];
+          const rows = [$("f21-r4"), $("f21-r1"), $("f21-r2"), $("f21-r3")];
+          let oldTop = 9.2;
+          ins.forEach(([t], i) => tl.set(rows[i], { opacity: 1 }, t));
+          // the old file is shoved down once per insert time (lines 1 and 2 open together)
+          [[ins[0][0], 24.62], [ins[2][0], 31.44], [ins[3][0], 44.84]].forEach(([t, next]) => {
+            tl.fromTo($("f21-old"), { y: (oldTop - 9.2) * PX }, { y: (next - 9.2) * PX, duration: 0.26, ease: "expo.out", immediateRender: false }, t - 0.02);
+            oldTop = next;
+          });
+          // the active-line band follows the cursor: old line 1 → line 1 (waiting for the name) → line 3 → line 4
+          [[ins[0][0], 0, 8.6, 3.2], [ins[2][0], 2, 6.82, 8.6], [ins[3][0], 3, 13.4, 6.82]].forEach(([t, k, h, h0], j, arr) => {
+            const y0 = j ? ins[arr[j - 1][1]][1] - 9.2 : 0;
+            tl.fromTo($("f21-band"), { y: y0 * PX, height: h0 * PX }, { y: (ins[k][1] - 9.2) * PX, height: h * PX, duration: 0.2, ease: "expo.out", immediateRender: false }, t - 0.02);
+          });
+          tl.set($("f21-dotA"), { opacity: 1 }, ins[0][0]);
+          tl.set($("f21-dotA"), { opacity: 0 }, at(105.331)); // saved on the kick
+          // the sung words
+          const w = root.querySelectorAll(".f21-w");
+          HR.lead(tl, w[0], at(103.525)); HR.lead(tl, w[1], at(103.62));
+          HR.lead(tl, w[2], at(103.72));
+          HR.hero(tl, $("f21-youtxt"), at(103.72), { spread: 22, over: 1.22, pre: 0.12, sharp: true });
+          [103.98, 104.06, 104.16, 104.32, 104.4].forEach((T, i) => HR.lead(tl, w[3 + i], at(T)));
+          HR.hero(tl, w[8], at(104.62), { spread: 30, over: 1.22, pre: 0.14, sharp: true });
+          
+          // ---- L32: files from you land in you/ and grey out as they land; git status sees nothing ----
+          const v = root.querySelectorAll(".f21-v");
+          HR.lead(tl, v[0], at(105.46)); HR.lead(tl, v[1], at(105.715)); HR.lead(tl, v[2], at(105.919));
+          HR.lead(tl, v[3], at(106.28)); HR.lead(tl, v[4], at(106.34)); HR.lead(tl, v[5], at(106.438)); HR.lead(tl, v[6], at(106.64));
+          HR.hero(tl, v[7], at(106.717), { spread: 26, over: 1.22, pre: 0.14, sharp: true });
+          const land = [105.588, 105.919, 106.017, 106.28, 106.438, 106.64]; // the downbeat kick, then the words and the snare
+          root.querySelectorAll(".f21-in").forEach((row, i) => {
+            const t = at(land[i]);
+            tl.set(row, { opacity: 1 }, t);
+            tl.fromTo(row, { x: -1.2 * PX }, { x: 0, duration: 0.2, ease: "expo.out", immediateRender: false }, t);
+            tl.fromTo(row, { color: "#F0ECE5" }, { color: "#888880", duration: 0.28, ease: "power1.in", immediateRender: false }, t + 0.12);
+          });
+          const CMD = "git status you/", TA = at(105.62), TB = at(106.3), ENTER = at(106.69);
+          const keys = [[0, ""]];
+          for (let i = 0; i < CMD.length; i++) keys.push([TA + ((TB - TA) * i) / CMD.length, CMD.slice(0, i + 1)]);
+          tl.set([$("f21-o1"), $("f21-o2")], { opacity: 1 }, at(106.717));
+          tl.set($("f21-p2"), { opacity: 1 }, at(106.86));
+
+          // ---- the camera: L31 creeps in and punches on name and git-ignore; L32 pans with the tree and punches on anymore ----
+          const cam = stage.cam, N = at(103.72), G = at(104.62), A = at(106.717);
+          tl.fromTo(cam, { z: 1.0, x: 0 }, { z: 1.012, x: -8, duration: N - 0.06, ease: "none" }, 0);
+          tl.fromTo(cam, { z: 1.012 }, { z: 1.045, duration: 0.06, ease: "power2.in", immediateRender: false }, N - 0.06);
+          tl.fromTo(cam, { z: 1.045 }, { z: 1.02, duration: 0.45, ease: "elastic.out(1, 0.55)", immediateRender: false }, N);
+          tl.fromTo(cam, { z: 1.02, x: -8 }, { z: 1.03, x: -16, duration: G - N - 0.51, ease: "none", immediateRender: false }, N + 0.45);
+          tl.fromTo(cam, { z: 1.03 }, { z: 1.065, duration: 0.06, ease: "power2.in", immediateRender: false }, G - 0.06);
+          tl.fromTo(cam, { z: 1.065 }, { z: 1.035, duration: 0.55, ease: "elastic.out(1, 0.5)", immediateRender: false }, G);
+          tl.fromTo(cam, { z: 1.035, x: -16 }, { z: 1.045, x: -26, duration: CUT - G - 0.55, ease: "none", immediateRender: false }, G + 0.55);
+          tl.fromTo(cam, { z: 1.0, x: 0 }, { z: 1.02, x: 22, duration: A - 0.06 - CUT, ease: "none", immediateRender: false }, CUT);
+          tl.fromTo(cam, { z: 1.02 }, { z: 1.055, duration: 0.06, ease: "power2.in", immediateRender: false }, A - 0.06);
+          tl.fromTo(cam, { z: 1.055, x: 22 }, { z: 1.03, x: 30, duration: DUR - A, ease: "elastic.out(1, 0.5)", immediateRender: false }, A);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: line numbers, typing, cursors, glow, camera ----
+          const olds = root.querySelectorAll(".f21-on0"), cmd = $("f21-cmd");
+          const cur0 = $("f21-cur0"), cur4 = $("f21-cur4"), cur5 = $("f21-cur5"), cur6 = $("f21-cur6");
+          const heroes = [$("f21-youtxt"), $("f21-gi"), $("f21-any")];
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          const last = (states, t) => { let s = states[0]; for (const st of states) if (st[0] <= t) s = st; return s; };
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            const n = ins.filter(([ti]) => ti <= t).length;
+            olds.forEach((el, i) => { el.textContent = String(1 + n + i); });
+            cur0.style.display = n ? "none" : "inline-block";
+            cur0.style.opacity = blink(t, 0) ? 1 : 0;
+            cur4.style.marginLeft = t < at(103.72) ? "-1.66em" : "0.08em"; // line 1 is empty until the name: the cursor sits at column 1 (3 mono glyphs = 1.74em)
+            cur4.style.opacity = t < ins[2][0] && blink(t, t < at(103.72) ? ins[0][0] : at(103.72)) ? 1 : 0; // on line 1 until line 3 opens
+            const k = last(keys, t); cmd.textContent = k[1];
+            cur5.style.opacity = t < ENTER && blink(t, Math.max(k[0], CUT)) ? 1 : 0;
+            cur6.style.opacity = blink(t, at(106.86)) ? 1 : 0;
+            heroes.forEach((el) => HR.glow(el, T, 0.3, 0.5));
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["21-ignore"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

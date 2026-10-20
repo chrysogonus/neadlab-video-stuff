@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 23 — force2 (chorus 2 hook, 114.120–117.160). Forks 10-force: same set, the world moved on.
+         The cut is the Enter of 22's `git push --force origin main`: git answers `+ e81b0d4...9c0ffee main -> main
+         (forced update)`, FORCE slams on 114.18, PUSH! hits on 114.78 with the kick (114.779), "baby, you're" builds,
+         and on "history" (116.395) the log called history loses what verse 2 added (the three cherry-picked days and
+         the revert PR's commit, all `you`) while the counter flips 3 → 0. A notch louder than 10: the punches, spreads
+         and stage pulse are scaled by the measured drums (this span's mean drum envelope over 10's, ~1.13). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f23-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f23-old { position: relative; color: var(--fire); font-weight: 600; }
+        #f23-old i { position: absolute; left: -0.2em; right: -0.2em; top: 52%; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
+        #f23-new { color: var(--fire); font-weight: 600; margin-left: 0.6em; }
+        /* git's own answer to the push */
+        #f23-out { position: absolute; left: 5.5cqw; top: 7.4cqw; font: 400 1.3cqw/1.55 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        #f23-out .f23-plus { color: var(--fire); font-weight: 600; }
+        #f23-out b { color: var(--cream); font-weight: 500; }
+        /* the hook: the one all-caps slam in the film */
+        #f23-hook { position: absolute; left: 4.4cqw; top: 10.8cqw; font: 900 19.5cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f23-hook > span { display: block; width: max-content; }
+        #f23-hook .f23-push { color: var(--fire); }
+        #f23-line { position: absolute; left: 5.2cqw; top: 45.3cqw; font: 800 6.2cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
+        #f23-line .f23-hero { color: var(--fire); }
+        /* "history" is the log: what is left of it */
+        #f23-log { position: absolute; left: 70.5cqw; top: 13.2cqw; width: 24cqw; }
+        #f23-log .f23-head { font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; margin-bottom: 1cqw; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+        #f23-log .f23-head b { color: var(--cream); font-weight: 600; }
+        .f23-row { position: relative; display: table; height: 2.45cqw; font: 400 1.05cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
+        .f23-row .f23-h { color: var(--cream-hint); }
+        .f23-row.f23-keep { color: var(--cream); }
+        .f23-row .f23-x { position: absolute; left: -0.3cqw; right: -0.3cqw; top: 0.48cqw; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
+      </style>
+      <div id="root" data-composition-id="23-force2" data-width="1920" data-height="1080" data-duration="3.04">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f23-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<span id="f23-old">3<i></i></span><span id="f23-new">0</span></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.45" data-layout-ignore>
+          <div id="f23-out"><span id="f23-o1">To me@home:us.git</span><br /><span id="f23-o2"><span class="f23-plus">+</span> <b>e81b0d4...9c0ffee</b> main -&gt; main (forced update)</span></div>
+          <div id="f23-log">
+            <div class="f23-head"><span>history</span><b>git log</b></div>
+            <div class="f23-row f23-keep"><span class="f23-h">9c0ffee</span> me &nbsp;ready.</div>
+            <div class="f23-row f23-gone"><span class="f23-h">2b7d4e8</span> you Revert "force push"<i class="f23-x"></i></div>
+            <div class="f23-row f23-gone"><span class="f23-h">0e96d4a</span> you that sunday<i class="f23-x"></i></div>
+            <div class="f23-row f23-gone"><span class="f23-h">c7f2b18</span> you the beach<i class="f23-x"></i></div>
+            <div class="f23-row f23-gone"><span class="f23-h">51d0a3e</span> you first date<i class="f23-x"></i></div>
+            <div class="f23-row f23-keep"><span class="f23-h">8f4c61b</span> me &nbsp;moved in</div>
+            <div class="f23-row f23-keep"><span class="f23-h">b05d2f8</span> me &nbsp;initial commit</div>
+          </div>
+        </div>
+        <div class="hr-layer" data-depth="1">
+          <div id="f23-hook"><span id="f23-force">FORCE</span><span class="f23-push hr-glowbox" id="f23-push">PUSH!</span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.85">
+          <div id="f23-line"><span class="f23-w">baby,</span> <span class="f23-w">you're</span> <span class="f23-w f23-hero hr-glowbox">history</span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.04, T0 = 114.12;
+          const root = document.querySelector('[data-composition-id="23-force2"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const at = (T) => T - T0;
+          // louder than 10: this span's mean drum envelope over 10's (0.409, measured 53.38–56.291), capped
+          let sum = 0, n = 0;
+          for (let T = T0; T < T0 + DUR; T += 0.02) { sum += HR.band("drums", T); n++; }
+          const K = Math.max(1, Math.min(1.25, sum / n / 0.409));
+          const up = (base, amt) => base + amt * K; // a punch of size `amt` above `base`, scaled
+          const stage = HR.stage(root, { seed: 23, pulse: K });
+          const tl = gsap.timeline({ paused: true });
+
+          // the Enter: git answers at once, the forced update a beat later
+          tl.set($("f23-o2"), { opacity: 0 }, 0).set($("f23-o2"), { opacity: 1 }, 0.22);
+          // the hook: FORCE on 114.18, PUSH! on 114.78 (the kick, 114.779)
+          HR.hero(tl, $("f23-force"), at(114.18), { spread: 34 * K, over: up(1, 0.2), pre: 0.05, sharp: true });
+          HR.hero(tl, $("f23-push"), at(114.78), { spread: 40 * K, over: up(1, 0.26), pre: 0.16, sharp: true });
+          // the line
+          const w = root.querySelectorAll(".f23-w");
+          HR.lead(tl, w[0], at(115.298)); HR.lead(tl, w[1], at(116.18));
+          HR.hero(tl, w[2], at(116.395), { spread: 22 * K, over: up(1, 0.16), pre: 0.14, sharp: true });
+          // history: the log is on screen from the Enter; on "history" every `you` is struck, top to bottom
+          const H = at(116.395);
+          tl.fromTo(root.querySelectorAll(".f23-row"), { opacity: 0, x: 14 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out", stagger: 0.035 }, 0.3);
+          const gone = root.querySelectorAll(".f23-gone");
+          gone.forEach((row, i) => {
+            tl.fromTo(row.querySelector(".f23-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.14, ease: "power2.out" }, H + 0.04 + i * 0.07);
+            tl.fromTo(row, { color: "#888880" }, { color: "#505048", duration: 0.2, immediateRender: false }, H + 0.1 + i * 0.07);
+          });
+          // the counter: 3 is struck, 0 lands
+          tl.fromTo($("f23-old").querySelector("i"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out" }, H);
+          tl.fromTo($("f23-old"), { opacity: 1 }, { opacity: 0.55, duration: 0.2, immediateRender: false }, H + 0.12);
+          tl.set($("f23-new"), { opacity: 0 }, 0).set($("f23-new"), { opacity: 1 }, H + 0.16);
+
+          // the camera: a punch on FORCE, a bigger one on PUSH! (with the kick), a nudge on history; a slow push carries it
+          const F = at(114.18), P = at(114.78);
+          tl.fromTo(stage.cam, { z: 1.0, y: 0 }, { z: up(1, 0.045), y: -6 * K, duration: 0.07, ease: "power2.in" }, Math.max(0, F - 0.06));
+          tl.to(stage.cam, { z: 1.0, y: 0, duration: 0.45, ease: "elastic.out(1, 0.55)" }, F + 0.01);
+          tl.to(stage.cam, { z: up(1, 0.065), y: -10 * K, duration: 0.07, ease: "power2.in" }, P - 0.06);
+          tl.to(stage.cam, { z: 1.012, y: 0, duration: 0.6, ease: "elastic.out(1, 0.5)" }, P + 0.01);
+          tl.to(stage.cam, { z: 1.03, duration: H - P - 0.6 - 0.05, ease: "none" }, P + 0.61);
+          tl.to(stage.cam, { z: up(1, 0.045), duration: 0.06, ease: "power2.in" }, H - 0.05);
+          tl.to(stage.cam, { z: 1.035, x: 18 * K, duration: DUR - H, ease: "power2.out" }, H + 0.01);
+          tl.set({}, {}, DUR);
+
+          const push = $("f23-push"), hist = root.querySelector(".f23-hero");
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            HR.glow(push, T, 0.22, 0.35 * K); HR.glow(hist, T, 0.3, 0.45 * K);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["23-force2"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

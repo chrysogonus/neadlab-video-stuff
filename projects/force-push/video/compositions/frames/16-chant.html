@@ -1,0 +1,314 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 16 — chant (post-chorus 1, L21–L24, 76.090–83.484). The stomp set, the template of 29 and 35.
+         Dark, centred, full-bleed. The upper zone is the chant: FORCE! (cream) and PUSH! (fire) swap full-frame on
+         their word starts, each slam and camera punch sized by the measured drums; every (hey!) is stamped as a tag
+         in the top right, and the tags pile up. The lower zone is the singer's terminal, always live: during each
+         chant a command types at the prompt, and each line's tail (centred, the hero in fire) gets git's answer.
+         "wipe it clean": `git status` → `nothing to commit, working tree clean` on "clean" (plant 2, now big).
+         "like you've never been": `git log --author=you` → Enter on "never", and on "been" just the prompt again.
+         "hear the crowd": `git push` → Enter on "crowd": `Everything up-to-date`, and rows of it stack up the frame on
+         the hits like a crowd. On "You're" (81.52) the drums drop out: a hard cut to a cleared terminal, `git log`
+         types, and on "history" (82.502) the post-rebase log prints, every author `me`; "now" gets the next prompt.
+         Forks (29, 35): change the WORLD table below (commands, outputs, tags) and the times; keep the set. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f16-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f16-strip b { color: var(--fire); font-weight: 600; }
+
+        /* ---- the chant: one word full-frame at a time ---- */
+        .f16-chant { position: absolute; left: 0; right: 0; top: 11cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 27cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        .f16-chant > span { display: inline-block; }
+        .f16-chant.f16-push { color: var(--fire); }
+        /* (hey!): a tag, stamped; the tags pile up across the top right */
+        .f16-tag { position: absolute; top: 6.4cqw; opacity: 0; padding: 0.25cqw 1.1cqw 0.45cqw; border: 0.28cqw solid var(--cream);
+          font: 900 4.2cqw/1 "Barlow", sans-serif; letter-spacing: -0.02em; color: var(--cream); white-space: nowrap; }
+        /* each line's tail: centred, the hero in fire */
+        .f16-tail { position: absolute; left: 0; right: 0; top: 16.6cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 7.5cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        .f16-tail .f16-hero, #f16-l24 .f16-hero { color: var(--fire); font-size: 1.5em; letter-spacing: -0.045em; }
+        /* the last line, after the drums drop out */
+        #f16-l24 { position: absolute; left: 0; right: 0; top: 6.6cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 7.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f16-l24 .f16-b { margin-top: -1.2cqw; }
+        #f16-l24 .f16-hero { font-size: 1.85em; }
+
+        /* ---- the terminal (the singer's, ~/us on main) ---- */
+        .f16-term { position: absolute; left: 5.5cqw; right: 5.5cqw; overflow: hidden; font: 400 2cqw/3cqw "IBM Plex Mono", monospace;
+          color: var(--cream-muted); }
+        #f16-termA { top: 37.8cqw; height: 15cqw; }
+        #f16-termB { top: 30.6cqw; height: 21.6cqw; font-size: 1.8cqw; line-height: 2.7cqw; opacity: 0; }
+        .f16-rows { position: absolute; left: 0; right: 0; top: 0; }
+        .f16-row { white-space: pre; opacity: 0; }
+        .f16-row .f16-cmd { color: var(--cream); }
+        .f16-row .f16-hl { color: var(--fire); font-weight: 600; }
+        .f16-row.f16-key { color: var(--cream); font-weight: 500; }
+        .f16-row b { color: var(--cream); font-weight: 600; }
+        .f16-cur { display: inline-block; width: 0.6em; height: 1.1em; margin-left: 0.06em; background: var(--fire); vertical-align: -0.2em; opacity: 0; }
+        .f16-u { position: relative; display: inline-block; }
+        .f16-u i { position: absolute; left: 0; right: 0; bottom: -0.1em; height: 0.12em; background: var(--fire); transform-origin: 0% 50%; transform: scaleX(0); }
+
+        /* the crowd: rows of git's answer stacking up the frame (decorative) */
+        #f16-crowd { position: absolute; inset: 0; }
+        .f16-crow { position: absolute; left: 0; white-space: pre; opacity: 0; font: 400 1.7cqw/1 "IBM Plex Mono", monospace; color: var(--cream-hint); }
+      </style>
+      <div id="root" data-composition-id="16-chant" data-width="1920" data-height="1080" data-duration="7.394">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f16-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.3" data-layout-ignore>
+          <div id="f16-crowd"></div>
+        </div>
+        <div class="hr-layer" data-depth="0.5">
+          <div class="f16-term" id="f16-termA"><div class="f16-rows"></div></div>
+          <div class="f16-term" id="f16-termB"><div class="f16-rows"></div></div>
+        </div>
+        <div class="hr-layer" data-depth="0.8">
+          <div class="f16-tag" id="f16-tag1" data-layout-allow-overlap style="right: 5.5cqw; transform: rotate(-5deg)">(hey!)</div>
+          <div class="f16-tag" id="f16-tag2" data-layout-allow-overlap style="right: 21.4cqw; transform: rotate(3deg)">(hey!)</div>
+          <div class="f16-tag" id="f16-tag3" data-layout-allow-overlap style="right: 37.2cqw; transform: rotate(-2.5deg)">(hey!)</div>
+        </div>
+        <div class="hr-layer" data-depth="1">
+          <div class="f16-chant" id="f16-f1"><span>FORCE!</span></div>
+          <div class="f16-chant f16-push" id="f16-p1"><span class="hr-glow">PUSH!</span></div>
+          <div class="f16-tail" id="f16-t1"><span class="f16-w">wipe</span> <span class="f16-w">it</span> <span class="f16-w f16-hero hr-glow">clean</span></div>
+          <div class="f16-chant" id="f16-f2"><span>FORCE!</span></div>
+          <div class="f16-chant f16-push" id="f16-p2"><span class="hr-glow">PUSH!</span></div>
+          <div class="f16-tail" id="f16-t2"><span class="f16-w">like</span> <span class="f16-w">you've</span> <span class="f16-w f16-hero hr-glow">never</span> <span class="f16-w">been</span></div>
+          <div class="f16-chant" id="f16-f3"><span>FORCE!</span></div>
+          <div class="f16-chant f16-push" id="f16-p3"><span class="hr-glow">PUSH!</span></div>
+          <div class="f16-tail" id="f16-t3"><span class="f16-w">hear</span> <span class="f16-w">the</span> <span class="f16-w f16-hero hr-glow">crowd</span></div>
+          <div id="f16-l24">
+            <div class="f16-a"><span class="f16-w">you're</span> <span class="f16-w">not</span> <span class="f16-w">in</span> <span class="f16-w">my</span></div>
+            <div class="f16-b"><span class="f16-w f16-hero">history</span> <span class="f16-w">now</span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 7.394, T0 = 76.09, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="16-chant"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 16 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          // ================= the song (track seconds, lyrics.json L21–L24) =================
+          // per chant line: FORCE!, PUSH!, (hey!), the tail's word starts, the tail's hero index
+          const CHANT = [
+            { force: 76.12, push: 76.54, hey: 76.86, tail: [77.02, 77.284, 77.44], hero: 2 },
+            { force: 77.873, push: 78.42, hey: 78.64, tail: [78.7, 78.911, 79.14, 79.3], hero: 2 },
+            { force: 79.8, push: 80.283, hey: 80.7, tail: [80.78, 80.981, 81.106], hero: 2 },
+          ];
+          const LAST = { words: [81.52, 81.66, 81.909, 82.32, 82.502, 83.22], hero: 4 };
+          const CUT = LAST.words[0]; // the drums drop out: the cleared terminal
+
+          // ================= the world: what the terminal says (forks change this table) =================
+          // rows: { at, out } printed whole at `at` (−1: already on screen) · { at, cmd, type: [a, b], enter, hl } a prompt
+          // that appears at `at`, types `cmd` from a to b, and is entered at `enter` (the cursor leaves)
+          const PS = "~/us (main) $ ";
+          const TERM_A = [
+            { at: -1, out: "To me@home:us.git" },
+            { at: -1, out: '<span class="f16-hl">+</span> 3f2a1c9...e81b0d4 main -&gt; main (forced update)' },
+            { at: -1, cmd: "git status", type: [76.2, 76.68], enter: 77.44 },
+            { at: 77.48, out: "On branch main" },
+            { at: 77.48, out: 'nothing to commit, working tree <span class="f16-u">clean<i></i></span>', key: true },
+            { at: 77.504, cmd: "git log --author=you", hl: [17, 20], type: [77.94, 78.96], enter: 79.14 },
+            { at: 79.32, cmd: "git push", type: [79.86, 80.27], enter: 81.106 },
+            { at: 81.106, out: "Everything up-to-date", key: true },
+          ];
+          const LOG = [["e81b0d4", "ready."], ["6b1e9f3", "we'll get to it"], ["d27a0c5", "just a feature"],
+            ["8f4c61b", "moved in"], ["1a93e7d", "nothing on the side"], ["b05d2f8", "initial commit"]];
+          const TERM_B = [
+            { at: CUT, cmd: "git log", type: [81.6, 81.92], enter: 82.502 },
+            ...LOG.map(([h, m], i) => ({ at: 82.502 + i * 0.022, out: `<span>${h}</span>  <b>me</b>  ${m}` })),
+            { at: 83.22, cmd: "", type: null, enter: 99 },
+          ];
+          // the crowd: rows of `Everything up-to-date` stacking up from the terminal on the hits after "crowd"
+          const CROWD = [81.106, 81.106, 81.106, 81.164, 81.164, 81.183, 81.183, 81.25, 81.25, 81.32, 81.32, 81.393, 81.393, 81.45];
+
+          // ================= build the terminals =================
+          const rng = HR.rng(1616);
+          function buildTerm(el, script) {
+            const box = el.querySelector(".f16-rows");
+            return script.map((r) => {
+              const d = document.createElement("div");
+              d.className = "f16-row" + (r.key ? " f16-key" : "");
+              const row = { ...r, el: d, t: r.at < 0 ? -1 : at(r.at) };
+              if (r.cmd !== undefined) {
+                d.innerHTML = `<span>${PS}</span><span class="f16-cmd"></span><i class="f16-cur"></i>`;
+                row.cmdEl = d.querySelector(".f16-cmd"); row.cur = d.querySelector(".f16-cur");
+                row.enterT = at(r.enter);
+                // keystrokes at a human rhythm: even spacing with a seeded wobble
+                row.keys = [];
+                if (r.type) {
+                  const a = at(r.type[0]), b = at(r.type[1]), n = r.cmd.length;
+                  for (let i = 0; i < n; i++) row.keys.push(a + ((b - a) * (i + 0.35 * (rng() - 0.5))) / Math.max(1, n - 1));
+                }
+                row.shown = -1;
+              } else d.innerHTML = r.out;
+              box.appendChild(d);
+              return row;
+            });
+          }
+          const termA = { el: $("f16-termA"), rows: buildTerm($("f16-termA"), TERM_A), cap: 5, rowH: 3 * PX };
+          const termB = { el: $("f16-termB"), rows: buildTerm($("f16-termB"), TERM_B), cap: 8, rowH: 2.7 * PX };
+          termA.box = termA.el.querySelector(".f16-rows"); termB.box = termB.el.querySelector(".f16-rows");
+
+          // the crowd rows, bottom up from the terminal's top edge
+          const crowdBox = $("f16-crowd");
+          const crowd = CROWD.map((T, k) => {
+            const d = document.createElement("div");
+            d.className = "f16-crow";
+            d.textContent = Array(5).fill("Everything up-to-date").join("    ");
+            const bottom = 37.4 + -2.25 * (k + 1);
+            d.style.top = bottom.toFixed(2) + "cqw";
+            const off = -(k % 2) * 13 - rng() * 9;
+            d.style.left = off.toFixed(2) + "cqw";
+            // fainter as the crowd climbs behind the lyric
+            d.style.opacity = 0;
+            crowdBox.appendChild(d);
+            return { el: d, t: at(T), a: Math.max(0.22, 0.75 - k * 0.045), ph: 0.5 + rng() * 0.5 };
+          });
+
+          // ================= the chant =================
+          const drumsPeak = (T) => { let m = 0; for (let d = 0; d <= 0.14; d += 0.02) m = Math.max(m, HR.band("drums", T + d)); return m; };
+          const show = (el, a, b) => { tl.set(el, { opacity: 0 }, 0); tl.set(el, { opacity: 1 }, Math.max(0.001, a)); if (b != null) tl.set(el, { opacity: 0 }, b); };
+          const hits = []; // camera: { T (local), a (z punch), y, settle }
+          CHANT.forEach((c, i) => {
+            const n = i + 1, F = at(c.force), P = at(c.push), H = at(c.hey);
+            const tail = $("f16-t" + n), words = tail.querySelectorAll(".f16-w");
+            const W0 = at(c.tail[0]);
+            const next = i + 1 < CHANT.length ? at(CHANT[i + 1].force) : at(CUT);
+            // FORCE! from its start to PUSH!; PUSH! to the tail's first word; the tail to the next FORCE!
+            const fEl = $("f16-f" + n), pEl = $("f16-p" + n);
+            show(fEl, F - 0.035, P - 0.035);
+            show(pEl, P - 0.035, W0 - 0.03);
+            show(tail, W0 - 0.03, i + 1 < CHANT.length ? next - 0.03 : at(CUT));
+            const dF = drumsPeak(c.force), dP = drumsPeak(c.push);
+            HR.hero(tl, fEl.firstElementChild, F, { spread: 22 + 30 * dF, over: 1.1 + 0.14 * dF, pre: 0.035, settle: 0.4, sharp: true });
+            HR.hero(tl, pEl.firstElementChild, P, { spread: 26 + 34 * dP, over: 1.12 + 0.16 * dP, pre: 0.035, settle: 0.4, sharp: true });
+            hits.push({ T: F, a: 0.018 + 0.04 * dF, y: -6, settle: 0.36 }, { T: P, a: 0.024 + 0.05 * dP, y: -9, settle: 0.42 });
+            // (hey!): stamped, 0 ms, a short settle; it stays until the drums drop
+            const tag = $("f16-tag" + n);
+            show(tag, H, at(CUT));
+            tl.fromTo(tag, { scale: 1.32 }, { scale: 1, duration: 0.12, ease: "power4.out", immediateRender: false }, H);
+            // the tail: words build on their starts, the hero slams
+            words.forEach((w, j) => {
+              if (j === c.hero) HR.hero(tl, w, at(c.tail[j]), { spread: 16, over: 1.2, pre: 0.06, sharp: true, skew: false });
+              else HR.lead(tl, w, at(c.tail[j]));
+            });
+            hits.push({ T: at(c.tail[c.hero]), a: i === 2 ? 0.045 : 0.022, y: i === 2 ? -10 : -4, settle: 0.4 });
+          });
+
+          // the answers: `clean` underlined as the hero lands; the crowd swells
+          tl.fromTo(root.querySelector(".f16-u i"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out", immediateRender: false }, at(77.52));
+
+          // ================= the last line: the drums drop out, a cleared terminal =================
+          show($("f16-l24"), at(CUT) - 0.03);
+          tl.set($("f16-termA"), { opacity: 1 }, 0).set($("f16-termA"), { opacity: 0 }, at(CUT) - 0.03);
+          tl.set($("f16-termB"), { opacity: 0 }, 0).set($("f16-termB"), { opacity: 1 }, at(CUT) - 0.03);
+          const lw = $("f16-l24").querySelectorAll(".f16-w");
+          lw.forEach((w, j) => {
+            if (j === LAST.hero) HR.hero(tl, w, at(LAST.words[j]), { spread: 18, over: 1.16, pre: 0.06, sharp: true, skew: false });
+            else HR.lead(tl, w, at(LAST.words[j]));
+          });
+
+          // ================= the camera =================
+          // a punch on every stomp sized by the measured drums, a settle, a slow climb between; after the cut a slow push
+          const cam = stage.cam; let cz = 1, cy = 0, cx = 0, ct = 0;
+          const camTo = (t, dur, z, y, x, ease) => {
+            if (dur <= 0.001) return;
+            tl.fromTo(cam, { z: cz, y: cy, x: cx }, { z, y, x, duration: dur, ease, immediateRender: ct === 0 }, t);
+            cz = z; cy = y; cx = x; ct = t + dur;
+          };
+          const cutT = at(CUT);
+          hits.sort((p, q) => p.T - q.T);
+          hits.forEach((h, k) => {
+            const nextT = k + 1 < hits.length ? hits[k + 1].T : cutT;
+            const base = 1 + 0.008 * Math.min(2, Math.floor(k / 3)), drift = (k % 2 ? 1 : -1) * 6;
+            camTo(ct, h.T - 0.05 - ct, base, 0, cx, "sine.inOut");
+            camTo(h.T - 0.05, 0.05, base + h.a, h.y, cx, "power2.in");
+            const s = Math.min(h.settle, nextT - 0.05 - h.T);
+            camTo(h.T, s, base, 0, drift, "elastic.out(1, 0.5)");
+          });
+          camTo(ct, cutT - 0.001 - ct, cz + 0.004, 0, cx, "none");
+          tl.set(cam, { z: 1, y: 0, x: 0 }, cutT); cz = 1; cy = 0; cx = 0; ct = cutT;
+          const HIST = at(LAST.words[LAST.hero]);
+          camTo(cutT, HIST - 0.06 - cutT, 1.024, -4, 8, "sine.inOut");
+          camTo(HIST - 0.06, 0.06, 1.036, -6, 8, "power2.in");
+          camTo(HIST, DUR - HIST, 1.05, -2, 16, "power2.out");
+          tl.set({}, {}, DUR);
+
+          // ================= per frame: terminals, crowd, glow, camera =================
+          const scrollE = gsap.parseEase("power3.out");
+          function drawTerm(term, t) {
+            let f = 0, active = null;
+            for (const r of term.rows) {
+              const on = r.t <= t;
+              r.el.style.opacity = on ? 1 : 0;
+              if (!on) continue;
+              f += r.t < 0 ? 1 : scrollE(Math.min(1, (t - r.t) / 0.09));
+              if (r.cmdEl) {
+                let n = 0; while (n < r.keys.length && r.keys[n] <= t) n++;
+                if (n !== r.shown) {
+                  const s = r.cmd.slice(0, n);
+                  if (r.hl && n > r.hl[0]) r.cmdEl.innerHTML = s.slice(0, r.hl[0]) + `<span class="f16-hl">${s.slice(r.hl[0], r.hl[1])}</span>` + s.slice(r.hl[1]);
+                  else r.cmdEl.textContent = s;
+                  r.shown = n;
+                }
+                r.cur.style.opacity = 0;
+                if (t < r.enterT) active = { r, last: n ? r.keys[n - 1] : r.t };
+              }
+            }
+            if (active) {
+              const idle = t - active.last;
+              active.r.cur.style.opacity = idle < 0.3 || Math.floor((idle - 0.3) * 4) % 2 === 1 ? 1 : 0;
+            }
+            const rowH = term.rowH;
+            term.box.style.transform = `translateY(${(-Math.max(0, f - term.cap) * rowH).toFixed(1)}px)`;
+          }
+          const glows = Array.from(root.querySelectorAll(".hr-glow"));
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (t < cutT) drawTerm(termA, t); else drawTerm(termB, t);
+            const live = t < cutT;
+            for (const c of crowd) {
+              const on = live && t >= c.t;
+              c.el.style.opacity = on ? c.a : 0;
+              if (!on) continue;
+              const rise = 1 - scrollE(Math.min(1, (t - c.t) / 0.16));
+              const bob = (HR.hit("kick", T, 0.12) + HR.hit("snare", T, 0.12)) * 7 * c.ph;
+              c.el.style.transform = `translateY(${(rise * 18 - bob).toFixed(1)}px)`;
+            }
+            for (const g of glows) HR.glow(g, T, 0.2, 0.32);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["16-chant"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

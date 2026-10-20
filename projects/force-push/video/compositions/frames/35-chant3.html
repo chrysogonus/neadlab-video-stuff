@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 35 — chant3 (post-chorus 3, L57–L60, 184.530–191.895). A fork of 16-chant, at its biggest: the last and
+         loudest post-chorus, after the key-change drop (33–34). Same stomp set, retimed to L57–L60 and this span's
+         kicks; FORCE! / PUSH! are set larger, and every slam, (hey!) stamp and camera punch is scaled by LOUD, the
+         measured drums of this span over 16's (~1.2), on top of each stomp's own drum peak.
+         The scrollback is the drop's forced update (33). "wipe it clean": `git status` → `nothing to commit, working
+         tree clean` on "clean" (plant 2). "like you've never been": `git log --author=you` → Enter on "never",
+         nothing; on "been" just the prompt. "hear the crowd": `git push` is entered ON the chanted "PUSH!" (188.44):
+         `Everything up-to-date`, and from there the crowd of it stacks up the frame on every kick and clap; on "crowd"
+         (189.569) it bursts and fills the whole frame, top to bottom, climbing. On "You're" (189.9) the drums drop
+         out: a hard cut to a cleared terminal, `git log` types, and on "history" (190.931) the log prints with every
+         author `me` (fire, popping in turn down the column). "now" gets the next prompt; the hard cut into 36 (the
+         dry spoken outro) is the drop to near-silence, so no fade. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f35-strip { position: absolute; background: var(--ink); left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f35-strip b { color: var(--fire); font-weight: 600; }
+
+        /* ---- the chant: one word full-frame at a time (the biggest of the three) ---- */
+        .f35-chant { position: absolute; left: 0; right: 0; top: 10.2cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 29.5cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        .f35-chant > span { display: inline-block; }
+        .f35-chant.f35-push { color: var(--fire); }
+        /* (hey!): a tag, stamped; the tags pile up across the top right */
+        .f35-tag { position: absolute; top: 6.2cqw; opacity: 0; padding: 0.25cqw 1.1cqw 0.45cqw; border: 0.3cqw solid var(--cream);
+          font: 900 4.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.02em; color: var(--cream); white-space: nowrap; background: var(--ink); }
+        /* each line's tail: centred, the hero in fire */
+        .f35-tail { position: absolute; left: 0; right: 0; top: 16.6cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 7.8cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        .f35-tail .f35-hero, #f35-l60 .f35-hero { color: var(--fire); font-size: 1.5em; letter-spacing: -0.045em; }
+        /* the last line, after the drums drop out */
+        #f35-l60 { position: absolute; left: 0; right: 0; top: 6.6cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 8cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f35-l60 .f35-b { margin-top: -1.2cqw; }
+        #f35-l60 .f35-hero { font-size: 1.85em; }
+
+        /* ---- the terminal (the singer's, ~/us on main) ---- */
+        .f35-term { position: absolute; left: 5.5cqw; right: 5.5cqw; overflow: hidden; font: 400 2cqw/3cqw "IBM Plex Mono", monospace;
+          color: var(--cream-muted); }
+        #f35-termA { top: 37.8cqw; height: 15cqw; }
+        #f35-termB { top: 30.6cqw; height: 21.6cqw; font-size: 1.8cqw; line-height: 2.7cqw; opacity: 0; }
+        .f35-rows { position: absolute; left: 0; right: 0; top: 0; }
+        .f35-row { white-space: pre; opacity: 0; }
+        .f35-row .f35-cmd { color: var(--cream); }
+        .f35-row .f35-hl { color: var(--fire); font-weight: 600; }
+        .f35-row.f35-key { color: var(--cream); font-weight: 500; }
+        .f35-row .f35-who { display: inline-block; color: var(--fire); font-weight: 600; transform-origin: 50% 70%; }
+        .f35-cur { display: inline-block; width: 0.6em; height: 1.1em; margin-left: 0.06em; background: var(--fire); vertical-align: -0.2em; opacity: 0; }
+        .f35-u { position: relative; display: inline-block; }
+        .f35-u i { position: absolute; left: 0; right: 0; bottom: -0.1em; height: 0.12em; background: var(--fire); transform-origin: 0% 50%; transform: scaleX(0); }
+
+        /* the crowd: rows of git's answer stacking until they fill the frame (decorative) */
+        #f35-crowd { position: absolute; inset: 0; }
+        .f35-crow { position: absolute; left: 0; white-space: pre; opacity: 0; font: 400 1.7cqw/1 "IBM Plex Mono", monospace; color: var(--cream-hint); }
+      </style>
+      <div id="root" data-composition-id="35-chant3" data-width="1920" data-height="1080" data-duration="7.365">
+        <div class="hr-layer" data-depth="0.3" data-layout-ignore>
+          <div id="f35-crowd"></div>
+        </div>
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f35-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.5">
+          <div class="f35-term" id="f35-termA"><div class="f35-rows"></div></div>
+          <div class="f35-term" id="f35-termB"><div class="f35-rows"></div></div>
+        </div>
+        <div class="hr-layer" data-depth="0.8">
+          <div class="f35-tag" id="f35-tag1" data-layout-allow-overlap style="right: 5.5cqw; transform: rotate(-5deg)">(hey!)</div>
+          <div class="f35-tag" id="f35-tag2" data-layout-allow-overlap style="right: 22.4cqw; transform: rotate(3.5deg)">(hey!)</div>
+          <div class="f35-tag" id="f35-tag3" data-layout-allow-overlap style="right: 39.2cqw; transform: rotate(-3deg)">(hey!)</div>
+        </div>
+        <div class="hr-layer" data-depth="1">
+          <div class="f35-chant" id="f35-f1"><span>FORCE!</span></div>
+          <div class="f35-chant f35-push" id="f35-p1"><span class="hr-glowbox">PUSH!</span></div>
+          <div class="f35-tail" id="f35-t1"><span class="f35-w">wipe</span> <span class="f35-w">it</span> <span class="f35-w f35-hero hr-glowbox">clean</span></div>
+          <div class="f35-chant" id="f35-f2"><span>FORCE!</span></div>
+          <div class="f35-chant f35-push" id="f35-p2"><span class="hr-glowbox">PUSH!</span></div>
+          <div class="f35-tail" id="f35-t2"><span class="f35-w">like</span> <span class="f35-w">you've</span> <span class="f35-w f35-hero hr-glowbox">never</span> <span class="f35-w">been</span></div>
+          <div class="f35-chant" id="f35-f3"><span>FORCE!</span></div>
+          <div class="f35-chant f35-push" id="f35-p3"><span class="hr-glowbox">PUSH!</span></div>
+          <div class="f35-tail" id="f35-t3"><span class="f35-w">hear</span> <span class="f35-w">the</span> <span class="f35-w f35-hero hr-glowbox">crowd</span></div>
+          <div id="f35-l60">
+            <div class="f35-a"><span class="f35-w">you're</span> <span class="f35-w">not</span> <span class="f35-w">in</span> <span class="f35-w">my</span></div>
+            <div class="f35-b"><span class="f35-w f35-hero">history</span> <span class="f35-w">now</span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 7.365, T0 = 184.53, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="35-chant3"]');
+          const $ = (id) => root.querySelector("#" + id);
+          // the third post-chorus is the loudest: its hits grow with the measured drums, this chant over 16's
+          const drums = (a, b) => { let s = 0, n = 0; for (let T = a; T < b; T += 0.02) { s += HR.band("drums", T); n++; } return s / n; };
+          const LOUD = Math.max(1, Math.min(1.35, drums(184.53, 189.9) / drums(76.09, 81.52)));
+          const stage = HR.stage(root, { seed: 35, pulse: LOUD });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          // ================= the song (track seconds, lyrics.json L57–L60) =================
+          // per chant line: FORCE!, PUSH!, (hey!), the tail's word starts, the tail's hero index
+          const CHANT = [
+            { force: 184.56, push: 185.019, hey: 185.259, tail: [185.48, 185.738, 185.907], hero: 2 },
+            { force: 186.4, push: 186.9, hey: 187.1, tail: [187.16, 187.42, 187.58, 187.76], hero: 2 },
+            { force: 188.22, push: 188.44, hey: 189.02, tail: [189.14, 189.38, 189.569], hero: 2 },
+          ];
+          const LAST = { words: [189.9, 190.1, 190.307, 190.74, 190.931, 191.64], hero: 4 };
+          const CUT = LAST.words[0]; // the drums drop out: the cleared terminal
+
+          // ================= the world: what the terminal says =================
+          // rows: { at, out } printed whole at `at` (−1: already on screen) · { at, cmd, type: [a, b], enter, hl } a
+          // prompt that appears at `at`, types `cmd` from a to b, and is entered at `enter` (the cursor leaves)
+          const PS = "~/us (main) $ ";
+          // kicks: 184.557 185.012 185.478 185.931 186.39 186.843 187.308 187.779 188.23 188.681 189.134 189.617
+          const PUSH3 = CHANT[2].push;
+          const TERM_A = [
+            { at: -1, out: "To me@home:us.git" },
+            { at: -1, out: '<span class="f35-hl">+</span> 5ab3e07...d4c7e19 main -&gt; main (forced update)' },
+            { at: -1, cmd: "git status", type: [184.64, 185.08], enter: 185.907 },
+            { at: 185.931, out: "On branch main" },
+            { at: 185.931, out: 'nothing to commit, working tree <span class="f35-u">clean<i></i></span>', key: true },
+            { at: 185.953, cmd: "git log --author=you", hl: [17, 20], type: [186.46, 187.4], enter: 187.58 },
+            { at: 187.779, cmd: "git push", type: [187.9, 188.36], enter: PUSH3 },
+            { at: PUSH3, out: "Everything up-to-date", key: true },
+          ];
+          // the log after the rewrites: every author `me`
+          const LOG = [["d4c7e19", "ready."], ["6b1e9f3", "we'll get to it"], ["d27a0c5", "just a feature"],
+            ["8f4c61b", "moved in"], ["1a93e7d", "nothing on the side"], ["b05d2f8", "initial commit"]];
+          const HIST_T = LAST.words[LAST.hero];
+          const TERM_B = [
+            { at: CUT, cmd: "git log", type: [190.0, 190.4], enter: HIST_T },
+            ...LOG.map(([h, m], i) => ({ at: HIST_T + i * 0.022, out: `<span>${h}</span>  <span class="f35-who">me</span>  ${m}` })),
+            { at: 191.64, cmd: "", type: null, enter: 99 },
+          ];
+          // the crowd: `Everything up-to-date` from the Enter on "PUSH!", a row or two on every kick and clap, climbing
+          // up from the terminal; on "crowd" it bursts to the top, then fills down behind the terminal to the bottom edge
+          const UP = [188.44, 188.44, 188.681, 188.913, 188.913, 189.134, 189.37, 189.37,
+            189.569, 189.569, 189.569, 189.569, 189.569, 189.569];
+          const DOWN = [189.595, 189.595, 189.595, 189.617, 189.617, 189.617, 189.829, 189.829];
+
+          // ================= build the terminals =================
+          const rng = HR.rng(3535);
+          function buildTerm(el, script, rowH) {
+            const box = el.querySelector(".f35-rows");
+            return script.map((r) => {
+              const d = document.createElement("div");
+              d.className = "f35-row" + (r.key ? " f35-key" : "");
+              const row = { ...r, el: d, t: r.at < 0 ? -1 : at(r.at), h: rowH };
+              if (r.cmd !== undefined) {
+                d.innerHTML = `<span>${PS}</span><span class="f35-cmd"></span><i class="f35-cur"></i>`;
+                row.cmdEl = d.querySelector(".f35-cmd"); row.cur = d.querySelector(".f35-cur");
+                row.enterT = at(r.enter);
+                // keystrokes at a human rhythm: even spacing with a seeded wobble
+                row.keys = [];
+                if (r.type) {
+                  const a = at(r.type[0]), b = at(r.type[1]), n = r.cmd.length;
+                  for (let i = 0; i < n; i++) row.keys.push(a + ((b - a) * (i + 0.35 * (rng() - 0.5))) / Math.max(1, n - 1));
+                }
+                row.shown = -1;
+              } else d.innerHTML = r.out;
+              box.appendChild(d);
+              return row;
+            });
+          }
+          const termA = { el: $("f35-termA"), rows: buildTerm($("f35-termA"), TERM_A, 3 * PX), height: 15 * PX };
+          const termB = { el: $("f35-termB"), rows: buildTerm($("f35-termB"), TERM_B, 2.7 * PX), height: 21.6 * PX };
+          termA.box = termA.el.querySelector(".f35-rows"); termB.box = termB.el.querySelector(".f35-rows");
+
+          // the crowd rows: up from the terminal's top edge to the strip, then down behind the terminal
+          const crowdBox = $("f35-crowd");
+          const mkRow = (T, top, a, k) => {
+            const d = document.createElement("div");
+            d.className = "f35-crow";
+            d.textContent = Array(6).fill("Everything up-to-date").join("    ");
+            d.style.top = top.toFixed(2) + "cqw";
+            d.style.left = (-(k % 2) * 13 - rng() * 9).toFixed(2) + "cqw";
+            d.style.opacity = 0;
+            crowdBox.appendChild(d);
+            return { el: d, t: at(T), a, ph: 0.5 + rng() * 0.5 };
+          };
+          const crowd = [
+            ...UP.map((T, k) => mkRow(T, 37.4 - 2.25 * (k + 1), Math.max(0.24, 0.78 - k * 0.04), k)),
+            // behind the terminal: fainter, so git's own lines stay readable over them
+            ...DOWN.map((T, k) => mkRow(T, 37.4 + 2.25 * k, 0.26, k + 1)),
+          ];
+
+          // ================= the chant =================
+          const drumsPeak = (T) => { let m = 0; for (let d = 0; d <= 0.14; d += 0.02) m = Math.max(m, HR.band("drums", T + d)); return m; };
+          const show = (el, a, b) => { tl.set(el, { opacity: 0 }, 0); tl.set(el, { opacity: 1 }, Math.max(0.001, a)); if (b != null) tl.set(el, { opacity: 0 }, b); };
+          const hits = []; // camera: { T (local), a (z punch), y, settle }
+          CHANT.forEach((c, i) => {
+            const n = i + 1, F = at(c.force), P = at(c.push), H = at(c.hey);
+            const tail = $("f35-t" + n), words = tail.querySelectorAll(".f35-w");
+            const W0 = at(c.tail[0]);
+            const next = i + 1 < CHANT.length ? at(CHANT[i + 1].force) : at(CUT);
+            // FORCE! from its start to PUSH!; PUSH! to the tail's first word; the tail to the next FORCE!
+            const fEl = $("f35-f" + n), pEl = $("f35-p" + n);
+            show(fEl, F - 0.035, P - 0.035);
+            show(pEl, P - 0.035, W0 - 0.03);
+            show(tail, W0 - 0.03, i + 1 < CHANT.length ? next - 0.03 : at(CUT));
+            const dF = drumsPeak(c.force) * LOUD, dP = drumsPeak(c.push) * LOUD;
+            // a short FORCE! (the third, 0.22 s) gathers faster so PUSH! is not stepped on
+            const preF = Math.min(0.035, (P - F) * 0.15);
+            HR.hero(tl, fEl.firstElementChild, F, { spread: 22 + 30 * dF, over: 1.1 + 0.14 * dF, pre: preF, settle: Math.min(0.4, P - F), sharp: true });
+            HR.hero(tl, pEl.firstElementChild, P, { spread: 26 + 34 * dP, over: 1.12 + 0.16 * dP, pre: 0.035, settle: 0.4, sharp: true });
+            hits.push({ T: F, a: 0.018 + 0.04 * dF, y: -6, settle: 0.36 }, { T: P, a: 0.024 + 0.05 * dP, y: -9, settle: 0.42 });
+            // (hey!): stamped, 0 ms, a short settle; it stays until the drums drop
+            const tag = $("f35-tag" + n);
+            show(tag, H, at(CUT));
+            tl.fromTo(tag, { scale: 1 + 0.32 * LOUD }, { scale: 1, duration: 0.12, ease: "power4.out", immediateRender: false }, H);
+            // the tail: words build on their starts, the hero slams
+            words.forEach((w, j) => {
+              if (j === c.hero) HR.hero(tl, w, at(c.tail[j]), { spread: 16 * LOUD, over: 1 + 0.2 * LOUD, pre: 0.06, sharp: true, skew: false });
+              else HR.lead(tl, w, at(c.tail[j]));
+            });
+            hits.push({ T: at(c.tail[c.hero]), a: (i === 2 ? 0.05 : 0.022) * LOUD, y: i === 2 ? -12 : -4, settle: 0.3 });
+          });
+
+          // the answer: `clean` underlined as the hero lands
+          tl.fromTo(root.querySelector(".f35-u i"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out", immediateRender: false }, at(185.95));
+
+          // ================= the last line: the drums drop out, a cleared terminal =================
+          show($("f35-l60"), at(CUT) - 0.03);
+          tl.set($("f35-termA"), { opacity: 1 }, 0).set($("f35-termA"), { opacity: 0 }, at(CUT) - 0.03);
+          tl.set($("f35-termB"), { opacity: 0 }, 0).set($("f35-termB"), { opacity: 1 }, at(CUT) - 0.03);
+          const lw = $("f35-l60").querySelectorAll(".f35-w");
+          lw.forEach((w, j) => {
+            if (j === LAST.hero) HR.hero(tl, w, at(LAST.words[j]), { spread: 18, over: 1.16, pre: 0.06, sharp: true, skew: false });
+            else HR.lead(tl, w, at(LAST.words[j]));
+          });
+          // `me` only: every author in the log pops in turn down the column
+          const who = root.querySelectorAll(".f35-who");
+          tl.fromTo(who, { scale: 1.7 }, { scale: 1, duration: 0.3, ease: "back.out(2.4)", stagger: 0.07, immediateRender: false }, at(HIST_T) + 0.06);
+
+          // ================= the camera =================
+          // a punch on every stomp sized by the measured drums, a settle, a slow climb between; after the cut a slow push
+          const cam = stage.cam; let cz = 1, cy = 0, cx = 0, ct = 0;
+          const camTo = (t, dur, z, y, x, ease) => {
+            if (dur <= 0.001) return;
+            tl.fromTo(cam, { z: cz, y: cy, x: cx }, { z, y, x, duration: dur, ease, immediateRender: ct === 0 }, t);
+            cz = z; cy = y; cx = x; ct = t + dur;
+          };
+          const cutT = at(CUT);
+          hits.sort((p, q) => p.T - q.T);
+          hits.forEach((h, k) => {
+            const nextT = k + 1 < hits.length ? hits[k + 1].T : cutT;
+            const base = 1 + 0.01 * Math.min(2, Math.floor(k / 3)), drift = (k % 2 ? 1 : -1) * 7;
+            camTo(ct, h.T - 0.05 - ct, base, 0, cx, "sine.inOut");
+            camTo(h.T - 0.05, 0.05, base + h.a, h.y, cx, "power2.in");
+            const s = Math.min(h.settle, nextT - 0.05 - h.T);
+            camTo(h.T, s, base, 0, drift, "elastic.out(1, 0.5)");
+          });
+          camTo(ct, cutT - 0.001 - ct, cz + 0.006, 0, cx, "none");
+          tl.set(cam, { z: 1, y: 0, x: 0 }, cutT); cz = 1; cy = 0; cx = 0; ct = cutT;
+          const HIST = at(HIST_T);
+          camTo(cutT, HIST - 0.06 - cutT, 1.024, -4, 8, "sine.inOut");
+          camTo(HIST - 0.06, 0.06, 1.036, -6, 8, "power2.in");
+          camTo(HIST, DUR - HIST, 1.05, -2, 16, "power2.out");
+          tl.set({}, {}, DUR);
+
+          // ================= per frame: terminals, crowd, glow, camera =================
+          const scrollE = gsap.parseEase("power3.out");
+          function drawTerm(term, t) {
+            let f = 0, active = null;
+            for (const r of term.rows) {
+              const on = r.t <= t;
+              r.el.style.opacity = on ? 1 : 0;
+              if (!on) continue;
+              f += r.h * (r.t < 0 ? 1 : scrollE(Math.min(1, (t - r.t) / 0.09)));
+              if (r.cmdEl) {
+                let n = 0; while (n < r.keys.length && r.keys[n] <= t) n++;
+                if (n !== r.shown) {
+                  const s = r.cmd.slice(0, n);
+                  if (r.hl && n > r.hl[0]) r.cmdEl.innerHTML = s.slice(0, r.hl[0]) + `<span class="f35-hl">${s.slice(r.hl[0], r.hl[1])}</span>` + s.slice(r.hl[1]);
+                  else r.cmdEl.textContent = s;
+                  r.shown = n;
+                }
+                r.cur.style.opacity = 0;
+                if (t < r.enterT) active = { r, last: n ? r.keys[n - 1] : r.t };
+              }
+            }
+            if (active) {
+              const idle = t - active.last;
+              active.r.cur.style.opacity = idle < 0.3 || Math.floor((idle - 0.3) * 4) % 2 === 1 ? 1 : 0;
+            }
+            term.box.style.transform = `translateY(${(-Math.max(0, f - term.height)).toFixed(1)}px)`;
+          }
+          const glows = Array.from(root.querySelectorAll(".hr-glowbox"));
+          const CROWD0 = at(PUSH3);
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (t < cutT) drawTerm(termA, t); else drawTerm(termB, t);
+            const live = t < cutT;
+            // the whole crowd keeps climbing while it grows: a higher climb than 16's
+            const climb = live && t > CROWD0 ? Math.min(1, (t - CROWD0) / (cutT - CROWD0)) * 1.6 * PX : 0;
+            for (const c of crowd) {
+              const on = live && t >= c.t;
+              c.el.style.opacity = on ? c.a : 0;
+              if (!on) continue;
+              const rise = 1 - scrollE(Math.min(1, (t - c.t) / 0.16));
+              const bob = (HR.hit("kick", T, 0.12) + HR.hit("snare", T, 0.12) + 0.6 * HR.hit("hat", T, 0.1)) * 8 * c.ph;
+              c.el.style.transform = `translateY(${(rise * 22 - bob - climb).toFixed(1)}px)`;
+            }
+            for (const g of glows) HR.glow(g, T, 0.2, 0.32);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["35-chant3"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

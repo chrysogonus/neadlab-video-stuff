@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 11 — rewrote (chorus 1, L16, 56.291–60.780). The mirror of 10: the log at the left, the line at the right.
+         `git rebase -i --root --force-rebase` has run; the log is rewritten as she sings it. Real git order: the new
+         commits are made oldest first, so the wave climbs the column, one SHA per kick from "rewrote" (56.5), the
+         fire cursor riding the row being rewritten and `Rebasing (n/6)` counting (a drop is not counted). The wave reaches `you and me` on
+         "no you": the row lights on "no" (59.06), is struck on "you" (59.28) and drops on the 59.523 downbeat, the
+         list closing the gap while the top row becomes e81b0d4 (the new tip 10 pushed). `Successfully rebased…` lands
+         on the 59.974 kick. "rewrote" and "past," slam at display scale; at "no" they step back so "you and me" can
+         take the frame. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f11-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f11-strip b { color: var(--fire); font-weight: 600; }
+        /* the log, rewritten: git log --oneline after the rebase command */
+        #f11-log { position: absolute; left: 5.5cqw; top: 9.6cqw; width: 34cqw; }
+        #f11-cmd { font: 500 1.02cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f11-cmd b { color: var(--cream); font-weight: 500; }
+        #f11-head { margin-top: 1.4cqw; font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase;
+          color: var(--cream-muted); padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+        #f11-head b { color: var(--cream); font-weight: 600; }
+        #f11-rows { position: relative; margin-top: 0.9cqw; }
+        .f11-row { position: relative; height: 3.7cqw; overflow: hidden; padding-left: 2.1cqw; font: 400 1.75cqw/3.7cqw "IBM Plex Mono", monospace;
+          color: var(--cream-muted); white-space: nowrap; }
+        .f11-row .f11-h { font-weight: 500; color: var(--cream-muted); }
+        .f11-row.f11-new .f11-h { color: var(--cream); font-weight: 600; }
+        .f11-row .f11-h.f11-hot { color: var(--fire); font-weight: 600; }
+        .f11-row.f11-mark, .f11-row.f11-mark .f11-h { color: var(--fire); }
+        .f11-row .f11-x { position: absolute; left: 1.8cqw; width: 19.6cqw; top: 1.78cqw; height: 3px; background: var(--fire); transform-origin: 0% 50%; transform: scaleX(0); }
+        #f11-cur { position: absolute; left: 0; top: 0.95cqw; width: 0.95cqw; height: 1.8cqw; background: var(--fire); }
+        #f11-status { margin-top: 1.1cqw; font: 400 1.12cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; height: 1.6cqw; }
+        #f11-status.f11-done { color: var(--cream); }
+        /* the line: right-aligned, poster scale */
+        .f11-lyric { position: absolute; right: 5.5cqw; text-align: right; color: var(--cream); white-space: nowrap; }
+        .f11-lyric > div { white-space: nowrap; }
+        #f11-past { top: 8.6cqw; font: 900 11.5cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.045em; transform-origin: 100% 0%; }
+        #f11-now { top: 31.6cqw; font: 900 10.8cqw/0.92 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        #f11-now .f11-small { font-weight: 800; font-size: 0.62em; letter-spacing: -0.035em; line-height: 1.12; }
+        .f11-hero { color: var(--fire); }
+      </style>
+      <div id="root" data-composition-id="11-rewrote" data-width="1920" data-height="1080" data-duration="4.489">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f11-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.5">
+          <div id="f11-log">
+            <div id="f11-cmd">~/us (main) $ <b>git rebase -i --root --force-rebase</b></div>
+            <div id="f11-head"><span>git log --oneline</span><b>main</b></div>
+            <div id="f11-rows">
+              <div class="f11-row"><span class="f11-h">7e2b9a4</span>&nbsp; ready.</div>
+              <div class="f11-row" id="f11-drop"><span class="f11-h">3f2a1c9</span>&nbsp; you and me<i class="f11-x"></i></div>
+              <div class="f11-row"><span class="f11-h">a7c21f0</span>&nbsp; we'll get to it</div>
+              <div class="f11-row"><span class="f11-h">4c9d7a1</span>&nbsp; just a feature</div>
+              <div class="f11-row"><span class="f11-h">91be33a</span>&nbsp; moved in</div>
+              <div class="f11-row"><span class="f11-h">0b5f6e2</span>&nbsp; nothing on the side</div>
+              <div class="f11-row"><span class="f11-h">5d0a8c4</span>&nbsp; initial commit</div>
+              <div id="f11-cur"></div>
+            </div>
+            <div id="f11-status"></div>
+          </div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.9">
+          <div class="f11-lyric" id="f11-past">
+            <div><span class="f11-w">i</span> <span class="f11-w f11-hero hr-glow" id="f11-rewrote">rewrote</span></div>
+            <div><span class="f11-w">the</span> <span class="f11-w f11-hero hr-glow" id="f11-pastw">past,</span></div>
+          </div>
+          <div class="f11-lyric" id="f11-now">
+            <div class="f11-small"><span class="f11-w">there's</span> <span class="f11-w">no</span></div>
+            <div><span class="f11-w f11-hero hr-glow" id="f11-you">you</span> <span class="f11-w">and</span> <span class="f11-w">me</span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 4.489, T0 = 56.291, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="11-rewrote"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 11 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          // ---- the sung line (lyrics.json L16) ----
+          const w = root.querySelectorAll(".f11-w");
+          const REWROTE = at(56.5), PAST = at(58.48), NO = at(59.06), YOU = at(59.28);
+          HR.lead(tl, w[0], at(56.4));
+          HR.hero(tl, w[1], REWROTE, { spread: 30, over: 1.2, pre: 0.1, sharp: true });
+          HR.lead(tl, w[2], at(57.66));
+          HR.hero(tl, w[3], PAST, { spread: 30, over: 1.2, pre: 0.12, sharp: true });
+          HR.lead(tl, w[4], at(58.8));
+          HR.lead(tl, w[5], NO);
+          HR.hero(tl, w[6], YOU, { spread: 26, over: 1.22, pre: 0.1, sharp: true });
+          HR.lead(tl, w[7], at(59.94)); HR.lead(tl, w[8], at(60.14));
+          // the accent points at what is being sung: each hero cools to cream when the next one lands
+          const rewrote = $("f11-rewrote"), pastw = $("f11-pastw"), you = $("f11-you");
+          tl.fromTo(rewrote, { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.3, immediateRender: false }, PAST);
+          tl.fromTo(pastw, { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.3, immediateRender: false }, YOU);
+          // on "no" the past steps back (still phone-legible at 0.52) and "there's no / you and me" rises to take the frame
+          tl.fromTo($("f11-past"), { scale: 1, y: 0 }, { scale: 0.52, y: -0.4 * PX, duration: 0.3, ease: "power3.inOut", immediateRender: false }, NO - 0.08);
+          tl.fromTo($("f11-now"), { y: 0 }, { y: -10.6 * PX, duration: 0.3, ease: "power3.inOut", immediateRender: false }, NO - 0.08);
+
+          // ---- the rebase: new commits are made oldest first, so the wave climbs; one SHA per kick ----
+          const rows = Array.from(root.querySelectorAll(".f11-row"));
+          const NEW = ["e81b0d4", null, "6b1e9f3", "d27a0c5", "8f4c61b", "1a93e7d", "b05d2f8"];
+          // [row, time] in rebase order (bottom row first); row 1 is the dropped commit
+          const steps = [[6, REWROTE], [5, at(56.749)], [4, at(57.212)], [3, at(57.675)], [2, at(58.154)], [1, YOU], [0, at(59.523)]];
+          const SCR = 0.2; // a SHA scrambles for 0.2 s and resolves left to right
+          rows.forEach((r) => { const h = r.querySelector(".f11-h"); h.dataset.old = h.textContent; });
+          // the dropped row: lit on "no", struck on "you", gone on the downbeat (the list closes the gap)
+          const drop = $("f11-drop"), DROP = at(59.523);
+          tl.fromTo(drop.querySelector(".f11-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power2.out" }, YOU);
+          tl.fromTo(drop, { opacity: 1 }, { opacity: 0.45, duration: 0.15, immediateRender: false }, YOU + 0.1);
+          const RH = 3.7 * PX, gap = { h: RH }; // the dropped row's height, applied in render(); rows below sit from fixed coordinates
+          tl.fromTo(gap, { h: RH }, { h: 0, duration: 0.3, ease: "power3.inOut", immediateRender: false }, DROP);
+          tl.fromTo(drop, { opacity: 0.45 }, { opacity: 0, duration: 0.24, ease: "power2.in", immediateRender: false }, DROP);
+          const SUCCESS = at(59.974);
+
+          // ---- the camera: punches on the three heroes sized by the measured drums; a slow push carries the frame ----
+          const punch = (t, base) => {
+            const k = base * (0.6 + 0.6 * HR.band("drums", T0 + t));
+            tl.to(stage.cam, { z: 1 + k + (t / DUR) * 0.03, y: -8, duration: 0.07, ease: "power2.in" }, t - 0.06);
+            tl.to(stage.cam, { z: 1.0 + ((t + 0.6) / DUR) * 0.03, y: 0, duration: 0.55, ease: "elastic.out(1, 0.5)" }, t + 0.01);
+          };
+          tl.fromTo(stage.cam, { x: 0 }, { x: 34, duration: DUR, ease: "none", immediateRender: false }, 0);
+          punch(REWROTE, 0.045); punch(PAST, 0.04); punch(YOU, 0.05);
+          tl.to(stage.cam, { z: 1.035, duration: DUR - (YOU + 0.6), ease: "none" }, YOU + 0.6);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: SHAs, cursor, status, glow, camera ----
+          const cur = $("f11-cur"), status = $("f11-status");
+          const HEXL = "0123456789abcdef";
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            let step = -1;
+            steps.forEach(([ri, ts], n) => {
+              if (t >= ts) step = n;
+              if (ri === 1) return; // dropped: never rewritten
+              const h = rows[ri].querySelector(".f11-h"), nw = NEW[ri];
+              if (t < ts) { h.textContent = h.dataset.old; h.classList.remove("f11-hot"); rows[ri].classList.remove("f11-new"); return; }
+              const p = (t - ts) / SCR, tick = Math.floor(t * 30);
+              let s = "";
+              for (let i = 0; i < 7; i++) s += p >= (i + 1) / 8 ? nw[i] : HEXL[(ri * 7 + tick * 5 + i * 3) % 16];
+              h.textContent = s;
+              h.classList.toggle("f11-hot", p < 1.6);
+              rows[ri].classList.add("f11-new");
+            });
+            // the cursor rides the row being rewritten; idle, it blinks on HEAD
+            if (step < 0) { cur.style.opacity = 0; }
+            else {
+              const [ri, ts] = steps[step];
+              cur.style.transform = `translateY(${(ri * RH - (ri >= 2 ? RH - gap.h : 0)).toFixed(2)}px)`;
+              cur.style.opacity = blink(t, ts) ? 1 : 0;
+            }
+            status.textContent = t >= SUCCESS ? "Successfully rebased and updated refs/heads/main." : step >= 0 ? `Rebasing (${Math.min(step + 1, 6)}/6)` : "";
+            status.classList.toggle("f11-done", t >= SUCCESS);
+            drop.classList.toggle("f11-mark", t >= NO);
+            drop.style.height = gap.h.toFixed(2) + "px";
+            HR.glow(rewrote, T, 0.3, 0.45); HR.glow(pastw, T, 0.3, 0.45); HR.glow(you, T, 0.3, 0.45);
+            if (t >= PAST) rewrote.style.setProperty("--hr-glow", "0"); // cooled: no glow once the accent has moved on
+            if (t >= YOU) pastw.style.setProperty("--hr-glow", "0");
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["11-rewrote"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

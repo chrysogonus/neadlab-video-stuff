@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 18 — message (verse 2, L26, 88.220–92.086). Cream: the squashed commit, printed as `git show`. The page is
+         on the cut (the command and the fuller header: authored by `you`, committed by `me`). "commit message says:" is
+         the heading over the message body; "message" (88.96) punches. The stat line prints on the 89.022 kick (a bar of
+         minus signs, in the accent, across the page) and the shortstat on the 89.487 kick. "fix," (89.776) slams in at
+         the message's 4-space indent and its type gets the marker underline; the drums drop out. On "wasted" (90.704)
+         the sung comma snaps to the Conventional Commit colon: the lyric has become the message `fix: wasted time`.
+         "time" (91.52) completes it; a slow push carries the page to the hard cut into 19. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --ink-on-cream: #111111; --muted-on-cream: #5F5B54; --marker: #C8481A;
+          --hr-accent-rgb: 200, 72, 26;
+          background: var(--cream); color: var(--ink-on-cream);
+        }
+        /* header strip, cream register (07's colours) */
+        #f18-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-on-cream);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
+        #f18-strip b { color: #B8461C; font-weight: 600; }
+        /* the finish layer's vignette darkens the corners of the cream page: the strip's small text needs a darker ink */
+        #f18-strip { color: #3F3C37; } #f18-strip b { color: #7E2E12; }
+        /* the printout: the command, then git show's fuller header */
+        #f18-head { position: absolute; left: 5.5cqw; top: 7.6cqw; font: 400 1.12cqw/1.62 "IBM Plex Mono", monospace; color: var(--muted-on-cream);
+          white-space: pre; }
+        #f18-head .f18-cmd { color: var(--ink-on-cream); font-weight: 500; }
+        #f18-head .f18-hash { color: var(--ink-on-cream); font-weight: 500; }
+        #f18-head .f18-who { color: var(--ink-on-cream); font-weight: 600; }
+        /* the stat: one file, a bar of minus signs across the page, then the shortstat */
+        #f18-stat { position: absolute; left: 5.5cqw; top: 43.4cqw; white-space: pre;
+          font: 400 1.32cqw/1.6 "IBM Plex Mono", monospace; color: var(--ink-on-cream); }
+        #f18-bar { color: #B8461C; font-weight: 600; }
+        #f18-short { position: absolute; left: 5.5cqw; top: 45.9cqw; font: 400 1.32cqw/1.6 "IBM Plex Mono", monospace; color: var(--muted-on-cream);
+          white-space: pre; }
+        /* the sung line: the heading, then the message body at git's 4-space indent */
+        #f18-a { position: absolute; left: 5.2cqw; top: 21.4cqw; font: 800 5cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em;
+          color: var(--ink-on-cream); white-space: nowrap; }
+        #f18-a .f18-hero { font-weight: 900; }
+        #f18-b { position: absolute; left: 8.1cqw; top: 28.6cqw; font: 900 10.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.045em;
+          color: var(--ink-on-cream); white-space: nowrap; }
+        .f18-hw { position: relative; display: inline-block; isolation: isolate; }
+        .f18-ul { position: absolute; z-index: -1; left: -0.02em; right: 0.02em; bottom: 0.03em; height: 0.07em; background: var(--marker); opacity: 0.85;
+          border-radius: 0.2cqw; transform-origin: 0% 50%; transform: rotate(-0.6deg) scaleX(0); }
+        .f18-sep { display: inline-block; transform-origin: 50% 70%; }
+      </style>
+      <div id="root" data-composition-id="18-message" data-width="1920" data-height="1080" data-duration="3.866">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f18-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1</b></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.5">
+          <div id="f18-head"><span class="f18-cmd">~/us (main) $ git show --stat --format=fuller</span>
+<span class="f18-hash">commit 7e0c3b2a9f41d6085be2c7d19a3f60e4b8c51d27</span> (HEAD -&gt; main)
+Author:     <span class="f18-who">you</span> &lt;you@laptop&gt;
+AuthorDate: Fri Oct 20 21:14:02 2023 +0200
+Commit:     <span class="f18-who">me</span> &lt;me@home&gt;
+CommitDate: Mon Oct 19 23:41:57 2026 +0200</div>
+          <div id="f18-stat"><span> us.txt | 1095 </span><span id="f18-bar">----------------------------------------------------------------------------------------------</span></div>
+          <div id="f18-short"> 1 file changed, 1095 deletions(-)</div>
+        </div>
+        <div class="hr-layer" data-depth="0.85">
+          <div id="f18-a"><span class="f18-w">commit</span> <span class="f18-w f18-hero" id="f18-message">message</span> <span class="f18-w">says:</span></div>
+          <div id="f18-b"><span class="f18-hw"><span class="f18-w" id="f18-fix">fix</span><i class="f18-ul" id="f18-ul"></i></span><span class="f18-sep" id="f18-sep">,</span> <span class="f18-w" id="f18-wasted">wasted</span> <span class="f18-w" id="f18-time">time</span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.866, T0 = 88.22;
+          const root = document.querySelector('[data-composition-id="18-message"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 18 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const COMMIT = at(88.28), MSG = at(88.96), SAYS = at(89.362), FIX = at(89.776), WASTED = at(90.704), TIME = at(91.52);
+          const K_STAT = at(89.022), K_SHORT = at(89.487);
+
+          // ---- the printout: the header is on the page at the cut; git's stat prints whole on the kicks ----
+          tl.set($("f18-stat"), { opacity: 0 }, 0).set($("f18-stat"), { opacity: 1 }, K_STAT);
+          tl.set($("f18-short"), { opacity: 0 }, 0).set($("f18-short"), { opacity: 1 }, K_SHORT);
+
+          // ---- the sung line, every word on its start ----
+          const w = root.querySelectorAll("#f18-a .f18-w");
+          HR.lead(tl, w[0], COMMIT);
+          HR.hero(tl, w[1], MSG, { spread: 14, over: 1.16, pre: 0.1, sharp: true });
+          HR.lead(tl, w[2], SAYS);
+          // "fix," slams in at the message's indent; the comma lands with it; the type gets the marker
+          HR.hero(tl, $("f18-fix"), FIX, { spread: 34, over: 1.22, pre: 0.12, sharp: true });
+          const sep = $("f18-sep");
+          tl.set(sep, { opacity: 0 }, 0).set(sep, { opacity: 1 }, FIX);
+          tl.fromTo($("f18-ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power2.out" }, FIX + 0.04);
+          // "wasted": the sung comma snaps to the Conventional Commit colon (text swap in render), with a pop
+          HR.hero(tl, $("f18-wasted"), WASTED, { spread: 24, over: 1.14, pre: 0.1, sharp: true });
+          tl.fromTo(sep, { scale: 1.9, y: -8 }, { scale: 1, y: 0, duration: 0.36, ease: "expo.out", immediateRender: false }, WASTED);
+          HR.lead(tl, $("f18-time"), TIME);
+
+          // ---- the camera: a slow push on the page, a punch on "message", the biggest on "fix," (the last drums);
+          //      the drop-out is carried by a calm push down onto the message, a soft nudge on "wasted" ----
+          const punch = (T) => 0.016 + 0.03 * HR.band("drums", T0 + T + 0.03);
+          tl.fromTo(stage.cam, { z: 1.0, y: -6, x: 0 }, { z: 1.012, y: 0, duration: MSG - 0.06, ease: "power1.in" }, 0);
+          tl.to(stage.cam, { z: 1.012 + punch(MSG), y: -4, duration: 0.06, ease: "power2.in" }, MSG - 0.06);
+          tl.to(stage.cam, { z: 1.016, y: 0, duration: 0.5, ease: "elastic.out(1, 0.55)" }, MSG);
+          tl.to(stage.cam, { z: 1.022, y: 6, duration: FIX - MSG - 0.56, ease: "none" }, MSG + 0.5);
+          tl.to(stage.cam, { z: 1.034 + punch(FIX), y: 2, duration: 0.06, ease: "power2.in" }, FIX - 0.06);
+          tl.to(stage.cam, { z: 1.028, y: 8, duration: 0.6, ease: "elastic.out(1, 0.5)" }, FIX);
+          tl.to(stage.cam, { z: 1.04, y: 14, x: 8, duration: WASTED - FIX - 0.66, ease: "sine.inOut" }, FIX + 0.6);
+          tl.to(stage.cam, { z: 1.054, y: 12, duration: 0.06, ease: "power2.in" }, WASTED - 0.06);
+          tl.to(stage.cam, { z: 1.044, y: 14, duration: 0.55, ease: "elastic.out(1, 0.55)" }, WASTED);
+          tl.to(stage.cam, { z: 1.06, y: 18, x: 16, duration: DUR - WASTED - 0.55, ease: "none" }, WASTED + 0.55);
+          tl.set({}, {}, DUR);
+
+          function render() {
+            const t = tl.time();
+            sep.textContent = t >= WASTED ? ":" : ",";
+            stage.apply(T0 + t);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["18-message"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

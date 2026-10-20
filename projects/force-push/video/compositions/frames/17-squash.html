@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 17 — squash (verse 2 opens, 83.484–88.220). L25 "Squashed three years down to a single line".
+         The cut opens on the interactive-rebase todo list, close up: 1,095 rows, every one `pick`, while vim's command
+         line types `:2,$s/^pick/squash/`. The Enter is "squashed" (84.668): rows 2–1,095 flip to `squash`, the list
+         pulls back to a column and the hero slams on the right; through "three years down" the list scrolls down all
+         three years to git's own definition (`s, squash … meld into previous commit`). `:wq` types, and on the 87.158
+         kick the list and the stacked lyric are pressed flat; on "single" (87.277) the whole lyric comes back as ONE
+         line, its letterforms squashed to fit, the counter's 1,095 pressed to a hairline beside `1`, and git opens the
+         squash message (`# This is a combination of 1095 commits.`), which 18 prints. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f17-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f17-old { display: inline-block; color: var(--fire); font-weight: 600; transform-origin: 50% 62%; }
+        #f17-new { color: var(--fire); font-weight: 600; margin-left: 0.6em; }
+        /* the command that opened the editor, left above it */
+        #f17-cmd { position: absolute; left: 5.5cqw; top: 6.5cqw; font: 500 1.3cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f17-cmd span { color: var(--cream); }
+        /* the todo list: a window onto 1,095 rows (+ git's help), drawn from the timeline's time */
+        #f17-win { position: absolute; left: 5.5cqw; top: 9.4cqw; width: 89cqw; height: 40.8cqw; overflow: hidden; }
+        #f17-list { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+        .f17-r { height: 2.24cqw; font: 400 1.3cqw/2.24cqw "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        .f17-r .f17-n { color: var(--cream-hint); }
+        .f17-r .f17-h { color: var(--cream-hint); }
+        .f17-r .f17-p { color: var(--cream); }
+        .f17-r .f17-q { color: var(--fire); font-weight: 600; }
+        .f17-r .f17-c { color: var(--cream-hint); }
+        .f17-r .f17-d { color: var(--cream); }
+        .f17-r .f17-t { color: var(--cream-hint); }
+        /* git's next screen: the squash message */
+        #f17-msg { position: absolute; left: 5.5cqw; top: 36.6cqw; font: 400 1.3cqw/1.75 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f17-msg .f17-m1 { color: var(--cream); }
+        /* vim's chrome, as in 02 */
+        #f17-status { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 50.2cqw; height: 2.1cqw; display: flex; justify-content: space-between; align-items: center;
+          padding: 0 1cqw; background: var(--ink-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+          font: 500 1.05cqw/1 "IBM Plex Mono", monospace; color: var(--cream); white-space: pre; }
+        #f17-status .f17-dim { color: var(--cream-muted); }
+        #f17-cmdline { position: absolute; left: 5.5cqw; top: 52.9cqw; font: 500 1.3cqw/1 "IBM Plex Mono", monospace; color: var(--cream); white-space: pre; }
+        .f17-cur { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.06em; background: var(--fire); vertical-align: -0.2em; }
+        /* the lyric, stacked at the right while the years scroll by */
+        #f17-stack { position: absolute; right: 5.5cqw; top: 10.6cqw; text-align: right; transform-origin: 50% 63%; }
+        #f17-stack > div { white-space: nowrap; font-family: "Barlow", sans-serif; }
+        #f17-s1 { font-weight: 900; font-size: 12.4cqw; line-height: 1; letter-spacing: -0.045em; }
+        #f17-s2, #f17-s3 { font-weight: 800; font-size: 7.4cqw; line-height: 1.04; letter-spacing: -0.035em; }
+        #f17-sq { display: inline-block; color: var(--fire); transform-origin: 100% 100%; }
+        /* ...then squashed into a single line */
+        #f17-line { position: absolute; left: 5.5cqw; top: 22.4cqw; font: 800 11cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em;
+          color: var(--cream); white-space: nowrap; transform-origin: 0 50%; }
+        #f17-line .f17-hero { display: inline-block; color: var(--fire); }
+      </style>
+      <div id="root" data-composition-id="17-squash" data-width="1920" data-height="1080" data-duration="4.736">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f17-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<span id="f17-old">1,095</span><span id="f17-new">1</span></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.4">
+          <div id="f17-cmd">~/us (main) $ <span>git rebase -i --root</span></div>
+          <div id="f17-win" data-layout-ignore><div id="f17-list"></div></div>
+          <div id="f17-msg"><span class="f17-m1"># This is a combination of 1095 commits.</span>
+# This is the 1st commit message:</div>
+          <div id="f17-status"><span id="f17-file">.git/rebase-merge/git-rebase-todo</span><span class="f17-dim" id="f17-ruler"></span></div>
+          <div id="f17-cmdline"><span id="f17-cl"></span><span class="f17-cur" id="f17-cur"></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.85">
+          <div id="f17-stack">
+            <div id="f17-s1"><span class="hr-glow" id="f17-sq">squashed</span></div>
+            <div id="f17-s2"><span class="f17-w">three</span> <span class="f17-w">years</span></div>
+            <div id="f17-s3"><span class="f17-w">down</span> <span class="f17-w">to</span> <span class="f17-w">a</span></div>
+          </div>
+        </div>
+        <div class="hr-layer" data-depth="0.9">
+          <div id="f17-line"><span id="f17-pre">squashed three years down to a</span> <span class="f17-hero hr-glow" id="f17-single">single</span> <span id="f17-last">line</span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 4.736, T0 = 83.484;
+          const root = document.querySelector('[data-composition-id="17-squash"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 17 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          const SQUASHED = at(84.668), SINGLE = at(87.277), LINE = at(87.84);
+          const WQ_A = at(86.86), WQ_B = at(87.1), PRESS = at(87.158); // `:wq` types after "to"; its Enter is the kick
+
+          // ---- the todo list: oldest first, `pick` everywhere until the substitution ----
+          const N = 1095, f = HR.rng(17);
+          const hex = () => { let s = ""; for (let i = 0; i < 7; i++) s += "0123456789abcdef"[(f() * 16) | 0]; return s; };
+          const SUBJ = ["wip", "fix", "sorry", "fix typo", "later", "small fix", "update us.txt", "we'll talk", "tomorrow", "it's fine",
+            "one more thing", "temp", "forgot", "cleanup", "trust me", "really fixed now", "wip (again)", "ok", "promise", "fix the fix",
+            "just checking", "busy", "soon", "nothing", "revert \"sorry\""];
+          const fixed = { 1: ["b05d2f8", "initial commit"], 2: ["1a93e7d", "nothing on the side"], 4: ["8f4c61b", "moved in"],
+            7: ["d27a0c5", "just a feature"], 11: ["6b1e9f3", "we'll get to it"], [N]: ["e81b0d4", "ready."] };
+          const todo = [];
+          for (let i = 1; i <= N; i++) todo.push(fixed[i] || [hex(), SUBJ[(f() * SUBJ.length) | 0]]);
+          // git's help block, wrapped as vim (linebreak) shows it in this window: [text, continuation?, key line?]
+          const HELP = [["", 0], ["# Rebase e81b0d4 onto 7c3d9a2 (1095 commands)", 0], ["#", 0], ["# Commands:", 0],
+            ["# p, pick <commit> = use commit", 0], ["# r, reword <commit> = use commit, but edit", 0], ["the commit message", 1],
+            ["# e, edit <commit> = use commit, but stop for", 0], ["amending", 1],
+            ["# s, squash <commit> = use commit, but meld", 0, 1], ["into previous commit", 1, 1]];
+          const ROWS = N + HELP.length, VIS = 18, S_END = ROWS - VIS;
+          const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          const rowHTML = (i, squashed) => { // i: 0-based screen row
+            if (i < N) {
+              const [h, s] = todo[i], sq = squashed && i > 0;
+              return `<span class="f17-n">${String(i + 1).padStart(4)} </span><span class="${sq ? "f17-q" : "f17-p"}">${sq ? "squash" : "pick"}</span> <span class="f17-h">${h}</span> ${esc(s)}`;
+            }
+            const [txt, cont, key] = HELP[i - N];
+            return `<span class="f17-n">${cont ? "     " : String(i + 1).padStart(4) + " "}</span><span class="${key ? "f17-d" : "f17-c"}">${esc(txt)}</span>`;
+          };
+          const list = $("f17-list"), pool = [];
+          for (let k = 0; k < VIS + 2; k++) { const r = document.createElement("div"); r.className = "f17-r"; list.appendChild(r); pool.push(r); }
+
+          // ---- the editor: close on the list while `:2,$s/^pick/squash/` types; the Enter is "squashed" ----
+          const ed = { k: 1.9, s: 0 };
+          tl.fromTo(ed, { k: 1.9 }, { k: 1.97, duration: SQUASHED - 0.05, ease: "sine.inOut" }, 0);
+          tl.to(ed, { k: 1, duration: 0.26, ease: "expo.out" }, SQUASHED - 0.03);
+          // three years, down: the view runs to the end of the file, arriving as "a" is sung
+          tl.fromTo(ed, { s: 0 }, { s: S_END, duration: at(87.0) - at(85.0), ease: "power2.inOut", immediateRender: false }, at(85.0));
+          const SUB = ":2,$s/^pick/squash/", SUB_A = 0.12, SUB_B = SQUASHED - 0.1;
+
+          // ---- the lyric, stacked: "squashed" slams and is squashed; the rest builds on its word times ----
+          HR.hero(tl, $("f17-sq"), SQUASHED, { spread: 26, over: 1.2, pre: 0.14, sharp: true, skew: false });
+          tl.fromTo($("f17-sq"), { scaleY: 0.5, scaleX: 1.16 }, { scaleY: 1, scaleX: 1, duration: 0.62, ease: "elastic.out(1, 0.38)" }, SQUASHED);
+          const sw = root.querySelectorAll(".f17-w");
+          [85.122, 85.86, 86.269, 86.68, 87.04].forEach((T, i) => HR.lead(tl, sw[i], at(T)));
+
+          // ---- the press: on the kick, the list and the stack are pressed flat; on "single" one line is left ----
+          tl.fromTo($("f17-stack"), { scaleY: 1 }, { scaleY: 0.04, duration: SINGLE - PRESS, ease: "power3.in", immediateRender: false }, PRESS);
+          tl.set($("f17-stack"), { opacity: 0 }, SINGLE);
+          gsap.set($("f17-win"), { transformOrigin: "0% 66%" });
+          tl.fromTo($("f17-win"), { scaleY: 1 }, { scaleY: 0.03, duration: SINGLE - PRESS, ease: "power3.in", immediateRender: false }, PRESS);
+          tl.set($("f17-win"), { opacity: 0 }, SINGLE);
+          tl.set($("f17-msg"), { opacity: 0 }, 0).set($("f17-msg"), { opacity: 1 }, SINGLE + 0.04);
+          // the single line: everything already sung is there at once, letterforms squashed to fit the frame
+          const sq = { x: 1 };
+          tl.set($("f17-pre"), { opacity: 0 }, 0).set($("f17-pre"), { opacity: 1 }, SINGLE);
+          tl.fromTo(sq, { x: 1.14 }, { x: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, SINGLE);
+          HR.hero(tl, $("f17-single"), SINGLE, { spread: 16, over: 1.18, pre: 0.12, sharp: true, skew: false });
+          HR.lead(tl, $("f17-last"), LINE);
+          // the counter: 1,095 is pressed to a hairline, 1 lands
+          tl.fromTo($("f17-old"), { scaleY: 1 }, { scaleY: 0.12, duration: SINGLE - PRESS, ease: "power3.in", immediateRender: false }, PRESS);
+          tl.set($("f17-new"), { opacity: 0 }, 0).set($("f17-new"), { opacity: 1 }, SINGLE);
+
+          // ---- the camera: a slow push on the list, a punch on each hero, a drift down the years ----
+          tl.fromTo(stage.cam, { z: 1.0, x: 0, y: 0 }, { z: 1.02, duration: SQUASHED - 0.06, ease: "sine.inOut" }, 0);
+          tl.to(stage.cam, { z: 1.05, y: -6, duration: 0.06, ease: "power2.in" }, SQUASHED - 0.06);
+          tl.to(stage.cam, { z: 1.018, y: 0, duration: 0.5, ease: "elastic.out(1, 0.55)" }, SQUASHED);
+          tl.to(stage.cam, { z: 1.034, x: 18, duration: PRESS - SQUASHED - 0.5, ease: "none" }, SQUASHED + 0.5);
+          tl.to(stage.cam, { z: 1.065, y: -10, duration: SINGLE - PRESS, ease: "power2.in" }, PRESS);
+          tl.to(stage.cam, { z: 1.02, x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, SINGLE);
+          tl.to(stage.cam, { z: 1.035, duration: DUR - SINGLE - 0.5, ease: "none" }, SINGLE + 0.5);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: the list window, the command line, the ruler, the fit of the squashed line ----
+          const cl = $("f17-cl"), cur = $("f17-cur"), ruler = $("f17-ruler"), file = $("f17-file"), line = $("f17-line");
+          const sqWord = $("f17-sq"), single = $("f17-single");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          const typed = (s, a, b, t) => s.slice(0, t < a ? 0 : Math.min(s.length, 1 + Math.floor(((t - a) / (b - a)) * s.length)));
+          const lastKey = (s, a, b, t) => a + ((b - a) * Math.max(0, typed(s, a, b, t).length - 1)) / s.length;
+          const ROW = 2.24 * 19.2;
+          // the squashed line's width, measured once from the font (fixed composition coordinates, not the DOM)
+          let LINE_EM = 18.3; // fallback before the font is ready
+          const measureLine = () => {
+            const c = document.createElement("canvas").getContext("2d");
+            c.font = '800 100px "Barlow"'; c.letterSpacing = "-3px";
+            LINE_EM = c.measureText(line.textContent).width / 100;
+          };
+          if (document.fonts.check('800 100px "Barlow"')) measureLine();
+          document.fonts.load('800 100px "Barlow"').then(() => { measureLine(); render(); });
+          const FONT_PX = 11 * 19.2, MEASURE_PX = 89 * 19.2;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            // the window: scale and scroll
+            const squashed = t >= SQUASHED, top = Math.floor(ed.s), frac = ed.s - top;
+            list.style.transform = `scale(${ed.k.toFixed(4)}) translateY(${(-frac * ROW).toFixed(2)}px)`;
+            for (let k = 0; k < pool.length; k++) {
+              const i = top + k, html = i < ROWS ? rowHTML(i, squashed) : "";
+              if (pool[k]._h !== html) { pool[k].innerHTML = html; pool[k]._h = html; }
+            }
+            // vim's command line and status bar
+            let txt = "", curOn = false;
+            if (t < SQUASHED) {
+              txt = t < SUB_A ? '".git/rebase-merge/git-rebase-todo" 1131L, 37604B' : typed(SUB, SUB_A, SUB_B, t);
+              curOn = t >= SUB_A && blink(t, lastKey(SUB, SUB_A, SUB_B, t));
+            } else if (t < WQ_A) txt = "1094 substitutions on 1094 lines";
+            else if (t < PRESS) { txt = typed(":wq", WQ_A, WQ_B, t); curOn = true; }
+            else if (t >= SINGLE) txt = '".git/COMMIT_EDITMSG" 3297L, 51762B';
+            cl.textContent = txt; cur.style.opacity = curOn ? 1 : 0;
+            if (t < SINGLE) {
+              file.textContent = ".git/rebase-merge/git-rebase-todo" + (squashed ? " [+]" : "");
+              const ln = !squashed ? 1 : Math.min(N, Math.round(ed.s) + 9);
+              const pos = ed.s <= 0.01 ? "Top" : ed.s >= S_END - 0.01 ? "Bot" : Math.round((ed.s / S_END) * 100) + "%";
+              ruler.textContent = `${ln},1`.padEnd(14) + pos.padStart(4);
+            } else { file.textContent = ".git/COMMIT_EDITMSG"; ruler.textContent = "1,1".padEnd(14) + " Top"; }
+            // the single line, squashed to the frame's measure
+            const fit = MEASURE_PX / (LINE_EM * FONT_PX);
+            line.style.transform = `scaleX(${(fit * sq.x).toFixed(4)})`;
+            HR.glow(sqWord, T); HR.glow(single, T, 0.3, 0.5);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["17-squash"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

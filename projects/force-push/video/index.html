@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+      .frame { position: absolute; inset: 0; width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="209.64"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div
+        id="el-01-status"
+        class="frame"
+        data-composition-id="01-status"
+        data-composition-src="compositions/frames/01-status.html"
+        data-start="0"
+        data-duration="15.081"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-02-commit"
+        class="frame"
+        data-composition-id="02-commit"
+        data-composition-src="compositions/frames/02-commit.html"
+        data-start="15.081"
+        data-duration="4.804"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-03-stash"
+        class="frame"
+        data-composition-id="03-stash"
+        data-composition-src="compositions/frames/03-stash.html"
+        data-start="19.885"
+        data-duration="3.811"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-04-feature"
+        class="frame"
+        data-composition-id="04-feature"
+        data-composition-src="compositions/frames/04-feature.html"
+        data-start="23.696"
+        data-duration="3.874"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-05-branch"
+        class="frame"
+        data-composition-id="05-branch"
+        data-composition-src="compositions/frames/05-branch.html"
+        data-start="27.57"
+        data-duration="3.569"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-06-blame"
+        class="frame"
+        data-composition-id="06-blame"
+        data-composition-src="compositions/frames/06-blame.html"
+        data-start="31.139"
+        data-duration="7.584"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-07-merge"
+        class="frame"
+        data-composition-id="07-merge"
+        data-composition-src="compositions/frames/07-merge.html"
+        data-start="38.723"
+        data-duration="7.827"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-08-patches"
+        class="frame"
+        data-composition-id="08-patches"
+        data-composition-src="compositions/frames/08-patches.html"
+        data-start="46.55"
+        data-duration="5.357"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-09-stop"
+        class="frame"
+        data-composition-id="09-stop"
+        data-composition-src="compositions/frames/09-stop.html"
+        data-start="51.907"
+        data-duration="1.473"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-10-force"
+        class="frame"
+        data-composition-id="10-force"
+        data-composition-src="compositions/frames/10-force.html"
+        data-start="53.38"
+        data-duration="2.911"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-11-rewrote"
+        class="frame"
+        data-composition-id="11-rewrote"
+        data-composition-src="compositions/frames/11-rewrote.html"
+        data-start="56.291"
+        data-duration="4.489"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-12-lies"
+        class="frame"
+        data-composition-id="12-lies"
+        data-composition-src="compositions/frames/12-lies.html"
+        data-start="60.78"
+        data-duration="2.899"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-13-timeline"
+        class="frame"
+        data-composition-id="13-timeline"
+        data-composition-src="compositions/frames/13-timeline.html"
+        data-start="63.679"
+        data-duration="5.011"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-14-local"
+        class="frame"
+        data-composition-id="14-local"
+        data-composition-src="compositions/frames/14-local.html"
+        data-start="68.69"
+        data-duration="3.745"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-15-origin"
+        class="frame"
+        data-composition-id="15-origin"
+        data-composition-src="compositions/frames/15-origin.html"
+        data-start="72.435"
+        data-duration="3.655"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-16-chant"
+        class="frame"
+        data-composition-id="16-chant"
+        data-composition-src="compositions/frames/16-chant.html"
+        data-start="76.09"
+        data-duration="7.394"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-17-squash"
+        class="frame"
+        data-composition-id="17-squash"
+        data-composition-src="compositions/frames/17-squash.html"
+        data-start="83.484"
+        data-duration="4.736"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-18-message"
+        class="frame"
+        data-composition-id="18-message"
+        data-composition-src="compositions/frames/18-message.html"
+        data-start="88.22"
+        data-duration="3.866"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-19-cherry"
+        class="frame"
+        data-composition-id="19-cherry"
+        data-composition-src="compositions/frames/19-cherry.html"
+        data-start="92.086"
+        data-duration="7.958"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-20-phone"
+        class="frame"
+        data-composition-id="20-phone"
+        data-composition-src="compositions/frames/20-phone.html"
+        data-start="100.044"
+        data-duration="3.421"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-21-ignore"
+        class="frame"
+        data-composition-id="21-ignore"
+        data-composition-src="compositions/frames/21-ignore.html"
+        data-start="103.465"
+        data-duration="3.905"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-22-revert"
+        class="frame"
+        data-composition-id="22-revert"
+        data-composition-src="compositions/frames/22-revert.html"
+        data-start="107.37"
+        data-duration="6.75"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-23-force2"
+        class="frame"
+        data-composition-id="23-force2"
+        data-composition-src="compositions/frames/23-force2.html"
+        data-start="114.12"
+        data-duration="3.04"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-24-rewrote2"
+        class="frame"
+        data-composition-id="24-rewrote2"
+        data-composition-src="compositions/frames/24-rewrote2.html"
+        data-start="117.16"
+        data-duration="4.374"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-25-lies2"
+        class="frame"
+        data-composition-id="25-lies2"
+        data-composition-src="compositions/frames/25-lies2.html"
+        data-start="121.534"
+        data-duration="3.046"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-26-timeline2"
+        class="frame"
+        data-composition-id="26-timeline2"
+        data-composition-src="compositions/frames/26-timeline2.html"
+        data-start="124.58"
+        data-duration="4.76"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-27-local2"
+        class="frame"
+        data-composition-id="27-local2"
+        data-composition-src="compositions/frames/27-local2.html"
+        data-start="129.34"
+        data-duration="3.812"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-28-origin2"
+        class="frame"
+        data-composition-id="28-origin2"
+        data-composition-src="compositions/frames/28-origin2.html"
+        data-start="133.152"
+        data-duration="3.638"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-29-chant2"
+        class="frame"
+        data-composition-id="29-chant2"
+        data-composition-src="compositions/frames/29-chant2.html"
+        data-start="136.79"
+        data-duration="7.379"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-30-shared"
+        class="frame"
+        data-composition-id="30-shared"
+        data-composition-src="compositions/frames/30-shared.html"
+        data-start="144.169"
+        data-duration="7.511"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-31-checkout"
+        class="frame"
+        data-composition-id="31-checkout"
+        data-composition-src="compositions/frames/31-checkout.html"
+        data-start="151.68"
+        data-duration="9.051"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-32-acappella"
+        class="frame"
+        data-composition-id="32-acappella"
+        data-composition-src="compositions/frames/32-acappella.html"
+        data-start="160.731"
+        data-duration="8.539"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-33-drop"
+        class="frame"
+        data-composition-id="33-drop"
+        data-composition-src="compositions/frames/33-drop.html"
+        data-start="169.27"
+        data-duration="7.88"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-34-dropmine"
+        class="frame"
+        data-composition-id="34-dropmine"
+        data-composition-src="compositions/frames/34-dropmine.html"
+        data-start="177.15"
+        data-duration="7.38"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-35-chant3"
+        class="frame"
+        data-composition-id="35-chant3"
+        data-composition-src="compositions/frames/35-chant3.html"
+        data-start="184.53"
+        data-duration="7.365"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-36-reflog"
+        class="frame"
+        data-composition-id="36-reflog"
+        data-composition-src="compositions/frames/36-reflog.html"
+        data-start="191.895"
+        data-duration="5.536"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-37-end"
+        class="frame"
+        data-composition-id="37-end"
+        data-composition-src="compositions/frames/37-end.html"
+        data-start="197.431"
+        data-duration="12.209"
+        data-track-index="1"
+      ></div>
+
+      <!-- BGM -->
+      <audio id="el-bgm" src="assets/bgm.mp3" data-start="0" data-duration="209.64"
+        data-track-index="11" data-volume="0.9"></audio>
+      <div id="el-finish" class="frame" data-composition-id="finish" data-composition-src="compositions/overlays/finish.html"
+        data-start="0" data-duration="209.64" data-track-index="2"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

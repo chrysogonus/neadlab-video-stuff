@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 31 — checkout (bridge rising, 151.680–160.731). Cream, continuing 30's printed page with the lyric moved
+         to the right. L49: "checked out" slams, and the reflog printed under it scrolls a long, long way back in time,
+         landing on "ago" on `3f2a1c9 HEAD@{2 years ago}: checkout: moving from us to somewhere-else`. On "so" the page
+         scrolls on to the push command: `--force-with-lease` (30's plant) loses `-with-lease` to a marker strike on
+         "lease" and is gone with no warning, 0 ms, on "warning". "here I go" builds under it; on the drums' entry
+         (158.88) the paper flips to the terminal, 0 ms: the printed `git push --force` is the prompt now, unsent, its
+         cursor blinking while the drums build into 32. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826; --ink-on-cream: #111111; --muted-on-cream: #5F5B54;
+          --marker: #C8481A;
+          background: var(--cream); color: var(--ink-on-cream);
+        }
+        /* the register lives on an inner wrapper (the scoped root does not take a class) */
+        #f31-reg { position: absolute; inset: 0; background: var(--cream); color: var(--ink-on-cream); }
+        #f31-reg.f31-dark { background: var(--ink); color: var(--cream); }
+        /* header strip, cream register (07's colours); flips with the page */
+        #f31-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-on-cream);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
+        #f31-strip b { color: #B8461C; font-weight: 600; }
+        /* the finish layer's vignette darkens the corners of the cream page: the strip's small text needs a darker ink */
+        #f31-strip { color: #3F3C37; } #f31-strip b { color: #7E2E12; }
+        .f31-dark #f31-strip { color: var(--cream-muted); border-bottom-color: var(--border); }
+        .f31-dark #f31-strip b { color: var(--fire); }
+        .f31-page { position: absolute; inset: 0; }
+        /* the printout scrolls under the header strip, never through it */
+        .f31-clip { clip-path: inset(5.5cqw -10cqw -10cqw -10cqw); }
+
+        /* ---- page A: L49, right-aligned; the reflog printed under it ---- */
+        #f31-a { position: absolute; right: 5.5cqw; top: 7.6cqw; text-align: right; color: var(--ink-on-cream); white-space: nowrap; }
+        #f31-a1 { font: 800 5.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em; }
+        #f31-a2 { font: 900 12.6cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.045em; margin-top: 0.2cqw; }
+        #f31-a3 { font: italic 400 7.2cqw/1.05 "Instrument Serif", serif; letter-spacing: -0.01em; margin-top: 0.4cqw; }
+        #f31-a3 .f31-s { display: inline-block; }
+        #f31-a3 .f31-hero { color: var(--marker); }
+        #f31-rl { position: absolute; left: 5.5cqw; top: 36.4cqw; width: 70cqw; }
+        #f31-rlhead { font: 500 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--ink-on-cream); padding-bottom: 0.7cqw;
+          border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
+        #f31-rlhead span { color: var(--muted-on-cream); }
+        #f31-view { position: relative; height: 14.4cqw; margin-top: 0.5cqw; overflow: hidden;
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22%, #000 70%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 22%, #000 70%, transparent 100%); }
+        .f31-row { position: relative; height: 2.4cqw; font: 400 1.45cqw/2.4cqw "IBM Plex Mono", monospace; color: var(--muted-on-cream);
+          white-space: pre; transform-origin: 0% 50%; width: max-content; }
+        .f31-row .f31-h { color: #8C877E; }
+        #f31-target .f31-sel { position: relative; }
+        #f31-target .f31-msg { position: relative; display: inline-block; }
+        #f31-ul { position: absolute; left: -0.1em; right: -0.1em; bottom: 0.2em; height: 0.2em; background: var(--marker); opacity: 0.85;
+          border-radius: 0.2cqw; transform-origin: 0% 50%; transform: rotate(-0.5deg) scaleX(0); }
+
+        /* ---- page B: L50 at the left, over the push command; flips to the terminal ---- */
+        .f31-bl { position: absolute; left: 5.1cqw; font: 800 8.2cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.04em;
+          color: var(--ink-on-cream); white-space: nowrap; }
+        #f31-b1 { top: 8.4cqw; }
+        #f31-b2 { top: 16.8cqw; }
+        .f31-bl .f31-hero { font-weight: 900; }
+        #f31-cmd { position: absolute; left: 5.5cqw; top: 28.2cqw; font: 500 4.2cqw/1 "IBM Plex Mono", monospace; color: var(--ink-on-cream);
+          white-space: pre; }
+        #f31-pfx { color: var(--muted-on-cream); }
+        #f31-lease { position: relative; display: inline-block; }
+        #f31-strike { position: absolute; left: -0.08em; right: -0.08em; top: 50%; height: 0.14em; margin-top: -0.07em; background: var(--marker);
+          transform-origin: 0% 50%; transform: scaleX(0); }
+        #f31-cur { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; opacity: 0; }
+        #f31-b3 { position: absolute; left: 4.6cqw; top: 35.4cqw; font: 900 14cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.05em;
+          color: var(--ink-on-cream); white-space: nowrap; }
+        #f31-go { color: var(--marker); }
+        /* the terminal: same page, inverted */
+        .f31-dark .f31-bl { color: var(--cream-muted); }
+        .f31-dark #f31-cmd { color: var(--cream); }
+        .f31-dark #f31-pfx { color: var(--cream-muted); }
+        .f31-dark #f31-b3 { color: var(--cream); }
+        .f31-dark #f31-go { color: var(--fire); }
+      </style>
+      <div id="root" data-composition-id="31-checkout" data-width="1920" data-height="1080" data-duration="9.051">
+        <div id="f31-reg">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f31-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+
+        <div class="hr-layer f31-clip" data-depth="0.5" data-layout-ignore>
+          <div class="f31-page" id="f31-pageA2">
+            <div id="f31-rl">
+              <div id="f31-rlhead"><span>$</span> git reflog --date=relative</div>
+              <div id="f31-view">
+                <div id="f31-list">
+                  <div class="f31-row"><span class="f31-h">9c0ffee</span> HEAD@{4 minutes ago}: rebase (finish): returning to refs/heads/main</div>
+                  <div class="f31-row"><span class="f31-h">9c0ffee</span> HEAD@{4 minutes ago}: rebase (pick): ready.</div>
+                  <div class="f31-row"><span class="f31-h">2b7d4e8</span> HEAD@{2 hours ago}: revert: Revert "force push"</div>
+                  <div class="f31-row"><span class="f31-h">0e96d4a</span> HEAD@{3 hours ago}: cherry-pick: that sunday</div>
+                  <div class="f31-row"><span class="f31-h">c7f2b18</span> HEAD@{3 hours ago}: cherry-pick: the beach</div>
+                  <div class="f31-row"><span class="f31-h">51d0a3e</span> HEAD@{3 hours ago}: cherry-pick: first date</div>
+                  <div class="f31-row"><span class="f31-h">e81b0d4</span> HEAD@{6 hours ago}: rebase (finish): returning to refs/heads/main</div>
+                  <div class="f31-row"><span class="f31-h">6b1e9f3</span> HEAD@{6 hours ago}: rebase (pick): we'll get to it</div>
+                  <div class="f31-row"><span class="f31-h">d27a0c5</span> HEAD@{6 hours ago}: rebase (pick): just a feature</div>
+                  <div class="f31-row"><span class="f31-h">b05d2f8</span> HEAD@{6 hours ago}: rebase (start): checkout b05d2f8</div>
+                  <div class="f31-row"><span class="f31-h">e81b0d4</span> HEAD@{11 months ago}: commit: ready.</div>
+                  <div class="f31-row"><span class="f31-h">9d03b7e</span> HEAD@{1 year ago}: merge you: Merge made by the 'ort' strategy.</div>
+                  <div class="f31-row" id="f31-target"><span class="f31-h">3f2a1c9</span> <span class="f31-sel">HEAD@{2 years ago}</span>: <span class="f31-msg">checkout: moving from us to somewhere-else<i id="f31-ul"></i></span></div>
+                  <div class="f31-row"><span class="f31-h">3f2a1c9</span> HEAD@{2 years ago}: commit: you and me</div>
+                  <div class="f31-row"><span class="f31-h">a7c21f0</span> HEAD@{2 years ago}: commit: we'll get to it</div>
+                  <div class="f31-row"><span class="f31-h">4c9d7a1</span> HEAD@{2 years ago}: commit: just a feature</div>
+                  <div class="f31-row"><span class="f31-h">91be33a</span> HEAD@{3 years ago}: commit: moved in</div>
+                  <div class="f31-row"><span class="f31-h">0b5f6e2</span> HEAD@{3 years ago}: commit: nothing on the side</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hr-layer f31-clip" data-depth="0.9">
+          <div class="f31-page" id="f31-pageA">
+            <div id="f31-a">
+              <div id="f31-a1"><span class="f31-w">but</span> <span class="f31-w">you</span></div>
+              <div id="f31-a2"><span class="f31-w" id="f31-checked">checked</span> <span class="f31-w">out</span></div>
+              <div id="f31-a3"><span class="f31-s">a</span> <span class="f31-s f31-hero">long,</span> <span class="f31-s">long</span> <span class="f31-s">time</span> <span class="f31-s">ago</span></div>
+            </div>
+          </div>
+          <div class="f31-page" id="f31-pageB">
+            <div class="f31-bl" id="f31-b1"><span class="f31-v">so</span> <span class="f31-v">no</span> <span class="f31-v f31-hero" id="f31-leasew">lease,</span></div>
+            <div class="f31-bl" id="f31-b2"><span class="f31-v">no</span> <span class="f31-v f31-hero" id="f31-warn">warning,</span></div>
+            <div id="f31-cmd"><span id="f31-pfx">$ </span>git push --force<span id="f31-lease">-with-lease<i id="f31-strike"></i></span><span id="f31-cur"></span></div>
+            <div id="f31-b3"><span class="f31-v">here</span> <span class="f31-v">I</span> <span class="f31-v" id="f31-go">go</span></div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 9.051, T0 = 151.68, PX = 19.2;
+          const root = document.querySelector('[data-composition-id="31-checkout"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 31, pulse: 1.6 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          // the word starts (lyrics.json), the page turn, and the drums' entry (HR_ENV: kick + snare at 158.88)
+          const BUT = at(151.74), YOU = at(151.92), CHECKED = at(152.16), OUT = at(152.468);
+          const A = at(152.98), LONG1 = at(153.12), LONG2 = at(153.78), TIME = at(154.06), AGO = at(154.569);
+          const SO = at(155.352), NO1 = at(155.66), LEASE = at(156.12), NO2 = at(156.6), WARN = at(157.04);
+          const HERE = at(157.98), I = at(158.32), GO = at(158.44), FLIP = at(158.88);
+          const TURN = at(155.3), TURN_D = 0.55;
+
+          // ---- L49: "but you" builds, "checked out" slams, the soft voice says how long ----
+          const wa = root.querySelectorAll("#f31-a .f31-w");
+          HR.lead(tl, wa[0], BUT); HR.lead(tl, wa[1], YOU);
+          HR.hero(tl, wa[2], CHECKED, { spread: 26, over: 1.18, pre: 0.14, sharp: true });
+          HR.lead(tl, wa[3], OUT);
+          const sa = root.querySelectorAll("#f31-a .f31-s");
+          [A, LONG2, TIME, AGO].forEach((t, i) => HR.lead(tl, sa[[0, 2, 3, 4][i]], t, { from: 60, dur: 0.45 }));
+          // "long," is the soft line's hero: it lands, then keeps stretching for as long as it is sung
+          const lg = HR.hero(tl, sa[1], LONG1, { spread: 18, over: 1.12, pre: 0.12, sharp: true, skew: false });
+          // the line is right-aligned, so the word stretches leftwards: each glyph's wrapper (the hero owns the glyph's
+          // own x) and the "a" before it move left; the right edge stays put
+          const lgw = lg.map((g) => { const s = document.createElement("span"); s.style.display = "inline-block"; g.replaceWith(s); s.appendChild(g); return s; });
+          const ST = 9, n = lg.length;
+          tl.fromTo(lgw, { x: 0 }, { x: (i) => -(n - 1 - i) * ST, duration: LONG2 - LONG1, ease: "sine.out", immediateRender: false }, LONG1);
+          tl.fromTo(sa[0], { x: 0 }, { x: -(n - 1) * ST, duration: LONG2 - LONG1, ease: "sine.out", immediateRender: false }, LONG1);
+
+          // ---- the reflog scrolls back a long, long way and lands on the checkout on "ago" ----
+          const ROW = 2.4 * PX, SLOT = 2, TARGET = 12;
+          tl.fromTo($("f31-list"), { y: 0 }, { y: -(TARGET - SLOT) * ROW, duration: AGO - CHECKED - 0.05, ease: "power2.inOut" }, CHECKED + 0.05);
+          const tgt = $("f31-target");
+          tl.fromTo(tgt, { color: "#5F5B54", scale: 1 }, { color: "#111111", scale: 1.12, duration: 0.4, ease: "power3.out", immediateRender: false }, AGO);
+          tl.fromTo(tgt.querySelector(".f31-sel"), { color: "#5F5B54" }, { color: "#B8461C", duration: 0.2, immediateRender: false }, AGO);
+          tl.fromTo($("f31-ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.32, ease: "power2.out" }, AGO + 0.06);
+
+          // ---- the page turns: the printout scrolls on to the push command ----
+          tl.fromTo([$("f31-pageA"), $("f31-pageA2")], { yPercent: 0 }, { yPercent: -100, duration: TURN_D, ease: "power3.inOut" }, TURN);
+          tl.set([$("f31-pageA"), $("f31-pageA2")], { autoAlpha: 0 }, TURN + TURN_D);
+          tl.fromTo($("f31-pageB"), { yPercent: 100, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: TURN_D, ease: "power3.inOut" }, TURN);
+
+          // ---- L50: no lease, no warning ----
+          const wb = root.querySelectorAll("#f31-pageB .f31-v");
+          HR.lead(tl, wb[0], SO); HR.lead(tl, wb[1], NO1);
+          HR.hero(tl, wb[2], LEASE, { spread: 22, over: 1.16, pre: 0.12, sharp: true });
+          tl.fromTo($("f31-strike"), { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power2.out" }, LEASE + 0.04);
+          tl.fromTo($("f31-lease"), { opacity: 1 }, { opacity: 0.55, duration: 0.25, immediateRender: false }, LEASE + 0.2);
+          HR.lead(tl, wb[3], NO2);
+          HR.hero(tl, wb[4], WARN, { spread: 24, over: 1.18, pre: 0.12, sharp: true });
+          // no warning: the struck lease is simply gone, 0 ms, and the command closes up to `--force`
+          tl.set($("f31-lease"), { display: "none" }, WARN);
+          tl.fromTo($("f31-cmd"), { x: 10 }, { x: 0, duration: 0.3, ease: "power3.out", immediateRender: false }, WARN);
+
+          // ---- here I go ----
+          HR.lead(tl, wb[5], HERE); HR.lead(tl, wb[6], I);
+          HR.hero(tl, wb[7], GO, { spread: 30, over: 1.26, pre: 0.14, sharp: true });
+
+          // ---- the camera: the bridge breathes, the rise pushes in, the drums punch ----
+          const cam = stage.cam;
+          tl.fromTo(cam, { z: 1.0, x: 0, y: 0 }, { z: 1.008, duration: CHECKED - 0.06, ease: "sine.inOut" }, 0);
+          tl.to(cam, { z: 1.026, y: -3, duration: 0.06, ease: "power2.in" }, CHECKED - 0.06);
+          tl.to(cam, { z: 1.012, y: 0, duration: 0.6, ease: "power3.out" }, CHECKED);
+          // the soft line: a slow push and drift, trucking with the reflog
+          tl.to(cam, { z: 1.035, x: -14, y: 6, duration: TURN - CHECKED - 0.6, ease: "sine.inOut" }, CHECKED + 0.6);
+          tl.to(cam, { z: 1.0, x: 0, y: 0, duration: TURN_D, ease: "power3.inOut" }, TURN);
+          // L50 rises: the push gets faster towards "go"
+          tl.to(cam, { z: 1.012, duration: LEASE - TURN - TURN_D - 0.06, ease: "sine.inOut" }, TURN + TURN_D);
+          tl.to(cam, { z: 1.03, duration: 0.06, ease: "power2.in" }, LEASE - 0.06);
+          tl.to(cam, { z: 1.018, duration: 0.5, ease: "power3.out" }, LEASE);
+          tl.to(cam, { z: 1.024, duration: WARN - LEASE - 0.56, ease: "none" }, LEASE + 0.5);
+          tl.to(cam, { z: 1.046, y: -4, duration: 0.06, ease: "power2.in" }, WARN - 0.06);
+          tl.to(cam, { z: 1.03, y: 0, duration: 0.5, ease: "power3.out" }, WARN);
+          tl.to(cam, { z: 1.05, y: 12, x: -8, duration: GO - WARN - 0.56, ease: "power1.in" }, WARN + 0.5);
+          tl.to(cam, { z: 1.085, y: 8, duration: 0.06, ease: "power2.in" }, GO - 0.06);
+          tl.to(cam, { z: 1.06, y: 12, duration: FLIP - GO - 0.04, ease: "power3.out" }, GO);
+          // the flip: a hard punch with the drums' entry, then a push that builds with them to the cut
+          tl.to(cam, { z: 1.09, duration: 0.04, ease: "power2.in" }, FLIP - 0.04);
+          tl.to(cam, { z: 1.065, duration: 0.35, ease: "power3.out" }, FLIP);
+          tl.to(cam, { z: 1.11, y: 18, x: -14, duration: DUR - FLIP - 0.35, ease: "power2.in" }, FLIP + 0.35);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: the register, the prompt, the cursor, the glow, the camera ----
+          const reg = $("f31-reg"), pfx = $("f31-pfx"), cur = $("f31-cur"), go = $("f31-go");
+          function render() {
+            const t = tl.time(), T = T0 + t, dark = t >= FLIP;
+            reg.classList.toggle("f31-dark", dark);
+            go.classList.toggle("hr-glowbox", dark);
+            pfx.textContent = dark ? "~/us (main) $ " : "$ ";
+            cur.style.opacity = dark && (t - FLIP < 0.35 || Math.floor((t - FLIP) * 2) % 2 === 0) ? 1 : 0;
+            if (dark) HR.glow(go, T, 0.35, 0.3);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["31-checkout"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,340 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 33 — drop (key change up, 169.270–177.150). The climax: 12's overwrite and 13's clean timeline combined
+         at full scale on one horizontal lane, after the hook at its largest.
+         A — the cut is 32's Enter: git answers at the foot of the terminal (`To me@home:us.git`, then the forced
+         update on the first kick). FORCE (169.33) slams alone across the frame, the biggest type of the film. On PUSH!
+         (169.86, the drop's first kick and downbeat) a 0 ms cut to the cream register: FORCE / PUSH! stacked edge to
+         edge in ink, for one beat (the finish layer's flash lands on the cut before it).
+         B — "right" (170.38, kick + snare): hard cut back to the terminal. FORCE PUSH! is a band across the top; under
+         it origin's lane holds two of your commits, their messages your lies (`we'll get to it`, `nothing on the
+         side`, same hashes as 10). The new main is drawn right over the old lane, and behind each row's cursor the lie
+         is erased and the sung word left in its place ("right over" above the lane, "your lies" hanging under it);
+         each commit is rewritten (new hash, author `me`). On "lies" (171.46) the lane lights.
+         C — "brand" (172.38): the camera whips along the lane to a clean stretch of it. "brand new" small above,
+         "timeline," the full-width display word riding the lane, written commit by commit, one step and one dot per
+         kick; on "no" the pen fast-forwards off the right edge, "no goodbyes" hangs from the line and "goodbyes"
+         (174.94) lands with the kick. The hold to the cut keeps moving with the drums: a glint runs the lane on every
+         kick, the camera pushes in. Hard cut into 34. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826; --ink-on-cream: #111111; --muted-on-cream: #5F5B54;
+          background: var(--ink); color: var(--cream);
+        }
+        #f33-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f33-strip b { color: var(--fire); font-weight: 600; }
+        #f33-strip.f33-oncream { color: var(--muted-on-cream); border-bottom-color: #CFCAC1; }
+        #f33-strip.f33-oncream b { color: var(--ink-on-cream); }
+
+        /* A: the hook at its largest; then one beat of cream paper */
+        #f33-giant { position: absolute; left: 0; right: 0; top: 13.2cqw; text-align: center; white-space: nowrap;
+          font: 900 34cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--cream); }
+        #f33-cream { position: absolute; inset: 0; background: var(--cream); opacity: 0; }
+        #f33-poster { position: absolute; left: 4.6cqw; top: 5.2cqw; font: 900 28.5cqw/0.84 "Barlow", sans-serif; letter-spacing: -0.045em;
+          color: var(--ink-on-cream); white-space: nowrap; }
+        #f33-poster > span { display: block; width: max-content; }
+
+        /* the world: B at 0..100cqw, C at 100..200cqw, one lane at y = 35cqw */
+        #f33-track { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+        #f33-svg { position: absolute; left: 0; top: 0; overflow: visible; }
+        .f33-b { opacity: 0; }
+
+        /* the terminal, where 32 left the unsent prompt: now sent, git answers */
+        #f33-term { position: absolute; left: 5.5cqw; top: 46.2cqw; font: 500 1.68cqw/1.55 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f33-term .f33-cmd { color: var(--cream); }
+        #f33-term .f33-plus { color: var(--fire); font-weight: 600; }
+        #f33-term b { color: var(--cream); font-weight: 500; }
+
+        /* B: the hook as a band, the two rows of lies on the lane */
+        #f33-hook { position: absolute; left: 0; width: 100cqw; top: 6.4cqw; text-align: center; white-space: nowrap;
+          font: 900 11cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f33-hook .f33-push { color: var(--fire); }
+        .f33-row { position: absolute; height: 11cqw; width: 50cqw; }
+        #f33-r1 { left: 5.5cqw; top: 22.6cqw; }
+        #f33-r2 { left: 46cqw; top: 36.6cqw; }
+        .f33-lie { position: absolute; left: 0; font: 400 4.2cqw/1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--cream-muted); white-space: pre; }
+        #f33-r1 .f33-lie { bottom: 1cqw; }
+        #f33-r2 .f33-lie { top: 1.2cqw; }
+        .f33-new { position: absolute; left: 0; font: 800 10.5cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: pre; }
+        #f33-r1 .f33-new { bottom: 0; }
+        #f33-r2 .f33-new { top: 0; }
+        .f33-new > span { display: inline-block; }
+        .f33-new .f33-hero { font-weight: 900; font-size: 1.42em; letter-spacing: -0.04em; color: var(--fire); }
+        .f33-cur { position: absolute; left: 0; width: 1cqw; height: 8.4cqw; background: var(--fire); opacity: 0; }
+        #f33-r1 .f33-cur { bottom: 0.2cqw; }
+        #f33-r2 .f33-cur { top: 0.4cqw; height: 10.6cqw; }
+        .f33-gut { position: absolute; top: 36.4cqw; font: 400 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        .f33-gut .f33-au { color: var(--fire); font-weight: 600; }
+        .f33-gut .f33-au.f33-me { color: var(--cream); font-weight: 500; }
+        #f33-g1 { left: 6.6cqw; }
+        #f33-g2 { left: 33.2cqw; }
+
+        /* C: the clean timeline, 100cqw to the right */
+        #f33-cset { position: absolute; left: 100cqw; top: 0; width: 100cqw; height: 100%; }
+        .f33-c { position: absolute; font-family: "Barlow", sans-serif; color: var(--cream); white-space: nowrap; }
+        #f33-bn { left: 5.5cqw; top: 7.6cqw; font-size: 7.6cqw; line-height: 0.8; letter-spacing: -0.03em; }
+        #f33-bn span { display: inline-block; }
+        #f33-brand { font-weight: 900; }
+        #f33-new2 { font-weight: 800; }
+        #f33-time { left: 4.6cqw; top: 16.4cqw; font-size: 24.5cqw; font-weight: 900; line-height: 0.72; letter-spacing: -0.045em; }
+        #f33-ng { right: 5.5cqw; top: 37cqw; line-height: 0.8; letter-spacing: -0.04em; text-align: right; }
+        #f33-ng span { display: inline-block; }
+        #f33-no { font-size: 9cqw; font-weight: 800; margin-right: 0.3em; }
+        #f33-good { font-size: 13.5cqw; font-weight: 900; }
+        .f33-fire { color: var(--fire); }
+        /* the hold flips to cream paper on its downbeat: the clean timeline, printed */
+        #f33-paperbg { position: absolute; inset: 0; background: var(--cream); opacity: 0; }
+        #f33-world.f33-paper .f33-c, #f33-world.f33-paper .f33-fire { color: var(--ink-on-cream); }
+        #f33-world.f33-paper .hr-glowbox { filter: none; }
+      </style>
+      <div id="root" data-composition-id="33-drop" data-width="1920" data-height="1080" data-duration="7.88">
+        <div id="f33-paperbg"></div>
+        <div class="hr-layer" data-depth="1" id="f33-world">
+          <div id="f33-track">
+            <svg id="f33-svg" width="3840" height="1080" viewBox="0 0 3840 1080" data-layout-ignore>
+              <path id="f33-old" d="M -100 672 L 1940 672" fill="none" stroke="#505048" stroke-width="2" opacity="0" />
+              <path id="f33-guide" d="M 1900 672 L 3940 672" fill="none" stroke="#282826" stroke-width="2" />
+              <path id="f33-line" d="M -100 672 L 3940 672" fill="none" stroke="#F0ECE5" stroke-width="6" />
+              <line id="f33-glint" x1="0" y1="672" x2="0" y2="672" stroke="#E85D26" stroke-width="6" />
+              <g id="f33-dots"></g>
+            </svg>
+
+            <div id="f33-term"><span>~/us (main) $ </span><span class="f33-cmd">git push --force</span>
+<span id="f33-o1">To me@home:us.git</span>
+<span id="f33-o2"><span class="f33-plus">+</span> <b>5ab3e07...d4c7e19</b> main -&gt; main (forced update)</span></div>
+
+            <div id="f33-hook" class="f33-b"><span>FORCE</span> <span class="f33-push hr-glowbox" id="f33-push2">PUSH!</span></div>
+            <div class="f33-row f33-b" id="f33-r1">
+              <span class="f33-lie" data-layout-allow-overlap>we'll get to it</span>
+              <span class="f33-new" data-layout-allow-overlap><span class="f33-w">right</span> <span class="f33-w">over</span></span>
+              <i class="f33-cur"></i>
+            </div>
+            <div class="f33-gut f33-b" id="f33-g1"><span class="f33-h">a7c21f0</span>  <span class="f33-au">you</span></div>
+            <div class="f33-row f33-b" id="f33-r2">
+              <span class="f33-lie" data-layout-allow-overlap>nothing on the side</span>
+              <span class="f33-new" data-layout-allow-overlap><span class="f33-w">your</span> <span class="f33-w f33-hero hr-glowbox" id="f33-lies">lies</span></span>
+              <i class="f33-cur"></i>
+            </div>
+            <div class="f33-gut f33-b" id="f33-g2"><span class="f33-h">0b5f6e2</span>  <span class="f33-au">you</span></div>
+
+            <div id="f33-cset">
+            <div class="f33-c" id="f33-bn"><span id="f33-brand">brand</span> <span id="f33-new2">new</span></div>
+            <div class="f33-c" id="f33-time">timeline,</div>
+            <div class="f33-c" id="f33-ng"><span id="f33-no">no</span> <span id="f33-good">goodbyes</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hr-layer" data-depth="1">
+          <div id="f33-giant">FORCE</div>
+        </div>
+        <div class="hr-layer" data-depth="1" id="f33-creamlayer">
+          <div id="f33-cream"><div id="f33-poster"><span>FORCE</span><span id="f33-push1">PUSH!</span></div></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0">
+          <div id="f33-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 7.88, T0 = 169.27;
+          const root = document.querySelector('[data-composition-id="33-drop"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 33, pulse: 2.4 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const W = 1920, CQ = W / 100, LANE = 672;
+          // the words (lyrics.json) and the drums (HR_ENV)
+          const FORCE = at(169.33), PUSH = at(169.86), RIGHT = at(170.38), OVER = at(170.92), YOUR = at(171.16), LIES = at(171.46);
+          const BRAND = at(172.38), NEW = at(172.76), TIME = at(172.98), NO = at(174.36), GOOD = at(174.94);
+          const CREAM = at(169.86), BACK = at(170.355);          // the cream beat: PUSH! (first kick, downbeat) to the next kick
+          const O2 = at(169.419);                                 // the forced update arrives on the first (soft) kick
+          const STEPS = [TIME, at(173.101), at(173.554), at(174.015)]; // "timeline," is written one step per kick
+          const FF = at(174.473);                                 // the kick after "no": fast-forward
+          const GLINTS = [175.395, 175.85, 176.303, 176.766].map(at); // the hold: a glint along the lane on every kick
+          const WHIP = BRAND - 0.03, WHIP_D = 0.22;
+          const PAPER = at(175.392);                              // the hold's downbeat: 0 ms cut to the cream register
+
+          // ---- A: the Enter, FORCE alone, then one beat of cream ----
+          tl.set($("f33-term"), { opacity: 1 }, 0).set($("f33-term"), { opacity: 0 }, at(169.86)).set($("f33-term"), { opacity: 1 }, at(170.355));
+          tl.set($("f33-o2"), { opacity: 0 }, 0).set($("f33-o2"), { opacity: 1 }, O2);
+          HR.hero(tl, $("f33-giant"), FORCE, { spread: 60, over: 1.16, pre: 0.05, sharp: true });
+          tl.set($("f33-giant"), { opacity: 1 }, 0).set($("f33-giant"), { opacity: 0 }, CREAM);
+          tl.set($("f33-cream"), { opacity: 0 }, 0).set($("f33-cream"), { opacity: 1 }, CREAM).set($("f33-cream"), { opacity: 0 }, BACK);
+          HR.hero(tl, $("f33-push1"), PUSH, { spread: 50, over: 1.2, pre: 0.12, sharp: true });
+
+          // ---- B: back on the terminal at the kick before "right" ----
+          const bs = root.querySelectorAll(".f33-b");
+          tl.set(bs, { opacity: 0 }, 0).set(bs, { opacity: 1 }, BACK);
+          tl.set($("f33-old"), { opacity: 0 }, 0).set($("f33-old"), { opacity: 1 }, BACK);
+          const rows = [$("f33-r1"), $("f33-r2")].map((el, i) => ({
+            el, i, pen: { p: 0 }, lie: el.querySelector(".f33-lie"), neu: el.querySelector(".f33-new"), cur: el.querySelector(".f33-cur"),
+            words: Array.from(el.querySelectorAll(".f33-w")), gut: $(i ? "f33-g2" : "f33-g1"),
+          }));
+          rows.forEach((r) => { r.h = r.gut.querySelector(".f33-h"); r.au = r.gut.querySelector(".f33-au"); r.oldH = r.h.textContent; });
+          const NEWH = ["3c9e0d2", "d4c7e19"];
+          // each row's pen: 0..1 writes its first word, 1..2 its second (and erases the rest of the lie)
+          const W1 = [[RIGHT, 0.3], [OVER, 0.2]], W2 = [[YOUR, 0.22], [LIES, 0.16]];
+          [W1, W2].forEach((ws, i) => {
+            const r = rows[i]; r.t0 = ws[0][0] - 0.04;
+            tl.fromTo(r.pen, { p: 0 }, { p: 1, duration: ws[0][1], ease: "power3.out", immediateRender: false }, ws[0][0] - 0.04);
+            tl.to(r.pen, { p: 2, duration: ws[1][1], ease: "power3.out" }, ws[1][0] - 0.04);
+          });
+          HR.hero(tl, $("f33-lies"), LIES, { spread: 22, over: 1.28, pre: 0.08, sharp: true, skew: false });
+
+          // ---- C: the whip along the lane, then the clean timeline ----
+          tl.fromTo($("f33-track"), { x: 0 }, { x: -W, duration: WHIP_D, ease: "power4.inOut", immediateRender: false }, WHIP);
+          const brand = $("f33-brand"), neu = $("f33-new2"), time = $("f33-time"), no = $("f33-no"), good = $("f33-good");
+          HR.hero(tl, brand, BRAND, { spread: 18, over: 1.2, pre: 0.08, sharp: true, skew: false });
+          HR.lead(tl, neu, NEW); neu.classList.remove("hr-clip");
+          HR.hero(tl, time, TIME, { spread: 70, over: 1.22, pre: 0.14, sharp: true, skew: false });
+          HR.lead(tl, no, NO, { from: -105 }); no.classList.remove("hr-clip");
+          HR.hero(tl, good, GOOD, { spread: 40, over: 1.24, pre: 0.1, sharp: true, skew: false });
+
+          // ---- the camera: punch on FORCE; the cream beat lands zoomed and springs out; a lean through the overwrite,
+          //      a punch on "lies"; the whip; punches on "timeline," and "goodbyes"; a push through the hold ----
+          const cam = stage.cam;
+          tl.fromTo(cam, { z: 1.0, y: 0, x: 0 }, { z: 1.05, y: -8, duration: 0.05, ease: "power2.in" }, Math.max(0, FORCE - 0.05));
+          tl.to(cam, { z: 1.0, y: 0, duration: 0.45, ease: "elastic.out(1, 0.55)" }, FORCE);
+          tl.set(cam, { z: 1.07, y: -6 }, CREAM);
+          tl.to(cam, { z: 1.0, y: 0, duration: 0.42, ease: "elastic.out(1, 0.5)" }, CREAM + 0.01);
+          tl.set(cam, { z: 1.0, x: 0, y: 0 }, BACK);
+          tl.to(cam, { z: 1.03, y: 10, duration: LIES - 0.06 - BACK, ease: "sine.inOut" }, BACK);
+          tl.to(cam, { z: 1.075, y: 18, duration: 0.06, ease: "power2.in" }, LIES - 0.06);
+          tl.to(cam, { z: 1.035, y: 12, duration: WHIP - LIES, ease: "power2.out" }, LIES);
+          // the whip lands close on "brand new" (top left of C), the pull-out on "timeline," reveals the line
+          tl.to(cam, { z: 1.8, x: -840, y: -545, duration: WHIP_D, ease: "power4.inOut" }, WHIP);
+          tl.to(cam, { z: 1.9, x: -890, y: -576, duration: TIME - 0.04 - (WHIP + WHIP_D), ease: "sine.out" }, WHIP + WHIP_D);
+          tl.to(cam, { z: 0.98, x: 0, y: 0, duration: 0.1, ease: "power3.out" }, TIME - 0.04);
+          tl.to(cam, { z: 1.0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, TIME + 0.06);
+          tl.to(cam, { z: 1.02, x: 8, duration: FF - TIME - 0.55, ease: "sine.inOut" }, TIME + 0.55);
+          tl.to(cam, { x: 20, duration: GOOD - 0.06 - FF, ease: "expo.out" }, FF);
+          tl.to(cam, { z: 1.065, y: 12, duration: 0.06, ease: "power2.in" }, GOOD - 0.06);
+          tl.to(cam, { z: 1.02, y: 6, duration: 0.5, ease: "elastic.out(1, 0.55)" }, GOOD);
+          tl.to(cam, { z: 1.05, x: 24, y: 10, duration: DUR - GOOD - 0.5, ease: "sine.in" }, GOOD + 0.5);
+          tl.set({}, {}, DUR);
+
+          // ---- geometry, measured until the fonts are in ----
+          const NS = "http://www.w3.org/2000/svg";
+          const guide = $("f33-guide"), line = $("f33-line"), oldL = $("f33-old"), glint = $("f33-glint"), dotG = $("f33-dots");
+          const L0 = -100, LLEN = 4040;
+          line.style.strokeDasharray = `${LLEN} ${LLEN}`;
+          const mkDot = () => { const c = document.createElementNS(NS, "circle"); dotG.appendChild(c); return c; };
+          const bDots = [mkDot(), mkDot()];
+          const cDots = Array.from({ length: STEPS.length + 2 }, mkDot);
+          let laid = false, pen = [], cd = [];
+          const wl = (el) => { let x = 0; for (let e = el; e && e !== root; e = e.offsetParent) x += e.offsetLeft; return x; };
+          function layout() {
+            const ready = document.fonts.status === "loaded";
+            for (const r of rows) {
+              r.x0 = r.el.offsetLeft;
+              r.end = Math.max(r.lie.offsetWidth, r.neu.offsetWidth) + 14;
+              r.ws = r.words.map((w) => w.offsetLeft + w.offsetWidth + 6);
+            }
+            rows[0].dot = rows[0].x0; rows[1].dot = 44 * CQ;
+            // C: the pen through "brand new", one step per kick across "timeline,", then off the right edge
+            const tx = W + time.offsetLeft, tw = time.offsetWidth;
+            const bEnd = rows[1].x0 + rows[1].end, c0 = W + 1.5 * CQ;
+            pen = [[WHIP, bEnd], [WHIP + WHIP_D, c0, "power4.inOut"], [NEW + 0.2, tx + 0.04 * tw, "power3.out"]];
+            STEPS.forEach((t, i) => { pen.push([t - 0.02, i === 0 ? tx + 0.04 * tw : tx + (tw * i) / STEPS.length]); pen.push([t + 0.24, tx + (tw * (i + 1)) / STEPS.length, "power3.out"]); });
+            pen.push([FF - 0.02, tx + tw], [FF + 0.2, 2 * W + 120, "expo.out"]);
+            cd = [[c0 + 2 * CQ, WHIP + WHIP_D], ...STEPS.map((t, i) => [tx + (tw * (i + 1)) / STEPS.length, t + 0.2]), [2 * W - 4 * CQ, FF + 0.1]];
+            laid = ready;
+          }
+          const penAt = (t) => {
+            if (t <= pen[0][0]) return null;
+            for (let i = 1; i < pen.length; i++) if (t < pen[i][0]) {
+              const [ta, sa] = pen[i - 1], [tb, sb, ease] = pen[i];
+              return sa + (sb - sa) * gsap.parseEase(ease || "none")((t - ta) / (tb - ta));
+            }
+            return pen[pen.length - 1][1];
+          };
+          const popE = gsap.parseEase("back.out(2.4)");
+          const setDot = (c, x, r, fill, stroke) => {
+            c.setAttribute("cx", x.toFixed(1)); c.setAttribute("cy", LANE); c.setAttribute("r", Math.max(0, r).toFixed(2));
+            c.setAttribute("fill", fill); c.setAttribute("stroke", stroke); c.setAttribute("stroke-width", 4);
+          };
+
+          // ---- per-frame state ----
+          const world = $("f33-world"), paperbg = $("f33-paperbg"), push2 = $("f33-push2"), lies = $("f33-lies"), strip = $("f33-strip");
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (!laid) layout();
+            const lit = t >= LIES;
+            // B: pens, erasure, cursors, rewritten commits
+            let laneB = rows[0].dot;
+            for (const r of rows) {
+              const p = r.pen.p, a = r.ws[0], b = r.end;
+              const x = p <= 1 ? p * a : a + (p - 1) * (b - a);
+              r.lie.style.clipPath = p >= 2 ? "inset(0 0 0 100%)" : `inset(-30% -2% -30% ${x.toFixed(1)}px)`;
+              r.words.forEach((w, j) => {
+                const right = w.offsetLeft + w.offsetWidth - x;
+                w.style.clipPath = right <= 0 ? "none" : `inset(-40% ${right.toFixed(1)}px -40% -30%)`;
+              });
+              const writing = t >= r.t0 && (r.i ? t < LIES + 0.22 : t < OVER + 0.3);
+              r.cur.style.opacity = writing ? 1 : 0;
+              r.cur.style.transform = `translateX(${x.toFixed(1)}px)`;
+              const rw = t >= r.t0;
+              r.h.textContent = rw ? NEWH[r.i] : r.oldH;
+              r.au.textContent = rw ? "me" : "you";
+              r.au.classList.toggle("f33-me", rw);
+              const k = rw ? popE(Math.min(1, (t - r.t0) / 0.3)) : 1;
+              const col = rw ? (lit ? "#E85D26" : "#F0ECE5") : "#505048";
+              setDot(bDots[r.i], r.dot, 13 * k, rw ? col : "#0A0A0A", col);
+              if (t >= r.t0) laneB = Math.max(laneB, r.x0 + x);
+            }
+            // the new main, drawn right over the old lane; then C's pen
+            const pc = penAt(t);
+            const head = t < BACK ? L0 : pc === null ? laneB : pc;
+            line.style.strokeDashoffset = (LLEN - (head - L0)).toFixed(1);
+            const paper = t >= PAPER, ink = paper ? "#111111" : "#F0ECE5";
+            world.classList.toggle("f33-paper", paper);
+            paperbg.style.opacity = paper ? 1 : 0;
+            guide.setAttribute("stroke", paper ? "#CFCAC1" : "#282826");
+            line.setAttribute("stroke", lit && t < WHIP + WHIP_D ? "#E85D26" : ink);
+            bDots.forEach((c) => c.setAttribute("opacity", t >= BACK && t < WHIP + WHIP_D + 0.1 ? 1 : 0));
+            // C: a dot per step, the newest in fire
+            let newest = -1; cd.forEach(([, td], i) => { if (t >= td) newest = i; });
+            cDots.forEach((c, i) => {
+              const [x, td] = cd[i] || [0, 99], k = Math.max(0, Math.min(1, (t - td) / 0.3));
+              setDot(c, x, 12 * (k > 0 ? Math.max(0.05, popE(k)) : 0), i === newest ? "#E85D26" : ink, i === newest ? "#E85D26" : ink);
+            });
+            // the hold: a glint runs the lane on every kick
+            let g = -1; GLINTS.forEach((gt) => { if (t >= gt && t < gt + 0.4) g = gt; });
+            if (g >= 0) {
+              const u = gsap.parseEase("power2.out")((t - g) / 0.4), gx = W + u * (W + 200);
+              glint.setAttribute("x1", (gx - 260).toFixed(1)); glint.setAttribute("x2", gx.toFixed(1)); glint.setAttribute("opacity", 1);
+            } else glint.setAttribute("opacity", 0);
+            // the accent points at the current hero in C
+            const hot = t >= GOOD ? good : t >= TIME ? time : brand;
+            for (const w of [brand, time, good]) { const on = w === hot; w.classList.toggle("f33-fire", on); w.classList.toggle("hr-glowbox", on); }
+            HR.glow(hot, T, 0.3, 0.45); HR.glow(push2, T, 0.2, 0.3); HR.glow(lies, T, 0.2, 0.3);
+            strip.classList.toggle("f33-oncream", (t >= CREAM && t < BACK) || paper);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { laid = false; render(); });
+          window.__timelines["33-drop"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -292,6 +292,8 @@ function snap(pid: string, frame: string | undefined, at: string | undefined) {
     rmSync(dir, { recursive: true, force: true });
     mkdirSync(dir, { recursive: true });
     linkProject(vdir, dir);
+    // only this frame: check lints every composition in the copy, and another frame's error is not this one's
+    for (const f of readdirSync(path.join(dir, 'compositions', 'frames'))) if (f !== `${frame}.html`) rmSync(path.join(dir, 'compositions', 'frames', f));
     writeFileSync(path.join(dir, 'index.html'), `<!doctype html>
 <html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" />
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>

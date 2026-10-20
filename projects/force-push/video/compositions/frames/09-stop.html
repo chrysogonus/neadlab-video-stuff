@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 9 — stop (pre-chorus 1's last line, 51.907–53.380). Everything stops: the sung line arrives word by word
+         while the push command types itself at the prompt; on "gone" (53.06) the frame holds through the silent beat and
+         only the cursor blinks. The cut into 10 is the Enter. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f09-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f09-strip b { color: var(--fire); font-weight: 600; }
+        #f09-line { position: absolute; left: 5.1cqw; top: 10.4cqw; font: 900 10.2cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--cream); }
+        #f09-line div { white-space: nowrap; }
+        #f09-line .f09-hero { color: var(--fire); }
+        #f09-prompt { position: absolute; left: 5.5cqw; top: 44.4cqw; font: 500 2.6cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f09-prompt .f09-cmd { color: var(--cream); }
+        #f09-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+      </style>
+      <div id="root" data-composition-id="09-stop" data-width="1920" data-height="1080" data-duration="1.473">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f09-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.9">
+          <div id="f09-line">
+            <div><span class="f09-w">stop,</span> <span class="f09-w">one</span> <span class="f09-w">beat</span></div>
+            <div><span class="f09-w">and</span> <span class="f09-w">you're</span> <span class="f09-w f09-hero hr-glow">gone</span></div>
+          </div>
+        </div>
+        <div class="hr-layer" data-depth="0.6">
+          <div id="f09-prompt"><span>~/us (main) $ </span><span class="f09-cmd" id="f09-cmd"></span><span id="f09-cursor"></span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 1.473, T0 = 51.907;
+          const root = document.querySelector('[data-composition-id="09-stop"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 9 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          // the sung line: "stop," hits with no anticipation (a stop is a stop); the rest builds; "gone" is the hero
+          const w = root.querySelectorAll(".f09-w");
+          tl.set(w[0], { opacity: 0 }, 0).set(w[0], { opacity: 1 }, at(51.967));
+          tl.fromTo(w[0], { scale: 1.12, transformOrigin: "0% 80%" }, { scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, at(51.967));
+          HR.lead(tl, w[1], at(52.376)); HR.lead(tl, w[2], at(52.56)); HR.lead(tl, w[3], at(52.76)); HR.lead(tl, w[4], at(52.885));
+          HR.hero(tl, w[5], at(53.06), { spread: 20, over: 1.16, pre: 0.12, sharp: true });
+
+          // the command types across the line; done by "gone", then nothing but the cursor until the Enter (the cut)
+          const CMD = "git push --force origin main", T_A = at(51.98), T_B = at(53.0);
+          const states = [[0, ""]];
+          for (let i = 0; i < CMD.length; i++) states.push([T_A + ((T_B - T_A) * i) / CMD.length, CMD.slice(0, i + 1)]);
+          // the camera leans in while the line builds and stops dead on "gone"
+          tl.fromTo(stage.cam, { z: 1.0 }, { z: 1.035, duration: at(53.06), ease: "power1.in" }, 0);
+          tl.set({}, {}, DUR);
+
+          const cmd = $("f09-cmd"), cur = $("f09-cursor"), GONE = at(53.06);
+          function render() {
+            const t = tl.time();
+            let s = states[0]; for (const st of states) if (st[0] <= t) s = st;
+            cmd.textContent = s[1];
+            cur.style.opacity = t - s[0] < 0.35 || Math.floor((t - s[0]) * 2.2) % 2 === 0 ? 1 : 0;
+            HR.glow(root.querySelector(".f09-hero"), T0 + t);
+            // the silent beat: no drift, no pulse after "gone"
+            stage.apply(t < GONE ? T0 + t : T0 + GONE);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["09-stop"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,321 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 26 — timeline2 (chorus 2, L40, 124.580–129.340). A fork of 13-timeline: the same set (one clean tilted
+         graph line edge to edge, the lyric riding it letter by letter, a commit dot per kick under the held
+         "timeline,", the fast-forward on "no goodbyes"), with plant 1 paid off. A faint ghost of 05's hidden branch
+         hangs off the line, its name `remotes/you/feature/nothing-on-the-side` at its head. While "timeline," is held
+         the prompt (bottom left) runs `git branch -a` (the ex's branch is still listed), then `git remote remove you`:
+         git prints nothing, and on that Enter (the kick at 126.269, as the pen reaches the fork) the ghost lights
+         fire, is cut at the fork and falls away, and the listed line is struck. `git branch -a` again lists only
+         `* main` and `remotes/origin/main`. Then `git merge --ff-only timeline` types; on "no" (the kick at 128.552)
+         git prints `Updating 9c0ffee..5ab3e07` and the pen fast-forwards to the head; "goodbyes" (hero, 128.78)
+         lands with `Fast-forward`. The terminal keeps its last 8 lines, as a terminal scrolls.
+         Chorus 2 is louder: the hero overshoot, spread, camera punches, kick pulse and dot size are scaled by the
+         measured drums (mean of this span over 13's span, ~1.15). The glow is a drop-shadow on the word
+         (.hr-glowbox), not a text-shadow, so it goes with the glyph when the contrast check hides it. Hard cut into 27. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f26-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f26-strip b { color: var(--fire); font-weight: 600; }
+        /* the singer's prompt, bottom left: the remote goes during the held "timeline,", then the merge */
+        #f26-term { position: absolute; left: 5.5cqw; top: 36.6cqw; font: 400 1.3cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        .f26-ln { white-space: pre; }
+        .f26-cmd { color: var(--cream); }
+        .f26-cur { color: var(--cream); font-weight: 500; }
+        .f26-ff { color: var(--cream); font-weight: 500; }
+        .f26-you { position: relative; display: inline-block; color: var(--cream); }
+        .f26-you.f26-gone { color: var(--cream-muted); }
+        .f26-strike { position: absolute; left: -0.2em; right: -0.2em; top: 52%; height: 3px; background: var(--fire); transform-origin: 0 50%; transform: scaleX(0); }
+        .f26-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.2em; }
+        /* the ghost of 05's hidden branch: its name at its head */
+        #f26-glabel { position: absolute; left: 0; top: 0; font: 500 1.1cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
+        #f26-glabel.f26-lit { color: var(--fire); font-weight: 600; }
+        /* the sung line: glyph wrappers placed on the graph line in JS */
+        .f26-w { position: absolute; left: 0; top: 0; font-family: "Barlow", sans-serif; color: var(--cream); }
+        /* line-height 0.72: the box hugs the letters (baseline 0.76em down, ascenders 0.06em under the top), so it never covers the line */
+        .f26-gp { position: absolute; left: 0; top: 0; line-height: 0.72; white-space: pre; }
+        .f26-up .f26-gp { clip-path: inset(-0.6em -0.4em -0.25em -0.4em); }
+        .f26-down .f26-gp { clip-path: inset(0 -0.4em -0.6em -0.4em); }
+        .f26-small { font-size: 6.4cqw; font-weight: 800; letter-spacing: -0.03em; }
+        #f26-brand { font-size: 6.4cqw; font-weight: 900; letter-spacing: -0.03em; }
+        #f26-time { font-size: 15cqw; font-weight: 900; letter-spacing: -0.04em; }
+        #f26-good { font-size: 10cqw; font-weight: 900; letter-spacing: -0.04em; }
+        .f26-fire { color: var(--fire); }
+      </style>
+      <div id="root" data-composition-id="26-timeline2" data-width="1920" data-height="1080" data-duration="4.76">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f26-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.45">
+          <div id="f26-term">
+            <div class="f26-ln" data-at="0"><span>~/us (main) $ </span><span class="f26-cmd"></span><span class="f26-cursor"></span></div>
+            <div class="f26-ln" data-at="E1"><span class="f26-cur">* main</span></div>
+            <div class="f26-ln" data-at="E1">  remotes/origin/main</div>
+            <div class="f26-ln" data-at="E1">  <span class="f26-you" id="f26-you">remotes/you/feature/nothing-on-the-side<span class="f26-strike" id="f26-strike"></span></span></div>
+            <div class="f26-ln" data-at="E1"><span>~/us (main) $ </span><span class="f26-cmd"></span><span class="f26-cursor"></span></div>
+            <div class="f26-ln" data-at="E2"><span>~/us (main) $ </span><span class="f26-cmd"></span><span class="f26-cursor"></span></div>
+            <div class="f26-ln" data-at="E3"><span class="f26-cur">* main</span></div>
+            <div class="f26-ln" data-at="E3">  remotes/origin/main</div>
+            <div class="f26-ln" data-at="E3"><span>~/us (main) $ </span><span class="f26-cmd"></span><span class="f26-cursor"></span></div>
+            <div class="f26-ln" data-at="E4">Updating 9c0ffee..5ab3e07</div>
+            <div class="f26-ln f26-ff" data-at="FW">Fast-forward</div>
+          </div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.8" id="f26-world">
+          <svg id="f26-svg" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0; overflow: visible" data-layout-ignore>
+            <!-- the ghost of 05's hidden branch, under the line; cut at the fork on `git remote remove you` -->
+            <g id="f26-ghost">
+              <path id="f26-glane" d="M 0 0" fill="none" stroke="#505048" stroke-width="4" />
+              <g id="f26-gdots"></g>
+            </g>
+            <path id="f26-cut" d="M 0 0" fill="none" stroke="#E85D26" stroke-width="5" stroke-linecap="square" opacity="0" />
+            <!-- the planned line, a hairline edge to edge; the pen draws the timeline over it -->
+            <path id="f26-guide" d="M -100 650 L 2020 470" fill="none" stroke="#282826" stroke-width="2" />
+            <path id="f26-line" d="M -100 650 L 2020 470" fill="none" stroke="#F0ECE5" stroke-width="4" />
+            <g id="f26-dots"></g>
+          </svg>
+          <div id="f26-glabel">remotes/you/feature/nothing-on-the-side</div>
+          <span class="f26-w f26-up hr-glowbox" id="f26-brand">brand</span>
+          <span class="f26-w f26-up f26-small">new</span>
+          <span class="f26-w f26-up" id="f26-time">timeline,</span>
+          <span class="f26-w f26-down f26-small">no</span>
+          <span class="f26-w f26-down" id="f26-good">goodbyes</span>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 4.76, T0 = 124.58;
+          const root = document.querySelector('[data-composition-id="26-timeline2"]');
+          const $ = (id) => root.querySelector("#" + id);
+          // chorus 2 is louder: the hits grow with the measured drums, this span over 13's
+          const drums = (a, b) => { let s = 0, n = 0; for (let T = a; T < b; T += 0.02) { s += HR.band("drums", T); n++; } return s / n; };
+          const LOUD = Math.max(1, Math.min(1.3, drums(124.58, 129.34) / drums(63.679, 68.69)));
+          const over = (o) => 1 + (o - 1) * LOUD;
+          const stage = HR.stage(root, { seed: 26, pulse: LOUD });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const BRAND = at(124.64), NEW = at(125.08), TIME = at(125.28), NO = at(128.54), GOOD = at(128.78);
+          // the kicks of the held "timeline,": one commit each
+          const HOLD = [125.335, 125.794, 126.269, 126.714, 127.175, 127.648, 128.093].map(at);
+          const KBN = at(124.878); // the kick between "brand" and "new"
+          const FF = at(128.552); // the kick under "no": the fast-forward
+          const CUT = HOLD[2]; // `git remote remove you` runs on this kick; the pen reaches the fork
+          const NS = "http://www.w3.org/2000/svg";
+
+          // ---- the words: each glyph in its own wrapper, the kit animates the glyph ----
+          const ws = Array.from(root.querySelectorAll(".f26-w"));
+          for (const w of ws) {
+            const text = w.textContent; w.textContent = ""; w._hrG = [];
+            for (const ch of text) {
+              const wr = document.createElement("span"); wr.className = "f26-gp"; wr.setAttribute("data-layout-allow-overlap", "");
+              const g = document.createElement("span"); g.className = "hr-g"; g.textContent = ch;
+              wr.appendChild(g); w.appendChild(wr); w._hrG.push(g);
+            }
+          }
+          const [brand, neu, time, no, good] = ws;
+          HR.hero(tl, brand, BRAND, { spread: 20 * LOUD, over: over(1.2), pre: 0.05, sharp: true, skew: false });
+          HR.lead(tl, neu, NEW); neu.classList.remove("hr-clip");
+          HR.hero(tl, time, TIME, { spread: 44 * LOUD, over: over(1.26), pre: 0.14, sharp: true, skew: false });
+          HR.lead(tl, no, NO, { from: -105 }); no.classList.remove("hr-clip");
+          HR.hero(tl, good, GOOD, { spread: 34 * LOUD, over: over(1.24), pre: 0.1, sharp: true, skew: false });
+
+          // ---- the prompt: four commands, each typed at a human rhythm and run on a kick; output lines arrive whole ----
+          const E = { E1: HOLD[0], E2: CUT, E3: HOLD[4], E4: FF, FW: at(128.763) };
+          const typing = (cmd, k0, k1, seed) => {
+            const rnd = HR.rng(seed), keys = [[0, ""]];
+            let acc = 0; const gaps = Array.from(cmd, () => 0.7 + rnd() * 0.6), sum = gaps.reduce((a, b) => a + b, 0);
+            for (let i = 0; i < cmd.length; i++) { keys.push([k0 + ((k1 - k0) * acc) / sum, cmd.slice(0, i + 1)]); acc += gaps[i]; }
+            return keys;
+          };
+          const lines = Array.from(root.querySelectorAll(".f26-ln")).map((el) => ({ el, t: el.dataset.at === "0" ? 0 : E[el.dataset.at] }));
+          const prompts = [
+            ["git branch -a", at(124.70), at(125.20), E.E1],
+            ["git remote remove you", at(125.42), at(126.18), E.E2],
+            ["git branch -a", at(126.36), at(126.98), E.E3],
+            ["git merge --ff-only timeline", at(127.26), at(128.42), E.E4],
+          ].map(([cmd, k0, k1, enter], i) => ({ keys: typing(cmd, k0, k1, 2600 + i), enter }));
+          const pLines = lines.filter((l) => l.el.querySelector(".f26-cmd"));
+          pLines.forEach((l, i) => { prompts[i].shown = l.t; prompts[i].cmd = l.el.querySelector(".f26-cmd"); prompts[i].cur = l.el.querySelector(".f26-cursor"); });
+          const KEEP = 8; // the terminal shows its last 8 lines
+
+          // ---- the remote goes: the listed branch is struck, the ghost lights, is cut at the fork and falls ----
+          tl.fromTo($("f26-strike"), { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "expo.out", immediateRender: false }, CUT);
+          const fall = { k: 0 };
+          tl.fromTo(fall, { k: 0 }, { k: 1, duration: 0.55, ease: "power2.in", immediateRender: false }, CUT + 0.04);
+
+          // ---- the camera: in close on the left for "brand new", out along the line on "timeline,", a slow push
+          //      through the hold, a slide right with the fast-forward, a punch on "goodbyes" (punches sized by LOUD) ----
+          tl.fromTo(stage.cam, { z: 1.08, x: -150, y: 30 }, { z: 1 + 0.11 * LOUD, x: -146, y: 30, duration: BRAND, ease: "power2.in" }, 0);
+          tl.to(stage.cam, { z: 1.08, x: -120, duration: TIME - 0.07 - BRAND, ease: "power2.out" }, BRAND);
+          tl.to(stage.cam, { z: 1.0, x: 0, y: 0, duration: 0.07, ease: "power2.in" }, TIME - 0.07);
+          tl.to(stage.cam, { z: 1 - 0.015 * LOUD, x: 6, y: -4, duration: 0.6, ease: "elastic.out(1, 0.5)" }, TIME);
+          tl.to(stage.cam, { z: 1.02, x: 18, y: -2, duration: CUT - TIME - 0.6, ease: "sine.inOut" }, TIME + 0.6);
+          // the cut: a small knock on the kick
+          tl.to(stage.cam, { z: 1.02 + 0.012 * LOUD, y: 4, duration: 0.05, ease: "power2.in" }, CUT - 0.05);
+          tl.to(stage.cam, { z: 1.022, x: 20, y: -4, duration: 0.5, ease: "elastic.out(1, 0.55)" }, CUT);
+          tl.to(stage.cam, { z: 1.03, x: 24, y: -8, duration: FF - CUT - 0.5, ease: "sine.inOut" }, CUT + 0.5);
+          tl.to(stage.cam, { x: 46, z: 1.015, duration: GOOD - 0.06 - FF, ease: "expo.out" }, FF);
+          tl.to(stage.cam, { z: 1.03 + 0.025 * LOUD, y: 10, duration: 0.06, ease: "power2.in" }, GOOD - 0.06);
+          tl.to(stage.cam, { z: 1.03, x: 40, y: 8, duration: DUR - GOOD, ease: "elastic.out(1, 0.55)" }, GOOD);
+          tl.set({}, {}, DUR);
+
+          // ---- the path text: placed once the fonts are in (until then, re-measured every frame) ----
+          const line = $("f26-line"), L = line.getTotalLength();
+          const P0 = line.getPointAtLength(0), P1 = line.getPointAtLength(L);
+          const RAD = Math.atan2(P1.y - P0.y, P1.x - P0.x), DEG = (RAD * 180) / Math.PI;
+          const sAtX = (x) => ((x - P0.x) / (P1.x - P0.x)) * L;
+          const X0 = 125, X1 = 1815; // pad-x 5.5cqw
+          const glane = $("f26-glane"), glabel = $("f26-glabel"), cutP = $("f26-cut");
+          let laid = false, pen = [], dots = [], gdots = [], fork = { x: 0, y: 0 }, glab = { x: 0, y: 0 };
+          const place = (w, s, down) => {
+            const em = parseFloat(getComputedStyle(w).fontSize);
+            w._s0 = s;
+            for (const g of w._hrG) {
+              const wr = g.parentNode, adv = wr.offsetWidth, c = s + adv / 2;
+              const p = line.getPointAtLength(c);
+              // up: the baseline rides 16 px over the line (box bottom clear of the dots); down: the box hangs 14 px under it
+              const dy = down ? 14 : -16 - 0.76 * em;
+              wr.style.transformOrigin = `${adv / 2}px ${-dy}px`;
+              wr.style.transform = `translate(${(p.x - adv / 2).toFixed(2)}px, ${(p.y + dy).toFixed(2)}px) rotate(${DEG.toFixed(3)}deg)`;
+              s += adv;
+            }
+            w._s1 = s;
+            return em;
+          };
+          const width = (w) => w._hrG.reduce((a, g) => a + g.parentNode.offsetWidth, 0);
+          function layout() {
+            const ready = document.fonts.status === "loaded";
+            // top row from the left margin: brand new timeline,
+            let s = sAtX(X0);
+            s = place(brand, s) * 0.26 + brand._s1;
+            s = place(neu, s) * 0.3 + neu._s1;
+            place(time, s);
+            // bottom row, right-aligned to the margin: no goodbyes
+            const gap = parseFloat(getComputedStyle(no).fontSize) * 0.26;
+            const s1 = sAtX(X1) - (width(no) + gap + width(good));
+            place(no, s1, true); place(good, no._s1 + gap, true);
+            // the pen: in from the edge on the cut, under "brand" as it lands, under "new", then one step per kick
+            // across "timeline,", and on "no" it fast-forwards off the right edge
+            const sRoot = sAtX(40), sBN = (brand._s1 + neu._s0) / 2, sNT = (neu._s1 + time._s0) / 2;
+            const step = (time._s1 - sNT) / (HOLD.length - 1);
+            pen = [[0, sRoot * 0.6, "none"], [0.06, sRoot, "power2.out"], [BRAND + 0.2, brand._s1, "power2.inOut"],
+              [KBN, sBN, "power2.out"], [NEW + 0.18, neu._s1, "power3.out"]];
+            HOLD.forEach((t, i) => { pen.push([t - 0.02, i === 0 ? neu._s1 + 8 : sNT + step * (i - 1)]); pen.push([t + 0.26, sNT + step * i, "power3.out"]); });
+            pen.push([FF - 0.02, time._s1], [FF + 0.2, L, "expo.out"]);
+            const sHead = sAtX(1868);
+            dots = [[sRoot, 0], [sBN, KBN], ...HOLD.map((t, i) => [sNT + step * i, t + 0.2]), [sHead, FF + 0.08]]
+              .map(([s, t]) => { const p = line.getPointAtLength(s); return { x: p.x, y: p.y, t }; });
+            // the ghost: forks off the commit of the cut's kick, bends down like 05's lane, runs flat to its head
+            const f = line.getPointAtLength(sNT + step * 2); fork = { x: f.x, y: f.y };
+            const ux = Math.cos(RAD), uy = Math.sin(RAD), yL = f.y + 250, xB = f.x + 430, xH = 1650;
+            glane.setAttribute("d", `M ${f.x.toFixed(1)} ${f.y.toFixed(1)} C ${(f.x + 230 * ux).toFixed(1)} ${(f.y + 230 * uy).toFixed(1)}, ` +
+              `${(xB - 230).toFixed(1)} ${yL.toFixed(1)}, ${xB.toFixed(1)} ${yL.toFixed(1)} H ${xH}`);
+            gdots = [xB + 10, xB + (xH - xB) * 0.5, xH].map((x) => ({ x, y: yL }));
+            glab = { x: xH - glabel.offsetWidth + 6, y: yL + 24 };
+            // the cut mark: a short slash across the lane, just below the fork
+            const gl = glane.getTotalLength(), a = glane.getPointAtLength(48), b = glane.getPointAtLength(52);
+            const th = Math.atan2(b.y - a.y, b.x - a.x) + Math.PI / 2 + 0.35, r = 20;
+            cutP.setAttribute("d", `M ${(a.x - r * Math.cos(th)).toFixed(1)} ${(a.y - r * Math.sin(th)).toFixed(1)} L ${(a.x + r * Math.cos(th)).toFixed(1)} ${(a.y + r * Math.sin(th)).toFixed(1)}`);
+            glane._len = gl;
+            laid = ready;
+          }
+          const dotG = $("f26-dots");
+          const dotC = Array.from({ length: 2 + HOLD.length + 1 }, () => {
+            const c = document.createElementNS(NS, "circle"); dotG.appendChild(c); return c;
+          });
+          const gdotC = [0, 1, 2].map(() => {
+            const c = document.createElementNS(NS, "circle"); c.setAttribute("r", 10); c.setAttribute("fill", "#0A0A0A"); c.setAttribute("stroke-width", "4");
+            $("f26-gdots").appendChild(c); return c;
+          });
+          const popE = gsap.parseEase("back.out(2.2)");
+          const penAt = (t) => {
+            if (t <= pen[0][0]) return pen[0][1];
+            for (let i = 1; i < pen.length; i++) if (t < pen[i][0]) {
+              const [ta, sa] = pen[i - 1], [tb, sb, ease] = pen[i];
+              return sa + (sb - sa) * gsap.parseEase(ease || "none")((t - ta) / (tb - ta));
+            }
+            return pen[pen.length - 1][1];
+          };
+
+          // ---- per-frame state: layout, the pen, the dots, the ghost, the accent, the terminal, glow, camera ----
+          const ghost = $("f26-ghost"), you = $("f26-you");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          const R = 11 * LOUD;
+          line.style.strokeDasharray = `${L} ${L}`;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (!laid) layout();
+            line.style.strokeDashoffset = (L - penAt(t)).toFixed(2);
+            // the newest commit is fire, the rest cream
+            let newest = -1; dots.forEach((d, i) => { if (t >= d.t) newest = i; });
+            dotC.forEach((c, i) => {
+              const d = dots[i], k = Math.max(0, Math.min(1, (t - d.t) / 0.3));
+              c.setAttribute("cx", d.x.toFixed(1)); c.setAttribute("cy", d.y.toFixed(1));
+              c.setAttribute("r", (R * (k > 0 ? Math.max(0.05, popE(k)) : 0)).toFixed(2));
+              c.setAttribute("fill", i === newest ? "#E85D26" : "#F0ECE5");
+            });
+            // the ghost: dim until the cut, fire on the cut, then it falls away from the fork and is gone
+            const cut = t >= CUT, gcol = cut ? "#E85D26" : "#505048", k = fall.k;
+            glane.setAttribute("stroke", gcol);
+            gdotC.forEach((c, i) => { c.setAttribute("cx", gdots[i].x.toFixed(1)); c.setAttribute("cy", gdots[i].y.toFixed(1)); c.setAttribute("stroke", gcol); });
+            const gx = `translate(0px, ${(k * 120).toFixed(2)}px) rotate(${(k * 7).toFixed(3)}deg)`;
+            ghost.style.transformOrigin = `${fork.x}px ${fork.y}px`; ghost.style.transform = gx;
+            ghost.style.opacity = (1 - k).toFixed(3);
+            // the ghost's start stays hidden behind the cut: the falling piece begins at the slash
+            glane.style.strokeDasharray = cut ? `0 36 ${glane._len || 9999}` : "none";
+            // the label falls with its lane: the same turn about the fork, the same drop
+            { const th = (k * 7 * Math.PI) / 180, dx = glab.x - fork.x, dy = glab.y - fork.y;
+              const lx = fork.x + dx * Math.cos(th) - dy * Math.sin(th), ly = fork.y + dx * Math.sin(th) + dy * Math.cos(th) + k * 120;
+              glabel.style.transformOrigin = "0 0";
+              glabel.style.transform = `translate(${lx.toFixed(1)}px, ${ly.toFixed(1)}px) rotate(${(k * 7).toFixed(3)}deg)`; }
+            glabel.classList.toggle("f26-lit", cut);
+            glabel.style.opacity = k >= 1 ? 0 : (1 - k).toFixed(3);
+            glabel.style.visibility = k >= 0.75 ? "hidden" : "visible";
+            const ck = cut ? Math.max(0, 1 - (t - CUT) / 0.5) : 0;
+            cutP.setAttribute("opacity", ck.toFixed(3));
+            you.classList.toggle("f26-gone", cut);
+            // the accent points at the current hero
+            const hot = t >= GOOD ? good : t >= TIME ? time : brand;
+            for (const w of [brand, time, good]) { const on = w === hot; w.classList.toggle("f26-fire", on); w.classList.toggle("hr-glowbox", on); }
+            HR.glow(hot, T, 0.3, 0.45);
+            // the terminal: lines appear on their kicks; it keeps the last KEEP shown
+            const shown = lines.filter((l) => t >= l.t), first = Math.max(0, shown.length - KEEP);
+            lines.forEach((l, i) => { l.el.style.display = t >= l.t && i >= first ? "block" : "none"; });
+            const active = prompts.filter((p) => t >= p.shown).pop();
+            for (const p of prompts) {
+              let kk = p.keys[0]; for (const st of p.keys) if (st[0] <= t) kk = st;
+              p.cmd.textContent = kk[1];
+              p.cur.style.opacity = p === active && t < p.enter && blink(t, Math.max(kk[0], p.shown)) ? 1 : 0;
+              p.cur.style.display = p === active && t < p.enter ? "inline-block" : "none";
+            }
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["26-timeline2"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

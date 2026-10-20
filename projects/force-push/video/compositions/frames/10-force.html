@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 10 — force (chorus 1 hook, 53.380–56.291). Reference frame (SYSTEM.md): the hook.
+         The cut is the Enter: git answers (`(forced update)`), FORCE slams on 53.44 with no anticipation, PUSH! hits on
+         53.96 with the kick, "baby, you're" builds, and on "history" (55.62) the log called history loses every `you`,
+         row by row, while the counter flips 1,095 → 0. Patterns for workers: HR.hero for the slam, camera punches on
+         the hits, a strike drawn with scaleX, the counter's struck old value. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f10-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f10-old { position: relative; color: var(--fire); font-weight: 600; }
+        #f10-old i { position: absolute; left: -0.2em; right: -0.2em; top: 52%; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
+        #f10-new { color: var(--fire); font-weight: 600; margin-left: 0.6em; }
+        /* git's own answer to the push */
+        #f10-out { position: absolute; left: 5.5cqw; top: 7.4cqw; font: 400 1.3cqw/1.55 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        #f10-out .f10-plus { color: var(--fire); font-weight: 600; }
+        #f10-out b { color: var(--cream); font-weight: 500; }
+        /* the hook: the one all-caps slam in the film */
+        #f10-hook { position: absolute; left: 4.4cqw; top: 10.8cqw; font: 900 19.5cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f10-hook > span { display: block; width: max-content; }
+        #f10-hook .f10-push { color: var(--fire); }
+        #f10-line { position: absolute; left: 5.2cqw; top: 45.3cqw; font: 800 6.2cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
+        #f10-line .f10-hero { color: var(--fire); }
+        /* "history" is the log: what is left of it */
+        #f10-log { position: absolute; left: 70.5cqw; top: 13.2cqw; width: 24cqw; }
+        #f10-log .f10-head { font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; margin-bottom: 1cqw; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+        #f10-log .f10-head b { color: var(--cream); font-weight: 600; }
+        .f10-row { position: relative; display: table; height: 2.45cqw; font: 400 1.05cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
+        .f10-row .f10-h { color: var(--cream-hint); }
+        .f10-row.f10-keep { color: var(--cream); }
+        .f10-row .f10-x { position: absolute; left: -0.3cqw; right: -0.3cqw; top: 0.48cqw; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
+      </style>
+      <div id="root" data-composition-id="10-force" data-width="1920" data-height="1080" data-duration="2.911">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f10-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<span id="f10-old">1,095<i></i></span><span id="f10-new">0</span></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.45" data-layout-ignore>
+          <div id="f10-out"><span id="f10-o1">To me@home:us.git</span><br /><span id="f10-o2"><span class="f10-plus">+</span> <b>3f2a1c9...e81b0d4</b> main -&gt; main (forced update)</span></div>
+          <div id="f10-log">
+            <div class="f10-head"><span>history</span><b>git log</b></div>
+            <div class="f10-row f10-keep"><span class="f10-h">e81b0d4</span> me &nbsp;ready.</div>
+            <div class="f10-row f10-gone"><span class="f10-h">9d03b7e</span> me &nbsp;merge branch 'you'<i class="f10-x"></i></div>
+            <div class="f10-row f10-gone"><span class="f10-h">3f2a1c9</span> you you and me<i class="f10-x"></i></div>
+            <div class="f10-row f10-gone"><span class="f10-h">a7c21f0</span> you we'll get to it<i class="f10-x"></i></div>
+            <div class="f10-row f10-gone"><span class="f10-h">4c9d7a1</span> you just a feature<i class="f10-x"></i></div>
+            <div class="f10-row f10-keep"><span class="f10-h">91be33a</span> me &nbsp;moved in</div>
+            <div class="f10-row f10-gone"><span class="f10-h">0b5f6e2</span> you nothing on the side<i class="f10-x"></i></div>
+            <div class="f10-row f10-keep"><span class="f10-h">5d0a8c4</span> me &nbsp;initial commit</div>
+          </div>
+        </div>
+        <div class="hr-layer" data-depth="1">
+          <div id="f10-hook"><span id="f10-force">FORCE</span><span class="f10-push hr-glow" id="f10-push">PUSH!</span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.85">
+          <div id="f10-line"><span class="f10-w">baby,</span> <span class="f10-w">you're</span> <span class="f10-w f10-hero hr-glow">history</span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 2.911, T0 = 53.38;
+          const root = document.querySelector('[data-composition-id="10-force"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 10 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          // the Enter: git answers at once, the forced update a beat later
+          tl.set($("f10-o2"), { opacity: 0 }, 0).set($("f10-o2"), { opacity: 1 }, 0.22);
+          // the hook
+          HR.hero(tl, $("f10-force"), at(53.44), { spread: 34, over: 1.2, pre: 0.05, sharp: true });
+          HR.hero(tl, $("f10-push"), at(53.96), { spread: 40, over: 1.26, pre: 0.16, sharp: true });
+          // the line
+          const w = root.querySelectorAll(".f10-w");
+          HR.lead(tl, w[0], at(54.66)); HR.lead(tl, w[1], at(55.28));
+          HR.hero(tl, w[2], at(55.62), { spread: 22, over: 1.16, pre: 0.14, sharp: true });
+          // history: the log is on screen from the Enter; on "history" every `you` is struck, top to bottom
+          const H = at(55.62);
+          tl.fromTo(root.querySelectorAll(".f10-row"), { opacity: 0, x: 14 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out", stagger: 0.035 }, 0.3);
+          const gone = root.querySelectorAll(".f10-gone");
+          gone.forEach((row, i) => {
+            tl.fromTo(row.querySelector(".f10-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.14, ease: "power2.out" }, H + 0.04 + i * 0.07);
+            tl.fromTo(row, { color: "#888880" }, { color: "#505048", duration: 0.2, immediateRender: false }, H + 0.1 + i * 0.07);
+          });
+          // the counter: 1,095 is struck, 0 lands
+          tl.fromTo($("f10-old").querySelector("i"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out" }, H);
+          tl.fromTo($("f10-old"), { opacity: 1 }, { opacity: 0.55, duration: 0.2, immediateRender: false }, H + 0.12);
+          tl.set($("f10-new"), { opacity: 0 }, 0).set($("f10-new"), { opacity: 1 }, H + 0.16);
+
+          // the camera: a punch on FORCE, a bigger one on PUSH! (with the kick), a nudge on history; a slow push carries it
+          tl.fromTo(stage.cam, { z: 1.0, y: 0 }, { z: 1.045, y: -6, duration: 0.07, ease: "power2.in" }, at(53.44) - 0.06);
+          tl.to(stage.cam, { z: 1.0, y: 0, duration: 0.45, ease: "elastic.out(1, 0.55)" }, at(53.44) + 0.01);
+          tl.to(stage.cam, { z: 1.065, y: -10, duration: 0.07, ease: "power2.in" }, at(53.96) - 0.06);
+          tl.to(stage.cam, { z: 1.012, y: 0, duration: 0.6, ease: "elastic.out(1, 0.5)" }, at(53.96) + 0.01);
+          tl.to(stage.cam, { z: 1.03, duration: H - at(53.96) - 0.6, ease: "none" }, at(53.96) + 0.61);
+          tl.to(stage.cam, { z: 1.045, duration: 0.06, ease: "power2.in" }, H - 0.05);
+          tl.to(stage.cam, { z: 1.035, x: 18, duration: DUR - H, ease: "power2.out" }, H + 0.01);
+          tl.set({}, {}, DUR);
+
+          const push = $("f10-push"), hist = root.querySelector(".f10-hero");
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            HR.glow(push, T, 0.22, 0.35); HR.glow(hist, T, 0.3, 0.45);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["10-force"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

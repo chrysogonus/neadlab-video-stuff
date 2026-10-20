@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 27 — local2 (chorus 2, 129.340–133.152). The chorus repeats 14's set with the world moved on: my
+         terminal top left is still up to date with origin; the lyric fills the right side, right-aligned. On "local"
+         (130.00) the ex's clone pops into the bottom-left corner, smaller than in 14 and further back in depth; they
+         type `git status` and git answers on the kicks: behind 'origin/main' by 2 commits, (use "git pull" ...).
+         "i don't care" builds under the first half; on "care" (131.94) the first half steps back, the clone sinks
+         further into its corner, and the marker notes it: (still.). Chorus 2 is louder: the hits run a little bigger,
+         sized by the measured drums. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f27-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f27-strip b { color: var(--fire); font-weight: 600; }
+        /* mine: the same command on my machine, still up to date */
+        #f27-mine { position: absolute; left: 5.5cqw; top: 7.9cqw; font: 400 1.15cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f27-mine .f27-c { color: var(--cream); }
+        /* the lyric, right-aligned: the first half on top, the second under it */
+        .f27-block { position: absolute; right: 5.5cqw; text-align: right; color: var(--cream); white-space: nowrap; }
+        #f27-top { top: 7.6cqw; transform-origin: 100% 100%; }
+        #f27-bot { top: 30.6cqw; }
+        .f27-r1 { font: 800 6.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; }
+        .f27-r2 { font: 900 16cqw/0.88 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        .f27-r2 .f27-small { font: 800 6.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; margin-left: 0.3em; }
+        .f27-hero { color: var(--fire); }
+        /* theirs: a smaller, staler clone, further into the corner than in 14 */
+        #f27-clone { position: absolute; left: 5.5cqw; bottom: 4.6cqw; width: 26.5cqw; background: var(--ink-alt); border: 1px solid var(--border);
+          transform-origin: 0% 100%; }
+        #f27-clone .f27-bar { display: flex; justify-content: space-between; padding: 0.38cqw 0.7cqw; border-bottom: 1px solid var(--border);
+          font: 500 0.6cqw/1.4 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); }
+        #f27-clone .f27-body { padding: 0.65cqw 0.7cqw 0.8cqw; font: 400 0.72cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f27-clone .f27-pr { color: var(--cream-muted); }
+        #f27-clone .f27-cmd { color: var(--cream); }
+        #f27-clone .f27-out { color: var(--cream); }
+        #f27-clone .f27-hint { color: var(--cream-muted); }
+        #f27-clone b { color: var(--fire); font-weight: 600; }
+        .f27-cur { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.18em; }
+        /* the marker's aside */
+        #f27-note { position: absolute; left: 41.5cqw; top: 41.8cqw; font: 400 3.6cqw/1 "Caveat Brush", cursive; color: var(--fire); transform: rotate(-4deg);
+          white-space: nowrap; }
+      </style>
+      <div id="root" data-composition-id="27-local2" data-width="1920" data-height="1080" data-duration="3.812">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f27-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.4">
+          <div id="f27-mine"><div>~/us (main) $ <span class="f27-c">git status</span></div><div>On branch main</div><div>Your branch is up to date with <span class="f27-c">'origin/main'</span>.</div></div>
+        </div>
+        <div class="hr-layer" data-depth="0.3">
+          <div id="f27-clone">
+            <div class="f27-bar"><span>you@laptop</span><span>~/us</span></div>
+            <div class="f27-body"><div><span class="f27-pr">you@laptop ~/us (main) $ </span><span class="f27-cmd" id="f27-cmd"></span><span class="f27-cur" id="f27-cur1"></span></div><div class="f27-out" id="f27-o1">On branch main</div><div id="f27-o2"><div class="f27-out">Your branch is behind 'origin/main' by <b>2</b> commits,</div><div class="f27-out">and can be fast-forwarded.</div></div><div class="f27-hint" id="f27-o3">  (use "git pull" to update your local branch)</div><div id="f27-o4"><span class="f27-pr">you@laptop ~/us (main) $ </span><span class="f27-cur" id="f27-cur2"></span></div></div>
+          </div>
+        </div>
+        <div class="hr-layer" data-depth="0.9">
+          <div class="f27-block" id="f27-top">
+            <div class="f27-r1"><span class="f27-w">keep</span> <span class="f27-w">your</span></div>
+            <div class="f27-r2"><span class="f27-w f27-hero hr-glowbox" id="f27-local">local</span><span class="f27-w f27-small">copy,</span></div>
+          </div>
+          <div class="f27-block" id="f27-bot">
+            <div class="f27-r1"><span class="f27-w">i</span> <span class="f27-w">don't</span></div>
+            <div class="f27-r2"><span class="f27-w f27-hero hr-glowbox" id="f27-care">care</span></div>
+          </div>
+          <div id="f27-note">(still.)</div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.812, T0 = 129.34;
+          const root = document.querySelector('[data-composition-id="27-local2"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 27 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const L = at(130.0), C = at(131.94);
+
+          // ---- the lyric (L41): "keep your" builds, "local" slams, "copy," leads; "i don't" builds, "care" slams ----
+          const w = root.querySelectorAll(".f27-w");
+          HR.lead(tl, w[0], at(129.4)); HR.lead(tl, w[1], at(129.7));
+          HR.hero(tl, w[2], L, { spread: 34, over: 1.24, pre: 0.14, sharp: true });
+          HR.lead(tl, w[3], at(130.34));
+          HR.lead(tl, w[4], at(131.092)); HR.lead(tl, w[5], at(131.5));
+          HR.hero(tl, w[6], C, { spread: 38, over: 1.26, pre: 0.16, sharp: true });
+          // on "care" the first half steps back (still ≥ 72 px) and gives up the accent
+          tl.fromTo($("f27-top"), { scale: 1 }, { scale: 0.64, duration: 0.32, ease: "power3.out", immediateRender: false }, C);
+          tl.fromTo($("f27-local"), { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.22, immediateRender: false }, C);
+
+          // ---- theirs: the clone appears on "local", types git status, git answers on the kicks ----
+          const clone = $("f27-clone");
+          tl.set(clone, { opacity: 0 }, 0).set(clone, { opacity: 1 }, L - 0.02);
+          tl.fromTo(clone, { scale: 0.84, y: 14 }, { scale: 0.92, y: 0, duration: 0.3, ease: "expo.out", immediateRender: false }, L - 0.02);
+          // "I don't care": the clone sinks further into its corner
+          tl.fromTo(clone, { scale: 0.92, y: 0 }, { scale: 0.78, y: 6, duration: 0.45, ease: "power3.out", immediateRender: false }, C);
+          const OUT = [at(130.392), at(130.861), at(131.32), at(131.767)], ENTER = OUT[0];
+          ["f27-o1", "f27-o2", "f27-o3", "f27-o4"].forEach((id, i) => tl.set($(id), { opacity: 0 }, 0).set($(id), { opacity: 1 }, OUT[i]));
+          const CMD = "git status", TA = L + 0.03, TB = ENTER - 0.02;
+          const keys = [[0, ""]];
+          for (let i = 0; i < CMD.length; i++) keys.push([TA + ((TB - TA) * i) / CMD.length, CMD.slice(0, i + 1)]);
+
+          // ---- the marker: drawn on the kick after "care" ----
+          const N0 = at(132.229), N1 = N0 + 0.36;
+
+          // ---- the camera: a creep in, punches on the two heroes sized by the drums, a slow truck right ----
+          const cam = stage.cam, pk = (T) => 0.03 + 0.04 * HR.band("drums", T);
+          tl.fromTo(cam, { z: 1.0, y: 0 }, { z: 1.012, y: 0, duration: L - 0.06, ease: "none" }, 0);
+          tl.to(cam, { z: 1.012 + pk(130.0), y: -7, duration: 0.06, ease: "power2.in" }, L - 0.06);
+          tl.to(cam, { z: 1.016, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, L + 0.01);
+          tl.to(cam, { z: 1.03, duration: C - 0.06 - (L + 0.51), ease: "none" }, L + 0.51);
+          tl.to(cam, { z: 1.03 + pk(131.94), y: -9, duration: 0.06, ease: "power2.in" }, C - 0.06);
+          tl.to(cam, { z: 1.034, y: 0, duration: 0.55, ease: "elastic.out(1, 0.5)" }, C + 0.01);
+          tl.to(cam, { z: 1.044, duration: DUR - (C + 0.56), ease: "none" }, C + 0.56);
+          tl.fromTo(cam, { x: 0 }, { x: 24, duration: DUR, ease: "none" }, 0);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: typing, cursors, the marker, glow, the camera ----
+          const cmd = $("f27-cmd"), cur1 = $("f27-cur1"), cur2 = $("f27-cur2"), note = $("f27-note");
+          const local = $("f27-local"), care = $("f27-care");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            let k = keys[0]; for (const s of keys) if (s[0] <= t) k = s;
+            cmd.textContent = k[1];
+            cur1.style.opacity = t >= L && t < ENTER && blink(t, Math.max(k[0], L)) ? 1 : 0;
+            cur2.style.opacity = t >= OUT[3] && blink(t, OUT[3]) ? 1 : 0;
+            const p = Math.max(0, Math.min(1, (t - N0) / (N1 - N0)));
+            note.style.opacity = p > 0 ? 1 : 0;
+            note.style.clipPath = `inset(-30% ${((1 - p) * 104).toFixed(2)}% -30% -6%)`;
+            // "local" glows while it holds the accent, "care" from its slam on
+            local.classList.toggle("hr-glowbox", t < C);
+            HR.glow(local, T, 0.3, 0.5);
+            HR.glow(care, T, 0.3, 0.5);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["27-local2"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

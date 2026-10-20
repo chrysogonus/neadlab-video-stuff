@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 6 — blame (verse 1, 31.139–38.723). The file being blamed is the verse itself, every line authored by `you`.
+         She runs the blame as she sings it: `git ` types on "ran", `blame` on "blame" (the hero slams with it), the Enter
+         is the 33.63 downbeat and the rows arrive whole on the kicks while the cream selection walks down to row 5 (L7).
+         L8 replaces L7 on 35.14 and the selection steps to row 6; on "every single one" every `you` in the author column
+         pops in turn, on "name" the whole column flares, and on "not mine" the tally lands: lines by you 8 · lines by me 0.
+         The look and layout are the approved stage-3 still at 38.5. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f06-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f06-strip b { color: var(--fire); font-weight: 600; }
+        #f06-cmd { position: absolute; left: 5.5cqw; top: 7.6cqw; font: 500 1.35cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f06-cmd b { color: var(--cream); font-weight: 500; }
+        #f06-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        /* git blame: hash · (author date time tz lineno) · the line — the verse is the file being blamed */
+        #f06-blame { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 11.4cqw; font: 400 1.2cqw/1 "IBM Plex Mono", monospace; }
+        #f06-bar { position: absolute; left: -0.8cqw; right: -0.8cqw; top: 0; height: 2.55cqw; background: var(--cream); }
+        .f06-row { position: relative; display: flex; align-items: baseline; height: 2.55cqw; color: var(--cream-hint); white-space: nowrap; }
+        .f06-row .f06-meta { flex: none; width: 41cqw; }
+        .f06-row .f06-who { display: inline-block; color: var(--fire); transform-origin: 50% 70%; }
+        .f06-row .f06-src { color: var(--cream-muted); }
+        /* the line being read: lit like a selection (the bar walks under it) */
+        .f06-row.f06-on { color: #5F5B54; }
+        .f06-row.f06-on .f06-who { color: #B8461C; font-weight: 600; }
+        .f06-row.f06-on .f06-src { color: #111111; font-weight: 500; }
+        #f06-tally { position: absolute; left: 5.5cqw; top: 33.2cqw; font: 500 0.95cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--cream-muted); }
+        #f06-tally > span { display: inline-block; transform-origin: 0% 60%; }
+        #f06-tally b { color: var(--fire); font-weight: 600; }
+        #f06-tally i { font-style: normal; color: var(--cream); }
+        /* the sung line, poster scale; L7 and L8 take the same place in turn */
+        .f06-lyric { position: absolute; left: 5.2cqw; top: 37.4cqw; font: 800 6.4cqw/0.98 "Barlow", sans-serif; letter-spacing: -0.035em;
+          color: var(--cream); }
+        .f06-lyric > div { white-space: nowrap; }
+        .f06-lyric .f06-hero { color: var(--fire); }
+      </style>
+      <div id="root" data-composition-id="06-blame" data-width="1920" data-height="1080" data-duration="7.584">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f06-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you <b>1,095</b></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.45">
+          <div id="f06-cmd"><span>~/us (main) $ </span><b id="f06-typed"></b><span id="f06-cursor"></span></div>
+
+          <div id="f06-blame" data-layout-ignore>
+            <div id="f06-bar"></div>
+            <div class="f06-row"><span class="f06-meta">^5d0a8c4 (<span class="f06-who hr-glow">you</span> 2023-04-02 21:14:07 +0200  1)</span><span class="f06-src">three years in and you never could commit</span></div>
+            <div class="f06-row"><span class="f06-meta">a7c21f0 (<span class="f06-who hr-glow">you</span> 2023-11-19 23:51:40 +0100  2)</span><span class="f06-src">hid me in your stash, said we'd get to it</span></div>
+            <div class="f06-row"><span class="f06-meta">4c9d7a1 (<span class="f06-who hr-glow">you</span> 2024-06-08 02:03:12 +0200  3)</span><span class="f06-src">said it's just a feature, nothing on the side</span></div>
+            <div class="f06-row"><span class="f06-meta">0b5f6e2 (<span class="f06-who hr-glow">you</span> 2024-06-08 02:09:55 +0200  4)</span><span class="f06-src">then i found the other branch you tried to hide</span></div>
+            <div class="f06-row"><span class="f06-meta">3f2a1c9 (<span class="f06-who hr-glow">you</span> 2025-02-14 19:30:00 +0100  5)</span><span class="f06-src">so i ran the blame on every broken line</span></div>
+            <div class="f06-row"><span class="f06-meta">3f2a1c9 (<span class="f06-who hr-glow">you</span> 2025-02-14 19:30:00 +0100  6)</span><span class="f06-src">every single one had your name, not mine</span></div>
+            <div class="f06-row"><span class="f06-meta">e19f4b2 (<span class="f06-who hr-glow">you</span> 2025-09-30 03:12:44 +0200  7)</span><span class="f06-src">you said we could merge, work the conflicts through</span></div>
+            <div class="f06-row"><span class="f06-meta">e19f4b2 (<span class="f06-who hr-glow">you</span> 2025-09-30 03:12:44 +0200  8)</span><span class="f06-src">but every conflict, baby, started with you</span></div>
+          </div>
+          <div id="f06-tally"><span id="f06-t1">lines by <span style="color: var(--fire)">you</span> <b>8</b></span><span id="f06-t2">&nbsp;&nbsp;·&nbsp; lines by <i>me</i> <b>0</b></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.85">
+          <div class="f06-lyric" id="f06-l7">
+            <div><span class="f06-w">so</span> <span class="f06-w">i</span> <span class="f06-w">ran</span> <span class="f06-w">the</span></div>
+            <div><span class="f06-w f06-hero hr-glow">blame</span> <span class="f06-w">on</span> <span class="f06-w">every</span> <span class="f06-w">broken</span> <span class="f06-w">line</span></div>
+          </div>
+          <div class="f06-lyric" id="f06-l8">
+            <div><span class="f06-w">every</span> <span class="f06-w">single</span> <span class="f06-w">one</span> <span class="f06-w">had</span></div>
+            <div><span class="f06-w f06-hero hr-glow">your</span> <span class="f06-w f06-hero hr-glow">name,</span> <span class="f06-w">not</span> <span class="f06-w">mine</span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 7.584, T0 = 31.139;
+          const root = document.querySelector('[data-composition-id="06-blame"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 6 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const BLAME = at(32.66), L8 = at(35.14), NAME = at(37.32), NOT = at(37.84), MINE = at(38.24);
+
+          // ---- she runs the blame as she sings it: `git ` on "ran", `blame` on "blame", the file on "on" ----
+          const keys = [[0, ""]];
+          const type = (t0, t1, text) => {
+            const base = keys[keys.length - 1][1];
+            for (let i = 0; i < text.length; i++) keys.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
+          };
+          type(at(32.02), at(32.24), "git ");
+          type(BLAME, at(32.9), "blame");
+          type(at(33.02), at(33.3), " us.txt");
+          const ENTER = at(33.63); // the downbeat
+
+          // ---- git answers: rows arrive whole on the kicks; the selection walks down with them ----
+          const rows = root.querySelectorAll(".f06-row");
+          const arrive = [[0, at(33.63)], [1, at(33.63)], [2, at(34.116)], [3, at(34.116)], [4, at(34.557)], [5, L8], [6, at(35.479)], [7, at(35.479)]];
+          // initial hides go on the elements before the timeline (a tl.set at 0 does not render at exactly 0)
+          gsap.set(rows, { opacity: 0 });
+          for (const [i, t] of arrive) tl.set(rows[i], { opacity: 1 }, t);
+          // [time, row]: the bar sits on the newest row, lands on row 5 (L7) on the "line" kick and on row 6 with L8
+          const SEL = [[ENTER, 1], [at(34.116), 3], [at(34.557), 4], [L8, 5]];
+          const bar = $("f06-bar");
+          gsap.set(bar, { opacity: 0 });
+          tl.set(bar, { opacity: 1 }, ENTER);
+          // before the Enter the screen is the prompt and the line: the prompt reads large, L7 sits high; the output
+          // arrives on the downbeat and pushes both into their places
+          const PX = 19.2;
+          tl.fromTo($("f06-cmd"), { scale: 1.6, transformOrigin: "0% 0%" }, { scale: 1, duration: 0.42, ease: "power3.inOut" }, ENTER - 0.02);
+          tl.fromTo($("f06-l7"), { y: -15 * PX }, { y: 0, duration: 0.42, ease: "power3.inOut" }, ENTER - 0.02);
+
+          // ---- the lyric: L7, then L8 in its place (a 0 ms content swap on 35.14) ----
+          const w7 = $("f06-l7").querySelectorAll(".f06-w");
+          [31.199, 31.68, 32.02, 32.46].forEach((T, i) => HR.lead(tl, w7[i], at(T)));
+          HR.hero(tl, w7[4], BLAME, { spread: 22, over: 1.2, pre: 0.14, sharp: true });
+          [33.02, 33.26, 33.703, 34.5].forEach((T, i) => HR.lead(tl, w7[5 + i], at(T)));
+          tl.set($("f06-l7"), { opacity: 0 }, L8 - 0.03);
+          const w8 = $("f06-l8").querySelectorAll(".f06-w");
+          [35.14, 35.474, 36.437, 36.796, 37.081].forEach((T, i) => HR.lead(tl, w8[i], at(T)));
+          HR.hero(tl, w8[5], NAME, { spread: 22, over: 1.22, pre: 0.14, sharp: true });
+          HR.lead(tl, w8[6], NOT);
+          HR.hero(tl, w8[7], MINE, { spread: 18, over: 1.16, pre: 0.12, sharp: true });
+
+          // ---- every single one: each `you` in the author column pops in turn; on "name" the column flares ----
+          const who = root.querySelectorAll(".f06-who");
+          tl.fromTo(who, { scale: 1.6 }, { scale: 1, duration: 0.32, ease: "back.out(2.4)", stagger: 0.15, immediateRender: false }, at(35.479));
+          tl.fromTo(who, { scale: 1.35 }, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.5)", stagger: { each: 0.012 }, immediateRender: false }, NAME);
+
+          // ---- not mine: the tally lands, you 8 on "not", me 0 on "mine" ----
+          const t1 = $("f06-t1"), t2 = $("f06-t2");
+          gsap.set([t1, t2], { opacity: 0 });
+          tl.set(t1, { opacity: 1 }, NOT).set(t2, { opacity: 1 }, MINE);
+          tl.fromTo(t1, { scale: 1.18 }, { scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, NOT);
+          tl.fromTo(t2, { scale: 1.18 }, { scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, MINE);
+
+          // ---- the camera: a slow lean in through L7, a punch on "blame", a truck along the gutter through L8,
+          //      a punch on "name", a nudge on "mine" ----
+          tl.fromTo(stage.cam, { z: 1.0, x: 0, y: 0 }, { z: 1.022, duration: BLAME - 0.06, ease: "sine.inOut" }, 0);
+          tl.to(stage.cam, { z: 1.05, y: -6, duration: 0.06, ease: "power2.in" }, BLAME - 0.06);
+          tl.to(stage.cam, { z: 1.018, y: 0, duration: 0.55, ease: "elastic.out(1, 0.5)" }, BLAME);
+          tl.to(stage.cam, { z: 1.026, y: -8, duration: L8 - BLAME - 0.56, ease: "sine.inOut" }, BLAME + 0.56);
+          tl.to(stage.cam, { x: -24, z: 1.032, duration: NAME - 0.06 - L8, ease: "none" }, L8);
+          tl.to(stage.cam, { z: 1.06, duration: 0.06, ease: "power2.in" }, NAME - 0.06);
+          tl.to(stage.cam, { z: 1.034, x: -30, duration: MINE - 0.05 - NAME, ease: "power2.out" }, NAME);
+          tl.to(stage.cam, { z: 1.05, duration: 0.05, ease: "power2.in" }, MINE - 0.05);
+          tl.to(stage.cam, { z: 1.04, x: -34, duration: DUR - MINE, ease: "power2.out" }, MINE);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: typing, cursor, selection, glow, camera ----
+          const typed = $("f06-typed"), cur = $("f06-cursor"), blame = $("f06-blame");
+          const heroes = root.querySelectorAll(".f06-lyric .hr-glow");
+          const ROW = 2.55 * 19.2; // one blame row in px at 1920 wide
+          const ease = (x) => 1 - Math.pow(1 - x, 3);
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            let s = keys[0]; for (const k of keys) if (k[0] <= t) s = k;
+            typed.textContent = s[1];
+            cur.style.opacity = t < ENTER && (t - s[0] < 0.35 || Math.floor((t - s[0]) * 2) % 2 === 0) ? 1 : 0;
+            let k = -1; for (let i = 0; i < SEL.length; i++) if (SEL[i][0] <= t) k = i;
+            const on = k < 0 ? -1 : SEL[k][1];
+            const from = k > 0 ? SEL[k - 1][1] : on, p = k < 0 ? 1 : ease(Math.min(1, (t - SEL[k][0]) / 0.14));
+            bar.style.transform = `translateY(${((from + (on - from) * p) * ROW).toFixed(2)}px)`;
+            rows.forEach((r, i) => r.classList.toggle("f06-on", i === on));
+            // the author column glows only from "name" on: a flare that settles to a steady burn on the bass
+            blame.style.setProperty("--hr-glow", t < NAME ? "0" : (0.3 + 1.1 * Math.exp(-(t - NAME) / 0.35) + 0.3 * HR.band("bass", T)).toFixed(3));
+            heroes.forEach((el) => HR.glow(el, T, 0.3, 0.45));
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["06-blame"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

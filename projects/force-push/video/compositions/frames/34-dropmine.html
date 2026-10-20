@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 34 — dropmine (the drop, L55–L56, 177.150–184.530). Two sets, one hard cut on "Origin's".
+         A (L55): chorus 1's idea at drop scale. The poster lyric stacks down the right (33 ends on the left); on "local"
+         (177.76) the ex's clone opens at the bottom left, a `you@laptop` terminal that types `git status` and gets 14's answer on the kicks
+         (diverged, 1095 and 1). On "care" (179.70) the clone collapses into its corner and is gone, and "care" slams.
+         B (L56): the singer's terminal, top left, with 03's stash still in its scrollback (`stash@{3 years ago}: On main:
+         me`, plant 3). "origin's" slams full-frame on 180.16 and is held while `git stash pop` types; Enter on the
+         180.897 downbeat, git's status prints on the kicks, and on "mine" (181.78) the pop lands: the old stash row is
+         struck, its `me` flies down into `new file:   me`, `Dropped refs/stash@{0} (…)` prints, "origin's" steps back
+         and "mine" explodes in at display scale, the frame's biggest hit. "and you're not there" builds beside it.
+         Every punch and the shake are sized by the measured drums. Hard cut into 35's chant. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-700.woff2") format("woff2"); font-weight: 700; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826; --ink-on-cream: #111111; --muted-on-cream: #5F5B54;
+          background: var(--ink); color: var(--cream);
+        }
+        #f34-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f34-strip b { color: var(--fire); font-weight: 600; }
+        .f34-cur { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.18em; }
+
+        /* ---- A: the poster lyric down the left, the ex's clone at the right ---- */
+        .f34-a { position: absolute; right: 5.5cqw; text-align: right; color: var(--cream); white-space: nowrap; }
+        .f34-s { font: 800 5.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; }
+        .f34-d { font: 900 18cqw/0.84 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--fire); }
+        #f34-a1 { top: 7.4cqw; }
+        #f34-a2 { top: 12.8cqw; right: 5.2cqw; display: flex; align-items: baseline; justify-content: flex-end; }
+        #f34-a2 .f34-s { margin-left: 0.25em; }
+        #f34-a3 { top: 28.9cqw; }
+        #f34-a4 { top: 34.4cqw; right: 5.4cqw; }
+        #f34-clone { position: absolute; left: 5.5cqw; top: 36.4cqw; width: 37.5cqw; background: var(--ink-alt); border: 1px solid var(--border);
+          transform-origin: 0% 100%; }
+        #f34-clone .f34-bar { display: flex; justify-content: space-between; padding: 0.5cqw 0.9cqw; border-bottom: 1px solid var(--border);
+          font: 500 0.72cqw/1.4 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); }
+        #f34-clone .f34-body { padding: 0.8cqw 0.9cqw 1cqw; font: 400 1cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f34-clone .f34-c { color: var(--cream); }
+        #f34-clone b { color: var(--fire); font-weight: 600; }
+
+        /* ---- B: the singer's terminal across the top, the lyric under it ---- */
+        #f34-term { position: absolute; left: 5.5cqw; top: 7.4cqw; font: 400 1.05cqw/1.42 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        #f34-term > div { position: relative; height: 1.42em; white-space: pre; }
+        #f34-term .f34-c { color: var(--cream); }
+        #f34-term .f34-ref { color: var(--cream); font-weight: 500; }
+        #f34-term .f34-me { color: var(--fire); font-weight: 600; display: inline-block; }
+        #f34-term .f34-hash { color: var(--cream-muted); }
+        #f34-x { position: absolute; left: -0.3em; top: 0.68em; width: 33.6ch; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
+        #f34-origin { position: absolute; left: 4.3cqw; top: 26.6cqw; font: 900 27cqw/0.84 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--cream);
+          white-space: nowrap; transform-origin: 0% 0%; }
+        #f34-b2 { position: absolute; left: 4.3cqw; top: 31.9cqw; white-space: nowrap; }
+        #f34-mine { display: inline-block; font: 900 23cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--fire); }
+        #f34-tail { display: inline-block; margin-left: 0.5em; font: 800 5.6cqw/1.02 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); }
+        /* hidden until their time (also set on the timeline, for seeking back) */
+        #f34-term, #f34-origin, #f34-b2, #f34-mine, .f34-o1, .f34-o2, .f34-o3, .f34-o4, #f34-co1, #f34-co2, #f34-co3, #f34-co4 { opacity: 0; }
+        #f34-clone { visibility: hidden; }
+      </style>
+      <div id="root" data-composition-id="34-dropmine" data-width="1920" data-height="1080" data-duration="7.38">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f34-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.5">
+          <div id="f34-clone">
+            <div class="f34-bar"><span>you@laptop</span><span>~/us</span></div>
+            <div class="f34-body"><div><span>you@laptop ~/us (main) $ </span><span class="f34-c" id="f34-ccmd"></span><span class="f34-cur" id="f34-ccur1"></span></div><div class="f34-c" id="f34-co1">On branch main</div><div class="f34-c" id="f34-co2">Your branch and 'origin/main' have diverged,</div><div class="f34-c" id="f34-co3">and have <b>1095</b> and 1 different commits each, respectively.</div><div id="f34-co4"><span>you@laptop ~/us (main) $ </span><span class="f34-cur" id="f34-ccur2"></span></div></div>
+          </div>
+          <div id="f34-term">
+            <div>~/us (main) $ <span class="f34-c">git stash list --date=relative</span></div>
+            <div id="f34-row" data-layout-allow-occlusion><span class="f34-ref" data-layout-allow-occlusion>stash@{3 years ago}</span>: On main: <span class="f34-me" id="f34-oldme">me</span><i id="f34-x" data-layout-allow-occlusion></i></div>
+            <div>~/us (main) $ <span class="f34-c" id="f34-cmd"></span><span class="f34-cur" id="f34-cur1"></span></div>
+            <div class="f34-o1">On branch main</div>
+            <div class="f34-o1">Your branch is up to date with <span class="f34-c">'origin/main'</span>.</div>
+            <div class="f34-o2"> </div>
+            <div class="f34-o2 f34-c">Changes to be committed:</div>
+            <div class="f34-o2">  (use "git restore --staged &lt;file&gt;..." to unstage)</div>
+            <div class="f34-o3 f34-c">        new file:   <span class="f34-me" id="f34-newme">me</span></div>
+            <div class="f34-o3"> </div>
+            <div class="f34-o3">Dropped <span class="f34-ref">refs/stash@{0}</span> <span class="f34-hash">(a3c9e1f07b52d8e46c1f9a0b37d2e85c4f6a1b90)</span></div>
+            <div class="f34-o4">~/us (main) $ <span class="f34-cur" id="f34-cur2"></span></div>
+          </div>
+        </div>
+        <div class="hr-layer" data-depth="0.9">
+          <div id="f34-shk">
+            <div class="f34-a f34-s" id="f34-a1"><span class="f34-w">keep</span> <span class="f34-w">your</span></div>
+            <div class="f34-a" id="f34-a2"><span class="f34-w f34-d hr-glowbox" id="f34-local">local</span><span class="f34-w f34-s">copy,</span></div>
+            <div class="f34-a f34-s" id="f34-a3"><span class="f34-w">i</span> <span class="f34-w">don't</span></div>
+            <div class="f34-a" id="f34-a4"><span class="f34-w f34-d hr-glowbox" id="f34-care">care</span></div>
+            <div id="f34-origin"><span id="f34-ow">origin's</span></div>
+            <div id="f34-b2"><span id="f34-mine" class="hr-glowbox">mine</span><span id="f34-tail"><span class="f34-t">and</span> <span class="f34-t">you're</span><br /><span class="f34-t">not</span> <span class="f34-t">there</span></span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 7.38, T0 = 177.15;
+          const root = document.querySelector('[data-composition-id="34-dropmine"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const at = (T) => T - T0;
+          // the drop: punches scale with this span's mean drum envelope over 10's (0.409), capped
+          let sum = 0, n = 0;
+          for (let T = T0; T < T0 + DUR; T += 0.02) { sum += HR.band("drums", T); n++; }
+          const K = Math.max(1, Math.min(1.35, sum / n / 0.409));
+          const pk = (T) => (0.022 + 0.04 * HR.band("drums", T0 + T + 0.03)) * K; // a camera punch sized by the drums at local T
+          const stage = HR.stage(root, { seed: 34, pulse: K });
+          const tl = gsap.timeline({ paused: true });
+
+          const LOCAL = at(177.76), CARE = at(179.7), CUT = at(180.16), MINE = at(181.78), THERE = at(183.38);
+          const C_ENT = at(178.141), C_OUT = [at(178.141), at(178.608), at(179.063), at(179.512)];
+          const ENTER = at(180.897), E2 = at(181.362), PROMPT = at(182.264);
+
+          // ---- the hard cut on "Origin's": set A leaves, set B is there (one frame early, so the slam lands on 180.16) ----
+          const A = [$("f34-a1"), $("f34-a2"), $("f34-a3"), $("f34-a4"), $("f34-clone")];
+          const B = [$("f34-term"), $("f34-origin"), $("f34-b2")];
+          tl.set(B, { opacity: 0 }, 0).set(B, { opacity: 1 }, CUT - 0.034);
+          tl.set(A, { opacity: 1 }, 0).set(A, { opacity: 0 }, CUT - 0.034);
+
+          // ---- A: the lyric, every word on its own start ----
+          const w = root.querySelectorAll(".f34-w");
+          HR.lead(tl, w[0], at(177.18)); HR.lead(tl, w[1], at(177.46));
+          HR.hero(tl, w[2], LOCAL, { spread: 34 * K, over: 1 + 0.22 * K, pre: 0.14, sharp: true });
+          HR.lead(tl, w[3], at(178.1));
+          HR.lead(tl, w[4], at(178.839)); HR.lead(tl, w[5], at(179.26));
+          HR.hero(tl, w[6], CARE, { spread: 40 * K, over: 1 + 0.26 * K, pre: 0.16, sharp: true });
+          // the accent is a pointer: it leaves "local" for "care"
+          tl.fromTo($("f34-local"), { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.22, ease: "power2.out", immediateRender: false }, CARE);
+
+          // ---- A: the ex's clone opens on "local", git answers on the kicks, and on "care" it folds into its corner ----
+          const clone = $("f34-clone");
+          tl.set(clone, { visibility: "hidden" }, 0).set(clone, { visibility: "visible" }, LOCAL - 0.02);
+          tl.fromTo(clone, { scale: 0.88, y: 18 }, { scale: 1, y: 0, duration: 0.32, ease: "expo.out", immediateRender: false }, LOCAL - 0.02);
+          ["f34-co1", "f34-co2", "f34-co3", "f34-co4"].forEach((id, i) => tl.set($(id), { opacity: 0 }, 0).set($(id), { opacity: 1 }, C_OUT[i]));
+          tl.fromTo(clone, { scale: 1, opacity: 1 }, { scale: 0.04, opacity: 0.4, duration: 0.26, ease: "power3.in", immediateRender: false }, CARE);
+          tl.set(clone, { visibility: "hidden" }, CARE + 0.26);
+          const ckeys = [[0, ""]], CC = "git status";
+          for (let i = 0; i < CC.length; i++) ckeys.push([LOCAL + 0.05 + (0.3 * i) / CC.length, CC.slice(0, i + 1)]);
+
+          // ---- B: the terminal. `git stash pop` types through the held "Origin's"; Enter on the downbeat; output on the kicks ----
+          const keys = [[0, ""]], CMD = "git stash pop", TA = CUT + 0.16, TB = ENTER - 0.1;
+          for (let i = 0; i < CMD.length; i++) keys.push([TA + ((TB - TA) * i) / CMD.length, CMD.slice(0, i + 1)]);
+          const show = (sel, t) => { const els = root.querySelectorAll(sel); tl.set(els, { opacity: 0 }, 0).set(els, { opacity: 1 }, t); };
+          show(".f34-o1", ENTER); show(".f34-o2", E2); show(".f34-o3", MINE); show(".f34-o4", PROMPT);
+          // the pop, on "mine": the stash row is struck, and its `me` comes out of it, down into the working tree
+          tl.set($("f34-oldme"), { opacity: 1 }, 0).set($("f34-oldme"), { opacity: 0 }, MINE);
+          tl.fromTo($("f34-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out" }, MINE + 0.03);
+          tl.fromTo($("f34-row").querySelector(".f34-ref"), { color: "#F0ECE5" }, { color: "#888880", duration: 0.2, immediateRender: false }, MINE + 0.1);
+          const PX = 1920 / 100 * 1.05, CH = 0.6 * PX, LH = 1.42 * PX; // the terminal's cell, in px at 1920
+          tl.fromTo($("f34-newme"), { x: 10 * CH, y: -7 * LH, scale: 1.6 }, { x: 0, y: 0, scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, MINE);
+
+          // ---- B: the lyric. "origin's" full-frame and held; on "mine" it steps back and "mine" explodes in ----
+          HR.hero(tl, $("f34-ow"), CUT, { spread: 46 * K, over: 1 + 0.2 * K, pre: 0.034, sharp: true });
+          const C1 = 1920 / 100;
+          // the step back is a scale (27cqw → 8.6cqw) about the top-left corner, so nothing reflows
+          tl.fromTo($("f34-origin"), { scale: 1, y: 0 }, { scale: 8.6 / 27, y: -1.3 * C1, duration: 0.2, ease: "power3.inOut", immediateRender: false }, MINE - 0.15);
+          tl.set($("f34-mine"), { opacity: 0 }, 0).set($("f34-mine"), { opacity: 1 }, MINE - 0.165);
+          WOW.explode(tl, $("f34-mine"), MINE, { fx: false, from: "bottom", pre: 0.16, seed: 34 });
+          WOW.shake(tl, $("f34-shk"), MINE, { amp: 9 * K * HR.band("drums", 181.8) + 4, dur: 0.42, seed: 34 });
+          const tw = root.querySelectorAll(".f34-t");
+          HR.lead(tl, tw[0], at(182.2)); HR.lead(tl, tw[1], at(182.5)); HR.lead(tl, tw[2], at(182.94));
+          HR.hero(tl, tw[3], THERE, { spread: 14 * K, over: 1.14, pre: 0.1, sharp: true });
+
+          // ---- the camera: punches on the heroes sized by the drums; a carrier move through every phrase ----
+          const cam = stage.cam;
+          tl.fromTo(cam, { z: 1.0, x: 0, y: 0 }, { z: 1.012, x: 8, duration: LOCAL - 0.06, ease: "none" }, 0);
+          tl.to(cam, { z: 1.012 + pk(LOCAL), y: -7, duration: 0.06, ease: "power2.in" }, LOCAL - 0.06);
+          tl.to(cam, { z: 1.016, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, LOCAL + 0.01);
+          tl.to(cam, { z: 1.03, x: 20, duration: CARE - 0.06 - (LOCAL + 0.51), ease: "none" }, LOCAL + 0.51);
+          tl.to(cam, { z: 1.03 + pk(CARE) * 1.2, y: -10, duration: 0.06, ease: "power2.in" }, CARE - 0.06);
+          tl.to(cam, { z: 1.036, y: 0, duration: 0.42, ease: "elastic.out(1, 0.5)" }, CARE + 0.01);
+          // B: a new shot, punched in on the cut; it settles and pushes slowly through the held "Origin's"
+          tl.set(cam, { z: 1.0 + pk(CUT) * 1.3, x: 0, y: -8 }, CUT - 0.034);
+          tl.to(cam, { z: 1.0, y: 0, duration: 0.55, ease: "elastic.out(1, 0.5)" }, CUT);
+          tl.to(cam, { z: 1.022, x: 10, duration: ENTER - 0.05 - (CUT + 0.55), ease: "none" }, CUT + 0.55);
+          tl.to(cam, { z: 1.022 + pk(ENTER) * 0.6, duration: 0.05, ease: "power2.in" }, ENTER - 0.05);
+          tl.to(cam, { z: 1.03, x: 16, duration: MINE - 0.07 - ENTER, ease: "power1.out" }, ENTER);
+          // "mine": the biggest punch of the frame
+          tl.to(cam, { z: 1.03 + pk(MINE) * 1.6, y: -14, duration: 0.07, ease: "power2.in" }, MINE - 0.07);
+          tl.to(cam, { z: 1.02, y: 0, duration: 0.65, ease: "elastic.out(1, 0.45)" }, MINE);
+          tl.to(cam, { z: 1.034, x: 4, duration: THERE - 0.06 - (MINE + 0.65), ease: "none" }, MINE + 0.65);
+          tl.to(cam, { z: 1.034 + pk(THERE) * 0.7, y: -6, duration: 0.06, ease: "power2.in" }, THERE - 0.06);
+          tl.to(cam, { z: 1.04, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, THERE);
+          tl.to(cam, { z: 1.056, x: -10, duration: DUR - (THERE + 0.5), ease: "none" }, THERE + 0.5);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: typing, cursors, glow, shake, the camera ----
+          const cmd = $("f34-cmd"), cur1 = $("f34-cur1"), cur2 = $("f34-cur2");
+          const ccmd = $("f34-ccmd"), ccur1 = $("f34-ccur1"), ccur2 = $("f34-ccur2");
+          const local = $("f34-local"), care = $("f34-care"), mine = $("f34-mine");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          const typed = (ks, t) => { let k = ks[0]; for (const s of ks) if (s[0] <= t) k = s; return k; };
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            const ck = typed(ckeys, t); ccmd.textContent = ck[1];
+            ccur1.style.opacity = t < C_ENT && blink(t, Math.max(ck[0], LOCAL)) ? 1 : 0;
+            ccur2.style.opacity = t >= C_OUT[3] && blink(t, C_OUT[3]) ? 1 : 0;
+            const k = typed(keys, t); cmd.textContent = k[1];
+            cur1.style.opacity = t < ENTER && blink(t, Math.max(k[0], CUT)) ? 1 : 0;
+            cur2.style.opacity = t >= PROMPT && blink(t, PROMPT) ? 1 : 0;
+            if (t < CARE) HR.glow(local, T, 0.3, 0.45 * K); else local.style.setProperty("--hr-glow", Math.max(0, 0.6 - (t - CARE) * 3).toFixed(3));
+            HR.glow(care, T, 0.3, 0.5 * K); HR.glow(mine, T, 0.35, 0.55 * K);
+            WOW.draw(tl, T0);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["34-dropmine"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

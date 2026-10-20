@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 1 — status (intro, 0–15.081). Reference frame (SYSTEM.md): the opening.
+         t = 0 is the poster and thumbnail (the bookend 37 returns to). At 1.22 the unsent `git push --force` is backspaced
+         ("not yet"), the title recedes to a ghost and the prompt rises to become the terminal's first line; "git
+         status." is typed on its word times and git answers with the lyric. The pad (9.24–15.08) clears the terminal and
+         draws three years of the log: two lanes, `you` branching off and merging back on the 13.215 downbeat, while the
+         counter climbs to 1,095. Patterns for workers: the keystroke list (f01type/f01text), the counter in render(),
+         lanes drawn with pathLength + strokeDashoffset, commit dots popping when the line reaches them. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        /* header strip: the repo, the label voice (the counter takes its right side in the pad) */
+        #f01-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f01-strip b { color: var(--cream); font-weight: 600; }
+        #f01-strip .f01-count { color: var(--fire); font-weight: 600; }
+        #f01-repo, #f01-counter { position: absolute; right: 0; top: 0; }
+        /* the poster: the song's title as the command it is about to run */
+        #f01-title { position: absolute; left: 4.6cqw; top: 5.6cqw; font: 900 22.5cqw/0.78 "Barlow", sans-serif;
+          letter-spacing: -0.055em; color: var(--cream); transform-origin: 0% 0%; }
+        #f01-title span { display: block; }
+        #f01-title .f01-push { color: var(--fire); text-shadow: 0 0 2.2cqw rgba(232, 93, 38, 0.35); }
+        /* the terminal: one prompt, rising from the poster's foot to the top */
+        .f01-prompt { position: absolute; left: 5.5cqw; font: 500 2.25cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted);
+          white-space: pre; transform-origin: 0% 0%; }
+        .f01-prompt .f01-cmd { color: var(--cream); }
+        .f01-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        #f01-p1 { top: 46.9cqw; }
+        #f01-p2 { top: 8cqw; transform: scale(1.35); }
+        #f01-hint { position: absolute; left: 5.5cqw; top: 51.3cqw; font: 400 0.95cqw/1.55 "IBM Plex Mono", monospace; color: var(--cream-hint); }
+        /* git's answer: the lyric is the output */
+        #f01-branch { position: absolute; left: 5.5cqw; top: 14.7cqw; font: 400 1.45cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        #f01-out { position: absolute; left: 5.1cqw; top: 17.1cqw; font: 800 8.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
+        #f01-out .f01-hero { color: var(--fire); }
+        #f01-clean { position: absolute; left: 5.5cqw; top: 27.6cqw; font: 400 1.3cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        #f01-aside { position: absolute; left: 5.5cqw; top: 32.2cqw; font: italic 400 6.6cqw/1.05 "Instrument Serif", serif; color: var(--cream); white-space: nowrap; }
+        /* the poster's log, dimmed out when the terminal takes over */
+        #f01-log { position: absolute; left: 69.5cqw; top: 9.6cqw; width: 25cqw; }
+        #f01-log .f01-head { font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase;
+          color: var(--cream-muted); padding-bottom: 0.6cqw; margin-bottom: 1.2cqw; border-bottom: 1px solid var(--border);
+          display: flex; justify-content: space-between; }
+        #f01-log .f01-head b { color: var(--fire); font-weight: 600; }
+        #f01-loggraph { position: absolute; left: 0; top: 2.9cqw; width: 2.6cqw; height: 32cqw; overflow: visible; }
+        .f01-row { position: relative; height: 3.9cqw; padding-left: 3.6cqw; font: 400 0.98cqw/1.25 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        .f01-row .f01-h { color: var(--cream-hint); }
+        .f01-row .f01-a { display: inline-block; width: 3.2cqw; }
+        .f01-row .f01-you { color: var(--fire); }
+        .f01-row .f01-me { color: var(--cream); }
+        .f01-row .f01-msg { display: block; color: var(--cream); font-size: 1.12cqw; }
+        .f01-row.f01-dim .f01-msg { color: var(--cream-muted); }
+        /* the pad: three years, left to right */
+        #f01-graph { position: absolute; left: 5.5cqw; top: 16.4cqw; width: 89cqw; height: 32.3cqw; overflow: visible; }
+        #f01-graph text { font-family: "IBM Plex Mono", monospace; }
+      </style>
+      <div id="root" data-composition-id="01-status" data-width="1920" data-height="1080" data-duration="15.081">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f01-strip"><span><b>NEAD</b> &nbsp;·&nbsp; force push</span><span style="position: relative; min-width: 22cqw; height: 1.2cqw;">
+            <span id="f01-repo">~/us &nbsp;·&nbsp; main</span><span id="f01-counter" style="opacity: 0">commits by you &nbsp;<span class="f01-count" id="f01-n">0</span></span></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.55" data-layout-ignore>
+          <div id="f01-title"><span>force</span><span class="f01-push">push</span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.45" data-layout-ignore>
+          <div id="f01-log">
+            <div class="f01-head"><span>git log --graph</span><span>commits by you <b>1,095</b></span></div>
+            <svg id="f01-loggraph" viewBox="0 0 50 615">
+              <line x1="12" y1="6" x2="12" y2="530" stroke="#505048" stroke-width="2" />
+              <path d="M12 82 C 12 110, 38 112, 38 140 L 38 452 C 38 480, 12 482, 12 510" fill="none" stroke="#E85D26" stroke-width="2" />
+              <g fill="#F0ECE5"><circle cx="12" cy="6" r="6" /><circle cx="12" cy="380" r="6" /></g>
+              <g fill="#0A0A0A" stroke="#E85D26" stroke-width="2.5"><circle cx="38" cy="155" r="5.5" /><circle cx="38" cy="230" r="5.5" />
+                <circle cx="38" cy="305" r="5.5" /><circle cx="38" cy="455" r="5.5" /></g>
+              <circle cx="12" cy="82" r="5.5" fill="#0A0A0A" stroke="#505048" stroke-width="2.5" />
+              <circle cx="12" cy="530" r="5.5" fill="#0A0A0A" stroke="#505048" stroke-width="2.5" />
+            </svg>
+            <div class="f01-row"><span class="f01-h">e81b0d4</span> <span class="f01-a f01-me">me</span>HEAD -&gt; main<span class="f01-msg">ready.</span></div>
+            <div class="f01-row f01-dim"><span class="f01-h">9d03b7e</span> <span class="f01-a f01-me">me</span>a year ago<span class="f01-msg">merge branch 'you'</span></div>
+            <div class="f01-row"><span class="f01-h">3f2a1c9</span> <span class="f01-a f01-you">you</span>2 years ago<span class="f01-msg">you and me</span></div>
+            <div class="f01-row"><span class="f01-h">a7c21f0</span> <span class="f01-a f01-you">you</span>2 years ago<span class="f01-msg">we'll get to it</span></div>
+            <div class="f01-row"><span class="f01-h">4c9d7a1</span> <span class="f01-a f01-you">you</span>2 years ago<span class="f01-msg">just a feature</span></div>
+            <div class="f01-row f01-dim"><span class="f01-h">91be33a</span> <span class="f01-a f01-me">me</span>3 years ago<span class="f01-msg">moved in</span></div>
+            <div class="f01-row"><span class="f01-h">0b5f6e2</span> <span class="f01-a f01-you">you</span>3 years ago<span class="f01-msg">nothing on the side</span></div>
+            <div class="f01-row f01-dim"><span class="f01-h">5d0a8c4</span> <span class="f01-a f01-me">me</span>3 years ago<span class="f01-msg">initial commit</span></div>
+          </div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.7" data-layout-ignore>
+          <svg id="f01-graph" viewBox="0 0 1708 620">
+            <line x1="0" y1="600" x2="1708" y2="600" stroke="#282826" stroke-width="2" />
+            <g fill="#888880" font-size="24" letter-spacing="2">
+              <text x="0" y="572">2023</text><text x="560" y="572">2024</text><text x="1120" y="572">2025</text><text x="1640" y="572">2026</text>
+            </g>
+            <g stroke="#505048" stroke-width="2"><line x1="2" y1="592" x2="2" y2="608" /><line x1="562" y1="592" x2="562" y2="608" />
+              <line x1="1122" y1="592" x2="1122" y2="608" /><line x1="1682" y1="592" x2="1682" y2="608" /></g>
+            <path id="f01-lane-me" d="M10 140 H1690" pathLength="100" fill="none" stroke="#888880" stroke-width="4" />
+            <path id="f01-lane-you" d="M150 140 C 230 140, 230 380, 310 380 H1340 C 1420 380, 1420 140, 1500 140" pathLength="100"
+              fill="none" stroke="#E85D26" stroke-width="4" />
+            <g id="f01-dots"></g>
+          </svg>
+        </div>
+
+        <div class="hr-layer" data-depth="0.85">
+          <div class="f01-prompt" id="f01-p1"><span>~/us (main) $ </span><span class="f01-cmd" id="f01-cmd1"></span><span class="f01-cursor" id="f01-cur1"></span></div>
+          <div id="f01-hint" data-layout-ignore>hint: Updates were rejected because the tip of your current branch is behind<br />hint: its remote counterpart.</div>
+          <div id="f01-branch">On branch main</div>
+          <div id="f01-out"><span class="f01-w">nothing</span> <span class="f01-w">to</span> <span class="f01-w f01-hero hr-glow">commit.</span></div>
+          <div id="f01-clean">nothing to commit, working tree clean</div>
+          <div id="f01-aside"><span class="f01-s">story</span> <span class="f01-s">of</span> <span class="f01-s">your</span> <span class="f01-s">life.</span></div>
+          <div class="f01-prompt" id="f01-p2" style="opacity: 0"><span>~/us (main) $ </span><span class="f01-cmd" id="f01-cmd2"></span><span class="f01-cursor" id="f01-cur2"></span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 15.081, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="01-status"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 11 });
+          const tl = gsap.timeline({ paused: true });
+
+          // ---- keystrokes: a list of [time, text] states; the text at time t is the last state at or before t ----
+          const f01type = (states, t0, t1, text) => {
+            const base = states[states.length - 1][1];
+            for (let i = 0; i < text.length; i++) states.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
+          };
+          const f01erase = (states, t0, t1) => {
+            const base = states[states.length - 1][1];
+            for (let i = 1; i <= base.length; i++) states.push([t0 + ((t1 - t0) * (i - 1)) / base.length, base.slice(0, base.length - i)]);
+          };
+          const f01text = (states, t) => { let k = 0; for (let i = 0; i < states.length; i++) if (states[i][0] <= t) k = i; return states[k]; };
+          const keys1 = [[0, "git push --force"]];
+          f01erase(keys1, 1.22, 1.5);                    // not yet
+          f01type(keys1, 1.56, 1.7, "git");              // "Git" 1.560
+          f01type(keys1, 1.716, 2.35, " status.");      // "status." 1.716
+          const keys2 = [[0, ""]];
+          f01type(keys2, 9.42, 10.1, "git log --graph --all");
+          const ENTER1 = 2.95; // the command runs; git answers with the next lines
+
+          // ---- the poster recedes; the prompt rises to be the terminal's first line ----
+          tl.fromTo($("f01-title"), { opacity: 1, scale: 1, y: 0 }, { opacity: 0.05, scale: 0.94, y: -1.5 * PX, duration: 0.3, ease: "power2.inOut" }, 1.16);
+          tl.fromTo($("f01-title"), { opacity: 0.05 }, { opacity: 0, duration: 0.3, immediateRender: false }, 9.06);
+          tl.fromTo($("f01-graph"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power1.out" }, 9.6);
+          tl.fromTo([$("f01-log"), $("f01-hint")], { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power1.in" }, 1.2);
+          tl.fromTo($("f01-p1"), { y: 0, scale: 1 }, { y: (8 - 46.9) * PX, scale: 1.73, duration: 0.36, ease: "power3.inOut" }, 1.18);
+
+          // ---- git answers: the lyric is the output ----
+          tl.set($("f01-branch"), { opacity: 0 }, 0).set($("f01-branch"), { opacity: 1 }, 4.5);
+          const out = root.querySelectorAll(".f01-w");
+          HR.lead(tl, out[0], 4.739); HR.lead(tl, out[1], 5.3);
+          HR.hero(tl, out[2], 5.46, { spread: 18, over: 1.14, sharp: true });
+          tl.set($("f01-clean"), { opacity: 0 }, 0).set($("f01-clean"), { opacity: 1 }, 5.95);
+          const aside = root.querySelectorAll(".f01-s");
+          [7.403, 8.16, 8.28, 8.5].forEach((t, i) => HR.lead(tl, aside[i], t, { from: 60, dur: 0.45 }));
+
+          // ---- the pad: clear, type the log command, draw three years ----
+          HR.exit(tl, $("f01-out"), 9.02); HR.exit(tl, $("f01-aside"), 9.06);
+          tl.fromTo([$("f01-p1"), $("f01-branch"), $("f01-clean")], { opacity: 1 }, { opacity: 0, duration: 0.18, immediateRender: false }, 9.06);
+          tl.set($("f01-p2"), { opacity: 1 }, 9.3);
+          tl.fromTo($("f01-repo"), { opacity: 1 }, { opacity: 0, duration: 0.2, immediateRender: false }, 9.42);
+          tl.fromTo($("f01-counter"), { opacity: 0 }, { opacity: 1, duration: 0.2, immediateRender: false }, 9.5);
+          const ME0 = 10.0, ME1 = 13.69, YOU0 = 10.4, YOU1 = 13.215; // you merges back on the downbeat; HEAD on the 13.69 kick
+          tl.fromTo($("f01-lane-me"), { strokeDasharray: "100 100", strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: ME1 - ME0, ease: "none" }, ME0);
+          tl.fromTo($("f01-lane-you"), { strokeDasharray: "100 100", strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: YOU1 - YOU0, ease: "none" }, YOU0);
+          // commits: [x, lane y, who, label, label below?]; each pops when its lane's pen reaches it
+          const dots = $("f01-dots"), NS = "http://www.w3.org/2000/svg";
+          const commits = [
+            [10, 140, "me", "initial commit"], [330, 380, "you", "nothing on the side", 1], [470, 140, "me", "moved in"],
+            [720, 380, "you", "just a feature", 1], [980, 380, "you", "we'll get to it", 1], [1150, 380, "you", "", 1],
+            [1300, 380, "you", "you and me", 1], [1500, 140, "me", "merge branch 'you'", 0, "end"], [1690, 140, "me", "HEAD -> main", 0, "end"],
+          ];
+          const whenMe = (x) => ME0 + ((ME1 - ME0) * (x - 10)) / 1680;
+          const whenYou = (x) => YOU0 + ((YOU1 - YOU0) * (x - 150)) / (1500 - 150); // ponytail: linear along x; the bends are short
+          for (const [x, y, who, label, below, anchor] of commits) {
+            const t = who === "you" ? whenYou(x) : x === 1500 ? YOU1 : whenMe(x);
+            const g = document.createElementNS(NS, "g");
+            const c = document.createElementNS(NS, "circle");
+            c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", who === "you" ? 11 : 12);
+            c.setAttribute("fill", who === "you" ? "#0A0A0A" : "#F0ECE5");
+            if (who === "you") { c.setAttribute("stroke", "#E85D26"); c.setAttribute("stroke-width", "5"); }
+            g.appendChild(c);
+            if (label) {
+              const tx = document.createElementNS(NS, "text");
+              tx.setAttribute("x", anchor === "end" ? (x === 1500 ? x - 20 : x + 10) : x - 10); tx.setAttribute("y", below ? y + 58 : y - 36);
+              if (anchor) tx.setAttribute("text-anchor", anchor);
+              tx.setAttribute("fill", who === "you" ? "#F0ECE5" : "#888880"); tx.setAttribute("font-size", "28");
+              tx.textContent = label; g.appendChild(tx);
+            }
+            dots.appendChild(g);
+            tl.fromTo(g, { opacity: 0, scale: 0.2, svgOrigin: `${x} ${y}` }, { opacity: 1, scale: 1, duration: 0.32, ease: "back.out(2.2)" }, t);
+          }
+          // the camera: the poster breathes, the terminal settles, the pad trucks left with the pen; a nudge on the merge
+          tl.fromTo(stage.cam, { z: 1.0 }, { z: 1.025, duration: 1.2, ease: "sine.inOut" }, 0);
+          tl.to(stage.cam, { z: 1.0, duration: 0.5, ease: "power2.out" }, 1.2);
+          // the spoken lines: a slow push and truck under the terminal, so the dry intro is calm but never frozen
+          tl.fromTo(stage.cam, { z: 1.0, x: 0, y: 0 }, { z: 1.07, x: -36, y: 14, duration: 9.06 - 1.7, ease: "sine.inOut", immediateRender: false }, 1.7);
+          tl.fromTo(stage.cam, { x: 0 }, { x: 46, duration: DUR - 9.4, ease: "none", immediateRender: false }, 9.4);
+          tl.fromTo(stage.cam, { z: 1.03 }, { z: 1.0, duration: 0.6, ease: "elastic.out(1, 0.5)", immediateRender: false }, YOU1);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: typing, cursors, the counter, the camera ----
+          const cmd1 = $("f01-cmd1"), cmd2 = $("f01-cmd2"), cur1 = $("f01-cur1"), cur2 = $("f01-cur2"), n = $("f01-n");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          function render() {
+            const t = tl.time();
+            const [k1, s1] = f01text(keys1, t), [k2, s2] = f01text(keys2, t);
+            cmd1.textContent = s1; cmd2.textContent = s2;
+            cur1.style.opacity = t < ENTER1 && blink(t, k1) ? 1 : 0;
+            cur2.style.opacity = t >= 9.3 && blink(t, Math.max(k2, 9.3)) ? 1 : 0;
+            const p = Math.max(0, Math.min(1, (t - YOU0) / (YOU1 - YOU0)));
+            n.textContent = Math.round(1095 * p).toLocaleString("en-US");
+            HR.draw(tl);
+            HR.glow(root.querySelector(".f01-hero"), t);
+            stage.apply(t);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["01-status"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 24 — rewrote2 (chorus 2, L38, 117.160–121.534). Forks 11-rewrote: same set, the world moved on.
+         The log is the one 23 left (`9c0ffee` ready. on top, the revert PR's commit under it, the three cherry-picked
+         days, then moved in and initial commit), and `git rebase -i --root --force-rebase` rewrites it as she sings.
+         The wave climbs oldest first, one SHA per kick from "rewrote" (117.28), `Rebasing (n/6)` counting the picks.
+         The row it skips is `Revert "force push"`, the ex's attempt to undo the push: lit on "no" (119.848), struck on
+         "you" (120.04), gone on the 120.279 downbeat while the top row becomes 61e0a7f. `Successfully rebased…` lands
+         on the 120.736 kick. Chorus 2 is a notch louder: the hero spreads and camera punches are sized by the drums
+         measured at each hero (past, 0.61 here against 0.16 in 11), the kick pulse by this span's mean drums. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f24-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f24-strip b { color: var(--fire); font-weight: 600; }
+        /* the log, rewritten: git log --oneline after the rebase command */
+        #f24-log { position: absolute; left: 5.5cqw; top: 9.6cqw; width: 34cqw; }
+        #f24-cmd { font: 500 1.02cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f24-cmd b { color: var(--cream); font-weight: 500; }
+        #f24-head { margin-top: 1.4cqw; font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase;
+          color: var(--cream-muted); padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+        #f24-head b { color: var(--cream); font-weight: 600; }
+        #f24-rows { position: relative; margin-top: 0.9cqw; }
+        .f24-row { position: relative; height: 3.7cqw; overflow: hidden; padding-left: 2.1cqw; font: 400 1.75cqw/3.7cqw "IBM Plex Mono", monospace;
+          color: var(--cream-muted); white-space: nowrap; }
+        .f24-row .f24-h { font-weight: 500; color: var(--cream-muted); }
+        .f24-row.f24-new .f24-h { color: var(--cream); font-weight: 600; }
+        .f24-row .f24-h.f24-hot { color: var(--fire); font-weight: 600; }
+        .f24-row.f24-mark, .f24-row.f24-mark .f24-h { color: var(--fire); }
+        .f24-row .f24-x { position: absolute; left: 1.8cqw; width: 29.8cqw; top: 1.78cqw; height: 3px; background: var(--fire); transform-origin: 0% 50%; transform: scaleX(0); }
+        #f24-cur { position: absolute; left: 0; top: 0.95cqw; width: 0.95cqw; height: 1.8cqw; background: var(--fire); }
+        #f24-status { margin-top: 1.1cqw; font: 400 1.12cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; height: 1.6cqw; }
+        #f24-status.f24-done { color: var(--cream); }
+        /* the line: right-aligned, poster scale */
+        .f24-lyric { position: absolute; right: 5.5cqw; text-align: right; color: var(--cream); white-space: nowrap; }
+        .f24-lyric > div { white-space: nowrap; }
+        #f24-past { top: 8.6cqw; font: 900 11.5cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.045em; transform-origin: 100% 0%; }
+        #f24-now { top: 31.6cqw; font: 900 10.8cqw/0.92 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        #f24-now .f24-small { font-weight: 800; font-size: 0.62em; letter-spacing: -0.035em; line-height: 1.12; }
+        .f24-hero { color: var(--fire); }
+      </style>
+      <div id="root" data-composition-id="24-rewrote2" data-width="1920" data-height="1080" data-duration="4.374">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f24-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.5">
+          <div id="f24-log">
+            <div id="f24-cmd">~/us (main) $ <b>git rebase -i --root --force-rebase</b></div>
+            <div id="f24-head"><span>git log --oneline</span><b>main</b></div>
+            <div id="f24-rows">
+              <div class="f24-row"><span class="f24-h">9c0ffee</span>&nbsp; ready.</div>
+              <div class="f24-row" id="f24-drop"><span class="f24-h">2b7d4e8</span>&nbsp; Revert "force push"<i class="f24-x"></i></div>
+              <div class="f24-row"><span class="f24-h">0e96d4a</span>&nbsp; that sunday</div>
+              <div class="f24-row"><span class="f24-h">c7f2b18</span>&nbsp; the beach</div>
+              <div class="f24-row"><span class="f24-h">51d0a3e</span>&nbsp; first date</div>
+              <div class="f24-row"><span class="f24-h">8f4c61b</span>&nbsp; moved in</div>
+              <div class="f24-row"><span class="f24-h">b05d2f8</span>&nbsp; initial commit</div>
+              <div id="f24-cur"></div>
+            </div>
+            <div id="f24-status"></div>
+          </div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.9">
+          <div class="f24-lyric" id="f24-past">
+            <div><span class="f24-w">i</span> <span class="f24-w f24-hero hr-glowbox" id="f24-rewrote">rewrote</span></div>
+            <div><span class="f24-w">the</span> <span class="f24-w f24-hero hr-glowbox" id="f24-pastw">past,</span></div>
+          </div>
+          <div class="f24-lyric" id="f24-now">
+            <div class="f24-small"><span class="f24-w">there's</span> <span class="f24-w">no</span></div>
+            <div><span class="f24-w f24-hero hr-glowbox" id="f24-you">you</span> <span class="f24-w">and</span> <span class="f24-w">me</span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 4.374, T0 = 117.16, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="24-rewrote2"]');
+          const $ = (id) => root.querySelector("#" + id);
+          // chorus 2 is louder: this span's mean drum envelope over 11's (0.492, measured 56.291–60.780), plus a notch
+          let sum = 0, n = 0;
+          for (let T = T0; T < T0 + DUR; T += 0.02) { sum += HR.band("drums", T); n++; }
+          const K = Math.max(1, Math.min(1.25, sum / n / 0.492)) * 1.12;
+          const stage = HR.stage(root, { seed: 24, pulse: K });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          // ---- the sung line (lyrics.json L38) ----
+          const w = root.querySelectorAll(".f24-w");
+          const REWROTE = at(117.28), PAST = at(119.1), NO = at(119.848), YOU = at(120.04);
+          HR.lead(tl, w[0], at(117.22));
+          HR.hero(tl, w[1], REWROTE, { spread: 30 * K, over: 1 + 0.2 * K, pre: 0.1, sharp: true });
+          HR.lead(tl, w[2], at(118.5));
+          HR.hero(tl, w[3], PAST, { spread: 30 * K, over: 1 + 0.2 * K, pre: 0.12, sharp: true });
+          HR.lead(tl, w[4], at(119.56));
+          HR.lead(tl, w[5], NO);
+          HR.hero(tl, w[6], YOU, { spread: 26 * K, over: 1 + 0.22 * K, pre: 0.1, sharp: true });
+          HR.lead(tl, w[7], at(120.66)); HR.lead(tl, w[8], at(120.94));
+          // the accent points at what is being sung: each hero cools to cream when the next one lands
+          const rewrote = $("f24-rewrote"), pastw = $("f24-pastw"), you = $("f24-you");
+          tl.fromTo(rewrote, { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.3, immediateRender: false }, PAST);
+          tl.fromTo(pastw, { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.3, immediateRender: false }, YOU);
+          // on "no" the past steps back (still phone-legible at 0.52) and "there's no / you and me" rises to take the frame
+          tl.fromTo($("f24-past"), { scale: 1, y: 0 }, { scale: 0.52, y: -0.4 * PX, duration: 0.3, ease: "power3.inOut", immediateRender: false }, NO - 0.08);
+          tl.fromTo($("f24-now"), { y: 0 }, { y: -10.6 * PX, duration: 0.3, ease: "power3.inOut", immediateRender: false }, NO - 0.08);
+
+          // ---- the rebase: new commits are made oldest first, so the wave climbs; one SHA per kick ----
+          const rows = Array.from(root.querySelectorAll(".f24-row"));
+          const NEW = ["61e0a7f", null, "b8d2c53", "4a1f96e", "e3b8d07", "7c0e5b9", "2fa61c4"];
+          // [row, time] in rebase order (bottom row first); row 1 is the dropped commit (not a pick: git counts 6)
+          const steps = [[6, REWROTE], [5, at(117.525)], [4, at(117.996)], [3, at(118.437)], [2, at(118.916)], [1, YOU], [0, at(120.279)]];
+          const SCR = 0.2; // a SHA scrambles for 0.2 s and resolves left to right
+          rows.forEach((r) => { const h = r.querySelector(".f24-h"); h.dataset.old = h.textContent; });
+          // the dropped row: lit on "no", struck on "you", gone on the downbeat (the list closes the gap)
+          const drop = $("f24-drop"), DROP = at(120.279);
+          tl.fromTo(drop.querySelector(".f24-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power2.out" }, YOU);
+          tl.fromTo(drop, { opacity: 1 }, { opacity: 0.45, duration: 0.15, immediateRender: false }, YOU + 0.1);
+          const RH = 3.7 * PX, gap = { h: RH }; // the dropped row's height, applied in render(); rows below sit from fixed coordinates
+          tl.fromTo(gap, { h: RH }, { h: 0, duration: 0.3, ease: "power3.inOut", immediateRender: false }, DROP);
+          tl.fromTo(drop, { opacity: 0.45 }, { opacity: 0, duration: 0.24, ease: "power2.in", immediateRender: false }, DROP);
+          const SUCCESS = at(120.736);
+
+          // ---- the camera: punches on the three heroes sized by the measured drums; a slow push carries the frame ----
+          const punch = (t, base) => {
+            const k = base * (0.6 + 0.6 * HR.band("drums", T0 + t));
+            tl.to(stage.cam, { z: 1 + k + (t / DUR) * 0.03, y: -8, duration: 0.07, ease: "power2.in" }, t - 0.06);
+            tl.to(stage.cam, { z: 1.0 + ((t + 0.6) / DUR) * 0.03, y: 0, duration: 0.55, ease: "elastic.out(1, 0.5)" }, t + 0.01);
+          };
+          tl.fromTo(stage.cam, { x: 0 }, { x: 34 * K, duration: DUR, ease: "none", immediateRender: false }, 0);
+          punch(REWROTE, 0.045 * K); punch(PAST, 0.04 * K); punch(YOU, 0.05 * K);
+          tl.to(stage.cam, { z: 1.035, duration: DUR - (YOU + 0.6), ease: "none" }, YOU + 0.6);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: SHAs, cursor, status, glow, camera ----
+          const cur = $("f24-cur"), status = $("f24-status");
+          const HEXL = "0123456789abcdef";
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            let step = -1;
+            steps.forEach(([ri, ts], n) => {
+              if (t >= ts) step = n;
+              if (ri === 1) return; // dropped: never rewritten
+              const h = rows[ri].querySelector(".f24-h"), nw = NEW[ri];
+              if (t < ts) { h.textContent = h.dataset.old; h.classList.remove("f24-hot"); rows[ri].classList.remove("f24-new"); return; }
+              const p = (t - ts) / SCR, tick = Math.floor(t * 30);
+              let s = "";
+              for (let i = 0; i < 7; i++) s += p >= (i + 1) / 8 ? nw[i] : HEXL[(ri * 7 + tick * 5 + i * 3) % 16];
+              h.textContent = s;
+              h.classList.toggle("f24-hot", p < 1.6);
+              rows[ri].classList.add("f24-new");
+            });
+            // the cursor rides the row being rewritten; idle, it blinks on HEAD
+            if (step < 0) { cur.style.opacity = 0; }
+            else {
+              const [ri, ts] = steps[step];
+              cur.style.transform = `translateY(${(ri * RH - (ri >= 2 ? RH - gap.h : 0)).toFixed(2)}px)`;
+              cur.style.opacity = blink(t, ts) ? 1 : 0;
+            }
+            const picks = steps.filter(([ri, ts]) => ri !== 1 && t >= ts).length;
+            status.textContent = t >= SUCCESS ? "Successfully rebased and updated refs/heads/main." : picks > 0 ? `Rebasing (${picks}/6)` : "";
+            status.classList.toggle("f24-done", t >= SUCCESS);
+            drop.classList.toggle("f24-mark", t >= NO);
+            drop.style.height = gap.h.toFixed(2) + "px";
+            HR.glow(rewrote, T, 0.3, 0.45); HR.glow(pastw, T, 0.3, 0.45); HR.glow(you, T, 0.3, 0.45);
+            if (t >= PAST) rewrote.style.setProperty("--hr-glow", "0"); // cooled: no glow once the accent has moved on
+            if (t >= YOU) pastw.style.setProperty("--hr-glow", "0");
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["24-rewrote2"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

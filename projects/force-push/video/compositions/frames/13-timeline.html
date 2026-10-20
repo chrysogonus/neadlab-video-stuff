@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 13 — timeline (chorus 1, L18, 63.679–68.690). The release after 12's overwrite: one clean graph line,
+         straight and single (no fork, no merge), rises gently across the frame edge to edge, and the lyric rides it.
+         "brand" (hero, 63.88) and "new" ride its left end as the pen draws under them; "timeline," slams on 64.52 as
+         the display word and is held for 3.3 s: under it the line is written commit by commit, one step and one dot
+         per kick, while `git merge --ff-only timeline` types at the prompt (bottom left). On "no" (67.82, kick) the
+         line fast-forwards: the pen shoots to the head at the right edge, and git prints `Updating …`; "no goodbyes"
+         hangs from the line's right end, "goodbyes" (hero, 68.04) lands with `Fast-forward`. The accent points at the
+         current hero: brand → timeline → goodbyes; the newest commit dot and the cursor are the only other fire. The glow is a drop-shadow on the word
+         (.hr-glowbox), not a text-shadow, so it goes with the glyph when the contrast check hides it.
+         The path text is 05's pattern: each glyph in a wrapper placed on the line (arclength + tangent, re-measured
+         until the fonts are in), the kit animating the glyph inside it. Hard cut into 14. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f13-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f13-strip b { color: var(--fire); font-weight: 600; }
+        /* the singer's prompt, bottom left: the merge types during the held "timeline," */
+        #f13-term { position: absolute; left: 5.5cqw; top: 45.2cqw; font: 400 1.3cqw/1.65 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f13-term .f13-cmd { color: var(--cream); }
+        #f13-term .f13-ff { color: var(--cream); font-weight: 500; }
+        .f13-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.2em; }
+        /* the sung line: glyph wrappers placed on the graph line in JS */
+        .f13-w { position: absolute; left: 0; top: 0; font-family: "Barlow", sans-serif; color: var(--cream); }
+        /* line-height 0.72: the box hugs the letters (baseline 0.76em down, ascenders 0.06em under the top), so it never covers the line */
+        .f13-gp { position: absolute; left: 0; top: 0; line-height: 0.72; white-space: pre; }
+        .f13-up .f13-gp { clip-path: inset(-0.6em -0.4em -0.25em -0.4em); }
+        .f13-down .f13-gp { clip-path: inset(0 -0.4em -0.6em -0.4em); }
+        .f13-small { font-size: 6.4cqw; font-weight: 800; letter-spacing: -0.03em; }
+        #f13-brand { font-size: 6.4cqw; font-weight: 900; letter-spacing: -0.03em; }
+        #f13-time { font-size: 15cqw; font-weight: 900; letter-spacing: -0.04em; }
+        #f13-good { font-size: 10cqw; font-weight: 900; letter-spacing: -0.04em; }
+        .f13-fire { color: var(--fire); }
+      </style>
+      <div id="root" data-composition-id="13-timeline" data-width="1920" data-height="1080" data-duration="5.011">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f13-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.45">
+          <div id="f13-term"><span>~/us (main) $ </span><span class="f13-cmd" id="f13-cmd"></span><span class="f13-cursor" id="f13-cur1"></span>
+<span id="f13-o1">Updating e81b0d4..7d3a9f1</span>
+<span id="f13-o2" class="f13-ff">Fast-forward</span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.8" id="f13-world">
+          <svg id="f13-svg" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0; overflow: visible" data-layout-ignore>
+            <!-- the planned line, a hairline edge to edge; the pen draws the timeline over it -->
+            <path id="f13-guide" d="M -100 650 L 2020 470" fill="none" stroke="#282826" stroke-width="2" />
+            <path id="f13-line" d="M -100 650 L 2020 470" fill="none" stroke="#F0ECE5" stroke-width="4" />
+            <g id="f13-dots"></g>
+          </svg>
+          <span class="f13-w f13-up hr-glowbox" id="f13-brand">brand</span>
+          <span class="f13-w f13-up f13-small">new</span>
+          <span class="f13-w f13-up" id="f13-time">timeline,</span>
+          <span class="f13-w f13-down f13-small">no</span>
+          <span class="f13-w f13-down" id="f13-good">goodbyes</span>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 5.011, T0 = 63.679;
+          const root = document.querySelector('[data-composition-id="13-timeline"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 13 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const BRAND = at(63.88), NEW = at(64.26), TIME = at(64.52), NO = at(67.82), GOOD = at(68.04);
+          // the kicks of the held "timeline,": one commit each, the last one at the word's end
+          const HOLD = [64.603, 65.064, 65.525, 65.97, 66.447, 66.892, 67.353].map(at);
+          const FF = at(67.812); // the kick under "no": the fast-forward
+          const NS = "http://www.w3.org/2000/svg";
+
+          // ---- the words: each glyph in its own wrapper, the kit animates the glyph ----
+          const ws = Array.from(root.querySelectorAll(".f13-w"));
+          for (const w of ws) {
+            const text = w.textContent; w.textContent = ""; w._hrG = [];
+            for (const ch of text) {
+              const wr = document.createElement("span"); wr.className = "f13-gp"; wr.setAttribute("data-layout-allow-overlap", "");
+              const g = document.createElement("span"); g.className = "hr-g"; g.textContent = ch;
+              wr.appendChild(g); w.appendChild(wr); w._hrG.push(g);
+            }
+          }
+          const [brand, neu, time, no, good] = ws;
+          HR.hero(tl, brand, BRAND, { spread: 20, over: 1.2, pre: 0.1, sharp: true, skew: false });
+          HR.lead(tl, neu, NEW); neu.classList.remove("hr-clip");
+          HR.hero(tl, time, TIME, { spread: 44, over: 1.26, pre: 0.14, sharp: true, skew: false });
+          HR.lead(tl, no, NO, { from: -105 }); no.classList.remove("hr-clip");
+          HR.hero(tl, good, GOOD, { spread: 34, over: 1.24, pre: 0.1, sharp: true, skew: false });
+
+          // ---- the prompt: the merge types during the hold, runs on a kick; git answers on "no" and "goodbyes" ----
+          const CMD = "git merge --ff-only timeline", K0 = at(65.97), K1 = at(67.28), ENTER = at(67.353);
+          const rnd = HR.rng(1313), keys = [[0, ""]];
+          { let acc = 0; const gaps = Array.from(CMD, () => 0.7 + rnd() * 0.6), sum = gaps.reduce((a, b) => a + b, 0);
+            for (let i = 0; i < CMD.length; i++) { keys.push([K0 + ((K1 - K0) * acc) / sum, CMD.slice(0, i + 1)]); acc += gaps[i]; } }
+          tl.set($("f13-o1"), { opacity: 0 }, 0).set($("f13-o1"), { opacity: 1 }, FF);
+          tl.set($("f13-o2"), { opacity: 0 }, 0).set($("f13-o2"), { opacity: 1 }, at(68.035));
+
+          // ---- the camera: in close on the left for "brand new", out along the line on "timeline,", a slow push
+          //      through the hold, a slide right with the fast-forward, a punch on "goodbyes" ----
+          tl.fromTo(stage.cam, { z: 1.07, x: -150, y: 30 }, { z: 1.09, x: -140, y: 30, duration: BRAND - 0.05, ease: "sine.out" }, 0);
+          tl.to(stage.cam, { z: 1.11, duration: 0.05, ease: "power2.in" }, BRAND - 0.05);
+          tl.to(stage.cam, { z: 1.08, x: -120, duration: TIME - 0.07 - BRAND, ease: "power2.out" }, BRAND);
+          tl.to(stage.cam, { z: 1.0, x: 0, y: 0, duration: 0.07, ease: "power2.in" }, TIME - 0.07);
+          tl.to(stage.cam, { z: 0.985, x: 6, y: -4, duration: 0.6, ease: "elastic.out(1, 0.5)" }, TIME);
+          tl.to(stage.cam, { z: 1.03, x: 22, y: -8, duration: FF - TIME - 0.6, ease: "sine.inOut" }, TIME + 0.6);
+          tl.to(stage.cam, { x: 46, z: 1.015, duration: GOOD - 0.06 - FF, ease: "expo.out" }, FF);
+          tl.to(stage.cam, { z: 1.055, y: 10, duration: 0.06, ease: "power2.in" }, GOOD - 0.06);
+          tl.to(stage.cam, { z: 1.03, x: 40, y: 8, duration: DUR - GOOD, ease: "elastic.out(1, 0.55)" }, GOOD);
+          tl.set({}, {}, DUR);
+
+          // ---- the path text: placed once the fonts are in (until then, re-measured every frame) ----
+          const line = $("f13-line"), L = line.getTotalLength();
+          const P0 = line.getPointAtLength(0), P1 = line.getPointAtLength(L);
+          const DEG = (Math.atan2(P1.y - P0.y, P1.x - P0.x) * 180) / Math.PI;
+          const sAtX = (x) => ((x - P0.x) / (P1.x - P0.x)) * L;
+          const X0 = 125, X1 = 1815; // pad-x 5.5cqw
+          let laid = false, pen = [], dots = [];
+          const place = (w, s, down) => {
+            const em = parseFloat(getComputedStyle(w).fontSize);
+            w._s0 = s;
+            for (const g of w._hrG) {
+              const wr = g.parentNode, adv = wr.offsetWidth, h = wr.offsetHeight, c = s + adv / 2;
+              const p = line.getPointAtLength(c);
+              // up: the baseline rides 16 px over the line (box bottom clear of the dots); down: the box hangs 14 px under it
+              const dy = down ? 14 : -16 - 0.76 * em;
+              wr.style.transformOrigin = `${adv / 2}px ${-dy}px`;
+              wr.style.transform = `translate(${(p.x - adv / 2).toFixed(2)}px, ${(p.y + dy).toFixed(2)}px) rotate(${DEG.toFixed(3)}deg)`;
+              s += adv;
+            }
+            w._s1 = s;
+            return em;
+          };
+          const width = (w) => w._hrG.reduce((a, g) => a + g.parentNode.offsetWidth, 0);
+          function layout() {
+            const ready = document.fonts.status === "loaded";
+            // top row from the left margin: brand new timeline,
+            let s = sAtX(X0);
+            s = place(brand, s) * 0.26 + brand._s1;
+            s = place(neu, s) * 0.3 + neu._s1;
+            place(time, s);
+            // bottom row, right-aligned to the margin: no goodbyes
+            const gap = parseFloat(getComputedStyle(no).fontSize) * 0.26;
+            const s1 = sAtX(X1) - (width(no) + gap + width(good));
+            place(no, s1, true); place(good, no._s1 + gap, true);
+            // the pen: in from the edge on the cut, under "brand" as it lands, under "new", then one step per kick
+            // across "timeline,", and on "no" it fast-forwards off the right edge
+            const sRoot = sAtX(40), sBN = (brand._s1 + neu._s0) / 2, sNT = (neu._s1 + time._s0) / 2;
+            const step = (time._s1 - sNT) / (HOLD.length - 1);
+            pen = [[0, sRoot * 0.6, "none"], [0.06, sRoot, "power2.out"], [BRAND + 0.2, brand._s1, "power2.inOut"],
+              [at(64.126), sBN, "power2.out"], [NEW + 0.18, neu._s1, "power3.out"]];
+            HOLD.forEach((t, i) => { pen.push([t - 0.02, i === 0 ? neu._s1 + 8 : sNT + step * (i - 1)]); pen.push([t + 0.26, sNT + step * i, "power3.out"]); });
+            pen.push([FF - 0.02, time._s1], [FF + 0.2, L, "expo.out"]);
+            const sHead = sAtX(1868);
+            dots = [[sRoot, 0], [sBN, at(64.126)], ...HOLD.map((t, i) => [sNT + step * i, t + 0.2]), [sHead, FF + 0.08]]
+              .map(([s, t]) => { const p = line.getPointAtLength(s); return { x: p.x, y: p.y, t }; });
+            laid = ready;
+          }
+          const dotG = $("f13-dots");
+          const dotC = Array.from({ length: 2 + HOLD.length + 1 }, () => {
+            const c = document.createElementNS(NS, "circle"); dotG.appendChild(c); return c;
+          });
+          const popE = gsap.parseEase("back.out(2.2)");
+          const penAt = (t) => {
+            if (t <= pen[0][0]) return pen[0][1];
+            for (let i = 1; i < pen.length; i++) if (t < pen[i][0]) {
+              const [ta, sa] = pen[i - 1], [tb, sb, ease] = pen[i];
+              return sa + (sb - sa) * gsap.parseEase(ease || "none")((t - ta) / (tb - ta));
+            }
+            return pen[pen.length - 1][1];
+          };
+
+          // ---- per-frame state: layout, the pen, the dots, the accent, typing, the cursor, glow, camera ----
+          const cmd = $("f13-cmd"), cur1 = $("f13-cur1");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          line.style.strokeDasharray = `${L} ${L}`;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (!laid) layout();
+            line.style.strokeDashoffset = (L - penAt(t)).toFixed(2);
+            // the newest commit is fire, the rest cream
+            let newest = -1; dots.forEach((d, i) => { if (t >= d.t) newest = i; });
+            dotC.forEach((c, i) => {
+              const d = dots[i], k = Math.max(0, Math.min(1, (t - d.t) / 0.3));
+              c.setAttribute("cx", d.x.toFixed(1)); c.setAttribute("cy", d.y.toFixed(1));
+              c.setAttribute("r", (11 * (k > 0 ? Math.max(0.05, popE(k)) : 0)).toFixed(2));
+              c.setAttribute("fill", i === newest ? "#E85D26" : "#F0ECE5");
+            });
+            // the accent points at the current hero
+            const hot = t >= GOOD ? good : t >= TIME ? time : brand;
+            for (const w of [brand, time, good]) { const on = w === hot; w.classList.toggle("f13-fire", on); w.classList.toggle("hr-glowbox", on); }
+            HR.glow(hot, T, 0.3, 0.45);
+            let k = keys[0]; for (const st of keys) if (st[0] <= t) k = st;
+            cmd.textContent = k[1];
+            cur1.style.opacity = t < ENTER && blink(t, k[0]) ? 1 : 0;
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["13-timeline"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

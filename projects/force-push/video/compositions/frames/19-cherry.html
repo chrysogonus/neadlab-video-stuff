@@ -1,0 +1,307 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 19 — cherry (verse 2, L27–L28, 92.086–100.044). Dark, centred: the grid above, the lyric below.
+         Three years of days as a contribution graph (1,095 squares, three bands Oct–Oct, drawn on a canvas from tl.time()).
+         The cut lands in the drums' drop-out with `git cherry-pick` at the prompt and the grid unlit; "cherry-picked"
+         slams on 92.146 and the days light up with the drums' return (92.244). Each hash types from a kick while a scan
+         runs along its year to the day it names (a fire outline); Enter is the 93.611 kick and the picks land one per
+         kick (93.611, 94.086, 94.545), each square filled in fire with git's own summary beside it (`[main <hash>]`,
+         ` Author: you`, ` Date:`). On "three" (95.099) the counter goes 1 → 3 and the caption reads `3 good days`.
+         On "rebased" (96.16) the rest dims and trembles, `git rebase -i --root` types, Enter is "rest" (97.06), and the
+         1,092 fall out of the frame in waves on the kicks. On the 98.668 kick the three picks slide into one column; on
+         "tree" (99.08) a fire lane draws through them (the new history, three commits) and git prints
+         `Successfully rebased and updated refs/heads/main.` -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f19-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f19-n { display: inline-block; color: var(--fire); font-weight: 600; transform-origin: 50% 70%; }
+        /* the singer's terminal: two rows, scrolling */
+        #f19-term { position: absolute; left: 5.5cqw; top: 6.1cqw; width: 60cqw; height: 3.3cqw; overflow: hidden; }
+        #f19-rows { font: 400 1.15cqw/1.65cqw "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f19-rows .f19-cmd { color: var(--cream); }
+        .f19-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.1em; background: var(--fire); vertical-align: -0.18em; }
+        /* the contribution graph's frame: years, the caption, the legend */
+        .f19-year { position: absolute; left: 17.4cqw; font: 500 0.8cqw/1 "IBM Plex Mono", monospace; letter-spacing: 0.06em; color: var(--cream-muted); }
+        #f19-cap { position: absolute; left: 22.66cqw; top: 35.5cqw; font: 500 0.86cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        #f19-cap b { color: var(--fire); font-weight: 600; }
+        #f19-legend { position: absolute; right: 22.66cqw; top: 35.5cqw; font: 500 0.86cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted);
+          display: flex; align-items: center; gap: 0.3cqw; }
+        #f19-legend i { display: inline-block; width: 0.78cqw; height: 0.78cqw; }
+        #f19-cv { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+        /* git's summary of each pick, beside its square */
+        .f19-pick { position: absolute; left: 0; top: 0; white-space: pre; opacity: 0;
+          font: 400 0.86cqw/1.45 "IBM Plex Mono", monospace; color: var(--cream-muted);
+          background: var(--ink); border: 1px solid var(--border); padding: 0.32cqw 0.6cqw; }
+        .f19-pick .f19-subj { color: var(--cream); font-weight: 500; }
+        .f19-pick .f19-you { color: var(--fire); font-weight: 600; }
+        /* the sung lines, centred under the grid */
+        .f19-line { position: absolute; left: 0; right: 0; top: 38.2cqw; text-align: center; color: var(--cream); }
+        .f19-r1 { font: 900 10cqw/0.86 "Barlow", sans-serif; letter-spacing: -0.045em; white-space: nowrap; }
+        .f19-r2 { margin-top: 0.4cqw; font: 800 4.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em; white-space: nowrap; }
+        .f19-r2 .f19-big { font-weight: 900; font-size: 6.8cqw; letter-spacing: -0.04em; }
+        .f19-w { display: inline-block; }
+        .f19-fire { color: var(--fire); }
+      </style>
+      <div id="root" data-composition-id="19-cherry" data-width="1920" data-height="1080" data-duration="7.958">
+        <div class="hr-layer" data-depth="0.5" id="f19-gridlayer">
+          <canvas id="f19-cv" width="1920" height="1080" data-layout-ignore></canvas>
+          <div class="f19-year" style="top: 10.62cqw">oct 2023</div>
+          <div class="f19-year" style="top: 19.28cqw">oct 2024</div>
+          <div class="f19-year" style="top: 27.94cqw">oct 2025</div>
+          <div id="f19-cap"><span id="f19-cap1">1,095 days</span><span id="f19-cap2" style="display: none"><b>3</b> good days</span></div>
+          <div id="f19-legend">less <i style="background: #1A1A18; outline: 1px solid #282826; outline-offset: -1px"></i><i style="background: #282826"></i><i style="background: #505048"></i><i style="background: #888880"></i> more</div>
+          <div class="f19-pick" id="f19-p0"><span>[main 51d0a3e]</span> <span class="f19-subj">first date</span>
+ Author: <span class="f19-you">you</span> &lt;you@laptop&gt;
+ Date: Sat Nov 4 20:13:45 2023 +0100</div>
+          <div class="f19-pick" id="f19-p1"><span>[main c7f2b18]</span> <span class="f19-subj">the beach</span>
+ Author: <span class="f19-you">you</span> &lt;you@laptop&gt;
+ Date: Sat Jul 5 18:40:02 2025 +0200</div>
+          <div class="f19-pick" id="f19-p2"><span>[main 0e96d4a]</span> <span class="f19-subj">that sunday</span>
+ Author: <span class="f19-you">you</span> &lt;you@laptop&gt;
+ Date: Sun Dec 14 11:02:37 2025 +0100</div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f19-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<span id="f19-n">1</span></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.35">
+          <div id="f19-term"><div id="f19-rows"><div><span>~/us (main) $ </span><span class="f19-cmd" id="f19-c1"></span><span class="f19-cursor" id="f19-cur1"></span></div><div id="f19-row2"><span>~/us (main) $ </span><span class="f19-cmd" id="f19-c2"></span><span class="f19-cursor" id="f19-cur2"></span></div><div id="f19-row3">Successfully rebased and updated refs/heads/main.</div></div></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.85">
+          <div class="f19-line" id="f19-l1">
+            <div class="f19-r1"><span class="f19-w f19-fire hr-glowbox" id="f19-cherry">cherry</span><span class="f19-w" id="f19-picked">-picked</span></div>
+            <div class="f19-r2"><span class="f19-w f19-a">the</span> <span class="f19-w f19-a">good</span> <span class="f19-w f19-a">days,</span> <span class="f19-w f19-a">there</span> <span class="f19-w f19-a">were</span> <span class="f19-w f19-big" id="f19-three">three</span></div>
+          </div>
+          <div class="f19-line" id="f19-l2">
+            <div class="f19-r1"><span class="f19-w" id="f19-rebased">rebased</span></div>
+            <div class="f19-r2"><span class="f19-w f19-b">the</span> <span class="f19-w f19-b">rest</span> <span class="f19-w f19-b">right</span> <span class="f19-w f19-b">out</span> <span class="f19-w f19-b">of</span> <span class="f19-w f19-b">my</span> <span class="f19-w f19-big" id="f19-tree">tree</span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 7.958, T0 = 92.086;
+          const root = document.querySelector('[data-composition-id="19-cherry"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 19 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+
+          // ---- the sung times (lyrics.json) and the kicks (HR_ENV) ----
+          const CHERRY = at(92.146), DRUMS = at(92.244), THE = at(93.36), GOOD = at(93.6), DAYS = at(94.086), THERE = at(94.74),
+            WERE = at(94.98), THREE = at(95.099);
+          const REB = at(96.16), THE2 = at(96.8), REST = at(97.06), RIGHT = at(97.5), OUT = at(98.38), OF = at(98.5), MY = at(98.64),
+            TREE = at(99.08);
+          const PICK_K = [at(93.611), at(94.086), at(94.545)];               // Enter, then one pick per kick
+          const HASH_T = [[at(92.25), at(92.58)], [at(92.7), at(93.03)], [at(93.17), at(93.5)]]; // each hash types from a kick
+          const WAVES = [REST, at(97.293), at(97.768), at(98.229), at(98.668)]; // the rest falls on the kicks
+          const SLIDE = at(98.668), DONE = at(99.133);
+
+          // ---- the grid: 1,095 days from Fri 20 Oct 2023, three bands of 365 (weeks are columns, Sunday on top) ----
+          const P = 19.84, S = 15, GX = 435, GY = 200, BAND = 7 * P + 1.4 * P;
+          const days = [], rnd = HR.rng(1919);
+          for (let d = 0; d < 1095; d++) {
+            const b = Math.floor(d / 365), ws = (5 + 365 * b) % 7, wd = (5 + d) % 7;
+            const col = Math.floor((d - 365 * b + ws) / 7);
+            // activity fades over three years: busy at first, then mostly nothing
+            const act = 0.82 - 0.66 * (d / 1094), r = rnd(), r2 = rnd();
+            const lv = r < act ? (r2 < 0.5 ? 1 : r2 < 0.82 ? 2 : 3) : 0;
+            days.push({ d, b, col, x: GX + col * P, y: GY + b * BAND + wd * P, lv, picked: -1 });
+          }
+          const PICKS = [15, 624, 786]; // Sat 4 Nov 2023 · Sat 5 Jul 2025 · Sun 14 Dec 2025
+          PICKS.forEach((d, i) => { days[d].picked = i; });
+          // the rest: each square leaves on a wave (a sweep left to right with noise), a hop sized by that kick's drums
+          const rf = HR.rng(77);
+          for (const q of days) {
+            if (q.picked >= 0) continue;
+            const key = clamp01((q.col / 52) * 0.75 + rf() * 0.25);
+            const w = Math.min(4, Math.floor(key * 5)), T = WAVES[w];
+            const kick = 0.4 + 0.6 * HR.band("drums", T0 + T + 0.02);
+            q.rel = T + rf() * 0.2;
+            q.vx = (rf() - 0.5) * 140; q.vy = -(60 + rf() * 220) * kick; q.w = (rf() - 0.5) * 9;
+            q.ph = rf() * 6.283; q.ph2 = rf() * 6.283;
+          }
+          // the picks: tweened state (seek-safe); `k` slides them into one column, `lane` draws the trunk
+          const TX = 752, TY = [292, 436, 580];
+          const pk = PICKS.map((d) => ({ q: days[d], ring: 0, fill: 0, sc: 1, k: 0 }));
+          const lane = { p: 0 };
+
+          // scan, mark, pick
+          pk.forEach((p, i) => {
+            tl.fromTo(p, { ring: 0 }, { ring: 1, duration: 0.12, ease: "power2.out" }, HASH_T[i][1]);
+            tl.set(p, { fill: 1 }, PICK_K[i]);
+            tl.fromTo(p, { sc: 1.9 }, { sc: 1.3, duration: 0.45, ease: "expo.out", immediateRender: false }, PICK_K[i]);
+            tl.set($("f19-p" + i), { opacity: 1 }, PICK_K[i]);
+            tl.fromTo(p, { sc: 1.85 }, { sc: 1.35, duration: 0.55, ease: "elastic.out(1, 0.5)", immediateRender: false }, THREE + i * 0.04);
+            tl.fromTo(p, { k: 0 }, { k: 1, duration: 0.42, ease: "power3.inOut" }, SLIDE + i * 0.03);
+            tl.fromTo(p, { sc: 1.35 }, { sc: 1.6, duration: 0.5, ease: "elastic.out(1, 0.5)", immediateRender: false }, TREE + 0.06 + i * 0.09);
+          });
+          tl.fromTo(lane, { p: 0 }, { p: 1, duration: 0.3, ease: "power2.out" }, TREE);
+
+          // ---- the terminal: keystrokes as [time, text] states (01's pattern) ----
+          const type = (states, t0, t1, text) => {
+            const base = states[states.length - 1][1];
+            for (let i = 0; i < text.length; i++) states.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
+          };
+          const textAt = (states, t) => { let k = 0; for (let i = 0; i < states.length; i++) if (states[i][0] <= t) k = i; return states[k]; };
+          const keys1 = [[0, "git cherry-pick"]];
+          ["2c41e07", "8a0f3d1", "e5b9726"].forEach((h, i) => type(keys1, HASH_T[i][0], HASH_T[i][1], " " + h));
+          const keys2 = [[0, ""]];
+          type(keys2, at(96.22), at(96.98), "git rebase -i --root");
+          const ROW2 = at(94.62), ENTER1 = PICK_K[0], ENTER2 = REST;
+          tl.set($("f19-row2"), { opacity: 0 }, 0).set($("f19-row2"), { opacity: 1 }, ROW2);
+          tl.set($("f19-row3"), { opacity: 0 }, 0).set($("f19-row3"), { opacity: 1 }, DONE);
+          tl.fromTo($("f19-rows"), { y: 0 }, { y: -1.65 * 19.2, duration: 0.12, ease: "power2.out" }, DONE);
+
+          // ---- the sung lines, every word on its start ----
+          HR.hero(tl, $("f19-cherry"), CHERRY, { spread: 30, over: 1.2, pre: 0.06, sharp: true });
+          HR.hero(tl, $("f19-picked"), CHERRY + 0.02, { spread: 18, over: 1.14, pre: 0.06, sharp: true, skew: false });
+          const a = root.querySelectorAll(".f19-a");
+          [THE, GOOD, DAYS, THERE, WERE].forEach((t, i) => HR.lead(tl, a[i], t));
+          HR.hero(tl, $("f19-three"), THREE, { spread: 22, over: 1.24, pre: 0.1, sharp: true });
+          HR.exit(tl, $("f19-l1"), REB - 0.19, { dir: -1, dur: 0.14, stagger: 0.003 });
+          HR.hero(tl, $("f19-rebased"), REB, { spread: 30, over: 1.2, pre: 0.1, sharp: true });
+          const b = root.querySelectorAll(".f19-b");
+          [THE2, REST, RIGHT, OUT, OF, MY].forEach((t, i) => HR.lead(tl, b[i], t));
+          HR.hero(tl, $("f19-tree"), TREE, { spread: 20, over: 1.24, pre: 0.1, sharp: true });
+
+          // the calendar's frame goes with the days it framed; the caption `3 good days` stays
+          tl.fromTo([...root.querySelectorAll(".f19-year"), $("f19-legend")], { opacity: 1 },
+            { opacity: 0, duration: WAVES[4] - WAVES[1], ease: "power1.in", immediateRender: false }, WAVES[1]);
+
+          // ---- the counter and the caption on "three" ----
+          const n = $("f19-n");
+          tl.fromTo(n, { scale: 1.9, y: -3 }, { scale: 1, y: 0, duration: 0.4, ease: "expo.out", immediateRender: false }, THREE);
+
+          // ---- the camera: punches sized by the measured drums; a slow push carries each line ----
+          const cam = stage.cam, punch = (t) => 0.014 + 0.026 * HR.band("drums", T0 + t + 0.03);
+          tl.fromTo(cam, { z: 1.0, y: 0, x: 0 }, { z: 1.004, duration: CHERRY - 0.05, ease: "none" }, 0);
+          tl.to(cam, { z: 1.004 + punch(DRUMS), y: -4, duration: 0.05, ease: "power2.in" }, CHERRY - 0.05);
+          tl.to(cam, { z: 1.01, y: 0, duration: 0.6, ease: "elastic.out(1, 0.5)" }, CHERRY);
+          tl.to(cam, { z: 1.024, x: -6, duration: THREE - CHERRY - 0.66, ease: "none" }, CHERRY + 0.6);
+          tl.to(cam, { z: 1.024 + punch(THREE), duration: 0.05, ease: "power2.in" }, THREE - 0.05);
+          tl.to(cam, { z: 1.026, duration: 0.55, ease: "elastic.out(1, 0.5)" }, THREE);
+          tl.to(cam, { z: 1.03, x: 0, duration: REB - THREE - 0.6, ease: "none" }, THREE + 0.55);
+          tl.to(cam, { z: 1.03 + punch(REB), y: -5, duration: 0.05, ease: "power2.in" }, REB - 0.05);
+          tl.to(cam, { z: 1.032, y: 0, duration: 0.6, ease: "elastic.out(1, 0.5)" }, REB);
+          tl.to(cam, { z: 1.04, y: 8, duration: TREE - REB - 0.65, ease: "sine.inOut" }, REB + 0.6);
+          tl.to(cam, { z: 1.04 + punch(TREE), duration: 0.05, ease: "power2.in" }, TREE - 0.05);
+          tl.to(cam, { z: 1.042, duration: 0.55, ease: "elastic.out(1, 0.5)" }, TREE);
+          tl.to(cam, { z: 1.05, y: 4, duration: DUR - TREE - 0.55, ease: "none" }, TREE + 0.55);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: the canvas, typing, cursors, counter, caption, the pointer ----
+          const cv = $("f19-cv"), dpr = Math.min(2, window.devicePixelRatio || 1);
+          cv.width = 1920 * dpr; cv.height = 1080 * dpr;
+          const ctx = cv.getContext("2d");
+          const LV = ["#1A1A18", "#282826", "#505048", "#888880"];
+          const G = 4200, WAKE = DRUMS;
+          const notes = [0, 1, 2].map((i) => $("f19-p" + i));
+          const c1 = $("f19-c1"), c2 = $("f19-c2"), cur1 = $("f19-cur1"), cur2 = $("f19-cur2");
+          const cap1 = $("f19-cap1"), cap2 = $("f19-cap2");
+          const words = { cherry: $("f19-cherry"), three: $("f19-three"), rebased: $("f19-rebased"), tree: $("f19-tree") };
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          const sq = (x, y, s, fill, line) => {
+            ctx.fillStyle = fill; ctx.fillRect(x - s / 2, y - s / 2, s, s);
+            if (line) { ctx.strokeStyle = line; ctx.lineWidth = 1; ctx.strokeRect(x - s / 2 + 0.5, y - s / 2 + 0.5, s - 1, s - 1); }
+          };
+          function drawGrid(t, T) {
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.clearRect(0, 0, 1920, 1080);
+            // the scan of the hash being typed: a bright window running along its year to the picked column
+            let scanB = -1, scanC = -9;
+            for (let i = 0; i < 3; i++) {
+              const [h0, h1] = HASH_T[i];
+              if (t >= h0 && t < h1 + 0.1) { scanB = pk[i].q.b; scanC = pk[i].q.col * gsap.parseEase("power2.out")(clamp01((t - h0) / (h1 - h0))); }
+            }
+            const shiver = t >= REB ? Math.min(1, (t - REB) / 0.9) : 0;
+            for (const q of days) {
+              if (q.picked >= 0) continue;
+              // the days light up with the drums, left to right
+              let lv = t >= WAKE + (q.col / 52) * 0.3 ? q.lv : 0;
+              if (q.b === scanB && Math.abs(q.col - scanC) < 2.2) lv = Math.max(lv, 2);
+              if (t >= REB) lv = Math.min(lv, 1);              // "the rest" dims on "rebased"
+              let x = q.x + S / 2, y = q.y + S / 2, rot = 0;
+              if (t >= q.rel) {
+                const dt = t - q.rel;
+                x += q.vx * dt; y += q.vy * dt + 0.5 * G * dt * dt; rot = q.w * dt;
+                if (y > 1110) continue;
+              } else if (shiver) {                               // smooth ~11 Hz tremble before the fall, never random per frame
+                x += Math.sin(t * 69 + q.ph) * 1.4 * shiver; y += Math.sin(t * 61 + q.ph2) * 1.4 * shiver;
+              }
+              if (rot) { ctx.save(); ctx.translate(x, y); ctx.rotate(rot); sq(0, 0, S, LV[lv], lv ? null : "#282826"); ctx.restore(); }
+              else sq(x, y, S, LV[lv], lv ? null : "#282826");
+            }
+            // the trunk: a fire lane through the three picks
+            const pos = pk.map((p) => {
+              const x0 = p.q.x + S / 2, y0 = p.q.y + S / 2;
+              return [x0 + (TX - x0) * p.k, y0 + (TY[pk.indexOf(p)] - y0) * p.k];
+            });
+            if (lane.p > 0) {
+              ctx.strokeStyle = "#E85D26"; ctx.lineWidth = 3;
+              ctx.beginPath(); ctx.moveTo(TX, TY[0]); ctx.lineTo(TX, TY[0] + (TY[2] - TY[0]) * lane.p); ctx.stroke();
+            }
+            // the picks
+            const glow = 0.5 + 0.5 * HR.band("bass", T) + 0.5 * HR.hit("kick", T, 0.2);
+            pk.forEach((p, i) => {
+              const [x, y] = pos[i], q = p.q;
+              if (p.fill) {
+                ctx.save(); ctx.shadowColor = "rgba(232, 93, 38, 0.7)"; ctx.shadowBlur = 10 + 14 * glow;
+                sq(x, y, S * p.sc, "#E85D26"); ctx.restore();
+              } else {
+                const lv = t >= WAKE + (q.col / 52) * 0.3 ? q.lv : 0;
+                sq(x, y, S, LV[lv], lv ? null : "#282826");
+                if (p.ring) { ctx.strokeStyle = "#E85D26"; ctx.lineWidth = 2; const r = S / 2 + 3 + 6 * (1 - p.ring); ctx.strokeRect(x - r, y - r, 2 * r, 2 * r); }
+              }
+              notes[i].style.transform = `translate(${(x + S * p.sc / 2 + 12).toFixed(1)}px, ${y.toFixed(1)}px) translateY(-50%)`;
+            });
+          }
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            const [k1, s1] = textAt(keys1, t), [k2, s2] = textAt(keys2, t);
+            c1.textContent = s1; c2.textContent = s2;
+            cur1.style.opacity = t < ENTER1 && blink(t, k1) ? 1 : 0;
+            cur2.style.opacity = t >= ROW2 && t < ENTER2 && blink(t, Math.max(k2, ROW2)) ? 1 : 0;
+            n.textContent = t >= THREE ? "3" : "1";
+            const good = t >= THREE;
+            cap1.style.display = good ? "none" : ""; cap2.style.display = good ? "" : "none";
+            // the accent points at the current hero: cherry → three → rebased → tree
+            const hot = t < THREE ? "cherry" : t < REB ? "three" : t < TREE ? "rebased" : "tree";
+            for (const [k, el] of Object.entries(words)) {
+              const on = k === hot; el.classList.toggle("f19-fire", on); el.classList.toggle("hr-glowbox", on);
+            }
+            HR.glow(words[hot], T, 0.3, 0.45);
+            drawGrid(t, T);
+            HR.draw(tl);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["19-cherry"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

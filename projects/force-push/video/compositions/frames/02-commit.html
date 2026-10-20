@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 2 — commit (verse 1 enters, 15.081–19.885). L3 "Three years in and you never could commit".
+         The cut lands on the prompt where 01 left it: `git commit` types, and the Enter (15.531, snare) opens the commit
+         editor: an empty first line, a display-size cursor waiting on it, git's template below. "three" slams onto the
+         message line (16.86) while the status bar counts the days to `1,095 days`; the rest of the line types into the
+         message, the template pushed down a row on the kick that starts line two (18.332). On "commit" (19.46) the editor
+         quits without saving: its chrome is gone at once, the unsaved message is left as a ghost, "commit" slams in the
+         accent, and git answers `Aborting commit due to empty commit message.` on the next kick. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f02-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f02-strip b { color: var(--fire); font-weight: 600; }
+        /* the terminal, where 01 left it */
+        .f02-prompt { position: absolute; left: 5.5cqw; font: 500 3.04cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        .f02-prompt .f02-cmd { color: var(--cream); }
+        .f02-mcur { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        #f02-p1 { top: 8cqw; }
+        /* the editor: git's template, vim's empty lines, the status bar and the command line */
+        #f02-body { position: absolute; left: 0; right: 0; top: 0; height: 49.6cqw; overflow: hidden; }
+        #f02-tpl { position: absolute; left: 5.5cqw; top: 21.4cqw; font: 400 1.55cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f02-tpl .f02-first { color: var(--cream); }
+        #f02-tilde { color: var(--cream-hint); }
+        #f02-status { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 50.2cqw; height: 2.1cqw; display: flex; justify-content: space-between; align-items: center;
+          padding: 0 1cqw; background: var(--ink-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+          font: 500 1.05cqw/1 "IBM Plex Mono", monospace; color: var(--cream); white-space: pre; }
+        #f02-status .f02-days { color: var(--fire); font-weight: 600; }
+        #f02-status .f02-dim { color: var(--cream-muted); }
+        #f02-cmdline { position: absolute; left: 5.5cqw; top: 53cqw; font: 500 1.05cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        /* the message: the lyric is what gets written into it */
+        .f02-row { position: absolute; left: 5.1cqw; white-space: nowrap; font-family: "Barlow", sans-serif; color: var(--cream); }
+        #f02-r1 { top: 8.4cqw; font-weight: 900; font-size: 11.2cqw; line-height: 1; letter-spacing: -0.045em; }
+        #f02-r2 { top: 20.6cqw; font-weight: 800; font-size: 6.2cqw; line-height: 1; letter-spacing: -0.035em; }
+        #f02-r3 { top: 27.6cqw; font-weight: 900; font-size: 15cqw; line-height: 0.92; letter-spacing: -0.045em; color: var(--fire); }
+        #f02-r1 .f02-sm { font-weight: 800; font-size: 6.2cqw; letter-spacing: -0.035em; }
+        .f02-hero { display: inline-block; }
+        #f02-three { color: var(--fire); }
+        .f02-cur { display: inline-block; width: 0.5em; height: 0.74em; margin-left: 0.06em; background: var(--fire); vertical-align: -0.02em; }
+        #f02-c0 { position: absolute; left: 5.5cqw; top: 9.6cqw; width: 5.6cqw; height: 8.6cqw; background: var(--fire); }
+        /* git's answer */
+        #f02-abort { position: absolute; left: 5.5cqw; top: 43.2cqw; font: 500 1.9cqw/1 "IBM Plex Mono", monospace; color: var(--cream); white-space: pre; }
+        #f02-p2 { top: 46.6cqw; font-size: 1.9cqw; }
+      </style>
+      <div id="root" data-composition-id="02-commit" data-width="1920" data-height="1080" data-duration="4.804">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f02-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.45" id="f02-editor">
+          <div id="f02-body" data-layout-ignore><div id="f02-tpl"><span class="f02-first"># Please enter the commit message for your changes.</span> Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Changes to be committed:
+#	modified:   us.txt
+#
+<span id="f02-tilde">~
+~
+~
+~
+~</span></div></div>
+          <div id="f02-status"><span id="f02-file">.git/COMMIT_EDITMSG</span><span><span class="f02-days" id="f02-days"></span><span class="f02-dim" id="f02-ruler">      1,1           All</span></span></div>
+          <div id="f02-cmdline">".git/COMMIT_EDITMSG" 8L, 205B</div>
+        </div>
+        <div class="hr-layer" data-depth="0.7">
+          <div class="f02-prompt" id="f02-p1"><span>~/us (main) $ </span><span class="f02-cmd" id="f02-cmd1"></span><span class="f02-mcur" id="f02-mc1"></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.9">
+          <div id="f02-c0"></div>
+          <div class="f02-row" id="f02-r1"><span class="f02-hero hr-glow" id="f02-three">three</span><span class="f02-sm"><span class="f02-t"></span><span class="f02-t"></span><span class="f02-cur" id="f02-c1"></span></span></div>
+          <div class="f02-row" id="f02-r2"><span class="f02-t"></span><span class="f02-t"></span><span class="f02-t"></span><span class="f02-t"></span><span class="f02-cur" id="f02-c2"></span></div>
+          <div class="f02-row" id="f02-r3"><span class="f02-hero hr-glow" id="f02-commit">commit</span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.8">
+          <div id="f02-abort">Aborting commit due to empty commit message.</div>
+          <div class="f02-prompt" id="f02-p2"><span>~/us (main) $ </span><span class="f02-mcur" id="f02-mc2"></span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 4.804, T0 = 15.081;
+          const root = document.querySelector('[data-composition-id="02-commit"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 2 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          const ENTER = at(15.531), INSERT = at(16.008), THREE = at(16.86), NL = at(18.332), QUIT = at(19.46), ABORT = at(19.514);
+
+          // ---- the command: typed where 01 left the prompt; the Enter (snare) opens the editor ----
+          const CMD = "git commit", C_A = at(15.13), C_B = at(15.47);
+          const cmdStates = [[0, ""]];
+          for (let i = 0; i < CMD.length; i++) cmdStates.push([C_A + ((C_B - C_A) * i) / CMD.length, CMD.slice(0, i + 1)]);
+          const editor = [$("f02-editor")];
+          tl.set(editor, { opacity: 0 }, 0).set(editor, { opacity: 1 }, ENTER).set(editor, { opacity: 0 }, QUIT);
+          tl.set($("f02-p1"), { opacity: 1 }, 0).set($("f02-p1"), { opacity: 0 }, ENTER);
+
+          // ---- the message: "three" slams onto line 1, the rest types at its word times ----
+          HR.hero(tl, $("f02-three"), THREE, { spread: 22, over: 1.18, pre: 0.12, sharp: true });
+          const tw = root.querySelectorAll(".f02-t");
+          // [element, text, track start, track end]; a leading space types with the first letter
+          const typed = [
+            [tw[0], " years", 17.4, 17.86], [tw[1], " in", 17.899, 18.2],
+            [tw[2], "and", 18.363, 18.52], [tw[3], " you", 18.54, 18.76], [tw[4], " never", 18.78, 19.13], [tw[5], " could", 19.22, 19.44],
+          ].map(([el, s, a, b]) => ({ el, s, a: at(a), b: at(b), n: s.trim().length }));
+          const keys = [ENTER, INSERT, THREE, NL]; // every keystroke, for the cursor's solid-while-typing
+          for (const w of typed) for (let i = 0; i < w.n; i++) keys.push(w.a + ((w.b - w.a) * i) / w.n);
+          keys.sort((p, q) => p - q);
+          // line 2 starts on the kick: git's template drops a row
+          tl.set($("f02-tpl"), { y: 0 }, 0).set($("f02-tpl"), { y: (28.9 - 21.4) * 19.2 }, NL);
+
+          // ---- "commit": the editor quits unsaved, the message is left as a ghost, git aborts ----
+          const ghost = [$("f02-r1"), $("f02-r2")];
+          tl.set(ghost, { color: "#F0ECE5" }, 0).set(ghost, { color: "#888880" }, QUIT);
+          tl.set($("f02-three"), { color: "#E85D26" }, 0).set($("f02-three"), { color: "#888880", textShadow: "none" }, QUIT);
+          HR.hero(tl, $("f02-commit"), QUIT, { spread: 30, over: 1.24, pre: 0.14, sharp: true });
+          const out = [$("f02-abort"), $("f02-p2")];
+          tl.set(out, { opacity: 0 }, 0).set(out[0], { opacity: 1 }, QUIT).set(out[1], { opacity: 1 }, ABORT);
+
+          // ---- the camera: a slow push while the cursor waits, a punch on each hero, a drift through the line ----
+          tl.fromTo(stage.cam, { z: 1.0, x: 0 }, { z: 1.022, duration: THREE - ENTER - 0.06, ease: "sine.inOut" }, ENTER);
+          tl.to(stage.cam, { z: 1.05, y: -6, duration: 0.06, ease: "power2.in" }, THREE - 0.06);
+          tl.to(stage.cam, { z: 1.018, y: 0, duration: 0.5, ease: "elastic.out(1, 0.55)" }, THREE);
+          tl.to(stage.cam, { z: 1.032, x: 16, duration: QUIT - THREE - 0.56, ease: "none" }, THREE + 0.5);
+          tl.to(stage.cam, { z: 1.065, y: -10, duration: 0.06, ease: "power2.in" }, QUIT - 0.06);
+          tl.to(stage.cam, { z: 1.03, y: 0, duration: 0.42, ease: "elastic.out(1, 0.5)" }, QUIT);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: typing, cursors, the day count, the ruler, the camera ----
+          const cmd1 = $("f02-cmd1"), mc1 = $("f02-mc1"), mc2 = $("f02-mc2"), c0 = $("f02-c0"), c1 = $("f02-c1"), c2 = $("f02-c2");
+          const days = $("f02-days"), ruler = $("f02-ruler"), three = $("f02-three"), commit = $("f02-commit");
+          const cmdline = $("f02-cmdline"), file = $("f02-file");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            let s = cmdStates[0]; for (const st of cmdStates) if (st[0] <= t) s = st;
+            cmd1.textContent = s[1];
+            mc1.style.opacity = t < ENTER && blink(t, s[0]) ? 1 : 0;
+            let col1 = 6, col2 = 1; // "three " typed by the hero; columns for the ruler
+            for (const w of typed) {
+              const k = t < w.a ? 0 : Math.min(w.n, 1 + Math.floor(((t - w.a) / (w.b - w.a)) * w.n));
+              const txt = k ? w.s.slice(0, w.s.length - w.n + k) : "";
+              w.el.textContent = txt;
+              if (w.a < NL) col1 += txt.length; else col2 += txt.length;
+            }
+            let last = 0; for (const k of keys) if (k <= t) last = k;
+            const live = t >= ENTER && t < QUIT, on = blink(t, last);
+            c0.style.opacity = live && t < THREE - 0.12 && on ? 1 : 0;
+            c1.style.opacity = live && t >= THREE && t < NL && on ? 1 : 0;
+            c2.style.opacity = live && t >= NL && on ? 1 : 0;
+            cmdline.textContent = t < INSERT ? '".git/COMMIT_EDITMSG" 8L, 205B' : "-- INSERT --";
+            file.textContent = t < THREE ? ".git/COMMIT_EDITMSG" : ".git/COMMIT_EDITMSG [+]";
+            mc2.style.opacity = t >= ABORT && blink(t, ABORT) ? 1 : 0;
+            // "three years": the days the message has been open, counted out across the two words
+            const p = Math.max(0, Math.min(1, (t - THREE) / (at(17.899) - THREE)));
+            days.textContent = t < THREE ? "" : Math.round(1095 * (1 - (1 - p) * (1 - p))).toLocaleString("en-US") + " days";
+            const row = t < NL ? 1 : 2, col = t < THREE ? 1 : row === 1 ? col1 : col2;
+            ruler.textContent = `      ${row},${col}`.padEnd(20, " ") + "All";
+            HR.glow(three, T); HR.glow(commit, T, 0.3, 0.5);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["02-commit"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

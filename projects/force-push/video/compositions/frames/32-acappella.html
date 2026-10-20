@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 32 — acappella (final chorus a cappella, 160.731–169.270). The stillest frame of the film: the hook of 10
+         again, but sung softly, so it is set small and lowercase in the soft voice (Instrument Serif Italic), one line
+         centred on black. The bridge's tail (to 161.91) is only the dark prompt with its cursor blinking on the beat.
+         On "force" the cursor leaves the prompt and becomes the one fire mark of the frame, a thin caret that writes
+         the line and breathes after it. On "i" the terminal scrolls up a line and the second line builds word by word;
+         "you" fades as it is sung ("there's no you"); the last beat accelerates into the drop (a push that rushes in,
+         the caret flickering faster) and hard-cuts into 33. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826; --ink-on-cream: #111111; --muted-on-cream: #5F5B54;
+          background: var(--ink); color: var(--cream);
+        }
+        #f32-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f32-strip .f32-n { color: var(--fire); font-weight: 600; margin-left: 0.6em; }
+        /* one line at a time, centred; the inner box carries the caret and (line 1) the prompt above its left edge */
+        .f32-line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap;
+          font: italic 400 6.4cqw/1.1 "Instrument Serif", serif; letter-spacing: -0.005em; color: var(--cream); }
+        #f32-l1 { top: calc(50% - 0.55em); }
+        #f32-l2 { top: calc(50% - 0.55em + 9cqw); font-size: 5.2cqw; }
+        .f32-in { position: relative; display: inline-block; }
+        .f32-w { display: inline; }
+        .f32-w.f32-you { color: var(--cream); }
+        .f32-caret { position: absolute; left: 0; top: 0.2em; width: 0.055em; height: 0.82em; background: var(--fire); opacity: 0; }
+        /* 31's last frame: the unsent command, same place and size; it steps down out of the voice's way and waits */
+        #f32-prompt { position: absolute; left: 5.5cqw; top: 28.2cqw; font: 500 4.2cqw/1 "IBM Plex Mono", monospace; color: var(--cream);
+          white-space: pre; transform-origin: 0% 0%; }
+        #f32-pfx { color: var(--cream-muted); }
+        #f32-block { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+      </style>
+      <div id="root" data-composition-id="32-acappella" data-width="1920" data-height="1080" data-duration="8.539">
+        <div class="hr-layer" data-depth="0.12" id="f32-striplayer">
+          <div id="f32-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin<span class="f32-n">0</span></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.2">
+          <div id="f32-prompt"><span id="f32-pfx">~/us (main) $ </span>git push --force<span id="f32-block"></span></div>
+        </div>
+        <div class="hr-layer" data-depth="1">
+          <div class="f32-line" id="f32-l1"><span class="f32-in" id="f32-in1"><span class="f32-w" data-s="161.912" data-hero="1">force</span> <span class="f32-w" data-s="162.52">push.</span> <span class="f32-w" data-s="163.22">baby,</span> <span class="f32-w" data-s="163.84">you're</span> <span class="f32-w" data-s="164.047" data-hero="1">history.</span><i class="f32-caret" id="f32-c1"></i></span></div>
+          <div class="f32-line" id="f32-l2"><span class="f32-in" id="f32-in2"><span class="f32-w" data-s="165.40">i</span> <span class="f32-w" data-s="166.003" data-hero="1">rewrote</span> <span class="f32-w" data-s="166.66">the</span> <span class="f32-w" data-s="166.84">past,</span> <span class="f32-w" data-s="167.34">there's</span> <span class="f32-w" data-s="167.58">no</span> <span class="f32-w f32-you" data-s="168.063" id="f32-you">you</span> <span class="f32-w" data-s="168.74">and</span> <span class="f32-w" data-s="168.96" data-hero="1">me.</span><i class="f32-caret" id="f32-c2"></i></span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 8.539, T0 = 160.731;
+          const root = document.querySelector('[data-composition-id="32-acappella"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 32, drift: 0.7, pulse: 0.6 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const FORCE = at(161.912), LINE2 = at(165.40), RUSH = at(168.74);
+          const BEAT = (168.036 - 160.731) / 16; // the tracked grid: 4 bars from the frame's downbeat
+
+          // ---- the words: each glyph inks in softly from its word's start (readable within 0.25 s) ----
+          // glyph reveal times per line, for the caret
+          const W = root.clientWidth || 1920;
+          const lines = [{ inner: $("f32-in1"), caret: $("f32-c1"), from: FORCE, to: LINE2, em: 0.064, gs: [] },
+                         { inner: $("f32-in2"), caret: $("f32-c2"), from: LINE2, to: RUSH, em: 0.052, gs: [] }];
+          lines.forEach((L) => {
+            L.inner.querySelectorAll(".f32-w").forEach((w) => {
+              const t = at(parseFloat(w.dataset.s)), hero = !!w.dataset.hero;
+              const gs = HR.glyphs(w), each = Math.min(0.045, 0.2 / Math.max(1, gs.length));
+              tl.fromTo(gs, { opacity: 0, yPercent: hero ? 34 : 24, scale: hero ? 1.1 : 1, filter: hero ? "blur(8px)" : "blur(7px)" },
+                { opacity: 1, yPercent: 0, scale: 1, filter: "blur(0px)", duration: hero ? 0.6 : 0.5, ease: "power3.out", stagger: each }, t - 0.04);
+              gs.forEach((g, i) => L.gs.push({ g, t: t - 0.04 + i * each }));
+            });
+          });
+
+          // "there's no you": the word is sung, then fades to the muted grey (still legible)
+          tl.fromTo($("f32-you"), { color: "#F0ECE5" }, { color: "#888880", duration: 0.5, ease: "power2.inOut", immediateRender: false }, at(168.063) + 0.3);
+
+          // the prompt (the bridge's tail): alone until the fill's last kicks, then it steps down to the foot of the
+          // terminal, small, and waits there unsent; on "and" it takes the cursor back for the drop (33 is the Enter)
+          tl.fromTo($("f32-prompt"), { y: 0, scale: 1 }, { y: (46.2 - 28.2) * W / 100, scale: 0.4, duration: 0.5, ease: "power3.inOut" }, at(161.4));
+          tl.fromTo($("f32-prompt"), { color: "#F0ECE5" }, { color: "#888880", duration: 0.6, ease: "power2.out", immediateRender: false }, at(161.9));
+          tl.fromTo($("f32-prompt"), { color: "#888880" }, { color: "#F0ECE5", duration: 0.25, ease: "power2.out", immediateRender: false }, RUSH);
+          // line 1 gives way to line 2 as the terminal scrolls a line
+          tl.fromTo($("f32-in1"), { opacity: 1, y: 0, filter: "blur(0px)" },
+            { opacity: 0, y: -24, filter: "blur(6px)", duration: 0.55, ease: "power1.in", immediateRender: false }, LINE2);
+
+          // ---- the camera: one slow push carries the frame; a breath deeper on each hero; the scroll; the rush ----
+          const push = { z: 0 }, step = { z: 0 }, rush = { z: 0 }, scroll = { y: 0 };
+          tl.fromTo(push, { z: 0 }, { z: 0.045, duration: RUSH, ease: "sine.inOut" }, 0);
+          [[FORCE, 0.008], [at(164.047), 0.016], [at(166.003), 0.024], [at(168.96), 0.032]].forEach(([t, z]) =>
+            tl.to(step, { z, duration: 0.9, ease: "power2.out" }, t - 0.04));
+          tl.fromTo(scroll, { y: 0 }, { y: 1, duration: 1.4, ease: "sine.inOut", immediateRender: false }, LINE2 - 0.1);
+          tl.fromTo(rush, { z: 0 }, { z: 0.11, duration: DUR - RUSH, ease: "power3.in", immediateRender: false }, RUSH);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: cursor, caret, camera ----
+          const block = $("f32-block"), stripL = $("f32-striplayer");
+          const lineGap = () => root.clientWidth * 0.09;
+          function caret(L, t) {
+            if (t < L.from - 0.04 || t >= L.to) { L.caret.style.opacity = 0; return; }
+            let last = null;
+            for (const it of L.gs) if (it.t <= t) last = it;
+            if (!last) { L.caret.style.opacity = 0; return; }
+            const em = W * L.em;
+            L.caret.style.left = (last.g.offsetLeft + last.g.offsetWidth + em * 0.06).toFixed(1) + "px";
+            const idle = t - last.t;
+            let a;
+            if (idle < 0.3) a = 1;
+            else a = 0.3 + 0.7 * (0.5 + 0.5 * Math.cos(2 * Math.PI * (idle - 0.3) / (2 * BEAT)));
+            L.caret.style.opacity = a.toFixed(3);
+          }
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            // the prompt's block cursor blinks on the beat until "force" takes it; from "and" it is back, quickening
+            const b = t / BEAT;
+            let on = t < FORCE - 0.04 && (b - Math.floor(b)) < 0.5;
+            if (t >= RUSH) { const u = t - RUSH, ph = 1.6 * u + 5 * u * u * u / (DUR - RUSH); on = u < 0.12 || (ph - Math.floor(ph)) < 0.55; }
+            block.style.opacity = on ? 1 : 0;
+            caret(lines[0], t); caret(lines[1], t);
+            stage.cam.z = 1 + push.z + step.z + rush.z;
+            stage.cam.y = scroll.y * lineGap() * 0.62;
+            stage.apply(T);
+            stripL.style.opacity = 0.8;
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
+          window.__timelines["32-acappella"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,341 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 29 — chant2 (post-chorus 2, L43–L46, 136.790–144.169). A fork of 16-chant: the same stomp set, retimed
+         to L43–L46 and the kicks of this span; FORCE! / PUSH! slams and camera punches sized by the measured drums.
+         The terminal's scrollback is the plain push of 26's fast-forward (`9c0ffee..5ab3e07  main -> main`).
+         "wipe it clean": `git status` → `nothing to commit, working tree clean` on "clean" (plant 2).
+         "like you've never been": `git log --author=you` → Enter on "never", nothing; on "been" just the prompt.
+         "hear the crowd": `git push` → Enter on "crowd": `Everything up-to-date`, and the crowd of it stacks up.
+         Plant 4 pays off on the last line: on "You're" (142.2) the drums drop out, a hard cut to a cleared terminal,
+         `git blame us.txt` types, and on "history" (143.2) 06's blame prints again, the verse-1 file line for line,
+         with new hashes and the night-of-the-rewrite dates, every author now `me` (fire); the `me`s pop in turn down
+         the gutter. "now" gets the next prompt and 06's tally, reversed: lines by you 0 · lines by me 8. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f29-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f29-strip b { color: var(--fire); font-weight: 600; }
+
+        /* ---- the chant: one word full-frame at a time ---- */
+        .f29-chant { position: absolute; left: 0; right: 0; top: 11cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 27cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        .f29-chant > span { display: inline-block; }
+        .f29-chant.f29-push { color: var(--fire); }
+        /* (hey!): a tag, stamped; the tags pile up across the top right */
+        .f29-tag { position: absolute; top: 6.4cqw; opacity: 0; padding: 0.25cqw 1.1cqw 0.45cqw; border: 0.28cqw solid var(--cream);
+          font: 900 4.2cqw/1 "Barlow", sans-serif; letter-spacing: -0.02em; color: var(--cream); white-space: nowrap; }
+        /* each line's tail: centred, the hero in fire */
+        .f29-tail { position: absolute; left: 0; right: 0; top: 16.6cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 7.5cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        .f29-tail .f29-hero, #f29-l24 .f29-hero { color: var(--fire); font-size: 1.5em; letter-spacing: -0.045em; }
+        /* the last line, after the drums drop out */
+        #f29-l24 { position: absolute; left: 0; right: 0; top: 6.6cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 7.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f29-l24 .f29-b { margin-top: -1.2cqw; }
+        #f29-l24 .f29-hero { font-size: 1.85em; }
+
+        /* ---- the terminal (the singer's, ~/us on main) ---- */
+        .f29-term { position: absolute; left: 5.5cqw; right: 5.5cqw; overflow: hidden; font: 400 2cqw/3cqw "IBM Plex Mono", monospace;
+          color: var(--cream-muted); }
+        #f29-termA { top: 37.8cqw; height: 15cqw; }
+        #f29-termB { top: 29.8cqw; height: 23cqw; font-size: 1.8cqw; line-height: 2.7cqw; opacity: 0; }
+        /* git blame: hash · (author date time tz lineno) · the line; the verse-1 file again, every author `me` */
+        .f29-row.f29-blame { font-size: 1.45cqw; line-height: 2.2cqw; height: 2.2cqw; color: var(--cream-muted); }
+        .f29-blame .f29-meta { display: inline-block; width: 43ch; }
+        .f29-blame .f29-who { display: inline-block; color: var(--fire); font-weight: 600; transform-origin: 50% 70%; }
+        .f29-blame .f29-src { color: var(--cream); }
+        #f29-tally { position: absolute; right: 5.5cqw; top: 50.1cqw; height: 2.7cqw; display: flex; align-items: center; opacity: 0;
+          font: 500 0.95cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); }
+        #f29-tally > span { display: inline-block; transform-origin: 100% 60%; }
+        #f29-tally b { color: var(--fire); font-weight: 600; }
+        #f29-tally i { font-style: normal; color: var(--cream); }
+        .f29-rows { position: absolute; left: 0; right: 0; top: 0; }
+        .f29-row { white-space: pre; opacity: 0; }
+        .f29-row .f29-cmd { color: var(--cream); }
+        .f29-row .f29-hl { color: var(--fire); font-weight: 600; }
+        .f29-row.f29-key { color: var(--cream); font-weight: 500; }
+        .f29-row b { color: var(--cream); font-weight: 600; }
+        .f29-cur { display: inline-block; width: 0.6em; height: 1.1em; margin-left: 0.06em; background: var(--fire); vertical-align: -0.2em; opacity: 0; }
+        .f29-u { position: relative; display: inline-block; }
+        .f29-u i { position: absolute; left: 0; right: 0; bottom: -0.1em; height: 0.12em; background: var(--fire); transform-origin: 0% 50%; transform: scaleX(0); }
+
+        /* the crowd: rows of git's answer stacking up the frame (decorative) */
+        #f29-crowd { position: absolute; inset: 0; }
+        .f29-crow { position: absolute; left: 0; white-space: pre; opacity: 0; font: 400 1.7cqw/1 "IBM Plex Mono", monospace; color: var(--cream-hint); }
+      </style>
+      <div id="root" data-composition-id="29-chant2" data-width="1920" data-height="1080" data-duration="7.379">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f29-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.3" data-layout-ignore>
+          <div id="f29-crowd"></div>
+        </div>
+        <div class="hr-layer" data-depth="0.5">
+          <div class="f29-term" id="f29-termA"><div class="f29-rows"></div></div>
+          <div class="f29-term" id="f29-termB"><div class="f29-rows"></div></div>
+          <div id="f29-tally"><span>lines by you <b>0</b>&nbsp;&nbsp;·&nbsp; lines by <i>me</i> <b>8</b></span></div>
+        </div>
+        <div class="hr-layer" data-depth="0.8">
+          <div class="f29-tag" id="f29-tag1" data-layout-allow-overlap style="right: 5.5cqw; transform: rotate(-5deg)">(hey!)</div>
+          <div class="f29-tag" id="f29-tag2" data-layout-allow-overlap style="right: 21.4cqw; transform: rotate(3deg)">(hey!)</div>
+          <div class="f29-tag" id="f29-tag3" data-layout-allow-overlap style="right: 37.2cqw; transform: rotate(-2.5deg)">(hey!)</div>
+        </div>
+        <div class="hr-layer" data-depth="1">
+          <div class="f29-chant" id="f29-f1"><span>FORCE!</span></div>
+          <div class="f29-chant f29-push" id="f29-p1"><span class="hr-glowbox">PUSH!</span></div>
+          <div class="f29-tail" id="f29-t1"><span class="f29-w">wipe</span> <span class="f29-w">it</span> <span class="f29-w f29-hero hr-glowbox">clean</span></div>
+          <div class="f29-chant" id="f29-f2"><span>FORCE!</span></div>
+          <div class="f29-chant f29-push" id="f29-p2"><span class="hr-glowbox">PUSH!</span></div>
+          <div class="f29-tail" id="f29-t2"><span class="f29-w">like</span> <span class="f29-w">you've</span> <span class="f29-w f29-hero hr-glowbox">never</span> <span class="f29-w">been</span></div>
+          <div class="f29-chant" id="f29-f3"><span>FORCE!</span></div>
+          <div class="f29-chant f29-push" id="f29-p3"><span class="hr-glowbox">PUSH!</span></div>
+          <div class="f29-tail" id="f29-t3"><span class="f29-w">hear</span> <span class="f29-w">the</span> <span class="f29-w f29-hero hr-glowbox">crowd</span></div>
+          <div id="f29-l24">
+            <div class="f29-a"><span class="f29-w">you're</span> <span class="f29-w">not</span> <span class="f29-w">in</span> <span class="f29-w">my</span></div>
+            <div class="f29-b"><span class="f29-w f29-hero">history</span> <span class="f29-w">now</span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 7.379, T0 = 136.79, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="29-chant2"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 29 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          // ================= the song (track seconds, lyrics.json L43–L46) =================
+          // per chant line: FORCE!, PUSH!, (hey!), the tail's word starts, the tail's hero index
+          const CHANT = [
+            { force: 136.82, push: 137.26, hey: 137.52, tail: [137.747, 138.02, 138.12], hero: 2 },
+            { force: 138.515, push: 138.86, hey: 139.06, tail: [139.18, 139.34, 139.54, 139.98], hero: 2 },
+            { force: 140.44, push: 140.77, hey: 141.38, tail: [141.46, 141.64, 141.808], hero: 2 },
+          ];
+          const LAST = { words: [142.2, 142.36, 142.6, 143.025, 143.2, 143.92], hero: 4 };
+          const CUT = LAST.words[0]; // the drums drop out: the cleared terminal
+
+          // ================= the world: what the terminal says (forks change this table) =================
+          // rows: { at, out, cls } printed whole at `at` (−1: already on screen) · { at, cmd, type: [a, b], enter, hl } a
+          // prompt that appears at `at`, types `cmd` from a to b, and is entered at `enter` (the cursor leaves)
+          const PS = "~/us (main) $ ";
+          // kicks in this span: 136.821 137.288 137.735 138.192 138.653 139.122 139.571 140.044 140.487 140.948 141.405 141.868
+          const TERM_A = [
+            { at: -1, out: "To me@home:us.git" },
+            { at: -1, out: "   9c0ffee..5ab3e07  main -&gt; main" },
+            { at: -1, cmd: "git status", type: [136.88, 137.36], enter: 138.12 },
+            { at: 138.192, out: "On branch main" },
+            { at: 138.192, out: 'nothing to commit, working tree <span class="f29-u">clean<i></i></span>', key: true },
+            { at: 138.214, cmd: "git log --author=you", hl: [17, 20], type: [138.56, 139.46], enter: 139.54 },
+            { at: 140.044, cmd: "git push", type: [140.5, 140.92], enter: 141.808 },
+            { at: 141.808, out: "Everything up-to-date", key: true },
+          ];
+          // plant 4: 06's blame of us.txt (the verse-1 lyric), rewritten: new hashes, the night of the rewrite, all `me`
+          const BLAME = [
+            ["^b05d2f8", "2026-10-19 23:58:01", "three years in and you never could commit"],
+            ["6b1e9f3", "2026-10-19 23:58:01", "hid me in your stash, said we'd get to it"],
+            ["d27a0c5", "2026-10-19 23:58:02", "said it's just a feature, nothing on the side"],
+            ["1a93e7d", "2026-10-19 23:58:02", "then i found the other branch you tried to hide"],
+            ["8f4c61b", "2026-10-19 23:58:03", "so i ran the blame on every broken line"],
+            ["8f4c61b", "2026-10-19 23:58:03", "every single one had your name, not mine"],
+            ["9c0ffee", "2026-10-20 00:41:17", "you said we could merge, work the conflicts through"],
+            ["9c0ffee", "2026-10-20 00:41:17", "but every conflict, baby, started with you"],
+          ];
+          const HIST_T = LAST.words[LAST.hero];
+          const TERM_B = [
+            { at: CUT, cmd: "git blame us.txt", type: [142.28, 142.98], enter: HIST_T },
+            ...BLAME.map(([h, d, line], i) => ({ at: HIST_T + i * 0.022, cls: "f29-blame",
+              out: `<span class="f29-meta">${h} (<span class="f29-who">me</span> ${d} +0200  ${i + 1})</span><span class="f29-src">${line}</span>` })),
+            { at: 143.92, cmd: "", type: null, enter: 99 },
+          ];
+          // the crowd: rows of `Everything up-to-date` stacking up from the terminal on the hits after "crowd"
+          const CROWD = [141.808, 141.808, 141.808, 141.856, 141.856, 141.868, 141.868, 141.93, 141.93, 142.0, 142.0, 142.091, 142.091, 142.14];
+
+          // ================= build the terminals =================
+          const rng = HR.rng(2929);
+          function buildTerm(el, script, rowH) {
+            const box = el.querySelector(".f29-rows");
+            return script.map((r) => {
+              const d = document.createElement("div");
+              d.className = "f29-row" + (r.key ? " f29-key" : "") + (r.cls ? " " + r.cls : "");
+              const row = { ...r, el: d, t: r.at < 0 ? -1 : at(r.at), h: r.cls ? 2.2 * PX : rowH };
+              if (r.cmd !== undefined) {
+                d.innerHTML = `<span>${PS}</span><span class="f29-cmd"></span><i class="f29-cur"></i>`;
+                row.cmdEl = d.querySelector(".f29-cmd"); row.cur = d.querySelector(".f29-cur");
+                row.enterT = at(r.enter);
+                // keystrokes at a human rhythm: even spacing with a seeded wobble
+                row.keys = [];
+                if (r.type) {
+                  const a = at(r.type[0]), b = at(r.type[1]), n = r.cmd.length;
+                  for (let i = 0; i < n; i++) row.keys.push(a + ((b - a) * (i + 0.35 * (rng() - 0.5))) / Math.max(1, n - 1));
+                }
+                row.shown = -1;
+              } else d.innerHTML = r.out;
+              box.appendChild(d);
+              return row;
+            });
+          }
+          const termA = { el: $("f29-termA"), rows: buildTerm($("f29-termA"), TERM_A, 3 * PX), height: 15 * PX };
+          const termB = { el: $("f29-termB"), rows: buildTerm($("f29-termB"), TERM_B, 2.7 * PX), height: 23 * PX };
+          termA.box = termA.el.querySelector(".f29-rows"); termB.box = termB.el.querySelector(".f29-rows");
+
+          // the crowd rows, bottom up from the terminal's top edge
+          const crowdBox = $("f29-crowd");
+          const crowd = CROWD.map((T, k) => {
+            const d = document.createElement("div");
+            d.className = "f29-crow";
+            d.textContent = Array(5).fill("Everything up-to-date").join("    ");
+            const bottom = 37.4 + -2.25 * (k + 1);
+            d.style.top = bottom.toFixed(2) + "cqw";
+            const off = -(k % 2) * 13 - rng() * 9;
+            d.style.left = off.toFixed(2) + "cqw";
+            // fainter as the crowd climbs behind the lyric
+            d.style.opacity = 0;
+            crowdBox.appendChild(d);
+            return { el: d, t: at(T), a: Math.max(0.22, 0.75 - k * 0.045), ph: 0.5 + rng() * 0.5 };
+          });
+
+          // ================= the chant =================
+          const drumsPeak = (T) => { let m = 0; for (let d = 0; d <= 0.14; d += 0.02) m = Math.max(m, HR.band("drums", T + d)); return m; };
+          const show = (el, a, b) => { tl.set(el, { opacity: 0 }, 0); tl.set(el, { opacity: 1 }, Math.max(0.001, a)); if (b != null) tl.set(el, { opacity: 0 }, b); };
+          const hits = []; // camera: { T (local), a (z punch), y, settle }
+          CHANT.forEach((c, i) => {
+            const n = i + 1, F = at(c.force), P = at(c.push), H = at(c.hey);
+            const tail = $("f29-t" + n), words = tail.querySelectorAll(".f29-w");
+            const W0 = at(c.tail[0]);
+            const next = i + 1 < CHANT.length ? at(CHANT[i + 1].force) : at(CUT);
+            // FORCE! from its start to PUSH!; PUSH! to the tail's first word; the tail to the next FORCE!
+            const fEl = $("f29-f" + n), pEl = $("f29-p" + n);
+            show(fEl, F - 0.035, P - 0.035);
+            show(pEl, P - 0.035, W0 - 0.03);
+            show(tail, W0 - 0.03, i + 1 < CHANT.length ? next - 0.03 : at(CUT));
+            const dF = drumsPeak(c.force), dP = drumsPeak(c.push);
+            HR.hero(tl, fEl.firstElementChild, F, { spread: 22 + 30 * dF, over: 1.1 + 0.14 * dF, pre: 0.035, settle: 0.4, sharp: true });
+            HR.hero(tl, pEl.firstElementChild, P, { spread: 26 + 34 * dP, over: 1.12 + 0.16 * dP, pre: 0.035, settle: 0.4, sharp: true });
+            hits.push({ T: F, a: 0.018 + 0.04 * dF, y: -6, settle: 0.36 }, { T: P, a: 0.024 + 0.05 * dP, y: -9, settle: 0.42 });
+            // (hey!): stamped, 0 ms, a short settle; it stays until the drums drop
+            const tag = $("f29-tag" + n);
+            show(tag, H, at(CUT));
+            tl.fromTo(tag, { scale: 1.32 }, { scale: 1, duration: 0.12, ease: "power4.out", immediateRender: false }, H);
+            // the tail: words build on their starts, the hero slams
+            words.forEach((w, j) => {
+              if (j === c.hero) HR.hero(tl, w, at(c.tail[j]), { spread: 16, over: 1.2, pre: 0.06, sharp: true, skew: false });
+              else HR.lead(tl, w, at(c.tail[j]));
+            });
+            hits.push({ T: at(c.tail[c.hero]), a: i === 2 ? 0.045 : 0.022, y: i === 2 ? -10 : -4, settle: 0.4 });
+          });
+
+          // the answers: `clean` underlined as the hero lands; the crowd swells
+          tl.fromTo(root.querySelector(".f29-u i"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out", immediateRender: false }, at(138.23));
+
+          // ================= the last line: the drums drop out, a cleared terminal =================
+          show($("f29-l24"), at(CUT) - 0.03);
+          tl.set($("f29-termA"), { opacity: 1 }, 0).set($("f29-termA"), { opacity: 0 }, at(CUT) - 0.03);
+          tl.set($("f29-termB"), { opacity: 0 }, 0).set($("f29-termB"), { opacity: 1 }, at(CUT) - 0.03);
+          const lw = $("f29-l24").querySelectorAll(".f29-w");
+          lw.forEach((w, j) => {
+            if (j === LAST.hero) HR.hero(tl, w, at(LAST.words[j]), { spread: 18, over: 1.16, pre: 0.06, sharp: true, skew: false });
+            else HR.lead(tl, w, at(LAST.words[j]));
+          });
+          // plant 4: every `me` in the blame gutter pops in turn down the file; on "now" the tally lands, 06's reversed
+          const who = root.querySelectorAll(".f29-who");
+          tl.fromTo(who, { scale: 1.7 }, { scale: 1, duration: 0.3, ease: "back.out(2.4)", stagger: 0.07, immediateRender: false }, at(HIST_T) + 0.06);
+          const tally = $("f29-tally");
+          show(tally, at(143.92));
+          tl.fromTo(tally.firstElementChild, { scale: 1.18 }, { scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, at(143.92));
+
+          // ================= the camera =================
+          // a punch on every stomp sized by the measured drums, a settle, a slow climb between; after the cut a slow push
+          const cam = stage.cam; let cz = 1, cy = 0, cx = 0, ct = 0;
+          const camTo = (t, dur, z, y, x, ease) => {
+            if (dur <= 0.001) return;
+            tl.fromTo(cam, { z: cz, y: cy, x: cx }, { z, y, x, duration: dur, ease, immediateRender: ct === 0 }, t);
+            cz = z; cy = y; cx = x; ct = t + dur;
+          };
+          const cutT = at(CUT);
+          hits.sort((p, q) => p.T - q.T);
+          hits.forEach((h, k) => {
+            const nextT = k + 1 < hits.length ? hits[k + 1].T : cutT;
+            const base = 1 + 0.008 * Math.min(2, Math.floor(k / 3)), drift = (k % 2 ? 1 : -1) * 6;
+            camTo(ct, h.T - 0.05 - ct, base, 0, cx, "sine.inOut");
+            camTo(h.T - 0.05, 0.05, base + h.a, h.y, cx, "power2.in");
+            const s = Math.min(h.settle, nextT - 0.05 - h.T);
+            camTo(h.T, s, base, 0, drift, "elastic.out(1, 0.5)");
+          });
+          camTo(ct, cutT - 0.001 - ct, cz + 0.004, 0, cx, "none");
+          tl.set(cam, { z: 1, y: 0, x: 0 }, cutT); cz = 1; cy = 0; cx = 0; ct = cutT;
+          const HIST = at(LAST.words[LAST.hero]);
+          camTo(cutT, HIST - 0.06 - cutT, 1.024, -4, 8, "sine.inOut");
+          camTo(HIST - 0.06, 0.06, 1.036, -6, 8, "power2.in");
+          camTo(HIST, DUR - HIST, 1.05, -2, 16, "power2.out");
+          tl.set({}, {}, DUR);
+
+          // ================= per frame: terminals, crowd, glow, camera =================
+          const scrollE = gsap.parseEase("power3.out");
+          function drawTerm(term, t) {
+            let f = 0, active = null;
+            for (const r of term.rows) {
+              const on = r.t <= t;
+              r.el.style.opacity = on ? 1 : 0;
+              if (!on) continue;
+              f += r.h * (r.t < 0 ? 1 : scrollE(Math.min(1, (t - r.t) / 0.09)));
+              if (r.cmdEl) {
+                let n = 0; while (n < r.keys.length && r.keys[n] <= t) n++;
+                if (n !== r.shown) {
+                  const s = r.cmd.slice(0, n);
+                  if (r.hl && n > r.hl[0]) r.cmdEl.innerHTML = s.slice(0, r.hl[0]) + `<span class="f29-hl">${s.slice(r.hl[0], r.hl[1])}</span>` + s.slice(r.hl[1]);
+                  else r.cmdEl.textContent = s;
+                  r.shown = n;
+                }
+                r.cur.style.opacity = 0;
+                if (t < r.enterT) active = { r, last: n ? r.keys[n - 1] : r.t };
+              }
+            }
+            if (active) {
+              const idle = t - active.last;
+              active.r.cur.style.opacity = idle < 0.3 || Math.floor((idle - 0.3) * 4) % 2 === 1 ? 1 : 0;
+            }
+            term.box.style.transform = `translateY(${(-Math.max(0, f - term.height)).toFixed(1)}px)`;
+          }
+          const glows = Array.from(root.querySelectorAll(".hr-glowbox"));
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (t < cutT) drawTerm(termA, t); else drawTerm(termB, t);
+            const live = t < cutT;
+            for (const c of crowd) {
+              const on = live && t >= c.t;
+              c.el.style.opacity = on ? c.a : 0;
+              if (!on) continue;
+              const rise = 1 - scrollE(Math.min(1, (t - c.t) / 0.16));
+              const bob = (HR.hit("kick", T, 0.12) + HR.hit("snare", T, 0.12)) * 7 * c.ph;
+              c.el.style.transform = `translateY(${(rise * 18 - bob).toFixed(1)}px)`;
+            }
+            for (const g of glows) HR.glow(g, T, 0.2, 0.32);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["29-chant2"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

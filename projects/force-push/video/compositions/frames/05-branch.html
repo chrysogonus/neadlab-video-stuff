@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 5 — branch (verse 1, L6, 27.570–31.139). The singer finds the ex's branch from 04.
+         On the singer's machine `git branch -a` types under "then i found"; its list arrives whole on the kicks. The
+         log graph fills the frame: "then i found the other" sits on `main`; from "other" a second lane, drawn behind
+         `main` and dim, peels off from three years back, and the rest of the line rides its curve: "branch" swoops
+         down the bend (hero, 28.98), "you tried to" follows the pen along the lane, "hide" lands at its head
+         (hero, 30.805, in the drums' silence). On "hide" the lane lights and its placeholder note
+         `(hidden: 1 branch)` swaps to the name, `remotes/you/feature/nothing-on-the-side` (plant 1). Hard cut into 06.
+         The path text: each glyph sits in a wrapper placed on the lane (arclength + tangent, measured after the fonts in
+         render()); the kit animates the glyph inside it. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f05-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f05-strip b { color: var(--fire); font-weight: 600; }
+        /* the singer's terminal, top right: the command and its list */
+        #f05-term { position: absolute; left: 62cqw; top: 7cqw; font: 400 1.3cqw/1.65 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f05-term .f05-ps { color: var(--cream-muted); }
+        #f05-term .f05-cmd { color: var(--cream); }
+        #f05-term .f05-cur { color: var(--cream); font-weight: 500; }
+        #f05-term .f05-found { color: var(--cream); }
+        .f05-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.2em; }
+        /* the graph: lane labels */
+        .f05-label { position: absolute; font: 500 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
+        #f05-head { right: 7.3cqw; top: 24.2cqw; }
+        #f05-tip { right: 7.3cqw; top: 46.6cqw; font-size: 1.45cqw; color: var(--cream-muted); transform-origin: 100% 50%; }
+        #f05-tip.f05-lit { color: var(--fire); font-weight: 600; }
+        /* the sung line: row 1 on main, row 2 on the hidden lane (glyph wrappers placed in JS) */
+        #f05-row1 { position: absolute; left: 5.2cqw; top: 17.4cqw; font: 800 4.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em; color: var(--cream); white-space: nowrap; }
+        .f05-w2 { position: absolute; left: 0; top: 0; font-family: "Barlow", sans-serif; color: var(--cream); }
+        .f05-gp { position: absolute; left: 0; top: 0; line-height: 1; white-space: pre; }
+        .f05-lead .f05-gp { clip-path: inset(-0.6em -0.4em 0 -0.4em); }
+        .f05-small { font-size: 4.4cqw; font-weight: 800; letter-spacing: -0.03em; }
+        #f05-branch { font-size: 10.6cqw; font-weight: 900; letter-spacing: -0.012em; color: var(--fire); }
+        #f05-hide { font-size: 8cqw; font-weight: 900; letter-spacing: -0.04em; color: var(--fire); }
+      </style>
+      <div id="root" data-composition-id="05-branch" data-width="1920" data-height="1080" data-duration="3.569">
+        <div class="hr-layer" data-depth="0.15">
+          <div id="f05-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.45">
+          <div id="f05-term"><span class="f05-ps">~/us (main) $ </span><span class="f05-cmd" id="f05-cmd"></span><span class="f05-cursor" id="f05-cur1"></span>
+<span id="f05-o1"><span class="f05-cur">* main</span></span>
+<span id="f05-o2">  remotes/origin/main</span>
+<span id="f05-o3" class="f05-found">  remotes/you/feature/nothing-on-the-side</span>
+<span id="f05-p2"><span class="f05-ps">~/us (main) $ </span><span class="f05-cursor" id="f05-cur2"></span></span></div>
+        </div>
+
+        <div class="hr-layer" data-depth="0.8" id="f05-world">
+          <svg id="f05-svg" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0; overflow: visible" data-layout-ignore>
+            <!-- the hidden lane first, so main is drawn over the fork -->
+            <path id="f05-hid" d="M 40 440 C 470 440, 470 870, 960 870 H 1776" fill="none" stroke="#505048" stroke-width="4" />
+            <path id="f05-main" d="M -80 440 H 1776" fill="none" stroke="#888880" stroke-width="4" />
+            <g id="f05-medots" fill="#F0ECE5"></g>
+            <circle id="f05-fork" cx="40" cy="440" r="10" fill="#0A0A0A" stroke="#888880" stroke-width="4" />
+            <g id="f05-youdots"></g>
+          </svg>
+          <div class="f05-label" id="f05-head" data-layout-ignore>HEAD -&gt; main</div>
+          <div class="f05-label" id="f05-tip">(hidden: 1 branch)</div>
+          <div id="f05-row1"><span class="f05-w">then</span> <span class="f05-w">i</span> <span class="f05-w">found</span> <span class="f05-w">the</span> <span class="f05-w">other</span></div>
+          <span class="f05-w2 hr-glow" id="f05-branch">branch</span>
+          <span class="f05-w2 f05-lead f05-small">you</span>
+          <span class="f05-w2 f05-lead f05-small">tried</span>
+          <span class="f05-w2 f05-lead f05-small">to</span>
+          <span class="f05-w2 hr-glow" id="f05-hide">hide</span>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.569, T0 = 27.57;
+          const root = document.querySelector('[data-composition-id="05-branch"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 5 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const BRANCH = at(28.98), HIDE = at(30.805), ENTER = at(28.541);
+          const NS = "http://www.w3.org/2000/svg";
+
+          // ---- row 1, on main: every word on its start ----
+          const w1 = root.querySelectorAll("#f05-row1 .f05-w");
+          [27.6, 27.88, 27.976, 28.32, 28.68].forEach((T, i) => HR.lead(tl, w1[i], at(T)));
+
+          // ---- row 2, on the hidden lane: each glyph in its own wrapper, the kit animates the glyph ----
+          const w2 = Array.from(root.querySelectorAll(".f05-w2"));
+          for (const w of w2) {
+            const text = w.textContent; w.textContent = ""; w._hrG = [];
+            for (const ch of text) {
+              const wr = document.createElement("span"); wr.className = "f05-gp"; wr.setAttribute("data-layout-allow-overlap", "");
+              const g = document.createElement("span"); g.className = "hr-g"; g.textContent = ch;
+              wr.appendChild(g); w.appendChild(wr); w._hrG.push(g);
+            }
+          }
+          HR.hero(tl, w2[0], BRANCH, { spread: 30, over: 1.22, pre: 0.1, sharp: true, skew: false });
+          [29.5, 29.88, 30.36].forEach((T, i) => { HR.lead(tl, w2[i + 1], at(T)); w2[i + 1].classList.remove("hr-clip"); });
+          HR.hero(tl, w2[4], HIDE, { spread: 22, over: 1.2, pre: 0.08, sharp: true, skew: false });
+
+          // ---- the terminal: `git branch -a` types under "then i found"; the list arrives whole on the kicks ----
+          const keys = [[0, ""]];
+          const CMD = "git branch -a", K0 = at(27.62), K1 = at(28.3);
+          for (let i = 0; i < CMD.length; i++) keys.push([K0 + ((K1 - K0) * i) / CMD.length, CMD.slice(0, i + 1)]);
+          const outs = [[$("f05-o1"), ENTER], [$("f05-o2"), ENTER], [$("f05-o3"), BRANCH], [$("f05-p2"), BRANCH]];
+          for (const [el, t] of outs) tl.set(el, { opacity: 0 }, 0).set(el, { opacity: 1 }, t);
+
+          // ---- "hide": the name replaces the note, a pop points at it ----
+          tl.fromTo($("f05-tip"), { scale: 1.35 }, { scale: 1, duration: 0.4, ease: "expo.out", immediateRender: false }, HIDE);
+
+          // ---- the camera: it follows the pen down the lane; a punch on "branch"; a quiet lean into "hide" ----
+          tl.fromTo(stage.cam, { z: 1.0, x: 0, y: 0 }, { z: 1.012, x: 6, y: 6, duration: BRANCH - 0.06, ease: "none" }, 0);
+          tl.to(stage.cam, { z: 1.045, y: 14, duration: 0.06, ease: "power2.in" }, BRANCH - 0.06);
+          tl.to(stage.cam, { z: 1.016, y: 10, duration: 0.55, ease: "elastic.out(1, 0.55)" }, BRANCH);
+          tl.to(stage.cam, { z: 1.026, x: 14, y: 18, duration: HIDE - BRANCH - 0.55, ease: "sine.inOut" }, BRANCH + 0.55);
+          tl.to(stage.cam, { z: 1.034, x: 16, y: 22, duration: DUR - HIDE, ease: "power2.out" }, HIDE);
+          tl.set({}, {}, DUR);
+
+          // ---- the path text: placed once the fonts are in (until then, re-measured every frame) ----
+          const hid = $("f05-hid"), L = hid.getTotalLength();
+          const S0 = 410, LIFT = 12, GAP = 0.3; // where "branch" starts on the lane (px of arclength), glyph lift, word gap (em)
+          const tan = (s) => { const a = hid.getPointAtLength(Math.max(0, s - 2)), b = hid.getPointAtLength(Math.min(L, s + 2)); return Math.atan2(b.y - a.y, b.x - a.x); };
+          let laid = false, pen = [], dots = [];
+          function layout() {
+            const ready = document.fonts.status === "loaded";
+            let s = S0;
+            for (const w of w2) {
+              const em = parseFloat(getComputedStyle(w).fontSize);
+              w._s0 = s;
+              for (const g of w._hrG) {
+                const wr = g.parentNode, adv = wr.offsetWidth, h = wr.offsetHeight, c = s + adv / 2;
+                const p = hid.getPointAtLength(c), th = tan(c);
+                wr.style.transformOrigin = `${adv / 2}px ${h + LIFT}px`;
+                wr.style.transform = `translate(${(p.x - adv / 2).toFixed(2)}px, ${(p.y - h - LIFT).toFixed(2)}px) rotate(${((th * 180) / Math.PI).toFixed(3)}deg)`;
+                s += adv;
+              }
+              w._s1 = s; s += em * GAP;
+            }
+            const [br, you, tried, to, hide] = w2;
+            // the pen: the lane is revealed from the fork during "other", passes under "branch" as it lands, then writes
+            // each word's stretch of lane while it is sung, and reaches the branch's head just after "hide"
+            pen = [[at(28.7), 0], [BRANCH + 0.06, br._s1], [at(29.5), you._s0], [at(29.88), tried._s0], [at(30.36), to._s0],
+              [HIDE, hide._s0], [HIDE + 0.16, hide._s1], [HIDE + 0.24, L]];
+            // you's commits sit in the gaps between the words, and on the head
+            dots = [(br._s1 + you._s0) / 2, (tried._s1 + to._s0) / 2, (to._s1 + hide._s0) / 2, L].map((s) => {
+              let t = pen[pen.length - 1][0];
+              for (let i = 1; i < pen.length; i++) if (s <= pen[i][1]) { const [ta, sa] = pen[i - 1], [tb, sb] = pen[i]; t = ta + ((tb - ta) * (s - sa)) / Math.max(1e-6, sb - sa); break; }
+              const p = hid.getPointAtLength(s);
+              return { x: p.x, y: p.y, t };
+            });
+            laid = ready;
+          }
+          // main's commits (static history) and you's commit circles
+          const meDots = $("f05-medots");
+          for (const x of [330, 700, 1060, 1420, 1776]) {
+            const c = document.createElementNS(NS, "circle"); c.setAttribute("cx", x); c.setAttribute("cy", 440); c.setAttribute("r", 11); meDots.appendChild(c);
+          }
+          const youG = $("f05-youdots"), youC = [0, 1, 2, 3].map(() => {
+            const c = document.createElementNS(NS, "circle"); c.setAttribute("r", 10); c.setAttribute("fill", "#0A0A0A"); c.setAttribute("stroke-width", "5");
+            youG.appendChild(c); return c;
+          });
+          const popE = gsap.parseEase("back.out(2.2)");
+          const penAt = (t) => {
+            if (t <= pen[0][0]) return 0;
+            for (let i = 1; i < pen.length; i++) if (t < pen[i][0]) { const [ta, sa] = pen[i - 1], [tb, sb] = pen[i]; return sa + ((sb - sa) * (t - ta)) / (tb - ta); }
+            return L;
+          };
+
+          // ---- per-frame state: layout, the pen, the dots, typing, cursors, the swap, glow, camera ----
+          const cmd = $("f05-cmd"), cur1 = $("f05-cur1"), cur2 = $("f05-cur2"), tip = $("f05-tip");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          hid.style.strokeDasharray = `${L} ${L}`;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (!laid) layout();
+            const lit = t >= HIDE, col = lit ? "#E85D26" : "#505048";
+            hid.style.strokeDashoffset = (L - penAt(t)).toFixed(2);
+            hid.setAttribute("stroke", col);
+            youC.forEach((c, i) => {
+              const d = dots[i], k = Math.max(0, Math.min(1, (t - d.t) / 0.32));
+              c.setAttribute("cx", d.x); c.setAttribute("cy", d.y); c.setAttribute("stroke", col);
+              c.setAttribute("r", (10 * (k > 0 ? Math.max(0.05, popE(k)) : 0)).toFixed(2));
+            });
+            let k = keys[0]; for (const st of keys) if (st[0] <= t) k = st;
+            cmd.textContent = k[1];
+            cur1.style.opacity = t < ENTER && blink(t, k[0]) ? 1 : 0;
+            cur2.style.opacity = t >= BRANCH && blink(t, BRANCH) ? 1 : 0;
+            tip.textContent = lit ? "remotes/you/feature/nothing-on-the-side" : "(hidden: 1 branch)";
+            tip.classList.toggle("f05-lit", lit);
+            HR.glow(w2[0], T, 0.3, 0.45); HR.glow(w2[4], T, 0.3, 0.45);
+            stage.apply(T);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["05-branch"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
