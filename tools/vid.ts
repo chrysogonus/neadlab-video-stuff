@@ -8,7 +8,8 @@
 //   ./vid video <id>                         the HyperFrames project for the music-to-video skill (see HYPERFRAMES)
 //   ./vid assemble <id>                      its index.html: the skill's assembler, plus compositions/overlays/ on top
 //   ./vid snap <id> [<frame_id>] --at <t,...> stills at track seconds, of the project or of one frame on its own
-//   ./vid proof <id> --to <s>                a 60 fps proof render of the project's first <s> seconds
+//                                            (checked first: a frame whose script throws fails here)
+//   ./vid proof <id> [--from <s>] --to <s>   a 60 fps proof render of the project between two track seconds
 //   ./vid master <id>                        its render with the master's audio -> out/<id>.mp4
 // A step runs when an output is missing or its inputs' contents changed since it last ran (hashes in
 // work/steps.json). A step with no record whose outputs all exist is adopted as current: committed data
@@ -213,7 +214,7 @@ function video(pid: string) {
   // the house-style kit and finish layer (docs/HOUSE-STYLE.md): installed once from templates/hyperframes/, never
   // overwritten — a project keeps the copy it was made with
   const tpl = path.join(ROOT, 'templates', 'hyperframes');
-  for (const f of ['assets/kit/hr-kit.js', 'compositions/overlays/finish.html']) {
+  for (const f of ['assets/kit/hr-kit.js', 'assets/kit/wow-kit.js', 'assets/kit/motion-blur.js', 'assets/kit/README.md', 'compositions/overlays/finish.html']) {
     const dst = path.join(vdir, f);
     if (existsSync(dst)) continue;
     mkdirSync(path.dirname(dst), { recursive: true });
@@ -280,7 +281,7 @@ function linkProject(vdir: string, dir: string) {
 function snap(pid: string, frame: string | undefined, at: string | undefined) {
   if (!at) throw new Error('usage: ./vid snap <id> [<frame_id>] --at <track seconds,...>');
   const vdir = path.join(ROOT, 'projects', pid, 'video');
-  let dir = vdir, start = 0;
+  let dir = vdir, start = 0, checkFailed = false;
   if (frame) {
     const sb = readFileSync(path.join(vdir, 'STORYBOARD.md'), 'utf8');
     const m = sb.match(new RegExp(`src:\\s*compositions/frames/${frame}\\.html[\\s\\S]*?span_sec:\\s*\\[\\s*([\\d.]+)\\s*,\\s*([\\d.]+)\\s*\\]`));
@@ -303,6 +304,16 @@ function snap(pid: string, frame: string | undefined, at: string | undefined) {
 <script>window.__timelines["main"] = gsap.timeline({ paused: true });</script>
 </body></html>
 `);
+    // a frame whose script throws renders as a dead frame in the film without failing anything; check catches it.
+    // The stills are taken either way (they are how you find the fault); a failed check fails the command after them.
+    const c = Bun.spawnSync([...HF, 'check', dir, '--no-browser-gpu'], { stdout: 'pipe', stderr: 'pipe' });
+    const log = c.stdout.toString() + c.stderr.toString();
+    checkFailed = c.exitCode !== 0;
+    if (checkFailed) console.error(log);
+    else {
+      for (const line of log.split('\n').filter((l) => /^\s*[✗⚠]/.test(l))) console.log(line);
+      console.log(`check passed: ${frame} on its own`);
+    }
   }
   const times = at.split(',').map((t) => Math.round((Number(t) - start) * 1000) / 1000);
   const out = path.join(vdir, 'snapshots', frame ?? 'all');
@@ -316,29 +327,78 @@ function snap(pid: string, frame: string | undefined, at: string | undefined) {
   writeFileSync(list, stills.map((f) => `file '${f}'\nduration 1\n`).join(''));
   ffmpeg(['-f', 'concat', '-safe', '0', '-i', list, '-vf', `scale=640:-1,tile=3x${Math.ceil(stills.length / 3)}:padding=6`, '-frames:v', '1', path.join(out, 'sheet.png')]);
   console.log(`sheet: ${path.relative(ROOT, path.join(out, 'sheet.png'))}`);
+  if (checkFailed) throw new Error(`hyperframes check failed on ${frame} on its own (its report is above the stills)`);
 }
 
 /**
- * A proof clip: the assembled project cut at --to (track seconds) — later frames dropped, clips and audio trimmed —
- * rendered at 60 fps to video/renders/proof.mp4. HyperFrames renders whole compositions only, so the cut is a copy.
+ * A proof clip: the assembled project cut to [--from, --to] (track seconds) — clips outside dropped, the rest shifted
+ * and trimmed — rendered at 60 fps to video/renders/proof-<from>-<to>.mp4 (one working copy per range, so frame-workers
+ * can proof side by side). HyperFrames renders whole compositions only, so the cut is a copy. --from moves back to the
+ * start of the frame playing there (pick it inside the previous frame to see the handoff). HyperFrames clamps a
+ * negative data-start to 0, so a clip that began before the cut (the full-length overlays) is played from its offset:
+ * media through data-media-start, a composition by moving its timeline (offsetComposition).
+ * ponytail: a media clip's data-automation envelope is not shifted; shift it too when one is cut from the front.
  */
-function proof(pid: string, to: number) {
-  const vdir = path.join(ROOT, 'projects', pid, 'video'), dir = path.join(vdir, '.hyperframes', 'proof');
+function proof(pid: string, from: number, to: number) {
+  const vdir = path.join(ROOT, 'projects', pid, 'video');
+  const r3 = (x: number) => Math.round(x * 1000) / 1000;
+  const clip = /<(div|audio|video)\b[^>]*?data-start="([\d.]+)"[^>]*?data-duration="([\d.]+)"[^>]*>(?:<\/\1>)?/gs;
+  const index = readFileSync(path.join(vdir, 'index.html'), 'utf8');
+  const total = Number(index.match(/data-composition-id="main"[\s\S]*?data-duration="([\d.]+)"/)?.[1]);
+  let t0 = from;
+  for (const [tag, , start, dur] of index.matchAll(clip)) {
+    const a = Number(start);
+    if (tag.includes('data-composition-src="compositions/frames/') && a <= from && from < a + Number(dur!)) t0 = a;
+  }
+  if (!(t0 >= 0 && to > t0 && to <= total)) throw new Error(`usage: ./vid proof <id> [--from <s>] --to <s> (track seconds, 0 ≤ --from < --to ≤ ${total})`);
+  const dir = path.join(vdir, '.hyperframes', `proof-${t0}-${to}`), out = path.join(vdir, 'renders', `proof-${t0}-${to}.mp4`);
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   linkProject(vdir, dir);
-  const html = readFileSync(path.join(vdir, 'index.html'), 'utf8').replace(/<(div|audio)\b[^>]*?data-start="([\d.]+)"[^>]*?data-duration="([\d.]+)"[^>]*>(?:<\/\1>)?/gs,
-    (tag, _k, start, dur) => {
-      const a = Number(start), b = a + Number(dur);
-      if (tag.includes('data-composition-id="main"')) return tag.replace(`data-duration="${dur}"`, `data-duration="${to}"`);
-      if (a >= to) return '';
-      return b > to ? tag.replace(`data-duration="${dur}"`, `data-duration="${Math.round((to - a) * 1000) / 1000}"`) : tag;
-    });
+  const html = index.replace(clip, (tag, kind, start, dur) => {
+    const a = Number(start), b = a + Number(dur);
+    if (tag.includes('data-composition-id="main"')) return tag.replace(`data-duration="${dur}"`, `data-duration="${r3(to - t0)}"`);
+    if (b <= t0 || a >= to) return '';
+    let out = tag.replace(`data-start="${start}"`, `data-start="${r3(Math.max(a - t0, 0))}"`)
+      .replace(`data-duration="${dur}"`, `data-duration="${r3(Math.min(b, to) - Math.max(a, t0))}"`);
+    if (a < t0) {
+      const off = r3(t0 - a), media = out.match(/data-media-start="([\d.]+)"/);
+      if (kind !== 'div') out = media ? out.replace(media[0], `data-media-start="${r3(Number(media[1]) + off)}"`) : out.replace(`<${kind}`, `<${kind} data-media-start="${off}"`);
+      else offsetComposition(dir, tag, off);
+    }
+    return out;
+  });
   writeFileSync(path.join(dir, 'index.html'), html);
-  const out = path.join(vdir, 'renders', 'proof.mp4');
-  const r = Bun.spawnSync([...HF, 'render', dir, '-q', 'delivery', '--fps', '60', '--no-browser-gpu', '-o', out], { stdout: 'inherit', stderr: 'inherit' });
+  console.log(`proof ${t0}–${to} s${t0 < from ? ` (from the start of the frame playing at ${from})` : ''}`);
+  const r =Bun.spawnSync([...HF, 'render', dir, '-q', 'delivery', '--fps', '60', '--no-browser-gpu', '-o', out], { stdout: 'inherit', stderr: 'inherit' });
   if (r.exitCode !== 0) throw new Error(`proof render failed (exit ${r.exitCode})`);
   console.log(path.relative(ROOT, out));
+}
+
+/**
+ * In the proof copy, move a composition's timeline `off` seconds earlier, in place: the runtime's seek fixes up the
+ * timeline's own children, so a wrapper timeline renders immediateRender:false tweens wrong. GSAP shifts a timeline
+ * whose child starts below 0, so: a child over before the cut is rendered at its end and removed; one under way at the
+ * cut plays on through a tween of its totalTime; the rest move. (An overlay reading tl.time() itself sees proof time.)
+ * It needs the timeline registered by the end of the composition's script, as the frame contract asks; otherwise the
+ * injected script throws and the proof shows the clip without its animation.
+ */
+function offsetComposition(dir: string, tag: string, off: number) {
+  const src = tag.match(/data-composition-src="([^"]+)"/)?.[1], id = tag.match(/data-composition-id="([^"]+)"/)?.[1];
+  if (!src || !id) return; // a plain timed element has no timeline of its own
+  const file = path.join(dir, src), text = readFileSync(file, 'utf8');
+  if (!text.includes('</template>')) throw new Error(`${src}: no </template>, so the proof cannot offset it`);
+  writeFileSync(file, text.replace('</template>', `<script>(() => { // ./vid proof: this clip began ${off} s before the cut
+  const off = ${off}, tl = window.__timelines[${JSON.stringify(id)}];
+  if (!tl) throw new Error("./vid proof: " + ${JSON.stringify(id)} + " registers no timeline by the end of its script, so it cannot be offset");
+  for (const c of tl.getChildren(false, true, true)) {
+    const s = c.startTime() - off, e = c.endTime() - off;
+    if (e <= 0) { c.totalProgress(1); tl.remove(c); }
+    else if (s < 0) { tl.remove(c); tl.fromTo(c, { totalTime: -s }, { totalTime: c.totalDuration(), duration: e, ease: "none" }, 0); }
+    else c.startTime(s);
+  }
+})();</script>
+</template>`));
 }
 
 function master(pid: string) {
@@ -365,7 +425,7 @@ try {
   else if (cmd === 'video') video(id);
   else if (cmd === 'assemble') assemble(id);
   else if (cmd === 'snap') snap(id, argv[2]?.startsWith('--') ? undefined : argv[2], opt('at'));
-  else if (cmd === 'proof') proof(id, Number(opt('to')));
+  else if (cmd === 'proof') proof(id, Number(opt('from') ?? 0), Number(opt('to')));
   else if (cmd === 'master') master(id);
   else throw new Error(`unknown command '${cmd}'`);
 } catch (e) {

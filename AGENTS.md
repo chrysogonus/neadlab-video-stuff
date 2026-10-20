@@ -45,13 +45,16 @@ the song?
 4. **Motion.** Animate the opening and the first chorus with its hook yourself: they are the reference frames.
    Render `./vid proof <id> --to <end of the first chorus>`. **Stop for the user's verdict on the motion.**
 5. **Build.** Dispatch frame-workers (the skill's Step 4) three at a time, each with `SYSTEM.md`, both reference
-   frames and the rough still of its scene. Each worker checks its own scene: `./vid snap <id> <frame_id> --at …`,
-   then `npx hyperframes check projects/<id>/video/.hyperframes/solo/<frame_id> --no-browser-gpu`. A runtime error
-   can silently kill a scene, and only this shows it. Review the signals in
+   frames and the rough still of its scene. Each worker checks its own scene:
+   - `./vid snap <id> <frame_id> --at …` runs `hyperframes check` on the scene alone, then takes the stills. It fails
+     when a script throws; in the film that would only be a dead scene.
+   - `./vid proof <id> --from <s> --to <s>` shows the scene moving.
+
+   The kit and the traps that cost earlier rounds are in `assets/kit/README.md`. Review the signals in
    [docs/visual-guidelines.md](docs/visual-guidelines.md); never game them.
 6. **Review.** `./vid assemble <id>`, then `npx hyperframes check --no-browser-gpu`, then the whole film against
    [docs/visual-guidelines.md](docs/visual-guidelines.md): a broken rule is a defect and gets fixed; a signal is a
-   flag you go and look at. Watch a proof around each drop. Render `renders/video.mp4` once the review passes and
+   flag you go and look at. Watch a proof around each drop (`./vid proof <id> --from <s> --to <s>`). Render `renders/video.mp4` once the review passes and
    you have inspected the snapshots yourself (that answers the skill's render question).
 7. **Deliver.** `./vid master <id>` writes `out/<id>.mp4`, the render with the master's audio (AAC 320k): the file
    to upload. With it come:
@@ -63,7 +66,6 @@ the song?
    this pipeline yet.
 
 **Not built yet.** Until these exist, do the work by hand:
-- **Range proofs.** `./vid proof` renders from 0 and takes only `--to`.
 - **`./vid audit`.** It will report the signals. Until then, measure them as described in visual-guidelines.md.
 - **Lyric-event registration.** It will let the audit check that the right word appears on its time.
 - **`./vid deliver`.** It will build stage 7's package.
@@ -71,8 +73,13 @@ the song?
 When one lands, update its stage here.
 
 `./vid snap <id> [<frame_id>] --at <track seconds,…>` writes stills and a contact sheet to
-`projects/<id>/video/snapshots/`; with a frame id it mounts that frame alone at its storyboard span, so a frame
-can be judged before the others exist. Read the sheet after every change you want to trust.
+`projects/<id>/video/snapshots/`. With a frame id it mounts that frame alone at its storyboard span, so a frame can
+be judged before the others exist, and it runs `hyperframes check` on it first. Read the sheet after every change you
+want to trust.
+
+`./vid proof <id> [--from <s>] --to <s>` renders a 60 fps proof of that range to
+`renders/proof-<from>-<to>.mp4`, one per range, so workers can proof side by side. `--from` moves back to the start of
+the frame playing there: to see a handoff, pick a time inside the previous frame.
 
 ## This repo's deviations from `/music-to-video`
 

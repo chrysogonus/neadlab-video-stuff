@@ -61,8 +61,8 @@ restrained and lit by one accent; 3D only as line drawing.
      literal second-colour moment when the lyric names the colour (p(doom)'s 2 s of acid green; harvest-remix's
      "little green padlock"), ideally planted for a payoff.
    - The ground is near-black (ink about `#0A0A0A`) and mostly empty; the references measure a ground luma of
-     0.047–0.063 (the 20th-percentile luma of each frame, median over the film) and 42–57 % of pixels darker than
-     0.09. Texture lives on objects, never on the ground.
+     0.047–0.063 (the 20th-percentile luma of each frame, median over the film). Texture lives on objects, never on
+     the ground.
    - **The accent is light and pointer, never a ground:** about 3 % of the frame in the references (median). It
      marks the sung word, the spark, the number that matters.
    - Two registers: the dark register, and a light **cream-paper** register for documents, forms and diagrams
@@ -112,8 +112,8 @@ restrained and lit by one accent; 3D only as line drawing.
 
 The stages are in [AGENTS.md](../AGENTS.md) ("Making a video"). What the house style adds to them:
 
-- **Analyze:** `./vid video` installs the kit (`hr-kit.js`, `env.js`) and the finish layer from
-  `templates/hyperframes/`.
+- **Analyze:** `./vid video` installs the kit (`hr-kit.js`, `wow-kit.js`, `motion-blur.js`, `env.js`, and the kit's
+  `README.md` with its traps) and the finish layer from `templates/hyperframes/`.
 - **Interpret:** the song's world, its idea and preset; a line table (each sung line and its literal pun); the
   running devices (counter, plants and payoffs, the bookend, a character only if the story needs one); the
   small-text jokes. The song's `SYSTEM.md` follows harvest-remix's: the world, the tokens, the three voices, the

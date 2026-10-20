@@ -50,8 +50,9 @@ weights into `analysis/.cache/`. Run `cd tools && bun install` once.
 ./vid video my-song               # the HyperFrames project at projects/my-song/video/
 #   ... build it with /music-to-video (AGENTS.md) ...
 ./vid assemble my-song            # index.html from STORYBOARD.md, plus the overlays
-./vid snap my-song [02-sent] --at 12.5,14   # stills + contact sheet (one frame on its own, or the whole film)
+./vid snap my-song [02-sent] --at 12.5,14   # stills + contact sheet (one frame on its own, checked first, or the whole film)
 ./vid proof my-song --to 30       # a 60 fps proof of the first 30 s
+./vid proof my-song --from 84 --to 92   # ... or of a range (from the start of the frame playing at 84 s)
 ./vid master my-song              # renders/video.mp4 + the master's audio -> out/my-song.mp4
 ```
 

@@ -63,10 +63,10 @@ The audit reports these. A flag is a question about that moment, not a failure.
 | Unseen hit | an onset ≥ 0.9 or a downbeat with no visible change within ±1 frame | Audit (V20) | a change does not prove it is the right one |
 | Slow opening | motion under 6 after 0.3 s, or no object hit before 2.5 s | Audit (V20) | |
 | Hero-word width | a section with no sung word across ≥ 60 % of the frame width | Audit (V18) | p(doom)'s full-frame words |
-| Small element | the biggest element under about a third of the frame | Audit (V20, V21) | the weak harvest-remix v20 verse props: 15–25 % |
+| Small element | the biggest element under about a third of the frame | Audit (V20, V21) | the weak harvest-remix v19 verse props: 15–25 % |
 | No highlight | 90th-percentile luma under 80 | Audit (V21) | harvest-remix v20, ranked by an agent: the 10 best shots 74–239, the 10 worst 34–68 |
 | Ground | 20th-percentile luma, median over the film | Refs | p(doom) 0.047, LGTM 0.063 |
-| Dark area | share of pixels darker than 0.09 | Refs | 42–57 % |
+| True black | mean share of pixels darker than 0.06 | Refs | LGTM 20 %, p(doom) 44 %; the threshold sits just under the ink `#111111`, so it partly counts the ink |
 | Accent area | median share of the frame carrying the accent | Refs | about 3 % in both |
 | Cream frames | share of frames in the cream register | Refs | p(doom) 9 %, LGTM 20 % |
 | Repeated layout | neighbouring lines with the lyric in the same position | Audit (V18) | v17: a small lead line top left in five shots in a row |
@@ -83,7 +83,7 @@ The audit reports these. A flag is a question about that moment, not a failure.
   mean frame difference (`tblend=all_mode=difference`, then YAVG). Take per-second and per-scene medians; jolts are a
   scene's peak over its median.
 - **Highlights:** the 90th-percentile luma per frame (`signalstats` YHIGH) at 480×270, 4 fps.
-- **Ground, dark area, accent area, cream frames:** `successful-videos-reference/analysis/scripts/metrics.py`, as in
+- **Ground, true black, accent area, cream frames:** `successful-videos-reference/analysis/scripts/metrics.py`, as in
   REFERENCE-VIDEOS.md ("Measuring a render"), so the figures compare with the references'.
 - **Music:** the tracked drums and RMS (`data/audio.json`), the kick, snare and hat onsets and downbeats (`HR_ENV`
   in `assets/kit/env.js`), and the word times (`data/lyrics.json`).
