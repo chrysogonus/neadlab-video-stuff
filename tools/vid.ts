@@ -10,6 +10,9 @@
 //   ./vid snap <id> [<frame_id>] --at <t,...> stills at track seconds, of the project or of one frame on its own
 //                                            (checked first: a frame whose script throws fails here)
 //   ./vid proof <id> [--from <s>] --to <s>   a 60 fps proof render of the project between two track seconds
+//   ./vid render <id> [--4k]                 the whole film -> video/renders/video.mp4
+//     proof and render use the GPU (tools/chrome-gpu) unless --no-browser-gpu, and the light pass (analysis/finish.py)
+//     when the project's finish layer leaves grain and glow to it (light: in STORYBOARD.md), unless --raw; snap too
 //   ./vid audit <id> [--file <mp4>] [--name <n>]  measure a render against the references, per scene (step A)
 //   ./vid master <id>                        its render with the master's audio -> out/<id>.mp4
 // A step runs when an output is missing or its inputs' contents changed since it last ran (hashes in
@@ -174,6 +177,40 @@ function ffmpeg(args: string[]) {
 // It scaffolds the project once and refreshes those three files on every run; the brief, storyboard and frames
 // are never touched. `./vid master` swaps the render's lossy audio for the master's (AAC 320k) for the upload.
 const HF = ['npx', '--yes', 'hyperframes@0.8.164'];
+const RAW = argv.includes('--raw');
+
+/** Headless Chrome needs no display, but connects to one when DISPLAY is set and blocks for good when WSLg's X server
+ *  hangs (2026-10-26: every check and snapshot timed out until DISPLAY was unset). */
+const HEADLESS = Object.fromEntries(Object.entries(process.env).filter(([k]) => k !== 'DISPLAY' && k !== 'WAYLAND_DISPLAY'));
+
+/** Render flags: the GPU through tools/chrome-gpu (HyperFrames' own headless Chrome gets no GPU under WSL; it needs
+ *  WSLg), or SwiftShader with --no-browser-gpu. */
+function renderEnv(): [string[], Record<string, string | undefined>] {
+  if (argv.includes('--no-browser-gpu')) return [['--no-browser-gpu'], HEADLESS];
+  return [['--browser-gpu', '--workers', '4'],
+    { ...process.env, HYPERFRAMES_BROWSER_PATH: path.join(ROOT, 'tools', 'chrome-gpu'), PRODUCER_BROWSER_GPU_MODE: 'hardware' }];
+}
+
+/** Does the project use the light pass? Its finish layer says so (the template's since 2026-10-26 leaves grain, vignette
+ *  and glow to analysis/finish.py); an older project keeps its own grain and renders as before. The pass then needs
+ *  STORYBOARD.md's `light: {"accent": …}` and fails loudly without it. */
+function lit(vdir: string) {
+  const fin = path.join(vdir, 'compositions', 'overlays', 'finish.html');
+  return !RAW && existsSync(fin) && readFileSync(fin, 'utf8').includes('analysis/finish.py');
+}
+
+/** Render `dir` to `out`; with the light pass, a near-lossless <out>.raw.mp4 goes through analysis/finish.py (kept, so
+ *  the light can be redone without rendering again: uv run python finish.py --project <id> --video … --out …). */
+function render(pid: string, dir: string, out: string, offset: number, extra: string[]) {
+  const vdir = path.join(ROOT, 'projects', pid, 'video'), pass = lit(vdir);
+  const raw = pass ? out.replace(/\.mp4$/, '.raw.mp4') : out;
+  const [flags, env] = renderEnv();
+  const r = Bun.spawnSync([...HF, 'render', dir, '-q', 'delivery', ...(pass ? ['--crf', '8'] : []), ...extra, ...flags, '-o', raw],
+    { stdout: 'inherit', stderr: 'inherit', env });
+  if (r.exitCode !== 0) throw new Error(`render failed (exit ${r.exitCode})`);
+  if (pass) python('finish.py', ['--project', pid, '--video', raw, '--out', out, '--offset', String(offset)]);
+  console.log(path.relative(ROOT, out));
+}
 const ANALYZER = path.join(ROOT, '.agents', 'skills', 'music-to-video', 'scripts', 'analyze-beatgrid.py');
 
 function video(pid: string) {
@@ -203,7 +240,7 @@ function video(pid: string) {
   for (const ph of am.phrases) { ph.start = toDownbeat(ph.start); ph.end = toDownbeat(ph.end); }
   writeFileSync(audiomap, JSON.stringify(am, null, 1) + '\n');
   // the music as data for the compositions (assets/kit/env.js, window.HR_ENV): band envelopes at 50 Hz (0..1) and
-  // the drum onsets [t, strength], so frames can breathe with the track without a render-time fetch
+  // the drum onsets [t, strength], the downbeats and beats, so frames can breathe with the track without a render-time fetch
   const full = JSON.parse(readFileSync(path.join(dir, 'data', 'audio.json'), 'utf8')) as Record<string, any>;
   const step = Math.round(full.fps / 50), q = (x: number) => Math.round(x * 100) / 100;
   const env = {
@@ -211,11 +248,13 @@ function video(pid: string) {
     bands: Object.fromEntries(['rms', 'bass', 'drums', 'vocal', 'high'].map((k) => [k, (full[k] as number[]).filter((_, i) => i % step === 0).map(q)])),
     onsets: Object.fromEntries(['kick', 'snare', 'hat'].map((k) => [k, (full.onsets[k] as [number, number][]).map(([t, s]) => [ms(t), q(s)])])),
     downbeats: ours.downbeats,
+    beats: ours.beats,
   };
   // the house-style kit and finish layer (docs/HOUSE-STYLE.md): installed once from templates/hyperframes/, never
   // overwritten — a project keeps the copy it was made with
   const tpl = path.join(ROOT, 'templates', 'hyperframes');
-  for (const f of ['assets/kit/hr-kit.js', 'assets/kit/wow-kit.js', 'assets/kit/motion-blur.js', 'assets/kit/README.md', 'compositions/overlays/finish.html']) {
+  for (const f of ['assets/kit/hr-kit.js', 'assets/kit/wow-kit.js', 'assets/kit/motion-blur.js', 'assets/kit/lines.js', 'assets/kit/README.md',
+    'assets/vendor/three.module.js', 'assets/vendor/three.core.js', 'assets/vendor/three-LICENSE', 'compositions/overlays/finish.html']) {
     const dst = path.join(vdir, f);
     if (existsSync(dst)) continue;
     mkdirSync(path.dirname(dst), { recursive: true });
@@ -277,7 +316,8 @@ function linkProject(vdir: string, dir: string) {
 /**
  * Stills at track seconds: of the assembled project, or of one frame (`frame` = its file stem, e.g. 02-sent) mounted
  * on its own at its STORYBOARD.md span — so a frame-worker can look at its frame before the others exist.
- * Software WebGL (SwiftShader): headless Chrome gets no GPU context under WSL.
+ * Software WebGL (SwiftShader): headless Chrome gets no GPU context under WSL. With light: in STORYBOARD.md the stills
+ * get the light pass (the look is judged in its final light).
  */
 function snap(pid: string, frame: string | undefined, at: string | undefined) {
   if (!at) throw new Error('usage: ./vid snap <id> [<frame_id>] --at <track seconds,...>');
@@ -309,7 +349,7 @@ function snap(pid: string, frame: string | undefined, at: string | undefined) {
 `);
     // a frame whose script throws renders as a dead frame in the film without failing anything; check catches it.
     // The stills are taken either way (they are how you find the fault); a failed check fails the command after them.
-    const c = Bun.spawnSync([...HF, 'check', dir, '--no-browser-gpu'], { stdout: 'pipe', stderr: 'pipe' });
+    const c = Bun.spawnSync([...HF, 'check', dir, '--no-browser-gpu'], { stdout: 'pipe', stderr: 'pipe', env: HEADLESS });
     const log = c.stdout.toString() + c.stderr.toString();
     checkFailed = c.exitCode !== 0;
     if (checkFailed) console.error(log);
@@ -321,9 +361,10 @@ function snap(pid: string, frame: string | undefined, at: string | undefined) {
   const times = at.split(',').map((t) => Math.round((Number(t) - start) * 1000) / 1000);
   const out = path.join(vdir, 'snapshots', frame ?? 'all');
   const r = Bun.spawnSync([...HF, 'snapshot', dir, '--at', times.join(','), '--no-end', '--keep', '-o', out, '--no-browser-gpu', '--describe', 'false'],
-    { stdout: 'inherit', stderr: 'inherit' });
+    { stdout: 'inherit', stderr: 'inherit', env: HEADLESS });
   if (r.exitCode !== 0) throw new Error(`hyperframes snapshot failed (exit ${r.exitCode})`);
   const stills = times.map((t) => path.join(out, `at-${t}s.png`));
+  if (lit(vdir)) python('finish.py', ['--project', pid, '--stills', stills.join(','), '--times', at]);
   for (const [i, t] of at.split(',').entries()) console.log(`track ${t}s -> ${path.relative(ROOT, stills[i]!)}`);
   // one contact sheet in the order asked, three across
   const list = path.join(out, 'sheet.txt');
@@ -373,9 +414,13 @@ function proof(pid: string, from: number, to: number) {
   });
   writeFileSync(path.join(dir, 'index.html'), html);
   console.log(`proof ${t0}–${to} s${t0 < from ? ` (from the start of the frame playing at ${from})` : ''}`);
-  const r =Bun.spawnSync([...HF, 'render', dir, '-q', 'delivery', '--fps', '60', '--no-browser-gpu', '-o', out], { stdout: 'inherit', stderr: 'inherit' });
-  if (r.exitCode !== 0) throw new Error(`proof render failed (exit ${r.exitCode})`);
-  console.log(path.relative(ROOT, out));
+  render(pid, dir, out, t0, ['--fps', '60']);
+}
+
+/** The whole film to video/renders/video.mp4 (60 fps; --4k for the master). */
+function film(pid: string) {
+  const vdir = path.join(ROOT, 'projects', pid, 'video');
+  render(pid, vdir, path.join(vdir, 'renders', 'video.mp4'), 0, ['--fps', '60', ...(argv.includes('--4k') ? ['--resolution', '4k'] : [])]);
 }
 
 /**
@@ -439,13 +484,14 @@ try {
     process.exit(r.exitCode);
   }
   else if (cmd === 'new') create(id!);
-  else if (!id) throw new Error('usage: ./vid check | new|analyze|status|video|assemble|snap|proof|audit|master <id> (see tools/vid.ts)');
+  else if (!id) throw new Error('usage: ./vid check | new|analyze|status|video|assemble|snap|proof|render|audit|master <id> (see tools/vid.ts)');
   else if (cmd === 'analyze') analyze(id, opt('force')?.split(',') ?? []);
   else if (cmd === 'status') status(id);
   else if (cmd === 'video') video(id);
   else if (cmd === 'assemble') assemble(id);
   else if (cmd === 'snap') snap(id, argv[2]?.startsWith('--') ? undefined : argv[2], opt('at'));
   else if (cmd === 'proof') proof(id, Number(opt('from') ?? 0), Number(opt('to')));
+  else if (cmd === 'render') film(id);
   else if (cmd === 'audit') audit(id, opt('file'), opt('name'));
   else if (cmd === 'master') master(id);
   else throw new Error(`unknown command '${cmd}'`);

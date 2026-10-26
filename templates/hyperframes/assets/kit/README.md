@@ -11,6 +11,26 @@ keeps the copy it was made with; only `env.js` is regenerated on every run. Cano
 | `hr-kit.js` | `HR`: seeded PRNG, glyph scramble, words that build glyph by glyph, three-phase hits, camera, pulses, glow, `HR.band`/`HR.hit` | after `env.js` |
 | `wow-kit.js` | `WOW`: shockwaves, rays, shards, flashes, word entrances, scene switches; `WOW.on` snaps to `HR_ENV` hits, `WOW.energy` sizes them by the drums | after `hr-kit.js` |
 | `motion-blur.js` | the registry's motion blur: mark an element `data-hf-motion-blur='{"fps": 60}'` (see `/hyperframes-animation`, `references/motion-blur.md`) | anywhere in the frame |
+| `lines.js` | ES module, the set-piece kit (p(doom)'s engine, `git show fa164b7`): `createLines` (instanced anti-aliased capsule lines, 2D or 3D, additive), `createShutter` (sub-frame motion blur for a WebGL layer), `textOnPath` (sung words glyph by glyph along a 3D curve, lit on their times), `projector`, `renderer` (true 4K in a 4K render), `HATCH_GLSL` (engraving hatch, heat ramp), camera time helpers (`keys`, `prog`, `ease`, `springStep`, `pulse`, `noise1`) and the grid (`beatAt`, `beatsIn`) | `import * as K from "./assets/kit/lines.js"` in a `<script type="module">`, with `three` from `./assets/vendor/three.module.js` |
+
+## Light and depth (docs/HOUSE-STYLE.md)
+
+- **The light pass owns glow, grain and vignette.** The finish layer leaves them to it, so `STORYBOARD.md`'s
+  frontmatter must set `light: {"accent": "#rrggbb"}` (the palette's accent; `./vid snap` fails without it), and
+  `./vid snap`, `proof` and `render` run `analysis/finish.py` over the frames: whatever is drawn in the accent emits light (bloom
+  and halation), cream and bone stay crisp. So draw the hot things in the accent and add no CSS glow (`text-shadow`,
+  `drop-shadow`, `.hr-glow*`, radial-gradient light) on top: it doubles. A frame's `- light: {"bloom": 0.8}` line
+  in its `STORYBOARD.md` block changes the pass for that frame only.
+- **A set piece is lines in a space.** `main` as a rail into the dark, a field of lanes, a curve the lyric rides:
+  `createLines` draws tens of thousands of segments a frame on the GPU. Fog every segment by its distance to the
+  camera (`alpha *= exp(-k · max(0, d − near))`) and rebuild the batch each frame from `t`.
+- **The camera follows the singer.** Key it to the sung words (`K.keys(t, [[wordTime, arclength], …])` along the
+  path) and to the beats, with a dive (`outExpo`, ~0.35 s) on the hero and smooth `noise1` drift; render the fast
+  moves through `createShutter` (8 samples) and the rest directly.
+- **Type on the object stays legible:** size the words in world units so the sung line is ≥ 72 px and a hero
+  ≥ 11cqw on screen (`px = size · 1.4 · camera.projectionMatrix.elements[5] · 540 / distance`). Text drawn with
+  `textOnPath` sits on a Canvas2D layer over the WebGL canvas; fixed copy (labels, terminals, the strip) stays DOM.
+- `projects/force-push/video/compositions/frames/05-branch.html` is the worked example.
 
 Colours follow `--hr-accent-rgb` and `--hr-light-rgb` (`"r, g, b"`) on the frame's `#root`; unset, they are
 harvest-remix's fire orange and cream. (`wow-kit.js` reads them from the 2026-10-20 template on; an older project's
@@ -48,4 +68,11 @@ copy, harvest-remix's included, hard-codes the orange and cream.)
 - **Many CSS-3D faces are slow under software WebGL** (144 faces rendered about 8 frames a minute). Draw them on a
   canvas instead.
 - **A brightness filter on a WebGL canvas lifts the haze to a coloured ground;** pair it with contrast.
-- **WebGL renders at `setPixelRatio(1)`,** so in a 4K render the 3D is upscaled while type and SVG stay sharp.
+- **WebGL at `setPixelRatio(1)` is upscaled in a 4K render** while type and SVG stay sharp: use `K.renderer`
+  (it takes `devicePixelRatio`), and size a Canvas2D layer `1920·dpr × 1080·dpr` with `ctx.setTransform(dpr, …)`.
+- **A hung WSLg blocks Chrome.** When the GPU render times out waiting for Chrome, or `check` never finishes,
+  WSLg's X server has hung (`xdpyinfo` does not answer): `./vid snap` and `check` run without a display anyway; add
+  `--no-browser-gpu` to proofs and renders until WSL restarts. For a raw `npx hyperframes` call, prefix
+  `env -u DISPLAY -u WAYLAND_DISPLAY`.
+- **A module script runs after the classic ones** (`env.js`, `hr-kit.js`, `wow-kit.js` are ready inside it) and may
+  `await document.fonts.load(…)` before it builds; register the timeline last, as always.

@@ -2,13 +2,19 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 9 — stop (pre-chorus 1's last line, 51.907–53.380). Refinement round 1. Everything stops: 08's push-in
-         carries through the cut and brakes dead as "stop," slams down in the accent (a motion-blurred fall, landing
-         sharp, a short jolt). The terminal keeps 08's thread: HEAD is reattached (`git switch main`, "Previous HEAD
-         position was 3f2a1c9 you and me"), and on the lit current line `git push --force origin main` types itself
-         while the line builds word by word, the cursor's light travelling with it. From "one" the camera leans in hard
-         (line ×1.13) and stops dead on "gone", which takes the accent from "stop,". Then the silent beat: nothing moves,
-         the cursor blinks once and its light swells to its peak on the cut. The cut into 10 is the Enter (hard). -->
+    <!-- Frame 9 — stop (pre-chorus 1's last line, 51.907–53.380). Light-and-depth rebuild: 10's world, met first at
+         ground level. The repo's history is the place it is in 10 (the same floor, the same `main` rail into the dark, the
+         same field of `you`'s lanes, built from the same seed), and the sung line stands across main like a barrier at a
+         stop line painted on the rail. Cut in: 08's pushIn carries on as the camera rushing low along main (through the
+         shutter), and it brakes dead on "stop," (51.967): the word lands white-hot across the rail, the stop line lights in
+         fire, the camera jolts. The held breath: a slow creep. From "one" the camera follows the singer along the line;
+         on "beat" (52.56) one hot packet leaves down main into the dark (the one beat). On "gone" (53.06) the hero lands
+         white-hot, "stop," hands it the accent, every `you` commit in the field ignites in fire from the line outward
+         (what the chorus will tear off), and the camera lifts and pulls back into 10's opening pose (high over the field,
+         main down the middle), arriving on the cut. The terminal (bottom left) keeps 08's thread: HEAD reattached from
+         3f2a1c9, `git push --force origin main` typing through the line, the cursor blinking once in the silent beat.
+         The cut into 10 is the Enter (hard). Layers: WebGL lines (assets/kit/lines.js), a Canvas2D layer for the type in
+         the space, then the DOM. -->
   </head>
   <body>
     <template>
@@ -20,136 +26,247 @@
         @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
         #root {
           position: absolute; inset: 0; overflow: hidden; container-type: size;
-          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5; --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
         #f09-cam, #f09-in { position: absolute; inset: 0; transform-origin: 30% 50%; }
+        #f09-gl, #f09-type, #f09-shade { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #f09-shade { background: linear-gradient(180deg, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0) 16%, rgba(10, 10, 10, 0) 70%, rgba(10, 10, 10, 0.7) 100%); }
         #f09-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
-          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); background: var(--ink); }
         #f09-strip b { color: var(--fire); font-weight: 600; }
-        /* the layers lean in from their own left edge, so the line and the prompt grow into the frame, not off it */
-        #f09-ll { transform-origin: 5% 18%; }
-        #f09-pl { transform-origin: 5.5% 79%; }
-        /* the light: a soft accent glow under the line, breathing with the voice (there is no bass in the stop) */
-        #f09-lglow { position: absolute; left: 30cqw; top: 20cqw; width: 136cqw; height: 74cqw; margin: -37cqw 0 0 -68cqw;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.11) 34%, rgba(232, 93, 38, 0.055) 64%, rgba(232, 93, 38, 0) 100%); }
-        #f09-line { position: absolute; left: 5.1cqw; top: 10.4cqw; font: 900 10.2cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--cream); }
-        #f09-line div { white-space: nowrap; }
-        #f09-stopg { display: inline-block; }
-        #f09-stop { display: inline-block; color: var(--fire); transform-origin: 0% 80%; }
-        #f09-line .f09-hero { color: var(--fire); }
-        /* the terminal: the current line is lit, a fire tick in its gutter; the cursor carries its own light */
-        #f09-band { position: absolute; left: 0; right: 0; top: 43.1cqw; height: 5.5cqw; background: #141413;
-          border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        #f09-tick { position: absolute; left: 3.3cqw; top: 1.25cqw; width: 0.42cqw; height: 3cqw; background: var(--fire); }
-        #f09-cglow { position: absolute; left: 0; top: 0; width: 64cqw; height: 40cqw; margin: -20cqw 0 0 -32cqw;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.26) 0%, rgba(232, 93, 38, 0.15) 28%, rgba(232, 93, 38, 0.065) 60%, rgba(232, 93, 38, 0) 100%); }
-        #f09-hist { position: absolute; left: 5.5cqw; top: 35.4cqw; font: 400 1.35cqw/1.65 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
-        #f09-hist b { font-weight: 400; color: var(--cream); }
-        #f09-prompt { position: absolute; left: 5.5cqw; top: 44.4cqw; font: 500 2.9cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        /* the singer's terminal, bottom left: 08's detached HEAD reattached, then the one prompt */
+        #f09-term { position: absolute; left: 105px; bottom: 72px; padding: 16px 26px 18px; background: rgba(26, 26, 24, 0.92); border: 1px solid var(--border);
+          font: 400 23px/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f09-term b { font-weight: 400; color: var(--cream); }
+        #f09-prompt { margin-top: 8px; font: 500 36px/1.2 "IBM Plex Mono", monospace; color: var(--cream-muted); }
         #f09-prompt .f09-cmd { color: var(--cream); }
-        #f09-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        #f09-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.2em; }
       </style>
       <div id="root" data-composition-id="09-stop" data-width="1920" data-height="1080" data-duration="1.473">
         <div id="f09-cam">
           <div id="f09-in">
-            <div class="hr-layer" data-depth="0.15">
-              <div id="f09-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
-            </div>
-            <div class="hr-layer" data-depth="0.5" data-layout-ignore>
-              <div id="f09-lglow"></div>
-            </div>
-            <div class="hr-layer" id="f09-pl" data-depth="0.6">
-              <div id="f09-band" data-layout-ignore><i id="f09-tick"></i></div>
-              <div id="f09-cglow" data-layout-ignore></div>
-              <div id="f09-hist"><div>~/us ((3f2a1c9...)) $ <b>git switch main</b></div><div>Previous HEAD position was 3f2a1c9 you and me</div><div>Switched to branch 'main'</div></div>
-              <div id="f09-prompt"><span>~/us (main) $ </span><span class="f09-cmd" id="f09-cmd"></span><span id="f09-cursor"></span></div>
-            </div>
-            <div class="hr-layer" id="f09-ll" data-depth="0.9">
-              <div id="f09-line">
-                <div><span id="f09-stopg" class="hr-glowbox"><span id="f09-stop" data-hf-motion-blur='{"fps": 60}'>stop,</span></span> <span class="f09-w">one</span> <span class="f09-w">beat</span></div>
-                <div><span class="f09-w">and</span> <span class="f09-w">you're</span> <span class="f09-w f09-hero hr-glow" id="f09-gone">gone</span></div>
-              </div>
-            </div>
+            <canvas id="f09-gl" width="1920" height="1080" data-layout-ignore></canvas>
+            <div id="f09-shade" data-layout-ignore></div>
+            <canvas id="f09-type" width="1920" height="1080" data-layout-ignore></canvas>
+            <div id="f09-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+            <div id="f09-term"><div>~/us ((3f2a1c9...)) $ <b>git switch main</b></div><div>Previous HEAD position was <b>3f2a1c9</b> you and me</div><div>Switched to branch 'main'</div><div id="f09-prompt"><span>~/us (main) $ </span><span class="f09-cmd" id="f09-cmd"></span><span id="f09-cursor"></span></div></div>
           </div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
       <script src="assets/kit/wow-kit.js"></script>
-      <script src="assets/kit/motion-blur.js"></script>
-      <script>
-        (() => {
-          const DUR = 1.473, T0 = 51.907, PX = 19.2; // px per cqw at 1920 wide
-          const root = document.querySelector('[data-composition-id="09-stop"]');
-          const $ = (id) => root.querySelector("#" + id);
-          const stage = HR.stage(root, { seed: 9 });
-          const tl = gsap.timeline({ paused: true });
-          const at = (T) => T - T0;
-          const STOP = at(51.967), ONE = at(52.376), GONE = at(53.06);
-          const BLINK_OFF = at(53.17), BLINK_ON = at(53.27); // the cursor blinks once in the silent beat
-          const cam = $("f09-cam"), cin = $("f09-in");
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+        import * as K from "./assets/kit/lines.js";
 
-          // ---- the cut in: 08's `pushIn` carries through and brakes dead as "stop," lands. Written here rather than as
-          //      WOW.transition's pushIn (0.46 s, blurred), which would cover "stop," (it starts 60 ms in); the out is a cut ----
-          tl.fromTo(cin, { scale: 1.12 }, { scale: 1, duration: 0.16, ease: "power3.out" }, 0);
+        const DUR = 1.473, T0 = 51.907;
+        const root = document.querySelector('[data-composition-id="09-stop"]');
+        const $ = (id) => root.querySelector("#" + id);
+        const at = (T) => T - T0;
+        // the words (lyrics.json L14); no drums under the line (the stop), the grid's beats at 52.61 and 53.069
+        const STOP = at(51.967), ONE = at(52.376), BEAT = at(52.56), AND = at(52.76), YOURE = at(52.885), GONE = at(53.06);
+        const BLINK_OFF = at(53.17), BLINK_ON = at(53.27); // the cursor blinks once in the silent beat
+        await document.fonts.load('900 100px "Barlow"');
+        await document.fonts.load('800 100px "Barlow"');
+        await document.fonts.load('500 100px "IBM Plex Mono"');
+        const tl = gsap.timeline({ paused: true });
 
-          // ---- "stop," falls onto the line in the accent: a motion-blurred 42 ms approach, landing sharp ON its start ----
-          const stop = $("f09-stop");
-          tl.set(stop, { opacity: 0, scale: 1 }, 0);
-          // (opacity as its own set: a fromTo's from-only property is skipped by the render's seeks). It lands dead, with
-          // no settle, so the blur's copies exist only around the fall and the word is sharp from ~0.1 s on.
-          const LAND = STOP + 0.004, FALL = STOP - 0.038;
-          tl.set(stop, { opacity: 1 }, FALL);
-          tl.fromTo(stop, { scale: 2.1, y: -24 }, { scale: 1, y: 0, duration: LAND - FALL, ease: "power3.in", immediateRender: false }, FALL);
-          WOW.shake(tl, cam, LAND, { amp: 8, dur: 0.28, rot: 0.3, seed: 9 });
-          WOW.punch(tl, cam, LAND, { s: 1.03, dur: 0.3 });
-          // the accent hands over to "gone"
-          tl.fromTo(stop, { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.18, ease: "power2.out", immediateRender: false }, GONE);
+        // ---- the cut in: 08's pushIn carries on (the DOM scale as before; the camera's rush does the rest); out is a cut ----
+        tl.fromTo($("f09-in"), { scale: 1.12 }, { scale: 1, duration: 0.16, ease: "power3.out" }, 0);
+        tl.set({}, {}, DUR);
 
-          // ---- the rest of the line builds; "gone" is the hero ----
-          const w = root.querySelectorAll(".f09-w");
-          HR.lead(tl, w[0], ONE); HR.lead(tl, w[1], at(52.56)); HR.lead(tl, w[2], at(52.76)); HR.lead(tl, w[3], at(52.885));
-          HR.hero(tl, w[4], GONE, { spread: 20, over: 1.16, pre: 0.12, sharp: true });
+        // ---- the command types across the line; done by "gone", then only the cursor until the Enter (the cut) ----
+        const CMD = "git push --force origin main", T_A = at(51.98), T_B = at(53.0);
+        const states = [[0, ""]];
+        for (let i = 0; i < CMD.length; i++) states.push([T_A + ((T_B - T_A) * i) / CMD.length, CMD.slice(0, i + 1)]);
 
-          // ---- the command types across the line; done by "gone", then only the cursor until the Enter (the cut) ----
-          const CMD = "git push --force origin main", T_A = at(51.98), T_B = at(53.0);
-          const states = [[0, ""]];
-          for (let i = 0; i < CMD.length; i++) states.push([T_A + ((T_B - T_A) * i) / CMD.length, CMD.slice(0, i + 1)]);
-
-          // ---- the camera: still through "stop,", then a hard lean in (accelerating) from "one", stopping dead on "gone" ----
-          tl.fromTo(stage.cam, { z: 1.0 }, { z: 1.145, duration: GONE - ONE, ease: "power2.in" }, ONE);
-          tl.set({}, {}, DUR);
-
-          const stopg = $("f09-stopg"), cmd = $("f09-cmd"), cur = $("f09-cursor"), cglow = $("f09-cglow"), lglow = $("f09-lglow"), gone = $("f09-gone");
-          function render() {
-            const t = tl.time(), T = T0 + t;
-            let s = states[0]; for (const st of states) if (st[0] <= t) s = st;
-            cmd.textContent = s[1];
-            const on = !(t >= BLINK_OFF && t < BLINK_ON);
-            cur.style.opacity = on ? 1 : 0;
-            // the cursor's light follows it; in the silent beat it swells to its peak on the cut
-            const hold = Math.max(0, Math.min(1, (t - GONE) / (DUR - GONE))), swell = hold * hold;
-            // (computed, not measured: Plex Mono advances 0.6em; the prompt is 2.9cqw at (5.5cqw, 44.4cqw); 14 prompt chars)
-            cglow.style.left = (PX * (5.5 + 2.9 * (0.6 * (14 + s[1].length) + 0.12 + 0.31))).toFixed(1) + "px";
-            cglow.style.top = (PX * (44.4 + 2.9 * 0.42)).toFixed(1) + "px";
-            cglow.style.opacity = ((0.62 + 0.38 * swell) * (on ? 1 : 0.3)).toFixed(3);
-            cglow.style.scale = (1 + 0.7 * swell).toFixed(3);
-            // the light under the line comes on with "stop," and breathes with the voice
-            const lit = t < STOP ? 0.35 : Math.min(1, 0.55 + 0.6 * HR.band("vocal", T));
-            lglow.style.opacity = lit.toFixed(3);
-            gone.style.setProperty("--hr-glow", (0.5 + 0.7 * swell).toFixed(3));
-            // (the glow sits on a still wrapper: the blur's copies are cloned once and would carry a stale halo)
-            stopg.style.setProperty("--hr-glow", t < LAND ? "0" : t < GONE ? (0.45 + 0.35 * HR.band("vocal", T)).toFixed(3) : "0");
-            // the silent beat: no drift, no pulse after "gone"
-            stage.apply(t < GONE ? T : T0 + GONE);
-            WOW.draw(tl, T0);
+        // ---- the world: 10's, built the same way from the same seed (the history on a floor y = 0, main along -z) ----
+        const renderer = K.renderer(THREE, $("f09-gl"));
+        const lines = K.createLines(THREE, 90000);
+        const shutter = K.createShutter(THREE, renderer);
+        const camera = new THREE.PerspectiveCamera(40, 16 / 9, 0.1, 800);
+        const BONE = K.BONE, FIRE = K.ACCENT, HOT = [1, 0.86, 0.72], MUTED = [0x88 / 255, 0x88 / 255, 0x80 / 255];
+        const rnd = HR.rng(1010);
+        const ZNEAR = 44, ZFAR = -420;
+        const lanes = [];
+        for (const s of [-1, 1]) for (let k = 1; k <= 7; k++) {
+          const x = s * (k * 2.5 + (rnd() - 0.5) * 0.5);
+          let z = ZNEAR - rnd() * 16;
+          while (z > ZFAR) {
+            const len = 14 + rnd() * 50, z1 = Math.max(ZFAR, z - len);
+            const run = { s, x, xi: x - s * 2.5, z0: z, z1, h: rnd(), dots: [] };
+            for (let zz = z - 2 - rnd() * 3; zz > z1 + 1; zz -= 5 + rnd() * 4) run.dots.push(zz);
+            const pc = (a, b, w) => [[a, b], w];
+            run.pieces = [pc(new THREE.Vector3(run.xi, 0, z + 3.5), new THREE.Vector3(x, 0, z), 1.4)];
+            for (let zz = z; zz > z1; zz -= 3) run.pieces.push(pc(new THREE.Vector3(x, 0, zz), new THREE.Vector3(x, 0, Math.max(z1, zz - 3)), 1.6));
+            if (z1 > ZFAR + 1) run.pieces.push(pc(new THREE.Vector3(x, 0, z1), new THREE.Vector3(run.xi, 0, z1 - 3.5), 1.4));
+            lanes.push(run);
+            z = z1 - 5 - rnd() * 14;
           }
-          tl.eventCallback("onUpdate", render);
-          render();
-          window.__timelines["09-stop"] = tl;
-        })();
+        }
+        const mainDots = []; for (let z = 30; z > ZFAR; z -= 8) mainDots.push(z);
+
+        // ---- the line, standing across main at z = ZB: "stop," (hero) "one beat" / "and you're" "gone" (hero) ----
+        const ZB = 0, HS = 4.0, LS = 1.9, Y2 = 0.9, Y1 = Y2 + 0.7 * HS + 0.28 * HS + 0.35, ZS = ZB + 0.5; // ZS: the stop line
+        const ctx = $("f09-type").getContext("2d");
+        const DPR = window.devicePixelRatio || 1;
+        $("f09-type").width = 1920 * DPR; $("f09-type").height = 1080 * DPR;
+        const adv = (w, size, font) => { ctx.font = font; return [...w].reduce((s, ch) => s + (ctx.measureText(ch).width / 100) * size * 1.4, 0); };
+        const LEAD = '800 100px "Barlow"', HERO = '900 100px "Barlow"', MONO = '500 100px "IBM Plex Mono"';
+        const WORDS = [["stop,", STOP, 1, true], ["one", ONE, 1], ["beat", BEAT, 1], ["and", AND, 2], ["you're", YOURE, 2], ["gone", GONE, 2, true]];
+        const rowU = { 1: 0, 2: 0 };
+        const placed = WORDS.map(([w, t, row, hero]) => {
+          const size = hero ? HS : LS, font = hero ? HERO : LEAD, len = adv(w, size, font), u0 = rowU[row];
+          rowU[row] += len + (hero ? 0.8 : 1) * adv(" ", size, font);
+          return { w, t, row, hero: !!hero, size, font, u0, len, y: row === 1 ? Y1 : Y2 };
+        });
+        const X0 = -Math.max(rowU[1], rowU[2]) / 2 - 0.4;
+        for (const p of placed) { p.cx = X0 + p.u0 + p.len / 2; p.cy = p.y + 0.4 * p.size; }
+        const [pS, pO, pB, pA, pY, pG] = placed, R1 = X0 + rowU[1] / 2; // R1: row 1's centre
+
+        // ---- the camera (local t): the rush low along main braking dead on "stop,", the held breath, a follow along the
+        //      line, a small push as "gone" lands, then the lift into 10's opening pose ([0, 8.4, 38] -> [0, 0, -40]) ----
+        const lin = K.ease.linear, ioc = K.ease.inOutCubic;
+        const KEYS = [
+          [0, [pS.cx + 1.0, 10.5, 52], [pS.cx, 4.6, ZB]],
+          [STOP, [pS.cx + 0.6, 9.2, 19.5], [pS.cx + 0.3, 5.7, ZB], lin],
+          [ONE - 0.1, [pS.cx + 1.0, 9.0, 18.7], [pS.cx + 0.7, 5.7, ZB], ioc],
+          [BEAT + 0.1, [R1 + 0.6, 9.6, 24], [R1 + 0.6, 5.4, ZB], ioc],
+          [YOURE + 0.06, [0.4, 6.6, 27.5], [0.4, 3.4, ZB], ioc],
+          [GONE, [0.6, 6.4, 27.0], [0.6, 3.3, ZB], lin],
+          [GONE + 0.07, [0.7, 6.1, 26.0], [0.7, 3.2, ZB], K.ease.outCubic],
+          [DUR, [0, 8.4, 38], [0, 0, -40], K.ease.outExpo],
+        ];
+        const lerp3 = (a, b, f) => [0, 1, 2].map((i) => a[i] + (b[i] - a[i]) * f);
+        function aim(t) {
+          let i = 1; while (i < KEYS.length - 1 && KEYS[i][0] <= t) i++;
+          const a = KEYS[i - 1], b = KEYS[i], f = b[3](K.clamp((t - a[0]) / (b[0] - a[0])));
+          const p = lerp3(a[1], b[1], f), l = lerp3(a[2], b[2], f), T = T0 + t;
+          // the brake: a damped jolt forward and a nose dip as the camera stops dead on "stop,"
+          const j = t > STOP ? Math.exp(-(t - STOP) / 0.08) * Math.sin((t - STOP) * 2 * Math.PI * 5.5) : 0;
+          p[2] -= 0.8 * j; p[1] -= 0.3 * j;
+          // handheld drift, the same noise as 10's so the cut carries it
+          p[0] += K.noise1(T * 0.7, 1) * 0.12; p[1] += K.noise1(T * 0.6, 2) * 0.08;
+          camera.position.set(...p); camera.lookAt(...l);
+          camera.rotateZ(K.noise1(T * 0.4, 3) * 0.01 + 0.025 * j);
+          camera.fov = 40 / (1 + 0.08 * K.pulse(t, STOP, 0.15) + 0.035 * K.pulse(t, GONE, 0.12));
+          camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+        }
+
+        // ---- drawing (pure functions of t) ----
+        const V = (x, y, z) => new THREE.Vector3(x, y, z);
+        const fogged = (p, near = 10, k = 0.0105) => Math.exp(-Math.max(0, camera.position.distanceTo(p) - near) * k);
+        const mid = new THREE.Vector3();
+        function seg(a, b, w, rgb, alpha) {
+          mid.addVectors(a, b).multiplyScalar(0.5);
+          const f = fogged(mid);
+          if (f * alpha > 0.01) lines.seg(a, b, w, rgb, alpha * f);
+        }
+        function ring(c, r, w, rgb, alpha, n) {
+          for (let i = 0; i < n; i++) {
+            const a0 = (i / n) * Math.PI * 2, a1 = ((i + 1) / n) * Math.PI * 2;
+            seg(V(c.x + Math.cos(a0) * r, c.y + Math.sin(a0) * r, c.z), V(c.x + Math.cos(a1) * r, c.y + Math.sin(a1) * r, c.z), w, rgb, alpha);
+          }
+        }
+        // `you`'s commits ignite on "gone", from the line outward, white-hot for a moment, then 10's fire
+        const ignite = (x, z) => GONE + Math.hypot(x, z - ZB) * 0.0008;
+        function youLight(t, x, z) {
+          const a = t - ignite(x, z);
+          if (a < 0) return [MUTED, 0.5];
+          return a < 0.07 ? [HOT, 1] : [FIRE, 0.85];
+        }
+        // the one beat: a hot packet leaving down main on "beat"
+        const PKT = 0.9, packetZ = (t) => ZS - 1 - 110 * K.ease.outCubic(K.clamp((t - BEAT) / PKT) * 0.6) / K.ease.outCubic(0.6);
+        function scene(t, target) {
+          aim(t);
+          lines.clear();
+          // the floor: 10's faint grid
+          for (let k = -6; k <= 6; k++) {
+            if (k === 0) continue;
+            for (let z = ZNEAR; z > ZFAR; z -= 6) seg(V(k * 8, 0, z), V(k * 8, 0, z - 6), 1.2, MUTED, 0.3);
+          }
+          for (let z = 40; z > -300; z -= 12) for (let x = -48; x < 48; x += 6) seg(V(x, 0, z), V(x + 6, 0, z), 1.2, MUTED, 0.22);
+          // `you`'s lanes, whole (the chorus tears them)
+          for (const run of lanes) {
+            for (const [pts, w] of run.pieces) seg(pts[0], pts[1], w, MUTED, 0.6);
+            for (const z of run.dots) {
+              const c = V(run.x, 0, z);
+              if (fogged(c) < 0.03) continue;
+              const [col, al] = youLight(t, run.x, z);
+              ring(c, 0.2, 1.7, col, al, 6);
+            }
+          }
+          // main: the bone rail and its commits; the packet lights the dots it passes
+          const pz = t >= BEAT && t < BEAT + PKT ? packetZ(t) : null, pa = pz === null ? 0 : 1 - (t - BEAT) / PKT;
+          for (let z = ZNEAR; z > ZFAR; z -= 3) seg(V(0, 0, z), V(0, 0, z - 3), 3, BONE, 0.85);
+          for (const z of mainDots) {
+            const hit = pz === null ? 0 : pa * Math.exp(-Math.abs(z - pz) / 4);
+            ring(V(0, 0, z), 0.26 * (1 + 0.8 * hit), 2.2, hit > 0.3 ? FIRE : BONE, 0.9, 12);
+          }
+          if (pz !== null) {
+            seg(V(0, 0.02, pz), V(0, 0.02, pz - 6), 11, HOT, pa);
+            seg(V(0, 0.02, pz), V(0, 0.02, Math.min(ZS, pz + 16)), 6, FIRE, pa);
+            seg(V(0, 0, pz), V(0, 2.2, pz), 4, FIRE, pa);
+            seg(V(0, 0, pz), V(0, 1.4, pz), 2, HOT, pa);
+          }
+          // the stop line painted across main at the line's foot: dim until "stop,", white-hot as it lands, then fire
+          const sa = t - STOP, sCol = sa < 0 ? MUTED : sa < 0.09 ? HOT : FIRE, sAl = sa < 0 ? 0.35 : 1;
+          for (let k = 0; k < 9; k++) seg(V(-3.4, 0.01, ZS + k * 0.09), V(3.4, 0.01, ZS + k * 0.09), 2.4, sCol, sAl);
+          lines.draw(renderer, camera, target);
+        }
+
+        // ---- the type in the space (Canvas2D): `you` on its lanes (as in 10), then the sung line standing across main ----
+        const project = K.projector(THREE, camera);
+        const tags = lanes.filter((r) => r.z0 < 30 && r.z0 > -70 && Math.abs(r.x) < 14).slice(0, 9);
+        const WHITE = [255, 236, 220], FIRE_C = [232, 93, 38], BONE_C = [240, 236, 229];
+        const mixC = (a, b, f) => a.map((v, i) => Math.round(v + (b[i] - v) * f)).join(", ");
+        function wordColor(p, t) {
+          const cool = 1 - Math.exp(-(t - p.t) / 0.3); // white-hot -> fire
+          if (p.w === "stop," && t >= GONE) return mixC(FIRE_C, BONE_C, K.prog(t, GONE, GONE + 0.18, K.ease.outCubic)); // hands the accent to "gone"
+          return p.hero ? mixC(WHITE, FIRE_C, cool) : null;
+        }
+        function type(t) {
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+          ctx.clearRect(0, 0, 1920, 1080);
+          aim(t);
+          for (const r of tags) {
+            const z = r.z0 - 1.2, f = fogged(V(r.x, 0, z), 10, 0.02);
+            if (f < 0.05) continue;
+            const lit = t >= ignite(r.x, z);
+            K.textOnPath(ctx, project, (s) => ({ x: r.x + 0.3 + s, y: 0.12, z }), "you", 0.42, { font: MONO, fill: lit ? "232, 93, 38" : "136, 136, 128", alpha: f * (lit ? 1 : 0.7) });
+          }
+          for (const p of placed) {
+            if (t < p.t - (p.w === "stop," ? 0 : 0.02)) continue;
+            const g = [...p.w].length, c = wordColor(p, t);
+            // "stop," is a hard hit (all at once, 0 ms); "gone" sweeps in fast; the rest build glyph by glyph
+            const spread = p.w === "stop," ? 0 : p.hero ? 0.04 : 0.05, ramp = p.hero ? 0.025 : 0.05;
+            K.textOnPath(ctx, project, (s) => ({ x: X0 + s, y: p.y, z: ZB }), p.w, p.size, {
+              start: p.u0, font: p.font, color: c ? () => c : undefined,
+              lit: (i) => K.clamp((t - p.t - (i / g) * spread) / ramp),
+            });
+          }
+        }
+
+        // ---- per-frame state ----
+        const cmd = $("f09-cmd"), cur = $("f09-cursor");
+        function render() {
+          const t = tl.time();
+          renderer.setRenderTarget(null); renderer.clear();
+          const fast = t < STOP + 0.12 || (t > GONE - 0.02 && t < GONE + 0.26);
+          if (fast) shutter((ts, target) => scene(ts, target), t, { samples: 8, angle: 270 });
+          else scene(t, null);
+          type(t);
+          let s = states[0]; for (const st of states) if (st[0] <= t) s = st;
+          cmd.textContent = s[1];
+          cur.style.opacity = t >= BLINK_OFF && t < BLINK_ON ? 0 : 1;
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines["09-stop"] = tl;
       </script>
     </template>
   </body>

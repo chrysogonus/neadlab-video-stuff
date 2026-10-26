@@ -75,8 +75,9 @@ Only these colours exist. **No diff red/green, no terminal green, no blue links,
 - A line stays readable until the next line starts (or a cut at least 0.4 s after its last word).
 - **Legible on a phone:** the sung line ≥ 72 px (3.75cqw); a hero word is display scale (11–17cqw); the hook and
   one word per section go full-frame. Line measure ≤ 78cqw, pad-x 5.5cqw. One display moment at a time.
-- **Hero words** (named with their second in the storyboard) are `--fire` on ink (`.hr-glow`) or ink weight on cream,
-  and land with the frame's strongest move.
+- **Hero words** (named with their second in the storyboard) are `--fire` on ink or ink weight on cream, and land with
+  the frame's strongest move. The light pass makes the fire glow; never add CSS glow (`.hr-glow*`, `HR.glow`,
+  `text-shadow`, `drop-shadow`).
 
 ## Running devices (keep the exact strings)
 
@@ -118,8 +119,8 @@ Hashes and dates are fiction; never invent a git message or flag.
 - **Never still, never jolting** (docs/visual-guidelines.md rule 1): a carrier move per phrase (scroll, camera
   drift, graph growing); accents only on real hits; shake is smooth noise.
 - Motion blur (`data-hf-motion-blur='{"fps": 60}'`) on 1–3 slams or whips per scene, never on a word while it is read.
-- Grain, vignette, leaks and flashes come from the finish layer (`compositions/overlays/finish.html`); never add
-  your own.
+- Grain, vignette and glow come from the light pass (`analysis/finish.py`, `light:` in STORYBOARD.md); leaks and
+  flashes from the finish layer (`compositions/overlays/finish.html`). Never add your own.
 
 ## Code (one file per frame, `compositions/frames/<frame_id>.html`)
 
@@ -133,7 +134,8 @@ Hashes and dates are fiction; never invent a git message or flag.
 - Anything drawn per frame (canvas, scrolling lists, the cursor) is drawn from the timeline's own time:
   `tl.eventCallback("onUpdate", render)` where `render()` reads `tl.time()`; call `render()` once after building.
 - Decorative layers (long scrolling lists, the hash wall, the contribution grid) carry `data-layout-ignore`.
-- No three.js unless the storyboard asks for it: this film is type, SVG and canvas.
+- Set pieces are lit line drawing in a space (docs/HOUSE-STYLE.md item 11): three.js through `assets/kit/lines.js`, in a
+  `<script type="module">`; `05-branch.html` is the worked example (rebuilt 2026-10-26 with 10, 32, 33).
 
 ## See your frame
 

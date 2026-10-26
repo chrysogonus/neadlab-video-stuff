@@ -2,21 +2,25 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 34 — dropmine (the drop's second half, L55–L56, 177.150–184.530). Refinement round 1: no local-copy set
-         a third time (14, 27). Two phrases, one big move each, one hard cut on "Origin's".
-         A (L55, dismissive): whipL in from 33 behind the lyric (the world whips, "keep" lands sharp on 177.18). The
-         remote list in the corner is just `origin` now (26 removed `you`). "local" slams full-bleed in fire; on "copy,"
-         its copy slides out from behind it, a hollow outline tagged `you@laptop ~/us` (their clone). On "care" the copy
-         is flicked off the left edge (motion blur) and "care" slams; the pointer leaves "local" for "care".
-         B (L56, the payoff of plant 3): the singer's terminal, 03's stash row lit across the top
-         (`stash@{3 years ago}: On main: me`). "origin's" slams full-frame and is held while `git stash pop` types;
-         Enter on the 180.897 downbeat, git answers on the kicks. On the 181.362 kick the row's `me` lifts out of the
-         stash and flies down at poster scale; on "mine" (181.78) it splits and "in" slams in between: me → mine, the
-         frame's biggest hit, while git prints `new file:   me` and `Dropped refs/stash@{0} (…)` and the row is struck.
-         "and you're not there" builds beside it. Zoom out into 35. Punches are sized by the drums over chorus 1's.
-         Round 2 (REFINE-2): cut onto content. The remote list is the first frame's object, answered and lit at 3.6cqw
-         mid-frame (`origin` twice, no `you`), a screen glow behind it, the camera pushing in on it under the whip; on
-         "local" it shrinks into its corner (round 1's place) as the word slams. -->
+    <!-- Frame 34 — dropmine (the drop's second half, L55–L56, 177.150–184.530). Light-and-depth rebuild: the drop goes on
+         in 33's world, the new timeline as a white-hot rail over the lit grid, light running down it on every beat.
+         A (L55, dismissive) — the whipL from 33 lands beside main. Past it, on the dark side, runs the ex's local copy:
+         a hollow clone of the rail (two hairlines, hollow commits), tagged `you@laptop ~/us`. "keep your local copy," is
+         written along the clone; the camera follows the singer down it and dives onto "local" (white-hot, cooling to
+         fire); on "copy," a pale packet runs down the clone (the clone's one sign of life) and the tag pins up. On "i"
+         the camera swings back onto main, and on "care" (179.7) it dives onto the hero while the clone breaks off and
+         falls into the dark in a wave from the camera, its words going with it.
+         B (L56, plant 3's payoff) — a hard cut on "origin's" further down main: the hero lands on the rail, cream and
+         white-hot, through a dive. Beside it the floor is open: the stash, a tray in the dark under the grid, holds 03's
+         row `stash@{3 years ago}: On main: me` (`me` in fire). `git stash pop` types in the terminal through the held
+         word; Enter on the 180.896 downbeat pops the tray up into the floor (a spring, the floor flares). On the 181.351
+         beat `me` lifts out of the row and flies onto the rail, growing to poster scale; on "mine" (181.78) it splits and
+         "in" slams down between: me → mine, white-hot, the frame's biggest hit, the rail and floor flaring, while git
+         prints `new file:   me` and `Dropped refs/stash@{0} (…)` and the row is struck and the tray drops away.
+         "and you're not there" follows along the rail as the camera pulls up and back over the whole line, the clone's
+         side of the floor empty. Out: the zoom into 35.
+         Light: draw hot things in the accent, the light pass blooms them (STORYBOARD `- light:`, as 33). No CSS glow.
+         Layers: WebGL lines (assets/kit/lines.js), a Canvas2D layer for the type in the world, then the DOM. -->
   </head>
   <body>
     <template>
@@ -38,296 +42,428 @@
           background: var(--ink); color: var(--cream);
         }
         #f34-cam, #f34-world { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        #f34-gl, #f34-type { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
         #f34-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f34-strip b { color: var(--fire); font-weight: 600; }
         .f34-cur { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.18em; }
-        /* the light: a soft accent glow behind the hero object, breathing with the bass */
-        #f34-glow { position: absolute; left: 50%; top: 28cqw; width: 150cqw; height: 80cqw; margin: -40cqw 0 0 -75cqw;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.11) 36%, rgba(232, 93, 38, 0.05) 66%, rgba(232, 93, 38, 0) 100%); }
-
-        /* ---- A: the remote list (just origin), "local" full-bleed with its copy, the line round it ---- */
-        /* big and lit on the cut (3.6cqw), shrunk to round 1's corner (1.3cqw at 5.5 / 6.2cqw) on "local" */
-        #f34-rem { position: absolute; left: 5.5cqw; top: 21cqw; font: 500 3.6cqw/1.45 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre;
-          transform-origin: 0% 0%; }
-        #f34-rem .f34-c, #f34-r1, #f34-r2 { color: var(--cream); }
-        #f34-rem b { color: var(--cream); font-weight: 600; }
-        #f34-scr { position: absolute; left: -14cqw; top: 6cqw; width: 100cqw; height: 52cqw;
-          background: radial-gradient(closest-side, rgba(240, 236, 229, 0.14) 0%, rgba(240, 236, 229, 0.07) 45%, rgba(240, 236, 229, 0) 100%); }
-        #f34-a { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
-        #f34-lw { position: absolute; left: 50%; top: 9.6cqw; transform: translateX(-50%); white-space: nowrap; }
-        .f34-big { font: 900 32cqw/0.84 "Barlow", sans-serif; letter-spacing: -0.05em; }
-        #f34-local { position: relative; color: var(--fire); display: inline-block; }
-        #f34-ghost { position: absolute; left: 0; top: 0; color: transparent; -webkit-text-stroke: 0.13cqw var(--cream-muted); }
-        #f34-tag { position: absolute; right: 0.6cqw; top: 100%; margin-top: -2.4cqw; font: 500 1.3cqw/1 "IBM Plex Mono", monospace; letter-spacing: 0;
-          -webkit-text-stroke: 0; color: var(--cream-muted); }
+        /* A: the clone's tag, pinned to it */
+        #f34-tag { position: absolute; left: 0; top: 0; padding: 0.45cqw 0.9cqw; background: rgba(10, 10, 10, 0.86); border: 1px solid var(--border);
+          font: 500 1.3cqw/1.3 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; opacity: 0; }
         #f34-tag b { color: var(--cream); font-weight: 600; }
-        .f34-s { font: 800 6cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
-        #f34-a1 { position: absolute; left: 7.4cqw; top: 3.3cqw; font-size: 4.6cqw; }
-        #f34-a2 { position: absolute; right: 7.5cqw; top: 35.6cqw; display: flex; align-items: baseline; gap: 1.6cqw; }
-        #f34-care { font: 900 15cqw/0.84 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--fire); margin-left: 0.1em; }
-        .f34-w { display: inline-block; }
-
-        /* ---- B: 03's stash row lit across the top, the terminal under it, the lyric below ---- */
-        #f34-bar { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 6.4cqw; height: 5.4cqw; display: flex; align-items: center; justify-content: center;
-          background: var(--ink-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-          font: 500 3.2cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
-        #f34-bar::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 0.5cqw; background: var(--fire); }
-        #f34-bar .f34-ref { color: var(--cream); font-weight: 600; }
-        #f34-txt { position: relative; }
-        #f34-oldme { color: var(--fire); font-weight: 600; display: inline-block; }
-        #f34-x { position: absolute; left: -0.3em; right: -0.3em; top: 50%; height: 3px; margin-top: -1px; background: var(--fire); transform-origin: 0% 50%; }
-        #f34-win { position: absolute; left: 5.5cqw; top: 12.5cqw; width: 89cqw; height: calc(3 * 1.45cqw * 1.45); overflow: hidden;
-          font: 400 1.45cqw/1.45 "IBM Plex Mono", monospace; color: var(--cream-muted); }
-        #f34-lines > div { height: 1.45em; white-space: pre; }
+        /* B: the terminal (fixed copy) */
+        #f34-term { position: absolute; left: 5.5cqw; top: 6.2cqw; padding: 0.7cqw 1.2cqw; background: rgba(10, 10, 10, 0.86); border: 1px solid var(--border);
+          font: 400 1.45cqw/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); opacity: 0; }
+        #f34-lines > div { height: 1.5em; white-space: pre; }
         #f34-lines .f34-c { color: var(--cream); }
         #f34-lines .f34-ref { color: var(--cream); font-weight: 600; }
         #f34-lines .f34-me { color: var(--fire); font-weight: 600; }
-        #f34-origin { position: absolute; left: 4.6cqw; top: 22.2cqw; font: 900 27cqw/0.84 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--cream);
-          white-space: nowrap; transform-origin: 0% 0%; }
-        #f34-b2 { position: absolute; left: 4.4cqw; top: 26cqw; white-space: nowrap; display: flex; align-items: baseline; }
-        #f34-fly { display: inline-block; transform-origin: 50% 50%; }
-        #f34-mine { display: inline-block; font: 900 30cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--fire); }
-        #f34-mine span { display: inline-block; }
-        #f34-tail { display: inline-block; position: relative; top: -5.7cqw; margin-left: 0.45em; font: 800 5.6cqw/1.02 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); }
-        #f34-fx { position: absolute; left: 0; top: 0; width: 0; height: 0; }
-        /* hidden until their time (also set on the timeline, for seeking back) */
-        #f34-bset { opacity: 0; }
-        #f34-ghost { visibility: hidden; }
       </style>
       <div id="root" data-composition-id="34-dropmine" data-width="1920" data-height="1080" data-duration="7.38">
         <div id="f34-cam">
           <div id="f34-world">
-            <div class="hr-layer" data-depth="0.6">
-              <div id="f34-glow" data-layout-ignore></div>
-            </div>
-            <div class="hr-layer" data-depth="0.15">
-              <div id="f34-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
-            </div>
-            <div class="hr-layer" data-depth="0.5" id="f34-wa">
-              <div id="f34-scr" data-layout-ignore></div>
-              <div id="f34-rem"><div>~/us (main) $ <span class="f34-c">git remote -v</span></div><div id="f34-r1"><b>origin</b>  me@home:us.git (fetch)</div><div id="f34-r2"><b>origin</b>  me@home:us.git (push)</div><div id="f34-r3">~/us (main) $ <span class="f34-cur" id="f34-rcur"></span></div></div>
-            </div>
-            <div class="hr-layer" data-depth="0.5" id="f34-wb">
-              <div id="f34-bar"><span id="f34-txt"><span class="f34-ref">stash@{3 years ago}</span>: On main: <span id="f34-oldme" class="hr-glow">me</span><i id="f34-x"></i></span></div>
-              <div id="f34-win"><div id="f34-lines">
-                <div>~/us (main) $ <span class="f34-c" id="f34-cmd"></span><span class="f34-cur" id="f34-cur1"></span></div>
-                <div>On branch main</div>
-                <div>Your branch is up to date with <span class="f34-c">'origin/main'</span>.</div>
-                <div> </div>
-                <div class="f34-c">Changes to be committed:</div>
-                <div>  (use "git restore --staged &lt;file&gt;..." to unstage)</div>
-                <div class="f34-c">        new file:   <span class="f34-me">me</span></div>
-                <div> </div>
-                <div>Dropped <span class="f34-ref">refs/stash@{0}</span> (a3c9e1f07b52d8e46c1f9a0b37d2e85c4f6a1b90)</div>
-                <div>~/us (main) $ <span class="f34-cur" id="f34-cur2"></span></div>
-              </div></div>
-            </div>
+            <canvas id="f34-gl" width="1920" height="1080" data-layout-ignore></canvas>
+            <canvas id="f34-type" width="1920" height="1080" data-layout-ignore></canvas>
+            <div id="f34-tag" data-layout-allow-overlap><b>you</b>@laptop ~/us</div>
+            <div id="f34-term" data-layout-allow-overlap><div id="f34-lines">
+              <div>~/us (main) $ <span class="f34-c" id="f34-cmd"></span><span class="f34-cur" id="f34-cur1"></span></div>
+              <div>On branch main</div>
+              <div>Your branch is up to date with <span class="f34-c">'origin/main'</span>.</div>
+              <div> </div>
+              <div class="f34-c">Changes to be committed:</div>
+              <div>  (use "git restore --staged &lt;file&gt;..." to unstage)</div>
+              <div class="f34-c">        new file:   <span class="f34-me">me</span></div>
+              <div> </div>
+              <div>Dropped <span class="f34-ref">refs/stash@{0}</span> (a3c9e1f07b52d8e46c1f9a0b37d2e85c4f6a1b90)</div>
+              <div>~/us (main) $ <span class="f34-cur" id="f34-cur2"></span></div>
+            </div></div>
           </div>
-          <div class="hr-layer" data-depth="0.9" id="f34-lyr">
-            <div id="f34-shk">
-              <div id="f34-a">
-                <div id="f34-lw" class="f34-big">
-                  <div id="f34-ghost" data-layout-ignore data-hf-motion-blur='{"fps": 60}'>local<span id="f34-tag"><b>you</b>@laptop ~/us</span></div>
-                  <span id="f34-local" class="hr-glowbox">local</span>
-                  <div id="f34-a1" class="f34-s"><span class="f34-w">keep</span> <span class="f34-w">your</span></div>
-                </div>
-                <div id="f34-a2"><span class="f34-s f34-w">copy,</span><span class="f34-s"><span class="f34-w">i</span> <span class="f34-w">don't</span></span><span class="f34-w hr-glowbox" id="f34-care">care</span></div>
-              </div>
-              <div id="f34-bset">
-                <div id="f34-origin"><span id="f34-ow">origin's</span></div>
-                <div id="f34-b2"><span id="f34-fly" data-layout-allow-overlap><span id="f34-mine" class="hr-glowbox"><span id="f34-gm">m</span><span id="f34-gin">in</span><span id="f34-ge">e</span></span></span><span id="f34-tail"><span class="f34-t">and</span> <span class="f34-t">you're</span><br /><span class="f34-t">not</span> <span class="f34-t">there</span></span></div>
-                <div id="f34-fx"></div>
-              </div>
-            </div>
-          </div>
+          <div id="f34-strip" data-layout-allow-overlap><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
       <script src="assets/kit/wow-kit.js"></script>
-      <script src="assets/kit/motion-blur.js"></script>
-      <script>
-        (() => {
-          const DUR = 7.38, T0 = 177.15, PX = 19.2; // 1cqw at 1920
-          const root = document.querySelector('[data-composition-id="34-dropmine"]');
-          const $ = (id) => root.querySelector("#" + id);
-          const at = (T) => T - T0;
-          // the drop: louder than chorus 1. Effects scale with this span's mean drum envelope over 10's (0.409), capped
-          let sum = 0, n = 0;
-          for (let T = T0; T < T0 + DUR; T += 0.02) { sum += HR.band("drums", T); n++; }
-          const K = Math.max(1, Math.min(1.35, sum / n / 0.409));
-          const pk = (t) => (0.022 + 0.04 * HR.band("drums", T0 + t + 0.03)) * K; // a camera punch sized by the drums at local t
-          const stage = HR.stage(root, { seed: 34, pulse: K });
-          const tl = gsap.timeline({ paused: true });
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+        import * as K from "./assets/kit/lines.js";
 
-          // words (lyrics.json) and kicks (HR_ENV): kicks 177.237 177.696 178.141 178.608 179.063 179.512 179.989 180.44
-          // 180.897 181.362 181.809 182.264 182.731 183.18 183.641 184.102
-          const LOCAL = at(177.76), COPY = at(178.1), CARE = at(179.7), CUT = at(180.16), MINE = at(181.78), THERE = at(183.38);
-          const ENTER = at(180.897), LIFT = at(181.362), PROMPT = at(182.264);
-          const OUT = 0.35;
+        const DUR = 7.38, T0 = 177.15;
+        const root = document.querySelector('[data-composition-id="34-dropmine"]');
+        const $ = (id) => root.querySelector("#" + id);
+        const at = (T) => T - T0;
+        // the words (lyrics.json L55, L56) and the grid (HR_ENV beats; downbeats 177.227 179.062 180.896 182.727)
+        const KEEP = at(177.18), YOUR = at(177.46), LOCAL = at(177.76), COPY = at(178.1), I = at(178.839), DONT = at(179.26), CARE = at(179.7);
+        const CUT = at(180.16), MINE = at(181.78), AND = at(182.2), YOURE = at(182.5), NOT = at(182.94), THERE = at(183.38);
+        const ENTER = at(180.896), LIFT = at(181.351), PROMPT = at(182.268), OUT = 0.35;
+        const BEATS = K.beatsIn(T0 - 0.7, T0 + DUR + 0.1).map(at);
+        await document.fonts.load('900 100px "Barlow"');
+        await document.fonts.load('400 100px "IBM Plex Mono"');
+        await document.fonts.load('500 100px "IBM Plex Mono"');
+        await document.fonts.load('600 100px "IBM Plex Mono"');
+        const tl = gsap.timeline({ paused: true });
 
-          // ---- the cuts: the world whips in from 33 (the lyric stays out of it, so "keep" lands sharp on 177.18);
-          //      everything zooms out into 35 over the last 0.35 s ----
-          const cam = $("f34-cam"), world = $("f34-world");
-          WOW.transition(tl, world, { in: "whipL", dur: 0.25, start: -0.1, total: DUR });
-          WOW.transition(tl, cam, { out: "zoom", dur: OUT, total: DUR });
+        // ---- the cuts: the world whips in from 33; everything zooms out into 35 over the last 0.35 s ----
+        const cam = $("f34-cam"), world = $("f34-world");
+        WOW.transition(tl, world, { in: "whipL", dur: 0.25, start: -0.1, total: DUR });
+        WOW.transition(tl, cam, { out: "zoom", dur: OUT, total: DUR });
+        tl.set({}, {}, DUR);
 
-          // ---- the hard cut on "Origin's": set A leaves, set B is there (one frame early, so the slam lands on 180.16) ----
-          const A = [$("f34-a"), $("f34-wa")], B = [$("f34-bset"), $("f34-wb")];
-          tl.set(B, { opacity: 0 }, 0).set(B, { opacity: 1 }, CUT - 0.034);
-          tl.set(A, { opacity: 1 }, 0).set(A, { opacity: 0 }, CUT - 0.034);
+        // ================= the world =================
+        const renderer = K.renderer(THREE, $("f34-gl"));
+        const lines = K.createLines(THREE, 90000);
+        const shutter = K.createShutter(THREE, renderer);
+        // software WebGL (checks, and proofs while the GPU path is down) takes half the shutter samples
+        const glr = (() => { try { const gl = renderer.getContext(), x = gl.getExtension("WEBGL_debug_renderer_info"); return x ? String(gl.getParameter(x.UNMASKED_RENDERER_WEBGL)) : ""; } catch (e) { return ""; } })();
+        const SAMPLES = /swiftshader|llvmpipe|software/i.test(glr) ? 4 : 8;
+        const camera = new THREE.PerspectiveCamera(40, 16 / 9, 0.1, 900);
+        const V = (x, y, z) => new THREE.Vector3(x, y, z);
+        const BONE = K.BONE, FIRE = K.ACCENT, HOT = [1, 0.86, 0.72], WHITE = [1, 0.93, 0.86], EMBER = [1, 0.72, 0.48], MUTED = [0x88 / 255, 0x88 / 255, 0x80 / 255];
+        const mixc = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k];
+        const beatP = (t, hl = 0.12) => { let p = 0; for (const b of BEATS) if (t >= b) p = Math.max(p, K.pulse(t, b, hl)); return p; };
 
-          // ---- A: the remote list, the first frame's object: answered (just origin), big and lit; the prompt returns on
-          //      the first kick; it pushes in until "local", then shrinks into its corner as the word slams ----
-          const rem = $("f34-rem"), scr = $("f34-scr"), RZ = 1.3 / 3.6, SH = LOCAL - 0.22;
-          tl.set($("f34-r3"), { opacity: 0 }, 0).set($("f34-r3"), { opacity: 1 }, at(177.237));
-          tl.fromTo(rem, { scale: 1, x: 0, y: 0 }, { scale: 1.05, x: 0.6 * PX, y: -0.4 * PX, duration: SH, ease: "sine.inOut" }, 0);
-          tl.fromTo(rem, { scale: 1.05, x: 0.6 * PX, y: -0.4 * PX }, { scale: RZ, x: 0, y: (6.2 - 21) * PX, duration: 0.24, ease: "power3.inOut", immediateRender: false }, SH);
-          // the screen lights up on the first kick (the prompt's return) and the shot punches with it
-          const K1 = at(177.237);
-          tl.set(scr, { opacity: 0.6 }, 0).set(scr, { opacity: 1 }, K1);
-          tl.fromTo(scr, { opacity: 1 }, { opacity: 0.75, duration: 0.3, ease: "power2.out", immediateRender: false }, K1);
-          tl.fromTo(scr, { opacity: 0.75 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, SH);
-          WOW.punch(tl, cam, K1, { s: 1 + 0.03 * K, dur: 0.32 });
+        // ---- the type metrics ----
+        const tcv = $("f34-type"), tctx = tcv.getContext("2d");
+        const DPR = window.devicePixelRatio || 1;
+        tcv.width = 1920 * DPR; tcv.height = 1080 * DPR;
+        const MONO = '500 100px "IBM Plex Mono"', SLAB = '900 100px "Barlow"';
+        const advOf = (font, s, size) => { tctx.font = font; return [...s].reduce((a, ch) => a + (tctx.measureText(ch).width / 100) * size * 1.4, 0); };
+        // kind: 0 a sung word (bone), 1 a hero landing white-hot and cooling to fire, 2 a hero landing white-hot, cooling to bone
+        const placeRun = (words, gap) => { let u = 0; return words.map(([w, T, size, kind]) => { const len = advOf(SLAB, w, size); const p = { w, t: at(T), size, kind, u0: u, u1: u + len }; u += len + gap * size; return p; }); };
+        const mid = (p) => (p.u0 + p.u1) / 2;
 
-          // ---- A: the lyric, every word on its own start ----
-          const w = root.querySelectorAll(".f34-w");
-          HR.lead(tl, w[0], at(177.18)); HR.lead(tl, w[1], at(177.46));
-          HR.hero(tl, $("f34-local"), LOCAL, { spread: 60 * K, over: 1 + 0.2 * K, pre: 0.14, sharp: true });
-          HR.lead(tl, w[2], COPY);
-          HR.lead(tl, w[3], at(178.839)); HR.lead(tl, w[4], at(179.26));
-          HR.hero(tl, $("f34-care"), CARE, { spread: 44 * K, over: 1 + 0.26 * K, pre: 0.16, sharp: true });
-          // the accent is a pointer: it leaves "local" for "care"
-          tl.fromTo($("f34-local"), { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.2, ease: "power2.out", immediateRender: false }, CARE);
+        // ---- A: the ex's local copy, a hollow clone of main on its dark side; "i don't care" on main ----
+        const XC = -8, ZC0 = 0;
+        const CW = placeRun([["keep", 177.18, 1.0, 0], ["your", 177.46, 1.0, 0], ["local", 177.76, 2.5, 1], ["copy,", 178.1, 1.2, 0]], 0.42);
+        const copyAt = (u, dy = 0) => ({ x: XC, y: 0.08 + dy, z: ZC0 - u });
+        const MW = placeRun([["i", 178.839, 1.15, 0], ["don't", 179.26, 1.15, 0], ["care", 179.7, 3.0, 1]], 0.42);
+        const ZM0 = ZC0 - CW[1].u0 - 0.5; // main's half of the line runs under the clone's, beside "your"
+        const mainA = (u) => ({ x: 0, y: 0.08, z: ZM0 - u });
+        const ZCARE = ZM0 - mid(MW[2]);
+        // on "care" a crack of fire runs down the clone; it breaks off and falls only from the cut on "origin's", seen from
+        // B's place on main, so line 55 stays whole until line 56 starts
+        const tcCrack = (z) => CARE + Math.abs(z - ZCARE) * 0.002;
+        const tcCopy = (z) => CUT + 0.05 + Math.abs(z - ZB0) * 0.0022;
+        const fall = (t, tc, seed = 0) => { if (t < tc) return [0, 1, 0]; const d = t - tc; return [-(1.5 + seed) * d - 9 * d * d, Math.max(0, 1 - d / 0.75), Math.exp(-d / 0.12)]; };
+        // its words go with it, slower, so the line stays readable until "origin's"
+        const wfall = (t, tc) => { if (t < tc) return [0, 1]; const d = t - tc; return [-0.8 * d - 3 * d * d, Math.max(0, 1 - d / 1.2)]; };
 
-          // ---- A: the copy. It slides out from behind "local" on "copy,", and on "care" it is flicked off the left edge ----
-          const ghost = $("f34-ghost");
-          tl.set(ghost, { visibility: "hidden", x: 2600, y: 0 }, 0);
-          tl.set(ghost, { visibility: "visible", x: 0, y: 0 }, COPY - 0.02);
-          tl.fromTo(ghost, { x: 0, y: 0 }, { x: 3.2 * PX, y: 2.4 * PX, duration: 0.42, ease: "expo.out", immediateRender: false }, COPY - 0.02);
-          tl.fromTo(ghost, { x: 3.2 * PX, y: 2.4 * PX, rotation: 0 }, { x: -2700, y: 4 * PX, rotation: -4, duration: 0.26, ease: "power3.in", immediateRender: false }, CARE - 0.06);
-          tl.set(ghost, { visibility: "hidden" }, CARE + 0.22);
+        // ---- B: further down main. "origin's mine and you're not there"; the stash tray beside it, under the floor ----
+        const ZB0 = -70;
+        // two rows, so the whole line stays big: "origin's mine" on main, "and you're not there" on the floor's near side
+        const BW1 = placeRun([["origin's", 180.16, 2.4, 2], ["mine", 181.78, 2.9, 1]], 0.42);
+        const BW2 = placeRun([["and", 182.2, 1.35, 0], ["you're", 182.5, 1.35, 0], ["not", 182.94, 1.35, 0], ["there", 183.38, 2.0, 2]], 0.42);
+        const BW = [...BW1, ...BW2];
+        const mainB = (u, dy = 0) => ({ x: 0, y: 0.08 + dy, z: ZB0 - u });
+        const XR = 6.2, ZR2 = ZB0 - 3;
+        const row2 = (u) => ({ x: XR, y: 0.08, z: ZR2 - u });
+        const MI = BW[1], mLen = advOf(SLAB, "m", MI.size), inLen = advOf(SLAB, "in", MI.size);
+        // the row 03 planted, in the tray; its `me` sits beside the slot "mine" lands in
+        const RS = 0.52, PRE = "stash@{3 years ago}: On main: ", preLen = advOf(MONO, PRE, RS), meLen = advOf(MONO, "me", RS);
+        const XD = 3.8, zMe0 = ZB0 - mid(MI) + meLen / 2, zR0 = zMe0 + preLen;
+        const DZ0 = zR0 + 0.7, DZ1 = zMe0 - meLen - 0.7, DX0 = XD - 1.0, DX1 = XD + 1.0; // the opening in the floor
+        const inHole = (x, z) => x > DX0 && x < DX1 && z < DZ0 && z > DZ1;
+        // the tray: down in the dark, popped up into the floor on Enter, dropped after "mine"
+        const trayY = (t) => -2.3 + 1.75 * K.springStep(t - ENTER, 3.2, 0.32) - 3.2 * K.prog(t, MINE + 0.3, MINE + 1.1, K.ease.inOutCubic);
+        const trayA = (t) => 1 - K.prog(t, MINE + 0.55, MINE + 1.15);
+        const LEND = Math.max(BW1[1].u1, ZB0 - ZR2 + BW2[BW2.length - 1].u1);
 
-          // ---- B: the terminal: `git stash pop` types through the held "origin's"; Enter on the downbeat; output on the kicks ----
-          const keys = [[0, ""]], CMD = "git stash pop", TA = CUT + 0.16, TB = ENTER - 0.1;
-          for (let i = 0; i < CMD.length; i++) keys.push([TA + ((TB - TA) * i) / CMD.length, CMD.slice(0, i + 1)]);
-          const lines = [...$("f34-lines").children];
-          const LT = [0, ENTER, ENTER, LIFT, LIFT, LIFT, MINE, MINE, MINE, PROMPT]; // when each line prints
-          const NWIN = 3;
-
-          // ---- B: the payoff. The stash row's `me` lifts out on the kick and flies down at poster scale (render() reads F.p) ----
-          const F = { p: 0 }, S = { p: 0 };
-          tl.fromTo(F, { p: 0 }, { p: 1, duration: MINE - 0.04 - LIFT, ease: "power3.in", immediateRender: false }, LIFT);
-          // on "mine" it splits and "in" slams in between: me → mine
-          tl.fromTo(S, { p: 0 }, { p: 1, duration: 0.14, ease: "power3.out", immediateRender: false }, MINE - 0.04);
-          const gin = $("f34-gin");
-          tl.set(gin, { opacity: 0, y: -1400 }, 0);
-          tl.fromTo(gin, { opacity: 1, y: -520, scaleY: 1.5, filter: "blur(10px)" }, { opacity: 1, y: 0, scaleY: 1, filter: "blur(0px)", duration: 0.1, ease: "power3.in", immediateRender: false }, MINE - 0.04);
-          tl.fromTo($("f34-mine"), { scaleY: 0.86, scaleX: 1.08 }, { scaleY: 1, scaleX: 1, duration: 0.55, ease: "elastic.out(1, 0.4)", immediateRender: false }, MINE + 0.06);
-          // the row: `me` leaves it on the lift; on "mine" the stash entry is struck and dims (dropped)
-          tl.set($("f34-oldme"), { opacity: 1 }, 0).set($("f34-oldme"), { opacity: 0 }, LIFT);
-          tl.fromTo($("f34-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.18, ease: "power2.out" }, MINE);
-          tl.fromTo($("f34-txt"), { opacity: 1 }, { opacity: 0.45, duration: 0.3, ease: "power2.out", immediateRender: false }, MINE + 0.12);
-          // the drop's light on "mine": a fire shockwave and cream rays out of the word
-          const fx = $("f34-fx");
-          WOW.shock(tl, fx, { x: 0, y: 0, t: MINE, r: 900 * K, n: 2, w: 5, dur: 0.6, color: "fire" });
-          WOW.rays(tl, fx, { x: 0, y: 0, t: MINE, n: 24, r0: 160, r1: 1100, w: 3, dur: 0.5, seed: 34 });
-          WOW.shake(tl, $("f34-shk"), MINE, { amp: 9 * K * HR.band("drums", 181.8) + 4, dur: 0.42, seed: 34 });
-
-          // ---- B: the lyric. "origin's" full-frame and held; it steps back as `me` comes down; then the tail ----
-          HR.hero(tl, $("f34-ow"), CUT, { spread: 46 * K, over: 1 + 0.2 * K, pre: 0.034, sharp: true });
-          tl.fromTo($("f34-origin"), { scale: 1, y: 0 }, { scale: 10 / 27, y: -3.3 * PX, duration: 0.24, ease: "power3.inOut", immediateRender: false }, MINE - 0.26);
-          const tw = root.querySelectorAll(".f34-t");
-          HR.lead(tl, tw[0], at(182.2)); HR.lead(tl, tw[1], at(182.5)); HR.lead(tl, tw[2], at(182.94));
-          HR.hero(tl, tw[3], THERE, { spread: 16 * K, over: 1.16, pre: 0.1, sharp: true });
-
-          // ---- the glow follows the hero object: "local", then "origin's", then "mine" ----
-          const glow = $("f34-glow");
-          tl.set(glow, { x: 0, y: 0 }, 0);
-          tl.set(glow, { x: -6 * PX, y: 4 * PX }, CUT - 0.034);
-          tl.fromTo(glow, { x: -6 * PX, y: 4 * PX }, { x: -16 * PX, y: 14 * PX, duration: 0.4, ease: "power3.out", immediateRender: false }, MINE - 0.1);
-
-          // ---- the camera: one push per phrase, punches on the heroes sized by the drums ----
-          const c = stage.cam;
-          // the cut carries 33's last lunge (zoomed in, banked right): the camera lands pushed in and rolled, and
-          // settles level while the list pushes in on its own
-          tl.fromTo(c, { z: 1.07, x: 0, y: 0 }, { z: 1.02, x: 6, y: 0, duration: LOCAL - 0.06, ease: "power3.out" }, 0);
-          tl.fromTo(c, { rot: 2.4 }, { rot: 0, duration: 0.45, ease: "expo.out" }, 0);
-          tl.to(c, { z: 1.02 + pk(LOCAL) * 1.3, y: -8, duration: 0.06, ease: "power2.in" }, LOCAL - 0.06);
-          tl.to(c, { z: 1.03, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, LOCAL + 0.01);
-          tl.to(c, { z: 1.07, x: 22, duration: CARE - 0.06 - (LOCAL + 0.51), ease: "none" }, LOCAL + 0.51);
-          tl.to(c, { z: 1.07 + pk(CARE) * 1.4, y: -10, duration: 0.06, ease: "power2.in" }, CARE - 0.06);
-          tl.to(c, { z: 1.08, y: 0, x: 26, duration: 0.42, ease: "elastic.out(1, 0.5)" }, CARE + 0.01);
-          // B: a new shot, punched in on the cut; it settles and pushes through the held "origin's"
-          tl.set(c, { z: 1.0 + pk(CUT) * 1.4, x: 0, y: -8 }, CUT - 0.034);
-          tl.to(c, { z: 1.0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, CUT);
-          tl.to(c, { z: 1.04, x: 14, duration: ENTER - 0.05 - (CUT + 0.5), ease: "none" }, CUT + 0.5);
-          tl.to(c, { z: 1.04 + pk(ENTER) * 0.7, duration: 0.05, ease: "power2.in" }, ENTER - 0.05);
-          tl.to(c, { z: 1.05, x: 18, duration: MINE - 0.07 - ENTER, ease: "power1.out" }, ENTER);
-          // "mine": the biggest punch of the frame, then a long push through the hold
-          tl.to(c, { z: 1.05 + pk(MINE) * 1.8, y: -14, duration: 0.07, ease: "power2.in" }, MINE - 0.07);
-          tl.to(c, { z: 1.02, y: 0, x: 0, duration: 0.6, ease: "elastic.out(1, 0.45)" }, MINE);
-          tl.to(c, { z: 1.06, x: -8, duration: THERE - 0.06 - (MINE + 0.6), ease: "none" }, MINE + 0.6);
-          tl.to(c, { z: 1.06 + pk(THERE) * 0.8, y: -6, duration: 0.06, ease: "power2.in" }, THERE - 0.06);
-          tl.to(c, { z: 1.07, y: 0, duration: 0.45, ease: "elastic.out(1, 0.5)" }, THERE);
-          tl.to(c, { z: 1.1, x: -16, duration: DUR - (THERE + 0.45), ease: "none" }, THERE + 0.45);
-          WOW.punch(tl, cam, PROMPT, { s: 1.02, dur: 0.3 });
-          tl.set({}, {}, DUR);
-
-          // ---- layout, measured once the fonts are in: the flight's start (the row's `me`) and the split ----
-          const fly = $("f34-fly"), mine = $("f34-mine"), gm = $("f34-gm"), ge = $("f34-ge"), oldme = $("f34-oldme");
-          const pos = (el) => { let x = 0, y = 0; for (let e = el; e && e !== root; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; } return [x, y]; };
-          let M = null;
-          function measure() {
-            const inW = gin.offsetWidth, W = mine.offsetWidth, H = mine.offsetHeight;
-            const [mx, my] = pos(mine), [ox, oy] = pos(oldme);
-            const cx = mx + W / 2, cy = my + H / 2;
-            M = { half: inW / 2, dx: ox + oldme.offsetWidth / 2 - cx, dy: oy + oldme.offsetHeight / 2 - cy,
-              s0: oldme.offsetWidth / Math.max(1, W - inW), cx, cy };
-            fx.style.left = cx + "px"; fx.style.top = cy + "px";
+        // ---- the camera: a span camera. It frames the sung line from its first word on the object to the word being sung
+        //      (keyed so it opens room for the next word as it comes), looking at the span's middle from a fixed bearing and
+        //      pulling back just enough that the whole span (and the stash row while it matters) fits the frame ----
+        const OF = V(11, 7, 8.5), DIRV = OF.clone().normalize(), BASE = 12;
+        const cz = (i) => ZC0 - mid(CW[i]), mz = (i) => ZM0 - mid(MW[i]), bz = (i) => ZB0 - mid(BW[i]);
+        const vv = (o) => V(o.x, o.y, o.z);
+        const L55 = [...CW.map((p) => [p.t, vv(copyAt(p.u1 + 0.3)), p.size]), ...MW.map((p) => [p.t, vv(mainA(p.u1 + 0.3)), p.size])];
+        const L56 = [...BW1.map((p) => [p.t, vv(mainB(p.u1 + 0.3)), p.size]), ...BW2.map((p) => [p.t, vv(row2(p.u1 + 0.3)), p.size])];
+        const S55 = vv(copyAt(CW[0].u0 - 0.4)), S56 = vv(mainB(BW1[0].u0 - 0.4));
+        // the second row's start joins the span as its first word comes
+        const S55b = vv(mainA(MW[0].u0 - 0.4)), S56b = vv(row2(BW2[0].u0 - 0.4));
+        // the span's end: the end of the word being sung, easing on toward the next word's end between their times
+        function spanEnd(t, L) {
+          if (t <= L[0][0]) return [L[0][1].clone(), L[0][2]];
+          for (let i = 1; i < L.length; i++) if (t < L[i][0]) {
+            const f = K.ease.inOutCubic((t - L[i - 1][0]) / (L[i][0] - L[i - 1][0]));
+            return [L[i - 1][1].clone().lerp(L[i][1], f), Math.max(L[i - 1][2], L[i][2] * f)];
           }
-          const fontsIn = () => document.fonts.check('900 100px "Barlow"') && document.fonts.check('500 20px "IBM Plex Mono"');
-          if (fontsIn()) measure();
-          Promise.all([document.fonts.load('900 100px "Barlow"'), document.fonts.load('500 20px "IBM Plex Mono"')]).then(() => { measure(); render(); });
+          const l = L[L.length - 1]; return [l[1].clone(), l[2]];
+        }
+        const fcam = new THREE.PerspectiveCamera(40, 16 / 9, 0.1, 900), pv = new THREE.Vector3();
+        fcam.updateProjectionMatrix();
+        const fits = (look, d, pts, dir) => {
+          fcam.position.copy(look).addScaledVector(dir, d); fcam.lookAt(look); fcam.updateMatrixWorld();
+          for (const p of pts) { pv.copy(p).project(fcam); if (pv.z > 1 || Math.abs(pv.x) > 0.76 || pv.y > 0.56 || pv.y < -0.8) return false; }
+          return true;
+        };
+        // the nearest distance (from BASE) at which every point fits: a bisection, so it moves smoothly with the span
+        function fitD(look, pts, dir) {
+          if (fits(look, BASE, pts, dir)) return BASE;
+          let lo = BASE, hi = BASE * 2; while (!fits(look, hi, pts, dir) && hi < 400) hi *= 2;
+          for (let i = 0; i < 18; i++) { const m = (lo + hi) / 2; if (fits(look, m, pts, dir)) hi = m; else lo = m; }
+          return hi;
+        }
+        function frame(t, sec) {
+          const S = sec ? S56 : S55, [E, hs] = spanEnd(t, sec ? L56 : L55);
+          const up = (p, h) => p.clone().setY(p.y + h);
+          const pts = [S, E, up(S, (sec ? BW1[0].size : CW[0].size) * 1.15), up(E, hs * 1.15)];
+          if (sec ? t >= AND - 0.3 : t >= I - 0.3) { const S2 = sec ? S56b : S55b; pts.push(S2, up(S2, 1.6)); }
+          if (sec ? t >= AND - 0.3 : t >= I - 0.3) pts.push(sec ? up(vv(mainB(BW1[1].u1)), 3.3) : up(vv(copyAt(CW[3].u1)), 1.4)); // and the first row's end
+          // B: the stash row stays in the frame from the cut until `me` has landed
+          if (sec && t < MINE + 0.2) pts.push(V(XD, 0, zR0), V(XD, 0, zMe0 - meLen), V(DX1, 0, DZ0));
+          if (!sec) pts.push(up(S, 0.6)); // and the clone's start
+          // a slow orbit through each line
+          const yaw = sec ? -0.12 + 0.2 * K.prog(t, CUT, DUR) : 0.1 - 0.18 * K.prog(t, 0, CUT);
+          const dir = DIRV.clone().applyAxisAngle(V(0, 1, 0), yaw);
+          const lo = pts[0].clone(), hi = pts[0].clone();
+          for (const q of pts) { lo.min(q); hi.max(q); }
+          const look = lo.add(hi).multiplyScalar(0.5);
+          let d = fitD(look, pts, dir);
+          if (sec) d *= 1 + 0.35 * (1 - K.ease.outExpo(K.clamp((t - CUT) / 0.35))); // the dive in on the cut
+          else d *= 1 + 0.25 * (1 - K.ease.outExpo(K.clamp(t / 0.4)));            // and on the whip in
+          if (sec) d *= 1 + 0.12 * K.prog(t, THERE + 0.3, DUR, K.ease.inOutCubic);  // the last pull up and away
+          return [look, look.clone().add(dir.multiplyScalar(d))];
+        }
+        const HITS = [[LOCAL, 0.6], [CARE, 0.8], [CUT, 0.7], [ENTER, 0.6], [LIFT, 0.4], [MINE, 1.1], [THERE, 0.4]];
+        const DIVES = [[LOCAL, 0.08], [CARE, 0.1], [CUT, 0.08], [ENTER, 0.05], [LIFT, 0.04], [MINE, 0.12], [THERE, 0.05]];
+        function aim(t, sec) {
+          const T = T0 + t;
+          const [look, pos] = frame(t, sec);
+          let amp = 0; for (const [h, a] of HITS) if (t >= h) amp += a * Math.exp(-(t - h) / 0.16);
+          pos.x += K.noise1(T * 0.7, 1) * 0.25 + K.noise1(T * 11, 4) * 0.35 * amp;
+          pos.y += K.noise1(T * 0.6, 2) * 0.18 + K.noise1(T * 11, 5) * 0.3 * amp - 0.1 * beatP(t);
+          camera.position.copy(pos); camera.lookAt(look);
+          const roll = sec ? 0.08 * Math.exp(-Math.max(0, t - CUT) / 0.35) - 0.06 * K.pulse(t, MINE, 0.3) + (t > THERE ? 0.05 * K.prog(t, THERE, DUR, K.ease.inOutCubic) : 0)
+            : -0.07 * Math.exp(-t / 0.4) + 0.05 * K.pulse(t, LOCAL, 0.3) - 0.05 * K.pulse(t, CARE, 0.3);
+          camera.rotateZ(K.noise1(T * 0.4, 3) * 0.012 + roll + K.noise1(T * 9, 6) * 0.012 * amp);
+          let z = 0; for (const [h, a] of DIVES) z += a * K.pulse(t, h, 0.16);
+          camera.fov = 40 / (1 + z + 0.035 * beatP(t));
+          camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+        }
 
-          // ---- per-frame state: typing, the terminal window, cursors, the flight, glow, shake, the camera ----
-          const cmd = $("f34-cmd"), cur1 = $("f34-cur1"), cur2 = $("f34-cur2"), rcur = $("f34-rcur");
-          const local = $("f34-local"), care = $("f34-care");
-          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
-          function render() {
-            const t = tl.time(), T = T0 + t;
-            // A: the remote list's prompt
-            rcur.style.opacity = t >= at(177.237) && blink(t, at(177.237)) ? 1 : 0;
-            // B: typing and the terminal window (the last four printed lines)
-            let k = keys[0]; for (const s of keys) if (s[0] <= t) k = s;
-            cmd.textContent = k[1];
-            cur1.style.opacity = t < ENTER && blink(t, Math.max(k[0], CUT)) ? 1 : 0;
-            cur2.style.opacity = t >= PROMPT && blink(t, PROMPT) ? 1 : 0;
-            let shown = 0; LT.forEach((x, i) => { if (t >= x) shown = i + 1; });
-            lines.forEach((el, i) => { el.style.display = i < shown && i >= shown - NWIN ? "" : "none"; });
-            // B: the flight of `me` and the split into "mine"
-            if (M) {
-              const p = F.p, vis = t >= LIFT;
-              fly.style.opacity = vis ? 1 : 0;
-              const s = M.s0 + (1 - M.s0) * p, arc = Math.sin(Math.PI * p) * 3 * PX;
-              fly.style.transform = `translate(${(M.dx * (1 - p)).toFixed(2)}px, ${(M.dy * (1 - p) - arc).toFixed(2)}px) rotate(${(-7 * Math.sin(Math.PI * p)).toFixed(2)}deg) scale(${s.toFixed(4)})`;
-              fly.style.filter = vis && p > 0.02 && p < 0.98 ? `blur(${(7 * Math.sin(Math.PI * p) * p).toFixed(1)}px)` : "";
-              const off = M.half * (1 - S.p);
-              gm.style.translate = `${off.toFixed(2)}px 0px`; ge.style.translate = `${(-off).toFixed(2)}px 0px`;
+        // ---- drawing (pure functions of t) ----
+        const fogged = (p, near = 12, k = 0.0095) => Math.exp(-Math.max(0, camera.position.distanceTo(p) - near) * k);
+        const mv = new THREE.Vector3();
+        function seg(a, b, w, rgb, alpha) {
+          mv.addVectors(a, b).multiplyScalar(0.5);
+          const f = fogged(mv);
+          if (f * alpha > 0.008) lines.seg(a, b, w, rgb, alpha * f);
+        }
+        function ring(c, r, w, rgb, alpha, n = 12) {
+          for (let i = 0; i < n; i++) {
+            const a0 = (i / n) * Math.PI * 2, a1 = ((i + 1) / n) * Math.PI * 2;
+            seg(V(c.x + Math.cos(a0) * r, c.y + Math.sin(a0) * r, c.z), V(c.x + Math.cos(a1) * r, c.y + Math.sin(a1) * r, c.z), w, rgb, alpha);
+          }
+        }
+        const PW = new THREE.Vector3();
+        const spanPx = (x, y, z, gap, fill = 0.85, lo = 1.4, hi = 16) => { PW.set(x, y, z).applyMatrix4(camera.matrixWorldInverse); const d = -PW.z; return d <= 0.1 ? 0 : K.clamp((camera.projectionMatrix.elements[5] * 540 / d) * gap * fill, lo, hi); };
+        const zBase = (sec) => (sec ? ZB0 : ZM0);
+        // a packet starts just ahead of where the camera stands on its beat, so every beat is seen
+        const P0 = new Map(BEATS.map((b) => { aim(b, b >= CUT ? 1 : 0); return [b, camera.position.z - 4]; }));
+        const packetZ = (b, d) => P0.get(b) - 240 * K.ease.inOutCubic(Math.min(1, d / 0.6)) * (d / 0.6);
+        // main's words in this shot: [z0, z1] spans the commits leave free
+        const wordSpans = (sec) => (sec ? BW1.map((p) => [ZB0 - p.u0 + 0.8, ZB0 - p.u1 - 0.8]) : MW.map((p) => [ZM0 - p.u0 + 0.8, ZM0 - p.u1 - 0.8]));
+
+        function scene(t, target, sec) {
+          aim(t, sec);
+          const T = T0 + t, bass = HR.band("bass", T), beat = beatP(t);
+          const camZ = camera.position.z;
+          const live = (z) => z < camZ + 6 && z > camZ - 420;
+          lines.clear();
+          const packets = BEATS.filter((b) => (b >= CUT) === !!sec && t >= b && t - b < 0.6).map((b) => [packetZ(b, t - b), t - b]);
+          // the light on the floor, from the rail, its packets and the hits, 0..1+
+          const flares = sec ? [[0, bz(0), K.pulse(t, CUT, 0.2) * 1.2], [XD, (DZ0 + DZ1) / 2, K.pulse(t, ENTER, 0.18) * 1.4 + K.pulse(t, LIFT, 0.15) * 0.9], [0, bz(1), K.pulse(t, MINE, 0.24) * 2.0], [XR, ZR2 - mid(BW2[3]), K.pulse(t, THERE, 0.18)]]
+            : [[0, mz(2), K.pulse(t, CARE, 0.22) * 1.6], [XC, cz(2), K.pulse(t, LOCAL, 0.2) * 0.7]];
+          const lightAt = (x, z) => {
+            let k = (x >= 0 ? 1 : 0.35) * Math.exp(-Math.abs(x) / (sec ? 1.3 : 2.6)) * (1 + 0.35 * beat + 0.25 * bass);
+            for (const [pz] of packets) k += 0.8 * Math.exp(-Math.hypot(x, z - pz) / 4);
+            for (const [fx, fz, a] of flares) if (a > 0.01) k += a * Math.exp(-Math.hypot(x - fx, z - fz) / 6);
+            return k;
+          };
+          const hole = (x, z) => sec && inHole(x, z);
+          // -- the grid, lit near the rail --
+          const ga = 0.28 + 0.06 * bass;
+          const lit = (x, z, w, a0) => { const k = Math.min(1.6, lightAt(x, z)); return [w + 1.6 * k, mixc(BONE, EMBER, Math.min(1, k * 0.6)), a0 + 0.75 * k]; };
+          const zTop = Math.min(camZ + 6, 40), zBot = camZ - 400;
+          for (let x = -90; x <= 90; x += 5) {
+            if (x === 0) continue;
+            for (let z = zTop; z > zBot; z -= 5) { const [w, c, a] = lit(x, z - 2.5, 1.3, ga); seg(V(x, -0.01, z), V(x, -0.01, z - 5), w, c, a); }
+          }
+          for (let z = Math.floor(zTop / 5) * 5; z > zBot; z -= 5)
+            for (let x = -90; x < 90; x += 5) { if (hole(x + 2.5, z) || (x === 0 && hole(XD, z))) continue; const [w, c, a] = lit(x + 2.5, z, 1.3, ga); seg(V(x, -0.01, z), V(x + 5, -0.01, z), w, c, a); }
+          // the fine floor where the rail's light falls
+          const zA = Math.min(camZ + 6, 40), zB = Math.max(zBot, camZ - 220);
+          // (in B the light hugs the rail, so both rows read on dark ground)
+          for (let x = -1.6; x <= (sec ? 3.4 : 6.2); x += 0.2) {
+            if (Math.abs(x) < 0.15) continue;
+            for (let z = zA; z > zB; z -= 3) {
+              const zm = z - 1.5;
+              if (hole(x, z) || hole(x, z - 3)) continue;
+              const k = lightAt(x, zm) * 1.2;
+              if (k < 0.04) continue;
+              seg(V(x, -0.004, z), V(x, -0.004, z - 3), spanPx(x, 0, zm, 0.2, 0.55, 1.1, 10), mixc(EMBER, WHITE, Math.min(1, k)), Math.min(0.95, 0.9 * k));
             }
-            // the light
-            if (t < CARE) HR.glow(local, T, 0.3, 0.45 * K); else local.style.setProperty("--hr-glow", Math.max(0, 0.6 - (t - CARE) * 3).toFixed(3));
-            HR.glow(care, T, 0.3, 0.5 * K); HR.glow(mine, T, 0.4, 0.6 * K); HR.glow(oldme, T, 0.35, 0.6);
-            glow.style.opacity = Math.min(1, 0.7 + 0.9 * HR.band("bass", T) + 0.25 * HR.hit("kick", T, 0.22)).toFixed(3);
-            stage.apply(T);
-            WOW.draw(tl, T0);
           }
-          tl.eventCallback("onUpdate", render);
-          render();
-          window.__timelines["34-dropmine"] = tl;
-        })();
+          for (let z = Math.floor(zA / 1.5) * 1.5; z > zB; z -= 1.5) {
+            const k = lightAt(sec ? 1 : 2, z), xa = -3, xb = sec ? 4 : 7.5;
+            if (k < 0.04) continue;
+            const c = mixc(BONE, EMBER, 0.45), w = 1.2 + 0.8 * k, a = 0.55 * k;
+            if (sec && z < DZ0 && z > DZ1) { seg(V(xa, -0.005, z), V(Math.min(xb, DX0), -0.005, z), w, c, a); if (DX1 < xb) seg(V(DX1, -0.005, z), V(xb, -0.005, z), w, c, a); }
+            else seg(V(xa, -0.005, z), V(xb, -0.005, z), w, c, a);
+          }
+          // -- main: the new timeline burns; light runs down it on every beat --
+          for (let z = zTop; z > zBot; z -= 3) {
+            seg(V(0, 0, z), V(0, 0, z - 3), 9 + 3 * beat, FIRE, 1);
+            seg(V(0, 0.02, z), V(0, 0.02, z - 3), 3, WHITE, 0.9);
+          }
+          const spans = wordSpans(sec);
+          for (let z = Math.ceil(zTop / 6) * 6; z > zBot; z -= 6) {
+            if (spans.some(([a, b]) => z < a && z > b)) continue;
+            ring(V(0, 0.01, z), 0.3, 2.4, BONE, 0.95, 12);
+          }
+          for (const [pz, d] of packets) {
+            seg(V(0, 0.02, pz), V(0, 0.02, pz - 6 - 20 * d), 16, FIRE, 1 - d / 0.6);
+            seg(V(0, 0.03, pz), V(0, 0.03, pz - 6 - 20 * d), 6, WHITE, 1 - d / 0.6);
+          }
+          // a fence of light along main past the line
+          {
+            const end = sec ? ZB0 - LEND - 4 : ZM0 - MW[MW.length - 1].u1 - 4;
+            for (let z = end; z > Math.max(end - 150, zBot); z -= 0.35) {
+              const n = 0.5 + 0.5 * K.noise1(z * 0.9 + T * 3, 11), hc = (0.8 + 1.4 * n) * (1 + 0.6 * beat);
+              for (let j = 0; j < 4; j++) { const f0 = j / 4; seg(V(0, hc * f0, z), V(0, hc * (j + 1) / 4, z), 2, f0 < 0.3 ? WHITE : FIRE, 0.8 * (1 - f0)); }
+            }
+          }
+          // -- the clone, two hairlines and hollow commits; cracked with fire on "care", falling from the cut --
+          {
+            for (let z = zTop; z > zBot; z -= 3) {
+              const [dy, a, h0] = fall(t, tcCopy(z - 1.5), 0.3);
+              if (a <= 0) continue;
+              const tk = tcCrack(z - 1.5), heat = Math.max(h0, t >= tk ? Math.exp(-(t - tk) / 0.18) : 0);
+              const c = mixc(mixc(MUTED, BONE, 0.5), FIRE, heat);
+              seg(V(XC - 0.11, dy, z), V(XC - 0.11, dy * 1.1, z - 3), 2 + 2 * heat, c, 0.9 * a + 0.5 * heat);
+              seg(V(XC + 0.11, dy, z), V(XC + 0.11, dy * 1.1, z - 3), 2 + 2 * heat, c, 0.9 * a + 0.5 * heat);
+            }
+            for (let z = Math.ceil(zTop / 6) * 6; z > zBot; z -= 6) {
+              if (z < ZC0 + 0.8 && z > ZC0 - CW[3].u1 - 0.8) continue;
+              const [dy, a] = fall(t, tcCopy(z), 0.3);
+              if (a > 0) ring(V(XC, dy + 0.01, z), 0.32, 2, BONE, 0.8 * a, 12);
+            }
+            // on "copy," the clone's one sign of life: a pale packet runs down it
+            const d = t - COPY;
+            if (d >= 0 && d < 0.7) {
+              const z0 = ZC0 + 12 - 260 * K.ease.inOutCubic(Math.min(1, d / 0.7)) * (d / 0.7);
+              const [dy, a] = fall(t, tcCopy(z0), 0.3);
+              if (a > 0) seg(V(XC, dy + 0.02, z0), V(XC, dy + 0.02, z0 - 5 - 18 * d), 5, BONE, (1 - d / 0.7) * 0.7 * a);
+            }
+          }
+          // -- B: the stash: an opening in the floor, the tray under it --
+          if (sec) {
+            const rim = mixc(MUTED, WHITE, K.pulse(t, ENTER, 0.15));
+            const rect = (y, rgb, a, w) => {
+              seg(V(DX0, y, DZ0), V(DX1, y, DZ0), w, rgb, a); seg(V(DX1, y, DZ0), V(DX1, y, DZ1), w, rgb, a);
+              seg(V(DX1, y, DZ1), V(DX0, y, DZ1), w, rgb, a); seg(V(DX0, y, DZ1), V(DX0, y, DZ0), w, rgb, a);
+            };
+            rect(0, rim, 0.9, 2);
+            const y = trayY(t), a = trayA(t), hot = Math.max(K.pulse(t, ENTER, 0.18), 0.8 * K.pulse(t, LIFT, 0.15));
+            if (a > 0.01) {
+              const c = mixc(BONE, WHITE, hot);
+              rect(y, c, 0.6 * a, 1.6); rect(y + 0.45, c, 0.8 * a, 1.8);
+              for (const [x, z] of [[DX0, DZ0], [DX1, DZ0], [DX1, DZ1], [DX0, DZ1]]) seg(V(x, y, z), V(x, y + 0.45, z), 1.6, c, 0.7 * a);
+              // the walls of the shaft it rose up, while it is below the floor
+              if (y < -0.05) for (const [x, z] of [[DX0, DZ0], [DX1, DZ0], [DX1, DZ1], [DX0, DZ1]]) seg(V(x, y + 0.45, z), V(x, 0, z), 1.2, MUTED, 0.45 * a);
+              // on "mine" the row is struck through in fire
+              const w = K.clamp((t - MINE) / 0.18);
+              if (w > 0) seg(V(XD, y + 0.05 + RS * 0.5, zR0 + 0.15), V(XD, y + 0.05 + RS * 0.5, zR0 + 0.15 - (preLen + 0.3) * w), 3.5, FIRE, a);
+            }
+          }
+          lines.draw(renderer, camera, target);
+        }
+
+        // ---- the type layer: the sung words on the clone and on main; the stash row; the flight of `me` ----
+        const project = K.projector(THREE, camera);
+        const heat = (d, to = [232, 93, 38]) => { const k = Math.exp(-Math.max(0, d) / 0.3); return [255, 236, 220].map((w, i) => Math.round(to[i] + (w - to[i]) * k)).join(", "); };
+        const BONE8 = [240, 236, 229];
+        function word(p, t, path, alpha = 1) {
+          if (t < p.t || alpha <= 0.003) return;
+          const g = [...p.w].length, k = p.kind ? 1 + 0.5 * (1 - K.ease.outExpo(K.clamp((t - p.t) / 0.24))) : 1;
+          K.textOnPath(tctx, project, path, p.w, p.size * k, {
+            start: p.u0, font: SLAB, alpha, color: p.kind === 1 ? () => heat(t - p.t) : p.kind === 2 ? () => heat(t - p.t, BONE8) : undefined,
+            lit: (i) => K.clamp((t - p.t - (i / g) * (p.kind ? 0.1 : 0.14)) / 0.05),
+          });
+        }
+        function type(t, sec) {
+          tctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+          tctx.clearRect(0, 0, 1920, 1080);
+          aim(t, sec);
+          if (!sec) {
+            for (const p of CW) { const [dy, a] = wfall(t, tcCopy(ZC0 - mid(p))); word(p, t, (u) => copyAt(u, dy), a); }
+            for (const p of MW) word(p, t, mainA);
+            return;
+          }
+          // the line on main; "mine" is drawn by the flight below
+          word(BW1[0], t, mainB);
+          for (const p of BW2) word(p, t, row2);
+          // the stash row in the tray (03's string exactly); its `me` leaves on the lift
+          const y = trayY(t), a = trayA(t);
+          const rowAt = (u) => ({ x: XD, y: y + 0.05, z: zR0 - u });
+          if (a > 0.01) K.textOnPath(tctx, project, rowAt, t < LIFT ? PRE + "me" : PRE, RS, { font: MONO, fill: "200, 197, 190", alpha: a * (t >= MINE + 0.12 ? 0.55 : 1), hot: (i) => i >= PRE.length });
+          // `me` lifts out on the beat and flies onto the rail, growing to poster scale; on "mine" it splits and "in" slams in
+          if (t >= LIFT) {
+            const p = K.ease.inOutCubic(K.clamp((t - LIFT) / (MINE - 0.04 - LIFT)));
+            const S = V(XD, y + 0.05, zMe0), E = mainB(MI.u0 + inLen / 2);
+            // it jumps out of the row on the beat, then flies
+            const size = RS + (MI.size - RS) * p, arc = Math.sin(Math.PI * p) * 3.2 + 2.2 * K.ease.outExpo(K.clamp((t - LIFT) / 0.12)) * (1 - p);
+            const P = { x: S.x + (E.x - S.x) * p, y: S.y + (E.y - S.y) * p + arc, z: S.z + (E.z - S.z) * p };
+            const sp = K.ease.outCubic(K.clamp((t - (MINE - 0.04)) / 0.14));
+            const col = t >= MINE - 0.04 ? () => heat(t - MINE + 0.04) : undefined;
+            const path = (u) => ({ x: P.x, y: P.y, z: P.z - u });
+            K.textOnPath(tctx, project, path, "m", size, { font: SLAB, start: -(inLen / 2) * sp, hot: () => true, color: col });
+            K.textOnPath(tctx, project, path, "e", size, { font: SLAB, start: advOf(SLAB, "m", size) + (inLen / 2) * sp, hot: () => true, color: col });
+            if (t >= MINE - 0.04) {
+              const q = K.clamp((t - (MINE - 0.04)) / 0.1), dy = 3.5 * (1 - q * q * q);
+              K.textOnPath(tctx, project, (u) => mainB(u, dy), "in", MI.size, { font: SLAB, start: MI.u0 + mLen, color: col });
+            }
+          }
+        }
+
+        // ---- per-frame state: the shot, the type, the tag, the terminal ----
+        const tag = $("f34-tag"), term = $("f34-term");
+        const TGW = tag.offsetWidth, TGH = tag.offsetHeight;
+        const keysT = [[0, ""]], CMD = "git stash pop", TA = CUT + 0.16, TB = ENTER - 0.1;
+        for (let i = 0; i < CMD.length; i++) keysT.push([TA + ((TB - TA) * i) / CMD.length, CMD.slice(0, i + 1)]);
+        const tlines = [...$("f34-lines").children];
+        const LT = [0, ENTER, ENTER, LIFT, LIFT, LIFT, MINE, MINE, MINE, PROMPT]; // when each line prints
+        const NWIN = 4;
+        const cmd = $("f34-cmd"), cur1 = $("f34-cur1"), cur2 = $("f34-cur2");
+        const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+        function render() {
+          const t = tl.time(), sec = t >= CUT ? 1 : 0;
+          renderer.setRenderTarget(null); renderer.clear();
+          const near = (a, w = 0.3) => t > a - 0.05 && t < a + w;
+          const fast = t < 0.16 || near(LOCAL, 0.36) || near(CARE, 0.36) || near(CUT, 0.36) || near(ENTER, 0.2) || (t > LIFT - 0.02 && t < MINE + 0.36) || near(THERE, 0.2);
+          if (fast) shutter((ts, target) => scene(ts, target, sec), t, { samples: SAMPLES, angle: 270 });
+          else scene(t, null, sec);
+          type(t, sec);
+          // A: the tag rides the clone past "copy," and falls with it
+          if (!sec) {
+            const [dy, a] = wfall(t, tcCopy(ZC0 - CW[3].u1));
+            const q = project(V(XC, 0.08 + dy, ZC0 - CW[3].u1 - 0.8));
+            tag.style.opacity = q ? (a * (1 - K.prog(t, CARE, CARE + 0.2))).toFixed(3) : 0;
+            if (q) tag.style.translate = `${Math.min(q.x + 12, 1920 - 106 - TGW).toFixed(1)}px ${Math.max(90, q.y - TGH - 8).toFixed(1)}px`;
+          } else tag.style.opacity = 0;
+          // B: the terminal: `git stash pop` types through the held "origin's"; Enter on the downbeat; output on the beats
+          term.style.opacity = sec ? 1 : 0;
+          let k = keysT[0]; for (const s of keysT) if (s[0] <= t) k = s;
+          cmd.textContent = k[1];
+          cur1.style.opacity = t < ENTER && blink(t, Math.max(k[0], CUT)) ? 1 : 0;
+          cur2.style.opacity = t >= PROMPT && blink(t, PROMPT) ? 1 : 0;
+          let shown = 0; LT.forEach((x, i) => { if (t >= x) shown = i + 1; });
+          tlines.forEach((el, i) => { el.style.display = i < shown && i >= shown - NWIN ? "" : "none"; });
+          WOW.draw(tl, T0);
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines["34-dropmine"] = tl;
       </script>
     </template>
   </body>

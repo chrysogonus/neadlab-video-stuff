@@ -1,7 +1,9 @@
 # House style — the Neadlab look
 
 The look every NEAD video uses. harvest-remix (`projects/harvest-remix/video/`) proved the base, which the user
-approved as the model for future videos. Revision 3 (2026-10-18, harvest-remix V18.md) adds five rules from the
+approved as the model for future videos. Revision 4 (2026-10-26) adds light and depth (item 11): the user approved
+four Force Push scenes rebuilt as lit line drawing in a space against the flat v2. Revision 3 (2026-10-18,
+harvest-remix V18.md) adds five rules from the
 v17 analysis. Revision 2 (2026-10-17) raises it to the level of the two reference
 videos, "LGTM" and "i'm upping my p(doom)": the evidence and the reasons are in
 [REFERENCE-VIDEOS.md](REFERENCE-VIDEOS.md). Read both before planning a new song (music-to-video Step 3) and
@@ -81,16 +83,36 @@ restrained and lit by one accent; 3D only as line drawing.
      type streaks instead of strobing.
 
    Nothing holds dead.
-9. **Light: glow on the accent only.** The accent glows; bone type stays crisp. Film grain, a gentle vignette,
-   low chromatic aberration, and light leaks on the flips to the loud register (the finish layer,
-   `compositions/overlays/finish.html`). The ground stays black.
+9. **Light: glow on the accent only.** The accent emits light; bone type stays crisp. The light pass
+   (`analysis/finish.py`, p(doom)'s post chain, run by `./vid snap`, `proof` and `render`) blooms whatever is drawn in
+   the accent, adds a red-orange halation, low chromatic aberration, a tone shoulder, film grain and a gentle
+   vignette; `STORYBOARD.md`'s frontmatter names the accent (`light: {"accent": "#E85D26"}`), and a frame's
+   `- light: {…}` line changes it for that frame (a drop blooms harder). The finish layer
+   (`compositions/overlays/finish.html`) keeps the light leaks on the flips to the loud register and the drop
+   flashes. **No CSS glow** (`text-shadow`, `drop-shadow`, glow classes, radial-gradient light): the pass does it,
+   and CSS glow on top doubles it. The ground stays black.
 10. **Objects are graphic and tactile; 3D is line drawing.**
     - Cards, forms, seals, drawers, tickets and keys are drawn simply, in the palette, then given detail: paper
       fibre, a rubber-stamp ink speckle, typewriter text. They read as things, not icons.
     - 3D may be used anywhere, drawn as lines: hairline wireframes and engraving-style hatching that follows the
       form, flat matte fills, fog to black. It reads as illustration, never as rendering.
-    - Build it lean for software WebGL: line and instanced geometry, simple materials, no post passes, driven
-      from the timeline.
+    - Build it with the kit's `lines.js` (instanced anti-aliased lines, analytic hatching, the shutter): unlit
+      lines whose accent parts the light pass blooms, fog by distance, driven from the timeline. No lit materials,
+      no shadow maps.
+11. **Light and depth: every scene is a lit set piece in a space** (revision 4; p(doom)'s engine, `git show
+    fa164b7`, is the model).
+    - **One hero set piece per scene,** the line's object built in the song's world as line drawing, at least
+      40 % of the frame: the history as a rail into the dark and a field of lanes, a branch peeling off it, a
+      wall of fire running down it. A headline over a flat ground or a small screen in a void is not one.
+    - **A camera through the space,** keyed to the words and the beats: a dive onto the hero (`outExpo`, about
+      0.35 s, through the shutter), then following the singer along the object, with smooth drift. Depth comes from
+      perspective, parallax and fog to black, not from blur.
+    - **The lyric on the object:** written along the curve, standing on the floor, engraved on the thing
+      (`lines.js` `textOnPath`), sized for the phone (≥ 72 px; a hero ≥ 11cqw on screen). Fixed copy (the strip,
+      a terminal, a label) stays DOM, crisp.
+    - **Light comes from the object:** the accent parts emit; hot moments go white-hot and cool to the accent (a
+      sung hero word, the head of a front, a kick packet). The drop is the hottest stretch of the dark register.
+    - **The quiet scenes keep the space:** one lit thread in deep black, not a black card.
 
 ## What to avoid
 
@@ -105,7 +127,7 @@ restrained and lit by one accent; 3D only as line drawing.
 | A busy, mid-grey ground; texture everywhere | Kills the contrast that makes the type and the accent pop (harvest-remix v12: ground luma 0.078 against 0.047–0.063). |
 | The lyric as a caption beside a prop, one layout template | The lyric must be on or be the object (item 2). |
 | Words that pop in and freeze, static frames, plain hard cuts everywhere | This was v7's "meh". |
-| Full-frame light washes | Leaks are edge-weighted, at most 0.4 opacity. |
+| Full-frame light washes | Leaks are edge-weighted, at most 0.15 opacity: the light pass blooms their accent too (0.4 read as an orange wash under it). |
 | Abstract energy effects on an object: lightning, flat CSS shock rings, colour washes over the frame | harvest-remix v18's cipher-rotor locks read "weird, underwhelming, low quality" to the user. Explosions are mechanical: the object comes apart, its parts and sparks and its own light carry the hit (v19's exploded view). |
 
 ## How to make one

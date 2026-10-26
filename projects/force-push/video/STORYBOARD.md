@@ -8,6 +8,7 @@ style:
   font: "Barlow / IBM Plex Mono / Instrument Serif Italic / Caveat Brush"
   palette: ["#0A0A0A", "#E85D26", "#F0ECE5", "#888880", "#505048", "#1A1A18"]
 assets: false
+light: {"accent": "#E85D26"}
 build_notes: ["SYSTEM.md is the shared contract: read it first", "one paused timeline per frame", "no remote assets", "lyrics.json gives every sung word's track second", "every git string on screen is real git or marked fiction"]
 avoid: ["generic hacker terminal", "Matrix rain", "green-on-black", "logos", "karaoke strip at the bottom", "a second accent colour", "empty dead frames", "red/green diff colours"]
 ---
@@ -744,6 +745,7 @@ Running devices (SYSTEM.md has the exact strings): the counter `COMMITS BY you` 
 - mood: [biggest]
 - feel: drop: key change up, biggest, full harmonies
 - register: dark · layout: full-bleed + graph
+- light: {"bloom": 0.85, "halation": 0.35}
 
 ### Groups
 
@@ -766,6 +768,7 @@ Running devices (SYSTEM.md has the exact strings): the counter `COMMITS BY you` 
 - mood: [biggest, triumphant]
 - feel: drop
 - register: dark · layout: terminal + full-bleed
+- light: {"bloom": 0.85, "halation": 0.35}
 
 ### Groups
 

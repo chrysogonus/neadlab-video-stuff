@@ -68,8 +68,9 @@ The audit reports these. A flag is a question about that moment, not a failure.
 | Ground | 20th-percentile luma, median over the film | Refs | p(doom) 0.047, LGTM 0.063 |
 | True black | mean share of pixels darker than 0.06 | Refs | LGTM 20 %, p(doom) 44 %; the threshold sits just under the ink `#111111`, so it partly counts the ink |
 | Accent area | median share of the frame carrying the accent | Refs | about 3 % in both |
+| Accent light | a scene whose accent, bloom and halo included, lights over ~30 % of the frame, or a hook or drop that lights under 2 % | Audit (2026-10-26) | p(doom) median 8.6 %, p90 32 %; LGTM median 3.3 %, p90 13 % (1 fps) |
 | Cream frames | share of frames in the cream register | Refs | p(doom) 9 %, LGTM 20 % |
-| Repeated layout | neighbouring lines with the lyric in the same position | Audit (V18) | v17: a small lead line top left in five shots in a row |
+| Repeated layout | neighbouring lines with the lyric in the same position; a scene whose edge layout matches the one before it over 0.8 (the audit's *layout vs previous*) | Audit (V18; measured 2026-10-26) | v17: a small lead line top left in five shots in a row; the references: 2–5 % of neighbouring 3 s blocks over 0.8 |
 | Few framings | a scene over 4 s without tight, mid and wide framings | Audit (V19, V20) | one sustained typographic transformation can be the better choice |
 | Flat depth | no parallax between two stills 0.5 s apart | Audit (V20) | |
 | No transformation | a scene whose last frame differs from its first only in position; under a third of scene switches as object match cuts | Audit (V20); the idea is *Refs* | p(doom)'s best quality is transformation; LGTM cuts ~8 times a minute and moves the camera or morphs instead |

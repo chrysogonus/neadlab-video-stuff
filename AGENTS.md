@@ -38,7 +38,9 @@ the song?
    `STORYBOARD.md` and the video's `SYSTEM.md` (how this video uses `frame.md`: its idea, tokens, lyric rule,
    motion, code conventions). Post the plan summary and keep going.
 3. **Look.** Build 3–4 representative scenes as stills (the opening, a verse, the first chorus and a contrasting
-   section) and show them with `./vid snap <id> <frame_id> --at …`. **Stop for the user's verdict on the look.**
+   section) and show them with `./vid snap <id> <frame_id> --at …`. Each one has its hero set piece: the scene's
+   object as lit line drawing in a space, the lyric on it (docs/HOUSE-STYLE.md, "Light and depth"); the stills come
+   out of the light pass, so they show the final glow. **Stop for the user's verdict on the look.**
    Then make a rough still for every scene (composition, type, the lyric on its object; not finished detail) and
    check the contact sheet against the four questions and for repeated layouts. Stills judge the look, not the
    motion.
@@ -52,11 +54,13 @@ the song?
      when a script throws; in the film that would only be a dead scene.
    - `./vid proof <id> --from <s> --to <s>` shows the scene moving, and `./vid audit` on that proof measures it.
 
-   The kit and the traps that cost earlier rounds are in `assets/kit/README.md`. Review the signals in
+   The kit and the traps that cost earlier rounds are in `assets/kit/README.md`; set pieces are built with its
+   `lines.js` (lines, shutter, type on a path; `projects/force-push/video/compositions/frames/05-branch.html` is the
+   worked example). Review the signals in
    [docs/visual-guidelines.md](docs/visual-guidelines.md); never game them.
 6. **Review: measure, critique, refine.** `./vid assemble <id>`, then `npx hyperframes check --no-browser-gpu` (a
    broken rule is a defect and gets fixed), then render a draft of the whole film to `renders/video.mp4` and run the
-   three steps below on it until they pass or two rounds are done. The loop answers the skill's render question.
+   three steps below on it until they pass or two rounds are done (`./vid render <id>` renders the draft). The loop answers the skill's render question.
    - **A. Measure.** `./vid audit <id> --name draft-<n>` measures the draft against LGTM and p(doom) (motion, big
      moves, composition change, cuts, black area, mid-tones, detail, accent colour) and per scene, and writes
      `audit/draft-<n>/report.md` with the weakest scenes against their music, still runs and unseen hits, plus
@@ -69,7 +73,8 @@ the song?
      film-level fixes and one fix per scene), dispatch workers three at a time as in stage 5, then re-render and run A
      and B again. Done when no scene scores below 3 in the review and every film metric on the "below/above" side
      has a written reason, or after two rounds; report what is left.
-7. **Deliver.** `./vid master <id>` writes `out/<id>.mp4`, the render with the master's audio (AAC 320k): the file
+7. **Deliver.** `./vid render <id> --4k` renders the film through the GPU and the light pass to `renders/video.mp4`;
+   `./vid master <id>` writes `out/<id>.mp4`, the render with the master's audio (AAC 320k): the file
    to upload; keep an earlier master under another name rather than overwrite it. With it come:
    - subtitles (`.srt`) built from `lyrics.json`;
    - a technical check with ffprobe: duration equals the master's, constant fps, audio present;
@@ -106,9 +111,14 @@ the frame playing there: to see a handoff, pick a time inside the previous frame
   on its own word time, and the line text is the sung text exactly.
 - **One film, many workers.** The skill's Step 4 waits for stage 4's verdict. Workers then run three at a time
   with both reference frames (stage 5). `projects/harvest-remix/video/` is the worked example.
-- **Software WebGL.** Headless Chrome gets no GPU context under WSL: pass `--no-browser-gpu` to every
-  `hyperframes check`, `snapshot` and `render` (`./vid snap` does). Keep three.js frames lean (instancing,
-  simple materials, no post passes) and drive them from the timeline (`tl.eventCallback("onUpdate", …)`).
+- **GPU renders, the light pass, software checks.** `./vid proof` and `./vid render` capture through
+  `tools/chrome-gpu` (the full Chrome, windowed on WSLg, reaches the GPU; HyperFrames' headless Chrome cannot under
+  WSL) and then run the light pass (`analysis/finish.py`: accent bloom, halation, grain, vignette) on the CUDA GPU.
+  `./vid snap` and every `hyperframes check` stay software (SwiftShader) with the display variables unset. If WSLg
+  hangs (`xdpyinfo` does not answer; a GPU render times out waiting for Chrome), add `--no-browser-gpu` to proofs
+  and renders until WSL is restarted (`wsl --shutdown` from Windows, the user's call). The HyperFrames CLI has no
+  whole-frame motion blur: WebGL set pieces use `lines.js`'s shutter, DOM elements the motion-blur component. Drive
+  three.js from the timeline (`tl.eventCallback("onUpdate", …)`).
 - **Decorative layers carry `data-layout-ignore`** (ghost ciphertext walls, drawer grids, texture piles):
   `hyperframes check` otherwise reports every lyric over them as a text overlap. Deliberate layering of
   real text gets `data-layout-allow-overlap` on that element. Anything else `check` flags is a defect.
@@ -126,8 +136,8 @@ the frame playing there: to see a handoff, pick a time inside the previous frame
 Every video uses the **house style**, [docs/HOUSE-STYLE.md](docs/HOUSE-STYLE.md). Read it before planning a
 song. In short: a world built from the song's subject, told in kinetic type (poster-scale lyrics on or as that
 world's objects, one literal pun per line, a deadpan small-text layer, counters and plants that pay off); black
-and restrained (one small accent, a cream-paper register); motion from the shared kit and finish layer; 3D only
-as line drawing. **Complex or realistic 3D is out**: it cost the most and still read as a generic CG demo
+and restrained (one small accent, a cream-paper register); every scene a lit set piece in a space, the accent
+emitting light through the light pass; motion from the shared kit; 3D only as line drawing. **Complex or realistic 3D is out**: it cost the most and still read as a generic CG demo
 (harvest-remix v1–v6). `projects/harvest-remix/video/` is the approved model; the reference videos and why they
 work are in [docs/REFERENCE-VIDEOS.md](docs/REFERENCE-VIDEOS.md).
 

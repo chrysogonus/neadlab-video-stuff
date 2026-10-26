@@ -35,6 +35,27 @@ its time?). The user watches the delivery with sound; say which moments they sho
 | **colour & light** | Is the accent there as a pointer? Is there depth and light (a highlight, a lit object, a glow), or text on a black void? |
 | **craft** | Does it look expensive: motion blur on fast moves, physical hits, detail on objects, clean type? |
 | **variety** | Does it look different from its neighbours (layout family, lyric position, register)? |
+| **spectacle** | Would it hold its own beside the reference still of the same role (below)? Is there one hero set piece in a space (depth, a moving camera, light coming from the object), or type laid over a flat ground? |
+
+## The pairwise reference test
+
+Scores drift when a scene is judged alone; judged beside a reference they do not (a pairwise judge agrees with
+people better than a pointwise one: GenArena, arXiv 2602.06013). For every scene that scores 3 or less on
+**spectacle**, and for the hook and every drop, set one frame of the scene beside the reference still of its role,
+left/right by a seeded coin flip (so the review can be redone), and answer: which is more striking at
+phone size, and what one change would close the gap? Pull the reference stills from the videos in
+`successful-videos-reference/` with `ffmpeg -ss <s> -i <video> -frames:v 1 -vf scale=960:540 <png>`:
+
+| role | reference | seconds |
+|---|---|---|
+| hook / chorus | p(doom), the lyric riding the oscilloscope trace | 41.2 |
+| drop / biggest | p(doom), the black hole with "SINGULARITY'S" on its ring | 43.5 |
+| verse (a world object) | LGTM, the org chart being "right-sized" | 52.5 |
+| verse (a document) | LGTM, the status page saying everything's fine | 211.5 |
+| quiet line | p(doom), "Gato, please" typed at the prompt | 91.5 |
+
+Write the verdicts in the review's scene table (a column *vs ref*: ours / ref / even) and put every "ref" scene in
+the ranked list.
 
 ## Film checks
 

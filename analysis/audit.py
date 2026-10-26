@@ -123,6 +123,28 @@ def every(rate):
     return f"fps=60,select='not(mod(n,{60 // rate}))'"
 
 
+def accent_light(rgb, hue=15.0, tol=30.0):
+    """Share of the frames' pixels the accent lights, its halo included: hue within tol degrees of the accent's, some
+    saturation, not dark (uint8 RGB frames, any shape ending in 3)."""
+    f = rgb.astype(np.float32) / 255
+    mx, mn = f.max(-1), f.min(-1)
+    s = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-6), 0)
+    h = np.degrees(np.arctan2(np.sqrt(3) * (f[..., 1] - f[..., 2]), 2 * f[..., 0] - f[..., 1] - f[..., 2])) % 360
+    return float(((np.abs((h - hue + 180) % 360 - 180) < tol) & (s > 0.3) & (mx > 0.12)).mean())
+
+
+def layout_map(frames):
+    """A scene's layout: where its edges sit, averaged over its frames, on an 18×32 grid, as a unit vector."""
+    g = frames.astype(np.float32)
+    g = g.mean(-1) if g.ndim == 4 else g
+    gy, gx = np.gradient(g, axis=(1, 2))
+    e = np.hypot(gx, gy).mean(0)
+    h, w = e.shape[0] // 18, e.shape[1] // 32
+    v = e[:h * 18, :w * 32].reshape(18, h, 32, w).mean(axis=(1, 3)).ravel()
+    v = v - v.mean()
+    return v / (np.linalg.norm(v) + 1e-9)
+
+
 def weakest(scenes, n=10):
     """Scenes ranked by big motion against their music: p90 motion / (0.3 + median drums), lowest first."""
     return sorted(scenes, key=lambda s: s["motion_p90"] / (0.3 + s["drums"]))[:n]
@@ -236,9 +258,15 @@ def main():
     audio = json.load(open(ROOT / "projects" / o.project / "data" / "audio.json"))
     drums, afps = np.array(audio["drums"]), audio["fps"]
     acc = accent_frames(rgb)
+    sb = (vdir / "STORYBOARD.md").read_text()
+    m = re.search(r'^light:.*"accent":\s*"#([0-9a-fA-F]{6})"', sb, re.M)
+    rgb_acc = [int(m.group(1)[i:i + 2], 16) / 255 for i in (0, 2, 4)] if m else [232 / 255, 93 / 255, 38 / 255]
+    accent_hue = float(np.degrees(np.arctan2(np.sqrt(3) * (rgb_acc[1] - rgb_acc[2]), 2 * rgb_acc[0] - rgb_acc[1] - rgb_acc[2])) % 360)
+    small = decode(o.video, every(4), 320, 180, 3)
     lum = (rgb.astype(np.float32) @ np.array([0.2126, 0.7152, 0.0722], np.float32)) / 255
     scenes = []
-    for sid, A, B in scene_spans((vdir / "STORYBOARD.md").read_text()):
+    prev_map = None
+    for sid, A, B in scene_spans(sb):
         span = clip_span(A, B, o.offset, o.offset + duration)
         if not span or span[1] - span[0] < 0.25:
             continue
@@ -253,6 +281,11 @@ def main():
                            highlight=float(np.median(yhigh[h0:h1])) if h1 > h0 else 0.0,
                            black=float((lum[i0:i1] < 0.06).mean()), colour=float(acc[i0:i1].mean()),
                            drums=float(np.median(drums[int(a * afps):int(b * afps)]))))
+        s0, s1 = samples(a - o.offset, b - o.offset, 4, len(small))
+        fr = small[s0:s1] if s1 > s0 else small[max(0, s0 - 1):s0 + 1]
+        lmap = layout_map(fr)
+        scenes[-1].update(light=accent_light(fr, accent_hue), layout_prev=float(lmap @ prev_map) if prev_map is not None else None)
+        prev_map = lmap
 
     # still runs (guideline definition) and unseen hits (strong onsets and downbeats that change nothing visible)
     runs = [(a + o.offset, b + o.offset) for a, b in still_runs(gmo, 10)]
@@ -262,7 +295,6 @@ def main():
     # strips for the reviewer, one image per scene, six across: row 1 is the cut-in (the first 0.2 s at 30 fps), the
     # rest the scene at 4 fps
     from PIL import Image
-    small = decode(o.video, every(4), 320, 180, 3)
     for s in scenes:
         a, b = s["span"]
         fr = small[slice(*samples(a - o.offset, b - o.offset, 4, len(small)))]
@@ -293,10 +325,14 @@ def main():
            "motion is visual-guidelines' measure (10 fps, 320×180 gray), the one its thresholds and still runs use. Highlight is "
            "its YHIGH (90th-percentile Y, 0–255; flagged under 80). A scene marked (part) is only partly in this video; its "
            "figures and drums cover that part.", "",
-           "| scene | frame diff p50 / p90 | guideline motion p50 | luma | highlight | black | colour | drums |",
-           "|---|---|---|---|---|---|---|---|"]
+           "| scene | frame diff p50 / p90 | guideline motion p50 | luma | highlight | black | colour | accent light | layout vs previous | drums |",
+           "|---|---|---|---|---|---|---|---|---|---|"]
+    lay = lambda v: "" if v is None else f"**{v:.2f}**" if v > 0.8 else f"{v:.2f}"  # noqa: E731
     md += [f"| {s['id']}{' (part)' if s['part'] else ''} | {s['motion_p50']:.2f} / {s['motion_p90']:.2f} | {s['guide_p50']:.2f} | {s['luma']:.2f} | {s['highlight']:.0f} | "
-           f"{s['black'] * 100:.0f} % | {s['colour'] * 100:.0f} % | {s['drums']:.2f} |" for s in scenes]
+           f"{s['black'] * 100:.0f} % | {s['colour'] * 100:.0f} % | {s['light'] * 100:.1f} % | {lay(s['layout_prev'])} | {s['drums']:.2f} |"
+           for s in scenes]
+    md += ["", "Accent light: the share of the frame the accent lights, its halo included. Layout vs previous: "
+           "how alike the scene's edge layout is to the scene before it (1 = the same; over 0.8 in bold, a repeated layout)."]
     md += ["", "## Weakest scenes (big motion against their music)", "",
            ", ".join(f"{s['id']} ({s['motion_p90']:.2f} @ drums {s['drums']:.2f})" for s in weak), "",
            "## Still runs (guideline motion < 1.5 for more than 2 s)", "",

@@ -2,19 +2,19 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 24 — rewrote2 (chorus 2, L38, 117.160–121.534). Refinement round 1. Forks 11-rewrote (its set, camera
-         wrapper, wave and counter), with the world moved on and everything a size up: the drums are louder.
-         The cut is a whipR out of 23 (0.06 s on this side: "I" starts 0.06 s in). The log opens as 23 left it, at its
-         scale: the revert PR's commit and the three cherry-picked days struck with 23's glowing bar, dimmed. `git rebase
-         -i --root --force-rebase` rewrites it oldest first, one SHA per kick from "rewrote" (117.28): the front (a fire
-         glow, a scan line, the cursor) climbs the column, each new hash scrambles in fire, a struck day is re-made clean
-         under a new hash, `Rebasing (n/6)` counts; the camera tilts up with the wave (a ~230 px truck plus a push).
-         On "no" (119.848) the camera snaps back and the row the rebase skips, `2b7d4e8 Revert "force push"`, is pulled
-         out of the log and thrown down to the bottom of the frame at 1.95× (display size, ~75 % of the width,
-         motion-blurred), leaving a gap. On "you" (120.04) a thick fire strike slams across it with a flash, a
-         shockwave, a 1.1 camera punch and a shake; on the 120.279 downbeat it falls off the frame (motion-blurred)
-         while the rows close the gap and the top row becomes 61e0a7f. `Successfully rebased…` lands on the 120.736
-         kick and the panel's edge lights. The out is a 0.25 s whipL into 25. -->
+    <!-- Frame 24 — rewrote2 (chorus 2, L38, 117.160–121.534). Light-and-depth rebuild, one design with 11-rewrote: the
+         same set and camera grammar (main as a rail across the floor, the commits' labels in front of it, the sung line
+         standing behind it, the camera down the rail from the root, then following the singer), with the world moved
+         on. The rail is 23's history: the three cherry-picked days and the revert PR still carry 23's strikes, the floor
+         holds more dashed ghosts (the past rewritten twice), and chorus 1's dropped commit lies in the dark beside main,
+         `unreachable commit 3f2a1c9` (plant 5, paid off in 36). This time the rebase also takes the authorship:
+         `git rebase -i --root --exec 'git commit --amend --reset-author --no-edit'` re-strikes one commit per kick from
+         "rewrote" (117.28), each struck day's strike burns off and its author flips `you` → `me`. On "no" (119.848)
+         the front reaches `2b7d4e8 Revert "force push"` and stops; on "you" (120.04) it is struck hot; on the 120.279
+         downbeat its piece of rail falls through the floor and main closes the gap; on the 120.736 kick the tip is
+         re-struck as 61e0a7f, `Successfully rebased…`, and the light sweeps the rail. Louder than 11 (bigger heroes,
+         sparks and front). In: 23's whipR (0.11 s from -0.05); out: a 0.25 s whipL into 25.
+         Layers: WebGL lines (assets/kit/lines.js), a Canvas2D layer for the type in the space, then the DOM. -->
   </head>
   <body>
     <template>
@@ -30,284 +30,368 @@
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
-        #f24-cam { position: absolute; inset: 0; transform-origin: 42% 88%; } /* punches centre on the thrown row */
+        #f24-cam { position: absolute; inset: 0; }
+        #f24-gl, #f24-type, #f24-shade { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #f24-shade { background: linear-gradient(180deg, rgba(10, 10, 10, 0.8) 0%, rgba(10, 10, 10, 0.25) 15%, rgba(10, 10, 10, 0) 26%, rgba(10, 10, 10, 0) 78%, rgba(10, 10, 10, 0.6) 100%); }
         #f24-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
-          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); background: var(--ink); }
         #f24-strip b { color: var(--fire); font-weight: 600; }
-        /* the log, as 23 left it: a lit terminal panel, hashes at 3 cqw, messages at 23's size */
-        #f24-log { position: absolute; left: 3.4cqw; top: 6.8cqw; width: 42cqw; box-sizing: border-box; padding: 1.3cqw 1.6cqw;
-          background: #161614; border: 1px solid var(--border); border-top-color: #3E3E3A; }
-        #f24-edge { position: absolute; left: -1px; top: -1px; bottom: -1px; width: 0.32cqw; background: var(--fire); }
-        #f24-cmd { font: 500 1.15cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
-        #f24-cmd b { color: var(--cream); font-weight: 500; }
-        #f24-head { margin-top: 1cqw; font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase;
-          color: #9A9A92; padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
-        #f24-head b { color: var(--cream); font-weight: 600; }
-        #f24-rows { position: relative; margin-top: 0.6cqw; height: 28cqw; }
-        /* the wave's light: a fire glow and a scan line at the row being rewritten (placed in render()) */
-        #f24-glow { position: absolute; left: 9cqw; top: 0; width: 70cqw; height: 34cqw; margin: -17cqw 0 0 -28cqw; pointer-events: none;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.19) 0%, rgba(232, 93, 38, 0.11) 38%, rgba(232, 93, 38, 0.05) 70%, rgba(232, 93, 38, 0) 100%); }
-        #f24-scan { position: absolute; left: -1.6cqw; right: -1.6cqw; top: 0; height: 2px; background: var(--fire); }
-        .f24-row { position: relative; height: 4cqw; padding-left: 2.2cqw; white-space: nowrap; color: #A4A49C; transform-origin: 0% 50%; }
-        .f24-txt { position: relative; display: inline-block; line-height: 4cqw; }
-        .f24-h { font: 500 2.8cqw/4cqw "IBM Plex Mono", monospace; letter-spacing: 0; color: var(--cream-muted); }
-        .f24-m { font: 500 2cqw/4cqw "IBM Plex Mono", monospace; margin-left: 1.2cqw; }
-        .f24-row.f24-new .f24-h { color: var(--cream); font-weight: 600; }
-        .f24-row.f24-new .f24-m { color: var(--cream); }
-        .f24-row .f24-h.f24-hot { color: var(--fire); font-weight: 600; }
-        /* 23's strike: a thick glowing bar; a re-made day loses it (it shrinks to the right) */
-        .f24-x { position: absolute; left: -0.5cqw; right: -0.5cqw; top: 1.86cqw; height: 0.34cqw; background: var(--fire); transform-origin: 100% 50%;
-          box-shadow: 0 0 0.9cqw rgba(232, 93, 38, 0.6); }
-        #f24-cur { position: absolute; left: 0.4cqw; top: 0.95cqw; width: 1cqw; height: 2.1cqw; background: var(--fire); }
-        #f24-status { margin-top: 0.8cqw; font: 400 1.3cqw/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; height: 2cqw; }
-        #f24-status.f24-done { color: var(--cream); }
-        /* the dropped commit, pulled out to the bottom of the frame at 1.95x: fixed-content copies of the row
-           (motion blur clones its target once) — the lifted one (lit) and the falling one (struck) */
-        .f24-big { position: absolute; left: 0; top: 4cqw; height: 4cqw; padding-left: 2.2cqw; white-space: nowrap; transform-origin: 0% 50%; opacity: 0; }
-        .f24-big .f24-h { color: var(--fire); font-weight: 600; }
-        .f24-big .f24-m { color: var(--cream); font-weight: 600; }
-        .f24-big .f24-bfl { position: absolute; left: -0.8cqw; right: -0.6cqw; top: 0.35cqw; bottom: 0.35cqw; background: var(--fire); opacity: 0; }
-        .f24-big .f24-bx { position: absolute; left: -0.6cqw; right: -0.6cqw; top: 2.08cqw; height: 0.5cqw; background: var(--fire); transform-origin: 0% 50%;
-          box-shadow: 0 0 1.1cqw rgba(232, 93, 38, 0.7); transform: scaleX(0); }
-        #f24-fall .f24-m { color: #A4A49C; }
-        #f24-fall .f24-bx { transform: none; }
-        #f24-inner { position: relative; display: inline-block; }
-        #f24-bglow { position: absolute; left: 0; top: 0; width: 96cqw; height: 34cqw; margin: -17cqw 0 0 -48cqw; pointer-events: none; opacity: 0;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.2) 0%, rgba(232, 93, 38, 0.11) 40%, rgba(232, 93, 38, 0.045) 72%, rgba(232, 93, 38, 0) 100%); }
-        #f24-fx { position: absolute; left: 0; top: 0; width: 0; height: 0; }
-        /* the line: right-aligned, poster scale, a glow behind the word being sung */
-        #f24-hglow { position: absolute; left: 0; top: 0; width: 78cqw; height: 48cqw; margin: -24cqw 0 0 -39cqw; pointer-events: none;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.085) 40%, rgba(232, 93, 38, 0.035) 72%, rgba(232, 93, 38, 0) 100%); }
-        .f24-lyric { position: absolute; right: 5.5cqw; text-align: right; color: var(--cream); white-space: nowrap; }
-        .f24-lyric > div { white-space: nowrap; }
-        #f24-past { top: 8.4cqw; font: 900 11cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.045em; transform-origin: 100% 0%; }
-        #f24-now { top: 31.6cqw; font: 900 10.2cqw/0.92 "Barlow", sans-serif; letter-spacing: -0.045em; }
-        #f24-now .f24-small { font-weight: 800; font-size: 0.64em; letter-spacing: -0.035em; line-height: 1.12; }
-        .f24-hero { color: var(--fire); }
+        /* the singer's terminal, top right: the deadpan layer */
+        #f24-term { position: absolute; right: 5.5cqw; top: 6.4cqw; padding: 14px 24px; background: rgba(26, 26, 24, 0.92); border: 1px solid var(--border);
+          font: 400 22px/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f24-term b { color: var(--cream); font-weight: 500; }
+        #f24-stat.f24-done { color: var(--cream); }
       </style>
       <div id="root" data-composition-id="24-rewrote2" data-width="1920" data-height="1080" data-duration="4.374">
         <div id="f24-cam">
-          <div class="hr-layer" data-depth="0.15">
-            <div id="f24-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
-          </div>
-
-          <div class="hr-layer" data-depth="0.5">
-            <div id="f24-log">
-              <i id="f24-edge" data-layout-ignore></i>
-              <div id="f24-cmd">~/us (main) $ <b>git rebase -i --root --force-rebase</b></div>
-              <div id="f24-head"><span>git log --oneline</span><b>main</b></div>
-              <div id="f24-rows">
-                <i id="f24-glow" data-layout-ignore></i>
-                <i id="f24-scan" data-layout-ignore></i>
-                <div class="f24-row"><span class="f24-txt"><span class="f24-h">9c0ffee</span><span class="f24-m">ready.</span></span></div>
-                <div class="f24-row" id="f24-drop"><span class="f24-txt"><span class="f24-h" data-layout-allow-occlusion>2b7d4e8</span><span class="f24-m" data-layout-allow-occlusion>Revert "force push"</span><i class="f24-x"></i></span></div>
-                <div class="f24-row"><span class="f24-txt"><span class="f24-h" data-layout-allow-occlusion>0e96d4a</span><span class="f24-m" data-layout-allow-occlusion>that sunday</span><i class="f24-x"></i></span></div>
-                <div class="f24-row"><span class="f24-txt"><span class="f24-h" data-layout-allow-occlusion>c7f2b18</span><span class="f24-m" data-layout-allow-occlusion>the beach</span><i class="f24-x"></i></span></div>
-                <div class="f24-row"><span class="f24-txt"><span class="f24-h" data-layout-allow-occlusion>51d0a3e</span><span class="f24-m" data-layout-allow-occlusion>first date</span><i class="f24-x"></i></span></div>
-                <div class="f24-row"><span class="f24-txt"><span class="f24-h">8f4c61b</span><span class="f24-m">moved in</span></span></div>
-                <div class="f24-row"><span class="f24-txt"><span class="f24-h">b05d2f8</span><span class="f24-m">initial commit</span></span></div>
-                <i id="f24-bglow" data-layout-ignore></i>
-                <div class="f24-big" id="f24-lift" data-layout-ignore data-hf-motion-blur='{"fps": 60}'><span id="f24-inner" class="f24-txt"><b class="f24-bfl"></b><span class="f24-h">2b7d4e8</span><span class="f24-m">Revert "force push"</span><i class="f24-bx"></i></span></div>
-                <div class="f24-big" id="f24-fall" data-layout-ignore data-hf-motion-blur='{"fps": 60}'><span class="f24-txt"><span class="f24-h">2b7d4e8</span><span class="f24-m">Revert "force push"</span><i class="f24-bx"></i></span></div>
-                <div id="f24-fx" data-layout-ignore></div>
-                <div id="f24-cur"></div>
-              </div>
-              <div id="f24-status"></div>
-            </div>
-          </div>
-
-          <div class="hr-layer" data-depth="0.9">
-            <i id="f24-hglow" data-layout-ignore></i>
-            <div class="f24-lyric" id="f24-past">
-              <div><span class="f24-w">i</span> <span class="f24-w f24-hero hr-glowbox" id="f24-rewrote">rewrote</span></div>
-              <div><span class="f24-w">the</span> <span class="f24-w f24-hero hr-glowbox" id="f24-pastw">past,</span></div>
-            </div>
-            <div class="f24-lyric" id="f24-now">
-              <div class="f24-small"><span class="f24-w">there's</span> <span class="f24-w">no</span></div>
-              <div><span class="f24-w f24-hero hr-glowbox" id="f24-you">you</span> <span class="f24-w">and</span> <span class="f24-w">me</span></div>
-            </div>
-          </div>
+          <canvas id="f24-gl" width="1920" height="1080" data-layout-ignore></canvas>
+          <div id="f24-shade" data-layout-ignore></div>
+          <canvas id="f24-type" width="1920" height="1080" data-layout-ignore></canvas>
+          <div id="f24-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+          <div id="f24-term"><span>~/us (main) $ </span><b>git rebase -i --root --exec 'git commit --amend --reset-author --no-edit'</b>
+<span id="f24-stat">&nbsp;</span></div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
       <script src="assets/kit/wow-kit.js"></script>
-      <script src="assets/kit/motion-blur.js"></script>
-      <script>
-        (() => {
-          const DUR = 4.374, T0 = 117.16;
-          const root = document.querySelector('[data-composition-id="24-rewrote2"]');
-          const $ = (id) => root.querySelector("#" + id);
-          const PX = (root.clientWidth || 1920) / 100; // 1cqw
-          // chorus 2 is louder: this span's mean drum envelope over 11's (0.492, measured 56.291–60.780), plus a notch
-          let sum = 0, n = 0;
-          for (let T = T0; T < T0 + DUR; T += 0.02) { sum += HR.band("drums", T); n++; }
-          const K = Math.max(1, Math.min(1.25, sum / n / 0.492)) * 1.12;
-          const stage = HR.stage(root, { seed: 24, pulse: K });
-          const tl = gsap.timeline({ paused: true });
-          const at = (T) => T - T0;
-          const cam = $("f24-cam");
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+        import * as K from "./assets/kit/lines.js";
 
-          // ---- the cuts: whipR in from 23 (0.11 s from -0.05, so it lands as "I" starts 0.06 s in and opens on the log), whipL out into 25 (from 121.284, 0.34 s
-          //      after "me" starts) ----
-          WOW.transition(tl, cam, { in: "whipR", dur: 0.11, start: -0.05 });
-          WOW.transition(tl, cam, { out: "whipL", dur: 0.25, total: DUR });
+        const ID = "24-rewrote2", DUR = 4.374, T0 = 117.16;
+        const root = document.querySelector('[data-composition-id="24-rewrote2"]');
+        const $ = (id) => root.querySelector("#f24-" + id);
+        const at = (T) => T - T0;
+        // ---- the song: lyrics.json L38, every word on its start; the kicks (HR_ENV) drive the rebase ----
+        const SPEC = [ // [text, start, size (world), hero, anchor x ("c": centred on the dropped commit; "b": ends before "you")]
+          ["i", 117.22, 1.15, false, -1.4], ["rewrote", 117.28, 2.25, true, null], ["the", 118.5, 1.15, false, 21],
+          ["past,", 119.1, 2.25, true, null], ["there's", 119.56, 1.15, false, "b"], ["no", 119.848, 1.15, false, null],
+          ["you", 120.04, 2.45, true, "c"], ["and", 120.66, 1.15, false, null], ["me", 120.94, 1.15, false, null],
+        ];
+        const REWROTE = at(117.28), THE = at(118.5), PAST = at(119.1), THERES = at(119.56), NO = at(119.848), YOU = at(120.04);
+        const AND = at(120.66), ME = at(120.94);
+        const DROP = at(120.279), SUCCESS = at(120.736), OUT = 0.25;
+        // main, root first: [old, new (null: dropped), author, message, x on the rail, re-struck at(, author after)]
+        const SP = 10, XD = 5; // commit spacing; the dropped one is commit 5
+        const COMMITS = [
+          ["b05d2f8", "2fa61c4", "me", "initial commit", 0, REWROTE],
+          ["8f4c61b", "7c0e5b9", "me", "moved in", SP, at(117.525)],
+          ["51d0a3e", "e3b8d07", "you", "first date", 2 * SP, at(117.996), "me"],
+          ["c7f2b18", "4a1f96e", "you", "the beach", 3 * SP, at(118.437), "me"],
+          ["0e96d4a", "b8d2c53", "you", "that sunday", 4 * SP, at(118.916), "me"],
+          ["2b7d4e8", null, "you", 'Revert "force push"', 5 * SP, null],
+          ["9c0ffee", "61e0a7f", "me", "ready.", 6 * SP, SUCCESS],
+        ];
+        const TIP = 6 * SP + 4, PIECE = [4.5 * SP, 5.5 * SP], STAT = (k) => `Rebasing (${2 * k}/12)`, DONE = "Successfully rebased and updated refs/heads/main.";
+        const LOUD = 1.2; // chorus 2 is louder
+        const STRUCK = [2, 3, 4, 5], UNREACH = { x: 5 * SP - 1.5, y: -2.4, z: 0.8, text: "unreachable commit 3f2a1c9" }, GSTEP = 2.0, DIP = 1.9;
+        // (the rows 23 struck, chorus 1's dropped commit lying under the floor where it fell, a denser floor; DIP: how far the camera looks down after the fall)
+        await document.fonts.load('900 100px "Barlow"');
+        await document.fonts.load('800 100px "Barlow"');
+        await document.fonts.load('600 100px "IBM Plex Mono"');
+        await document.fonts.load('400 100px "IBM Plex Mono"');
+        const tl = gsap.timeline({ paused: true });
 
-          // ---- the sung line (lyrics.json L38) ----
-          const w = root.querySelectorAll(".f24-w");
-          const REWROTE = at(117.28), PAST = at(119.1), NO = at(119.848), YOU = at(120.04);
-          HR.lead(tl, w[0], at(117.22));
-          HR.hero(tl, w[1], REWROTE, { spread: 30 * K, over: 1 + 0.2 * K, pre: 0.1, sharp: true });
-          HR.lead(tl, w[2], at(118.5));
-          HR.hero(tl, w[3], PAST, { spread: 30 * K, over: 1 + 0.2 * K, pre: 0.12, sharp: true });
-          HR.lead(tl, w[4], at(119.56));
-          HR.lead(tl, w[5], NO);
-          HR.hero(tl, w[6], YOU, { spread: 26 * K, over: 1 + 0.22 * K, pre: 0.1, sharp: true });
-          HR.lead(tl, w[7], at(120.66)); HR.lead(tl, w[8], at(120.94));
-          // the accent points at what is being sung: each hero cools to cream when the next one lands
-          const rewrote = $("f24-rewrote"), pastw = $("f24-pastw"), you = $("f24-you");
-          tl.fromTo(rewrote, { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.3, immediateRender: false }, PAST);
-          tl.fromTo(pastw, { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.3, immediateRender: false }, YOU);
-          // on "no" the past steps back (still phone-legible at 0.52) and "there's no / you and me" rises to take the frame
-          tl.fromTo($("f24-past"), { scale: 1, y: 0 }, { scale: 0.52, y: -0.4 * PX, duration: 0.3, ease: "power3.inOut", immediateRender: false }, NO - 0.08);
-          tl.fromTo($("f24-now"), { y: 0 }, { y: -10.6 * PX, duration: 0.3, ease: "power3.inOut", immediateRender: false }, NO - 0.08);
+        // ---- the cuts: 23's whipR lands (0.11 s, from -0.05: "I" starts 0.06 s in); a whipL into 25 over the last 0.25 s ----
+        const cam = $("cam");
+        WOW.transition(tl, cam, { in: "whipR", dur: 0.11, start: -0.05 });
+        WOW.transition(tl, cam, { out: "whipL", dur: OUT, total: DUR });
+        WOW.shake(tl, cam, DROP + 0.01, { amp: 7 * LOUD, dur: 0.32, rot: 0.2, seed: 24 });
+        tl.set({}, {}, DUR);
 
-          // ---- the rebase: new commits are made oldest first, so the wave climbs; one SHA per kick ----
-          const rows = Array.from(root.querySelectorAll(".f24-row"));
-          const NEW = ["61e0a7f", null, "b8d2c53", "4a1f96e", "e3b8d07", "7c0e5b9", "2fa61c4"];
-          const DROP = at(120.279), SUCCESS = at(120.736), RH = 4 * PX;
-          // [row, time] in rebase order (bottom row first); row 1 is the dropped commit
-          const steps = [[6, REWROTE], [5, at(117.525)], [4, at(117.996)], [3, at(118.437)], [2, at(118.916)], [1, YOU], [0, DROP]];
-          const SCR = 0.2; // a SHA scrambles for 0.2 s and resolves left to right
-          rows.forEach((r) => { const h = r.querySelector(".f24-h"); h.dataset.old = h.textContent; });
-          // a struck day (23's verdict) is re-made under a new hash: its strike shrinks away as the SHA resolves
-          steps.forEach(([ri, ts]) => {
-            if (ri < 2 || ri > 4) return;
-            tl.fromTo(rows[ri].querySelector(".f24-x"), { scaleX: 1 }, { scaleX: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, ts + 0.04);
-          });
-          // the front of the wave (in rows): it starts on the oldest commit and climbs a row per kick; it reaches
-          // the revert on "no"
-          const FR = { y: 6 };
-          [[5, at(117.525)], [4, at(117.996)], [3, at(118.437)], [2, at(118.916)], [1, NO]].forEach(([ri, ts]) => {
-            tl.fromTo(FR, { y: ri + 1 }, { y: ri, duration: 0.2, ease: "power3.out", immediateRender: false }, ts - 0.03);
-          });
-          tl.fromTo(FR, { y: 1 }, { y: 0, duration: 0.2, ease: "power3.out", immediateRender: false }, DROP - 0.03);
+        // ---- the line: standing on the floor behind the rail (z = WZ), placed along it where the camera meets it ----
+        const tctx = $("type").getContext("2d");
+        const DPR = window.devicePixelRatio || 1;
+        $("type").width = 1920 * DPR; $("type").height = 1080 * DPR;
+        const LEAD = '800 100px "Barlow"', HERO = '900 100px "Barlow"', MONO6 = '600 100px "IBM Plex Mono"', MONO4 = '400 100px "IBM Plex Mono"';
+        const adv = (w, size, font) => { tctx.font = font; return [...w].reduce((s, ch) => s + (tctx.measureText(ch).width / 100) * size * 1.4, 0); };
+        const WZ = -3.2;
+        let end = -Infinity;
+        const gapOf = (a, b) => 0.32 * Math.max(a, b, 1.4);
+        const lens = SPEC.map(([w, , size, hero]) => adv(w, size, hero ? HERO : LEAD));
+        const iy = SPEC.findIndex((s) => s[4] === "c"), yu0 = XD * SP - lens[iy] / 2 - 0.4;
+        const words = SPEC.map(([w, T, size, hero, anc], i) => {
+          const font = hero ? HERO : LEAD, len = lens[i], gap = gapOf(size, i ? SPEC[i - 1][2] : 0);
+          let u0 = end + gap;
+          if (typeof anc === "number") u0 = Math.max(u0, anc);
+          if (anc === "c") u0 = Math.max(u0, yu0);
+          if (anc === "b") { let back = yu0; for (let j = iy - 1; j >= i; j--) back -= lens[j] + gapOf(SPEC[j][2], SPEC[j + 1][2]); u0 = Math.max(u0, back); }
+          end = u0 + len;
+          return { w, t: at(T), size, hero, font, u0, len, mid: u0 + len / 2 };
+        });
+        const heroes = words.filter((p) => p.hero);
 
-          // ---- the drop, the scene's big moment: on "no" the revert row is pulled out of the log and thrown to the
-          //      bottom of the frame at 1.95x; struck on "you"; it falls off the frame on the downbeat ----
-          const drop = $("f24-drop"), lift = $("f24-lift"), fall = $("f24-fall"), inner = $("f24-inner");
-          const BIG = 1.95, ROWS_TOP = 13.1, DY = (50 - (ROWS_TOP + 1.5 * 4)) * PX, DX = -0.6 * PX;
-          tl.set(drop, { opacity: 1 }, 0).set(drop, { opacity: 0 }, NO - 0.02);
-          tl.set(lift, { opacity: 0 }, 0).set(lift, { opacity: 1 }, NO - 0.02).set(lift, { opacity: 0 }, DROP);
-          tl.fromTo(lift, { x: 0, y: 0, scale: 1, rotation: 0 }, { x: DX, y: DY, scale: BIG, rotation: -1.2, duration: 0.2, ease: "power3.out", immediateRender: false }, NO - 0.02);
-          // "you": the strike slams across, the row flashes and jolts (on an inner wrapper: the lifted row itself holds still)
-          tl.fromTo(inner.querySelector(".f24-bx"), { scaleX: 0 }, { scaleX: 1, duration: 0.09, ease: "power2.out", immediateRender: false }, YOU);
-          const bfl = inner.querySelector(".f24-bfl");
-          tl.set(bfl, { opacity: 0 }, 0);
-          tl.fromTo(bfl, { opacity: 0.42 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, YOU);
-          tl.fromTo(inner.querySelector(".f24-m"), { color: "#F0ECE5" }, { color: "#A4A49C", duration: 0.12, immediateRender: false }, YOU + 0.06);
-          tl.fromTo(inner, { x: 0, y: 0 }, { x: 0.5 * PX, y: 0.25 * PX, duration: 0.05, ease: "power2.out", immediateRender: false }, YOU);
-          tl.fromTo(inner, { x: 0.5 * PX, y: 0.25 * PX }, { x: 0, y: 0, duration: 0.3, ease: "elastic.out(1, 0.5)", immediateRender: false }, YOU + 0.05);
-          // the downbeat: it falls off the frame, tipping, motion-blurred
-          tl.set(fall, { opacity: 0 }, 0).set(fall, { opacity: 1 }, DROP).set(fall, { opacity: 0 }, DROP + 0.42);
-          tl.fromTo(fall, { x: DX, y: DY, scale: BIG, rotation: -1.2 }, { x: DX + 5 * PX, y: DY + 24 * PX, scale: BIG, rotation: 9, duration: 0.42, ease: "power2.in", immediateRender: false }, DROP);
-          // the list closes the gap: the rows under it move up a slot
-          tl.fromTo(rows.slice(2), { y: 0 }, { y: -RH, duration: 0.3, ease: "power3.inOut", immediateRender: false }, DROP + 0.08);
-          // the hit's light and debris, at the lifted row's centre (in #f24-rows' coordinates)
-          const BX = (DX + 0.5 * BIG * (2.2 + 35.8) * PX), BY = 1.5 * RH + DY;
-          const fx = $("f24-fx");
-          WOW.shock(tl, fx, { x: BX, y: BY, t: YOU, r: 760 * K, n: 2, w: 5, dur: 0.6, color: "fire" });
-          WOW.rays(tl, fx, { x: BX, y: BY, t: YOU, n: 14, r0: 220, r1: 900, w: 3, dur: 0.32, seed: 24 });
-          WOW.burst(tl, fx, { x: BX, y: BY + 2 * PX, t: DROP, n: 26, speed: 1100, gravity: 2600, spread: 150, aim: 90, size: [6, 16], dur: 0.7, seed: 24 });
-          const bglow = $("f24-bglow");
-          bglow.style.left = BX.toFixed(1) + "px"; bglow.style.top = BY.toFixed(1) + "px";
-
-          // ---- the camera: the frame tilts up and pushes with the wave (a ~230 px truck), snaps back on "no" as the
-          //      row is thrown down, punches 1.1 on "you", then drifts left toward the whip; kick punches are sized
-          //      by the measured drums ----
-          const c = stage.cam;
-          tl.fromTo(c, { z: 1.0, x: 0, y: 0 }, { z: 1.07, x: 40, y: -230, duration: NO - 0.08, ease: "sine.inOut" }, 0);
-          tl.fromTo(c, { z: 1.07, x: 40, y: -230 }, { z: 1.0, x: 0, y: 0, duration: 0.3, ease: "power3.inOut", immediateRender: false }, NO - 0.08);
-          tl.fromTo(c, { z: 1.0, x: 0, y: 0 }, { z: 1.06, x: 70, y: -24, duration: DUR - (YOU + 0.3), ease: "sine.in", immediateRender: false }, YOU + 0.3);
-          const kp = (s, base) => 1 + base * K * (0.6 + 0.6 * HR.band("drums", s));
-          [[117.28, 0.035], [117.525, 0.014], [117.996, 0.014], [118.437, 0.022], [118.916, 0.014], [119.1, 0.035], [119.361, 0.012],
-           [120.279, 0.03], [120.736, 0.022], [121.197, 0.016]]
-            .forEach(([s, b]) => WOW.punch(tl, cam, at(s), { s: kp(s, b), dur: 0.4 }));
-          WOW.punch(tl, cam, YOU, { s: 1.1, dur: 0.5 });
-          WOW.shake(tl, cam, YOU + 0.01, { amp: 14 * K, dur: 0.4, rot: 0.35, seed: 24 });
-          WOW.shake(tl, cam, DROP + 0.01, { amp: 8 * K, dur: 0.3, rot: 0.2, seed: 25 });
-          tl.set({}, {}, DUR);
-
-          // ---- per-frame state: SHAs, the wave's front, cursor, status, light, camera ----
-          const cur = $("f24-cur"), status = $("f24-status"), glow = $("f24-glow"), scan = $("f24-scan"), edge = $("f24-edge");
-          const hglow = $("f24-hglow");
-          const HEXL = "0123456789abcdef";
-          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
-          const popE = (d) => (d < 0 || d > 0.45 ? 0 : Math.pow(1 - d / 0.45, 3));
-          function render() {
-            const t = tl.time(), T = T0 + t;
-            let step = -1;
-            steps.forEach(([ri, ts], n) => {
-              if (t >= ts) step = n;
-              if (ri === 1) return; // dropped: never rewritten
-              const row = rows[ri], h = row.querySelector(".f24-h"), nw = NEW[ri];
-              const pop = 1 + 0.12 * popE(t - ts);
-              row.style.scale = pop !== 1 ? pop.toFixed(4) : "";
-              if (t < ts) { h.textContent = h.dataset.old; h.classList.remove("f24-hot"); row.classList.remove("f24-new"); return; }
-              const p = (t - ts) / SCR, tick = Math.floor(t * 30);
-              let s = "";
-              for (let i = 0; i < 7; i++) s += p >= (i + 1) / 8 ? nw[i] : HEXL[(ri * 7 + tick * 5 + i * 3) % 16];
-              h.textContent = s;
-              h.classList.toggle("f24-hot", p < 1.6);
-              row.classList.add("f24-new");
-            });
-            // the front: the glow and the scan line ride it; the cursor rides it while the rebase runs, then blinks on HEAD
-            const fy = FR.y * RH;
-            glow.style.top = (fy + RH / 2).toFixed(1) + "px";
-            scan.style.transform = `translateY(${(fy + RH - 2).toFixed(1)}px)`;
-            const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.22);
-            const swell = t >= SUCCESS ? 0.45 * Math.exp(-(t - SUCCESS) / 0.5) : 0;
-            glow.style.opacity = Math.min(1, 0.66 + 0.3 * bass + 0.3 * kick + swell).toFixed(3);
-            scan.style.opacity = (step < 0 ? 0.35 : t >= SUCCESS ? 0.5 : 0.9).toFixed(2);
-            if (step < 0) { cur.style.opacity = 0; }
-            else {
-              cur.style.transform = `translateY(${fy.toFixed(2)}px)`;
-              cur.style.opacity = blink(t, steps[step][1]) ? 1 : 0;
-            }
-            status.textContent = t >= SUCCESS ? "Successfully rebased and updated refs/heads/main." : step >= 0 ? `Rebasing (${Math.min(step + 1, 6)}/6)` : "";
-            status.classList.toggle("f24-done", t >= SUCCESS);
-            // the panel's fire edge lights when the rebase succeeds
-            edge.style.boxShadow = t >= SUCCESS ? `0 0 ${(18 + 26 * swell + 10 * bass).toFixed(1)}px rgba(232, 93, 38, 0.55)` : "";
-            // the light under the thrown row: up on "no", a flare on "you", gone after it falls
-            let bg = 0;
-            if (t >= NO - 0.02 && t < DROP + 0.5) {
-              const up = Math.min(1, (t - (NO - 0.02)) / 0.2), flare = t >= YOU ? 0.5 * Math.exp(-(t - YOU) / 0.35) : 0;
-              const out = t > DROP ? Math.max(0, 1 - (t - DROP) / 0.5) : 1;
-              bg = Math.min(1, (0.6 + 0.3 * bass + flare) * up * out);
-            }
-            bglow.style.opacity = bg.toFixed(3);
-            // a plain blur by speed on the thrown row (the proof showed it crossing the log sharp): the lift is a
-            // power3.out over 0.2 s, the fall a power2.in over 0.42 s; speed in px per 1/60 s
-            const ul = (t - (NO - 0.02)) / 0.2, uf = (t - DROP) / 0.42;
-            const vl = ul >= 0 && ul < 1 ? (3 * (1 - ul) * (1 - ul) * Math.hypot(DY, 0.95 * BX) / 0.2) / 60 : 0;
-            const vf = uf >= 0 && uf < 1 ? (2 * uf * 24 * PX / 0.42) / 60 : 0;
-            lift.style.filter = vl > 4 ? `blur(${Math.min(14, vl * 0.12).toFixed(1)}px)` : "";
-            fall.style.filter = vf > 4 ? `blur(${Math.min(10, vf * 0.2).toFixed(1)}px)` : "";
-            // the light behind the line: on "rewrote / past," then on "you and me", following the reflow
-            const k = Math.max(0, Math.min(1, (t - (NO - 0.08)) / 0.3)), ke = k * k * (3 - 2 * k);
-            hglow.style.transform = `translate(${((72 + (66 - 72) * ke) * PX).toFixed(1)}px, ${((18 + (32 - 18) * ke) * PX).toFixed(1)}px)`;
-            hglow.style.opacity = (t < REWROTE - 0.1 ? 0.35 : Math.min(1, 0.62 + 0.35 * bass + 0.3 * kick)).toFixed(3);
-            HR.glow(rewrote, T, 0.3, 0.45); HR.glow(pastw, T, 0.3, 0.45); HR.glow(you, T, 0.35, 0.5);
-            if (t >= PAST) rewrote.style.setProperty("--hr-glow", "0"); // cooled: no glow once the accent has moved on
-            if (t >= YOU) pastw.style.setProperty("--hr-glow", "0");
-            stage.apply(T);
-            WOW.draw(tl, T0);
+        // ---- the rebase in time: the front, the slide that closes the gap ----
+        const SHIFT = (t) => SP * K.prog(t, DROP + 0.06, DROP + 0.38, K.ease.inOutCubic); // commit 6 and the tip slide back
+        const xOf = (k, t) => COMMITS[k][4] - (k > XD ? SHIFT(t) : 0);
+        // the front's stops: [time, x(t)] — a step per kick, it waits on the dropped commit from "no", then runs to the tip
+        const STOPS = [[REWROTE, () => 0], ...COMMITS.slice(1, XD).map((c) => [c[5], () => c[4]]), [NO, () => XD * SP],
+          [SUCCESS, (t) => xOf(6, t)], [SUCCESS + 0.2, (t) => TIP - SHIFT(t)]];
+        function frontX(t) {
+          if (t < REWROTE - 0.03) return -1.2;
+          let x = -1.2;
+          for (const [ts, f] of STOPS) {
+            const s = ts - 0.03; if (t < s) break;
+            x = x + (f(t) - x) * K.ease.outExpo(K.clamp((t - s) / 0.22));
           }
-          tl.eventCallback("onUpdate", render);
-          render();
-          window.__timelines["24-rewrote2"] = tl;
-        })();
+          return x;
+        }
+
+        // ---- the camera: wide over the root, a dive on "rewrote", then following the singer along the line; a punch
+        //      on "past,", a dive onto the dropped commit on "no", a dip after it as it falls, easing out over "me" ----
+        const W = Object.fromEntries(words.map((p) => [p.w, p]));
+        const LX = [[0, 2.2], [REWROTE - 0.01, 2.4], [REWROTE, W.rewrote.mid - 1.2], [COMMITS[2][5], W.rewrote.mid + 5.5], [THE + 0.3, W.the.mid + 3.2],
+          [PAST, W["past,"].mid], [THERES, W["there's"].mid + 1.2], [NO, (W.no.u0 + XD * SP) / 2 - 0.6], [YOU, XD * SP - 1.0], [DROP + 0.3, XD * SP + 0.6],
+          [AND, W.and.mid - 1.0], [ME, W.me.mid - 1.4], [DUR, W.me.mid - 3.2]];
+        const OFF = [
+          [0, [-10.2, 3.6, 8.0], K.ease.linear],
+          [REWROTE - 0.01, [-9.8, 3.5, 7.8], K.ease.linear],
+          [REWROTE + 0.36, [-3.7, 2.9, 12.2], K.ease.outExpo],
+          [PAST - 0.01, [-3.9, 3.1, 12.8], K.ease.inOutCubic],
+          [PAST + 0.3, [-3.3, 2.7, 11.2], K.ease.outExpo],
+          [NO - 0.01, [-3.5, 2.9, 11.8], K.ease.inOutCubic],
+          [NO + 0.36, [-3.0, 2.6, 10.9], K.ease.outExpo],
+          [DROP, [-3.0, 2.7, 11.1], K.ease.linear],
+          [DROP + 0.45, [-3.1, 3.4, 11.2], K.ease.outCubic],
+          [ME + 0.08, [-3.3, 3.5, 11.8], K.ease.inOutCubic],
+          [DUR, [-5.4, 5.0, 17.0], K.ease.inOutCubic],
+        ].map(([t, v, e]) => [t, v.map((x, i) => (i === 2 ? x : x * (1 + 0.04 * (LOUD - 1))) ), e]);
+        const camAt = (t) => {
+          let i = 1; while (i < OFF.length - 1 && OFF[i][0] <= t) i++;
+          const a = OFF[i - 1], b = OFF[i], f = b[2](K.clamp((t - a[0]) / (b[0] - a[0])));
+          return [0, 1, 2].map((j) => a[1][j] + (b[1][j] - a[1][j]) * f);
+        };
+        const camera = new THREE.PerspectiveCamera(40, 16 / 9, 0.1, 800);
+        function aim(t) {
+          const T = T0 + t, lx = K.keys(t, LX);
+          const ly = 1.3 - DIP * Math.sin(Math.PI * K.prog(t, DROP, DROP + 0.7)) * (t > DROP ? 1 : 0);
+          const o = camAt(t);
+          camera.position.set(lx + o[0] + K.noise1(T * 0.7, 1) * 0.16, ly + o[1] + K.noise1(T * 0.6, 2) * 0.1 + 0.07 * LOUD * HR.hit("kick", T, 0.12), -1.2 + o[2]);
+          camera.lookAt(lx, ly, -1.2);
+          camera.rotateZ(K.noise1(T * 0.4, 3) * 0.01 + 0.03 * K.pulse(t, DROP, 0.3) - 0.02 * K.prog(t, ME, DUR, K.ease.inOutCubic));
+          const kick = HR.hit("kick", T, 0.1) * (0.6 + 0.6 * HR.band("drums", T));
+          const strike = COMMITS.reduce((m, c) => (c[5] == null ? m : Math.max(m, K.pulse(t, c[5], 0.08))), 0); // each re-strike lands
+          camera.fov = 40 / (1 + 0.035 * LOUD * kick + 0.06 * LOUD * strike + LOUD * (0.07 * K.pulse(t, REWROTE, 0.18) + 0.06 * K.pulse(t, PAST, 0.18) + 0.08 * K.pulse(t, YOU, 0.2) + 0.04 * K.pulse(t, DROP, 0.2) + 0.04 * K.pulse(t, SUCCESS, 0.2)));
+          camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+        }
+
+        // ---- the world (pure functions of t) ----
+        const renderer = K.renderer(THREE, $("gl"));
+        const lines = K.createLines(THREE, 60000);
+        const shutter = K.createShutter(THREE, renderer);
+        const BONE = K.BONE, FIRE = K.ACCENT, HOT = [1, 0.86, 0.72], MUTED = [0x88 / 255, 0x88 / 255, 0x80 / 255];
+        const V = (x, y, z) => new THREE.Vector3(x, y, z);
+        const rnd = HR.rng(2424);
+        // 10's torn lanes: dashed ghosts on the floor, running with main
+        const ghosts = [];
+        for (let z = -34; z <= 16; z += GSTEP) {
+          if (Math.abs(z + 1) < 4.5) continue; // keep the rail's own strip clear
+          let x = -30 + rnd() * 10;
+          while (x < 120) { const len = 6 + rnd() * 26; ghosts.push([z + (rnd() - 0.5) * 0.6, x, x + len]); x += len + 3 + rnd() * 12; }
+        }
+        const fogged = (p, near = 10, k = 0.012) => Math.exp(-Math.max(0, camera.position.distanceTo(p) - near) * k);
+        const mid = new THREE.Vector3();
+        function seg(a, b, w, rgb, alpha) {
+          mid.addVectors(a, b).multiplyScalar(0.5);
+          const f = fogged(mid);
+          if (f * alpha > 0.01) lines.seg(a, b, w, rgb, alpha * f);
+        }
+        const mix3 = (a, b, f) => [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
+        const cool = (age) => (age < 0.06 ? HOT : mix3(HOT, FIRE, K.clamp((age - 0.06) / 0.3))); // white-hot cooling to fire
+        const ringPts = (c, r, n = 16) => { const p = []; for (let i = 0; i <= n; i++) { const a = (i / n) * Math.PI * 2; p.push(V(c.x + Math.cos(a) * r, c.y + Math.sin(a) * r, c.z)); } return p; };
+        // the falling piece: about its centre, tipping and dropping through the floor
+        const q = new THREE.Quaternion(), axis = new THREE.Vector3(0.35, 0.2, 1).normalize(), PC = V(XD * SP, 0, 0);
+        const fallXf = (t) => {
+          const a = Math.max(0, t - DROP);
+          q.setFromAxisAngle(axis, -(1.6 * a + 3 * a * a));
+          const off = V(0.8 * a, -2.6 * a - 14 * a * a, 1.2 * a);
+          return (p) => p.clone().sub(PC).applyQuaternion(q).add(PC).add(off);
+        };
+        const RING = 0.44;
+        function scene(t, target) {
+          aim(t);
+          const T = T0 + t, bass = HR.band("bass", T), F = frontX(t), sh = SHIFT(t), fall = t >= DROP;
+          lines.clear();
+          const flash = 0.9 * COMMITS.reduce((m, c) => (c[5] == null ? m : Math.max(m, K.pulse(t, c[5], 0.07))), 0); // the rewritten rail flashes on each re-strike
+          // the floor: a faint grid, the ghost lanes
+          for (let z = -40; z <= 20; z += 5) for (let x = -36; x < 110; x += 6) seg(V(x, -0.02, z), V(x + 6, -0.02, z), 1.1, MUTED, 0.25);
+          for (let x = -36; x <= 110; x += 6) for (let z = -40; z < 20; z += 5) seg(V(x, -0.02, z), V(x, -0.02, z + 5), 1.1, MUTED, 0.25);
+          for (const [z, x0, x1] of ghosts) {
+            for (let x = x0; x < x1; x += 1.6) seg(V(x, 0, z), V(Math.min(x1, x + 0.8), 0, z), 1.4, MUTED, 0.62);
+            for (const x of [x0, x1]) { const r = ringPts(V(x, 0, z), 0.16, 8); for (let i = 1; i < r.length; i++) seg(r[i - 1], r[i], 1.3, MUTED, 0.55); }
+          }
+          // main: fire behind the front (rewritten), bone ahead (the old history); a white-hot head on the front
+          const railSeg = (x0, x1, xf) => {
+            for (let x = x0; x < x1 - 1e-6; x += 1) {
+              const xa = x, xb = Math.min(x1, x + 1), ma = xf ? xf(V(xa, 0, 0)) : V(xa - (xa > PIECE[1] - 1e-6 ? sh : 0), 0, 0), mb = xf ? xf(V(xb, 0, 0)) : V(xb - (xa > PIECE[1] - 1e-6 ? sh : 0), 0, 0);
+              if (xf) { const age = t - DROP, f = K.smoothstep(0.25, 0.9, age); seg(ma, mb, 4.2 - 2 * f, mix3(FIRE, MUTED, f), 1 - 0.75 * f); continue; }
+              if (ma.x + 0.5 < F) {
+                seg(ma, mb, 4.2, FIRE, 1);
+                if (flash > 0.05) seg(ma, mb, 2.4, HOT, flash);
+                const heat = Math.exp(-(F - mb.x) / (5 * LOUD));
+                if (heat > 0.05) seg(ma, mb, 1.8, HOT, 0.8 * heat);
+              } else seg(ma, mb, 2.6, BONE, 0.62);
+            }
+          };
+          if (!fall) railSeg(0, TIP);
+          else { railSeg(0, PIECE[0]); railSeg(PIECE[1], TIP); if (t - DROP < 1.2) railSeg(PIECE[0], PIECE[1], fallXf(t)); }
+          if (t >= REWROTE && t < SUCCESS + 0.45) {
+            const p = V(F, 0, 0);
+            seg(V(F - 3, 0, 0), p, 12 * LOUD, FIRE, 1);
+            seg(V(F - 2.2, 0, 0), p, 5, HOT, 1);
+            seg(p, V(F, 2.6, 0), 4.5, FIRE, 1);
+            seg(p, V(F, 1.8, 0), 1.8, HOT, 1);
+          }
+          // the sweep on success: light runs the whole rewritten rail
+          if (t >= SUCCESS) {
+            const xs = (TIP - sh + 6) * K.ease.outCubic(K.clamp((t - SUCCESS - 0.05) / 0.45)), fade = 1 - K.prog(t, SUCCESS + 0.4, SUCCESS + 0.8);
+            for (let x = Math.max(0, xs - 8); x < Math.min(TIP - sh, xs); x += 1) seg(V(x, 0, 0), V(x + 1, 0, 0), 2.4, HOT, fade * Math.exp(-(xs - x - 1) / 3));
+          }
+          // the commits
+          COMMITS.forEach(([, nw, , , , tk], k) => {
+            const x = xOf(k, t), c = V(x, 0, 0);
+            if (k === XD) { // the dropped one: marked on "no", struck on "you", falls on the downbeat
+              const mark = t >= NO, col = t >= YOU && t < YOU + 0.08 ? HOT : mark ? FIRE : BONE;
+              const r = RING * (1 + 0.35 * K.prog(t, NO - 0.04, NO + 0.18, K.ease.outBack));
+              let pts = ringPts(c, r);
+              if (fall) {
+                const age = t - DROP; if (age > 1.2) return;
+                const xf = fallXf(t), f = K.smoothstep(0.25, 0.9, age);
+                pts = pts.map(xf);
+                for (let i = 1; i < pts.length; i++) seg(pts[i - 1], pts[i], 2.8, mix3(FIRE, MUTED, f), 1 - 0.7 * f);
+              } else for (let i = 1; i < pts.length; i++) seg(pts[i - 1], pts[i], mark ? 3 : 2.2, col, 0.95);
+              return;
+            }
+            const age = t - tk;
+            if (age < 0) { const pts = ringPts(c, RING); for (let i = 1; i < pts.length; i++) seg(pts[i - 1], pts[i], 2.2, BONE, 0.9); return; }
+            // the new commit: stamped white-hot, cooling to fire, a punch on the kicks
+            const r = RING * (1 + 0.9 * K.pulse(t, tk, 0.1) + 0.12 * HR.hit("kick", T, 0.14));
+            const pts = ringPts(c, r);
+            for (let i = 1; i < pts.length; i++) seg(pts[i - 1], pts[i], 2.8, cool(age), 1);
+            // the old one: knocked up off the rail, a dashed grey ghost (unreachable), fading
+            if (age < 1.6) {
+              const lift = 2.6 * K.ease.outCubic(K.clamp(age / 0.7)) + 0.4 * age, gp = ringPts(V(c.x - 0.3 * age, lift, -0.6 * age), RING, 20);
+              const al = 0.85 * (1 - K.smoothstep(0.5, 1.6, age));
+              for (let i = 1; i < gp.length; i += 2) seg(gp[i - 1], gp[i], 1.6, MUTED, al);
+              seg(V(c.x, RING, 0), V(c.x - 0.3 * age, lift - RING, -0.6 * age), 1.1, MUTED, 0.5 * al);
+            }
+            // sparks: short streaks thrown up off the re-strike, falling
+            for (let i = 0; i < 18 * LOUD; i++) {
+              const a = age - 0.012 * (i % 3); if (a < 0 || a > 0.5) continue;
+              const h1 = K.hash(k, i, 1), h2 = K.hash(k, i, 2), h3 = K.hash(k, i, 3);
+              const v = V((h1 - 0.5) * 8, 3 + 6 * h2, (h3 - 0.5) * 6), p0 = V(x, 0.2, 0);
+              const p = p0.clone().addScaledVector(v, a).add(V(0, -6 * a * a, 0));
+              if (p.y < 0) continue;
+              seg(p, p.clone().addScaledVector(v, -0.04), 2, a < 0.1 ? HOT : FIRE, (1 - a / 0.5) ** 2);
+            }
+          });
+          // the break: sparks at both ends of the gap
+          if (fall && t - DROP < 0.6) for (let i = 0; i < 30 * LOUD; i++) {
+            const a = t - DROP; const h1 = K.hash(55, i, 1), h2 = K.hash(55, i, 2), h3 = K.hash(55, i, 3), xe = i % 2 ? PIECE[0] : PIECE[1] - SHIFT(DROP);
+            const v = V((h1 - 0.5) * 9, 2 + 5 * h2, (h3 - 0.5) * 7), p = V(xe, 0.1, 0).addScaledVector(v, a).add(V(0, -7 * a * a, 0));
+            if (p.y < -2) continue;
+            seg(p, p.clone().addScaledVector(v, -0.04), 2, a < 0.1 ? HOT : FIRE, (1 - a / 0.6) ** 2);
+          }
+          // the strike through the dropped commit's label, on "you"
+          if (t >= YOU && (!fall || t - DROP < 1.2)) {
+            const xf = fall ? fallXf(t) : (p) => p, x0 = XD * SP - 0.5, L = LBL[XD].len * K.ease.outCubic(K.clamp((t - YOU) / 0.12));
+            const sa = fall ? 1 - K.smoothstep(0.3, 1.0, t - DROP) : 1, L2 = LBL[XD].mlen * K.ease.outCubic(K.clamp((t - YOU - 0.04) / 0.12));
+            seg(xf(V(x0 - 0.2, 0.24, LZ)), xf(V(x0 + L, 0.24, LZ)), 4, FIRE, sa);
+            if (L2 > 0) seg(xf(V(x0 - 0.2, 0.18, LZ2)), xf(V(x0 + L2 + 0.1, 0.18, LZ2)), 3.4, FIRE, sa);
+          }
+          // the rows 23 struck: their strike burns off as the rebase re-makes them (the dropped one keeps it and falls)
+          for (const k of STRUCK) {
+            const tk = COMMITS[k][5], burn = tk == null ? 0 : K.prog(t, tk + 0.04, tk + 0.24, K.ease.inOutCubic);
+            if (burn >= 1 || (k === XD && fall && t - DROP > 1.2)) continue;
+            const xf = k === XD && fall ? fallXf(t) : (p) => p, x0 = xOf(k, t) - 0.5, sa = k === XD && fall ? 1 - K.smoothstep(0.3, 1.0, t - DROP) : 0.8;
+            const L1 = LBL[k].len + 0.35 + LBL[k].alen + 0.2, L2 = LBL[k].mlen + 0.3;
+            seg(xf(V(x0 - 0.2 + L1 * burn, 0.24, LZ)), xf(V(x0 - 0.2 + L1, 0.24, LZ)), 2.6, FIRE, sa);
+            seg(xf(V(x0 - 0.2 + L2 * burn, 0.18, LZ2)), xf(V(x0 - 0.2 + L2, 0.18, LZ2)), 2.2, FIRE, sa);
+          }
+          // chorus 1's dropped commit, lying in the dark under main: unreachable, not yet collected
+          if (UNREACH) {
+            const n = 24;
+            for (let i = 0; i < n; i += 2) {
+              const a0 = (i / n) * Math.PI * 2, a1 = ((i + 1) / n) * Math.PI * 2;
+              seg(V(UNREACH.x + Math.cos(a0) * 0.6, UNREACH.y, UNREACH.z + Math.sin(a0) * 0.6), V(UNREACH.x + Math.cos(a1) * 0.6, UNREACH.y, UNREACH.z + Math.sin(a1) * 0.6), 1.8, MUTED, 0.8);
+            }
+          }
+          lines.draw(renderer, camera, target);
+        }
+
+        // ---- the type in the space (Canvas2D): the commits' labels standing in front of the rail, the line behind it ----
+        const LZ = 1.3, LZ2 = 2.5, HS = 0.5, MS = 0.4; // hash row and message row
+        const LBL = COMMITS.map(([old, , au, msg]) => ({ len: adv(old, HS, MONO6), alen: adv(au, HS * 0.8, MONO6), mlen: adv(msg, MS, MONO4) }));
+        const project = K.projector(THREE, camera);
+        const HEX = "0123456789abcdef";
+        const HOTS = "255, 236, 220", FIRES = "232, 93, 38", BONES = "240, 236, 229", DIMS = "136, 136, 128";
+        const mixS = (a, b, f) => { const A = a.split(",").map(Number), B = b.split(",").map(Number); return A.map((x, i) => Math.round(x + (B[i] - x) * f)).join(", "); };
+        function type(t) {
+          tctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+          tctx.clearRect(0, 0, 1920, 1080);
+          aim(t);
+          const fall = t >= DROP;
+          COMMITS.forEach(([old, nw, au0, msg, , tk, au1], k) => {
+            const x = xOf(k, t) - 0.5, au = au1 && tk != null && t >= tk + 0.2 ? au1 : au0;
+            let xf = (p) => p, al = 1;
+            if (k === XD && fall) { if (t - DROP > 1.2) return; xf = fallXf(t); al = 1 - K.smoothstep(0.3, 1.1, t - DROP); }
+            const on = (y, z) => (s) => xf(V(x + s, y, z));
+            const age = tk == null ? -1 : t - tk;
+            // the hash: old and dim; scrambling to the new SHA in white-hot, cooling to fire, then bone
+            let hash = old, col = () => (k === XD && t >= NO ? FIRES : DIMS);
+            if (age >= 0) {
+              hash = [...nw].map((ch, i) => (age >= (0.2 * (i + 1)) / 8 ? ch : HEX[Math.floor(K.hash(k, Math.floor(t * 30), i) * 16)])).join("");
+              const c = age < 0.22 ? HOTS : age < 0.6 ? mixS(HOTS, FIRES, (age - 0.22) / 0.2 > 1 ? 1 : (age - 0.22) / 0.2) : mixS(FIRES, BONES, K.clamp((age - 0.6) / 0.6));
+              col = () => c;
+            }
+            K.textOnPath(tctx, project, on(0.02, LZ), hash, HS, { font: MONO6, color: col, alpha: al });
+            // the author beside the hash; the message, a row nearer
+            K.textOnPath(tctx, project, on(0.02, LZ), au, HS * 0.8, { start: LBL[k].len + 0.35, font: MONO6, color: () => (au === "you" ? FIRES : BONES), alpha: al * 0.95 });
+            K.textOnPath(tctx, project, on(0.02, LZ2), msg, MS, { font: MONO4, color: () => (k === XD && t >= NO ? FIRES : BONES), alpha: al * (k === XD && t >= NO ? 1 : 0.85) });
+            // the old hash rides up with its ghost, fading
+            if (age >= 0 && age < 1.4) {
+              const lift = 2.6 * K.ease.outCubic(K.clamp(age / 0.7)) + 0.4 * age;
+              K.textOnPath(tctx, project, (s) => V(x + 0.9 - 0.3 * age + s, lift + 0.7, -0.6 * age), old, 0.34, { font: MONO6, color: () => DIMS, alpha: 0.9 * (1 - K.smoothstep(0.4, 1.4, age)) });
+            }
+          });
+          if (UNREACH) K.textOnPath(tctx, project, (s) => V(UNREACH.x + 0.9 + s, UNREACH.y, UNREACH.z), UNREACH.text, 0.34, { font: MONO4, color: () => DIMS, alpha: 0.9 });
+          // the tip: main
+          K.textOnPath(tctx, project, (s) => V(TIP - SHIFT(t) + 0.6 + s, 0.02, 0), "main", 0.5, { font: MONO6, color: () => (t >= SUCCESS ? FIRES : BONES) });
+          // the sung line: every word on its start; heroes land white-hot, cool to fire, then to bone when the next hero lands
+          for (const p of words) {
+            if (t < p.t - 0.04) continue;
+            const g = [...p.w].length, nx = heroes[heroes.indexOf(p) + 1];
+            K.textOnPath(tctx, project, (s) => V(s, 0, WZ), p.w, p.size, {
+              start: p.u0, font: p.font,
+              lit: (i) => K.clamp((t - (p.t - 0.04) - (i / g) * (p.hero ? 0.12 : 0.06)) / 0.05),
+              color: () => {
+                if (!p.hero) return BONES;
+                const dt = t - p.t, c = mixS(HOTS, FIRES, 1 - Math.exp(-Math.max(0, dt) / 0.3));
+                return nx ? mixS(c, BONES, K.prog(t, nx.t, nx.t + 0.3)) : c;
+              },
+            });
+          }
+        }
+
+        // ---- per-frame state ----
+        const stat = $("stat");
+        function render() {
+          const t = tl.time();
+          renderer.setRenderTarget(null); renderer.clear();
+          const fast = [REWROTE, PAST, NO, DROP].some((h) => t > h - 0.04 && t < h + 0.4);
+          if (fast) shutter((ts, target) => scene(ts, target), t, { samples: 8, angle: 270 });
+          else scene(t, null);
+          type(t);
+          const done = COMMITS.filter((c) => c[5] != null && t >= c[5]).length;
+          stat.textContent = t >= SUCCESS ? DONE : done > 0 ? STAT(done) : " ";
+          stat.classList.toggle("f24-done", t >= SUCCESS);
+          WOW.draw(tl, T0);
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines[ID] = tl;
       </script>
     </template>
   </body>

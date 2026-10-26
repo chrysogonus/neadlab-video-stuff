@@ -2,22 +2,24 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 37 — end (outro, 197.431–209.640, no lyrics). Refinement round 1 (REFINE-1.md): the count runs one day per
-         tick and faster as it runs out, so the poster is up on 202.92 and the end card holds 6.7 s.
-         A — the countdown (197.431–202.920). The hard cut from 36 lands on the same terminal and the same page (36's
-         reflog, its prompt and cursor, "i can wait." beside it), pulled back on the beat's return, and the counter takes
-         the right: `reflog expires in 30 days`. One day per tick, accelerating with the drums: bar 1 on the eighths
-         (30 → 23), bar 2's kick roll on the sixteenths (22 → 7), bar 3 on the eighths again (6 → 0), each tick a digit
-         flip, a punch and a segment of the 30-day bar going dark, the unreachable reflog rows dimming by age, the camera
-         pushing in as it runs out. `git gc --prune=now` types over the last days; `0` and Enter are one hit (202.472):
-         the rows are struck in fire and fly off-frame (motion blur), git's gc output prints, the camera pulls back and the
-         counter reads `COMMITS BY you 0`.
-         C — the bookend (202.920–209.640): a hard cut on the downbeat to 01's t = 0 poster, same place and scale. `force`
-         is there with an empty prompt; `git push --force` types and `push` slams in fire as its word is typed (203.374);
-         the log builds on the right as a faint texture (every author `me`, `commits by you 0`), dim so YouTube's end
-         screen can sit over the right 40 %. The drums' last downbeat (204.764) is the final hit on the card. Then it
-         breathes: a slow pull back, the accent glow on the tail, the cursor blinking, the light going out with the last
-         note, and the last frame is 01's t = 0 pose so the film loops. -->
+    <!-- Frame 37 — end (outro, 197.431–209.640, no lyrics). Light-and-depth rebuild (LIGHT.md), one design with 01 (the
+         bookend): the same world, ~/us as a place, after the force push.
+         A — the countdown (197.431–202.920). The hard cut from 36 lands on 36's terminal, pulled back (unchanged handoff);
+         on the beat's return the page shrinks into a window top left and the world comes up behind it: `main` lit, all
+         `me` now, and beside it where `you`'s lanes were, their dashed ghosts (unreachable, still in the reflog, as 10's
+         push left them). `you`'s lane is thirty dashes, one per day; the reflog's rows stand along it (`3f2a1c9 HEAD@{2}:
+         commit: you and me`, its hash in fire). The camera looks back up the history from the near end. One day per tick,
+         accelerating with the drums (bar 1 on the eighths 30 → 23, bar 2's kick roll on the sixteenths 22 → 7, bar 3 on
+         the eighths 6 → 0): each tick the oldest live dash flashes fire and goes dark, the counter flips, and the camera
+         rides the spent edge toward HEAD. `git gc --prune=now` types over the last days; `0` and Enter are one hit
+         (202.472): a white-hot front runs up every ghost into the dark and burns them off the floor with the reflog's
+         rows, the struck rows fly out of the terminal, gc prints, the counter reads `COMMITS BY you 0`.
+         C — the bookend (202.920–209.640): a hard cut on the downbeat to 01's t = 0 poster, same type, place and scale,
+         the same camera, the history changed: `main` alone, no `you` anywhere. `force` is there with an empty prompt;
+         `git push --force` types and `push` whips in as its word is typed (203.374), a hot packet running down main on
+         each of the last kicks; the drums' last downbeat (204.764) is the final hit. Then a slow pull back that stops on
+         01's exact t = 0 pose and type, so the film loops. The right ~40 % is the rail into the dark, room for the
+         end-screen cards. Layers: WebGL lines (assets/kit/lines.js), a Canvas2D layer for the type in the space, the DOM. -->
   </head>
   <body>
     <template>
@@ -34,31 +36,24 @@
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
-        /* the camera wrapper (transitions, punches); A and C inside */
         #f37-cam, .f37-set { position: absolute; inset: 0; }
-        .f37-light { position: absolute; left: 0; top: 0; pointer-events: none; opacity: 0; }
-        .f37-screen { width: 2600px; height: 1700px; margin: -850px 0 0 -1300px;
-          background: radial-gradient(closest-side, rgba(240, 236, 229, 1) 0%, rgba(240, 236, 229, 0.62) 45%, rgba(240, 236, 229, 0) 100%); }
-        .f37-glow { width: 1500px; height: 1100px; margin: -550px 0 0 -750px;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 1) 0%, rgba(232, 93, 38, 0.5) 40%, rgba(232, 93, 38, 0) 100%); }
+        #f37-gl, #f37-type, #f37-shade { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #f37-shade { background: linear-gradient(90deg, rgba(10, 10, 10, 0.82) 0%, rgba(10, 10, 10, 0.55) 34%, rgba(10, 10, 10, 0) 62%),
+          linear-gradient(180deg, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0) 22%); }
         .f37-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         .f37-strip b { color: var(--cream); font-weight: 600; }
         .f37-strip .f37-v { color: var(--fire); font-weight: 600; }
-        #f37-A .f37-strip { color: #9C9C95; } /* over the A glow */
 
         /* ---- A: 36's terminal, in 36's page coordinates (cqw); render() moves the page (translate + scale, origin 0 0) ---- */
-        #f37-view { position: absolute; inset: 0; overflow: hidden;
-          -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 5.6cqw, #000 8.6cqw);
-          mask-image: linear-gradient(to bottom, transparent 0, transparent 5.6cqw, #000 8.6cqw); }
         #f37-page { position: absolute; left: 0; top: 0; width: 100cqw; height: 56.25cqw; transform-origin: 0 0; }
-        #f37-glowA { width: 64cqw; height: 46cqw; margin: -23cqw 0 0 -32cqw;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 1) 0%, rgba(232, 93, 38, 0.5) 40%, rgba(232, 93, 38, 0) 100%); }
+        #f37-panel { position: absolute; left: 4.3cqw; top: 7.2cqw; width: 58cqw; height: 34.6cqw; background: rgba(26, 26, 24, 0.92);
+          border: 1px solid var(--border); opacity: 0; }
         #f37-log { position: absolute; left: 5.5cqw; top: 12.4cqw; font: 400 1.5cqw/2.4cqw "IBM Plex Mono", monospace; color: var(--cream-muted); }
         .f37-row { height: 2.4cqw; white-space: pre; }
         .f37-sel { height: 3.8cqw; padding-top: 0.5cqw; box-sizing: border-box; font: 500 2.2cqw/1 "IBM Plex Mono", monospace; color: var(--cream); white-space: pre; }
-        .f37-sel .f37-h { color: #EC6A36; font-weight: 600; } /* a touch above fire: it sits on the A glow */
+        .f37-sel .f37-h { color: var(--fire); font-weight: 600; }
         .f37-sel b { font-weight: 600; }
         .f37-txt { position: relative; display: inline-block; }
         #f37-ul { position: absolute; left: 0; right: 0; bottom: -0.45cqw; height: 2px; background: var(--fire); }
@@ -73,7 +68,7 @@
         #f37-gc { position: absolute; left: 5.5cqw; top: 35.6cqw; font: 400 1.5cqw/2.3cqw "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
         #f37-l3 { position: absolute; left: 29.6cqw; top: 29.7cqw; font: italic 400 6.4cqw/1 "Instrument Serif", serif; color: var(--cream); white-space: nowrap; }
         /* the counter, right; the digits flip inside a clip */
-        #f37-num { position: absolute; right: 5.5cqw; top: 11.2cqw; text-align: right; transform-origin: 100% 55%; }
+        #f37-num { position: absolute; right: 5.5cqw; top: 9.4cqw; text-align: right; transform-origin: 100% 55%; }
         #f37-lab { font: 500 1.3cqw/1.4 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); }
         #f37-lab i { font-style: normal; text-transform: none; letter-spacing: 0.02em; color: var(--fire); }
         #f37-nclip { position: relative; height: 20.6cqw; margin-top: 0.4cqw; clip-path: inset(0); }
@@ -81,106 +76,69 @@
           color: var(--cream); font-variant-numeric: tabular-nums; white-space: nowrap; }
         .f37-n.f37-zero { color: var(--fire); }
         #f37-unit { margin-top: 0.4cqw; font: 800 4.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em; color: var(--cream); height: 4.4cqw; }
-        #f37-bar { display: flex; justify-content: flex-end; gap: 0.26cqw; margin-top: 1.5cqw; }
-        #f37-bar i { display: block; width: 0.9cqw; height: 0.75cqw; background: var(--border); }
-        #f37-bar i.f37-on { background: var(--fire); }
-        #f37-bar i.f37-now { background: var(--cream); }
-        #f37-note { margin-top: 1.1cqw; font: 400 1.3cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f37-note { margin-top: 1.4cqw; font: 400 1.3cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
         #f37-note b { color: var(--cream); font-weight: 600; }
 
-        /* ---- C: the bookend, 01's t = 0 poster in the same place and scale ---- */
+        /* ---- C: the bookend, 01's t = 0 poster: same rules as 01's #f01-title / #f01-credit / #f01-term / #f01-hint ---- */
         #f37-title { position: absolute; left: 4.6cqw; top: 5.6cqw; font: 900 22.5cqw/0.78 "Barlow", sans-serif;
-          letter-spacing: -0.055em; color: var(--cream); transform-origin: 0% 0%; }
-        #f37-title span { display: block; }
-        #f37-title .f37-push { --f37-pg: 0.35; color: var(--fire); text-shadow: 0 0 2.2cqw rgba(232, 93, 38, var(--f37-pg)); transform-origin: 0% 100%; }
-        #f37-p1 { position: absolute; left: 5.5cqw; top: 46.9cqw; font: 500 2.25cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted);
-          white-space: pre; transform-origin: 0% 0%; }
+          letter-spacing: -0.055em; color: var(--cream); transform-origin: 30% 60%; }
+        #f37-title span { display: block; width: max-content; }
+        #f37-title .f37-push { color: var(--fire); transform-origin: 0% 100%; }
+        #f37-credit { position: absolute; left: 0; top: 0; font: 600 1.7cqw/1 "IBM Plex Mono", monospace; letter-spacing: 0.62em;
+          color: var(--cream); white-space: pre; }
+        #f37-p1 { position: absolute; left: 5.5cqw; top: 46.9cqw; font: 500 2.25cqw/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted);
+          white-space: pre; transform-origin: 0 0; }
         #f37-p1 .f37-cmd { color: var(--cream); }
-        #f37-hint { position: absolute; left: 5.5cqw; top: 51.3cqw; font: 400 0.95cqw/1.55 "IBM Plex Mono", monospace; color: var(--cream-hint); }
-        /* the right 40 %: a faint texture YouTube's end-screen cards can sit over */
-        #f37-clog { position: absolute; left: 69.5cqw; top: 9.6cqw; width: 25cqw; opacity: 0.22; }
-        #f37-clog .f37-head { font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase;
-          color: var(--cream-muted); padding-bottom: 0.6cqw; margin-bottom: 1.2cqw; border-bottom: 1px solid var(--border);
-          display: flex; justify-content: space-between; }
-        #f37-clog .f37-head b { color: var(--fire); font-weight: 600; }
-        #f37-loggraph { position: absolute; left: 0; top: 2.9cqw; width: 2.6cqw; height: 32cqw; overflow: visible; }
-        .f37-lrow { opacity: 0; position: relative; height: 3.9cqw; padding-left: 3.6cqw; font: 400 0.98cqw/1.25 "IBM Plex Mono", monospace; color: var(--cream-muted); }
-        .f37-lrow .f37-lh { color: var(--cream-hint); }
-        .f37-lrow .f37-a { display: inline-block; width: 3.2cqw; color: var(--cream); }
-        .f37-lrow .f37-msg { display: block; color: var(--cream); font-size: 1.12cqw; }
+        #f37-hint { position: absolute; left: 5.5cqw; top: 51.3cqw; font: 400 0.95cqw/1.55 "IBM Plex Mono", monospace; color: var(--cream-muted); }
       </style>
       <div id="root" data-composition-id="37-end" data-width="1920" data-height="1080" data-duration="12.209">
         <div id="f37-cam">
+          <canvas id="f37-gl" width="1920" height="1080" data-layout-ignore></canvas>
+          <div id="f37-shade" data-layout-ignore style="opacity: 0"></div>
+          <canvas id="f37-type" width="1920" height="1080" data-layout-ignore></canvas>
+
           <!-- ================= A: the countdown, then gc ================= -->
           <div class="f37-set" id="f37-A">
-            <div class="f37-light f37-screen" id="f37-screenA" data-layout-ignore></div>
-            <div id="f37-view">
-              <div id="f37-page">
-                <i class="f37-light" id="f37-glowA" data-layout-ignore></i>
-                <div class="f37-prompt" id="f37-p1r"><span>~/us (main) $ </span><span class="f37-cmd">git reflog</span></div>
-                <div id="f37-log">
-                  <div class="f37-row" data-layout-ignore>d4c7e19 HEAD@{0}: rebase (finish): returning to refs/heads/main</div>
-                  <div class="f37-row" data-layout-ignore>d4c7e19 HEAD@{1}: rebase (pick): ready.</div>
-                  <div class="f37-sel f37-age"><span class="f37-txt"><span class="f37-h">3f2a1c9</span> <b>HEAD@{2}</b>: commit: you and me<i id="f37-ul"></i></span></div>
-                  <div class="f37-row f37-age" data-layout-ignore>a7c21f0 HEAD@{3}: commit: we'll get to it</div>
-                  <div class="f37-row f37-age" data-layout-ignore>4c9d7a1 HEAD@{4}: commit: just a feature</div>
-                  <div class="f37-row f37-age" data-layout-ignore>91be33a HEAD@{5}: commit: moved in</div>
-                  <div class="f37-row f37-age" data-layout-ignore>0b5f6e2 HEAD@{6}: commit: nothing on the side</div>
-                </div>
-                <div id="f37-dead" data-layout-ignore data-hf-motion-blur='{"fps": 60}'>
-                  <div class="f37-sel" style="opacity: 0.7"><span class="f37-txt"><span class="f37-h">3f2a1c9</span> <b>HEAD@{2}</b>: commit: you and me<i class="f37-x"></i></span></div>
-                  <div class="f37-row" style="opacity: 0.55"><span class="f37-txt">a7c21f0 HEAD@{3}: commit: we'll get to it<i class="f37-x"></i></span></div>
-                  <div class="f37-row" style="opacity: 0.5"><span class="f37-txt">4c9d7a1 HEAD@{4}: commit: just a feature<i class="f37-x"></i></span></div>
-                  <div class="f37-row" style="opacity: 0.45"><span class="f37-txt">91be33a HEAD@{5}: commit: moved in<i class="f37-x"></i></span></div>
-                  <div class="f37-row" style="opacity: 0.4"><span class="f37-txt">0b5f6e2 HEAD@{6}: commit: nothing on the side<i class="f37-x"></i></span></div>
-                </div>
-                <div class="f37-prompt" id="f37-p2"><span>~/us (main) $ </span><span class="f37-cmd" id="f37-cmd"></span><span class="f37-cursor" id="f37-cur"></span></div>
-                <div id="f37-gc" data-layout-ignore></div>
-                <div id="f37-l3">i can wait.</div>
-                <div id="f37-num">
-                  <div id="f37-lab">reflog expires in</div>
-                  <div id="f37-nclip"><div class="f37-n" id="f37-nold" data-layout-allow-overlap></div><div class="f37-n" id="f37-n" data-layout-allow-overlap>30</div></div>
-                  <div id="f37-unit">days</div>
-                  <div id="f37-bar" data-layout-ignore></div>
-                  <div id="f37-note">gc.reflogExpireUnreachable = <b>30.days</b></div>
-                </div>
+            <div id="f37-page">
+              <div id="f37-panel" data-layout-ignore></div>
+              <div class="f37-prompt" id="f37-p1r"><span>~/us (main) $ </span><span class="f37-cmd">git reflog</span></div>
+              <div id="f37-log">
+                <div class="f37-row" data-layout-ignore>d4c7e19 HEAD@{0}: rebase (finish): returning to refs/heads/main</div>
+                <div class="f37-row" data-layout-ignore>d4c7e19 HEAD@{1}: rebase (pick): ready.</div>
+                <div class="f37-sel f37-age"><span class="f37-txt"><span class="f37-h">3f2a1c9</span> <b>HEAD@{2}</b>: commit: you and me<i id="f37-ul"></i></span></div>
+                <div class="f37-row f37-age" data-layout-ignore>a7c21f0 HEAD@{3}: commit: we'll get to it</div>
+                <div class="f37-row f37-age" data-layout-ignore>4c9d7a1 HEAD@{4}: commit: just a feature</div>
+                <div class="f37-row f37-age" data-layout-ignore>91be33a HEAD@{5}: commit: moved in</div>
+                <div class="f37-row f37-age" data-layout-ignore>0b5f6e2 HEAD@{6}: commit: nothing on the side</div>
               </div>
+              <div id="f37-dead" data-layout-ignore data-hf-motion-blur='{"fps": 60}'>
+                <div class="f37-sel" style="opacity: 0.7"><span class="f37-txt"><span class="f37-h">3f2a1c9</span> <b>HEAD@{2}</b>: commit: you and me<i class="f37-x"></i></span></div>
+                <div class="f37-row" style="opacity: 0.55"><span class="f37-txt">a7c21f0 HEAD@{3}: commit: we'll get to it<i class="f37-x"></i></span></div>
+                <div class="f37-row" style="opacity: 0.5"><span class="f37-txt">4c9d7a1 HEAD@{4}: commit: just a feature<i class="f37-x"></i></span></div>
+                <div class="f37-row" style="opacity: 0.45"><span class="f37-txt">91be33a HEAD@{5}: commit: moved in<i class="f37-x"></i></span></div>
+                <div class="f37-row" style="opacity: 0.4"><span class="f37-txt">0b5f6e2 HEAD@{6}: commit: nothing on the side<i class="f37-x"></i></span></div>
+              </div>
+              <div class="f37-prompt" id="f37-p2"><span>~/us (main) $ </span><span class="f37-cmd" id="f37-cmd"></span><span class="f37-cursor" id="f37-cur"></span></div>
+              <div id="f37-gc" data-layout-ignore></div>
+              <div id="f37-l3">i can wait.</div>
+            </div>
+            <div id="f37-num">
+              <div id="f37-lab">reflog expires in</div>
+              <div id="f37-nclip"><div class="f37-n" id="f37-nold" data-layout-allow-overlap></div><div class="f37-n" id="f37-n" data-layout-allow-overlap>30</div></div>
+              <div id="f37-unit">days</div>
+              <div id="f37-note">gc.reflogExpireUnreachable = <b>30.days</b></div>
             </div>
             <div class="f37-strip"><span>~/us &nbsp;·&nbsp; main</span><span id="f37-stripr"></span></div>
           </div>
 
           <!-- ================= C: the bookend (01 at t = 0) ================= -->
           <div class="f37-set" id="f37-C" style="opacity: 0">
-            <div class="hr-layer" data-depth="0.25" data-layout-ignore>
-              <div class="f37-light f37-screen" id="f37-screenC"></div>
-              <div class="f37-light f37-glow" id="f37-glowC"></div>
-            </div>
-            <div class="hr-layer" data-depth="0.15">
-              <div class="f37-strip"><span><b>NEAD</b> &nbsp;·&nbsp; force push</span><span style="position: relative; min-width: 22cqw; height: 1.2cqw;">
-                <span style="position: absolute; right: 0; top: 0">~/us &nbsp;·&nbsp; main</span></span></div>
-            </div>
-            <div class="hr-layer" data-depth="0.55" data-layout-ignore>
-              <div id="f37-title"><span id="f37-force">force</span><span class="f37-push" id="f37-push" data-hf-motion-blur='{"fps": 60}'>push</span></div>
-            </div>
-            <div class="hr-layer" data-depth="0.45" data-layout-ignore>
-              <div id="f37-clog">
-                <div class="f37-head"><span>git log --graph</span><span>commits by you <b>0</b></span></div>
-                <svg id="f37-loggraph" viewBox="0 0 50 615">
-                  <path id="f37-lane" d="M12 6 V381" pathLength="100" fill="none" stroke="#505048" stroke-width="2" />
-                  <g id="f37-dots" fill="#F0ECE5"></g>
-                </svg>
-                <div class="f37-lrow"><span class="f37-lh">d4c7e19</span> <span class="f37-a">me</span>HEAD -&gt; main<span class="f37-msg">ready.</span></div>
-                <div class="f37-lrow"><span class="f37-lh">6b1e9f3</span> <span class="f37-a">me</span>2 years ago<span class="f37-msg">we'll get to it</span></div>
-                <div class="f37-lrow"><span class="f37-lh">d27a0c5</span> <span class="f37-a">me</span>2 years ago<span class="f37-msg">just a feature</span></div>
-                <div class="f37-lrow"><span class="f37-lh">8f4c61b</span> <span class="f37-a">me</span>3 years ago<span class="f37-msg">moved in</span></div>
-                <div class="f37-lrow"><span class="f37-lh">1a93e7d</span> <span class="f37-a">me</span>3 years ago<span class="f37-msg">nothing on the side</span></div>
-                <div class="f37-lrow"><span class="f37-lh">b05d2f8</span> <span class="f37-a">me</span>3 years ago<span class="f37-msg">initial commit</span></div>
-              </div>
-            </div>
-            <div class="hr-layer" data-depth="0.85">
-              <div id="f37-p1"><span>~/us (main) $ </span><span class="f37-cmd" id="f37-cmd1"></span><span class="f37-cursor" id="f37-cur1"></span></div>
-              <div id="f37-hint" data-layout-ignore>hint: Updates were rejected because the tip of your current branch is behind<br />hint: its remote counterpart.</div>
-            </div>
+            <div class="f37-strip"><span><b>NEAD</b> &nbsp;·&nbsp; force push</span><span style="position: relative; min-width: 22cqw; height: 1.2cqw;">
+              <span style="position: absolute; right: 0; top: 0">~/us &nbsp;·&nbsp; main</span></span></div>
+            <div id="f37-title" data-layout-allow-overlap><span id="f37-force">force</span><span class="f37-push" id="f37-push" data-hf-motion-blur='{"fps": 60}'>push</span></div>
+            <div id="f37-credit">NEAD</div>
+            <div id="f37-p1"><span>~/us (main) $ </span><span class="f37-cmd" id="f37-cmd1"></span><span class="f37-cursor" id="f37-cur1"></span></div>
+            <div id="f37-hint">hint: Updates were rejected because the tip of your current branch is behind<br />hint: its remote counterpart.</div>
           </div>
         </div>
       </div>
@@ -188,167 +146,346 @@
       <script src="assets/kit/hr-kit.js"></script>
       <script src="assets/kit/wow-kit.js"></script>
       <script src="assets/kit/motion-blur.js"></script>
-      <script>
-        (() => {
-          const DUR = 12.209, T0 = 197.431, PX = 19.2; // 1cqw at 1920 wide
-          const root = document.querySelector('[data-composition-id="37-end"]');
-          const $ = (id) => root.querySelector("#" + id);
-          const at = (T) => T - T0;
-          const clamp01 = (x) => Math.max(0, Math.min(1, x));
-          const tl = gsap.timeline({ paused: true });
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+        import * as K from "./assets/kit/lines.js";
 
-          // ---- the count: one day per tick, accelerating with the drums (track seconds) ----
-          // bar 1 on the eighths (30 → 23), bar 2's kick roll on the sixteenths (22 → 7), bar 3 on the eighths (6 → 0)
-          const DB = [197.431, 199.253, 201.087, 202.92];
-          const snap = (T) => WOW.on(T, { kinds: ["kick", "snare", "hat"], tol: 0.035 });
-          const EV = []; // [track time, strong (on a kick or snare)]
-          for (let k = 0; k < 8; k++) EV.push(snap(DB[0] + ((DB[1] - DB[0]) * k) / 8));
-          for (let k = 0; k < 16; k++) EV.push(snap(DB[1] + ((DB[2] - DB[1]) * k) / 16));
-          for (let k = 0; k < 7; k++) EV.push(snap(DB[2] + ((DB[3] - DB[2]) * k) / 8));
-          EV[0] = T0;                                   // 30 is on screen from the cut
-          const STRONG = EV.map((T) => HR.onsetsIn("kick", T - 0.03, T + 0.03).length + HR.onsetsIn("snare", T - 0.03, T + 0.03).length > 0);
-          const ZERO = at(EV[30]);                      // 202.472: day 0 and Enter, one hit
-          const CUT = at(DB[3]);                        // 202.920: the bookend, hard, on the downbeat
-          const SLAM = at(203.374);                     // `push` (kick + snare), as its word is typed
-          const HIT = at(204.764);                      // the drums' last downbeat: the final hit on the card
+        const DUR = 12.209, T0 = 197.431, PX = 19.2; // 1cqw at 1920 wide
+        const root = document.querySelector('[data-composition-id="37-end"]');
+        const $ = (id) => root.querySelector("#" + id);
+        const at = (T) => T - T0;
+        await document.fonts.load('900 100px "Barlow"');
+        await document.fonts.load('800 100px "Barlow"');
+        await document.fonts.load('500 100px "IBM Plex Mono"');
+        await document.fonts.load('600 100px "IBM Plex Mono"');
+        await document.fonts.load('italic 400 100px "Instrument Serif"');
+        const tl = gsap.timeline({ paused: true });
 
-          // ---- keystrokes (01's pattern) ----
-          const typeInto = (states, t0, t1, text) => {
-            const base = states[states.length - 1][1];
-            for (let i = 0; i < text.length; i++) states.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
-          };
-          const textAt = (states, t) => { let k = states[0]; for (const s of states) if (s[0] <= t) k = s; return k; };
-          const keysGc = [[0, ""]]; typeInto(keysGc, at(201.316), at(202.3), "git gc --prune=now");
-          const keysPush = [[0, ""]];
-          typeInto(keysPush, at(202.98), at(203.16), "git ");
-          typeInto(keysPush, at(203.17), at(203.35), "push");
-          typeInto(keysPush, at(203.42), at(203.78), " --force");
+        // ---- the count: one day per tick, accelerating with the drums (track seconds) ----
+        // bar 1 on the eighths (30 → 23), bar 2's kick roll on the sixteenths (22 → 7), bar 3 on the eighths (6 → 0)
+        const DB = [197.431, 199.253, 201.087, 202.92];
+        const snap = (T) => WOW.on(T, { kinds: ["kick", "snare", "hat"], tol: 0.035 });
+        const EV = []; // track times of the ticks: EV[k] is when the count reads 30 − k
+        for (let k = 0; k < 8; k++) EV.push(snap(DB[0] + ((DB[1] - DB[0]) * k) / 8));
+        for (let k = 0; k < 16; k++) EV.push(snap(DB[1] + ((DB[2] - DB[1]) * k) / 16));
+        for (let k = 0; k < 7; k++) EV.push(snap(DB[2] + ((DB[3] - DB[2]) * k) / 8));
+        EV[0] = T0;                                   // 30 is on screen from the cut
+        const STRONG = EV.map((T) => HR.onsetsIn("kick", T - 0.03, T + 0.03).length + HR.onsetsIn("snare", T - 0.03, T + 0.03).length > 0);
+        const EVL = EV.map(at);
+        const ZERO = EVL[30];                         // 202.472: day 0 and Enter, one hit
+        const CUT = at(DB[3]);                        // 202.920: the bookend, hard, on the downbeat
+        const SLAM = at(203.374);                     // `push` (kick + snare), as its word is typed
+        const HIT = at(204.764);                      // the drums' last downbeat: the final hit on the card
+        const SHRINK0 = 0.12, SHRINK1 = 0.5;          // 36's page becomes a window, the world comes up
 
-          // ---- A: "i can wait." leaves on the second kick; the 30-day bar ----
-          HR.exit(tl, $("f37-l3"), at(197.85), { dur: 0.3 });
-          const bar = $("f37-bar"), segs = [];
-          for (let i = 0; i < 30; i++) { const s = document.createElement("i"); bar.appendChild(s); segs.push(s); }
+        // ---- keystrokes ----
+        const typeInto = (states, t0, t1, text) => {
+          const base = states[states.length - 1][1];
+          for (let i = 0; i < text.length; i++) states.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
+        };
+        const textAt = (states, t) => { let k = states[0]; for (const s of states) if (s[0] <= t) k = s; return k; };
+        const keysGc = [[0, ""]]; typeInto(keysGc, at(201.316), at(202.3), "git gc --prune=now");
+        const keysPush = [[0, ""]];
+        typeInto(keysPush, at(202.98), at(203.16), "git ");
+        typeInto(keysPush, at(203.17), at(203.35), "push");
+        typeInto(keysPush, at(203.42), at(203.78), " --force");
 
-          // ---- 0 + Enter: the unreachable rows are struck and thrown off-frame; gc prints; the counter is relabelled ----
-          const ages = root.querySelectorAll(".f37-age"), dead = $("f37-dead");
-          tl.set(ages, { opacity: 1 }, 0).set(ages, { opacity: 0 }, ZERO);
-          tl.set(dead, { opacity: 0, x: 0 }, 0).set(dead, { opacity: 1 }, ZERO);
-          tl.fromTo(dead, { x: 0, skewX: 0 }, { x: -2900, skewX: -12, duration: 0.3, ease: "power3.in", immediateRender: false }, ZERO + 0.07);
-          const GC = ["Enumerating objects: 1203, done.", "Counting objects: 100% (1203/1203), done.", "Delta compression using up to 16 threads",
-            "Compressing objects: 100% (612/612), done.", "Writing objects: 100% (1203/1203), done.", "Total 1203 (delta 401), reused 1203 (delta 401), pack-reused 0"];
-          const gc = $("f37-gc");
-          GC.forEach((s, i) => {
-            const d = document.createElement("div"); d.textContent = s; gc.appendChild(d);
-            tl.set(d, { opacity: 0 }, 0).set(d, { opacity: 1 }, ZERO + 0.035 + 0.06 * i);
-          });
-          tl.set([$("f37-unit"), $("f37-note"), bar], { opacity: 1 }, 0).set([$("f37-unit"), $("f37-note"), bar], { opacity: 0 }, ZERO);
+        // ---- A: "i can wait." leaves as the page shrinks into a window; 0 + Enter strikes the rows and gc prints ----
+        HR.exit(tl, $("f37-l3"), 0.1, { dur: 0.26 });
+        const pg = { s: 1.06, x: -3 * PX, y: 10.85 };   // 36's page, pulled back (the cut's first frame)
+        tl.fromTo(pg, { s: 1.06, x: -3 * PX, y: 10.85 }, { s: 0.55, x: 2.475 * PX, y: 2.8 * PX, duration: SHRINK1 - SHRINK0, ease: "power3.inOut" }, SHRINK0);
+        tl.fromTo($("f37-panel"), { opacity: 0 }, { opacity: 1, duration: 0.25, immediateRender: false }, SHRINK0 + 0.15);
+        const ages = root.querySelectorAll(".f37-age"), dead = $("f37-dead");
+        tl.set(ages, { opacity: 1 }, 0).set(ages, { opacity: 0 }, ZERO);
+        tl.set(dead, { opacity: 0, x: 0 }, 0).set(dead, { opacity: 1 }, ZERO);
+        tl.fromTo(dead, { x: 0, skewX: 0 }, { x: -2900, skewX: -12, duration: 0.3, ease: "power3.in", immediateRender: false }, ZERO + 0.07);
+        const GC = ["Enumerating objects: 1203, done.", "Counting objects: 100% (1203/1203), done.", "Delta compression using up to 16 threads",
+          "Compressing objects: 100% (612/612), done.", "Writing objects: 100% (1203/1203), done.", "Total 1203 (delta 401), reused 1203 (delta 401), pack-reused 0"];
+        const gc = $("f37-gc");
+        GC.forEach((s, i) => {
+          const d = document.createElement("div"); d.textContent = s; gc.appendChild(d);
+          tl.set(d, { opacity: 0 }, 0).set(d, { opacity: 1 }, ZERO + 0.035 + 0.06 * i);
+        });
+        tl.set([$("f37-unit"), $("f37-note")], { opacity: 1 }, 0).set([$("f37-unit"), $("f37-note")], { opacity: 0 }, ZERO);
 
-          // ---- A's camera: wide on the beat's return, pushing in on the counter as it runs out; 0 punches and pulls back ----
-          const camA = { s: 1.06, cx: 50, cy: 26 };
-          tl.fromTo(camA, { s: 1.06, cx: 50, cy: 26 }, { s: 1.3, cx: 58, cy: 25, duration: ZERO, ease: "power2.in" }, 0);
-          tl.fromTo(camA, { s: 1.38, cx: 58, cy: 25 }, { s: 1.04, cx: 50, cy: 27, duration: 0.42, ease: "expo.out", immediateRender: false }, ZERO);
+        // ---- C: the hard cut to the poster; `push` whips in as its word is typed ----
+        const A = $("f37-A"), C = $("f37-C"), force = $("f37-force"), push = $("f37-push"), title = $("f37-title"), credit = $("f37-credit");
+        tl.set(A, { opacity: 1 }, 0).set(C, { opacity: 0 }, 0).set(A, { opacity: 0 }, CUT).set(C, { opacity: 1 }, CUT);
+        tl.set($("f37-shade"), { opacity: 0 }, 0).set($("f37-shade"), { opacity: 1 }, CUT);
+        tl.fromTo(force, { scale: 1.04 }, { scale: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, CUT);
+        // parked off-frame left, hidden; it whips in along its own line (never across `force`), blurred, and lands sharp on the kick
+        tl.set(push, { opacity: 0, x: -1500 }, 0).set(push, { opacity: 1 }, SLAM - 0.12);
+        tl.fromTo(push, { x: -1500 }, { x: 0, duration: 0.12, ease: "power3.in", immediateRender: false }, SLAM - 0.12);
+        tl.fromTo(push, { scaleX: 1.06, scaleY: 0.88 }, { scaleX: 1, scaleY: 1, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, SLAM);
+        tl.set(credit, { opacity: 0 }, 0).set(credit, { opacity: 1 }, HIT);
+        // NEAD on the baseline of `push`, measured as 01 measures it
+        {
+          const cv = document.createElement("canvas").getContext("2d");
+          cv.font = `900 ${22.5 * PX}px Barlow`;
+          const m = cv.measureText("push"), lh = 0.78 * 22.5 * PX;
+          const base = title.offsetTop + push.offsetTop + (lh - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2 + m.fontBoundingBoxAscent;
+          credit.style.left = (title.offsetLeft + push.offsetWidth + 1.6 * PX).toFixed(1) + "px";
+          credit.style.top = (base - 0.74 * 1.7 * PX).toFixed(1) + "px";
+        }
 
-          // ---- C: the hard cut to the poster; `push` slams as its word is typed; the faint log builds on the ticks ----
-          const A = $("f37-A"), C = $("f37-C"), force = $("f37-force"), push = $("f37-push");
-          tl.set(A, { opacity: 1 }, 0).set(C, { opacity: 0 }, 0).set(A, { opacity: 0 }, CUT).set(C, { opacity: 1 }, CUT);
-          tl.fromTo(force, { scale: 1.04 }, { scale: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, CUT);
-          // parked off-frame left, hidden; it whips in along its own line (never across `force`), blurred, and lands sharp on the kick
-          tl.set(push, { opacity: 0, x: -1500 }, 0).set(push, { opacity: 1 }, SLAM - 0.12);
-          tl.fromTo(push, { x: -1500 }, { x: 0, duration: 0.12, ease: "power3.in", immediateRender: false }, SLAM - 0.12);
-          tl.fromTo(push, { scaleX: 1.06, scaleY: 0.88 }, { scaleX: 1, scaleY: 1, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, SLAM);
-          const TICKS = [203.607, 203.831, 204.064, 204.292, 204.503, 204.764].map(at);
-          const lrows = root.querySelectorAll(".f37-lrow"), dots = $("f37-dots"), NS = "http://www.w3.org/2000/svg";
-          tl.fromTo($("f37-lane"), { strokeDasharray: "100 100", strokeDashoffset: 100 },
-            { strokeDasharray: "100 100", strokeDashoffset: 0, duration: TICKS[5] - TICKS[0], ease: "none", immediateRender: true }, TICKS[0]);
-          TICKS.forEach((t, i) => {
-            const y = 6 + 75 * i, c = document.createElementNS(NS, "circle");
-            c.setAttribute("cx", 12); c.setAttribute("cy", y); c.setAttribute("r", 6); dots.appendChild(c);
-            tl.fromTo(lrows[i], { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.26, ease: "power3.out", immediateRender: false }, t - 0.02);
-            tl.set(c, { opacity: 0 }, 0);
-            tl.fromTo(c, { opacity: 0, scale: 0.2, svgOrigin: `12 ${y}` }, { opacity: 1, scale: 1, svgOrigin: `12 ${y}`, duration: 0.3, ease: "back.out(2.2)", immediateRender: false }, t);
-          });
-          // `push`'s glow flares on the final hit and settles to 01's
-          const pg = { v: 0.35 };
-          tl.fromTo(pg, { v: 0.35 }, { v: 0.85, duration: 0.05, ease: "none", immediateRender: false }, HIT);
-          tl.fromTo(pg, { v: 0.85 }, { v: 0.35, duration: 1.4, ease: "power2.out", immediateRender: false }, HIT + 0.05);
+        // ---- punches: the 0, the cut, the slam, the final hit; the card breathes on the tail's soft ticks ----
+        const cam = $("f37-cam");
+        for (const [t, s, d] of [[CUT, 1.035, 0.4], [SLAM, 1.03, 0.4], [HIT, 1.055, 0.7]]) WOW.punch(tl, cam, t, { s, dur: d });
+        for (const [T, s, d] of [[203.831, 1.012, 0.22], [204.292, 1.012, 0.2], [204.503, 1.015, 0.25], [205.23, 1.015, 0.5], [205.679, 1.012, 0.45], [206.141, 1.015, 0.45], [206.597, 1.02, 0.6],
+          [207.055, 1.015, 0.45], [207.516, 1.015, 0.45], [207.975, 1.012, 0.4], [208.351, 1.02, 0.7]]) WOW.punch(tl, cam, at(T), { s, dur: d });
+        WOW.transition(tl, cam, { in: "cut", out: "cut", dur: 0, total: DUR }); // both sides hard
+        tl.set({}, {}, DUR);
 
-          // ---- C's camera: 01's stage (seed 11); a slow, continuous pull back that ends on 01's t = 0 pose ----
-          const stC = HR.stage(C, { seed: 11 });
-          tl.fromTo(stC.cam, { z: 1.1, x: -48, y: 18 }, { z: 1.0, x: 0, y: 0, duration: DUR - CUT, ease: "none", immediateRender: false }, CUT);
-          // punches: the cut, the slam, the final hit
-          const cam = $("f37-cam");
-          for (const [t, s, d] of [[CUT, 1.035, 0.4], [SLAM, 1.03, 0.4], [HIT, 1.055, 0.7]]) WOW.punch(tl, cam, t, { s, dur: d });
-          // the card breathes on the last kicks and the tail's soft ticks (the kicks fading out, the hats, the two downbeats): small, never still for 2 s
-          for (const [T, s, d] of [[203.831, 1.015, 0.22], [204.292, 1.015, 0.2], [204.503, 1.02, 0.25], [205.23, 1.02, 0.5], [205.679, 1.016, 0.45], [206.141, 1.02, 0.45], [206.597, 1.03, 0.6],
-            [207.055, 1.02, 0.45], [207.516, 1.02, 0.45], [207.975, 1.016, 0.4], [208.351, 1.03, 0.7]]) WOW.punch(tl, cam, at(T), { s, dur: d });
-          WOW.transition(tl, cam, { in: "cut", out: "cut", dur: 0, total: DUR }); // both sides hard (REFINE-1 table)
-          tl.set({}, {}, DUR);
-
-          // ---- per frame: the count, the flips, the rows' age, typing, cursors, light, the cameras ----
-          const nclip = $("f37-nclip"), n = $("f37-n"), nold = $("f37-nold"), num = $("f37-num"), lab = $("f37-lab"), unit = $("f37-unit"), sr = $("f37-stripr");
-          const page = $("f37-page"), cmd = $("f37-cmd"), cur = $("f37-cur"), cmd1 = $("f37-cmd1"), cur1 = $("f37-cur1");
-          const glowA = $("f37-glowA"), screenA = $("f37-screenA"), glowC = $("f37-glowC"), screenC = $("f37-screenC");
-          gsap.set(screenA, { x: 960, y: 560 }); gsap.set(glowA, { left: 78 * PX, top: 24 * PX });
-          gsap.set(screenC, { x: 960, y: 540 }); gsap.set(glowC, { x: 520, y: 640 });
-          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
-          const smooth = (name, T) => (HR.band(name, T - 0.08) + HR.band(name, T) + HR.band(name, T + 0.08)) / 3;
-          let lastD = -1;
-          function render() {
-            const t = tl.time(), T = T0 + t;
-            // the count
-            let k = 0; for (let i = 0; i < EV.length; i++) if (EV[i] <= T + 1e-4) k = i;
-            const d = 30 - k, dt = T - EV[k], zero = d === 0;
-            if (d !== lastD) {
-              n.textContent = String(d); nold.textContent = String(d + 1);
-              n.classList.toggle("f37-zero", zero); n.classList.toggle("hr-glowbox", zero);
-              unit.textContent = d === 1 ? "day" : "days";
-              lab.innerHTML = zero ? "commits by <i>you</i>" : "reflog expires in";
-              sr.innerHTML = zero ? 'commits by you &nbsp;<span class="f37-v">0</span>'
-                : 'reflog expires in &nbsp;<span class="f37-v">' + d + (d === 1 ? " day" : " days") + "</span>";
-              segs.forEach((s, i) => { s.className = i < d ? "f37-on" : ""; });
-              lastD = d;
-            }
-            // the flip: the old day slides up and out, the new one rises in (shorter in the sixteenth roll)
-            const fd = k >= 8 && k < 24 ? 0.07 : 0.11, u = k === 0 ? 1 : clamp01(dt / fd), e = 1 - Math.pow(1 - u, 3);
-            n.style.transform = `translateY(${((1 - e) * 46).toFixed(2)}%)`;
-            n.style.filter = e < 1 ? `blur(${((1 - e) * 7).toFixed(2)}px)` : "";
-            nold.style.transform = `translateY(${(-e * 60).toFixed(2)}%)`;
-            nold.style.opacity = (1 - e).toFixed(3);
-            nold.style.filter = e > 0 && e < 1 ? `blur(${(e * 7).toFixed(2)}px)` : "";
-            nclip.style.clipPath = u < 1 ? "inset(0)" : "inset(-8cqw)"; // clipped only while a leaf flips, so the 0's glow is whole
-            if (k > 0 && k < 30 && dt < 0.06) segs[d].className = "f37-now"; // the day being spent flashes as it goes dark
-            if (zero) HR.glow(n, T, 0.55, 0.6);
-            // a punch per tick, harder on kicks and over the last days; the 0 the hardest
-            const amp = zero ? 0.14 : (STRONG[k] ? 0.05 : 0.03) + (d <= 3 ? 0.04 : 0) + (k === 0 ? 0.06 : 0);
-            num.style.transform = `scale(${(1 + amp * Math.exp(-Math.max(0, dt) / (zero ? 0.16 : 0.08))).toFixed(4)})`;
-            // the unreachable rows dim with age, the oldest first
-            ages.forEach((r, i) => { if (!zero) r.style.opacity = Math.max(0.16, 1 - ((30 - d) / 30) * (0.45 + 0.1 * i)).toFixed(3); });
-            // typing and the cursor (hidden while gc runs)
-            const [kg, sg] = textAt(keysGc, t); cmd.textContent = sg;
-            cur.style.opacity = t < ZERO && blink(t, kg) ? 1 : 0;
-            const [kp, sp] = textAt(keysPush, t); cmd1.textContent = sp;
-            cur1.style.opacity = t < at(203.8) || Math.floor((DUR - t) * 2) % 2 === 0 ? 1 : 0; // ends lit, as 01 begins
-            // light: A — the screen glow and the accent glow behind the counter, on the bass; the 0 flares it
-            const bass = smooth("bass", T), flare = t >= ZERO ? Math.exp(-(t - ZERO) / 0.25) : 0;
-            screenA.style.opacity = (0.055 + 0.02 * smooth("rms", T)).toFixed(4);
-            glowA.style.opacity = Math.min(0.3, 0.075 + 0.07 * bass + 0.2 * flare).toFixed(4);
-            // C — the accent glow under `push` breathes on the tail and goes out with the last note (01's t = 0 is unlit)
-            const on = clamp01((t - CUT) / 0.3) * (1 - clamp01((T - 208.75) / 0.7)), rms = smooth("rms", T);
-            const breath = 0.5 + 0.5 * Math.sin((T - 204.764) * 2.4);
-            screenC.style.opacity = (on * (0.05 + 0.02 * rms)).toFixed(4);
-            glowC.style.opacity = (on * Math.min(0.16, 0.06 + 0.035 * breath + 0.05 * rms + 0.08 * HR.hit("kick", T, 0.25) + 0.06 * HR.hit("hat", T, 0.3) + 0.08 * (pg.v - 0.35))).toFixed(4);
-            push.style.setProperty("--f37-pg", pg.v.toFixed(3));
-            // the cameras: A's page (36's coordinates, a seeded micro-drift on top); C on 01's stage
-            const dx = Math.sin(T * 0.41 + 37) * 4 + Math.sin(T * 0.13 + 74) * 3, dy = Math.sin(T * 0.33 + 111) * 3;
-            const x = (50 - camA.s * camA.cx) * PX + dx, y = (28.125 - camA.s * camA.cy) * PX + dy;
-            page.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) scale(${camA.s.toFixed(4)})`;
-            stC.apply(t - DUR);
-            WOW.draw(tl, T0);
+        // ================= the world (01-status's, after the push: keep the two in step) =================
+        const V = (x, y, z) => new THREE.Vector3(x, y, z);
+        const renderer = K.renderer(THREE, $("f37-gl"));
+        const lines = K.createLines(THREE, 60000);
+        const shutter = K.createShutter(THREE, renderer);
+        const camera = new THREE.PerspectiveCamera(40, 16 / 9, 0.1, 900);
+        const BONE = K.BONE, FIRE = K.ACCENT, HOT = [1, 0.86, 0.72], MUTED = [0x88 / 255, 0x88 / 255, 0x80 / 255], HINT = [0x50 / 255, 0x50 / 255, 0x48 / 255];
+        const ZH = -300, ZF = -26, ZM = -268, XY = 3.2;
+        const rnd = HR.rng(101);
+        // `you`'s lane, as in 01: fork, three years beside main, merge
+        const fork = new THREE.CubicBezierCurve3(V(0, 0, ZF + 9), V(0, 0, ZF + 4), V(XY, 0, ZF + 5), V(XY, 0, ZF));
+        const merge = new THREE.CubicBezierCurve3(V(XY, 0, ZM + 9), V(XY, 0, ZM + 4), V(0, 0, ZM + 5), V(0, 0, ZM));
+        const bend = (c) => { const p = c.getPoints(8), out = []; for (let i = 1; i < p.length; i++) if (i % 2) out.push([p[i - 1], p[i]]); return out; };
+        // the thirty days: a fence of posts on the lane's newest stretch, post j (the oldest first) farthest from HEAD
+        const DAY = 2.6, ZD = ZM + 11, PH = 4;
+        const days = []; for (let j = 0; j < 30; j++) days.push(ZD + (29 - j) * DAY);
+        // the field's ghosts (01's field, seeded the same)
+        const field = [];
+        for (const [s, ks] of [[1, [1, 2, 3, 4, 5, 6, 7, 8, 9]], [-1, [1, 2, 3, 4]]]) for (const k of ks) {
+          const x = s > 0 ? XY + k * 3 + (rnd() - 0.5) * 0.6 : -(k * 3 + (rnd() - 0.5) * 0.6), xi = s > 0 ? x - 3 : x + 3;
+          let z = -6 - rnd() * 24;
+          while (z > ZH + 12) {
+            const len = 16 + rnd() * 50, z1 = Math.max(ZH + 10, z - len);
+            const run = { x, z0: z, z1, dots: [] };
+            for (let zz = z - 2 - rnd() * 3; zz > z1 + 1; zz -= 4 + rnd() * 5) run.dots.push(zz);
+            field.push(run);
+            z = z1 - 6 - rnd() * 16;
           }
-          tl.eventCallback("onUpdate", render);
-          render();
-          window.__timelines["37-end"] = tl;
-        })();
+        }
+        const mainDots = []; for (let z = 0; z >= ZH; z -= 12) mainDots.push(z);
+        // the reflog's rows that are `you`'s, standing by their commits on the ghost
+        const ROWS = [[-226, "3f2a1c9 HEAD@{2}: commit: you and me", true], [-196, "a7c21f0 HEAD@{3}: commit: we'll get to it"],
+          [-130, "4c9d7a1 HEAD@{4}: commit: just a feature"], [-34, "0b5f6e2 HEAD@{6}: commit: nothing on the side"]];
+
+        // ---- the count's state at local t: k ticks spent (0..30), a smooth k for the camera ----
+        const kAt = (t) => { let k = 0; for (let i = 0; i < EVL.length; i++) if (EVL[i] <= t + 1e-4) k = i; return k; };
+        const kSmooth = (t) => K.keys(t, EVL.map((x, i) => [x, i]), K.ease.outCubic);
+        const spentAt = (j) => EVL[j + 1]; // dash j goes out on tick j + 1
+        // the gc front: from the near end (HEAD side) up every ghost into the dark
+        const G0 = ZERO + 0.02, GD = 0.42;
+        const gcT = (z) => G0 + GD * Math.pow(K.clamp((ZM + 9 - z) / (ZM + 9 - 6)), 0.8);
+        const gcZ = (t) => (ZM + 9) + (6 - (ZM + 9)) * Math.pow(K.clamp((t - G0) / GD), 1.25);
+
+        // ---- the cameras: A looks back up the history (+z) from past the spent edge; C is 01's poster ----
+        const P0 = [[-6, 11, 20], [-28.2, -5.2, -80]]; // 01's t = 0 pose, exactly
+        const lerp3 = (a, b, f) => [0, 1, 2].map((i) => a[i] + (b[i] - a[i]) * f);
+        function pose(t) {
+          if (t >= CUT) {
+            // a slow pull back that stops on 01's t = 0 pose
+            const f = K.prog(t, CUT, DUR), dir = [P0[1][0] - P0[0][0], P0[1][1] - P0[0][1], P0[1][2] - P0[0][2]], n = Math.hypot(...dir);
+            const off = (1 - f) * 7.5;
+            const p = P0[0].map((v, i) => v + (dir[i] / n) * off), l = P0[1].map((v, i) => v + (dir[i] / n) * off);
+            p[0] += (1 - f) * 1.2;
+            return [p, l];
+          }
+          // past the newest day, looking up the fence into the dark; pushing in as the days run out
+          const k = kSmooth(t) / 30;
+          let p = lerp3([-5.2, 3.6, ZD - 15], [-4.6, 3.3, ZD - 9], k), l = lerp3([4.2, 1.9, ZD + 60], [4.0, 1.9, ZD + 45], k);
+          if (t < SHRINK1 + 0.3) { const f = K.ease.inOutCubic(K.prog(t, 0, SHRINK1 + 0.3)); p = lerp3([-11, 11, ZD - 40], p, f); l = lerp3([3, -1, ZD + 70], l, f); }
+          if (t > ZERO) {
+            const f = K.ease.outExpo(K.prog(t, ZERO, ZERO + 0.42));
+            p = lerp3(p, [-10, 9.5, ZD - 36], f); l = lerp3(l, [3, 0, ZD + 110], f);
+          }
+          return [p, l];
+        }
+        function aim(t) {
+          const [p, l] = pose(t), T = T0 + t;
+          // drift, none on C's last frame (01's t = 0 has none)
+          const d = t < CUT ? 1 : K.smoothstep(0, 0.8, DUR - t);
+          p[0] += d * K.noise1(T * 0.6, 1) * 0.16; p[1] += d * K.noise1(T * 0.5, 2) * 0.1 + d * 0.08 * HR.hit("kick", T, 0.12);
+          camera.position.set(...p); camera.lookAt(...l);
+          camera.rotateZ(d * K.noise1(T * 0.35, 3) * 0.008);
+          camera.fov = 40 / (1 + 0.06 * K.pulse(t, ZERO, 0.2) + 0.03 * K.pulse(t, SLAM, 0.2) + 0.05 * K.pulse(t, HIT, 0.3));
+          camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+        }
+
+        // ---- drawing (pure functions of t) ----
+        const fogged = (p, k = 0.0105) => Math.exp(-Math.max(0, camera.position.distanceTo(p) - 10) * k);
+        const mid = new THREE.Vector3();
+        let WA = 1;
+        function seg(a, b, w, rgb, alpha) {
+          mid.addVectors(a, b).multiplyScalar(0.5);
+          const f = fogged(mid) * WA;
+          if (f * alpha > 0.01) lines.seg(a, b, w, rgb, alpha * f);
+        }
+        function ring(c, r, w, rgb, alpha, n = 10, dash = false) {
+          for (let i = 0; i < n; i += dash ? 2 : 1) {
+            const a0 = (i / n) * Math.PI * 2, a1 = ((i + 1) / n) * Math.PI * 2;
+            seg(V(c.x + Math.cos(a0) * r, c.y, c.z + Math.sin(a0) * r), V(c.x + Math.cos(a1) * r, c.y, c.z + Math.sin(a1) * r), w, rgb, alpha);
+          }
+        }
+        function dashed(a, b, w, rgb, alpha, on = 1.1, off = 1.1) {
+          const L = a.distanceTo(b);
+          for (let u = 0; u < L; u += on + off) seg(a.clone().lerp(b, u / L), a.clone().lerp(b, Math.min(1, (u + on) / L)), w, rgb, alpha);
+        }
+        const mix3 = (a, b, f) => [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
+        // a burnt piece: white-hot at the front, fire, then gone, lifting off the floor
+        function burn(age) {
+          if (age < 0.06) return [HOT, 1];
+          const f = K.smoothstep(0.08, 0.45, age);
+          return [mix3(FIRE, MUTED, f), 1 - f];
+        }
+        const up = (p, h) => V(p.x, p.y + h, p.z);
+        // the hot packets down main in C: on the slam, the last kicks and the final hit
+        const PACKETS = [SLAM, at(203.831), at(204.292), at(204.503), HIT];
+        function scene(t, target) {
+          aim(t);
+          const T = T0 + t, bass = HR.band("bass", T), isA = t < CUT;
+          WA = isA ? K.smoothstep(0, SHRINK1 + 0.2, t) : 1;
+          lines.clear();
+          // the floor and main, as in 01
+          for (let k = -7; k <= 8; k++) for (let z = 40; z > ZH - 40; z -= 6) seg(V(k * 7, 0, z), V(k * 7, 0, z - 6), 1.1, MUTED, 0.26);
+          for (let z = 36; z > ZH - 40; z -= 12) for (let x = -49; x < 56; x += 7) seg(V(x, 0, z), V(x + 7, 0, z), 1.1, MUTED, 0.2);
+          for (let z = 30; z > ZH; z -= 3) seg(V(0, 0, z), V(0, 0, Math.max(ZH, z - 3)), 3.2, BONE, 0.85);
+          for (const z of mainDots) ring(V(0, 0, z), 0.3 * (1 + 0.4 * HR.hit("kick", T, 0.16)), 2.2, BONE, 0.9 + 0.1 * bass, 12);
+          for (const z of [0, -84, ZM, ZH]) ring(V(0, 0, z), 0.62, 2.4, BONE, 1, 16);
+          if (isA) {
+            const k = kAt(t);
+            // the ghosts: `you`'s other lanes, dashed, their commits dashed rings; gone when the gc front passes
+            for (const run of field) {
+              const L = run.z0 - run.z1;
+              for (let u = 0; u < L; u += 2.4) {
+                const z = run.z0 - u, age = t - gcT(z);
+                if (age < 0) { seg(V(run.x, 0, z), V(run.x, 0, Math.max(run.z1, z - 1.2)), 1.5, MUTED, 0.55); continue; }
+                const [c, a] = burn(age); if (a < 0.03) continue;
+                const h = 2.2 * K.ease.outCubic(K.clamp(age / 0.5));
+                seg(V(run.x, h, z), V(run.x, h, Math.max(run.z1, z - 1.2)), age < 0.12 ? 3 : 1.6, c, a);
+              }
+              for (const z of run.dots) { const age = t - gcT(z); if (age < 0) ring(V(run.x, 0, z), 0.2, 1.4, MUTED, 0.5, 8, true); }
+            }
+            // `you`'s lane: its bends dashed; thirty days, the oldest out first (a fire flash, then a spent hint)
+            for (const [a, b] of [...bend(fork), ...bend(merge)]) { const age = t - gcT(a.z); if (age < 0) seg(a, b, 1.8, MUTED, 0.6); }
+            for (let z = ZF; z > ZM + 9; z -= 2.2) { const age = t - gcT(z); if (age < 0) seg(V(XY, 0, z), V(XY, 0, z - 1.2), 2, MUTED, 0.65); }
+            // the days: a post stands for each day left; on its tick it flashes white-hot, burns to fire and topples flat
+            days.forEach((z, j) => {
+              const base = V(XY, 0, z), age = t - gcT(z);
+              if (age >= 0) {
+                const [c, al] = burn(age); if (al < 0.03) return;
+                const h = 2.4 * K.ease.outCubic(K.clamp(age / 0.5));
+                seg(up(base, h), V(XY + PH, h, z), age < 0.12 ? 5 : 2.6, c, al); return;
+              }
+              if (j >= k) {                                          // a day left
+                const top = up(base, PH * (1 + 0.06 * HR.hit("kick", T, 0.12)));
+                seg(base, top, 5.5, BONE, 0.9); seg(V(XY, top.y, z + 0.5), V(XY, top.y, z - 0.5), 4, BONE, 0.9); return;
+              }
+              const a = t - spentAt(j), fl = Math.exp(-a / 0.14), th = (Math.PI / 2) * K.ease.outCubic(K.clamp(a / 0.22));
+              const top = V(XY + Math.sin(th) * PH, Math.cos(th) * PH, z);
+              seg(base, top, 5.5 + 3 * fl, mix3(FIRE, HOT, Math.min(1, fl * 1.6)), 0.4 + 0.6 * fl); // a spent day: an ember on the floor
+            });
+            // the gc front: a white-hot line across the floor running up the history
+            if (t >= G0 && t < G0 + GD + 0.1) {
+              const zg = gcZ(t), a = 1 - K.prog(t, G0 + GD, G0 + GD + 0.1);
+              seg(V(-14, 0.05, zg), V(32, 0.05, zg), 5, FIRE, a); seg(V(-14, 0.06, zg), V(32, 0.06, zg), 2, HOT, a);
+              for (let i = 0; i < 70; i++) {
+                const te = G0 + (i / 70) * GD, aa = t - te;
+                if (aa < 0 || aa > 0.45) continue;
+                const h1 = K.hash(i, 1), h2 = K.hash(i, 2), h3 = K.hash(i, 3), x0 = -12 + 42 * h1;
+                const v = V((h2 - 0.5) * 6, 3 + 5 * h3, 4 + 6 * h2), p0 = V(x0, 0.1, gcZ(te));
+                const p = p0.clone().addScaledVector(v, aa).add(V(0, -4.9 * aa * aa, 0));
+                if (p.y > 0) seg(p, p.clone().addScaledVector(v, -0.035), 2, FIRE, (1 - aa / 0.45) ** 2);
+              }
+            }
+          } else {
+            // C: main alone, linear after the rewrite, every commit on it hers; a hot packet runs down it on the slam and the last kicks
+            for (let z = -4; z > ZH; z -= 4) ring(V(0, 0, z), 0.17, 1.6, BONE, 0.7, 8);
+            for (const tk of PACKETS) {
+              const a = t - tk; if (a < 0 || a > 1.1) continue;
+              const z0 = 14 - 260 * K.ease.outCubic(a / 1.1), al = 1 - a / 1.1;
+              seg(V(0, 0.02, z0), V(0, 0.02, z0 - 6), tk === HIT ? 9 : 6, HOT, al);
+              seg(V(0, 0.02, z0), V(0, 0.02, z0 - 14), 4, FIRE, al);
+            }
+          }
+          lines.draw(renderer, camera, target);
+        }
+
+        // ---- the type in the space (A): the reflog's rows standing by their commits; screen-right is -x ----
+        const ctx = $("f37-type").getContext("2d");
+        const DPR = window.devicePixelRatio || 1;
+        $("f37-type").width = 1920 * DPR; $("f37-type").height = 1080 * DPR;
+        const MONO = '500 100px "IBM Plex Mono"';
+        const adv = (w, size) => { ctx.font = MONO; return [...w].reduce((s, ch) => s + (ctx.measureText(ch).width / 100) * size * 1.4, 0); };
+        const project = K.projector(THREE, camera);
+        function type(t) {
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+          ctx.clearRect(0, 0, 1920, 1080);
+          if (t >= CUT) return;
+          aim(t);
+          const a0 = K.smoothstep(SHRINK0, SHRINK1 + 0.2, t);
+          for (const [z, s, sel] of ROWS) {
+            const age = t - gcT(z);
+            let a = a0, h = 0.12; // standing on the floor beside the fence
+            if (age >= 0) { a *= Math.max(0, 1 - age / 0.3); h += 2.4 * K.ease.outCubic(K.clamp(age / 0.4)); }
+            if (a < 0.02) continue;
+            const size = sel ? 0.62 : 0.46, hot = age >= 0 && age < 0.12;
+            const x0 = XY + 0.8 + adv(s, size); // over the fence, ending at it (clear of the counter on the right)
+            K.textOnPath(ctx, project, (u) => ({ x: x0 - u, y: h, z }), s, size, {
+              font: MONO, alpha: a, fill: sel ? "240, 236, 229" : "136, 136, 128",
+              color: hot ? () => "255, 236, 220" : undefined, hot: (i) => sel && i < 7,
+            });
+          }
+        }
+
+        // ---- per frame: the count, the flips, typing, cursors, the page, the world ----
+        const nclip = $("f37-nclip"), n = $("f37-n"), nold = $("f37-nold"), num = $("f37-num"), lab = $("f37-lab"), unit = $("f37-unit"), sr = $("f37-stripr");
+        const page = $("f37-page"), cmd = $("f37-cmd"), cur = $("f37-cur"), cmd1 = $("f37-cmd1"), cur1 = $("f37-cur1");
+        const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+        const clamp01 = (x) => Math.max(0, Math.min(1, x));
+        let lastD = -1;
+        function render() {
+          const t = tl.time(), T = T0 + t;
+          renderer.setRenderTarget(null); renderer.clear();
+          const fast = (t > SHRINK0 && t < SHRINK1 + 0.2) || (t > ZERO - 0.02 && t < ZERO + 0.45) || (t > EVL[8] && t < EVL[24]);
+          if (fast) shutter((ts, target) => scene(ts, target), t, { samples: 8, angle: 270 });
+          else scene(t, null);
+          type(t);
+          // the count
+          const k = kAt(t), d = 30 - k, dt = t - EVL[k], zero = d === 0;
+          if (d !== lastD) {
+            n.textContent = String(d); nold.textContent = String(d + 1);
+            n.classList.toggle("f37-zero", zero);
+            unit.textContent = d === 1 ? "day" : "days";
+            lab.innerHTML = zero ? "commits by <i>you</i>" : "reflog expires in";
+            sr.innerHTML = zero ? 'commits by you &nbsp;<span class="f37-v">0</span>'
+              : 'reflog expires in &nbsp;<span class="f37-v">' + d + (d === 1 ? " day" : " days") + "</span>";
+            lastD = d;
+          }
+          // the flip: the old day slides up and out, the new one rises in (shorter in the sixteenth roll)
+          const fd = k >= 8 && k < 24 ? 0.07 : 0.11, u = k === 0 ? 1 : clamp01(dt / fd), e = 1 - Math.pow(1 - u, 3);
+          n.style.transform = `translateY(${((1 - e) * 46).toFixed(2)}%)`;
+          n.style.filter = e < 1 ? `blur(${((1 - e) * 7).toFixed(2)}px)` : "";
+          nold.style.transform = `translateY(${(-e * 60).toFixed(2)}%)`;
+          nold.style.opacity = (1 - e).toFixed(3);
+          nold.style.filter = e > 0 && e < 1 ? `blur(${(e * 7).toFixed(2)}px)` : "";
+          nclip.style.clipPath = u < 1 ? "inset(0)" : "inset(-8cqw)";
+          const amp = zero ? 0.14 : (STRONG[k] ? 0.05 : 0.03) + (d <= 3 ? 0.04 : 0) + (k === 0 ? 0.06 : 0);
+          num.style.transform = `scale(${(1 + amp * Math.exp(-Math.max(0, dt) / (zero ? 0.16 : 0.08))).toFixed(4)})`;
+          // the unreachable rows dim with age, the oldest first
+          ages.forEach((r, i) => { if (!zero) r.style.opacity = Math.max(0.16, 1 - ((30 - d) / 30) * (0.45 + 0.1 * i)).toFixed(3); });
+          // typing and the cursors (A's hidden while gc runs; C's ends lit, as 01 begins)
+          const [kg, sg] = textAt(keysGc, t); cmd.textContent = sg;
+          cur.style.opacity = t < ZERO && blink(t, kg) ? 1 : 0;
+          const [, sp] = textAt(keysPush, t); cmd1.textContent = sp;
+          cur1.style.opacity = t < at(203.8) || Math.floor((DUR - t) * 2) % 2 === 0 ? 1 : 0;
+          // the page: 36's coordinates, shrinking into the window
+          page.style.transform = `translate(${pg.x.toFixed(2)}px, ${pg.y.toFixed(2)}px) scale(${pg.s.toFixed(4)})`;
+          WOW.draw(tl, T0);
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines["37-end"] = tl;
       </script>
     </template>
   </body>

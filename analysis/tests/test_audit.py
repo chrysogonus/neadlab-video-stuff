@@ -97,3 +97,23 @@ def test_the_last_scene_keeps_the_videos_last_frame_and_difference():
     d = np.abs(np.diff(frames))
     k0, k1 = samples(0.5, 2.0, 4, len(frames))  # the scene runs to the video's end
     assert frames[k0:k1].max() == 9.0 and d[internal(k0, k1)].max() == 9.0
+
+
+def test_accent_light_counts_the_accent_and_its_halo_not_cream():
+    from audit import accent_light
+    f = np.zeros((10, 10, 3), np.uint8)
+    f[0:2] = (232, 93, 38)    # the accent
+    f[2:4] = (120, 50, 25)    # its halo: darker, less saturated, same hue
+    f[4:6] = (240, 236, 229)  # cream
+    assert accent_light(f) == pytest.approx(0.4)
+
+
+def test_layout_map_finds_the_same_layout_and_a_different_one():
+    from audit import layout_map
+    a = np.zeros((3, 180, 320), np.uint8)
+    a[:, 20:60, 20:200] = 255   # a headline top left
+    b = a.copy()
+    b[:, :, :] = 0
+    b[:, 110:170, 120:300] = 255  # a block bottom right
+    assert layout_map(a) @ layout_map(a.copy()) == pytest.approx(1.0)
+    assert layout_map(a) @ layout_map(b) < 0.5
