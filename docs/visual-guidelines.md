@@ -78,6 +78,9 @@ The audit reports these. A flag is a question about that moment, not a failure.
 
 ## How to measure
 
+`./vid audit <id> [--file <mp4>]` (analysis/audit.py) measures all of the below on a render, per scene and against
+the references, and writes the strips the reviewer reads (docs/REVIEW.md). By hand:
+
 - **Contact sheets:** 2 fps of the whole film, 5–10 fps strips around every drop and every scene switch.
 - **Luma and motion:** per frame at 10 fps, 320×180 gray. Luma is the mean (`signalstats` YAVG). Motion is the
   mean frame difference (`tblend=all_mode=difference`, then YAVG). Take per-second and per-scene medians; jolts are a

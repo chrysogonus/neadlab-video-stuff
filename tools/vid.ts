@@ -10,6 +10,7 @@
 //   ./vid snap <id> [<frame_id>] --at <t,...> stills at track seconds, of the project or of one frame on its own
 //                                            (checked first: a frame whose script throws fails here)
 //   ./vid proof <id> [--from <s>] --to <s>   a 60 fps proof render of the project between two track seconds
+//   ./vid audit <id> [--file <mp4>] [--name <n>]  measure a render against the references, per scene (step A)
 //   ./vid master <id>                        its render with the master's audio -> out/<id>.mp4
 // A step runs when an output is missing or its inputs' contents changed since it last ran (hashes in
 // work/steps.json). A step with no record whose outputs all exist is adopted as current: committed data
@@ -350,7 +351,7 @@ function proof(pid: string, from: number, to: number) {
   let t0 = from;
   for (const [tag, , start, dur] of index.matchAll(clip)) {
     const a = Number(start);
-    if (tag.includes('data-composition-src="compositions/frames/') && a <= from && from < a + Number(dur!)) t0 = a;
+    if (tag.includes('data-composition-src="compositions/frames/') && a <= from && from < r3(a + Number(dur!))) t0 = a;
   }
   if (!(t0 >= 0 && to > t0 && to <= total)) throw new Error(`usage: ./vid proof <id> [--from <s>] --to <s> (track seconds, 0 ≤ --from < --to ≤ ${total})`);
   const dir = path.join(vdir, '.hyperframes', `proof-${t0}-${to}`), out = path.join(vdir, 'renders', `proof-${t0}-${to}.mp4`);
@@ -358,7 +359,7 @@ function proof(pid: string, from: number, to: number) {
   mkdirSync(dir, { recursive: true });
   linkProject(vdir, dir);
   const html = index.replace(clip, (tag, kind, start, dur) => {
-    const a = Number(start), b = a + Number(dur);
+    const a = Number(start), b = r3(a + Number(dur)); // r3: 143.604 + 1.84 is 145.44400000000002, past a cut at 145.444
     if (tag.includes('data-composition-id="main"')) return tag.replace(`data-duration="${dur}"`, `data-duration="${r3(to - t0)}"`);
     if (b <= t0 || a >= to) return '';
     let out = tag.replace(`data-start="${start}"`, `data-start="${r3(Math.max(a - t0, 0))}"`)
@@ -391,16 +392,33 @@ function offsetComposition(dir: string, tag: string, off: number) {
   const file = path.join(dir, src), text = readFileSync(file, 'utf8');
   if (!text.includes('</template>')) throw new Error(`${src}: no </template>, so the proof cannot offset it`);
   writeFileSync(file, text.replace('</template>', `<script>(() => { // ./vid proof: this clip began ${off} s before the cut
-  const off = ${off}, tl = window.__timelines[${JSON.stringify(id)}];
-  if (!tl) throw new Error("./vid proof: " + ${JSON.stringify(id)} + " registers no timeline by the end of its script, so it cannot be offset");
-  for (const c of tl.getChildren(false, true, true)) {
-    const s = c.startTime() - off, e = c.endTime() - off;
-    if (e <= 0) { c.totalProgress(1); tl.remove(c); }
-    else if (s < 0) { tl.remove(c); tl.fromTo(c, { totalTime: -s }, { totalTime: c.totalDuration(), duration: e, ease: "none" }, 0); }
-    else c.startTime(s);
+  const off = ${off}, id = ${JSON.stringify(id)}, T = (window.__timelines = window.__timelines || {});
+  const shift = (tl) => {
+    for (const c of tl.getChildren(false, true, true)) {
+      const s = c.startTime() - off, e = c.endTime() - off;
+      if (e <= 0) { c.totalProgress(1); tl.remove(c); }
+      else if (s < 0) { tl.remove(c); tl.fromTo(c, { totalTime: -s }, { totalTime: c.totalDuration(), duration: e, ease: "none" }, 0); }
+      else c.startTime(s);
+    }
+  };
+  if (T[id]) shift(T[id]);
+  else { // registered later (after an await): shift it the moment it is registered
+    let v;
+    Object.defineProperty(T, id, { configurable: true, enumerable: true, get: () => v, set: (tl) => { v = tl; shift(tl); } });
   }
 })();</script>
 </template>`));
+}
+
+/**
+ * Pipeline step A (AGENTS.md): measure a render against the reference videos and per scene (analysis/audit.py).
+ * --file defaults to renders/video.mp4; a range proof (proof-<from>-<to>.mp4) is measured from its track second.
+ */
+function audit(pid: string, file: string | undefined, name: string | undefined) {
+  const video = path.resolve(file ?? path.join(ROOT, 'projects', pid, 'video', 'renders', 'video.mp4'));
+  if (!existsSync(video)) throw new Error(`${path.relative(ROOT, video)} is missing; render or proof it first`);
+  const offset = path.basename(video).match(/^proof-([\d.]+)-[\d.]+\.mp4$/)?.[1] ?? '0';
+  python('audit.py', ['--project', pid, '--video', video, '--offset', offset, '--name', name ?? path.basename(video, '.mp4')]);
 }
 
 function master(pid: string) {
@@ -421,13 +439,14 @@ try {
     process.exit(r.exitCode);
   }
   else if (cmd === 'new') create(id!);
-  else if (!id) throw new Error('usage: ./vid check | new|analyze|status|video|assemble|snap|proof|master <id> (see tools/vid.ts)');
+  else if (!id) throw new Error('usage: ./vid check | new|analyze|status|video|assemble|snap|proof|audit|master <id> (see tools/vid.ts)');
   else if (cmd === 'analyze') analyze(id, opt('force')?.split(',') ?? []);
   else if (cmd === 'status') status(id);
   else if (cmd === 'video') video(id);
   else if (cmd === 'assemble') assemble(id);
   else if (cmd === 'snap') snap(id, argv[2]?.startsWith('--') ? undefined : argv[2], opt('at'));
   else if (cmd === 'proof') proof(id, Number(opt('from') ?? 0), Number(opt('to')));
+  else if (cmd === 'audit') audit(id, opt('file'), opt('name'));
   else if (cmd === 'master') master(id);
   else throw new Error(`unknown command '${cmd}'`);
 } catch (e) {

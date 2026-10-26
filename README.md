@@ -53,6 +53,7 @@ weights into `analysis/.cache/`. Run `cd tools && bun install` once.
 ./vid snap my-song [02-sent] --at 12.5,14   # stills + contact sheet (one frame on its own, checked first, or the whole film)
 ./vid proof my-song --to 30       # a 60 fps proof of the first 30 s
 ./vid proof my-song --from 84 --to 92   # ... or of a range (from the start of the frame playing at 84 s)
+./vid audit my-song               # measure renders/video.mp4 against the references, per scene (AGENTS.md step A)
 ./vid master my-song              # renders/video.mp4 + the master's audio -> out/my-song.mp4
 ```
 

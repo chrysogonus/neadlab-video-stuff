@@ -17,6 +17,7 @@ projects/*/work/
 projects/*/video/assets/bgm.mp3
 projects/*/video/renders/
 projects/*/video/snapshots/
+projects/*/video/audit/*/strips/
 projects/*/video/.hyperframes/
 projects/*/video/backups/
 projects/*/video/.thumbnails/

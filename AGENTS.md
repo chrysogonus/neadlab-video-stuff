@@ -43,30 +43,45 @@ the song?
    check the contact sheet against the four questions and for repeated layouts. Stills judge the look, not the
    motion.
 4. **Motion.** Animate the opening and the first chorus with its hook yourself: they are the reference frames.
-   Render `./vid proof <id> --to <end of the first chorus>`. **Stop for the user's verdict on the motion.**
+   Render `./vid proof <id> --to <end of the first chorus>` and measure it (step A below:
+   `./vid audit <id> --file projects/<id>/video/renders/proof-<from>-<to>.mp4`). **Stop for the user's verdict on the
+   motion**, with the audit's film table beside the proof.
 5. **Build.** Dispatch frame-workers (the skill's Step 4) three at a time, each with `SYSTEM.md`, both reference
    frames and the rough still of its scene. Each worker checks its own scene:
    - `./vid snap <id> <frame_id> --at …` runs `hyperframes check` on the scene alone, then takes the stills. It fails
      when a script throws; in the film that would only be a dead scene.
-   - `./vid proof <id> --from <s> --to <s>` shows the scene moving.
+   - `./vid proof <id> --from <s> --to <s>` shows the scene moving, and `./vid audit` on that proof measures it.
 
    The kit and the traps that cost earlier rounds are in `assets/kit/README.md`. Review the signals in
    [docs/visual-guidelines.md](docs/visual-guidelines.md); never game them.
-6. **Review.** `./vid assemble <id>`, then `npx hyperframes check --no-browser-gpu`, then the whole film against
-   [docs/visual-guidelines.md](docs/visual-guidelines.md): a broken rule is a defect and gets fixed; a signal is a
-   flag you go and look at. Watch a proof around each drop (`./vid proof <id> --from <s> --to <s>`). Render `renders/video.mp4` once the review passes and
-   you have inspected the snapshots yourself (that answers the skill's render question).
+6. **Review: measure, critique, refine.** `./vid assemble <id>`, then `npx hyperframes check --no-browser-gpu` (a
+   broken rule is a defect and gets fixed), then render a draft of the whole film to `renders/video.mp4` and run the
+   three steps below on it until they pass or two rounds are done. The loop answers the skill's render question.
+   - **A. Measure.** `./vid audit <id> --name draft-<n>` measures the draft against LGTM and p(doom) (motion, big
+     moves, composition change, cuts, black area, mid-tones, detail, accent colour) and per scene, and writes
+     `audit/draft-<n>/report.md` with the weakest scenes against their music, still runs and unseen hits, plus
+     `strips/<scene>.jpg` for step B. A flag is a reason to look, not a target to game.
+   - **B. Critique.** A fresh reviewer agent, which built nothing, follows [docs/REVIEW.md](docs/REVIEW.md): it
+     scores every scene on idea, motion, transitions, legibility, colour and light, craft and variety from the strips,
+     checks the hook, the pacing curve and the ending, and writes `audit/draft-<n>/review.md` with the weakest scenes
+     ranked and one concrete fix each.
+   - **C. Refine.** Take the weakest scenes from A and B (5–10), write the round's brief (`REFINE-<n>.md`: the
+     film-level fixes and one fix per scene), dispatch workers three at a time as in stage 5, then re-render and run A
+     and B again. Done when no scene scores below 3 in the review and every film metric on the "below/above" side
+     has a written reason, or after two rounds; report what is left.
 7. **Deliver.** `./vid master <id>` writes `out/<id>.mp4`, the render with the master's audio (AAC 320k): the file
-   to upload. With it come:
+   to upload; keep an earlier master under another name rather than overwrite it. With it come:
    - subtitles (`.srt`) built from `lyrics.json`;
    - a technical check with ffprobe: duration equals the master's, constant fps, audio present;
-   - the thumbnail, exported from its approved composition.
+   - **the YouTube package check:** three thumbnail candidates (the t = 0 poster and two strong frames), compared
+     side by side at YouTube's small sizes (168×94 and 320×180) for legibility and click appeal; the first frame
+     matches the chosen thumbnail and the title; the last 20 s leave room for the end-screen elements (two video
+     cards and a subscribe button, 5–20 s).
 
    Loudness is the user's choice: report the master's LUFS and change nothing unless asked. Shorts are not part of
    this pipeline yet.
 
 **Not built yet.** Until these exist, do the work by hand:
-- **`./vid audit`.** It will report the signals. Until then, measure them as described in visual-guidelines.md.
 - **Lyric-event registration.** It will let the audit check that the right word appears on its time.
 - **`./vid deliver`.** It will build stage 7's package.
 
