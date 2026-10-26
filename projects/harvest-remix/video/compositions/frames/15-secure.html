@@ -19,6 +19,11 @@
            ring clamps). NEAD is rubber-stamped letter by letter on the bar's four beats: 162.325 / 162.798 / 163.249 /
            163.708. The end card is cream paper under the seal's light (paper whites), on screen 162.3 → 164.4.
          Archie's typed reply and the SEC-0001 toast (plant 2) survive as the card's deadpan fields.
+         v22 r1 (REFINE-1.md, worker I): room for YouTube's end screen. Everything lives in the upper-left ~58 % (x ≤ ~1110);
+         the right ~40 % stays ink for the whole span. The client opens at x ~160..1100 (thumbnail centre 338.3,405.3, ×1.068,
+         -2.12°: 23's ENV), pushes in ×1.2 (not ×1.62) about the seal; the stage layers zoom about the card's centre (584,384);
+         the tooltip unhooks visibly on the 161.873 downbeat and swings down to the left; the catalogue card is 1040×624 at
+         (64,72), same look and fields, card text darkened for contrast on cream.
          v20 copy: backups/v20-sources/compositions/frames/15-secure.html. -->
   </head>
   <body>
@@ -33,9 +38,13 @@
           position: absolute; inset: 0; overflow: hidden; container-type: size;
           --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
-          --paper-ink: #1a1916; --paper-muted: #6b665d;
+          --paper-ink: #1a1916; --paper-muted: #5F5B54; --paper-fire: #923915;
           background: var(--ink); color: var(--cream);
         }
+
+        /* r1: the stage layers zoom, pulse and punch about the content's centre (the end card's centre), not the frame's,
+           so the right ~40 % (YouTube's end-screen window) stays calm and dark */
+        #f15-mid, #f15-endl { transform-origin: 584px 384px; }
 
         /* ---- the mail client (all of it scales through #f15-objs, a plain 2D transform set in render) ---- */
         #f15-objs { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
@@ -50,7 +59,7 @@
         #f15-cur { position: absolute; left: 0; top: 0; width: 22px; height: 30px; overflow: visible; opacity: 0; }
 
         /* the padlock's tooltip, on paper: #f15-popfall swings it off the lock, #f15-pop opens it from its arrow */
-        #f15-popfall { position: absolute; left: 993px; top: 274px; width: 827px; height: 384px; transform-origin: 827px 0; }
+        #f15-popfall { position: absolute; left: 993px; top: 274px; width: 827px; height: 384px; transform-origin: 77px 0; }
         #f15-pop { position: absolute; inset: 0; opacity: 0; transform-origin: 77px 0; border-radius: 6px;
           background-color: #F2EEE7; background-size: 256px 256px;
           box-shadow: inset 0 1.5px 0 rgba(255,255,255,.9), inset 0 -2px 0 rgba(0,0,0,.08), 0 22px 40px rgba(0,0,0,.65), 0 4px 10px rgba(0,0,0,.4); }
@@ -68,51 +77,52 @@
         .f15-prow { position: absolute; left: 26px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 15px; letter-spacing: 0.14em;
           text-transform: uppercase; color: var(--paper-muted); white-space: nowrap; }
         .f15-prow i { font-style: normal; color: var(--paper-ink); }
-        .f15-prow b { font-weight: 600; color: var(--fire); }
+        .f15-prow b { font-weight: 600; color: var(--paper-fire); }
         #f15-pr1 { top: 321px; }
         #f15-pr2 { top: 348px; }
 
         /* ---- end card: the archive's catalogue card for OBJ 0001 ---- */
-        #f15-card { position: absolute; left: 240px; top: 130px; width: 1440px; height: 820px; opacity: 0; border-radius: 4px;
+        /* r1: the card sits in the upper-left (64..1104 × 72..696), its right edge clear of the end-screen window */
+        #f15-card { position: absolute; left: 64px; top: 72px; width: 1040px; height: 624px; opacity: 0; border-radius: 4px;
           background-color: var(--cream); background-size: 256px 256px;
-          box-shadow: inset 0 2px 0 rgba(255,255,255,.9), inset 0 -2px 0 rgba(0,0,0,.06), 0 34px 70px rgba(0,0,0,.72), 0 8px 18px rgba(0,0,0,.5); }
-        #f15-cwarm { position: absolute; left: 260px; top: -150px; width: 920px; height: 760px; border-radius: 50%; pointer-events: none;
+          box-shadow: inset 0 2px 0 rgba(255,255,255,.9), inset 0 -2px 0 rgba(0,0,0,.06), 0 30px 60px rgba(0,0,0,.72), 0 8px 18px rgba(0,0,0,.5); }
+        #f15-cwarm { position: absolute; left: 140px; top: -140px; width: 760px; height: 640px; border-radius: 50%; pointer-events: none;
           background: radial-gradient(closest-side, rgba(232,93,38,0.15), rgba(232,93,38,0.05) 55%, rgba(232,93,38,0) 100%); opacity: 0; }
         #f15-clamp { position: absolute; inset: 0; border-radius: 4px; pointer-events: none;
           background: linear-gradient(125deg, rgba(255,253,248,0.10) 0%, rgba(255,253,248,0) 36%, rgba(60,40,20,0.08) 78%, rgba(40,25,10,0.20) 100%); }
-        .f15-cf { position: absolute; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 15px; letter-spacing: 0.2em;
+        .f15-cf { position: absolute; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 14px; letter-spacing: 0.16em;
           text-transform: uppercase; color: var(--paper-muted); white-space: nowrap; }
-        .f15-cf b { font-weight: 600; color: var(--fire); }
-        .f15-cf em { font-family: "Instrument Serif"; font-style: italic; font-size: 22px; letter-spacing: 0; text-transform: none; color: var(--paper-ink); }
-        #f15-chr { position: absolute; left: 40px; right: 40px; top: 64px; height: 2px; background: var(--fire); transform-origin: 0 50%; }
+        .f15-cf b { font-weight: 600; color: var(--paper-fire); }
+        .f15-cf em { font-family: "Instrument Serif"; font-style: italic; font-size: 20px; letter-spacing: 0; text-transform: none; color: var(--paper-ink); }
+        #f15-chr { position: absolute; left: 32px; right: 32px; top: 50px; height: 2px; background: var(--fire); transform-origin: 0 50%; }
         #f15-chr::after { content: ""; position: absolute; left: 0; right: 0; top: 6px; height: 1px; background: rgba(232,93,38,0.5); }
-        #f15-emb { position: absolute; left: 570px; top: 72px; width: 300px; height: 300px; }
+        #f15-emb { position: absolute; left: 395px; top: 62px; width: 250px; height: 250px; }
         #f15-ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; opacity: 0; }
         #f15-eanchor { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
         #f15-esealpos { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
         #f15-eroll { position: absolute; left: 0; top: 0; width: 0; height: 0; }
-        #f15-eseal { position: absolute; left: -100px; top: -100px; width: 200px; height: 200px; overflow: visible; opacity: 0; }
+        #f15-eseal { position: absolute; left: -85px; top: -85px; width: 170px; height: 170px; overflow: visible; opacity: 0; }
         .f15-edrop { position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: #D4521E; opacity: 0; }
-        #f15-nead { position: absolute; left: 0; top: 378px; width: 1440px; text-align: center; font-family: "Barlow"; font-weight: 900;
-          font-size: 170px; line-height: 1; letter-spacing: 0.3em; padding-left: 0.3em; box-sizing: border-box; color: var(--paper-ink); white-space: nowrap; }
+        #f15-nead { position: absolute; left: 0; top: 314px; width: 1040px; text-align: center; font-family: "Barlow"; font-weight: 900;
+          font-size: 148px; line-height: 1; letter-spacing: 0.3em; padding-left: 0.3em; box-sizing: border-box; color: var(--paper-ink); white-space: nowrap; }
         .f15-nl { display: inline-block; position: relative; opacity: 0; }
-        #f15-rule { position: absolute; left: 270px; top: 576px; width: 900px; height: 1px; background: rgba(26,25,22,0.35); transform-origin: 50% 50%; }
+        #f15-rule { position: absolute; left: 190px; top: 484px; width: 660px; height: 1px; background: rgba(26,25,22,0.35); transform-origin: 50% 50%; }
         #f15-rule::before, #f15-rule::after { content: ""; position: absolute; top: -0.5px; width: 40px; height: 2px; background: var(--fire); }
         #f15-rule::before { left: 0; }
         #f15-rule::after { right: 0; }
         #f15-rule i { position: absolute; left: 50%; top: -5px; width: 10px; height: 10px; margin-left: -5px; background: var(--fire); transform: rotate(45deg); }
-        #f15-title { position: absolute; left: 0; top: 598px; width: 1440px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
-          font-size: 39px; line-height: 1.2; letter-spacing: 0.24em; padding-left: 0.24em; box-sizing: border-box; text-transform: uppercase;
+        #f15-title { position: absolute; left: 0; top: 500px; width: 1040px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
+          font-size: 32px; line-height: 1.2; letter-spacing: 0.22em; padding-left: 0.22em; box-sizing: border-box; text-transform: uppercase;
           color: var(--paper-ink); white-space: nowrap; }
-        #f15-t2 { color: var(--fire); }
+        #f15-t2 { color: #C4501E; }
         #f15-title .hr-g { min-width: 0.6em; text-align: center; }
-        #f15-file { position: absolute; left: 0; top: 670px; width: 1440px; display: flex; justify-content: center; align-items: center; gap: 22px;
-          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--paper-muted); white-space: nowrap; }
+        #f15-file { position: absolute; left: 0; top: 552px; width: 1040px; display: flex; justify-content: center; align-items: center; gap: 20px;
+          font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--paper-muted); white-space: nowrap; }
         #f15-file span { opacity: 0; }
         #f15-bars { width: 190px; height: 20px; overflow: visible; }
-        #f15-hole { position: absolute; left: 704px; top: 752px; width: 32px; height: 32px; border-radius: 50%; background: #0A0A0A;
+        #f15-hole { position: absolute; left: 507px; top: 581px; width: 26px; height: 26px; border-radius: 50%; background: #0A0A0A;
           box-shadow: inset 0 4px 5px rgba(0,0,0,.9), 0 1.5px 0 rgba(255,255,255,.75), 0 -1px 0 rgba(0,0,0,.12); }
-        #f15-cb1, #f15-cb2 { top: 760px; }
+        #f15-cb1, #f15-cb2 { top: 584px; }
       </style>
 
       <div data-hf-id="hf-8tze" id="root" data-composition-id="15-secure" data-width="1920" data-height="1080" data-duration="4.342">
@@ -211,8 +221,8 @@
         <div data-hf-id="hf-2d2f" class="hr-layer" id="f15-endl" data-depth="0.8">
           <div id="f15-card">
             <div id="f15-cwarm"></div>
-            <div class="f15-cf" id="f15-ct1" style="left: 40px; top: 30px;">OBJ 0001 · FILED TUE 09.03.2021 · 14:02</div>
-            <div class="f15-cf" id="f15-ct2" style="right: 40px; top: 30px;">X25519 · <b>COPY HELD</b></div>
+            <div class="f15-cf" id="f15-ct1" style="left: 32px; top: 20px;">OBJ 0001 · FILED TUE 09.03.2021 · 14:02</div>
+            <div class="f15-cf" id="f15-ct2" style="right: 32px; top: 20px;">X25519 · <b>COPY HELD</b></div>
             <div id="f15-chr"></div>
             <div data-hf-id="hf-trrz" id="f15-emb" data-layout-ignore>
               <svg data-hf-id="hf-wvfa" id="f15-ring" viewBox="-165 -165 330 330">
@@ -235,8 +245,8 @@
             <div data-hf-id="hf-pzly" id="f15-rule"><i data-hf-id="hf-wt6k"></i></div>
             <div data-hf-id="hf-1e0u" id="f15-title"><span data-hf-id="hf-fqbl" id="f15-t1">Harvest now,</span> <span data-hf-id="hf-v0tt" id="f15-t2">decrypt later</span></div>
             <div data-hf-id="hf-zb4u" id="f15-file"><span data-hf-id="hf-9hsl">OBJ 0001</span><svg data-hf-id="hf-gudv" id="f15-bars" viewBox="0 0 190 20" data-layout-ignore></svg><span data-hf-id="hf-sex4">STATUS · READ 1 TIME</span></div>
-            <div class="f15-cf" id="f15-cb1" style="left: 40px;">RE: MY LOVE · <em>lovely letter.</em> — THE ARCHIVE</div>
-            <div class="f15-cf" id="f15-cb2" style="right: 40px;">SEC-0001 · <b>MOVED TO NEXT QUARTER (×19)</b></div>
+            <div class="f15-cf" id="f15-cb1" style="left: 32px;">RE: MY LOVE · <em>lovely letter.</em> — THE ARCHIVE</div>
+            <div class="f15-cf" id="f15-cb2" style="right: 32px;">SEC-0001 · <b>MOVED TO NEXT QUARTER (×19)</b></div>
             <div id="f15-hole"></div>
             <div id="f15-clamp"></div>
           </div>
@@ -380,7 +390,8 @@
           const LK = { k: 0 };                    // the shackles pop
           const CU = { x: 1530, y: 760 };         // the cursor (objs px)
           const CARD = { y: 860, k: 0 };          // the card rises; k = impact recoil (px)
-          const seg = (o, from, to, a, b, ease) => tl.fromTo(o, from, { ...to, duration: Math.max(0.01, b - a), ease, immediateRender: false, force3D: false }, a);
+          const seg = (o, from, to, a, b, ease) => tl.fromTo(o, from, { ...to, duration: Math.max(0.01, b - a), ease, immediateRender: false,
+            ...(typeof o === "string" || o instanceof Element ? { force3D: false } : {}) }, a);
           const punch = (t, z, rot, settle = 0.55) => {
             tl.fromTo(P, { z: 0, rot: 0 }, { z, rot, duration: 0.06, ease: "power3.out", immediateRender: false }, t);
             tl.fromTo(P, { z, rot }, { z: 0, rot: 0, duration: settle, ease: "elastic.out(1, 0.5)", immediateRender: false }, t + 0.06);
@@ -389,7 +400,7 @@
           // 1 — the push: log-space zoom about the envelope's seal, the stage camera settling with it
           seg(U, { u: 0 }, { u: 1 }, 0, 0.68, "power2.inOut");
           seg(B, { z: 1.1, x: 30 }, { z: 1.0, x: 0 }, 0, 0.68, "power2.inOut");
-          seg(Q, { q: 0 }, { q: 0.04 }, 0.68, L(POP), "sine.inOut");
+          seg(Q, { q: 0 }, { q: 0.06 }, 0.68, L(POP), "sine.inOut");
           HR.exit(tl, $("f15-kicker"), 0.1, { dir: -1, dur: 0.3 });
           // the cursor drifts onto the padlock and hovers it; the hover lights the icon's background
           tl.fromTo("#f15-cur", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none", immediateRender: false }, 0.12);
@@ -397,7 +408,7 @@
           seg(CU, { x: 1074, y: 249 }, { x: 1079, y: 253 }, 0.5, L(POP), "sine.inOut");
           tl.fromTo("#f15-hover", { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none", immediateRender: false }, 0.46);
           // the read receipt flips on the kick
-          tl.fromTo("#f15-status", { scale: 1.25, svgOrigin: "1707 307" }, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(READ));
+          tl.fromTo("#f15-status", { scale: 1.25, svgOrigin: "1707 307" }, { scale: 1, svgOrigin: "1707 307", duration: 0.4, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(READ));
 
           // 2 — the tooltip drops open from its arrow; the line builds in it
           seg("#f15-pop", { opacity: 0, scaleX: 0.55, scaleY: 0.1 }, { opacity: 1, scaleX: 1, scaleY: 1 }, L(160.58), L(160.755), "power3.out");
@@ -407,15 +418,18 @@
           tl.set(["#f15-pr1", "#f15-pr2"], { clipPath: "inset(-20% 100% -20% 0)" }, 0);
           tl.fromTo("#f15-pr1", { clipPath: "inset(-20% 100% -20% 0)" }, { clipPath: "inset(-20% 0% -20% 0)", duration: 0.32, ease: "steps(16)", immediateRender: false }, L(160.95));
           tl.fromTo("#f15-pr2", { clipPath: "inset(-20% 100% -20% 0)" }, { clipPath: "inset(-20% 0% -20% 0)", duration: 0.36, ease: "steps(18)", immediateRender: false }, L(161.2));
-          tl.fromTo("#f15-prule", { scaleX: 0, transformOrigin: "0 50%" }, { scaleX: 1, duration: 0.3, ease: "expo.out", immediateRender: false, force3D: false }, L(160.9));
+          tl.fromTo("#f15-prule", { scaleX: 0, transformOrigin: "0 50%" }, { scaleX: 1, transformOrigin: "0 50%", duration: 0.3, ease: "expo.out", immediateRender: false, force3D: false }, L(160.9));
 
           // 3 — on the downbeat both padlocks pop open; chips fly off the hinge; the tooltip loses its hook and falls
           tl.fromTo(LK, { k: 0 }, { k: 1, duration: 0.16, ease: "back.out(2.6)", immediateRender: false }, L(POP));
           WOW.burst(tl, $("f15-psparks"), { x: 38, y: 22, t: L(POP), n: 12, speed: 520, size: [3, 8], dur: 0.45, gravity: 900, spread: 120, aim: -120, cream: 0.5, seed: 21 });
-          punch(L(POP), 0.015, 0.3, 0.45);
-          seg(PF, { a: 0 }, { a: -34 }, L(POP) + 0.02, L(162.14), "power2.in");
-          seg(PF, { a: -34 }, { a: -48 }, L(162.14), L(162.34), "power1.out");
-          seg(PF, { y: 0 }, { y: 640 }, L(161.95), L(162.32), "power2.in");
+          punch(L(POP), 0.024, 0.4, 0.45);
+          // r1: the tooltip visibly unhooks on the downbeat (a drop and a tilt about its arrow), then swings down to the
+          // left and falls, never out into the right-hand end-screen window
+          seg(PF, { a: 0, y: 0 }, { a: 4.5, y: 18 }, L(POP), L(POP) + 0.09, "power3.out");
+          seg(PF, { a: 4.5 }, { a: 36 }, L(161.98), L(162.2), "power2.in");
+          seg(PF, { a: 36 }, { a: 44 }, L(162.2), L(162.34), "power1.out");
+          seg(PF, { y: 18 }, { y: 700 }, L(161.98), L(162.32), "power2.in");
           seg(R, { r: 0 }, { r: 1 }, L(161.95), L(162.34), "power2.in");
 
           // 4 — the seal rolls to centre (render) while the card rises; it lands on the kick
@@ -432,21 +446,25 @@
           seg("#f15-eseal", { scaleX: 1.1, scaleY: 0.9 }, { scaleX: 1, scaleY: 1 }, E0 + 0.05, E0 + 0.5, "elastic.out(1, 0.45)");
           edrops.forEach(({ d, dx, dy, s }, i) => {
             const t0 = E0 + (i % 3) * 0.008;
-            tl.fromTo(d, { opacity: 1, x: 0, y: 0, scale: s }, { x: dx, y: dy, duration: 0.34, ease: "power3.out", immediateRender: false }, t0);
+            tl.fromTo(d, { opacity: 1, x: 0, y: 0, scale: s }, { opacity: 1, x: dx, y: dy, scale: s, duration: 0.34, ease: "power3.out", immediateRender: false }, t0);
           });
           seg("#f15-ring", { opacity: 0, scale: 0.86, rotation: -40 }, { opacity: 1, scale: 1, rotation: 0 }, E0 - 0.1, E0 + 0.5, "power3.out");
           seg("#f15-ring", { rotation: 0 }, { rotation: 9 }, E0 + 0.5, DUR, "none");
           seg("#f15-cwarm", { opacity: 0 }, { opacity: 1 }, E0 - 0.05, E0 + 0.15, "power2.out");
+          // r2: every property in both from and to (the renderer drops from-only props: NEAD flashed one frame each)
+          tl.set(letters, { opacity: 0 }, 0);
+          tl.set(edrops.map((e) => e.d), { opacity: 0 }, 0);
           STAMPS.forEach((T, i) => {
             const t = L(T), n = letters[i];
             tl.fromTo(n, { opacity: 1, scale: 1.16, rotation: tilt[i] * 2, x: nudge[i][0], y: nudge[i][1] - 6 },
-              { scale: 1, rotation: tilt[i], x: nudge[i][0], y: nudge[i][1], duration: 0.09, ease: "power3.out", immediateRender: false, force3D: false }, t);
+              { opacity: 1, scale: 1, rotation: tilt[i], x: nudge[i][0], y: nudge[i][1], duration: 0.09, ease: "power3.out", immediateRender: false, force3D: false }, t);
             tl.fromTo(CARD, { k: 0 }, { k: i ? 5 : 12, duration: 0.04, ease: "power2.out", immediateRender: false }, t);
             tl.fromTo(CARD, { k: i ? 5 : 12 }, { k: 0, duration: 0.45, ease: "elastic.out(1, 0.5)", immediateRender: false }, t + 0.04);
-            punch(t, i ? 0.01 : 0.022, 0, 0.5);
+            punch(t, i ? 0.01 : 0.022, 0, 0.4);
           });
-          seg(B, { z: 1.0 }, { z: 1.07 }, E0, DUR, "sine.inOut");
-          seg(B, { y: 0, x: 0 }, { y: -10, x: 24 }, E0, DUR, "sine.inOut");
+          // the end card's slow breath, about its own centre (the layers' origin), so its right edge stays clear
+          seg(B, { z: 1.0 }, { z: 1.05 }, E0, DUR, "sine.inOut");
+          seg(B, { y: 0, x: 0 }, { y: -8, x: 14 }, E0, DUR, "sine.inOut");
           tl.fromTo(["#f15-ct1", "#f15-ct2"], { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out", stagger: 0.05, immediateRender: false }, E0 + 0.04);
           tl.set(["#f15-ct1", "#f15-ct2", "#f15-cb1", "#f15-cb2"], { opacity: 0 }, 0);
           seg("#f15-chr", { scaleX: 0 }, { scaleX: 1 }, E0 + 0.02, E0 + 0.36, "expo.out");
@@ -456,7 +474,7 @@
           const TITLE_AT = (i) => E0 + 0.14 + i * 0.012 + 0.12;
           tl.fromTo("#f15-file span", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out", stagger: 0.06, immediateRender: false }, L(STAMPS[1]) + 0.02);
           tl.set(".f15-bar", { scaleY: 0, transformOrigin: "50% 100%" }, 0);
-          tl.fromTo(".f15-bar", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.14, ease: "power3.out", stagger: 0.004, immediateRender: false }, L(STAMPS[1]));
+          tl.fromTo(".f15-bar", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, transformOrigin: "50% 100%", duration: 0.14, ease: "power3.out", stagger: 0.004, immediateRender: false }, L(STAMPS[1]));
           tl.fromTo(["#f15-cb1", "#f15-cb2"], { opacity: 0 }, { opacity: 1, duration: 0.22, ease: "power2.out", stagger: 0.08, immediateRender: false }, L(STAMPS[2]) + 0.02);
           tl.set({}, {}, DUR);
 
@@ -469,13 +487,17 @@
             const k = HR.hit("kick", T, 0.14) * 0.014;
             return { s: 1 + (cam.z - 1) * d + k * d, tx: -(cam.x + dx) * d, ty: -(cam.y + dy) * d, r: ((cam.rot + dr) * d) * Math.PI / 180 };
           };
+          const OX = 584, OY = 384;                          // the layers' transform origin (CSS above): the card's centre
           const toScreen = (Lr, x, y) => {
-            const vx = x - 960, vy = y - 540, c = Math.cos(Lr.r), s = Math.sin(Lr.r);
-            return [960 + Lr.tx + Lr.s * (vx * c - vy * s), 540 + Lr.ty + Lr.s * (vx * s + vy * c)];
+            const vx = x - OX, vy = y - OY, c = Math.cos(Lr.r), s = Math.sin(Lr.r);
+            return [OX + Lr.tx + Lr.s * (vx * c - vy * s), OY + Lr.ty + Lr.s * (vx * s + vy * c)];
           };
-          const ZS = 1.62, SX = 1124, SY = 411;           // the seal's place in the client (objs px)
-          const A0 = [1124, 389], A1 = [512.7, 411.9];      // its place on screen: the opening instant, the pushed-in frame
-          const SEAL_D = 128 * 0.36;                        // the thumbnail seal's box (objs px); the card's is 200
+          // r1: the client lives in the left ~57 % of the frame. Opening: at scale 1 with the seal at A0 (layer px), the
+          // client spans ~160..1100 on screen; pushed in (×1.2) it spans ~30..1086, the tooltip ~70..1062.
+          const Z0 = 1.0, ZS = 1.2, SX = 1124, SY = 411;   // opening and pushed-in scales; the seal's place in the client (objs px)
+          const A0 = [370, 400], A1 = [227, 334];           // the seal's place (layer px): the opening instant, the pushed-in frame
+          const SEAL_D = 128 * 0.36, SEAL_E = 170;           // the thumbnail seal's box (objs px); the card's
+          const CARD_X = 64 + 520, CARD_Y = 72 + 187;        // the card's emblem centre (layer px, card at rest)
           const objs = $("f15-objs"), popfall = $("f15-popfall"), cur = $("f15-cur"), card = $("f15-card");
           const sealpos = $("f15-esealpos"), roll = $("f15-eroll"), disc = $("f15-eseal");
           const pshk = $("f15-pshk"), ishk = $("f15-ishk"), pl2 = $("f15-pl2"), cwarm = $("f15-cwarm");
@@ -488,10 +510,10 @@
             HR.draw(tl);
 
             // the client: push (about the seal), slow push and recede (about the frame centre)
-            const u = U.u, s = Math.exp(u * Math.log(ZS));
+            const u = U.u, s = Math.exp(Math.log(Z0) + u * (Math.log(ZS) - Math.log(Z0)));
             let tx = A0[0] + (A1[0] - A0[0]) * u - s * SX, ty = A0[1] + (A1[1] - A0[1]) * u - s * SY;
             const m = (1 + Q.q) * (1 - 0.24 * R.r);
-            tx = 960 + m * (tx - 960); ty = 540 + m * (ty - 540) + 30 * R.r;
+            tx = OX + m * (tx - OX); ty = OY + m * (ty - OY) + 30 * R.r;
             const S = s * m;
             objs.style.transform = `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px) scale(${S.toFixed(5)})`;
             objs.style.opacity = (1 - R.r).toFixed(3);
@@ -518,10 +540,10 @@
             if (t >= ROLL0 && t < ROLL1) {
               const e = Math.pow(clamp01((t - ROLL0) / (ROLL1 - ROLL0)), 1.7);
               const a = toScreen(Lm, tx + S * SX, ty + S * SY);
-              const rest = toScreen(Le, 240 + 720, 130 + 222 + CARD.y + CARD.k);
+              const rest = toScreen(Le, CARD_X, CARD_Y + CARD.y + CARD.k);
               const kc = Le.s, d0 = SEAL_D * S * Lm.s;
               const px = a[0] + (rest[0] - a[0]) * e, py = a[1] + (rest[1] - a[1]) * e - 150 * Math.sin(Math.PI * e) * (1 - 0.35 * e);
-              const sc = Math.exp(Math.log(d0 / (200 * kc)) * (1 - e));
+              const sc = Math.exp(Math.log(d0 / (SEAL_E * kc)) * (1 - e));
               sealpos.style.transform = `translate(${((px - rest[0]) / kc).toFixed(2)}px, ${((py - rest[1]) / kc).toFixed(2)}px)`;
               roll.style.transform = `rotate(${(-460 * (1 - e)).toFixed(2)}deg) scale(${sc.toFixed(4)})`;
             } else {

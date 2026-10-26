@@ -19,7 +19,12 @@
          v19 (V19.md §1): the lightning, rings and washes are gone. Each lock blows the bank apart along its axle into an
          exploded view (wiring discs, spring pins, axle, entry wheel, reflector, deadpan callouts) that slams back shut on
          the next strong kick with sparks from the seams; snares rattle it open a crack before a lock; "later" blows it
-         apart and the parts fly past the lens into the hook. -->
+         apart and the parts fly past the lens into the hook.
+         v22 r2 (REFINE-2.md, worker C): no flat rings, rays, burst lines or flashes left in the hook (rule 9). The drums
+         whir off "later·" on the 85.147 downbeat and spin up again as the bank flies apart; on "harvest" (96.82) they slam
+         to a stop in a close shot, sparks fly off the gear teeth and the word is printed off the window row; they click
+         a face on the 97.46 snare. "now," (97.653) is printed on a cream paper strip fed out of the bank's output slot,
+         a feed step per kick. The lockup (99.28 → the frame's last instant) is unchanged; 09 continues it. -->
   </head>
   <body>
     <template>
@@ -77,30 +82,44 @@
         .f08-hkick::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor; vertical-align: middle; margin-right: 16px; }
         .f08-hword { position: absolute; left: 0; right: 0; text-align: center; font-family: "Barlow"; font-weight: 900; line-height: 1;
           letter-spacing: -0.04em; white-space: nowrap; }
-        /* shot 1: harvest — the reaping sweep */
-        #f08-h1 { background: radial-gradient(ellipse 70% 70% at 50% 52%, #1f1611, #111111 70%); }
-        #f08-hrings { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
-        #f08-hsweep { position: absolute; left: -240px; top: -640px; width: 2400px; height: 2400px; border-radius: 50%; mix-blend-mode: screen;
-          background: conic-gradient(from 0deg, rgba(232, 93, 38, 0) 0deg, rgba(232, 93, 38, 0) 280deg, rgba(232, 93, 38, 0.22) 335deg,
-            rgba(255, 196, 160, 0.7) 358deg, rgba(255, 246, 234, 0.95) 359.6deg, rgba(232, 93, 38, 0) 360deg); }
-        #f08-hglyphs { position: absolute; inset: 0; }
-        #f08-hglyphs b { position: absolute; left: 0; top: 0; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 30px; letter-spacing: 0.06em;
-          color: var(--fire); opacity: 0; }
-        /* v17: a calm ink plate behind "harvest": the rings and the beam dim there and no hex runs through the letters */
-        #f08-hcalm { position: absolute; left: 100px; top: 300px; width: 1720px; height: 580px; border-radius: 50%;
-          background: radial-gradient(closest-side, rgba(10, 10, 10, 0.86), rgba(10, 10, 10, 0.7) 55%, rgba(10, 10, 10, 0) 100%); }
-        #f08-hw1 { top: 352px; font-size: 420px; color: var(--fire);
-          text-shadow: 0 0 26px rgba(232, 93, 38, 0.6), 0 0 90px rgba(232, 93, 38, 0.3); }
-        /* shot 2: now — the flash to cream */
-        #f08-h2 { background: radial-gradient(ellipse 80% 80% at 50% 50%, #F7F3EC, #F0ECE5 50%, #d9d2c4); }
-        #f08-hburst { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
-        #f08-hw2 { top: 140px; font-size: 760px; color: var(--ink);
-          }
+        /* shot 1: harvest — v22 r2: the drums slam to a stop in a close shot and the word is printed off the window row */
+        #f08-h1 { background: #0A0A0A; }
+        /* v17: a calm ink plate behind "harvest" (the drums dim there) */
+        #f08-hcalm { position: absolute; left: 100px; top: 300px; width: 1720px; height: 540px; border-radius: 50%;
+          background: radial-gradient(closest-side, rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0.6) 55%, rgba(10, 10, 10, 0) 100%); }
+        #f08-hw1 { top: 352px; font-size: 420px; color: var(--fire); transform-origin: 50% 50%;
+          text-shadow: 0 0 26px rgba(232, 93, 38, 0.6), 0 0 90px rgba(232, 93, 38, 0.3), 0 6px 18px rgba(10, 10, 10, 0.9); }
+        /* shot 2: now — v22 r2: a cream paper strip fed out of the bank's output slot */
+        #f08-h2 { background: radial-gradient(ellipse 70% 60% at 50% 92%, #2a170d, #120c08 55%, #0A0A0A 85%); }
+        #f08-hstrip { position: absolute; left: 150px; top: 40px; width: 1620px; height: 1500px;
+          background:
+            radial-gradient(circle, #0A0A0A 0 9px, rgba(10, 10, 10, 0) 10px) left 14px top 8px / 40px 50px repeat-y,
+            radial-gradient(circle, #0A0A0A 0 9px, rgba(10, 10, 10, 0) 10px) right 14px top 8px / 40px 50px repeat-y,
+            linear-gradient(90deg, #cfc7b8, #F3EFE8 5%, #F0ECE5 95%, #c9c1b2);
+          box-shadow: 0 0 0 1px rgba(10, 10, 10, 0.4), 0 30px 80px rgba(0, 0, 0, 0.7); }
+        /* the strip's printed margins: a perforation rule each side */
+        #f08-hstrip::before, #f08-hstrip::after { content: ""; position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px dashed rgba(95, 91, 84, 0.45); }
+        #f08-hstrip::before { left: 64px; } #f08-hstrip::after { right: 64px; }
+        #f08-hstrip .f08-hkick { left: 110px; top: 34px; }
+        #f08-hw2 { top: 92px; font-size: 600px; color: var(--ink); }
         #f08-hw2 .f08-hcomma { color: var(--fire); }
-        #f08-hts { position: absolute; left: 96px; bottom: 76px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 22px; letter-spacing: 0.16em;
+        #f08-hts { position: absolute; left: 110px; top: 712px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 22px; letter-spacing: 0.16em;
           color: #5F5B54; white-space: nowrap; }
         #f08-hts b { color: #C8481A; font-weight: 600; }
-        #f08-hflash { position: absolute; inset: 0; background: #FFF8EE; opacity: 0; }
+        /* the paper turns into the dark of the slot */
+        #f08-hshade { position: absolute; left: 0; top: 760px; width: 1920px; height: 160px;
+          background: linear-gradient(180deg, rgba(10, 10, 10, 0), rgba(10, 10, 10, 0.55)); }
+        #f08-hslot { position: absolute; left: -40px; top: 900px; width: 2000px; height: 220px;
+          background: linear-gradient(180deg, #4a443c 0, #2c2823 6px, #1a1714 40px, #0b0a09 120px); box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8); }
+        #f08-hslit { position: absolute; left: 190px; top: -3px; width: 1540px; height: 6px; border-radius: 3px;
+          background: linear-gradient(90deg, rgba(232, 93, 38, 0), #E85D26 8%, #FFD9C2 50%, #E85D26 92%, rgba(232, 93, 38, 0));
+          box-shadow: 0 0 18px rgba(232, 93, 38, 0.8), 0 0 60px rgba(232, 93, 38, 0.35); }
+        .f08-hroll { position: absolute; left: 150px; width: 1620px; height: 34px; border-radius: 17px;
+          background-image: repeating-linear-gradient(180deg, #3a352e 0 6px, #16140f 6px 14px), linear-gradient(180deg, #5a544a, #141210);
+          background-blend-mode: multiply; }
+        #f08-hroll1 { top: 14px; } #f08-hroll2 { top: 56px; }
+        #f08-hslab { position: absolute; left: 190px; top: 120px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 16px; letter-spacing: 0.16em;
+          color: #888880; white-space: nowrap; }
         /* shot 3: decrypt — the flare */
         #f08-h3 { background: #111111; }
         #f08-hghost { position: absolute; left: -40px; top: 30px; width: 2400px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 30px;
@@ -112,8 +131,6 @@
         #f08-hflare { position: absolute; left: -200px; top: 540px; width: 2320px; height: 30px; border-radius: 15px; opacity: 0; filter: blur(5px);
           background: linear-gradient(90deg, rgba(232, 93, 38, 0), rgba(232, 93, 38, 0.8) 25%, #FFF6EA 48%, #FFFFFF 50%, #FFF6EA 52%, rgba(232, 93, 38, 0.8) 75%, rgba(232, 93, 38, 0));
           mix-blend-mode: screen; }
-        .f08-hghostc { position: absolute; border-radius: 50%; opacity: 0; mix-blend-mode: screen;
-          background: radial-gradient(closest-side, rgba(232, 93, 38, 0), rgba(232, 93, 38, 0.22) 70%, rgba(255, 214, 186, 0.4) 92%, rgba(232, 93, 38, 0) 100%); }
         /* shot 4: the lockup on orange */
         /* v17: shot 4 pushes in about a point left of the lockup's centre, so the incoming push clips neither end */
         #f08-h4 { transform-origin: 500px 540px; background: radial-gradient(ellipse 80% 80% at 40% 45%, #1c120c, #0A0A0A 70%); }
@@ -145,24 +162,27 @@
         <div data-hf-id="hf-zgr1" id="f08-hk">
           <div data-hf-id="hf-42f0" class="f08-hs" id="f08-h1">
             <div data-hf-id="hf-821p" class="f08-hcam" id="f08-hc1">
-              <svg data-hf-id="hf-f1aq" id="f08-hrings" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg>
-              <div data-hf-id="hf-gymr" id="f08-hsweep" data-layout-ignore></div>
-              <div data-hf-id="hf-icss" id="f08-hglyphs" data-layout-ignore></div>
+              <canvas class="f08-cv" id="f08-h1c" width="1920" height="1080" data-layout-ignore></canvas>
               <div id="f08-hcalm" data-layout-ignore></div>
-              <div class="f08-hfx" id="f08-hfx1" data-layout-ignore></div>
               <div data-hf-id="hf-ol4d" class="f08-hword" id="f08-hw1">harvest</div>
             </div>
             <div data-hf-id="hf-vtf7" class="f08-hkick" style="color: var(--fire)">HARVESTING · ENCRYPTED COPIES</div>
           </div>
           <div data-hf-id="hf-cqav" class="f08-hs" id="f08-h2">
             <div data-hf-id="hf-c05q" class="f08-hcam" id="f08-hc2">
-              <svg data-hf-id="hf-m21d" id="f08-hburst" viewBox="0 0 1920 1080" aria-hidden="true" data-layout-ignore></svg>
-              <div class="f08-hfx" id="f08-hfx2" data-layout-ignore></div>
-              <div data-hf-id="hf-11zb" class="f08-hword" id="f08-hw2"><span data-hf-id="hf-jrcp" id="f08-hw2w">now</span><span data-hf-id="hf-wh1l" class="f08-hcomma">,</span></div>
+              <div id="f08-hstrip">
+                <div data-hf-id="hf-ikbo" class="f08-hkick" style="color: #5F5B54">COPY · OBJ 0001</div>
+                <div data-hf-id="hf-11zb" class="f08-hword" id="f08-hw2"><span data-hf-id="hf-jrcp" id="f08-hw2w">now</span><span data-hf-id="hf-wh1l" class="f08-hcomma">,</span></div>
+                <div data-hf-id="hf-flyr" id="f08-hts">NOW · TUE 09 MAR 2021 · <b data-hf-id="hf-fm96" id="f08-htsv">14:02:07.000</b></div>
+              </div>
+              <div id="f08-hshade" data-layout-ignore></div>
+              <div id="f08-hslot" data-layout-ignore>
+                <div id="f08-hslit"></div>
+                <div class="f08-hroll" id="f08-hroll1"></div>
+                <div class="f08-hroll" id="f08-hroll2"></div>
+                <div id="f08-hslab">CIPHER BANK · OUTPUT</div>
+              </div>
             </div>
-            <div data-hf-id="hf-ikbo" class="f08-hkick" style="color: #5F5B54">COPY · OBJ 0001</div>
-            <div data-hf-id="hf-flyr" id="f08-hts">NOW · TUE 09 MAR 2021 · <b data-hf-id="hf-fm96" id="f08-htsv">14:02:07.000</b></div>
-            <div data-hf-id="hf-tlz9" id="f08-hflash" data-layout-ignore></div>
           </div>
           <div data-hf-id="hf-8s6u" class="f08-hs" id="f08-h3">
             <div data-hf-id="hf-fy9r" class="f08-hcam" id="f08-hc3">
@@ -176,7 +196,6 @@
           </div>
           <div data-hf-id="hf-jnoh" class="f08-hs" id="f08-h4">
             <div data-hf-id="hf-de6o" class="f08-hcam" id="f08-hc4" style="transform-origin: 40% 45%">
-              <div class="f08-hfx" id="f08-hfx4" data-layout-ignore></div>
               <div data-hf-id="hf-y9or" id="f08-hlock">
                 <div data-hf-id="hf-ox14" class="f08-hlx" id="f08-hlr" aria-hidden="true" data-layout-ignore><span data-hf-id="hf-q7kd" class="f08-hl">harvest now,</span><span data-hf-id="hf-s275" class="f08-hl">decrypt later</span></div>
                 <div data-hf-id="hf-3u88" class="f08-hlx" id="f08-hlb" aria-hidden="true" data-layout-ignore><span data-hf-id="hf-lcsh" class="f08-hl">harvest now,</span><span data-hf-id="hf-sh85" class="f08-hl">decrypt later</span></div>
@@ -231,13 +250,19 @@
           const PER = [4, 3, 2, 2, 1, 1];   // v19: every drum steps more often (v18 8/6/4/3/2/1 left the first line still)
           const backOut = (x) => 1 + 2.70158 * Math.pow(x - 1, 3) + 1.70158 * Math.pow(x - 1, 2);
           const stepsIn = (k, a, T) => { let v = 0; KICKS.forEach((kt, i) => { if (kt >= a && kt <= T && i % PER[k] === 0) v += backOut(clamp((T - kt) / 0.13)); }); return v; };
-          const SEGS = [["steps", T0 - 0.1, TIME - 0.45], ["seek", TIME - 0.45, TIME, "·time·"], ["hold", TIME, C17],
+          // v22 r2: "whir" — on the 85.147 downbeat the drums release off "later·" and spin away (a flywheel that runs down in
+          // 1.25 s onto a whole face, a different number of faces each), with the kick steps on top; "fling" — the drums spin
+          // up again as "later" blows the bank apart (96.108), so they can slam to a stop on "harvest"
+          const SEGS = [["whir", T0 - 0.1, TIME - 0.45], ["seek", TIME - 0.45, TIME, "·time·"], ["hold", TIME, C17],
             ["spin", C17, MINE - 0.5], ["seek", MINE - 0.5, MINE, "·mine·"], ["hold", MINE, C18],
             ["steps", C18, SOON - 0.5], ["seek", SOON - 0.5, SOON, "sooner"], ["hold", SOON, OR - 0.3],
-            ["seek", OR - 0.3, OR, "··or··"], ["hold", OR, LATE - 0.3], ["seek", LATE - 0.3, LATE, "later·"], ["hold", LATE, HOOK + 1]];
+            ["seek", OR - 0.3, OR, "··or··"], ["hold", OR, LATE - 0.3], ["seek", LATE - 0.3, LATE, "later·"], ["hold", LATE, 96.108], ["fling", 96.108, HOOK + 1]];
+          const WHIR_A = [14, 19, 16, 22, 17, 24], WHIR_D = 1.25;
           const segVal = (k, s, v0, T, fin) => {
             const [kind, a, b] = s;
             if (kind === "steps") return v0 + (k % 2 ? 1 : -1) * stepsIn(k, a, T);
+            if (kind === "whir") { const u = clamp((T - T0) / WHIR_D); return v0 + (k % 2 ? 1 : -1) * (WHIR_A[k] * (1 - Math.pow(1 - u, 4)) + stepsIn(k, a, T)); }
+            if (kind === "fling") { const dt = Math.max(0, T - a); return v0 + (k % 2 ? 1 : -1) * (12 + 4 * k) * dt * dt; }
             if (kind === "spin") { const D = b - a, x = clamp((T - a) / D); return v0 + (k % 2 ? 1 : -1) * D * (3 * x + 6 * x * x * x) * (1 + 0.15 * k); }
             if (kind === "seek") { const u = clamp((T - a) / (b - a)); return v0 + (fin - v0) * (1 - Math.pow(1 - u, 3)); }
             const dt = T - a; return v0 + 0.14 * Math.exp(-dt / 0.06) * Math.sin(dt * 55);
@@ -284,7 +309,7 @@
           const POPS = [[TIME, 0.6], [88.794, 0.72], [MINE, 1.0], [92.461, 1.3], [SOON, 0.9], [94.278, 1.05], [OR, 0.45], [LATE, 1.1], [96.108, 1.4]];
           // the snares before a lock rattle the bank open a crack, a little wider each time (anticipation, on the music)
           const tease = (t, a) => [[t, a, 0.1, backOut], [t + 0.16, 0, 0.12, sine]];
-          const TEASE = [[85.58, 0.08], [86.489, 0.12], [87.405, 0.18], [88.319, 0.1], [90.151, 0.12], [91.069, 0.2]];
+          const TEASE = [[85.58, 0.26], [86.489, 0.12], [87.405, 0.18], [88.319, 0.1], [90.151, 0.12], [91.069, 0.2]];
           const EXP = keyed([...TEASE.slice(0, 4).flatMap(([t, a]) => tease(t, a)), [TIME, 0.6, 0.16, backOut], [88.794, 0.72, 0.14, backOut], ...slamEv(SLAMS[0]),
             ...TEASE.slice(4).flatMap(([t, a]) => tease(t, a)), [MINE, 1.0, 0.16, backOut], [92.461, 1.3, 0.2, backOut], ...slamEv(SLAMS[1]),
             [SOON, 0.9, 0.16, backOut], [94.278, 1.05, 0.16, backOut], ...slamEv(SLAMS[2]),
@@ -301,7 +326,9 @@
             [LATE, 1.1, 0.35, outC], [96.108, 1.3, 0.3, outC]]);
           const GAP = 150;
           // c: the part's place along the axle (drums -2.5…2.5, the end discs ±3.4); k seeds its twist and flight
+          let HOOKDRAW = false;   // v22 r2: the hook's close shot draws the bank assembled
           const offAt = (c, k, T) => {
+            if (HOOKDRAW) return { dx: 0, dy: 0, dz: 0 };
             const e = EXP(T), tw = TWIST(T), f2 = FLY(T) * FLY(T);
             return { dx: c * GAP * e + c * 460 * f2, dy: Math.sin(k * 1.9 + 0.4) * 70 * tw + (((k + 6) % 3) - 1) * 300 * f2,
               dz: Math.cos(k * 1.3) * 90 * tw + (760 + 180 * ((k + 6) % 2)) * f2 };
@@ -383,7 +410,7 @@
             sprites.set(key, c); return c;
           };
           const quadPath = (c, p) => { c.beginPath(); c.moveTo(p[0][0], p[0][1]); for (let q = 1; q < 4; q++) c.lineTo(p[q][0], p[q][1]); c.closePath(); };
-          const rot = $("f08-rot").getContext("2d");
+          let rot = $("f08-rot").getContext("2d");   // v22 r2: swapped to the hook's canvas while shot 1 draws
           const da = (2 * Math.PI) / N;
           // a point on the disc in plane x of a part with offset o, at angle a and radius r (the cylinder's parametrisation)
           const discPt = (x, o, a, r) => project(x + o.dx, -r * Math.sin(a) + o.dy, r * Math.cos(a) - R + o.dz);
@@ -441,7 +468,7 @@
             });
             fs.sort((a, b) => Math.abs(b.th) - Math.abs(a.th));
             const x0 = drums[k].x - PITCH / 2, x1 = x0 + PITCH, mode = vel > 9 ? 3 : vel > 3.5 ? 2 : 0;
-            STREAKS = curT < HOOK;   // v21 (lead): speed streaks through every spin of the chorus, not only before "mine"
+            STREAKS = true;   // v21 (lead): speed streaks through every spin (v22 r2: the hook's close shot too)
             for (const f of fs) {
               const ta = f.th + da / 2, tb = f.th - da / 2;
               const p00 = discPt(x0, o, ta, R), p10 = discPt(x1, o, ta, R), p01 = discPt(x0, o, tb, R), p11 = discPt(x1, o, tb, R);
@@ -718,52 +745,70 @@
           const L16Y = track(0, [[86.966, 340, 0.5]]);
           // the work lamp over the bank warms up from the cut, stutters on the first snare, is full on the first kick, dims as
           // the camera orbits to "time", comes back on with the slam after it and goes dark just before "mine" locks (its flare takes over)
-          const LAMP = track(0, [[T0 + 0.02, 1.15, 0.28, outC], [85.58, 0.45, 0.05], [85.66, 0.9, 0.06], [85.825, 1.1, 0.12, outC], [88.068, 0, 0.45],
+          const LAMP = track(0, [[T0 + 0.02, 1.15, 0.28, outC], [85.58, 0.1, 0.03], [85.63, 1.35, 0.06], [85.825, 1.1, 0.12, outC], [88.068, 0, 0.45],
             [SLAMS[0], 0.9, 0.25, outC], [91.95, 0, 0.27]]);
 
           // ---- v12: the hook, four full-bleed shots over the old g2 (which stays hidden) -----------------------
           // v17: shot 3 now cuts on the strong kick 98.392 (was 98.68, on nothing); the other cuts are the hook's sung words
           const HK = [96.82, 97.653, 98.392, 99.28].map(L);
           const hshots = ["f08-h1", "f08-h2", "f08-h3", "f08-h4"].map($);
-          const hr8 = HR.rng(9081);
-          // v16: hero words are thrown in with WOW.explode (shockwave, rays, shards, shake); the settle's blur is cleared monotonically
+          // v16: hero words are thrown in with WOW.explode; the settle's blur is cleared monotonically.
+          // v22 r2: never with its fx (a flat shock ring and rays, rule 9): the objects carry the hits
           const xplode = (word, t, o) => {
-            const gs = WOW.explode(tl, word, t, o);
+            const gs = WOW.explode(tl, word, t, { ...o, fx: false });
             tl.fromTo(gs, { filter: "blur(2px)" }, { filter: "blur(0px)", duration: 0.4, ease: "power2.out", immediateRender: false }, t);
             return gs;
           };
-          // shot 1: rings, a sweep, and the hex it reaps into the word
-          const hrings = $("f08-hrings"), HCX = 960, HCY = 560;
-          const ringEls = Array.from({ length: 13 }, (_, i) => {
-            const r = 150 + i * 92, dashed = i % 3 === 1;
-            const g = sv("g", hrings, { transform: `translate(${HCX} ${HCY})` });
-            sv("circle", g, { r, fill: "none", stroke: "#E85D26", "stroke-width": i % 4 === 0 ? 3 : 1.5, opacity: (0.55 - i * 0.035).toFixed(3),
-              "stroke-dasharray": dashed ? "2 14" : i % 3 === 2 ? "60 18 6 18" : "none" });
-            return { g, dir: i % 2 ? 1 : -1, speed: 12 + (i % 5) * 6 };
+          // shot 1 (v22 r2): the six drums, close and front on, come in spinning from the fly-past and slam to a stop on
+          // "harvest": the pawls bite (the faces kick past and settle), sparks fly off the gear teeth above and below the
+          // window, the window row burns white and "harvest" is printed off it — the word leaves the drum squashed to the
+          // row and lifts to full height as it cools to fire. On the 97.46 snare the pawls let one tooth through: every
+          // drum clicks a face, with a smaller spray.
+          const H1C = $("f08-h1c").getContext("2d"), H1CAM = { rx: 5, ry: -7, s: 1.72, bx: 960, by: 562 };
+          const H1CLICK = 97.46, h1Stop = drums.map((dr, k) => dr.ord.indexOf("b7c03d"[k]));
+          // (bite: false leaves out the pawls' kick, so the faces read crisp, not as a spin, as soon as they stop)
+          const h1Pos = (k, T, bite1 = true) => {
+            const dir = k % 2 ? 1 : -1, dt = T - HOOK;
+            if (dt < 0) return h1Stop[k] + dir * (34 + 3 * k) * dt;   // still spinning (its speed shows in the first frame)
+            const bite = bite1 ? 0.34 * Math.exp(-dt / 0.07) * Math.sin(dt * 46) : 0, ct = T - H1CLICK;
+            const click = ct >= 0 ? backOut(clamp(ct / 0.12)) + 0.12 * Math.exp(-ct / 0.05) * Math.sin(ct * 60) : 0;
+            return h1Stop[k] + dir * (bite + click);
+          };
+          // every spark's numbers are drawn once, so a spark keeps its path from frame to frame
+          const H1SPK = [[HOOK, 10, 41, 1], [H1CLICK, 4, 42, 0.6]].map(([t0, n, seed, pw]) => {
+            const r8 = HR.rng(seed * 31 + 7), list = [];
+            for (let p = 0; p <= K6; p++) for (const sg of [-1, 1]) for (let q = 0; q < n; q++)
+              list.push({ p, sg, vx: (r8() - 0.5) * 900 * pw, vy: -sg * (250 + 900 * r8()) * pw, life: 0.3 + 0.45 * r8(), g: Math.round(150 + 70 * r8()), b: Math.round(70 + 60 * r8()) });
+            return { t0, list };
           });
-          for (let k = 0; k < 72; k++) {
-            const a = (k / 72) * Math.PI * 2, r0 = 1250, r1 = k % 6 ? 1275 : 1310;
-            sv("path", hrings, { d: `M${(HCX + Math.cos(a) * r0).toFixed(1)} ${(HCY + Math.sin(a) * r0).toFixed(1)}L${(HCX + Math.cos(a) * r1).toFixed(1)} ${(HCY + Math.sin(a) * r1).toFixed(1)}`,
-              stroke: "#E85D26", "stroke-width": 2, opacity: 0.4 });
-          }
-          const SW0 = -120, SWW = 480; // sweep start angle (deg, clockwise from up) and speed (deg/s); v17: 840 → 480, a calmer beam
-          const hglyphs = Array.from({ length: 150 }, (_, i) => {
-            const b = el("b", "", $("f08-hglyphs"), HR.cipher(2, 3300 + i));
-            const th = hr8() * 360, r = 260 + hr8() * 820;
-            const pass = HK[0] + (((th - SW0) % 360) + 360) % 360 / SWW;
-            return { b, th, r, pass };
-          });
-          xplode($("f08-hw1"), HK[0], { parent: $("f08-hfx1"), x: 960, y: 560, seed: 11, pre: 0.16, r: 1500, rays: 22, burst: 18, shake: $("f08-hc1"), amp: 8 });
-          // shot 2: a burst of ink lines, a live timestamp
-          const hburst = $("f08-hburst");
-          const burstG = sv("g", hburst, { transform: "translate(960 560)" });
-          for (let k = 0; k < 30; k++) {
-            const a = (k / 30) * Math.PI * 2 + hr8() * 0.1, r0 = 420 + hr8() * 120, r1 = r0 + 260 + hr8() * 420;
-            sv("path", burstG, { d: `M${(Math.cos(a) * r0).toFixed(1)} ${(Math.sin(a) * r0 * 0.7).toFixed(1)}L${(Math.cos(a) * r1).toFixed(1)} ${(Math.sin(a) * r1 * 0.7).toFixed(1)}`,
-              stroke: k % 5 ? "#111111" : "#E85D26", "stroke-width": (4 + hr8() * 10).toFixed(1), "stroke-linecap": "round" });
-          }
-          xplode($("f08-hw2w"), HK[1], { parent: $("f08-hfx2"), x: 940, y: 560, seed: 12, pre: 0.1, r: 1500, rays: 22, burst: 16, color: "17,17,17", shake: $("f08-hc2"), amp: 8 });
-          tl.fromTo("#f08-hflash", { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, HK[1]);
+          const ZO = { dx: 0, dy: 0, dz: 0 };
+          const drawHook1 = (T) => {
+            const keep = { ...CAM }, keepRot = rot, keepLamp = lampK;
+            Object.assign(CAM, H1CAM); rot = H1C; HOOKDRAW = true; curT = T; lampK = 0.6;
+            const pos = drums.map((_, k) => h1Pos(k, T)), vel = drums.map((_, k) => Math.abs(h1Pos(k, T, false) - h1Pos(k, T - 1 / 60, false)) * 60);
+            const heat = 0.35 + 1.4 * env(T - HOOK, 0.28) + 0.8 * env(T - H1CLICK, 0.2);
+            drawBank(T, pos, vel, drums.map(() => heat), heat, 0, 0);
+            H1C.save(); H1C.globalCompositeOperation = "lighter"; H1C.lineCap = "round"; H1C.lineWidth = 3.5;
+            for (const { t0, list } of H1SPK) {
+              const age = T - t0; if (age < 0 || age > 0.8) continue;
+              for (const s of list) {
+                if (age > s.life) continue;
+                const xb = s.p < K6 ? drums[s.p].x - PITCH / 2 : drums[K6 - 1].x + PITCH / 2, [px, py] = discPt(xb, ZO, s.sg * da * 0.75, R + 22);
+                const xx = px + s.vx * age, yy = py + s.vy * age + 1800 * age * age, fade = 1 - age / s.life;
+                H1C.strokeStyle = age < s.life * 0.35 ? `rgba(255,248,236,${fade.toFixed(3)})` : `rgba(255,${s.g},${s.b},${fade.toFixed(3)})`;
+                H1C.beginPath(); H1C.moveTo(xx, yy); H1C.lineTo(xx - s.vx * 0.045, yy - (s.vy + 3600 * age) * 0.045); H1C.stroke();
+              }
+            }
+            H1C.restore();
+            Object.assign(CAM, keep); rot = keepRot; HOOKDRAW = false; lampK = keepLamp;
+          };
+          // the print: squashed to the window row and white-hot on the stop, full height and fire 0.2 s later
+          tl.fromTo("#f08-hw1", { scaleY: 0.5, scaleX: 0.94, color: "#FFF4E6" }, { scaleY: 1, scaleX: 1, color: "#E85D26", duration: 0.2, ease: "power3.out", immediateRender: false }, HK[0]);
+          // shot 2 (v22 r2): "now," is printed on a cream paper strip fed out of the bank's output slot: the strip shoots out
+          // on the word, steps a feed on the 97.698 hat and the 97.937 kick (the rollers turn, the slit flares) and creeps
+          // between; the timestamp on it runs in milliseconds
+          const FEED = keyed([[97.653, 130, 0.16, outC], [97.698, 165, 0.1, backOut], [97.937, 270, 0.13, backOut]]);
+          const feedAt = (T) => FEED(T) + 36 * Math.max(0, T - 97.653);
           // shot 3: hex resolves to "decrypt" under a flare
           $("f08-hghost").textContent = Array.from({ length: 15 }, (_, i) => HR.cipher(64, 3500 + i).replace(/(.{4})/g, "$1 ")).join("\n");
           // v17: "decrypt" stands as seven scrambling cipher slots from the cut (98.392) and resolves left to right on its word (98.8)
@@ -773,17 +818,9 @@
           tl.fromTo("#f08-hflare", { opacity: 1, scaleY: 1 }, { opacity: 0.25, scaleY: 0.4, duration: 0.45, ease: "power2.out", immediateRender: false }, L(98.8) + 0.05);
           tl.fromTo("#f08-hbloom", { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "power2.out", immediateRender: false }, L(98.8) - 0.02);
           tl.fromTo("#f08-hbloom", { opacity: 1 }, { opacity: 0.35, duration: 0.4, ease: "power2.out", immediateRender: false }, L(98.8) + 0.04);
-          const ghosts = [[1340, 380, 120], [1560, 250, 70], [600, 760, 180]].map(([x, y, r]) => {
-            const d = el("div", "f08-hghostc", $("f08-hc3"));
-            Object.assign(d.style, { left: x - r + "px", top: y - r + "px", width: 2 * r + "px", height: 2 * r + "px" });
-            d.setAttribute("data-layout-ignore", "");
-            tl.fromTo(d, { opacity: 0 }, { opacity: 0.9, duration: 0.05, immediateRender: false }, L(98.8) - 0.01);
-            tl.fromTo(d, { opacity: 0.9 }, { opacity: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, L(98.8) + 0.04);
-            return d;
-          });
           tl.fromTo("#f08-hw3", { scale: 1.08 }, { scale: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, L(98.8));
           // shot 4: the lockup lands on "later" with a chromatic split, then punches into the cut
-          xplode($("f08-hlater"), HK[3], { parent: $("f08-hfx4"), x: 1290, y: 660, seed: 13, pre: 0.1, r: 1400, rays: 22, burst: 18, shake: $("f08-hc4"), amp: 8 });
+          xplode($("f08-hlater"), HK[3], { seed: 13, pre: 0.1, shake: $("f08-hc4"), amp: 8 });
           tl.fromTo("#f08-hlr", { x: -18, y: -6 }, { x: 0, y: 0, duration: 0.22, ease: "power3.out", immediateRender: false }, HK[3]);
           tl.fromTo("#f08-hlb", { x: 18, y: 6 }, { x: 0, y: 0, duration: 0.22, ease: "power3.out", immediateRender: false }, HK[3]);
           // v17: the split fades out from the word (power2.out), not in a late drop at 99.4; no yank into the cut — a slow push to the end
@@ -806,28 +843,25 @@
           WOW.pulse(tl, cam, { kind: "kick", amt: 0.022, y: 5, decay: 0.15 });
           for (const [p] of POPS) WOW.punch(tl, cam, L(p), { s: 1.035, dur: 0.4 });
           for (const s of SLAMS) WOW.punch(tl, cam, L(s), { s: 1.025, dur: 0.3 });
-          // the hook: a punch and a spark of shake on every kick, rings on shot 1's hits, a signature burst at each word
+          // v22 r2: the first snare kicks the whirring bank (its rattle alone is lost in the spin)
+          WOW.punch(tl, cam, L(85.58), { s: 1.03, dur: 0.3 });
+          // the hook: a punch and a spark of shake on every kick (v22 r2: no rings, rays or flashes; the machine, the paper
+          // and the sparks carry the hits)
           const HKT = HK.concat([DUR]);
-          const hcs = ["f08-hc1", "f08-hc2", "f08-hc3", "f08-hc4"].map($), hfx = ["f08-hfx1", "f08-hfx2", "f08-hfx3", "f08-hfx4"].map($);
+          const hcs = ["f08-hc1", "f08-hc2", "f08-hc3", "f08-hc4"].map($);
           HR.onsetsIn("kick", HOOK, T0 + DUR).forEach((kt, n) => {
             const t = L(kt), si = Math.max(0, HKT.findIndex((x, j) => t >= x && t < HKT[j + 1]));
             // v17: no punch on a kick that is itself a cut (98.392) or the frame's last instant (99.749); shake only on the downbeat
             if (t < HK[0] - 0.01 || HKT.some((x) => Math.abs(t - x) < 0.05)) return;
             WOW.punch(tl, hcs[si], t, { s: 1.035, dur: 0.3 });
             if (E8.downbeats.some((d) => Math.abs(d - kt) < 0.02)) WOW.shake(tl, hcs[si], t, { amp: 5, dur: 0.3, seed: 30 + n });
-            if (si === 0) WOW.shock(tl, hfx[0], { x: HCX, y: HCY, t, r: 1200, n: 1, w: 4, color: "fire", dur: 0.45 });
-            if (si === 3) WOW.shock(tl, hfx[3], { x: 1290, y: 660, t, r: 900, n: 1, w: 4, color: "fire", dur: 0.4 });
           });
-          WOW.flash(tl, $("f08-h1"), HK[0], { color: "fire", a: 0.3, dur: 0.16 });
-          WOW.rays(tl, hfx[1], { x: 940, y: 560, t: HK[1], n: 28, r0: 300, r1: 1500, seed: 25, color: "17,17,17", dur: 0.5, w: 6 });
-          WOW.shock(tl, hfx[1], { x: 940, y: 560, t: HK[1], r: 1700, n: 2, w: 9, color: "fire", dur: 0.6 });
-          WOW.shock(tl, hfx[2], { x: 960, y: 552, t: L(98.8), r: 1700, n: 3, w: 8, color: "fire", dur: 0.6, gap: 0.06 });
-          WOW.rays(tl, hfx[2], { x: 960, y: 552, t: L(98.8), n: 30, r0: 260, r1: 1400, seed: 26, color: "cream", dur: 0.5, w: 6 });
-          WOW.burst(tl, hfx[2], { x: 960, y: 552, t: L(98.8), n: 24, speed: 1500, size: [6, 16], seed: 27, dur: 0.9, gravity: 700 });
-          WOW.flash(tl, $("f08-h3"), L(98.8), { color: "cream", a: 0.3, dur: 0.16 });
+          // the drums' slam on "harvest" jolts the close shot (the kit's 11 Hz shake, within 8 px)
+          WOW.shake(tl, hcs[0], HK[0], { amp: 7, dur: 0.32, seed: 28 });
+          // "decrypt": sparks off the resolving slots under the flare
+          WOW.burst(tl, $("f08-hfx3"), { x: 960, y: 552, t: L(98.8), n: 24, speed: 1500, size: [6, 16], seed: 27, dur: 0.9, gravity: 700 });
           WOW.shake(tl, hcs[2], L(98.8), { amp: 8, dur: 0.4, seed: 29 });
           WOW.punch(tl, hcs[2], L(98.8), { s: 1.08, dur: 0.4 });
-          WOW.flash(tl, $("f08-h4"), HK[3], { color: "fire", a: 0.28, dur: 0.16 });
           // v17 switches (one beat, 0.46 s, each side; the move carries through the cut): the chorus dives into the reading
           // window → shot 1 (pushIn, cut on "harvest"); shot 1 pulls back to "now," (pullOut); shot 2 glides off from the
           // downbeat 97.937 and cuts on the kick 98.392 (glideL); shot 3 pushes into the lockup (pushIn, cut on "later");
@@ -1047,27 +1081,14 @@
               $("f08-hc1").style.transform = `scale(${(hcam.z1 + 0.05 * sp).toFixed(4)}) rotate(${(-0.6 * sp).toFixed(3)}deg)`;
               $("f08-hc2").style.transform = `scale(${(hcam.z2 + 0.035 * kp).toFixed(4)}) rotate(${(0.5 * kp * (T > 97.9 && T < 98.3 ? -1 : 1)).toFixed(3)}deg)`;
               $("f08-hc3").style.transform = `scale(${hcam.z3.toFixed(4)})`;
-              // shot 1: rings turn, the sweep turns, the hex lights as the beam passes and is reaped into the word
-              const ht = t - HK[0];
-              ringEls.forEach(({ g, dir, speed }, i) => g.setAttribute("transform",
-                `translate(${HCX} ${HCY}) rotate(${(dir * speed * ht).toFixed(2)}) scale(${(1 + 0.03 * sp * (1 - i / 13)).toFixed(4)})`));
-              const sw = SW0 + SWW * ht;
-              $("f08-hsweep").style.transform = `rotate(${sw.toFixed(2)}deg)`;
-              for (const g of hglyphs) {
-                const p = Math.max(0, Math.min(1, (t - g.pass) / 0.22)), e = p * p * (3 - 2 * p);
-                const r = g.r * (1 - 0.9 * e), a = (g.th * Math.PI) / 180;
-                const lit = t >= g.pass ? 1 - p : 0;
-                g.b.style.transform = `translate(${(HCX + Math.sin(a) * r - 24).toFixed(1)}px, ${(HCY - Math.cos(a) * r - 18).toFixed(1)}px) scale(${(1 + 0.8 * lit).toFixed(3)})`;
-                // v17: the calm zone — a glyph fades out as it nears the word's ellipse, so none crosses the letters
-                const gx = HCX + Math.sin(a) * r, gy = HCY - Math.cos(a) * r, calm = clamp((Math.hypot((gx - 960) / 800, (gy - 590) / 250) - 1) / 0.35);
-                g.b.style.opacity = ((t < g.pass ? 0.28 : 1 - e) * calm).toFixed(3);
-                g.b.style.color = lit > 0.5 ? "#FFF0E2" : "#E85D26";
-              }
+              // shot 1 (v22 r2): the drums in close-up slam to a stop, spark and print the word
+              if (t < HK[1] + 0.01) drawHook1(T);
               HR.glow($("f08-hw1"), T, 0.5, 0.8);
-              // shot 2: the burst flies out on each hit; the clock runs in milliseconds
-              const bs = 0.75 + 0.5 * (1 - kp);
-              burstG.setAttribute("transform", `translate(960 560) scale(${bs.toFixed(4)})`);
-              burstG.setAttribute("opacity", (0.15 + 0.85 * kp).toFixed(3));
+              // shot 2 (v22 r2): the strip feeds out of the slot, the rollers turn with it, the slit flares on each feed step
+              const fy = feedAt(T), fe = Math.max(env(T - 97.653, 0.1), 0.7 * env(T - 97.698, 0.08), env(T - 97.937, 0.1));
+              $("f08-hstrip").style.transform = `translateY(${(130 - fy).toFixed(1)}px)`;
+              for (const r of ["f08-hroll1", "f08-hroll2"]) $(r).style.backgroundPosition = `0 ${(-fy).toFixed(1)}px, 0 0`;
+              $("f08-hslit").style.opacity = (0.55 + 0.45 * fe).toFixed(3);
               const ms = Math.max(0, Math.floor((T - 97.653) * 1000));
               $("f08-htsv").textContent = `14:02:${String(7 + Math.floor(ms / 1000)).padStart(2, "0")}.${String(ms % 1000).padStart(3, "0")}`;
               // shot 3: cipher slots scramble from the cut and resolve left to right on the word (first glyph 0.04 s early)

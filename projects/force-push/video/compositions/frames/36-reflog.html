@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 36 — reflog (outro, 191.895–197.431). Spoken, the beat cut out; back to 01's lit terminal (the bookend's
+         first half). Refinement round 1 (REFINE-1.md): cut onto content, one slow continuous camera move, no hits.
+         The cut (hard, from 35's "now"): the same terminal, 35's `git log --format="%an %s"` (every author `me`) still in the scrollback
+         above the prompt, and `git ` types at once into it; the camera, pulled back, starts its one push.
+         L61: "oh, and the" builds under the prompt and `reflog` types across "ref-log?" (the hero, 193.26), the camera
+         leaning in on the question. Enter on L62's first word (194.403): the reflog prints whole under the prompt, which
+         scrolls up out of frame, and there you still are: `3f2a1c9 HEAD@{2}: commit: you and me` (plant 5 pays off), the
+         row a fire hairline underlines on "you". On "thirty" (195.3) the config prints beside it at a readable size,
+         `gc.reflogExpireUnreachable = 30.days` (git's real default), while the camera pushes in on both.
+         L63: the pager quits on "i" (196.803), the prompt returns under the reflog, and the camera settles on its
+         cursor, "i can wait." beside it in the soft voice (01's "story of your life."); the cursor's light is the last
+         accent. The final pose is a close-up on the bottom of the very terminal 37 opens on (wide): the beat's return is
+         the hard cut. Light: 01's screen glow, an accent glow that travels with the hero object, the cursor's light.
+         Round 2 (REFINE-2.md): 35 now ends pulled back on its log at display size (`me` 5.2cqw). The cut matches it: the
+         first frame is 35's last terminal at 35's scale, place and colours (the six `me` rows, the "now" prompt at the
+         bottom; only the lyric and the window's fire edge drop out with the beat). Over the first beat, before "Oh", the
+         terminal scrolls up: the log settles to 0.55 and dims to the scrollback above the prompt, the prompt grows to 36's
+         size as `git ` types, the command above the log fades in, and the camera's push carries on from there. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        /* the camera wrapper (cut in, cut out); the view masks the page under the strip, as a terminal's top edge */
+        #f36-cam { position: absolute; inset: 0; }
+        #f36-view { position: absolute; inset: 0; overflow: hidden;
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 5.6cqw, #000 8.6cqw);
+          mask-image: linear-gradient(to bottom, transparent 0, transparent 5.6cqw, #000 8.6cqw); }
+        /* the page: the whole terminal in one coordinate space (cqw); render() moves it (translate + scale, origin 0 0) */
+        #f36-page { position: absolute; left: 0; top: 0; width: 100cqw; height: 56.25cqw; transform-origin: 0 0; }
+        /* light: 01's screen glow (screen space) and the accent glow / cursor light (page space) */
+        .f36-light { position: absolute; left: 0; top: 0; pointer-events: none; opacity: 0; }
+        #f36-screen { width: 2600px; height: 1700px; margin: -850px 0 0 -1300px;
+          background: radial-gradient(closest-side, rgba(240, 236, 229, 1) 0%, rgba(240, 236, 229, 0.62) 45%, rgba(240, 236, 229, 0) 100%); }
+        #f36-glow { width: 70cqw; height: 46cqw; margin: -23cqw 0 0 -35cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 1) 0%, rgba(232, 93, 38, 0.5) 40%, rgba(232, 93, 38, 0) 100%); }
+        #f36-clight { width: 34cqw; height: 24cqw; margin: -12cqw 0 0 -17cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.3) 0%, rgba(232, 93, 38, 0.16) 28%, rgba(232, 93, 38, 0.07) 60%, rgba(232, 93, 38, 0) 100%); }
+        /* header strip (fixed, outside the camera) */
+        #f36-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f36-strip b { color: var(--fire); font-weight: 600; }
+        /* the terminal */
+        .f36-mono { font-family: "IBM Plex Mono", monospace; white-space: pre; }
+        /* 35's closing log, built at 35's own sizes (its rows, `me` 5.2cqw, the subject 3.1cqw); render() places it
+           (translate + scale, origin 0 0): on the cut exactly where 35 left it, settling to 0.55 above the prompt */
+        #f36-back { position: absolute; left: 0; top: 0; transform-origin: 0 0; color: var(--cream); white-space: pre; }
+        #f36-back .f36-brow { display: flex; align-items: center; height: 4.55cqw; }
+        #f36-back .f36-who { display: inline-block; width: 8.2cqw; font: 600 5.2cqw/1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--fire); opacity: var(--f36-who-a, 1); }
+        #f36-back .f36-msg { font: 500 3.1cqw/1 "IBM Plex Mono", monospace; }
+        /* the command above it (hidden under 35's window edge on the cut): 1.9cqw once settled */
+        #f36-back .f36-bcmd { position: absolute; left: 0; bottom: 100%; font: 400 3.455cqw/5cqw "IBM Plex Mono", monospace; color: var(--cream-muted); opacity: 0; }
+        .f36-prompt { position: absolute; left: 5.5cqw; font: 500 2.4cqw/3.6cqw "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        .f36-prompt .f36-cmd { color: var(--cream); }
+        .f36-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        #f36-p1 { top: 8cqw; transform-origin: 0 0; }
+        #f36-p2 { top: 31.4cqw; }
+        #f36-log { position: absolute; left: 5.5cqw; top: 12.4cqw; font: 400 1.5cqw/2.4cqw "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        #f36-log .f36-row, #f36-sel { white-space: pre; }
+        #f36-log .f36-row { height: 2.4cqw; }
+        #f36-sel { height: 3.8cqw; padding-top: 0.5cqw; box-sizing: border-box; font: 500 2.2cqw/1 "IBM Plex Mono", monospace; color: var(--cream); }
+        #f36-sel .f36-h { color: var(--fire); font-weight: 600; }
+        #f36-sel b { font-weight: 600; }
+        #f36-txt { position: relative; display: inline-block; }
+        #f36-ul { position: absolute; left: 0; right: 0; bottom: -0.45cqw; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
+        /* the config, beside the row: readable at phone size once the camera is in */
+        #f36-note { position: absolute; left: 57cqw; top: 15.2cqw; font-family: "IBM Plex Mono", monospace; white-space: pre; }
+        #f36-note .f36-k { font: 500 1.3cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        #f36-note .f36-v { margin-top: 0.7cqw; font: 600 3.3cqw/1 "IBM Plex Mono", monospace; color: var(--cream); }
+        #f36-note .f36-v i { font-style: normal; color: var(--cream-muted); font-weight: 500; }
+        /* the lyric, in the page (the camera carries it) */
+        #f36-l1 { position: absolute; left: 5.1cqw; top: 12.6cqw; color: var(--cream); white-space: nowrap; }
+        #f36-l1 .f36-a { font: 800 7.4cqw/1.05 "Barlow", sans-serif; letter-spacing: -0.035em; }
+        #f36-l1 .f36-b { font: 900 15cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        .f36-hero { color: var(--fire); }
+        #f36-l2 { position: absolute; left: 5.1cqw; top: 31.8cqw; color: var(--cream); white-space: nowrap; }
+        #f36-l2 .f36-a { font: 800 5.8cqw/1.05 "Barlow", sans-serif; letter-spacing: -0.035em; }
+        #f36-l2 .f36-b { font: 900 10.6cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        #f36-l3 { position: absolute; left: 29.6cqw; top: 29.7cqw; font: italic 400 6.4cqw/1 "Instrument Serif", serif; color: var(--cream); white-space: nowrap; }
+      </style>
+      <div id="root" data-composition-id="36-reflog" data-width="1920" data-height="1080" data-duration="5.536">
+        <div id="f36-cam">
+          <div class="f36-light" id="f36-screen" data-layout-ignore></div>
+          <div id="f36-view">
+            <div id="f36-page">
+              <i class="f36-light" id="f36-glow" data-layout-ignore></i>
+              <i class="f36-light" id="f36-clight" data-layout-ignore></i>
+
+              <!-- 35's last command, still in the scrollback -->
+              <div id="f36-back" data-layout-ignore><div class="f36-bcmd">~/us (main) $ git log --format="%an %s"</div><div class="f36-brow"><span class="f36-who">me</span><span class="f36-msg"> ready.</span></div><div class="f36-brow"><span class="f36-who">me</span><span class="f36-msg"> we'll get to it</span></div><div class="f36-brow"><span class="f36-who">me</span><span class="f36-msg"> just a feature</span></div><div class="f36-brow"><span class="f36-who">me</span><span class="f36-msg"> moved in</span></div><div class="f36-brow"><span class="f36-who">me</span><span class="f36-msg"> nothing on the side</span></div><div class="f36-brow"><span class="f36-who">me</span><span class="f36-msg"> initial commit</span></div></div>
+
+              <div class="f36-prompt" id="f36-p1"><span>~/us (main) $ </span><span class="f36-cmd" id="f36-cmd"></span><span class="f36-cursor" id="f36-cur1"></span></div>
+
+              <div id="f36-log" style="opacity: 0">
+                <div class="f36-row" data-layout-ignore>d4c7e19 HEAD@{0}: rebase (finish): returning to refs/heads/main</div>
+                <div class="f36-row" data-layout-ignore>d4c7e19 HEAD@{1}: rebase (pick): ready.</div>
+                <div id="f36-sel"><span id="f36-txt"><span class="f36-h">3f2a1c9</span> <b>HEAD@{2}</b>: commit: you and me<i id="f36-ul"></i></span></div>
+                <div class="f36-row" data-layout-ignore>a7c21f0 HEAD@{3}: commit: we'll get to it</div>
+                <div class="f36-row" data-layout-ignore>4c9d7a1 HEAD@{4}: commit: just a feature</div>
+                <div class="f36-row" data-layout-ignore>91be33a HEAD@{5}: commit: moved in</div>
+                <div class="f36-row" data-layout-ignore>0b5f6e2 HEAD@{6}: commit: nothing on the side</div>
+              </div>
+              <div id="f36-note" style="opacity: 0"><div class="f36-k">gc.reflogExpireUnreachable</div><div class="f36-v"><i>= </i>30.days</div></div>
+
+              <div class="f36-prompt" id="f36-p2" style="opacity: 0"><span>~/us (main) $ </span><span class="f36-cursor" id="f36-cur2"></span></div>
+
+              <div id="f36-l1">
+                <div class="f36-a"><span class="f36-w1">oh,</span> <span class="f36-w1">and</span> <span class="f36-w1">the</span></div>
+                <div class="f36-b"><span class="f36-w1 f36-hero hr-glowbox">ref-log?</span></div>
+              </div>
+              <div id="f36-l2">
+                <div class="f36-a"><span class="f36-w2">it</span> <span class="f36-w2">forgets</span> <span class="f36-w2">you</span> <span class="f36-w2">in</span></div>
+                <div class="f36-b"><span class="f36-w2 f36-hero hr-glowbox">thirty</span> <span class="f36-w2">days.</span></div>
+              </div>
+              <div id="f36-l3"><span class="f36-w3">i</span> <span class="f36-w3">can</span> <span class="f36-w3">wait.</span></div>
+            </div>
+          </div>
+        </div>
+        <div id="f36-strip"><span>~/us &nbsp;·&nbsp; main</span><span>reflog: unreachable &nbsp;<b>1,095</b></span></div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 5.536, T0 = 191.895, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="36-reflog"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const ENTER = at(194.403), QUIT = at(196.803);
+
+          // ---- keystrokes (01's pattern): `git ` types on the cut, `reflog` across "ref-log?"; Enter on L62 ----
+          const keys = [[0, ""]];
+          const type = (t0, t1, text) => {
+            const base = keys[keys.length - 1][1];
+            for (let i = 0; i < text.length; i++) keys.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
+          };
+          type(0.04, 0.26, "git ");
+          type(at(193.26), at(193.62), "reflog"); // "ref-log?" 193.26
+          const TYPED = at(193.62);
+
+          // ---- L61: the question builds under the prompt; "ref-log?" is the hero ----
+          const w1 = root.querySelectorAll(".f36-w1");
+          HR.lead(tl, w1[0], at(192.328)); HR.lead(tl, w1[1], at(193.06)); HR.lead(tl, w1[2], at(193.14));
+          HR.hero(tl, w1[3], at(193.26), { spread: 14, over: 1.12, pre: 0.12, sharp: true });
+          tl.set($("f36-l1"), { opacity: 1 }, 0).set($("f36-l1"), { opacity: 0 }, ENTER);
+
+          // ---- Enter: the reflog prints whole (top-down, a terminal's fast print), and there you still are ----
+          const log = $("f36-log"), rows = log.children;
+          tl.set(log, { opacity: 0 }, 0).set(log, { opacity: 1 }, ENTER);
+          Array.from(rows).forEach((r, i) => tl.set(r, { opacity: 0 }, 0).set(r, { opacity: 1 }, ENTER + 0.014 * i));
+          tl.fromTo($("f36-ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.inOut" }, at(195.0)); // "you"
+          // "thirty": the config prints beside the row
+          const note = $("f36-note");
+          tl.set(note, { opacity: 0 }, 0).set(note, { opacity: 1 }, at(195.3));
+          tl.fromTo(note, { x: -0.6 * PX }, { x: 0, duration: 0.3, ease: "power3.out" }, at(195.3));
+          tl.fromTo(note, { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power1.in", immediateRender: false }, QUIT); // the cursor keeps the light
+          // the prompt scrolls up under the strip as the output prints
+          tl.fromTo($("f36-p1"), { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power1.in", immediateRender: false }, ENTER + 0.12);
+
+          // ---- L62: git's answer under the listing; "thirty" is the hero ----
+          const w2 = root.querySelectorAll(".f36-w2");
+          [194.403, 194.503, 195.0, 195.18].forEach((T, i) => HR.lead(tl, w2[i], at(T)));
+          HR.hero(tl, w2[4], at(195.3), { spread: 12, over: 1.1, pre: 0.1, sharp: true });
+          HR.lead(tl, w2[5], at(195.62));
+          tl.set($("f36-l2"), { opacity: 1 }, 0).set($("f36-l2"), { opacity: 0 }, QUIT);
+
+          // ---- L63: the pager quits on "i", the prompt returns under the reflog; the soft voice beside the cursor ----
+          const p2 = $("f36-p2");
+          tl.set(p2, { opacity: 0 }, 0).set(p2, { opacity: 1 }, QUIT);
+          const w3 = root.querySelectorAll(".f36-w3");
+          HR.lead(tl, w3[0], at(196.803), { from: 60, dur: 0.4 }); HR.lead(tl, w3[1], at(196.98), { from: 60, dur: 0.4 });
+          HR.lead(tl, w3[2], at(197.16), { from: 60, dur: 0.36 });
+
+          // ---- the accent glow travels with the hero object (page cqw) ----
+          const glow = $("f36-glow"), clight = $("f36-clight"), screen = $("f36-screen");
+          gsap.set(screen, { x: 960, y: 600 });
+          // (round 2: it starts behind 35's column of `me`s, where 35's log glow was, and rises with the scrollback)
+          const G = [[0, 11.4, 18.9], [0.4, 24, 5], [at(193.2), 26, 28], [ENTER, 30, 19], [at(195.25), 27, 40], [QUIT, 27.5, 33.2]];
+          for (let i = 1; i < G.length; i++) {
+            tl.fromTo(glow, { x: G[i - 1][1] * PX, y: G[i - 1][2] * PX }, { x: G[i][1] * PX, y: G[i][2] * PX, duration: 0.45, ease: "power2.inOut", immediateRender: i === 1 }, G[i][0] - 0.2);
+          }
+          // the cursor light sits on P2's cursor (left/top, not x/y: its CSS `scale` would multiply a translate)
+          gsap.set(clight, { left: 26.8 * PX, top: 33.2 * PX });
+
+          // ---- the camera: one slow continuous push, 1.08 → 1.62, page centre C (cqw) on the screen centre ----
+          // [t, Cx, Cy, s]: wide on the history and the prompt → leaning in on "ref-log?" → down the printed reflog →
+          // in on "thirty" and the config → settling on the cursor (the final pose is the bottom of 37's terminal, close)
+          const CAM = [
+            [0, 42, 6, 1.08], [at(193.26), 45, 20.5, 1.1], [ENTER - 0.06, 44, 22.4, 1.13], [ENTER + 0.5, 41, 29.6, 1.18],
+            [at(195.3), 41, 29.2, 1.25], [QUIT - 0.1, 41, 29.6, 1.3], [DUR, 30, 30.2, 1.62],
+          ];
+          // a cubic Hermite through the keys with central-difference tangents: no stop between stations; it ends easing
+          function camAt(t) {
+            const n = CAM.length; let k = 0;
+            while (k < n - 2 && t > CAM[k + 1][0]) k++;
+            const a = CAM[k], b = CAM[k + 1], h = b[0] - a[0], u = Math.max(0, Math.min(1, (t - a[0]) / h));
+            const tan = (j, c) => {
+              if (j === 0) return (CAM[1][c] - CAM[0][c]) / (CAM[1][0] - CAM[0][0]);
+              if (j === n - 1) return 0.35 * (CAM[j][c] - CAM[j - 1][c]) / (CAM[j][0] - CAM[j - 1][0]);
+              return (CAM[j + 1][c] - CAM[j - 1][c]) / (CAM[j + 1][0] - CAM[j - 1][0]);
+            };
+            const u2 = u * u, u3 = u2 * u, h00 = 2 * u3 - 3 * u2 + 1, h10 = u3 - 2 * u2 + u, h01 = -2 * u3 + 3 * u2, h11 = u3 - u2;
+            return [1, 2, 3].map((c) => h00 * a[c] + h10 * h * tan(k, c) + h01 * b[c] + h11 * h * tan(k + 1, c));
+          }
+          // ---- the hand-off (round 2): the cut lands on 35's last terminal at 35's scale and layout — its closing log
+          // (`me` 5.2cqw) and the "now" prompt under it — and over the first beat (before "Oh") the terminal scrolls up:
+          // the log settles to 0.55 above the prompt and the prompt grows to 36's size, the camera's push carrying on ----
+          const SETTLE = 0.46, settleE = gsap.parseEase("power2.inOut");
+          const drift36 = (T) => [Math.sin(T * 0.41 + 36) * 4 + Math.sin(T * 0.13 + 72) * 3, Math.sin(T * 0.33 + 108) * 3];
+          // 35's world layer (depth 0.5) on its last frame: camera z 1.02, y 4, its stage drift (seed 35); origin = centre
+          const S35 = (() => {
+            const T = T0 - 0.02, d = 0.5, L = 1 + 0.02 * d;
+            const dx = Math.sin(T * 0.41 + 35) * 7 + Math.sin(T * 0.13 + 70) * 5;
+            const dy = Math.sin(T * 0.33 + 105) * 5 + Math.sin(T * 0.09 + 35) * 4;
+            return (x, y) => [960 + L * (x - 960) - dx * d, 540 + L * (y - 540) - (4 + dy) * d, L];
+          })();
+          // 36's page on its first frame (camAt(0) + its drift): screen → page
+          const toPage0 = (() => {
+            const [cx, cy, s] = camAt(0), [dx, dy] = drift36(T0);
+            const x0 = (50 - s * cx) * PX + dx, y0 = (28.125 - s * cy) * PX + dy;
+            return (X, Y) => [(X - x0) / s, (Y - y0) / s, s];
+          })();
+          // 35's closing log: its first `me` row at (5.5, 25.7)cqw, the "now" prompt at (5.5, 53.0)cqw (termB scrolled 2.7)
+          const B0 = (() => { const [X, Y, L] = S35(5.5 * PX, 25.7 * PX), [x, y, s] = toPage0(X, Y); return { x, y, k: L / s }; })();
+          const B1 = { x: 5.5 * PX, y: (8 - 0.55 * 6 * 4.55) * PX, k: 0.55 }; // settled: the rows end on the prompt's top
+          const P0 = (() => { const [X, Y, L] = S35(5.5 * PX, 53.0 * PX), [x, y, s] = toPage0(X, Y); return { x: x - 5.5 * PX, y: y - 8 * PX, k: (L * 2) / (2.4 * s) }; })();
+          const back = $("f36-back"), bcmd = back.querySelector(".f36-bcmd"), p1 = $("f36-p1");
+          const mix = (a, b, u) => a + (b - a) * u;
+          function handoff(t) {
+            const u = settleE(Math.max(0, Math.min(1, t / SETTLE)));
+            back.style.transform = `translate(${mix(B0.x, B1.x, u).toFixed(2)}px, ${mix(B0.y, B1.y, u).toFixed(2)}px) scale(${mix(B0.k, B1.k, u).toFixed(4)})`;
+            p1.style.transform = `translate(${mix(P0.x, 0, u).toFixed(2)}px, ${mix(P0.y, 0, u).toFixed(2)}px) scale(${mix(P0.k, 1, u).toFixed(4)})`;
+            // 35's cream subjects and full-fire authors dim to 36's scrollback; the command fades in as it clears the edge
+            back.style.color = `rgb(${Math.round(mix(240, 136, u))}, ${Math.round(mix(236, 136, u))}, ${Math.round(mix(229, 128, u))})`;
+            back.style.setProperty("--f36-who-a", mix(1, 0.8, u).toFixed(3));
+            bcmd.style.opacity = Math.max(0, Math.min(1, (t - 0.12) / 0.26)).toFixed(3);
+          }
+          WOW.transition(tl, $("f36-cam"), { in: "cut", out: "cut", dur: 0, total: DUR }); // both cuts hard (REFINE-1 table)
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame: typing, cursors, light, the camera ----
+          const page = $("f36-page"), cmd = $("f36-cmd"), cur1 = $("f36-cur1"), cur2 = $("f36-cur2");
+          const heroes = root.querySelectorAll(".f36-hero.hr-glowbox");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            let k = keys[0]; for (const s of keys) if (s[0] <= t) k = s;
+            cmd.textContent = k[1];
+            cur1.style.opacity = t < ENTER && (t < 0.3 || (t > at(193.2) && t < TYPED + 0.05) || blink(t, Math.max(k[0], 0.26))) ? 1 : 0;
+            cur2.style.opacity = t >= QUIT ? 1 : 0; // lit from the prompt's return to the cut (37 opens on it)
+            // light: the screen glow follows the camera's centre a little; the accent breathes with the voice (no drums here)
+            const [cx, cy, s] = camAt(t);
+            const v = (HR.band("vocal", T - 0.1) + HR.band("vocal", T) + HR.band("vocal", T + 0.1)) / 3;
+            screen.style.opacity = (0.062 + 0.02 * v).toFixed(4);
+            const end = Math.max(0, Math.min(1, (t - QUIT) / (DUR - QUIT)));
+            glow.style.opacity = ((0.085 + 0.05 * v) * (1 - 0.7 * end)).toFixed(4);
+            clight.style.opacity = t < QUIT ? "0" : (0.55 + 0.45 * end * end).toFixed(3);
+            clight.style.scale = (0.8 + 0.5 * end).toFixed(3);
+            heroes.forEach((el) => HR.glow(el, T, 0.35, 0.4));
+            // the camera: a seeded micro-drift on the push (smooth, a few px)
+            const [dx, dy] = drift36(T);
+            const x = (50 - s * cx) * PX + dx, y = (28.125 - s * cy) * PX + dy;
+            page.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) scale(${s.toFixed(4)})`;
+            handoff(t);
+            WOW.draw(tl, T0);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["36-reflog"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

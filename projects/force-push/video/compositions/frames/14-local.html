@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 14 — local (chorus 1, 68.690–72.435). Big / tiny: two terminal windows with the same chrome. Mine
+         (`me@home`) is the frame, a lit screen edge to edge, my own `git status` up to date with origin top left; the
+         lyric fills its right side, right-aligned. The cut whips in from 13 (whipL): the world (strip, my window, the
+         clone) carries the whip, the lyric does not, so "keep" (0.03 s in) lands sharp on its start. On "local"
+         (69.24) the word is shoved in from the right (motion-blurred approach) and the ex's clone pops up bottom left, a
+         small lit `you@laptop` window; they type `git status` and git answers on the kicks: diverged, 1095 and 1. The
+         camera leans toward their window while it prints. On "care" (71.22) the word drops in like a weight, the first
+         half steps back, their window shrinks hard and sinks into its corner, and the camera pushes into my screen
+         (mine fills the frame); the marker notes it beside the shrunken window: (noted.). Out: rise into 15.
+         Light: my screen washes the frame from its top left; a fire glow sits behind the current hero; their window
+         glows. All three breathe with the bass.
+         Round 2 (REFINE-2): cut onto content. The clone is the opening object: a lit miniature terminal (35 columns,
+         git's answer word-wrapped) already answered, `have diverged,` / `and have 1095 and 1 different` at h3 (2.84cqw)
+         and close from the first frame, under the whip; it creeps back while "keep your" builds at the right, and on
+         "local" it shrinks into its corner (still 2cqw mono, ~20 % of the frame) as the word lands. While "i don't"
+         sings they type `git pull` (git's own hint); "care" crushes the window before the Enter. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f14-cam, #f14-world, #f14-words { position: absolute; inset: 0; }
+        #f14-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f14-strip b { color: var(--fire); font-weight: 600; }
+        /* mine: a terminal window as big as the frame, its screen lit from the top left */
+        #f14-win { position: absolute; left: 2.6cqw; right: 2.6cqw; top: 6.2cqw; bottom: 2.6cqw; background: var(--ink); border: 1px solid var(--border); overflow: hidden; }
+        #f14-wash { position: absolute; inset: 0;
+          background: radial-gradient(130% 150% at 0% 0%, rgba(240, 236, 229, 0.09) 0%, rgba(240, 236, 229, 0.055) 38%, rgba(240, 236, 229, 0.036) 100%); }
+        .f14-bar { position: relative; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border);
+          font: 500 0.78cqw/1 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; }
+        #f14-win .f14-bar { height: 2.1cqw; padding: 0 2.9cqw; background: var(--ink-alt); color: var(--cream-muted); }
+        #f14-mine { position: absolute; left: 2.9cqw; top: 3.2cqw; font: 400 1.5cqw/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f14-mine .f14-c { color: var(--cream); }
+        /* the lyric, right-aligned inside my window: the first half on top, the second under it */
+        .f14-block { position: absolute; right: 7cqw; text-align: right; color: var(--cream); white-space: nowrap; }
+        #f14-top { top: 9.6cqw; transform-origin: 100% 100%; }
+        #f14-bot { top: 31.4cqw; }
+        .f14-r1 { font: 800 6.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; }
+        .f14-r2 { font: 900 16cqw/0.88 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        .f14-r2 .f14-small { font: 800 6.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; margin-left: 0.3em; }
+        .f14-slam { display: inline-block; }
+        #f14-local { color: var(--fire); }
+        #f14-care { color: var(--fire); transform-origin: 50% 100%; }
+        /* the light behind the current hero */
+        #f14-glow { position: absolute; left: 0; top: 0; width: 96cqw; height: 58cqw; margin: -29cqw 0 0 -48cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.1) 35%, rgba(232, 93, 38, 0.05) 66%, rgba(232, 93, 38, 0) 100%); }
+        /* theirs: the same window, small, lit, in the corner */
+        #f14-clone { position: absolute; left: 5.5cqw; bottom: 2.9cqw; background: var(--ink-alt); transform-origin: 0% 100%;
+          --f14-lit: 1;
+          box-shadow: 0 0 0 1px rgba(240, 236, 229, 0.22), 0 0 calc(var(--f14-lit) * 2.6cqw) rgba(240, 236, 229, 0.16),
+            0 0 calc(var(--f14-lit) * 8cqw) rgba(240, 236, 229, 0.08); }
+        #f14-clone .f14-bar { height: 2cqw; padding: 0 1.2cqw; font-size: 0.9cqw; background: rgba(240, 236, 229, 0.1); color: var(--cream); border-bottom-color: rgba(240, 236, 229, 0.16); }
+        /* 35 columns: git's two lines word-wrapped to the pane, so the answer reads at h3 when the window is close */
+        #f14-clone .f14-body { padding: 0.8cqw 1.2cqw 1cqw; font: 400 2cqw/1.35 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f14-clone .f14-cmd, #f14-clone .f14-out { color: var(--cream); }
+        #f14-clone b { color: var(--fire); font-weight: 600; display: inline-block; }
+        .f14-cur { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.18em; }
+        /* the marker's aside, beside their shrunken window */
+        #f14-note { position: absolute; left: 21.5cqw; top: 44.6cqw; font: 400 4.4cqw/1 "Caveat Brush", cursive; color: var(--fire); transform: rotate(-5deg);
+          white-space: nowrap; }
+      </style>
+      <div id="root" data-composition-id="14-local" data-width="1920" data-height="1080" data-duration="3.745">
+        <div id="f14-cam">
+          <!-- the world carries the whip in from 13; the lyric (below) does not -->
+          <div id="f14-world">
+            <div class="hr-layer" data-depth="0.15">
+              <div id="f14-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+            </div>
+            <div class="hr-layer" data-depth="0.4">
+              <div id="f14-win">
+                <div id="f14-wash" data-layout-ignore></div>
+                <div class="f14-bar"><span>me@home</span><span>~/us</span></div>
+                <div id="f14-mine"><div>~/us (main) $ <span class="f14-c">git status</span></div><div class="f14-c">On branch main</div><div class="f14-c">Your branch is up to date with 'origin/main'.</div><div>~/us (main) $ <span class="f14-cur" id="f14-cur0"></span></div></div>
+              </div>
+            </div>
+            <div class="hr-layer" data-depth="0.55">
+              <div id="f14-clone">
+                <div class="f14-bar"><span>you@laptop</span><span>~/us</span></div>
+                <div class="f14-body"><div><span>you@laptop ~/us (main) $ </span><span class="f14-cmd">git status</span></div><div class="f14-out">On branch main</div><div class="f14-out">Your branch and 'origin/main'</div><div class="f14-out">have diverged,</div><div class="f14-out">and have <b class="hr-glowbox" id="f14-n">1095</b> and 1 different</div><div class="f14-out">commits each, respectively.</div><div id="f14-o4"><span>you@laptop ~/us (main) $ </span><span class="f14-cmd" id="f14-cmd"></span><span class="f14-cur" id="f14-cur2"></span></div></div>
+              </div>
+            </div>
+          </div>
+          <div id="f14-words">
+            <div class="hr-layer" data-depth="0.9">
+              <div id="f14-glow" data-layout-ignore></div>
+              <div class="f14-block" id="f14-top">
+                <div class="f14-r1"><span class="f14-w">keep</span> <span class="f14-w">your</span></div>
+                <div class="f14-r2"><span class="f14-slam hr-glowbox" id="f14-local" data-hf-motion-blur='{"fps": 60}'>local</span><span class="f14-w f14-small">copy,</span></div>
+              </div>
+              <div class="f14-block" id="f14-bot">
+                <div class="f14-r1"><span class="f14-w">i</span> <span class="f14-w">don't</span></div>
+                <div class="f14-r2"><span class="f14-slam hr-glow" id="f14-care" data-hf-motion-blur='{"fps": 60}'>care</span></div>
+              </div>
+              <div id="f14-note">(noted.)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.745, T0 = 68.69, PX = 19.2;
+          const root = document.querySelector('[data-composition-id="14-local"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 14 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          // the words (lyrics.json) and the hits under them (HR_ENV)
+          const KEEP = at(68.72), YOUR = at(68.98), L = at(69.24), COPY = at(69.62), I = at(69.911), DONT = at(70.78), C = at(71.22);
+          const OUT = [at(69.668), at(70.133), at(70.578), at(71.051)]; // kicks: their prompt returns on the first; punches
+          const N0 = at(71.515), N1 = N0 + 0.36; // the marker, on the kick after "care"
+          const IN = 0.25, RISE = 0.4;
+
+          // ---- the cuts: the world whips in from 13 (whipL); "keep" is outside it, so it lands sharp at 0.03.
+          //      Everything rises out into 15's cream page over the last 0.4 s. ----
+          const cam = $("f14-cam"), world = $("f14-world");
+          WOW.transition(tl, world, { in: "whipL", out: "cut", dur: IN, start: -0.4 * IN, total: DUR });
+          WOW.transition(tl, cam, { in: "cut", out: "rise", dur: RISE, total: DUR });
+
+          // ---- the lyric: "keep your" builds, "local" is shoved in from the right, "copy," leads; "i don't" builds,
+          //      "care" drops in like a weight. Both slams: static words on their own tweens, so the blur smears the approach ----
+          const w = root.querySelectorAll(".f14-w");
+          HR.lead(tl, w[0], KEEP); HR.lead(tl, w[1], YOUR); HR.lead(tl, w[2], COPY);
+          HR.lead(tl, w[3], I); HR.lead(tl, w[4], DONT);
+          const local = $("f14-local"), care = $("f14-care");
+          const LA = L - 0.04, LB = L + 0.06, CA = C - 0.04, CB = C + 0.08;
+          tl.set(local, { opacity: 0, x: 1150, skewX: -24, scale: 1.18 }, 0).set(local, { opacity: 1 }, LA);
+          tl.fromTo(local, { x: 1150, skewX: -24, scale: 1.18 }, { x: 0, skewX: 0, scale: 1, duration: LB - LA, ease: "power2.in", immediateRender: false }, LA);
+          tl.fromTo(local, { scale: 1.07, skewX: 6 }, { scale: 1, skewX: 0, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, LB);
+          tl.set(care, { opacity: 0, y: -520, scaleY: 1.3, scaleX: 0.92 }, 0).set(care, { opacity: 1 }, CA);
+          tl.fromTo(care, { y: -520, scaleY: 1.3, scaleX: 0.92 }, { y: 0, scaleY: 1, scaleX: 1, duration: CB - CA, ease: "power2.in", immediateRender: false }, CA);
+          tl.fromTo(care, { scaleY: 0.8, scaleX: 1.07 }, { scaleY: 1, scaleX: 1, duration: 0.55, ease: "elastic.out(1, 0.4)", immediateRender: false }, CB);
+          // on "care" the first half steps back (still ≥ 72 px) and gives up the accent
+          tl.fromTo($("f14-top"), { scale: 1 }, { scale: 0.64, duration: 0.32, ease: "power3.out", immediateRender: false }, C);
+          tl.fromTo(local, { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.22, immediateRender: false }, C);
+
+          // ---- theirs: the first frame's object. The clone is close (×1.42: git's answer at h3), lit and already
+          //      answered; it creeps back under "keep your" and on "local" shrinks into its corner as the word lands.
+          //      The prompt returns on the next kick and `git pull` (git's hint) types through "i don't"; on "care"
+          //      the window shrinks hard before the Enter and sinks into its corner, and keeps sinking ----
+          const clone = $("f14-clone"), num = $("f14-n"), Z0 = 1.42, Z1 = 1.37, SH = L - 0.05;
+          tl.set(clone, { opacity: 1, scale: Z0, x: 0, y: 0 }, 0);
+          tl.fromTo(clone, { scale: Z0, x: 0, y: 0 }, { scale: Z1, x: 0.7 * PX, y: 0, duration: SH, ease: "sine.inOut", immediateRender: false }, 0);
+          tl.fromTo(clone, { scale: Z1, x: 0.7 * PX, y: 0 }, { scale: 1, x: 0, y: 0, duration: 0.42, ease: "expo.out", immediateRender: false }, SH);
+          tl.fromTo(clone, { scale: 1, y: 0 }, { scale: 0.3, y: 1.6 * PX, duration: 0.5, ease: "power4.out", immediateRender: false }, C);
+          tl.fromTo(clone, { scale: 0.3, y: 1.6 * PX }, { scale: 0.27, y: 2.1 * PX, duration: DUR - C - 0.5, ease: "none", immediateRender: false }, C + 0.5);
+          // the count kicks on the cut's kick and on "local"
+          [at(68.73), at(69.211)].forEach((k) => tl.fromTo(num, { scale: 1.32 }, { scale: 1, duration: 0.32, ease: "power3.out", immediateRender: false }, k));
+          tl.set($("f14-o4"), { opacity: 0 }, 0).set($("f14-o4"), { opacity: 1 }, OUT[0]);
+          const CMD = "git pull", TA = at(70.6), TB = at(71.0);
+          const keys = [[0, ""]];
+          for (let i = 0; i < CMD.length; i++) keys.push([TA + ((TB - TA) * i) / CMD.length, CMD.slice(0, i + 1)]);
+
+          // ---- the camera: a creep in under the whip, a punch on "local" sized by the drums, a lean toward their
+          //      window while git answers, a punch on "care" and the phrase's big move: a push into my screen ----
+          const c = stage.cam, pk = (T) => 0.02 + 0.035 * HR.band("drums", T);
+          tl.fromTo(c, { z: 1.05, x: 0, y: 0 }, { z: 1.02, x: 0, y: 0, duration: LB - 0.05, ease: "sine.inOut" }, 0);
+          tl.to(c, { z: 1.02 + pk(T0 + LB), y: -6, duration: 0.05, ease: "power2.in" }, LB - 0.05);
+          tl.to(c, { z: 1.025, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, LB);
+          tl.to(c, { z: 1.05, x: -34, y: 22, duration: CB - 0.05 - (LB + 0.5), ease: "sine.inOut" }, LB + 0.5);
+          tl.to(c, { z: 1.05 + pk(T0 + CB), y: 16, duration: 0.05, ease: "power2.in" }, CB - 0.05);
+          tl.to(c, { z: 1.105, x: 26, y: 40, duration: 0.6, ease: "power3.out" }, CB);
+          tl.to(c, { z: 1.125, x: 30, y: 44, duration: DUR - (CB + 0.6), ease: "none" }, CB + 0.6);
+          // small punches on the kicks git answers on; a thud under "care"
+          [OUT[0], OUT[1], OUT[2], OUT[3], N0].forEach((k) => WOW.punch(tl, cam, k, { s: 1.006 + 0.012 * WOW.energy(T0 + k), dur: 0.3 }));
+          WOW.shake(tl, cam, CB + 0.01, { amp: 8, dur: 0.32, rot: 0.25, seed: 14 });
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: typing, cursors, the marker, the light, the camera ----
+          const cmd = $("f14-cmd"), cur0 = $("f14-cur0"), cur2 = $("f14-cur2"), note = $("f14-note");
+          const top = $("f14-top"), bot = $("f14-bot"), glow = $("f14-glow"), wash = $("f14-wash");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          const e3 = gsap.parseEase("power3.out");
+          // the heroes' centres in the lyric layer (layout offsets, transforms ignored); kept once the fonts are in
+          const ctr = (blk, el) => ({ x: blk.offsetLeft + el.offsetLeft + el.offsetWidth / 2, y: blk.offsetTop + el.offsetTop + el.offsetHeight * 0.55 });
+          let A = null, B = null, Q = null;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.2);
+            let k = keys[0]; for (const s of keys) if (s[0] <= t) k = s;
+            cmd.textContent = k[1];
+            cur0.style.opacity = blink(t, 0) ? 1 : 0;
+            cur2.style.opacity = t >= OUT[0] && t < C + 0.3 && blink(t, Math.max(k[0], OUT[0])) ? 1 : 0;
+            const p = Math.max(0, Math.min(1, (t - N0) / (N1 - N0)));
+            note.style.opacity = p > 0 ? 1 : 0;
+            note.style.clipPath = `inset(-30% ${((1 - p) * 104).toFixed(2)}% -30% -6%)`;
+            // the light: the glow sits behind their close window, moves to "local" as it shrinks, then to "care";
+            // my screen and their window breathe
+            if (!A || document.fonts.status !== "loaded") {
+              A = ctr(top, local); B = ctr(bot, care);
+              Q = { x: clone.offsetLeft + (clone.offsetWidth * Z0) / 2, y: clone.offsetTop + clone.offsetHeight * (1 - Z0 / 2) };
+            }
+            const v = t < SH ? 0 : e3(Math.min(1, (t - SH) / 0.35)), u = t < C ? 0 : e3(Math.min(1, (t - C) / 0.35));
+            const a = { x: Q.x + (A.x - Q.x) * v, y: Q.y + (A.y - Q.y) * v }, b = B;
+            glow.style.transform = `translate(${(a.x + (b.x - a.x) * u).toFixed(1)}px, ${(a.y + (b.y - a.y) * u).toFixed(1)}px)`;
+            const up = t < LA ? 0.7 : 0.8;
+            glow.style.opacity = Math.min(1, up + 0.3 * bass + 0.25 * kick).toFixed(3);
+            wash.style.opacity = Math.min(1, 0.88 + 0.12 * bass + 0.08 * kick).toFixed(3);
+            // their window stays lit as it shrinks: the halo grows against the scale
+            const sh = t < C ? 0 : e3(Math.min(1, (t - C) / 0.5));
+            clone.style.setProperty("--f14-lit", ((1.1 + 0.4 * bass + 0.3 * kick) * (1 + 1.5 * sh)).toFixed(3));
+            local.classList.toggle("hr-glowbox", t < C + 0.12);
+            HR.glow(local, T, 0.25, 0.4); HR.glow(care, T, 0.3, 0.5); HR.glow(num, T, 0.3, 0.4);
+            stage.apply(T);
+            WOW.draw(tl, T0);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["14-local"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,329 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 20 — phone (verse 2, L29–L30, 100.044–103.465). The phone is the frame: a lock screen drawn in the palette,
+         centred, cropped by the frame's foot, and the only light in the room. 19 glides out to the right and the phone
+         is already there, lying back on the desk, lit by #53 landing on the cut's kick. L29 is the lock screen's clock
+         ("your pull requests keep lighting up my phone", centred like the time); under it the pull requests from `you`
+         whip in on the hits (motion-blurred, newest on top) and each one lights the screen, the phone's edge and the room
+         around it, and lifts the phone a step toward the viewer while the camera pushes in (#53 … #57 Revert "force push",
+         which plants 22's revert). On "Please" (101.669, the kick) the camera slams into the screen and the notification
+         opens through the blur: `you requested your review on #57`, "please review?" is its text, `REVIEWERS none`
+         stamps large on the snare, and on "honey" the camera pulls back down to the reply field, where the singer's
+         answer types; "own" slams, and the screen glides up into 21's editor. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f20-cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        #f20-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f20-strip b { color: var(--fire); font-weight: 600; }
+        /* the room: the screen's light on the desk and the wall around the phone */
+        #f20-spill { position: absolute; left: 50cqw; top: 33cqw; width: 150cqw; height: 100cqw; margin: -50cqw 0 0 -75cqw;
+          background: radial-gradient(closest-side, rgba(240, 236, 229, 0.2) 0%, rgba(240, 236, 229, 0.14) 22%, rgba(240, 236, 229, 0.06) 45%,
+            rgba(240, 236, 229, 0.022) 62%, rgba(240, 236, 229, 0.006) 80%, rgba(240, 236, 229, 0) 100%); }
+        /* the phone: one big object, centred, its foot below the frame; tilted back on the desk, rising as it lights */
+        #f20-phone { position: absolute; left: 27cqw; top: 6.9cqw; width: 46cqw; height: 62cqw; background: var(--ink);
+          border: 2px solid var(--cream-hint); border-bottom: 0; border-radius: 5.2cqw 5.2cqw 0 0; transform-origin: 50% 49.35cqw; }
+        .f20-btn { position: absolute; width: 0.32cqw; background: var(--cream-hint); }
+        #f20-screen { position: absolute; left: 0.9cqw; right: 0.9cqw; top: 0.9cqw; bottom: 0; overflow: hidden;
+          border-radius: 4.4cqw 4.4cqw 0 0; background: var(--ink-alt); }
+        #f20-light { position: absolute; inset: 0; background: var(--cream); opacity: 0.06; }
+        #f20-heat { position: absolute; left: 50%; top: 0; width: 46cqw; height: 30cqw; margin: -15cqw 0 0 -23cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.08) 45%, rgba(232, 93, 38, 0) 100%); }
+        #f20-island { position: absolute; left: 50%; top: 1.1cqw; width: 8.6cqw; height: 2.5cqw; margin-left: -4.3cqw; border-radius: 1.25cqw; background: var(--ink); }
+        #f20-status { position: absolute; left: 3.6cqw; right: 3.6cqw; top: 1.55cqw; display: flex; justify-content: space-between; align-items: center;
+          font: 600 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--cream); }
+        #f20-status svg { width: 4.6cqw; height: 1.2cqw; }
+        .f20-scene { position: absolute; inset: 0; }
+        /* the lock screen: the lyric is the clock */
+        #f20-date { position: absolute; left: 0; right: 0; top: 4.1cqw; text-align: center; font: 500 0.95cqw/1.5 "IBM Plex Mono", monospace;
+          letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); }
+        #f20-date svg { display: block; width: 1.25cqw; height: 1.6cqw; margin: 0 auto 0.5cqw; }
+        #f20-l29 { position: absolute; left: 1.2cqw; right: 1.2cqw; top: 7.3cqw; text-align: center; font: 800 5.6cqw/0.95 "Barlow", sans-serif;
+          letter-spacing: -0.035em; color: var(--cream); }
+        #f20-l29 div { white-space: nowrap; }
+        .f20-fire { color: var(--fire); }
+        /* the stack of notifications, newest on top: fixed cards moved only by the timeline (motion blur) */
+        #f20-stack { position: absolute; left: 1.8cqw; right: 1.8cqw; top: 29.4cqw; height: 32cqw; }
+        .f20-card { position: absolute; left: 0; right: 0; top: 0; padding: 1cqw 1.4cqw 1.05cqw 1.6cqw; background: #262523;
+          border: 1px solid var(--cream-hint); border-left: 0.5cqw solid var(--fire);
+          font: 400 1.62cqw/1.45 "IBM Plex Mono", monospace; color: #A8A49C; white-space: nowrap; }
+        .f20-card .f20-t { display: flex; justify-content: space-between; color: var(--cream); }
+        .f20-card .f20-t i { font-style: normal; font-size: 1.05cqw; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); }
+        .f20-you { color: var(--fire); font-weight: 600; }
+        .f20-card .f20-you { font-size: 1.85cqw; line-height: 1; }
+        /* the expanded notification: #57 and the reply */
+        #f20-open { visibility: hidden; }
+        #f20-note { position: absolute; left: 2.2cqw; right: 2.2cqw; top: 4.6cqw; padding: 1.3cqw 2cqw 1.3cqw; background: var(--ink-alt); border: 1px solid var(--cream-hint); }
+        #f20-note .f20-head { display: flex; justify-content: space-between; font: 500 0.86cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--cream-muted); padding-bottom: 0.6cqw; margin-bottom: 0.8cqw; border-bottom: 1px solid var(--border); }
+        #f20-note .f20-m { font: 400 1.4cqw/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
+        #f20-note .f20-pr { font: 600 2.1cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream); white-space: nowrap; letter-spacing: -0.01em; }
+        #f20-ask { margin-top: 0.6cqw; font: 900 7.4cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f20-ask div { white-space: nowrap; }
+        #f20-rev { display: flex; align-items: baseline; gap: 1.6cqw; margin-top: 1.1cqw; padding-top: 0.8cqw; border-top: 1px solid var(--border); }
+        #f20-rev .f20-rl0 { font: 500 0.95cqw/1 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); }
+        #f20-none { display: inline-block; font: 600 3.4cqw/1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--cream); transform-origin: 0% 80%; }
+        #f20-reply { position: absolute; left: 2.2cqw; right: 2.2cqw; top: 35.4cqw; padding: 1cqw 1.6cqw 1.3cqw; background: var(--ink-alt); border: 1px solid var(--cream-muted); }
+        #f20-reply .f20-label { font: 500 0.86cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 0.4cqw; }
+        .f20-rl { height: 4.7cqw; font: 800 4.7cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
+        #f20-own { display: none; margin-left: 0.22em; color: var(--fire); }
+        .f20-cursor { display: inline-block; width: 0.4em; height: 0.82em; margin-left: 0.06em; background: var(--fire); vertical-align: -0.06em; }
+      </style>
+      <div id="root" data-composition-id="20-phone" data-width="1920" data-height="1080" data-duration="3.421">
+        <div id="f20-cam">
+          <div class="hr-layer" data-depth="0.15">
+            <div id="f20-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>3</b></span></div>
+          </div>
+
+          <div class="hr-layer" data-depth="1" id="f20-body">
+            <div id="f20-spill" data-layout-ignore></div>
+            <div id="f20-phone" data-layout-allow-overflow>
+              <i class="f20-btn" style="left: -0.5cqw; top: 9cqw; height: 3.2cqw" data-layout-ignore></i>
+              <i class="f20-btn" style="left: -0.5cqw; top: 14cqw; height: 5.6cqw" data-layout-ignore></i>
+              <i class="f20-btn" style="right: -0.5cqw; top: 12cqw; height: 8cqw" data-layout-ignore></i>
+              <div id="f20-screen">
+                <div id="f20-light" data-layout-ignore></div>
+                <div id="f20-heat" data-layout-ignore></div>
+                <div id="f20-island" data-layout-ignore></div>
+                <div id="f20-status" data-layout-ignore>
+                  <span>23:42</span>
+                  <svg viewBox="0 0 88 24"><g fill="#F0ECE5"><rect x="0" y="16" width="5" height="8" /><rect x="8" y="11" width="5" height="13" />
+                    <rect x="16" y="6" width="5" height="18" /><rect x="24" y="1" width="5" height="23" /><rect x="50" y="6" width="26" height="14" /></g>
+                    <rect x="46" y="2" width="36" height="22" fill="none" stroke="#888880" stroke-width="2" /><rect x="84" y="9" width="4" height="8" fill="#888880" /></svg>
+                </div>
+
+                <div class="f20-scene" id="f20-lock">
+                  <div id="f20-date"><svg viewBox="0 0 24 30"><path d="M6 13 V8 a6 6 0 0 1 12 0 V13" fill="none" stroke="#888880" stroke-width="2.4" />
+                    <rect x="2" y="13" width="20" height="16" fill="#888880" /></svg>monday 19 october</div>
+                  <div id="f20-l29">
+                    <div><span class="f20-w">your</span> <span class="f20-w f20-fire hr-glowbox" id="f20-pull">pull</span></div>
+                    <div><span class="f20-w">requests</span> <span class="f20-w">keep</span></div>
+                    <div><span class="f20-w">lighting</span> <span class="f20-w">up</span></div>
+                    <div><span class="f20-w">my</span> <span class="f20-w f20-fire hr-glowbox" id="f20-phn">phone</span></div>
+                  </div>
+                  <div id="f20-stack" data-layout-ignore>
+                    <div class="f20-card" id="f20-c0"><div class="f20-t"><span><span class="f20-you">you</span> opened #53</span><i>now</i></div><div>nothing on the side</div></div>
+                    <div class="f20-card" id="f20-c1" data-hf-motion-blur='{"fps": 60, "samplesPerFrame": 8}'><div class="f20-t"><span><span class="f20-you">you</span> opened #54</span><i>now</i></div><div>just a feature</div></div>
+                    <div class="f20-card" id="f20-c2" data-hf-motion-blur='{"fps": 60, "samplesPerFrame": 8}'><div class="f20-t"><span><span class="f20-you">you</span> opened #55</span><i>now</i></div><div>we'll get to it</div></div>
+                    <div class="f20-card" id="f20-c3" data-hf-motion-blur='{"fps": 60, "samplesPerFrame": 8}'><div class="f20-t"><span><span class="f20-you">you</span> commented on #55</span><i>now</i></div><div>lgtm</div></div>
+                    <div class="f20-card" id="f20-c4" data-hf-motion-blur='{"fps": 60, "samplesPerFrame": 8}'><div class="f20-t"><span><span class="f20-you">you</span> opened #56</span><i>now</i></div><div>you and me</div></div>
+                    <div class="f20-card" id="f20-c5" data-hf-motion-blur='{"fps": 60, "samplesPerFrame": 8}'><div class="f20-t"><span><span class="f20-you">you</span> reopened #53</span><i>now</i></div><div>nothing on the side</div></div>
+                    <div class="f20-card" id="f20-c6" data-hf-motion-blur='{"fps": 60, "samplesPerFrame": 8}'><div class="f20-t"><span><span class="f20-you">you</span> opened #57</span><i>now</i></div><div>Revert "force push"</div></div>
+                  </div>
+                </div>
+
+                <div class="f20-scene" id="f20-open">
+                  <div id="f20-note">
+                    <div class="f20-head"><span>pull requests</span><span>now</span></div>
+                    <div class="f20-m"><span class="f20-you">you</span> requested your review on #57</div>
+                    <div class="f20-pr">#57 Revert "force push"</div>
+                    <div id="f20-ask">
+                      <div class="f20-v">please</div>
+                      <div class="f20-v f20-fire hr-glowbox" id="f20-review">review?</div>
+                    </div>
+                    <div id="f20-rev"><span class="f20-rl0">reviewers</span><span id="f20-none">none</span></div>
+                  </div>
+                  <div id="f20-reply">
+                    <div class="f20-label">reply</div>
+                    <div class="f20-rl"><span id="f20-r1"></span><span class="f20-cursor" id="f20-c1c"></span></div>
+                    <div class="f20-rl"><span id="f20-r2"></span><span id="f20-own" class="hr-glowbox">own</span><span class="f20-cursor" id="f20-c2c"></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.421, T0 = 100.044, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="20-phone"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 20 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          const drums = (t) => HR.band("drums", T0 + t + 0.03);
+
+          // ---- the sung times (lyrics.json) and the hits (HR_ENV) ----
+          const PULL = at(100.26), PHONE = at(101.4);
+          const SWAP = at(101.669);                     // the kick under "Please": the notification opens
+          const PLEASE = at(101.68), REVIEW = at(102.04), HONEY = at(102.138), OWN = at(103.285);
+          const REV = at(102.335);                      // the snare: the PR's answer
+          // the cuts (REFINE-1's table): 19 → 20 glideR, 20 → 21 glideUp; both shortened so neither covers a sung word's
+          // first 0.25 s more than it must ("Your" starts 0.096 s in; "own" lands 0.18 s before the cut)
+          const IN = 0.09, OUT = 0.16;
+          const cam = $("f20-cam");
+          WOW.transition(tl, cam, { in: "glideR", out: "cut", dur: IN, total: DUR });
+          WOW.transition(tl, cam, { in: "cut", out: "glideUp", dur: OUT, total: DUR });
+
+          // ---- L29: the lock screen's clock is the line ----
+          const w = root.querySelectorAll(".f20-w");
+          HR.lead(tl, w[0], at(100.14));
+          HR.hero(tl, w[1], PULL, { spread: 16, over: 1.2, pre: 0.1, sharp: true });
+          HR.lead(tl, w[2], at(100.42)); HR.lead(tl, w[3], at(100.746)); HR.lead(tl, w[4], at(100.94));
+          HR.lead(tl, w[5], at(101.22)); HR.lead(tl, w[6], at(101.3));
+          HR.hero(tl, w[7], PHONE, { spread: 22, over: 1.22, pre: 0.12, sharp: true });
+
+          // ---- the stack: pull requests from `you`, one per hit, newest on top. Each whips in from off the screen's
+          //      edge (parked there, never hidden by opacity: the motion-blur copies), lands ON its hit, and pushes the
+          //      older ones down a slot ----
+          const ARR = [0, at(100.266), at(100.492), at(100.717), at(100.94), at(101.178), at(101.414)];
+          const SIDE = [0, 1, -1, 1, -1, 1, -1], PARK = 46 * PX, PITCH = 7.25 * PX, APP = 0.1;
+          const cards = ARR.map((_, i) => $("f20-c" + i));
+          cards.forEach((c, k) => {
+            tl.set(c, { x: k ? SIDE[k] * PARK : 0, y: 0 }, 0);
+            if (k) tl.fromTo(c, { x: SIDE[k] * PARK, y: 0 }, { x: 0, y: 0, duration: APP, ease: "power2.in", immediateRender: false }, ARR[k] - APP);
+            // the older cards make room just before the new one lands
+            for (let i = 0; i < k; i++)
+              tl.fromTo(cards[i], { y: (k - 1 - i) * PITCH }, { y: (k - i) * PITCH, duration: 0.24, ease: "expo.out", immediateRender: false }, ARR[k] - 0.05);
+          });
+          const LIGHTS = ARR.concat([SWAP, at(101.908)]);
+
+          // ---- L30: the notification opens; "please review?" is its text ----
+          tl.set($("f20-lock"), { visibility: "inherit" }, 0).set($("f20-lock"), { visibility: "hidden" }, SWAP);
+          tl.set($("f20-open"), { visibility: "hidden" }, 0).set($("f20-open"), { visibility: "inherit" }, SWAP);
+          const v = root.querySelectorAll(".f20-v");
+          HR.lead(tl, v[0], PLEASE);
+          HR.hero(tl, v[1], REVIEW, { spread: 20, over: 1.2, pre: 0.1, sharp: true });
+          // the PR's answer stamps on the snare, large: nobody will review it
+          const rev = $("f20-rev"), none = $("f20-none");
+          tl.set(rev, { opacity: 0 }, 0).set(rev, { opacity: 1 }, REV);
+          tl.fromTo(none, { scale: 1.7, x: 0 }, { scale: 1, x: 0, duration: 0.3, ease: "expo.out", immediateRender: false }, REV);
+          // the reply types on the word times; "own" slams
+          const own = $("f20-own");
+          tl.set(own, { display: "none" }, 0).set(own, { display: "inline-block" }, OWN - 0.12);
+          HR.hero(tl, own, OWN, { spread: 18, over: 1.24, pre: 0.1, sharp: true });
+
+          const type = (states, t0, t1, text) => {
+            const base = states[states.length - 1][1];
+            for (let i = 0; i < text.length; i++) states.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
+          };
+          const textAt = (states, t) => { let k = 0; for (let i = 0; i < states.length; i++) if (states[i][0] <= t) k = i; return states[k]; };
+          const k1 = [[0, ""]], k2 = [[0, ""]];
+          type(k1, HONEY, at(102.487), "honey,"); type(k1, at(102.487), at(102.826), " you're");
+          type(k2, at(102.826), at(103.04), "on"); type(k2, at(103.04), OWN, " your");
+          const LINE2 = at(102.826);
+
+          // ---- hit punches on the camera wrapper, sized by the drums ----
+          ARR.slice(1).forEach((a, k) => WOW.punch(tl, cam, a, { s: 1.01 + 0.02 * drums(a) + (k === 5 ? 0.014 : 0), dur: 0.32 }));
+          // "phone": the whole phone buzzes, kick-sized
+          WOW.shake(tl, $("f20-phone"), PHONE, { amp: 7 + 6 * WOW.energy(T0 + PHONE), dur: 0.26, rot: 0.5, seed: 21 });
+          WOW.punch(tl, cam, REVIEW, { s: 1.03, dur: 0.42 });
+          // the kick under "Please" (101.908): the opened card lands with it
+          const K2 = at(101.908);
+          WOW.punch(tl, cam, K2, { s: 1.018 + 0.02 * drums(K2), dur: 0.3 });
+          WOW.punch(tl, cam, REV, { s: 1.015 + 0.02 * drums(REV), dur: 0.32 });
+          WOW.punch(tl, cam, OWN, { s: 1.05, dur: 0.4 });
+          WOW.shake(tl, cam, OWN, { amp: 6 + 8 * WOW.energy(T0 + OWN), dur: 0.3, rot: 0.25, seed: 20 });
+          tl.set({}, {}, DUR);
+
+          // ---- the big moves, as pure functions of time (render) ----
+          // L29: each notification lifts the phone a step off the desk toward the viewer and pushes the camera in;
+          // just before "Please" the camera dives into the screen (blurred) and the swap happens inside the blur;
+          // on "honey" it pulls back down to the reply field.
+          const TILT0 = 7, TILT = [0, 1, 1, 1, 1, 1, 1.5];
+          const Z0 = 1.4, ZS = 0.045, FY0 = 30.5 * PX, FYS = 0.45 * PX;
+          const eo = gsap.parseEase("expo.out"), el = gsap.parseEase("elastic.out(1, 0.55)"), e3 = gsap.parseEase("power3.out"),
+            io3 = gsap.parseEase("power3.inOut"), in2 = gsap.parseEase("power2.in");
+          const DIVE = SWAP - 0.11, Z_DIVE = 0.09, Z_LAND = 0.09;
+          // camera targets (composition px of the point to centre): the ask, then the note + reply together
+          const ASK_Y = 470, MID_Y = 662, PULL_A = HONEY - 0.05, PULL_D = 0.46, Z_MID = 1.1;
+          function camAt(t) {
+            let z = Z0, fy = FY0, tilt = TILT0;
+            for (let k = 1; k < ARR.length; k++) if (t >= ARR[k]) {
+              const u = eo(clamp01((t - ARR[k]) / 0.32));
+              z -= ZS * u; fy += FYS * u;
+              tilt -= TILT[k] * el(clamp01((t - ARR[k]) / 0.55));
+            }
+            // a slow drift down the stack between the steps
+            fy += 1.2 * PX * clamp01(t / SWAP);
+            let y = (fy - 540) * z;
+            let blur = 0;
+            if (t >= DIVE) {
+              const u = t < SWAP ? in2(clamp01((t - DIVE) / (SWAP - DIVE))) : 1;
+              const v = t < SWAP ? 0 : e3(clamp01((t - SWAP) / 0.24));
+              const y0 = y;
+              z += Z_DIVE * u + Z_LAND * v;
+              const p = 0.55 * u + 0.45 * v;
+              y = y0 + ((ASK_Y - 540) * z - y0) * p;
+              blur = t < SWAP ? 4.5 * u : 4.5 * (1 - e3(clamp01((t - SWAP) / 0.1)));
+              // the phone tips toward the viewer as it opens, and settles
+              if (t >= SWAP) { const d = t - SWAP; tilt = -5 * Math.exp(-d / 0.22) * Math.cos(d * 13); }
+              else tilt *= 1 - u;
+            }
+            if (t >= SWAP) z += 0.02 * clamp01((t - SWAP) / (PULL_A - SWAP));
+            if (t >= PULL_A) {
+              const u = io3(clamp01((t - PULL_A) / PULL_D));
+              const zA = z;
+              z = zA + (Z_MID - zA) * u + 0.015 * clamp01((t - PULL_A - PULL_D) / (DUR - PULL_A - PULL_D));
+              const yA = (ASK_Y - 540) * zA, yB = (MID_Y - 540) * Z_MID;
+              y = yA + (yB - yA) * u;
+            }
+            return { z, y, tilt, blur };
+          }
+
+          // ---- per-frame state: the light, typing, cursors, glow, camera ----
+          const light = $("f20-light"), spill = $("f20-spill"), heat = $("f20-heat"), phone = $("f20-phone"), body = $("f20-body");
+          const r1 = $("f20-r1"), r2 = $("f20-r2"), c1 = $("f20-c1c"), c2 = $("f20-c2c");
+          const pull = $("f20-pull"), phn = $("f20-phn"), review = $("f20-review");
+          const blink = (t, since) => t - since < 0.3 || Math.floor((t - since) * 2) % 2 === 0;
+          // the hero glow inside the screen (screen px from its top): the clock, the ask, the reply
+          const HEAT = [[0, 17.5 * PX], [SWAP, 22 * PX], [HONEY, 41 * PX]];
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            const bass = HR.band("bass", T);
+            // each notification (and the swap) lights the screen, the phone's edge and the room
+            let F = 0;
+            for (const a of LIGHTS) if (t >= a) F = Math.max(F, Math.exp(-(t - a) / 0.32));
+            light.style.opacity = Math.min(0.17, 0.075 + 0.085 * F + 0.02 * bass).toFixed(4);
+            spill.style.opacity = Math.min(1, 0.55 + 0.45 * F + 0.2 * bass).toFixed(3);
+            const halo = 0.05 + 0.13 * F + 0.03 * bass;
+            phone.style.boxShadow = `0 0 ${(4 + 3 * F).toFixed(2)}cqw 0.4cqw rgba(240, 236, 229, ${halo.toFixed(3)})`;
+            phone.style.borderColor = `rgba(240, 236, 229, ${(0.28 + 0.35 * F).toFixed(3)})`;
+            let hy = HEAT[0][1];
+            for (let i = 1; i < HEAT.length; i++) if (t >= HEAT[i][0]) hy = HEAT[i - 1][1] + (HEAT[i][1] - HEAT[i - 1][1]) * e3(clamp01((t - HEAT[i][0]) / 0.3));
+            heat.style.transform = `translateY(${hy.toFixed(1)}px)`;
+            heat.style.opacity = Math.min(1, 0.6 + 0.4 * bass + 0.3 * HR.hit("kick", T, 0.2)).toFixed(3);
+            // typing
+            const [s1t, s1] = textAt(k1, t), [s2t, s2] = textAt(k2, t);
+            r1.textContent = s1; r2.textContent = s2;
+            c1.style.opacity = t < LINE2 && blink(t, Math.max(s1t, SWAP)) ? 1 : 0;
+            c2.style.opacity = t >= LINE2 && blink(t, Math.max(s2t, t >= OWN ? OWN : 0)) ? 1 : 0;
+            HR.glow(pull, T, 0.35, 0.5); HR.glow(phn, T, 0.35, 0.5); HR.glow(review, T, 0.35, 0.5); HR.glow(own, T, 0.35, 0.5);
+            // the camera and the phone
+            const c = camAt(t);
+            stage.cam.z = c.z; stage.cam.y = c.y;
+            phone.style.transform = `perspective(1700px) rotateX(${c.tilt.toFixed(3)}deg)`;
+            body.style.filter = c.blur > 0.3 ? `blur(${c.blur.toFixed(2)}px)` : "";
+            stage.apply(T);
+            WOW.draw(tl, T0);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["20-phone"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

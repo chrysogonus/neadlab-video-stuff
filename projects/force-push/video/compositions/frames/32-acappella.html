@@ -1,0 +1,329 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 32 — acappella (final chorus a cappella, 160.731–169.270). Light-and-depth rebuild: the stillest frame of
+         the film, set in space. The whole history is reduced to ONE hairline of fire, `main`, running away into deep
+         black; beside it, below, the faint lane of `you`, joined to main by merge diagonals where main jogs.
+         The handover is unchanged: the cut is a match on 31's terminal, its last frame exactly (the unsent
+         `~/us (main) $ git push --force` with "so no lease, / no warning," above and "here I go" below). On the 160.986
+         kick the terminal scrolls and the prompt reflows to the foot, small, at 33's terminal place (where 33's Enter
+         answers); behind it main is drawn in from the lens into the dark.
+         L51: on "force" the camera dives onto the line, the cursor becomes a fire caret writing the soft line (Instrument
+         Serif Italic) along main, and the push runs down the line as a pulse of light. "history." is fire, main under it
+         lights. L52: on "i" the camera glides on down the line to a fresh stretch; on "rewrote" a wave runs both ways
+         along main: its jogs straighten and the merges let go of it (the past rewritten); on "no you" the lane of `you`
+         dims out. The last bar: the prompt types ` origin main` (eighths, then sixteenths) while the camera gathers,
+         and on "me." it accelerates down the line at the word (shutter blur). The Enter is the hard cut into 33.
+         Layers: WebGL lines (assets/kit/lines.js), a Canvas2D layer for the sung type on the line, then the DOM. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826; --ink-on-cream: #111111; --muted-on-cream: #5F5B54;
+          background: var(--ink); color: var(--cream);
+        }
+        #f32-gl, #f32-type { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        /* cleared to black and screened over the ink ground: the same ground with or without the shutter */
+        #f32-gl { mix-blend-mode: screen; }
+        /* the DOM camera: only the handover's kick punches */
+        #f32-cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        #f32-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); opacity: 0.8; }
+        #f32-strip .f32-n { color: var(--fire); font-weight: 600; margin-left: 0.6em; }
+
+        /* 31's terminal, as it hands over */
+        #f32-term { position: absolute; inset: 0; transform-origin: 5.5% 70%; }
+        .f32-tl { position: absolute; left: 5.1cqw; font: 800 8.2cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.04em;
+          color: var(--cream-muted); white-space: nowrap; }
+        .f32-tl .f32-h31 { font-weight: 900; }
+        #f32-t3 { position: absolute; left: 4.6cqw; top: 36cqw; font: 900 14cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.05em;
+          color: var(--cream); white-space: nowrap; }
+        #f32-go { color: var(--fire); }
+        #f32-prompt { position: absolute; left: 5.5cqw; top: 28.2cqw; font: 500 4.2cqw/1 "IBM Plex Mono", monospace; color: var(--cream);
+          white-space: pre; transform-origin: 0% 0%; }
+        #f32-pfx { color: var(--cream-muted); }
+        #f32-block { position: relative; display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+      </style>
+      <div id="root" data-composition-id="32-acappella" data-width="1920" data-height="1080" data-duration="8.539">
+        <canvas id="f32-gl" width="1920" height="1080" data-layout-ignore></canvas>
+        <canvas id="f32-type" width="1920" height="1080" data-layout-ignore></canvas>
+        <div id="f32-cam">
+          <div id="f32-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin<span class="f32-n">0</span></span></div>
+          <div id="f32-term">
+            <div class="f32-tl" id="f32-t1" style="top: 7.4cqw" data-layout-allow-overlap data-hf-motion-blur='{"fps": 60}'><span>so</span> <span>no</span> <span class="f32-h31">lease,</span></div>
+            <div class="f32-tl" id="f32-t2" style="top: 15.6cqw" data-layout-allow-overlap data-hf-motion-blur='{"fps": 60}'><span>no</span> <span class="f32-h31">warning,</span></div>
+            <div id="f32-t3" data-layout-allow-overlap><span>here</span> <span>I</span> <span id="f32-go">go</span></div>
+            <div id="f32-prompt"><span id="f32-pfx">~/us (main) $ </span><span id="f32-cmd">git push --force</span><span id="f32-block"></span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+        import * as K from "./assets/kit/lines.js";
+
+        const DUR = 8.539, T0 = 160.731, PX = 19.2; // px per cqw at 1920 wide
+        const root = document.querySelector('[data-composition-id="32-acappella"]');
+        const $ = (id) => root.querySelector("#" + id);
+        const at = (T) => T - T0;
+        const K1 = at(160.986), FORCE = at(161.912), HIST = at(164.047), LINE2 = at(165.40), REWROTE = at(166.003);
+        const YOU = at(168.063), ME = at(168.96);
+        // the tracked grid continues through the a cappella: 166.186 and 168.036 are downbeats
+        const BEAT = (168.036 - 166.186) / 4, E8 = BEAT / 2, E16 = BEAT / 4;
+        // the last bar: ` origin main`, one key per eighth from the "and" before "there's" (167.343), then per sixteenth
+        // from beat 2 (168.497); the last key 169.191, the Enter (the cut) 169.270
+        const KEYS = [];
+        for (let i = 0; i < 5; i++) KEYS.push(at(168.036 - 3 * E8 + i * E8));
+        for (let i = 0; i < 7; i++) KEYS.push(at(168.036 + BEAT + i * E16));
+        const TYPE = " origin main", BAR = KEYS[0];
+        await document.fonts.load('italic 400 100px "Instrument Serif"');
+        await document.fonts.load('800 100px "Barlow"');
+        await document.fonts.load('900 100px "Barlow"');
+        await document.fonts.load('500 40px "IBM Plex Mono"');
+        const tl = gsap.timeline({ paused: true });
+        const cam = $("f32-cam");
+        WOW.transition(tl, cam, { in: "cut", out: "cut", dur: 0, total: DUR }); // 31 → 32 a match cut, 32 → 33 the Enter
+
+        // ---- the handover: 31's terminal exactly as 31 leaves it; the fill's last hits keep it moving ----
+        const term = $("f32-term"), prompt = $("f32-prompt");
+        tl.fromTo(term, { scale: 1.0 }, { scale: 1.09, duration: FORCE - 0.1, ease: "power2.in" }, 0);
+        tl.fromTo(term, { scale: 1.09 }, { scale: 1.0, duration: 0.6, ease: "power3.out", immediateRender: false }, FORCE - 0.1);
+        // the lines above rise away on the kick (moved off-frame, never faded)
+        tl.fromTo([$("f32-t1"), $("f32-t2")], { y: 0 }, { y: -560, duration: 0.4, ease: "expo.out" }, K1);
+        ["f32-t1", "f32-t2"].forEach((id) => tl.set($(id), { visibility: "visible" }, 0).set($(id), { visibility: "hidden" }, K1 + 0.3));
+        // "here I go" rides up into their place (render: y3, blurred by its own speed), and scrolls off on "force"
+        const t3 = $("f32-t3"), UP = -(36 - 9.6) * PX, eX = gsap.parseEase("expo.out"), eI = gsap.parseEase("power3.in");
+        const y3 = (t) => t < K1 ? 0 : t < FORCE - 0.08 ? UP * eX(Math.min(1, (t - K1) / 0.45))
+          : UP - 640 * eI(Math.min(1, (t - FORCE + 0.08) / 0.3));
+        // the prompt reflows on the kick to the foot, at 33's terminal place and size (1.68cqw at 5.5 / 46.2cqw, line 1.55),
+        // where it waits unsent: a two-frame redraw while "here I go" passes its old line
+        const PFS = 1.68, PTOP = 46.2 + (PFS * 0.55) / 2;
+        tl.set(prompt, { visibility: "visible" }, 0).set(prompt, { visibility: "hidden" }, K1).set(prompt, { visibility: "visible" }, K1 + 0.05);
+        tl.set(prompt, { y: 0, scale: 1 }, 0).set(prompt, { y: (PTOP - 28.2) * PX, scale: PFS / 4.2 }, K1);
+        tl.fromTo(prompt, { color: "#F0ECE5" }, { color: "#888880", duration: 0.5, ease: "power2.out", immediateRender: false }, FORCE - 0.2);
+        tl.fromTo(prompt, { color: "#888880" }, { color: "#F0ECE5", duration: 0.2, ease: "power2.out", immediateRender: false }, BAR);
+        // the fill's last hits punch the DOM camera, dying away
+        HR.onsetsIn("kick", T0 + 0.05, 161.6).forEach((s, i) => WOW.punch(tl, cam, at(s), { s: 1.03 - 0.006 * i, dur: 0.32 }));
+        tl.set({}, {}, DUR);
+
+        // ---- the world: main along +x (bending gently away into the dark), the lane of `you` below it ----
+        const renderer = K.renderer(THREE, $("f32-gl"), "#000000");
+        const lines = K.createLines(THREE, 30000);
+        const shutter = K.createShutter(THREE, renderer);
+        const camera = new THREE.PerspectiveCamera(36, 16 / 9, 0.05, 600);
+        const FIRE = K.ACCENT, BONE = K.BONE, CORE = [1, 0.86, 0.72], MUTED = [0x88 / 255, 0x88 / 255, 0x80 / 255];
+        const V = (x, y, z) => new THREE.Vector3(x, y, z);
+        const along = (u, y = 0) => V(u, y, -0.0011 * Math.max(0, u) * Math.max(0, u)); // main's ideal path at u
+        const YOUOFF = V(0, -1.05, 0.75); // the lane of `you`, below and in front of main
+        const U0 = -40, U1 = 260;
+        // merges (shared history): where you's lane joins main, main jogs
+        const rnd = HR.rng(3232), merges = [], offs = [];
+        for (let u = U0 + 2; u < U1; u += 2.4 + rnd() * 3.6) { merges.push(u); offs.push((rnd() < 0.5 ? -1 : 1) * (0.1 + rnd() * 0.12)); }
+        const jog = (u) => { // main's step offset at u (y)
+          let k = -1; for (let i = 0; i < merges.length && merges[i] <= u; i++) k = i;
+          if (k < 0) return 0;
+          const prev = k > 0 ? offs[k - 1] : 0, f = K.clamp((u - merges[k]) / 0.3);
+          return K.lerp(prev, offs[k], f);
+        };
+
+        // ---- the sung type on the line: [text, start (track s), size (world), hero] ----
+        const ctx = $("f32-type").getContext("2d");
+        const DPR = window.devicePixelRatio || 1;
+        $("f32-type").width = 1920 * DPR; $("f32-type").height = 1080 * DPR;
+        const FONT = 'italic 400 100px "Instrument Serif"', TY = 0.3; // the baseline above main
+        const L1 = [["force", 161.912, 1.0, true], ["push.", 162.52, 0.66], ["baby,", 163.22, 0.66], ["you're", 163.84, 0.66], ["history.", 164.047, 1.25, true]];
+        const L2 = [["i", 165.40, 0.66], ["rewrote", 166.003, 1.0, true], ["the", 166.66, 0.66], ["past,", 166.84, 0.66], ["there's", 167.34, 0.66],
+                    ["no", 167.58, 0.66], ["you", 168.063, 0.66], ["and", 168.74, 0.66], ["me.", 168.96, 1.15, true]];
+        ctx.font = FONT;
+        const adv = (ch, size) => ctx.measureText(ch).width / 100 * size * 1.4;
+        function lay(words, u, line) {
+          return words.map(([w, T, size, hero]) => {
+            const gl = [...w].map((ch) => adv(ch, size)), len = gl.reduce((s, x) => s + x, 0);
+            const p = { w, t: at(T), size, hero: !!hero, u0: u, u1: u + len, gl, line };
+            u += len + adv(" ", Math.min(size, 0.8)) * 1.15;
+            return p;
+          });
+        }
+        const P1 = lay(L1, 0, 1), P2 = lay(L2, P1[P1.length - 1].u1 + 3.2, 2), WORDS = [...P1, ...P2];
+        const L1e = P1[P1.length - 1].u1, L2s = P2[0].u0, pMe = P2[P2.length - 1], pYou = P2[6], pHist = P1[4], pRew = P2[1];
+        const STAG = 0.16, RAMP = 0.08; // glyph by glyph from the word's start
+        const glyphLit = (p, i, t) => K.clamp((t - (p.t - 0.04) - (i / p.gl.length) * STAG) / RAMP);
+        // the caret: right after the last glyph that has begun
+        function caretU(t) {
+          let u = null, size = 0.62, last = -1;
+          for (const p of WORDS) {
+            if (t < p.t - 0.04) break;
+            let x = p.u0;
+            p.gl.forEach((g, i) => { if (glyphLit(p, i, t) > 0) { x = p.u0 + p.gl.slice(0, i + 1).reduce((s, y) => s + y, 0); } });
+            u = x + 0.06; size = p.size; last = p.t;
+          }
+          return u === null ? null : { u, size, last };
+        }
+
+        // ---- the camera: [t, look u, distance, angle off the line (deg), height] with an ease per segment ----
+        const inCubic = (x) => x * x * x;
+        const CAM = [
+          [0, -6, 24, 40, 2.4],
+          [K1, -6, 24, 40, 2.4, K.ease.linear],
+          [FORCE - 0.02, 1.0, 17, 46, 1.9, K.ease.inOutCubic],          // drawn in, creeping toward the start of the line
+          [FORCE + 0.36, 3.2, 12.6, 52, 1.2, K.ease.outExpo],           // the dive onto "force"
+          [HIST - 0.1, L1e * 0.47, 14.6, 54, 1.1, K.ease.inOutCubic],
+          [LINE2 - 0.04, L1e * 0.5, 15.0, 55, 1.05, K.ease.inOutCubic],
+          [LINE2 + 0.5, L2s + 3.6, 12.4, 55, 1.0, K.ease.inOutCubic],   // the glide on down the line to line 2
+          [REWROTE + 0.4, L2s + 5.0, 12.0, 56, 0.95, K.ease.outCubic],
+          [BAR, L2s + (pMe.u0 - L2s) * 0.5, 14.6, 55, 0.95, K.ease.inOutCubic],
+          [ME, pMe.u0 - 6.0, 13.8, 54, 0.9, (x) => x * x],              // gathering through the bar
+          [DUR, pMe.u0 + 0.6, 4.4, 50, 0.6, inCubic],                    // the rush down the line at "me."
+        ];
+        function camAt(t) {
+          let i = 1; while (i < CAM.length - 1 && t >= CAM[i][0]) i++;
+          const A = CAM[i - 1], B = CAM[i], f = (B[5] || K.ease.inOutCubic)(K.clamp((t - A[0]) / Math.max(1e-6, B[0] - A[0])));
+          return [1, 2, 3, 4].map((k) => K.lerp(A[k], B[k], f));
+        }
+        const BEATS = K.beatsIn(T0 + 0.3, T0 + DUR);
+        function aim(t) {
+          const T = T0 + t;
+          const [lu, d, ang, h] = camAt(t), a = ang * Math.PI / 180;
+          const look = along(lu, 0.55);
+          const pos = look.clone().add(V(-Math.cos(a) * d, h, Math.sin(a) * d));
+          // handheld drift, a breath on every beat (no drums here: the pulse is only felt), the fill's kicks
+          pos.x += K.noise1(T * 0.5, 1) * 0.22; pos.y += K.noise1(T * 0.45, 2) * 0.14 + (t < FORCE ? 0.1 * HR.hit("kick", T, 0.12) : 0);
+          look.y += K.noise1(T * 0.35, 4) * 0.06;
+          camera.position.copy(pos); camera.lookAt(look);
+          camera.rotateZ(K.noise1(T * 0.3, 3) * 0.01 + 0.025 * Math.sin(Math.min(1, Math.max(0, t - FORCE) / 7) * Math.PI));
+          let br = 0; for (const b of BEATS) br = Math.max(br, K.pulse(T, b, 0.16));
+          let key = 0; KEYS.forEach((k, i) => { key = Math.max(key, (0.006 + 0.014 * i / (KEYS.length - 1)) * K.pulse(t, k, 0.06)); });
+          camera.fov = 36 / (1 + 0.006 * br + 0.04 * K.pulse(t, FORCE, 0.2) + 0.025 * K.pulse(t, HIST, 0.2) + 0.03 * K.pulse(t, REWROTE, 0.2) + key);
+          camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+        }
+
+        // ---- the light on the line (pure functions of t) ----
+        const penAt = (t) => (t < K1 ? -Infinity : U0 + (U1 - U0) * K.ease.outExpo(K.clamp((t - K1) / 1.6)));
+        // the push: a pulse of light running from "force" down the line
+        const pushFront = (t) => (t < FORCE ? -Infinity : 0.4 + 55 * Math.pow(t - FORCE, 0.85));
+        const pushGain = (t) => (t < FORCE ? 0 : Math.exp(-(t - FORCE) / 1.6));
+        // the rewrite: a wave from "rewrote" both ways along main
+        const RC = pRew.u0, waveR = (t) => (t < REWROTE ? -1 : 70 * K.ease.outCubic(K.clamp((t - REWROTE) / 1.4)) + 6 * (t - REWROTE));
+        const straight = (u, t) => K.clamp((waveR(t) - Math.abs(u - RC)) / 1.2);
+        const histLit = (t) => (t < HIST ? pHist.u0 - 0.4 : pHist.u0 - 0.4 + (pHist.u1 - pHist.u0 + 0.8) * K.ease.outCubic(K.clamp((t - HIST) / 0.3)));
+        // you's lane dims out on "you", from the word outward
+        const youGone = (u, t) => K.clamp((50 * Math.max(0, t - YOU - 0.12) - Math.abs(u - pYou.u0) * 0.9) / 6);
+
+        const fogged = (p, near = 9, k = 0.05) => Math.exp(-Math.max(0, camera.position.distanceTo(p) - near) * k);
+        const mid = new THREE.Vector3();
+        function seg(a, b, w, rgb, alpha) {
+          mid.addVectors(a, b).multiplyScalar(0.5);
+          const f = fogged(mid);
+          if (f * alpha > 0.008) lines.seg(a, b, w, rgb, alpha * f);
+        }
+        const mainAt = (u, t) => along(u, jog(u) * (1 - straight(u, t)));
+        function scene(t, target) {
+          aim(t);
+          const T = T0 + t, voice = HR.band("vocal", T);
+          lines.clear();
+          const pen = penAt(t), front = pushFront(t), gain = pushGain(t), wr = waveR(t), hl = histLit(t);
+          const near = camera.position.x - 30, far = Math.min(pen, U1);
+          // main: the fire hairline
+          for (let u = Math.max(U0, near); u < far; u += 0.25) {
+            const u1 = Math.min(far, u + 0.25), a = mainAt(u, t), b = mainAt(u1, t);
+            seg(a, b, 2.0, FIRE, 0.78 + 0.12 * voice);
+            // the push pulse, the rewrite's wave front, "history." lit from below
+            const um = u + 0.125;
+            const hot = Math.max(gain * Math.exp(-Math.pow((um - front) / 1.6, 2)),
+              wr > 0 ? Math.exp(-Math.pow((Math.abs(um - RC) - wr) / 1.4, 2)) * Math.exp(-(t - REWROTE) / 1.2) : 0,
+              um > pHist.u0 - 0.4 && um < hl ? 0.55 : 0);
+            if (hot > 0.02) { seg(a, b, 4.2, FIRE, hot); seg(a, b, 1.4, CORE, 0.75 * hot); }
+          }
+          // you's lane, the merges into main and the commits on them
+          for (let u = Math.max(U0, near); u < far; u += 0.5) {
+            const um = u + 0.25, g = 1 - youGone(um, t);
+            if (g > 0.01) seg(along(u).add(YOUOFF), along(Math.min(far, u + 0.5)).add(YOUOFF), 1.3, BONE, 0.24 * g);
+          }
+          for (const m of merges) {
+            if (m < near || m > far) continue;
+            const s = straight(m, t), g = 1 - youGone(m, t);
+            const top = mainAt(m, t), bot = along(m - 1.1).add(YOUOFF);
+            // after the rewrite the merge lets go of main and sinks back to you's lane
+            const end = top.clone().lerp(along(m - 0.2).add(YOUOFF), K.ease.outCubic(s));
+            if (g > 0.01) seg(bot, end, 1.2, BONE, 0.3 * g * (1 - 0.6 * s));
+            // the commit on main: a small ring across the line
+            const n = 10, r = 0.075;
+            for (let i = 0; i < n; i++) {
+              const a0 = (i / n) * Math.PI * 2, a1 = ((i + 1) / n) * Math.PI * 2;
+              seg(top.clone().add(V(0, Math.sin(a0) * r, Math.cos(a0) * r)), top.clone().add(V(0, Math.sin(a1) * r, Math.cos(a1) * r)), 1.4, BONE, 0.55);
+            }
+          }
+          // the caret: the terminal's cursor, now writing the line (blinks when the voice rests)
+          const c = caretU(t);
+          if (c && t < DUR) {
+            const idle = t - c.last, blink = idle < 0.5 ? 1 : 0.35 + 0.65 * (0.5 + 0.5 * Math.cos(2 * Math.PI * (idle - 0.5) / (2 * BEAT)));
+            const base = along(c.u, TY - 0.06);
+            seg(base, base.clone().add(V(0, c.size * 1.4 * 0.72, 0)), 2.6, FIRE, blink);
+          }
+          lines.draw(renderer, camera, target);
+        }
+
+        const project = K.projector(THREE, camera);
+        const typeAt = (u) => along(u, TY);
+        function type(t) {
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+          ctx.clearRect(0, 0, 1920, 1080);
+          aim(t);
+          for (const p of WORDS) {
+            if (t < p.t - 0.04) continue;
+            let alpha = 1, fill = "240, 236, 229";
+            if (p.line === 1) alpha = 1 - 0.45 * K.prog(t, LINE2 - 0.3, LINE2 + 0.3, K.ease.inOutCubic); // line 1 steps back
+            if (p === pYou) { const f = K.prog(t, YOU + 0.35, YOU + 0.85, K.ease.inOutCubic); fill = [240, 236, 229].map((v, i) => Math.round(K.lerp(v, [136, 136, 128][i], f))).join(", "); }
+            K.textOnPath(ctx, project, typeAt, p.w, p.size, {
+              start: p.u0, font: FONT, alpha, fill, hot: () => p.hero, lit: (i) => glyphLit(p, i, t),
+            });
+          }
+        }
+
+        // ---- per-frame state ----
+        const block = $("f32-block"), cmd = $("f32-cmd");
+        function render() {
+          const t = tl.time(), T = T0 + t;
+          renderer.setRenderTarget(null); renderer.clear();
+          const fast = (t > FORCE - 0.04 && t < FORCE + 0.3) || t > ME + 0.05;
+          if (t >= K1) {
+            if (fast) shutter((ts, target) => scene(ts, target), t, { samples: 8, angle: 270 });
+            else scene(t, null);
+          }
+          type(t);
+          // the prompt's block: flickers with the fill's hits, leaves on "force" (the caret takes over), back for the bar
+          let on;
+          if (t < FORCE - 0.04) { const hit = Math.max(HR.hit("kick", T, 0.12), HR.hit("snare", T, 0.12)); on = t < 0.3 || hit > 0.35 ? 1 : 0.15; }
+          else if (t < BAR) on = 0;
+          else on = 1;
+          block.style.background = on ? `rgba(232, 93, 38, ${on})` : "transparent";
+          let n = 0; for (const k of KEYS) if (k <= t) n++;
+          cmd.textContent = "git push --force" + TYPE.slice(0, n);
+          // "here I go": rides up, blurred by its own speed, gone after "force"
+          const yy = y3(t), vy = Math.abs(yy - y3(Math.max(0, t - 1 / 60)));
+          t3.style.transform = yy ? `translateY(${yy.toFixed(1)}px)` : "";
+          t3.style.visibility = t < FORCE + 0.24 ? "visible" : "hidden";
+          t3.style.filter = vy > 12 ? `blur(${Math.min(8, (vy - 12) / 10).toFixed(1)}px)` : "";
+          WOW.draw(tl, T0);
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines["32-acappella"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

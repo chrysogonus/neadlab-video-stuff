@@ -1,0 +1,615 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 31 — checkout (bridge rising, 151.680–160.731). Light-and-depth rebuild, cream register: the printout as a
+         place. `git reflog` comes off the printer as one long fanfold sheet (tractor holes, perforated folds) lying in a
+         cream space, and the camera moves over it.
+         The cut: 30's glideUp carries on as a short settle, top-down on the head of the sheet (flat paper, like 30's).
+         L49: "but you" is printed at the head; on "checked" the camera dives from top-down to oblique and the hero lands.
+         Then the camera travels down the printout, back in time, each word of "a long, long time ago" printed in the log
+         between the entries as it is sung (the camera follows the singer; "long," stretches while it is sung); the
+         present recedes up the sheet into the haze behind. On "ago" it stops on `3f2a1c9 HEAD@{2 years ago}: checkout:
+         moving from us to somewhere-else`, the date marked, the message underlined, then rises to look back up the
+         whole long sheet.
+         L50: on the downbeat it whips on down the printout to its end, the next command: `$ git push
+         --force-with-lease` at display size under "so no lease, / no warning,". On "lease" it dives onto the flag and a
+         marker strike crosses `-with-lease`; on "warning" the struck piece is torn off the paper and flies at the lens
+         (the camera jolts): `--force` is left. "here I go": the camera pulls back to top-down, the last page laid out as
+         32's terminal; on "go" it tears at the perforation and flips up over the top, landing on the drums' entry
+         (158.875): the black terminal was under it. The fill's hits carry the camera over the terminal; 32 opens on
+         that last frame (match cut).
+         Layers: WebGL paper and ink lines (assets/kit/lines.js), a Canvas2D layer for the printed type, the DOM terminal
+         under them and the strip over them. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2"); font-style: italic; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826; --ink-on-cream: #111111; --muted-on-cream: #5F5B54;
+          --hr-accent-rgb: 200, 72, 26;
+          /* the cream space the sheet lies in (the GL clears to the same) */
+          background: #D8D3CB; color: var(--ink-on-cream);
+        }
+        #f31-cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        #f31-blur, #f31-world { position: absolute; inset: 0; }
+        #f31-gl, #f31-type { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+
+        /* ================= the terminal: under the paper all along ================= */
+        #f31-term { position: absolute; inset: 0; background: var(--ink); color: var(--cream); visibility: hidden;
+          --hr-accent-rgb: 232, 93, 38; }
+        #f31-tcam { position: absolute; inset: 0; transform-origin: 0 0; }
+        #f31-tstrip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); opacity: 0.8; }
+        #f31-tstrip .f31-n { color: var(--fire); font-weight: 600; margin-left: 0.6em; }
+        .f31-tl { position: absolute; left: 5.1cqw; font: 800 8.2cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.04em;
+          color: var(--cream-muted); white-space: nowrap; }
+        .f31-tl .f31-hero { font-weight: 900; }
+        /* 32's first frame: the unsent command, same place and size */
+        #f31-prompt { position: absolute; left: 5.5cqw; top: 28.2cqw; font: 500 4.2cqw/1 "IBM Plex Mono", monospace; color: var(--cream);
+          white-space: pre; }
+        #f31-tpfx { color: var(--cream-muted); }
+        #f31-block { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        #f31-t3 { position: absolute; left: 4.6cqw; top: 36cqw; font: 900 14cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.05em;
+          color: var(--cream); white-space: nowrap; }
+        #f31-tgo { color: var(--fire); }
+
+        /* header strip, cream register (the vignette darkens the corners, so the small text takes the darker inks) */
+        #f31-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #3F3C37;
+          padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
+        #f31-strip b { color: #7E2E12; font-weight: 600; }
+      </style>
+      <div id="root" data-composition-id="31-checkout" data-width="1920" data-height="1080" data-duration="9.051">
+        <div id="f31-cam">
+          <!-- the terminal under the paper (shown as the last page starts to lift) -->
+          <div id="f31-term" data-layout-allow-overlap>
+            <div id="f31-tcam">
+              <div class="f31-tl" style="top: 7.4cqw"><span>so</span> <span>no</span> <span class="f31-hero">lease,</span></div>
+              <div class="f31-tl" style="top: 15.6cqw"><span>no</span> <span class="f31-hero">warning,</span></div>
+              <div id="f31-prompt"><span id="f31-tpfx">~/us (main) $ </span><span id="f31-pgit">git</span> <span id="f31-ppush">push</span> <span id="f31-pforce">--force</span><span id="f31-block"></span></div>
+              <div id="f31-t3"><span id="f31-there">here</span> <span>I</span> <span id="f31-tgo">go</span></div>
+            </div>
+            <div id="f31-tstrip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin<span class="f31-n">0</span></span></div>
+          </div>
+          <!-- the printout -->
+          <div id="f31-blur">
+            <div id="f31-world">
+              <canvas id="f31-gl" width="1920" height="1080" data-layout-ignore></canvas>
+              <canvas id="f31-type" width="1920" height="1080" data-layout-ignore></canvas>
+            </div>
+          </div>
+          <div id="f31-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+        import * as K from "./assets/kit/lines.js";
+
+        const DUR = 9.051, T0 = 151.68;
+        const root = document.querySelector('[data-composition-id="31-checkout"]');
+        const $ = (id) => root.querySelector("#" + id);
+        const at = (T) => T - T0;
+        // the word starts (lyrics.json), the downbeats and the drums' entry (HR_ENV: kick + snare at 158.875)
+        const BUT = at(151.74), YOU = at(151.92), CHECKED = at(152.16), OUT = at(152.468);
+        const A = at(152.98), LONG1 = at(153.12), LONG2 = at(153.78), TIME = at(154.06), AGO = at(154.569);
+        const SO = at(155.352), NO1 = at(155.66), LEASE = at(156.12), NO2 = at(156.6), WARN = at(157.04);
+        const HERE = at(157.98), I = at(158.32), GO = at(158.44), DRUM = at(158.875);
+        const TURN = at(155.224); // the downbeat before "so"
+        await document.fonts.load('italic 400 100px "Instrument Serif"');
+        await document.fonts.load('800 100px "Barlow"');
+        await document.fonts.load('900 100px "Barlow"');
+        await document.fonts.load('400 100px "IBM Plex Mono"');
+        await document.fonts.load('500 100px "IBM Plex Mono"');
+        await document.fonts.load('600 100px "IBM Plex Mono"');
+        const tl = gsap.timeline({ paused: true });
+        const cam = $("f31-cam"), term = $("f31-term"), tcam = $("f31-tcam");
+
+        // ================= the terminal (DOM): revealed by the flip, handed to 32 =================
+        tl.set(term, { visibility: "hidden" }, 0).set(term, { visibility: "visible" }, GO - 0.02);
+        HR.hero(tl, $("f31-tgo"), GO, { spread: 30, over: 1.26, pre: 0.14, sharp: true });
+        const fill = [...HR.onsetsIn("kick", T0 + DRUM, T0 + DUR), ...HR.onsetsIn("snare", T0 + DRUM, T0 + DUR)]
+          .sort((p, q) => p - q).filter((t, i, a) => i === 0 || t - a[i - 1] > 0.02);
+        const strength = (T) => Math.max(HR.hit("kick", T + 0.001, 0.05), HR.hit("snare", T + 0.001, 0.05));
+        // the punches stop before the last two hits, so the cut frame is exactly 32's first (no punch left on it)
+        fill.filter((T) => T < 160.5).forEach((T, i) => WOW.punch(tl, cam, at(T), { s: 1 + (i === 0 ? 0.04 : 0.012 + 0.014 * strength(T)), dur: i === 0 ? 0.42 : 0.24 }));
+        WOW.shake(tl, tcam, DRUM, { amp: 6 + 10 * HR.band("drums", T0 + DRUM + 0.1), dur: 0.42, rot: 0.25, seed: 7 });
+        // the fill's hits carry the camera: on the drums' entry it slams in on "go"; the next hits walk it back across
+        // "here", then up onto the unsent command a word per hit; the last kick pulls it back to the whole terminal,
+        // landing ON the cut (32's first frame, the prompt at 5.5/28.2cqw, 4.2cqw, unscaled)
+        const CAM_STEPS = [
+          [at(158.875), "go", 1.75, 0.58, 0.56], [at(159.104), "here", 1.75, 0.42, 0.56],
+          [at(159.332), "pfx", 2.15, 0.5, 0.46], [at(159.561), "git", 2.15, 0.5, 0.46], [at(159.791), "push", 2.2, 0.5, 0.46],
+          [at(160.022), "force", 2.3, 0.5, 0.46], [at(160.252), "block", 2.65, 0.5, 0.46], [at(160.531), null, 1, 0, 0],
+        ];
+        tl.set({}, {}, DUR);
+        const block = $("f31-block"), tgo = $("f31-tgo"), promptEl = $("f31-prompt"), t3 = $("f31-t3");
+        const TGT = { go: [t3, tgo], here: [t3, $("f31-there")], pfx: [promptEl, $("f31-tpfx")], git: [promptEl, $("f31-pgit")],
+          push: [promptEl, $("f31-ppush")], force: [promptEl, $("f31-pforce")], block: [promptEl, block] };
+        const cache = {};
+        const centre = (k) => {
+          if (cache[k]) return cache[k];
+          const [box, el] = TGT[k];
+          return (cache[k] = [box.offsetLeft + el.offsetLeft + el.offsetWidth / 2, box.offsetTop + el.offsetTop + el.offsetHeight / 2]);
+        };
+        const e3o = gsap.parseEase("power3.out");
+        const frameOf = (st) => { if (!st[1]) return [0, 0, 1]; const [cx, cy] = centre(st[1]), z = st[2]; return [st[3] * 1920 - cx * z, st[4] * 1080 - cy * z, z]; };
+        function tcamAt(t) {
+          let cur = [0, 0, 1];
+          for (let i = 0; i < CAM_STEPS.length; i++) {
+            const st = CAM_STEPS[i]; if (t < st[0]) break;
+            const next = i + 1 < CAM_STEPS.length ? CAM_STEPS[i + 1][0] : DUR;
+            const d = Math.min(0.13, next - st[0]), u = i === CAM_STEPS.length - 1 ? e3o(Math.min(1, (t - st[0]) / (DUR - st[0]))) : e3o(Math.min(1, (t - st[0]) / d));
+            const to = frameOf(st);
+            cur = [cur[0] + (to[0] - cur[0]) * u, cur[1] + (to[1] - cur[1]) * u, cur[2] + (to[2] - cur[2]) * u];
+          }
+          return cur;
+        }
+
+        // ================= the printout: layout in paper units (x across, z down the sheet; y up) =================
+        const ctx = $("f31-type").getContext("2d");
+        const DPR = window.devicePixelRatio || 1;
+        $("f31-type").width = 1920 * DPR; $("f31-type").height = 1080 * DPR;
+        const SER = 'italic 400 100px "Instrument Serif"', B8 = '800 100px "Barlow"', B9 = '900 100px "Barlow"';
+        const M4 = '400 100px "IBM Plex Mono"', M5 = '500 100px "IBM Plex Mono"', M6 = '600 100px "IBM Plex Mono"';
+        const INKS = "17, 17, 17", GREY = "92, 88, 81", HASH = "128, 123, 115", MARKS = "200, 72, 26", DARKA = "138, 52, 18", STRUCK = "95, 91, 84";
+        const advOf = (font, s, size, track = 0) => { ctx.font = font; let w = 0; for (const ch of s) w += ctx.measureText(ch).width / 100 * size * 1.4 + track * size * 1.4; return w; };
+        const W = 18, X0 = -7.0;                 // the sheet is 18 wide (x ±9); type starts at x = −7
+        const HEAD = -2.2, PE = 10.5, PG = 6.5, FA = 0.32; // head of the sheet, the last page's length, fold pitch and height
+        const RS = 0.24, RG = 0.62;               // a reflog row: size and pitch
+        const items = [];                          // {words: [{text, font, u0, rgb, T, hero, track}], x, z, size, kind}
+        // a line of words: [text, font, T (track s or null), rgb, hero]
+        function lineOf(x, z, size, list, track = 0, kind = "lyric") {
+          let u = 0;
+          const words = list.map(([text, font, T, rgb, hero]) => {
+            const w = { text, font, u0: u, len: advOf(font, text, size, track), T: T == null ? null : at(T), rgb, hero: !!hero, track };
+            u += w.len + advOf(font, " ", size, track);
+            return w;
+          });
+          const it = { x, z, size, words, kind, len: u };
+          items.push(it);
+          return it;
+        }
+        let z = 0;
+        // the reading card: L49 printed on a cream card lying on the printout (a ruler under the line being read). It is
+        // carried down the log with the camera, so the whole sung line stays in view; its lower edge is the reading edge.
+        const CT0 = -0.8, CH = 5.8, CX = 7.75, CY = 0.36;   // the card's top (z), height, half width, height above the sheet
+        const card = (it) => { it.card = true; return it; };
+        card(lineOf(X0, 0.55, 1.0, [["but", B8, 151.74, INKS], ["you", B8, 151.92, INKS]], -0.03));
+        card(lineOf(X0 - 0.1, 2.8, 1.75, [["checked", B9, 152.16, INKS, true], ["out", B9, 152.468, INKS]], -0.045));
+        const hLong = card(lineOf(X0, 4.4, 1.05, [["a", SER, 152.98, INKS], ["long,", SER, 153.12, MARKS, true], ["long", SER, 153.78, INKS],
+          ["time", SER, 154.06, INKS], ["ago", SER, 154.569, INKS]]));
+        lineOf(X0, 5.75, 0.3, [["$", M5, null, HASH], ["git reflog --date=relative", M5, null, INKS]], 0, "cmd");
+        const RULE_Z = 6.0;
+        z = 6.75;
+        const rows = [];
+        const row = (hash, when, msg) => {
+          const it = lineOf(X0, z, RS, [[hash, M4, null, HASH], [`HEAD@{${when}}:`, M4, null, GREY], [msg, M4, null, GREY]], 0, "row");
+          rows.push(it); z += RG; return it;
+        };
+        row("9c0ffee", "4 minutes ago", "rebase (finish): returning to refs/heads/main");
+        row("9c0ffee", "4 minutes ago", "rebase (pick): ready.");
+        row("2b7d4e8", "2 hours ago", 'revert: Revert "force push"');
+        row("0e96d4a", "3 hours ago", "cherry-pick: that sunday");
+        row("c7f2b18", "3 hours ago", "cherry-pick: the beach");
+        row("51d0a3e", "3 hours ago", "cherry-pick: first date");
+        row("e81b0d4", "6 hours ago", "rebase (finish): returning to refs/heads/main");
+        row("6b1e9f3", "6 hours ago", "rebase (pick): we'll get to it");
+        row("d27a0c5", "6 hours ago", "rebase (pick): just a feature");
+        row("b05d2f8", "6 hours ago", "rebase (start): checkout b05d2f8");
+        row("e81b0d4", "11 months ago", "commit: ready.");
+        row("9d03b7e", "1 year ago", "merge you: Merge made by the 'ort' strategy.");
+        row("5e7a90c", "1 year ago", "commit: sorry");
+        row("77c3d1b", "1 year ago", "commit: fixed it");
+        row("a1f4e62", "1 year ago", "commit: sorry");
+        row("c38b5d0", "1 year ago", "pull: Fast-forward");
+        row("f06e2a9", "2 years ago", "commit: anniversary");
+        row("e3b8a41", "2 years ago", "commit: late again");
+        const target = row("3f2a1c9", "2 years ago", "checkout: moving from us to somewhere-else");
+        target.words[2].rgb = INKS;
+        row("3f2a1c9", "2 years ago", "commit: you and me");
+        row("a7c21f0", "2 years ago", "commit: we'll get to it");
+        row("4c9d7a1", "2 years ago", "commit: just a feature");
+        row("91be33a", "3 years ago", "commit: moved in");
+        row("0b5f6e2", "3 years ago", "commit: nothing on the side");
+        row("6d2e8b4", "3 years ago", "commit: the beach");
+        row("2f9c1a7", "3 years ago", "commit: first date");
+        row("8e40b3c", "3 years ago", "commit (initial): hello");
+        // the last page starts at the next perforation: laid out as 32's terminal (1 cqw = 0.16 units, the frame's top
+        // at its fold when the camera is top-down over it)
+        const Zb = Math.ceil((z + 0.9) * 2) / 2;
+        const CQ = 0.16, xq = (c) => -8 + c * CQ;
+        const base = (top, fs, lh, font) => {
+          ctx.font = font; const m = ctx.measureText("Hg"), asc = m.fontBoundingBoxAscent / 100, des = m.fontBoundingBoxDescent / 100;
+          return Zb + (top + (lh * fs - (asc + des) * fs) / 2 + asc * fs) * CQ;
+        };
+        const sz = (fs) => fs * CQ / 1.4;
+        const b1 = lineOf(xq(5.1), base(7.4, 8.2, 0.95, B8), sz(8.2), [["so", B8, 155.352, INKS], ["no", B8, 155.66, INKS], ["lease,", B9, 156.12, INKS, true]], -0.04);
+        const b2 = lineOf(xq(5.1), base(15.6, 8.2, 0.95, B8), sz(8.2), [["no", B8, 156.6, INKS], ["warning,", B9, 157.04, INKS, true]], -0.04);
+        lineOf(xq(5.5), base(25.1, 3, 1, M5), sz(3), [["$", M5, null, HASH], ["git push", M5, null, INKS]], 0, "cmd");
+        const flag = lineOf(xq(5.2), base(29, 7.2, 1, M6), sz(7.2), [["--force", M6, null, INKS]], 0, "cmd");
+        const chip = { text: "-with-lease", font: M6, u0: flag.words[0].len, size: flag.size };
+        flag.words[0].len = advOf(M6, "--force", flag.size); chip.len = advOf(M6, chip.text, flag.size);
+        const b3 = lineOf(xq(4.6), base(36, 14, 0.9, B9), sz(14), [["here", B9, 157.98, INKS], ["I", B9, 158.32, INKS], ["go", B9, 158.44, MARKS, true]], -0.05);
+
+        // ================= the sheet in 3D: fanfold folds, the last page on its own hinge =================
+        const yk = (k) => (k % 2 ? FA : 0);
+        const fy = (zz) => { if (zz >= Zb) return 0; const s = (Zb - zz) / PG, k = Math.floor(s); return K.lerp(yk(k), yk(k + 1), s - k); };
+        const knots = [HEAD]; for (let k = Math.floor((Zb - HEAD) / PG); k >= 1; k--) if (Zb - k * PG > HEAD + 0.3) knots.push(Zb - k * PG); knots.push(Zb);
+        const V = (x, y, zz) => new THREE.Vector3(x, y, zz);
+        // the flip of the last page: about the perforation at Zb, its near edge lifting up and over
+        const flipM = new THREE.Matrix4(), tmpM = new THREE.Matrix4();
+        let flipTh = 0;
+        function setFlip(p) {
+          // u (0..1) -> the near edge lifts and the page is pulled away over the top, exiting just before the drums
+          p = Math.pow(p, 1.6);
+          flipTh = p * 30 * Math.PI / 180;
+          flipM.makeTranslation(0, 0, Zb - 9 * p).multiply(tmpM.makeRotationZ(-0.05 * p)).multiply(tmpM.makeRotationX(-flipTh)).multiply(tmpM.makeTranslation(0, 0, -Zb));
+        }
+        setFlip(0);
+        // a point on the paper (x, z), lifted a hair; on the last page through the flip
+        const P = (x, zz, lift = 0.004) => { const v = V(x, fy(zz) + lift, zz); return zz >= Zb - 1e-6 && flipTh > 0 ? v.applyMatrix4(flipM) : v; };
+
+        const renderer = K.renderer(THREE, $("f31-gl"), "#D8D3CB");
+        const lines = K.createLines(THREE, 30000, { blend: "normal" });
+        const shutter = K.createShutter(THREE, renderer);
+        const camera = new THREE.PerspectiveCamera(40, 16 / 9, 0.05, 400);
+        camera.up.set(0, 0, -1);
+        const hex3 = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+        const INK = hex3("#111111"), MARK = hex3("#C8481A");
+        // the paper: display values written as they are (no colour management in the shader), fogged into the space
+        const paperMat = new THREE.ShaderMaterial({
+          side: THREE.DoubleSide,
+          uniforms: { camPos: { value: V(0, 0, 0) }, paper: { value: new THREE.Vector3(...hex3("#F0ECE5")) }, haze: { value: new THREE.Vector3(...hex3("#D8D3CB")) },
+            fogNear: { value: 14 }, fogK: { value: 0.05 }, pool: { value: new THREE.Vector2() }, poolAmt: { value: 0.08 } },
+          vertexShader: `varying vec3 vW; varying vec3 vN;
+            void main() { vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = mat3(modelMatrix) * normal; gl_Position = projectionMatrix * viewMatrix * w; }`,
+          fragmentShader: `uniform vec3 camPos, paper, haze; uniform float fogNear, fogK, poolAmt; uniform vec2 pool;
+            varying vec3 vW; varying vec3 vN;
+            void main() {
+              vec3 n = normalize(vN); if (dot(n, camPos - vW) < 0.0) n = -n;
+              vec3 L = normalize(vec3(-0.25, 1.0, 0.35));
+              float lam = clamp(1.0 + 0.9 * (dot(n, L) - L.y), 0.72, 1.04);
+              float pl = 1.0 - poolAmt * smoothstep(3.0, 17.0, distance(vW.xz, pool));
+              float f = exp(-max(0.0, distance(vW, camPos) - fogNear) * fogK);
+              gl_FragColor = vec4(mix(haze, paper * lam * pl, f), 1.0);
+            }`,
+        });
+        const quadGeo = (zs, ys) => {
+          const pos = [];
+          for (let i = 1; i < zs.length; i++) {
+            const a0 = [-W / 2, ys[i - 1], zs[i - 1]], a1 = [W / 2, ys[i - 1], zs[i - 1]], b0 = [-W / 2, ys[i], zs[i]], b1 = [W / 2, ys[i], zs[i]];
+            pos.push(...a0, ...b0, ...a1, ...a1, ...b0, ...b1);
+          }
+          const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.computeVertexNormals(); return g;
+        };
+        const sheetScene = new THREE.Scene();
+        const mainSheet = new THREE.Mesh(quadGeo(knots, knots.map(fy)), paperMat);
+        const lastPage = new THREE.Mesh(quadGeo([Zb, Zb + PE], [0, 0]), paperMat);
+        lastPage.matrixAutoUpdate = false;
+        sheetScene.add(mainSheet, lastPage);
+        const cardMat = paperMat.clone(); cardMat.uniforms.paper.value = new THREE.Vector3(...hex3("#F5F2EC"));
+        const cardGeo = new THREE.BufferGeometry();
+        cardGeo.setAttribute("position", new THREE.Float32BufferAttribute([-CX, CY, CT0, -CX, CY, CT0 + CH, CX, CY, CT0, CX, CY, CT0, -CX, CY, CT0 + CH, CX, CY, CT0 + CH], 3));
+        cardGeo.computeVertexNormals();
+        const cardMesh = new THREE.Mesh(cardGeo, cardMat);
+        cardMesh.matrixAutoUpdate = false;
+        const cardScene = new THREE.Scene(); cardScene.add(cardMesh);
+
+        // the ink on the sheet: edges, tractor holes, the margin perforations, the folds (static, [a, b, width, rgb, alpha, last page])
+        const INKSEG = [];
+        const inkSeg = (a, b, w, rgb, al) => INKSEG.push([a, b, w, rgb, al, a[1] >= Zb - 1e-6 && b[1] >= Zb - 1e-6]);
+        const zsAll = [...knots, Zb + PE];
+        for (const sx of [-1, 1]) {
+          for (let i = 1; i < zsAll.length; i++) inkSeg([sx * W / 2, zsAll[i - 1]], [sx * W / 2, zsAll[i]], 1.6, INK, 0.5);
+          for (let zz = HEAD + 0.25; zz < Zb + PE; zz += 0.5) INKSEG.push(["hole", sx * 8.45, zz, zz >= Zb]);
+          for (let zz = HEAD; zz < Zb + PE - 0.2; zz += 0.36) inkSeg([sx * 7.85, zz], [sx * 7.85, Math.min(zz + 0.22, Zb + PE)], 1.0, INK, 0.3);
+        }
+        inkSeg([-W / 2, HEAD], [W / 2, HEAD], 1.6, INK, 0.5);
+        inkSeg([-W / 2, Zb + PE], [W / 2, Zb + PE], 1.6, INK, 0.5);
+        for (const k of knots.slice(1)) for (let x = -W / 2; x < W / 2 - 0.1; x += 0.34) inkSeg([x, k - 0.001], [x + 0.2, k - 0.001], 1.0, INK, 0.38);
+        inkSeg([X0, RULE_Z], [7.4, RULE_Z], 1.2, INK, 0.32);
+
+        // ================= the camera: [t, look x, look z, distance, pitch (deg)], an ease per segment =================
+        const E = K.ease, p2o = (x) => 1 - (1 - x) * (1 - x), p2i = (x) => x * x, sine = (x) => -(Math.cos(Math.PI * x) - 1) / 2;
+        const ZC0 = 3.0, ZSO = (b1.z + b2.z) / 2 - 0.5, ZFL = flag.z - 0.45;
+        // the card: slides down the log through "a long, long time ago", stopping with its edge on the found line on
+        // "ago"; whips on with the camera to the end of the printout on the downbeat; flung off on "so"
+        const E0 = CT0 + CH, E1 = target.z - 0.42, E2 = Zb - 0.45, SLIDE = A - 0.1, FLING = SO + 0.02;
+        function cardAt(t) {
+          let dz = (E1 - E0) * sine(K.clamp((t - SLIDE) / (AGO - SLIDE)));
+          if (t > TURN) dz += (E2 - E1) * E.outExpo(K.clamp((t - TURN) / 0.3));
+          const dx = t > FLING ? -26 * E.outExpo(K.clamp((t - FLING) / 0.5)) : 0;
+          return { dx, dz };
+        }
+        const zE = (t) => E0 + cardAt(t).dz;   // the reading edge
+        // keys marked R hold look z relative to the card's reading edge (the camera rides with the card)
+        const RL = true;
+        const CAM = [
+          [0, 0, ZC0 - 80 / 120, 12.36, 89.5],
+          [0.32, 0, ZC0, 12.36, 89.5, p2o],                         // 30's glide settles
+          [CHECKED - 0.03, 0.05, ZC0 + 0.12, 12.2, 89, sine],
+          [CHECKED + 0.36, -0.4, -2.7, 12.8, 50, E.outExpo, RL],     // the dive onto "checked out"
+          [SLIDE, -0.6, -2.3, 12.6, 47, sine, RL],
+          [A + 0.35, -0.8, -1.5, 12.4, 43, sine, RL],                // the travel down the log, riding the card
+          [AGO, -0.8, -1.3, 12.2, 43, sine, RL],
+          [AGO + 0.5, -0.6, -1.4, 12.6, 42, E.outCubic, RL],
+          [TURN - 0.03, -0.2, -2.6, 15.0, 32, sine, RL],              // rises, looking back up the long sheet
+          [TURN + 0.3, -2.4, ZSO - 1.2 - E2, 11.6, 44, E.outExpo, RL], // the whip to the end of the printout
+          [LEASE - 0.03, -2.4, ZSO + 0.3, 11.2, 45, sine],
+          [LEASE + 0.3, -0.7, ZFL - 1.2, 10.2, 50, E.outExpo],       // the dive onto the flag
+          [WARN - 0.02, -0.7, ZFL - 1.1, 9.8, 51, E.linear],
+          [WARN + 0.24, -0.9, ZFL - 1.0, 10.4, 52, E.outCubic],
+          [HERE - 0.06, -0.2, Zb + 4.4, 12.2, 72, E.inOutCubic],
+          [GO, 0.0, Zb + 4.5, 12.364, 90, p2i],                    // top-down on the last page: 32's terminal layout
+          [DUR, 0.0, Zb + 4.5, 12.364, 90, E.linear],
+        ];
+        function camAt(t) {
+          let i = 1; while (i < CAM.length - 1 && t >= CAM[i][0]) i++;
+          const a = CAM[i - 1], b = CAM[i], f = (b[5] || sine)(K.clamp((t - a[0]) / Math.max(1e-6, b[0] - a[0])));
+          const v = [1, 2, 3, 4].map((k) => K.lerp(a[k], b[k], f));
+          if (a[6] && b[6]) v[1] = K.lerp(a[2], b[2], f) + zE(t);
+          else v[1] = K.lerp(a[2] + (a[6] ? zE(a[0]) : 0), b[2] + (b[6] ? zE(b[0]) : 0), f);
+          return v;
+        }
+        const BEATS = K.beatsIn(T0, T0 + DUR), BARS = K.beatsIn(T0 + 0.5, T0 + GO, "downbeats").filter((b) => Math.abs(b - (T0 + TURN)) > 0.05); // the whip takes the 155.224 bar
+        const look = V(0, 0, 0);
+        let D = 12.36;
+        function aim(t) {
+          const T = T0 + t, [lx, lz, d, p] = camAt(t), pr = p * Math.PI / 180;
+          D = d;
+          look.set(lx, fy(lz), lz);
+          const pos = V(lx, look.y + d * Math.sin(pr), lz + d * Math.cos(pr));
+          // handheld drift (stilled for the top-down landing on "go"), the jolt of the tear on "warning"
+          const hand = K.clamp((GO - 0.25 - t) / 0.6);
+          pos.x += K.noise1(T * 0.5, 1) * 0.16 * hand; pos.z += K.noise1(T * 0.45, 2) * 0.12 * hand;
+          const j = t >= WARN ? Math.pow(Math.max(0, 1 - (t - WARN) / 0.36), 2) : 0;
+          pos.x += K.noise1(T * 11, 5) * 0.2 * j; pos.y += K.noise1(T * 11, 6) * 0.16 * j; pos.z += K.noise1(T * 11, 7) * 0.14 * j;
+          camera.position.copy(pos); camera.lookAt(look);
+          camera.rotateZ((K.noise1(T * 0.3, 3) * 0.008 + K.noise1(T * 11, 8) * 0.012 * j) * hand);
+          let br = 0; for (const b of BEATS) br = Math.max(br, K.pulse(T, b, 0.16));
+          for (const b of BARS) br = Math.max(br, 4 * K.pulse(T, b, 0.14)); // the bar lines: a breath of the lens
+          camera.fov = 40 / (1 + (0.006 * br + 0.05 * K.pulse(t, CHECKED, 0.18) + 0.04 * K.pulse(t, LONG1, 0.2) + 0.04 * K.pulse(t, LEASE, 0.18)
+            + 0.05 * K.pulse(t, WARN, 0.16)) * hand);
+          camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+        }
+        const project = K.projector(THREE, camera);
+        // type printed ON the sheet: a glyph's height foreshortens with the paper (its scale times how much a step up the
+        // page shrinks on screen); `lay` is the projector the type uses, set per printed line
+        let lay = project;
+        function onSheet(it) {
+          const a = PT(it, it.x, it.z), up = PT(it, it.x, it.z - 1).sub(a).normalize().multiplyScalar(0.3);
+          return (pt) => {
+            const q = project(pt); if (!q) return q;
+            const q2 = project(pt.clone().add(up)); if (!q2) return q;
+            return { x: q.x, y: q.y, s: q.s * K.clamp(Math.hypot(q2.x - q.x, q2.y - q.y) / (0.3 * q.s), 0.3, 1) };
+          };
+        }
+
+        // ================= drawing (pure functions of t) =================
+        const FLIP0 = GO + 0.02, FLIPD = DRUM - FLIP0;
+        const flipP = (t) => (t < FLIP0 ? 0 : K.clamp((t - FLIP0) / FLIPD));
+        const fogA = (p) => Math.exp(-Math.max(0, camera.position.distanceTo(p) - (D + 3)) * 0.05);
+        const mid = new THREE.Vector3();
+        function seg(a, b, w, rgb, alpha) {
+          mid.addVectors(a, b).multiplyScalar(0.5);
+          const f = fogA(mid) * alpha;
+          if (f > 0.01) lines.seg(a, b, w, rgb, f);
+        }
+        function scene(t, target) {
+          aim(t);
+          setFlip(flipP(t));
+          lastPage.matrix.copy(flipM); lastPage.matrixWorldNeedsUpdate = true;
+          const T = T0 + t, flipping = t >= FLIP0;
+          mainSheet.visible = !flipping;
+          const u = paperMat.uniforms;
+          u.camPos.value.copy(camera.position); u.fogNear.value = D + 3;
+          u.pool.value.set(look.x + 1.5, look.z - 1); u.poolAmt.value = 0.06 + 0.05 * (1 - HR.band("rms", T));
+          renderer.setRenderTarget(target);
+          renderer.render(sheetScene, camera);
+          lines.clear();
+          for (const s of INKSEG) {
+            if (s[0] === "hole") {
+              const [, x, zz, last] = s; if (flipping && !last) continue;
+              const n = 10, r = 0.16;
+              for (let i = 0; i < n; i++) {
+                const a0 = (i / n) * Math.PI * 2, a1 = ((i + 1) / n) * Math.PI * 2;
+                seg(P(x + Math.cos(a0) * r, zz + Math.sin(a0) * r, 0.006), P(x + Math.cos(a1) * r, zz + Math.sin(a1) * r, 0.006), 1.3, INK, 0.45);
+              }
+              continue;
+            }
+            const [a, b, w, rgb, al, last] = s; if (flipping && !last) continue;
+            seg(P(a[0], a[1], 0.006), P(b[0], b[1], 0.006), w, rgb, al);
+          }
+          // the card's shadow on the sheet, then the card and its edge
+          const cd = cardAt(t), C = (x, zz, y = CY + 0.003) => V(x + cd.dx, y, zz + cd.dz);
+          if (!flipping && t < FLING + 0.6) {
+            for (let k = 0; k < 3; k++) {
+              const o = 0.08 + k * 0.1, w = 6 + k * 8;
+              seg(C(-CX + 0.3, CT0 + CH + o, 0.01), C(CX + o, CT0 + CH + o, 0.01), w, INK, 0.05);
+              seg(C(CX + o, CT0 + 0.3, 0.01), C(CX + o, CT0 + CH + o, 0.01), w, INK, 0.05);
+            }
+          }
+          lines.draw(renderer, camera, target);
+          if (!flipping && t < FLING + 0.6) {
+            cardMesh.matrix.makeTranslation(cd.dx, 0, cd.dz); cardMesh.matrixWorldNeedsUpdate = true;
+            const cu = cardMat.uniforms; cu.camPos.value.copy(camera.position); cu.fogNear.value = D + 3; cu.pool.value.copy(u.pool.value); cu.poolAmt.value = u.poolAmt.value;
+            renderer.setRenderTarget(target);
+            renderer.render(cardScene, camera);
+            lines.clear();
+            const cr = [C(-CX, CT0), C(CX, CT0), C(CX, CT0 + CH), C(-CX, CT0 + CH), C(-CX, CT0)];
+            for (let i = 1; i < cr.length; i++) seg(cr[i - 1], cr[i], 1.6, INK, 0.6);
+            lines.draw(renderer, camera, target);
+          }
+        }
+
+        // the type: every printed line on the sheet, sung words from their start (glyph by glyph), heroes slam
+        let cdT = { dx: 0, dz: 0 };   // the card's offset at the time being drawn
+        const PT = (it, x, zz) => (it.card ? V(x + cdT.dx, CY + 0.004, zz + cdT.dz) : P(x, zz));
+        const lineAt = (it) => (u) => PT(it, it.x + u, it.z);
+        const STAG = 0.12, RAMP = 0.07;
+        const litOf = (w, t, i, n) => (w.T == null ? 1 : K.clamp((t - (w.T - 0.04) - (i / Math.max(1, n)) * STAG) / RAMP));
+        const facing = () => (flipTh < Math.PI / 2 ? Math.max(0, Math.cos(flipTh)) : 0);
+        function drawWord(atF, w, size, t, alpha, rgbAt, spread = 0) {
+          const n = [...w.text].length;
+          // a hero slams: overscaled from its start, settling into place
+          const m = w.hero && t >= w.T - 0.04 ? 1 + 0.2 * Math.exp(-Math.max(0, t - w.T) / 0.09) : 1;
+          const s = size * m, start = w.u0; // grows from its left edge, away from the word before it
+          ctx.font = w.font;
+          let u = start;
+          [...w.text].forEach((ch, i) => {
+            if (ch !== " ") {
+              const lit = litOf(w, t, i, n), rgb = rgbAt(i);
+              K.textOnPath(ctx, lay, atF, ch, s, { start: u, font: w.font, alpha, fill: rgb, color: () => rgb, lit: () => lit });
+            }
+            u += ctx.measureText(ch).width / 100 * s * 1.4 + w.track * s * 1.4 + spread;
+          });
+        }
+        // screen-space marks along a printed run (u0..u1 of a line): k = 0..1 drawn, off = height above the baseline (× font px)
+        function mark(atF, u0, u1, size, off, wid, rgb, alpha, k = 1) {
+          const qa = lay(atF(u0)), qb = lay(atF(u0 + (u1 - u0) * k));
+          if (!qa || !qb || k <= 0) return;
+          const hp = 0.5 * (qa.s + qb.s) * size * 1.4, ang = Math.atan2(qb.y - qa.y, qb.x - qa.x), nx = Math.sin(ang), ny = -Math.cos(ang);
+          ctx.save(); ctx.strokeStyle = `rgba(${rgb}, ${alpha})`; ctx.lineCap = "round"; ctx.lineWidth = wid * hp;
+          ctx.beginPath(); ctx.moveTo(qa.x + nx * off * hp, qa.y + ny * off * hp); ctx.lineTo(qb.x + nx * off * hp, qb.y + ny * off * hp + (qb.x - qa.x) * 0.012 * off); ctx.stroke(); ctx.restore();
+        }
+        const visible = (it) => {
+          const qa = project(PT(it, it.x, it.z)), qb = project(PT(it, it.x + it.len, it.z));
+          if (!qa || !qb) return false;
+          const pad = 260;
+          return !(Math.max(qa.y, qb.y) < -pad || Math.min(qa.y, qb.y) > 1080 + pad || Math.max(qa.x, qb.x) < -pad || Math.min(qa.x, qb.x) > 1920 + pad);
+        };
+        // the reading pointer: the row under the camera's eye, stopping on the target on "ago"
+        const pointerRow = (t) => {
+          if (t < SLIDE || t >= TURN + 0.05) return null;
+          if (t >= AGO) return target;
+          const e = zE(t); for (const r of rows) if (r.z - 0.3 > e) return r;
+          return null;
+        };
+        // the struck piece: torn off on "warning" and thrown at the lens
+        const chipM = new THREE.Matrix4(), chipR = new THREE.Matrix4();
+        function chipAt(t) {
+          const e = K.clamp((t - WARN) / 0.42) ** 2, pv = V(flag.x + chip.u0 + chip.len / 2, 0.004, flag.z - 0.3);
+          chipR.makeRotationFromEuler(new THREE.Euler(0.9 * e, -0.5 * e, -0.55 * e));
+          chipM.makeTranslation(pv.x + 8.5 * e, pv.y + 5.2 * e, pv.z + 2.6 * e).multiply(chipR).multiply(new THREE.Matrix4().makeTranslation(-pv.x, -pv.y, -pv.z));
+          return (u) => V(flag.x + u, 0.004, flag.z).applyMatrix4(chipM);
+        }
+        function type(t, alphaAll = 1) {
+          aim(t);
+          setFlip(flipP(t));
+          const flipping = t >= FLIP0, face = facing();
+          const pr = pointerRow(t);
+          cdT = cardAt(t);
+          const onCard = t < FLING + 0.6, eTop = CT0 + cdT.dz, eBot = CT0 + CH + cdT.dz;
+          const stretch = 0.18 * Math.sin(Math.PI / 2 * K.clamp((t - LONG1) / (LONG2 - LONG1)));
+          for (const it of items) {
+            const last = it.z >= Zb;
+            if (flipping && !last) continue;
+            if (it.card && !onCard) continue;
+            // printed lines under the card are hidden by it (until it is flung off)
+            if (!it.card && onCard && cdT.dx > -2 * CX + 0.5 && it.z > eTop && it.z - 0.3 < eBot) continue;
+            if (!visible(it)) continue;
+            const atF = lineAt(it);
+            lay = onSheet(it);
+            const alpha = fogA(PT(it, it.x + it.len / 2, it.z)) * alphaAll * (last ? face : 1);
+            if (alpha < 0.02) continue;
+            for (const w of it.words) {
+              if (w.T != null && t < w.T - 0.04) continue;
+              let rgb = w.rgb;
+              if (it.kind === "row" && it === pr && w !== it.words[0]) rgb = INKS;
+              if (it === target && w === it.words[1] && t >= AGO) rgb = DARKA;
+              // "long," stretches for as long as it is sung; the words after it make room
+              const wi = it.words.indexOf(w), isL = it === hLong;
+              const spread = isL && wi === 1 ? stretch : 0, shift = isL && wi > 1 ? stretch * 4 : 0;
+              drawWord(atF, shift ? { ...w, u0: w.u0 + shift } : w, it.size, t, alpha, () => rgb, spread);
+            }
+          }
+          // the reading pointer and the found line
+          if (pr && (!flipping)) {
+            lay = onSheet(pr);
+            const atF = lineAt(pr), al = fogA(P(pr.x, pr.z)) * alphaAll;
+            mark((u) => P(pr.x - 0.42, pr.z + u), 0.06, -0.3, RS, 0, 0.32, MARKS, al);
+            if (t >= AGO + 0.06) {
+              const m = target.words[2], k = E.outCubic(K.clamp((t - AGO - 0.06) / 0.34));
+              mark(atF, m.u0 - 0.05, m.u0 + m.len + 0.05, RS, -0.2, 0.16, MARKS, 0.9 * al, k);
+            }
+          }
+          // the flag: its pointer, the strike on "lease", the piece torn off on "warning"
+          if (visible(flag) && t >= TURN) {
+            const atF = lineAt(flag), al = alphaAll * face;
+            lay = onSheet(flag);
+            mark((u) => P(flag.x - 0.32, flag.z + u), 0.0, -0.75, flag.size, 0, 0.13, MARKS, al);
+            if (t < WARN) {
+              const grey = K.clamp((t - LEASE - 0.12) / 0.3), rgb = grey > 0 ? [17, 17, 17].map((v, i) => Math.round(K.lerp(v, [95, 91, 84][i], grey))).join(", ") : INKS;
+              drawWord(atF, { ...chip, T: null, hero: false, track: 0, u0: chip.u0 }, flag.size, t, al, () => rgb);
+              if (t >= LEASE + 0.02) mark(atF, chip.u0 - 0.1, chip.u0 + chip.len + 0.1, flag.size, 0.3, 0.13, MARKS, al, E.outCubic(K.clamp((t - LEASE - 0.02) / 0.14)));
+            } else if (t < WARN + 0.44) {
+              // the tear: thrown at the lens, drawn at a few sub-frame times (its own motion blur)
+              const n = 5;
+              lay = project;
+              for (let k = n - 1; k >= 0; k--) {
+                const ts = t - k * 0.006, cf = chipAt(ts), a = al * (k === 0 ? 1 : 0.3);
+                drawWord(cf, { ...chip, T: null, hero: false, track: 0 }, flag.size, t, a, () => STRUCK);
+                mark(cf, chip.u0 - 0.1, chip.u0 + chip.len + 0.1, flag.size, 0.3, 0.13, MARKS, a);
+              }
+            }
+          }
+        }
+
+        // ================= per-frame state =================
+        const blur = $("f31-blur"), world = $("f31-world"), strip = $("f31-strip");
+        const FAST = [[CHECKED - 0.03, CHECKED + 0.36], [TURN - 0.03, TURN + 0.32], [FLING, FLING + 0.4], [LEASE - 0.03, LEASE + 0.3], [WARN - 0.02, WARN + 0.26], [GO - 0.14, GO]];
+        function render() {
+          const t = tl.time(), T = T0 + t;
+          const on = t < DRUM;
+          blur.style.visibility = on ? "visible" : "hidden";
+          if (on) {
+            renderer.setRenderTarget(null); renderer.clear();
+            const fast = FAST.some(([a, b]) => t > a && t < b);
+            if (fast) shutter((ts, target) => scene(ts, target), t, { samples: 8, angle: 270 });
+            else scene(t, null);
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+            ctx.clearRect(0, 0, 1920, 1080);
+            if (fast) { const n = 4; for (let k = 0; k < n; k++) type(t + ((k + 0.5) / n - 0.5) * 0.75 / 60, 1 / (k + 1)); }
+            else type(t);
+            // the flip: only the last page is left, the terminal shows wherever it is not
+            const p = flipP(t);
+            if (t >= FLIP0) {
+              aim(t); setFlip(p);
+              const c = [[-W / 2, Zb], [W / 2, Zb], [W / 2, Zb + PE], [-W / 2, Zb + PE]].map(([x, zz]) => project(V(x, 0, zz).applyMatrix4(flipM)));
+              world.style.clipPath = c.every(Boolean) ? `polygon(${c.map((q) => `${q.x.toFixed(1)}px ${q.y.toFixed(1)}px`).join(", ")})` : "";
+              const bl = 9 * K.smoothstep(0.25, 0.75, p);
+              blur.style.filter = bl > 0.3 ? `blur(${bl.toFixed(1)}px)` : "";
+            } else { world.style.clipPath = ""; blur.style.filter = ""; }
+            strip.style.visibility = p < 0.7 ? "visible" : "hidden";
+          } else strip.style.visibility = "hidden";
+          // the terminal: the cursor flickers with the fill's hits; the hit-carried camera, blurred by its own speed
+          const hit = Math.max(HR.hit("kick", T, 0.12), HR.hit("snare", T, 0.12));
+          block.style.opacity = t < DRUM ? 1 : (t - DRUM < 0.3 || hit > 0.35 ? 1 : 0.15);
+          const [tx, ty, tz] = tcamAt(t), [px, py, pz] = tcamAt(Math.max(0, t - 1 / 60));
+          const neutral = Math.abs(tz - 1) < 1e-4 && Math.abs(tx) < 0.05 && Math.abs(ty) < 0.05;
+          tcam.style.transform = t >= DRUM - 0.001 && !neutral ? `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px) scale(${tz.toFixed(4)})` : "";
+          const csp = Math.hypot(tx - px, ty - py) + 900 * Math.abs(tz - pz);
+          tcam.style.filter = t >= DRUM && csp > 20 ? `blur(${Math.min(6, (csp - 20) / 12).toFixed(1)}px)` : "";
+          WOW.draw(tl, T0);
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines["31-checkout"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

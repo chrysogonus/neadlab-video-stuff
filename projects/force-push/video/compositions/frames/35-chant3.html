@@ -1,0 +1,483 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 35 — chant3 (post-chorus 3, L57–L60, 184.530–191.895). Refinement round 1: a fork of 29-chant2 (its world /
+         front split, confined lights and the window that falls off to ink), staged as the film's peak and only the end's.
+         K = this chant's mean drums (184.53–189.9) over chorus 1's hook (0.409, as 23/33), capped at 1.5: ≈ 1.31.
+         FORCE! (cream, a cream light) still comes out of the lens; PUSH! (fire, a fire glow) now DROPS from above (16: from
+         below, 29: from the sides) and squashes onto the terminal's fire floor, and the whole world jolts down under it.
+         The world is on its own dolly that pushes into the terminal through the three chant lines (1 → 1 + 0.1·K) while
+         the camera rolls (a dutch swing per line) instead of trucking.
+         "wipe it clean": `git status` → `nothing to commit, working tree clean` on "clean" (plant 2).
+         "like you've never been": `git log --author=you` → Enter on "never", nothing; on "been" just the prompt.
+         "hear the crowd": `git push` entered ON the chanted PUSH! (188.44): `Everything up-to-date`, and the crowd of it
+         climbs the frame on every kick and hat; on "crowd" (189.569) the dolly punches in, the terminal is knocked out of
+         the frame and the crowd fills it top to bottom, every row running, alternating directions.
+         On "You're" (189.9) the drums drop out: a hard cut to a cleared terminal, `git log --format="%an %s"` types, and on
+         "history" (190.931) — the closing hit: the hero slams, a fire shockwave, the floor flares, the world jolts — the
+         log prints at display scale, every author `me` (fire, popping in turn down the column). "now" (191.64) gets the
+         next prompt and its cursor, the last hit; the hard cut into 36 (the dry outro) is the silence.
+         Cuts: in = `zoom` from 34 on the world only (FORCE! starts 30 ms in and stays sharp); out = a hard `cut`.
+         Round 2 (REFINE-2.md): bigger than 16 and 29 in what it shows. The dutch swing per line is the film's biggest
+         (4.5°, 110 px); the crowd climbs two rows per hit from the Enter on PUSH! to the strip, and on "crowd" fills the
+         rest of the frame, bigger and lit cream, as it rushes the lens; after the dropout the cut lands tight on the
+         line and the prompt, and on "history" the camera pulls all the way back as the log prints every author `me`
+         at display size (5.2cqw, twice 29's gutter). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        /* the world takes the zoom in; inside it the dolly (push, stomp jolts) carries the crowd and the terminal; the
+           front (lights, tags, lyric) is kept out of both */
+        #f35-world, #f35-front, #f35-dolly { position: absolute; inset: 0; }
+        #f35-dolly { transform-origin: 8% 62%; }
+        #f35-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); background: var(--ink); }
+        #f35-strip b { color: var(--fire); font-weight: 600; }
+
+        /* ---- the light behind the slams: cream behind FORCE!, fire behind PUSH! and the heroes (render() breathes them);
+           the third chant burns brightest ---- */
+        .f35-light { position: absolute; left: 50cqw; top: 22cqw; width: 112cqw; height: 54cqw; margin: -27cqw 0 0 -56cqw; opacity: 0; }
+        #f35-lightF { background: radial-gradient(closest-side, rgba(240, 236, 229, 0.14) 0%, rgba(240, 236, 229, 0.09) 35%, rgba(240, 236, 229, 0.037) 65%, rgba(240, 236, 229, 0) 100%); }
+        #f35-lightP { background: radial-gradient(closest-side, rgba(232, 93, 38, 0.19) 0%, rgba(232, 93, 38, 0.125) 35%, rgba(232, 93, 38, 0.055) 65%, rgba(232, 93, 38, 0) 100%); }
+        #f35-fx { position: absolute; inset: 0; }
+
+        /* ---- the chant: one word full-frame at a time; the span is the fixed-content slam (motion-blurred) ---- */
+        .f35-chant { position: absolute; left: 0; right: 0; top: 10.2cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 29cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        .f35-chant > span { display: inline-block; transform-origin: 50% 62%; }
+        .f35-chant.f35-push { color: var(--fire); }
+        .f35-chant.f35-push > span { transform-origin: 50% 96%; }
+        /* (hey!): a tag, stamped; the tags pile up across the top right */
+        .f35-tag { position: absolute; top: 6.2cqw; opacity: 0; padding: 0.25cqw 1.1cqw 0.45cqw; border: 0.3cqw solid var(--cream);
+          font: 900 4.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.02em; color: var(--cream); white-space: nowrap; background: var(--ink); }
+        /* each line's tail: centred, the hero in fire */
+        .f35-tail { position: absolute; left: 0; right: 0; top: 16.6cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 7.8cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        .f35-tail .f35-hero { color: var(--fire); font-size: 1.5em; letter-spacing: -0.045em; }
+        /* the last line, after the drums drop out: above the log */
+        #f35-l60 { position: absolute; left: 0; right: 0; top: 5.4cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 6.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f35-l60 .f35-b { margin-top: -0.9cqw; }
+        #f35-l60 .f35-hero { color: var(--fire); font-size: 2.05em; letter-spacing: -0.045em; }
+
+        /* ---- the terminal (the singer's, ~/us on main): a lit window; its top edge is the fire floor ---- */
+        #f35-panel { position: absolute; left: 3.6cqw; right: 3.6cqw; top: 35.8cqw; height: 32cqw;
+          background: linear-gradient(180deg, #1C1B19 0%, #161614 22%, #0E0E0D 48%, var(--ink) 68%);
+          border: 1px solid var(--border); border-top: 0; }
+        #f35-screen { position: absolute; inset: 0; opacity: 0.8;
+          background: radial-gradient(ellipse 70% 90% at 34% 0%, rgba(240, 236, 229, 0.05) 0%, rgba(240, 236, 229, 0.02) 55%, rgba(240, 236, 229, 0) 100%); }
+        #f35-floor { position: absolute; left: -1px; right: -1px; top: 0; height: 0.72cqw; background: var(--fire); transform-origin: 50% 100%;
+          box-shadow: 0 0 1.4cqw rgba(232, 93, 38, 0.45); }
+        /* the log's own light: a fire glow behind the column of `me`s, from "history" on */
+        #f35-logGlow { position: absolute; left: -8cqw; top: 24cqw; width: 50cqw; height: 36cqw; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.16) 0%, rgba(232, 93, 38, 0.08) 45%, rgba(232, 93, 38, 0) 100%); }
+        .f35-term { position: absolute; left: 5.5cqw; right: 5.5cqw; overflow: hidden; font: 400 2cqw/3cqw "IBM Plex Mono", monospace;
+          color: var(--cream-muted); }
+        #f35-termA { top: 37.8cqw; height: 15cqw; }
+        /* the closing log: the prompt, six display-scale rows, the next prompt */
+        #f35-termB { top: 25.4cqw; height: 30.6cqw; line-height: 3cqw; opacity: 0; }
+        .f35-rows { position: absolute; left: 0; right: 0; top: 0; }
+        .f35-row { white-space: pre; opacity: 0; }
+        #f35-termB .f35-row { height: 3cqw; }
+        #f35-termB .f35-row.f35-log { display: flex; align-items: center; height: 4.55cqw; }
+        .f35-row .f35-cmd { color: var(--cream); }
+        .f35-row .f35-hl { color: var(--fire); font-weight: 600; }
+        .f35-row.f35-key { color: var(--cream); font-weight: 500; }
+        .f35-cur { display: inline-block; width: 0.6em; height: 1.1em; margin-left: 0.06em; background: var(--fire); vertical-align: -0.2em; opacity: 0; }
+        .f35-u { position: relative; display: inline-block; }
+        .f35-u i { position: absolute; left: 0; right: 0; bottom: -0.1em; height: 0.12em; background: var(--fire); transform-origin: 0% 50%; transform: scaleX(0); }
+        /* git log --format="%an %s": the author big in fire, the subject in cream */
+        .f35-log .f35-who { display: inline-block; width: 8.2cqw; font: 600 5.2cqw/1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--fire); transform-origin: 30% 60%; }
+        .f35-log .f35-msg { font: 500 3.1cqw/1 "IBM Plex Mono", monospace; color: var(--cream); }
+
+        /* the crowd: rows of git's answer filling the frame, a lit wall (decorative) */
+        #f35-crowd { position: absolute; inset: 0; }
+        .f35-crow { position: absolute; left: 0; white-space: pre; opacity: 0; font: 500 1.8cqw/1 "IBM Plex Mono", monospace; color: var(--cream); }
+      </style>
+      <div id="root" data-composition-id="35-chant3" data-width="1920" data-height="1080" data-duration="7.365">
+        <div id="f35-world">
+          <div id="f35-dolly">
+            <div class="hr-layer" data-depth="0.3" data-layout-ignore>
+              <div id="f35-crowd"></div>
+            </div>
+            <div class="hr-layer" data-depth="0.5">
+              <div id="f35-panel" data-layout-ignore><div id="f35-screen"></div><i id="f35-floor"></i></div>
+              <div id="f35-logGlow" data-layout-ignore></div>
+              <div class="f35-term" id="f35-termA"><div class="f35-rows"></div></div>
+              <div class="f35-term" id="f35-termB"><div class="f35-rows"></div></div>
+            </div>
+          </div>
+          <div class="hr-layer" data-depth="0.15">
+            <div id="f35-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+          </div>
+        </div>
+        <div id="f35-front">
+          <div class="hr-layer" data-depth="0.9" data-layout-ignore>
+            <div class="f35-light" id="f35-lightF"></div>
+            <div class="f35-light" id="f35-lightP"></div>
+            <div id="f35-fx"></div>
+          </div>
+          <div class="hr-layer" data-depth="0.45">
+            <div class="f35-tag" id="f35-tag1" data-layout-allow-overlap style="right: 5.5cqw; transform: rotate(-5deg)">(hey!)</div>
+            <div class="f35-tag" id="f35-tag2" data-layout-allow-overlap style="right: 22.4cqw; transform: rotate(3.5deg)">(hey!)</div>
+            <div class="f35-tag" id="f35-tag3" data-layout-allow-overlap style="right: 39.2cqw; transform: rotate(-3deg)">(hey!)</div>
+          </div>
+          <div class="hr-layer" data-depth="1">
+            <div class="f35-chant" id="f35-force"><span id="f35-fw" data-layout-allow-overlap data-hf-motion-blur='{"fps": 60}'>FORCE!</span></div>
+            <div class="f35-chant f35-push" id="f35-push"><span id="f35-pw" class="hr-glow" data-layout-allow-overlap data-hf-motion-blur='{"fps": 60}'>PUSH!</span></div>
+            <div class="f35-tail" id="f35-t1"><span class="f35-w">wipe</span> <span class="f35-w">it</span> <span class="f35-w f35-hero hr-glow">clean</span></div>
+            <div class="f35-tail" id="f35-t2"><span class="f35-w">like</span> <span class="f35-w">you've</span> <span class="f35-w f35-hero hr-glow">never</span> <span class="f35-w">been</span></div>
+            <div class="f35-tail" id="f35-t3"><span class="f35-w">hear</span> <span class="f35-w">the</span> <span class="f35-w f35-hero hr-glow">crowd</span></div>
+            <div id="f35-l60">
+              <div class="f35-a"><span class="f35-w">you're</span> <span class="f35-w">not</span> <span class="f35-w">in</span> <span class="f35-w">my</span></div>
+              <div class="f35-b"><span class="f35-w f35-hero">history</span> <span class="f35-w">now</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script>
+        (() => {
+          const DUR = 7.365, T0 = 184.53, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="35-chant3"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          // ================= the song (track seconds, lyrics.json L57–L60) =================
+          // per chant line: FORCE!, PUSH!, (hey!), the tail's word starts, the tail's hero index
+          const CHANT = [
+            { force: 184.56, push: 185.019, hey: 185.259, tail: [185.48, 185.738, 185.907], hero: 2 },
+            { force: 186.4, push: 186.9, hey: 187.1, tail: [187.16, 187.42, 187.58, 187.76], hero: 2 },
+            { force: 188.22, push: 188.44, hey: 189.02, tail: [189.14, 189.38, 189.569], hero: 2 },
+          ];
+          const LAST = { words: [189.9, 190.1, 190.307, 190.74, 190.931, 191.64], hero: 4 };
+          const CUT = LAST.words[0]; // the drums drop out: the cleared terminal
+          const CUTV = CUT - T0 - 0.031; // the one instant everything switches (just before "you're")
+          const CUTS = CUTV - 0.006; // the timeline's own sets land a hair earlier…
+          const CUTR = CUTV + 0.012; // …and render()'s switch a frame later, so no captured frame falls between them
+          const CROWD_T = CHANT[2].tail[2], PUSH3 = CHANT[2].push, HIST_T = LAST.words[LAST.hero], NOW_T = LAST.words[5];
+          const IN = { kind: "zoom", dur: 0.35 }; // from 34; the out into 36 is a hard cut
+
+          // the loudest chant: its mean drum envelope (up to the dropout) over chorus 1's hook (10: 0.409), capped — K ≈ 1.31
+          let dsum = 0, dn = 0;
+          for (let T = T0; T < CUT; T += 0.02) { dsum += HR.band("drums", T); dn++; }
+          const K = Math.max(1, Math.min(1.5, dsum / dn / 0.409));
+          const stage = HR.stage(root, { seed: 35, pulse: K });
+
+          // ================= the world: what the terminal says =================
+          // rows: { at, out } printed whole at `at` (−1: already on screen) · { at, cmd, type: [a, b], enter, hl } a prompt
+          // that appears at `at`, types `cmd` from a to b, and is entered at `enter` (the cursor leaves)
+          const PS = "~/us (main) $ ";
+          // kicks: 184.557 185.012 185.478 185.931 186.39 186.843 187.308 187.779 188.23 188.681 189.134 189.617
+          // hats: 185.70 186.163 186.354 186.584 187.081 187.536 187.995 188.436 188.913 189.37 189.829
+          const TERM_A = [
+            { at: -1, out: "To me@home:us.git" },
+            { at: -1, out: '<span class="f35-hl">+</span> 5ab3e07...d4c7e19 main -&gt; main (forced update)' },
+            { at: -1, cmd: "git status", type: [184.64, 185.08], enter: 185.907 },
+            { at: 185.931, out: "On branch main" },
+            { at: 185.931, out: 'nothing to commit, working tree <span class="f35-u">clean<i></i></span>', key: true },
+            { at: 185.953, cmd: "git log --author=you", hl: [17, 20], type: [186.46, 187.4], enter: 187.58 },
+            { at: 187.779, cmd: "git push", type: [187.9, 188.36], enter: PUSH3 },
+            { at: PUSH3, out: "Everything up-to-date", key: true },
+          ];
+          // the log after every rewrite: one author
+          const LOG = ["ready.", "we'll get to it", "just a feature", "moved in", "nothing on the side", "initial commit"];
+          const ROW_GAP = 0.03;
+          const TERM_B = [
+            { at: CUT - 0.037, cmd: 'git log --format="%an %s"', type: [189.96, 190.86], enter: HIST_T, h: 3 },
+            ...LOG.map((m, i) => ({ at: HIST_T + i * ROW_GAP, cls: "f35-log", h: 4.55,
+              out: `<span class="f35-who">me</span><span class="f35-msg"> ${m}</span>` })),
+            { at: NOW_T, cmd: "", type: null, enter: T0 + DUR + 1, h: 3 },
+          ];
+
+          // ================= build the terminals =================
+          const rng = HR.rng(3535);
+          function buildTerm(el, script, rowH) {
+            const box = el.querySelector(".f35-rows");
+            return script.map((r) => {
+              const d = document.createElement("div");
+              d.className = "f35-row" + (r.key ? " f35-key" : "") + (r.cls ? " " + r.cls : "");
+              d.setAttribute("data-layout-allow-occlusion", ""); // rows scroll out under the window's top edge (clipped)
+              d.setAttribute("data-layout-allow-overlap", ""); // stacked rows: under the dutch roll their axis-aligned boxes touch
+              const row = { ...r, el: d, t: r.at < 0 ? -1 : at(r.at), h: (r.h ?? rowH) * PX };
+              if (r.cmd !== undefined) {
+                d.innerHTML = `<span>${PS}</span><span class="f35-cmd"></span><i class="f35-cur"></i>`;
+                row.cmdEl = d.querySelector(".f35-cmd"); row.cur = d.querySelector(".f35-cur");
+                row.enterT = at(r.enter);
+                // keystrokes at a human rhythm: even spacing with a seeded wobble
+                row.keys = [];
+                if (r.type) {
+                  const a = at(r.type[0]), b = at(r.type[1]), n = r.cmd.length;
+                  for (let i = 0; i < n; i++) row.keys.push(a + ((b - a) * (i + 0.35 * (rng() - 0.5))) / Math.max(1, n - 1));
+                }
+                row.shown = -1;
+              } else d.innerHTML = r.out;
+              d.querySelectorAll("*").forEach((e) => e.setAttribute("data-layout-allow-occlusion", ""));
+              box.appendChild(d);
+              return row;
+            });
+          }
+          const termA = { el: $("f35-termA"), rows: buildTerm($("f35-termA"), TERM_A, 3), height: 15 * PX };
+          const termB = { el: $("f35-termB"), rows: buildTerm($("f35-termB"), TERM_B, 3), height: 30.6 * PX };
+          termA.box = termA.el.querySelector(".f35-rows"); termB.box = termB.el.querySelector(".f35-rows");
+
+          // ================= the crowd =================
+          // up from the terminal's top edge on the hits after the Enter on PUSH!; on "crowd" the rest of the frame at once:
+          // the top to the strip, and the lower half where the terminal was (bigger, brighter). Every row runs sideways,
+          // alternating directions; the rows behind the tail stay dim so the line reads.
+          // round 2: the crowd is the film's biggest — two rows climb per hit from the Enter on PUSH! (188.44) up to the
+          // strip, and on "crowd" the rest of the frame fills at once where the terminal was, bigger and brighter
+          const UP = [188.44, 188.44, 188.681, 188.681, 188.913, 188.913, 189.134, 189.134, 189.37, 189.37];
+          const crowdBox = $("f35-crowd");
+          const crowd = [];
+          const mkRow = (T, top, size, a, k, from) => {
+            const d = document.createElement("div");
+            d.className = "f35-crow";
+            d.textContent = Array(6).fill("Everything up-to-date").join("    ");
+            d.style.top = top.toFixed(2) + "cqw";
+            d.style.fontSize = size + "cqw";
+            d.style.left = (-(k % 2) * 13 - 10 - rng() * 9).toFixed(2) + "cqw";
+            d.style.opacity = 0;
+            crowdBox.appendChild(d);
+            const behind = top > 13.4 && top < 29.2; // the tail's band
+            crowd.push({ el: d, t: at(T), a: behind ? 0.2 : a, ph: 0.5 + rng() * 0.5, dir: k % 2 ? -1 : 1, v: 50 + rng() * 70, from });
+          };
+          UP.forEach((T, k) => mkRow(T, 32.9 - 2.95 * k, 2.4, Math.max(0.5, 0.95 - k * 0.04), k, 30));
+          for (let k = 0; k < 7; k++) mkRow(CROWD_T + 0.012 * k, 36.2 + 3.05 * k, 2.9, 0.95 - 0.04 * k, k + 1, 60);
+
+          // ================= the chant =================
+          const drumsPeak = (T) => { let m = 0; for (let d = 0; d <= 0.14; d += 0.02) m = Math.max(m, HR.band("drums", T + d)); return m; };
+          const show = (el, a, b) => { tl.set(el, { opacity: 0 }, 0); tl.set(el, { opacity: 1 }, Math.max(0.001, a)); if (b != null) tl.set(el, { opacity: 0 }, b); };
+          // one FORCE! and one PUSH! element, each shown in three windows (so 2 motion-blurred targets, fixed content)
+          const fEl = $("f35-force"), pEl = $("f35-push"), fw = $("f35-fw"), pw = $("f35-pw"), floor = $("f35-floor");
+          const PRE = 0.04; // the slam's approach: begins at start − 0.04, lands ON the word's start
+          const fWin = [], pWin = [], heroT = [];
+          const hits = []; // camera: { T (local), a (z punch), y, settle }
+          const jolts = []; // the world (dolly) knocked down: { t (local), amp px }
+          // FORCE! comes out of the lens; PUSH! drops from above and squashes onto the floor
+          const fromF = (d) => ({ scale: (1.6 + 0.6 * d) * K, xPercent: 0, yPercent: -10, skewX: -8 });
+          const fromP = (d) => ({ scaleX: 0.9, scaleY: 1.5 + 0.35 * d, xPercent: 0, yPercent: -Math.min(150, (85 + 30 * d) * K), skewX: 0 });
+          CHANT.forEach((c, i) => {
+            const n = i + 1, F = at(c.force), P = at(c.push), H = at(c.hey);
+            const tail = $("f35-t" + n), words = tail.querySelectorAll(".f35-w");
+            const W0 = at(c.tail[0]);
+            const next = i + 1 < CHANT.length ? at(CHANT[i + 1].force) - PRE : at(CUT);
+            // FORCE! from its approach to PUSH!'s; PUSH! to the tail's first word; the tail to the next FORCE!
+            fWin.push([Math.max(0, F - PRE), P - PRE]); pWin.push([P - PRE, W0 - 0.03]);
+            show(tail, W0 - 0.03, i + 1 < CHANT.length ? next - 0.001 : CUTS);
+            const dF = drumsPeak(c.force), dP = drumsPeak(c.push);
+            // the slams: parked at their approach pose while hidden, so the blur never smears a jump
+            const sF = i === 0 ? { ...fromF(dF), scale: 1.3 * Math.min(K, 1.15) } : fromF(dF), sP = fromP(dP), aF = Math.min(PRE, F), aP = PRE;
+            const landF = { scale: 0.965, xPercent: 0, yPercent: 0, skewX: -4 };
+            const landP = { scaleX: 1.08 + 0.04 * dP, scaleY: 0.84 - 0.04 * dP, xPercent: 0, yPercent: 2, skewX: 0 };
+            if (i === 0) gsap.set(fw, sF), gsap.set(pw, sP);
+            else tl.set(fw, sF, fWin[i - 1][1] + 0.001), tl.set(pw, sP, pWin[i - 1][1] + 0.001);
+            tl.fromTo(fw, sF, { ...landF, duration: aF, ease: "power3.in", immediateRender: false }, F - aF);
+            tl.fromTo(fw, { ...landF }, { scale: 1, xPercent: 0, yPercent: 0, skewX: 0, duration: 0.1, ease: "power2.out", immediateRender: false }, F);
+            tl.fromTo(pw, sP, { ...landP, duration: aP, ease: "power3.in", immediateRender: false }, P - aP);
+            tl.fromTo(pw, { ...landP }, { scaleX: 1, scaleY: 1, xPercent: 0, yPercent: 0, skewX: 0, duration: 0.34, ease: "elastic.out(1, 0.45)", immediateRender: false }, P);
+            // the floor takes each stomp: it flares and settles; PUSH! lands on it, so the world drops under it
+            tl.fromTo(floor, { scaleY: (1.6 + 1.6 * dF) * K }, { scaleY: 1, duration: 0.34, ease: "power3.out", immediateRender: false }, F);
+            tl.fromTo(floor, { scaleY: (1.8 + 1.6 * dP) * K }, { scaleY: 1, duration: 0.42, ease: "power3.out", immediateRender: false }, P);
+            jolts.push({ t: F, amp: 6 * K }, { t: P, amp: (14 + 12 * dP) * K });
+            hits.push({ T: F, a: (0.018 + 0.036 * dF) * K, y: -6, settle: 0.36 }, { T: P, a: (0.02 + 0.04 * dP) * K, y: -16 * K, settle: 0.42 });
+            // (hey!): stamped, 0 ms, a short settle; it stays until the drums drop
+            const tag = $("f35-tag" + n);
+            show(tag, H, CUTS);
+            tl.fromTo(tag, { scale: Math.min(1.6, 1.32 * K) }, { scale: 1, duration: 0.12, ease: "power4.out", immediateRender: false }, H);
+            // the tail: words build on their starts, the hero slams
+            words.forEach((w, j) => {
+              if (j === c.hero) HR.hero(tl, w, at(c.tail[j]), { spread: 16 * K, over: 1 + 0.2 * K, pre: 0.06, sharp: true, skew: false });
+              else HR.lead(tl, w, at(c.tail[j]));
+            });
+            heroT.push(at(c.tail[c.hero]));
+            hits.push({ T: at(c.tail[c.hero]), a: (i === 2 ? 0.09 : 0.022) * K, y: i === 2 ? -22 : -5, settle: 0.3 });
+          });
+          const showWins = (el, wins) => {
+            if (wins[0][0] <= 0) gsap.set(el, { opacity: 1 }); // on screen from the first frame (a set at 0 never fires)
+            wins.forEach(([a, b]) => { if (a > 0) tl.set(el, { opacity: 1 }, a); tl.set(el, { opacity: 0 }, b); });
+          };
+          showWins(fEl, fWin); showWins(pEl, pWin);
+          tl.set(floor, { scaleY: 1 }, 0);
+
+          // the answer: `clean` underlined as the hero lands
+          tl.fromTo(root.querySelector(".f35-u i"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out", immediateRender: false }, at(185.95));
+
+          // ================= "crowd": the crowd takes the frame; the terminal is knocked out of it =================
+          const crowdT = at(CROWD_T), cutT = CUTV, HIST = at(HIST_T), NOW = at(NOW_T);
+          const panel = $("f35-panel"), tA = $("f35-termA"), tB = $("f35-termB");
+          tl.set([panel, tA], { y: 0 }, 0);
+          tl.fromTo([panel, tA], { y: 0 }, { y: 24 * PX, duration: 0.26, ease: "power3.in", immediateRender: false }, crowdT + 0.02);
+          jolts.push({ t: crowdT, amp: 16 * K });
+          WOW.shock(tl, $("f35-fx"), { x: 50 * PX, y: 24 * PX, t: crowdT, r: 1000 * K, n: 2, w: 6, dur: 0.5, color: "cream" });
+
+          // ================= the last line: the drums drop out, a cleared terminal; the log, all `me` =================
+          show($("f35-l60"), CUTS);
+          tl.set(tA, { opacity: 1 }, 0).set(tA, { opacity: 0 }, CUTS);
+          tl.set(tB, { opacity: 0 }, 0).set(tB, { opacity: 1 }, CUTS);
+          // the window comes back up to hold the log (a hard cut, with the terminal)
+          tl.set(panel, { y: -11 * PX }, CUTS);
+          const lw = $("f35-l60").querySelectorAll(".f35-w");
+          lw.forEach((w, j) => {
+            if (j === LAST.hero) HR.hero(tl, w, at(LAST.words[j]), { spread: 28 * K, over: 1.3, pre: 0.08, sharp: true, skew: false });
+            else HR.lead(tl, w, at(LAST.words[j]));
+          });
+          // "history": the closing hit — the floor flares hardest, a fire shockwave out of the word, the world drops
+          tl.fromTo(floor, { scaleY: 3 * K }, { scaleY: 1, duration: 0.6, ease: "power3.out", immediateRender: false }, HIST);
+          WOW.shock(tl, $("f35-fx"), { x: 40 * PX, y: 17.5 * PX, t: HIST, r: 1000 * K, n: 2, w: 7, dur: 0.6, color: "fire" });
+          jolts.push({ t: HIST, amp: 18 * K });
+          // every `me` pops as its row prints, in turn down the column
+          root.querySelectorAll(".f35-who").forEach((w, i) => {
+            tl.fromTo(w, { scale: 1.6 }, { scale: 1, duration: 0.28, ease: "back.out(2.2)", immediateRender: false }, HIST + i * ROW_GAP + 0.02);
+          });
+          // the downbeat under "you're" (190.056, the drums' last breath): a knock, and the floor takes it
+          jolts.push({ t: at(190.056), amp: 7 });
+          tl.fromTo(floor, { scaleY: 2.6 }, { scaleY: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, at(190.056));
+          // "now": the next prompt, a small knock — the last hit before the cut
+          jolts.push({ t: NOW, amp: 6 });
+          tl.fromTo(floor, { scaleY: 1.8 }, { scaleY: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, NOW);
+
+          // ================= the camera =================
+          // z/y: a punch on every stomp sized by the measured drums × K, a settle, a climb between; after the cut a push
+          // through the last line with the hardest punch on "history"
+          const cam = stage.cam; let cz = 1, cy = 0, ct = 0;
+          const camTo = (t, dur, z, y, ease) => {
+            if (dur <= 0.001) return;
+            tl.fromTo(cam, { z: cz, y: cy }, { z, y, duration: dur, ease, immediateRender: ct === 0 }, t);
+            cz = z; cy = y; ct = t + dur;
+          };
+          hits.sort((p, q) => p.T - q.T);
+          hits.forEach((h, k) => {
+            const nextT = k + 1 < hits.length ? hits[k + 1].T : cutT;
+            const base = 1 + 0.01 * Math.min(2, Math.floor(k / 3));
+            camTo(ct, h.T - 0.05 - ct, base, 0, "sine.inOut");
+            camTo(h.T - 0.05, 0.05, base + h.a, h.y, "power2.in");
+            camTo(h.T, Math.min(h.settle, nextT - 0.05 - h.T), base, 0, "elastic.out(1, 0.5)");
+          });
+          camTo(ct, cutT - 0.001 - ct, cz + 0.004, 0, "none");
+          // round 2: the cut lands tight on the last line and the prompt (the log not printed yet) and creeps in; on
+          // "history" the camera pulls all the way back as the log prints, so the column of `me`s is the reveal
+          // (zoom about y ≈ 12cqw: cam.y = (z − 1) · (12cqw − the frame's centre), the same point on every layer)
+          tl.set(cam, { z: 1.2, y: -62 }, cutT); cz = 1.2; cy = -62; ct = cutT;
+          // the drums' last breath (the 190.056 downbeat) steps the camera in, then it creeps on to "history"
+          const LASTD = at(190.056);
+          camTo(cutT, LASTD - cutT, 1.2, -62, "none");
+          camTo(LASTD, 0.16, 1.235, -73, "expo.out");
+          camTo(LASTD + 0.16, HIST - 0.07 - LASTD - 0.16, 1.245, -76, "sine.inOut");
+          camTo(HIST - 0.07, 0.07, 1.26, -80, "power2.in");
+          camTo(HIST, 0.5, 1.0, 0, "expo.out");
+          camTo(HIST + 0.5, DUR - HIST - 0.5, 1.02, 4, "power1.out");
+          // the roll (drawn in render()): a dutch swing per chant line, alternating sides, level on every FORCE!
+          const lineStarts = [...CHANT.map((c) => at(c.force)), cutT];
+          const roll = (t) => {
+            for (let i = 0; i < CHANT.length; i++) {
+              const a = lineStarts[i], b = lineStarts[i + 1];
+              if (t < b) return (i % 2 ? -1 : 1) * Math.sin(Math.PI * Math.max(0, (t - a) / (b - a)));
+            }
+            return 0;
+          };
+
+          // ================= the cuts =================
+          const world = $("f35-world");
+          WOW.transition(tl, world, { in: IN.kind, dur: IN.dur, total: DUR });
+          tl.set({}, {}, DUR);
+
+          // ================= per frame: terminals, crowd, lights, dolly, camera =================
+          const scrollE = gsap.parseEase("power3.out"), dollyE = gsap.parseEase("sine.inOut");
+          function drawTerm(term, t) {
+            let f = 0, active = null;
+            for (const r of term.rows) {
+              const on = r.t <= t;
+              r.el.style.opacity = on ? 1 : 0;
+              if (!on) continue;
+              f += r.h * (r.t < 0 ? 1 : scrollE(Math.min(1, (t - r.t) / 0.09)));
+              if (r.cmdEl) {
+                let n = 0; while (n < r.keys.length && r.keys[n] <= t) n++;
+                if (n !== r.shown) {
+                  const s = r.cmd.slice(0, n);
+                  if (r.hl && n > r.hl[0]) r.cmdEl.innerHTML = s.slice(0, r.hl[0]) + `<span class="f35-hl">${s.slice(r.hl[0], r.hl[1])}</span>` + s.slice(r.hl[1]);
+                  else r.cmdEl.textContent = s;
+                  r.shown = n;
+                }
+                r.cur.style.opacity = 0;
+                if (t < r.enterT) active = { r, last: n ? r.keys[n - 1] : r.t };
+              }
+            }
+            if (active) {
+              const idle = t - active.last;
+              active.r.cur.style.opacity = idle < 0.3 || Math.floor((idle - 0.3) * 4) % 2 === 1 ? 1 : 0;
+            }
+            term.box.style.transform = `translateY(${(-Math.max(0, f - term.height)).toFixed(1)}px)`;
+          }
+          const inWin = (wins, t) => wins.some(([a, b]) => t >= a && t < b);
+          const sinceHero = (t) => { let s = 99; for (const h of [...heroT, HIST]) if (t >= h) s = Math.min(s, t - h); return s; };
+          const glows = Array.from(root.querySelectorAll(".hr-glow"));
+          const lightF = $("f35-lightF"), lightP = $("f35-lightP"), screen = $("f35-screen"), logGlow = $("f35-logGlow"), dolly = $("f35-dolly");
+          const cutAway = [$("f35-tag1"), $("f35-tag2"), $("f35-tag3"), $("f35-t3")];
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (t < CUTR) drawTerm(termA, t); else drawTerm(termB, t);
+            const live = t < CUTR;
+            const kick = HR.hit("kick", T, 0.2), bass = HR.band("bass", T);
+            const clap = HR.hit("kick", T, 0.12) + HR.hit("snare", T, 0.12) + 0.6 * HR.hit("hat", T, 0.1);
+            for (const c of crowd) {
+              const on = t < CUTR && t >= c.t;
+              c.el.style.opacity = on ? c.a : 0;
+              if (!on) continue;
+              const rise = 1 - scrollE(Math.min(1, (t - c.t) / 0.16));
+              const run = c.dir * (c.v * (t - c.t) + (t > crowdT ? 2.2 * c.v * (t - crowdT) : 0));
+              c.el.style.transform = `translate(${run.toFixed(1)}px, ${(rise * c.from - clap * 8 * c.ph).toFixed(1)}px)`;
+            }
+            // the light: cream behind FORCE!, fire behind PUSH!; between the stomps a low cream ambience and the fire
+            // swelling behind each hero; all breathing with the bass and flaring on the kicks. "history" burns longest.
+            const hs = sinceHero(t);
+            const heroGlow = hs < 99 ? 0.4 + 0.52 * Math.exp(-hs / (t >= HIST ? 1.2 : 0.6)) : 0.3;
+            let lf, lp;
+            if (inWin(fWin, t)) { lf = 0.95; lp = 0.16; } else if (inWin(pWin, t)) { lf = 0.18; lp = 1; }
+            else if (live) { lf = t >= crowdT ? 0.7 : 0.48; lp = heroGlow; } else { lf = 0.34; lp = t < HIST ? 0.24 : heroGlow; }
+            lightF.style.opacity = Math.min(1, lf + 0.2 * bass + 0.22 * kick).toFixed(3);
+            lightP.style.opacity = Math.min(1, lp + 0.2 * bass + 0.22 * kick).toFixed(3);
+            screen.style.opacity = (0.72 + 0.3 * bass).toFixed(3);
+            logGlow.style.opacity = t >= HIST ? Math.min(1, 0.55 + 0.45 * Math.exp(-(t - HIST) / 0.5) + 0.2 * bass).toFixed(3) : 0;
+            for (const g of glows) HR.glow(g, T, 0.2, 0.32);
+            // the dolly: a push into the terminal through the chant, a punch on "crowd"; every stomp knocks the world down
+            let dz = 1, dy = 0;
+            if (live) {
+              dz = 1 + 0.1 * K * dollyE(Math.min(1, t / crowdT));
+              if (t >= crowdT) dz += 0.22 * K * scrollE(Math.min(1, (t - crowdT) / 0.18)); // the crowd rushes the lens
+            }
+            for (const j of jolts) { const d = t - j.t; if (d >= 0 && d < 0.5) dy += j.amp * Math.exp(-d / 0.09) * Math.cos(d * 30); }
+            dolly.style.transform = `translate3d(0, ${dy.toFixed(1)}px, 0) scale(${dz.toFixed(4)})`;
+            // the cut is one instant for everything: the chant's tags and tail leave with the crowd and the terminal
+            if (t >= CUTR) for (const el of cutAway) el.style.opacity = 0;
+            const r = live ? roll(t) : 0;
+            cam.rot = 4.5 * r; cam.x = -110 * r; // round 2: the film's biggest dutch swings, one per chant line
+            stage.apply(T);
+            WOW.draw(tl, T0);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["35-chant3"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

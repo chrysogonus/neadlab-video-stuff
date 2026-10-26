@@ -1,0 +1,390 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 4 — feature (verse 1, L5, 23.696–27.570). Light-and-depth rebuild: the branch is made. The world is 05's,
+         the repo as a lit place: `main` a rail running back into the dark, ending at HEAD (a fire ring and pin, the
+         present), the other lanes of the history as a field of hairlines. The cut glides in (glideL, as before) on the
+         field and the ex's terminal (`you@laptop`, top right) with `git switch -c ` already typing, while "said it's
+         just a" builds top left and the camera trucks in toward HEAD. On "feature," (25.183) a new lane peels out of
+         HEAD and turns sideways, and the camera dives onto it (outExpo through the shutter) as the word lands on the
+         lane white-hot, cooling to fire. The camera then follows the singer along the new lane: "nothing", "on", "the"
+         stand on it as the pen draws the lane under each word and the prompt types the name. On "side" (26.744) the line
+         conforms to kebab-case (`,` → `/`, spaces → `-`), a white-hot sweep runs down the lane, and the camera pulls
+         out to a square-on shot where the lane is the name's fire underline: `feature/nothing-on-the-side`, full width
+         along the bottom, exactly where 05 lands it. Enter on the 27.14 kick: git answers whole and the name hands
+         over to the DOM copy 05 uses (same metrics). Out: drop (0.40 s) into 05.
+         Layers: WebGL lines (assets/kit/lines.js), a Canvas2D layer for the type on the lane, then the DOM. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f04-tx { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        #f04-world, #f04-dropf, #f04-namew, #f04-lyr, #f04-hud { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #f04-gl, #f04-type { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #f04-shade { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+          background: linear-gradient(180deg, rgba(10, 10, 10, 0.78) 0%, rgba(10, 10, 10, 0) 36%); }
+        #f04-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); background: var(--ink); }
+        #f04-strip b { color: var(--fire); font-weight: 600; }
+        /* the ex's machine, top right: the deadpan layer (05's singer's terminal sits in the same place) */
+        #f04-term { position: absolute; right: 105px; top: 124px; background: rgba(26, 26, 24, 0.92); border: 1px solid var(--border); }
+        #f04-title { padding: 0 24px; height: 40px; border-bottom: 1px solid var(--border);
+          font: 500 18px/40px "IBM Plex Mono", monospace; letter-spacing: 0.08em; color: var(--cream-muted); }
+        #f04-title::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 14px; background: var(--fire); vertical-align: 0; }
+        #f04-body { padding: 12px 24px 14px; font: 400 24px/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f04-body .f04-cmd { color: var(--cream); }
+        #f04-body b { color: var(--cream); font-weight: 500; }
+        .f04-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.2em; }
+        /* the lead-in of the sung line, top left (05's row 1 sits in the same place) */
+        #f04-row1 { position: absolute; left: 105px; top: 150px; font: 800 100px/1 "Barlow", sans-serif; letter-spacing: -0.03em; color: var(--cream); white-space: nowrap; }
+        /* the name as 05 holds it (same metrics as #f05-name): shown from the Enter, where the lane's type hands over */
+        #f04-name { position: absolute; left: 105.6px; top: 0; font-family: "Barlow", sans-serif; font-weight: 900; font-size: 145px; line-height: 0.9;
+          letter-spacing: -0.04em; color: var(--cream); white-space: pre; width: max-content; transform-origin: 50% 100%; }
+        #f04-name .f04-f { color: var(--fire); }
+        #f04-uline { position: absolute; left: 0; top: calc(100% + 13.4px); width: 100%; height: 5.76px; background: var(--fire); }
+      </style>
+      <div id="root" data-composition-id="04-feature" data-width="1920" data-height="1080" data-duration="3.874">
+        <div id="f04-tx">
+          <div id="f04-world">
+            <canvas id="f04-gl" width="1920" height="1080" data-layout-ignore></canvas>
+            <div id="f04-shade" data-layout-ignore></div>
+            <canvas id="f04-type" width="1920" height="1080" data-layout-ignore></canvas>
+          </div>
+          <div id="f04-dropf">
+            <div id="f04-term"><div id="f04-title">you@laptop: ~/us</div><div id="f04-body"><span>~/us (main) $ <span class="f04-cmd">git branch</span></span>
+<span class="f04-cmd">* main</span>
+<span>~/us (main) $ </span><span class="f04-cmd" id="f04-cmd"></span><span class="f04-cursor" id="f04-cur1"></span>
+<span id="f04-out">Switched to a new branch '<b>feature/nothing-on-the-side</b>'</span>
+<span id="f04-p2"><span>~/us (feature/nothing-on-the-side) $ </span><span class="f04-cursor" id="f04-cur2"></span></span></div></div>
+          </div>
+          <div id="f04-namew">
+            <div id="f04-name" data-layout-allow-overlap><span class="f04-f">feature</span><span class="f04-f">/</span>nothing<span class="f04-f">-</span>on<span class="f04-f">-</span>the<span class="f04-f">-</span><span class="f04-f">side</span><div id="f04-uline"></div></div>
+          </div>
+          <div id="f04-lyr">
+            <div id="f04-row1"><span class="f04-w">said</span> <span class="f04-w">it's</span> <span class="f04-w">just</span> <span class="f04-w">a</span></div>
+          </div>
+          <div id="f04-hud">
+            <div id="f04-strip" data-layout-allow-overlap><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+        import * as K from "./assets/kit/lines.js";
+
+        const DUR = 3.874, T0 = 23.696;
+        const root = document.querySelector('[data-composition-id="04-feature"]');
+        const $ = (id) => root.querySelector("#" + id);
+        const at = (T) => T - T0;
+        const FEATURE = at(25.183), NOTHING = at(25.74), ON = at(26.36), THE = at(26.64), SIDE = at(26.744), ENTER = at(27.14);
+        const IN = 0.42, OUT = 0.4; // the glideL from 03 (world, terminal, strip; never the lyric), the drop into 05
+        await document.fonts.load('900 100px "Barlow"');
+        await document.fonts.load('800 100px "Barlow"');
+        await document.fonts.load('400 24px "IBM Plex Mono"');
+        await document.fonts.load('500 24px "IBM Plex Mono"');
+        const tl = gsap.timeline({ paused: true });
+
+        // ---- the cuts (unchanged handoffs) ----
+        const px = document.createElement("div"); px.style.display = "none"; root.appendChild(px);
+        WOW.transition(tl, px, { in: "glideL", dur: IN });
+        const tx = $("f04-tx");
+        WOW.transition(tl, tx, { out: "drop", dur: OUT, total: DUR });
+        WOW.punch(tl, tx, ENTER, { s: 1.03, dur: 0.25 }); // git answers
+
+        // ---- the lead-in, every word on its start; it steps back a little when the line moves onto the lane ----
+        const w1 = root.querySelectorAll("#f04-row1 .f04-w");
+        [23.756, 24.2, 24.3, 24.863].forEach((T, i) => HR.lead(tl, w1[i], at(T)));
+        tl.fromTo("#f04-row1", { opacity: 1 }, { opacity: 0.6, duration: 0.35, ease: "power2.out", immediateRender: false }, FEATURE + 0.1);
+
+        // ---- the prompt: the command was already typing at the cut; its argument types in kebab-case as she sings it ----
+        const keys = [[-1, ""]];
+        const typeK = (t0, t1, text) => {
+          const base = keys[keys.length - 1][1];
+          for (let i = 0; i < text.length; i++) keys.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
+        };
+        typeK(at(23.42), at(24.5), "git switch -c ");
+        typeK(FEATURE, at(25.6), "feature/");
+        typeK(NOTHING, at(26.22), "nothing-");
+        typeK(ON, at(26.5), "on-");
+        typeK(THE, SIDE, "the-");
+        typeK(at(26.76), at(26.98), "side");
+        for (const el of [$("f04-out"), $("f04-p2")]) tl.set(el, { opacity: 0 }, 0).set(el, { opacity: 1 }, ENTER);
+        // the DOM name: hidden until the Enter, where it takes over from the type on the lane
+        const name = $("f04-name");
+        tl.set(name, { opacity: 0 }, 0).set(name, { opacity: 1 }, ENTER);
+        tl.set({}, {}, DUR);
+
+        // ---- the name's layout, exactly as 05 sets it (fit to the full width, glyph box on the bottom line) ----
+        const WIDE = 89 * 19.2, BOTTOM = 52.2 * 19.2, NAME_X = 105.6;
+        name.style.fontSize = "145px";
+        const FS = (145 * WIDE) / name.offsetWidth;
+        name.style.fontSize = FS.toFixed(3) + "px";
+        name.style.top = (BOTTOM - name.offsetHeight).toFixed(2) + "px";
+        const NAME = "feature/nothing-on-the-side";
+        // each glyph's pen position (layout px from the name's left), read from the DOM so kerning and tracking match
+        const gx = [];
+        {
+          const nr = name.getBoundingClientRect(), k = name.offsetWidth / Math.max(1e-6, nr.width);
+          if (nr.width > 0) {
+          const walk = document.createTreeWalker(name, NodeFilter.SHOW_TEXT);
+          const rg = document.createRange();
+          for (let n = walk.nextNode(); n; n = walk.nextNode())
+            for (let i = 0; i < n.data.length; i++) { rg.setStart(n, i); rg.setEnd(n, i + 1); gx.push((rg.getBoundingClientRect().left - nr.left) * k); }
+          }
+        }
+        const probe = document.createElement("span");
+        probe.style.cssText = "display:inline-block;width:0;height:0;vertical-align:baseline";
+        name.insertBefore(probe, $("f04-uline"));
+        const BASE_Y = BOTTOM - name.offsetHeight + probe.offsetTop; // the DOM baseline (px from the top)
+        probe.remove();
+        const UL_Y = BOTTOM + 13.4 + 2.88; // the fire underline's centre line
+        if (gx.length !== NAME.length) { // fallback: advances minus the tracking
+          const c = document.createElement("canvas").getContext("2d"); c.font = '900 100px "Barlow"';
+          gx.length = 0; let x = 0; for (const ch of NAME) { gx.push(x); x += (c.measureText(ch).width / 100 - 0.04) * FS; }
+        }
+
+        // ---- the world: 05's field of lanes on the plane y = 0; main along -z, ending at HEAD (the origin) ----
+        const renderer = K.renderer(THREE, $("f04-gl"));
+        const lines = K.createLines(THREE, 60000);
+        const laneL = K.createLines(THREE, 4000, { blend: "max" }); // the new lane: no bright beads where its pieces overlap
+        const shutter = K.createShutter(THREE, renderer);
+        const camera = new THREE.PerspectiveCamera(40, 16 / 9, 0.1, 600);
+        const V = (x, y, z) => new THREE.Vector3(x, y, z);
+        const BONE = K.BONE, FIRE = K.ACCENT, MUTED = [0x88 / 255, 0x88 / 255, 0x80 / 255], HOT = [1, 0.9, 0.8];
+        const R = 1; // the new lane's turn radius: out of HEAD toward the camera, then sideways along +x at z = R
+        const rnd = HR.rng(404);
+        const CLEAR = (x, za, zb) => x > -0.9 && x < 18 && za > -0.5 && zb < 2.6; // the strip the new lane runs through
+        const lanes = [];
+        for (let k = -16; k <= 16; k++) {
+          if (k === 0) continue;
+          const x = k * 3.2 + (rnd() - 0.5) * 0.6;
+          let z = 44 - rnd() * 20;
+          while (z > -320) {
+            const len = 12 + rnd() * 60, z1 = z - len, merge = rnd() < 0.5;
+            // split a run around the clearing
+            if (CLEAR(x, z, z1)) { if (z > 2.6) lanes.push([x, z, 2.6]); if (z1 < -0.5) lanes.push([x, -0.5, z1]); }
+            else lanes.push([x, z, z1]);
+            if (merge && !CLEAR(x, z1, z1 - 5)) lanes.push([x, z1, z1 - 5, Math.sign(k) * -3.2]);
+            z = z1 - 4 - rnd() * 20;
+          }
+        }
+        const commits = []; for (let z = -7; z > -320; z -= 7) commits.push(z);
+        // the new lane: a quarter turn out of HEAD, then straight; it ends where the name ends
+        const ARC = (Math.PI * R) / 2;
+        const lanePt = (s) => { // arclength s from HEAD
+          if (s <= ARC) { const f = s / R; return V(R - R * Math.cos(f), 0, R * Math.sin(f)); }
+          return V(R + (s - ARC), 0, R);
+        };
+
+        // ---- the square-on end pose E: the lane is the name's underline, the type stands on it at the DOM's metrics ----
+        const TP = Math.tan((3.1 * Math.PI) / 180), DE = 7; // pitch, depth of the lane
+        const project = K.projector(THREE, camera);
+        function poseE(cx, h) {
+          camera.fov = 40; camera.updateProjectionMatrix();
+          camera.position.set(cx, h, R + DE); camera.up.set(0, 1, 0); camera.lookAt(cx, h - 50 * TP, R + DE - 50); camera.updateMatrixWorld();
+        }
+        const bisect = (f, lo, hi, target, up) => { for (let i = 0; i < 50; i++) { const m = (lo + hi) / 2; if ((f(m) < target) === up) lo = m; else hi = m; } return (lo + hi) / 2; };
+        const EH = bisect((h) => { poseE(R + 4, h); return project(V(R, 0, R)).y; }, 0.3, 9, UL_Y, true);
+        const ECX = bisect((cx) => { poseE(cx, EH); return project(V(R, 0, R)).x; }, R, R + 30, NAME_X, false);
+        poseE(ECX, EH);
+        const LIFT = bisect((y) => project(V(R, y, R)).y, 0, 3, BASE_Y, false);
+        const SE = project(V(R + 1, LIFT, R)).x - project(V(R, LIFT, R)).x; // px per world unit along the lane at E
+        const SIZE = FS / (1.4 * project(V(R, LIFT, R)).s); // textOnPath's size convention: font px = s · size · 1.4
+        const DEPTH_E = DE; // view depth of the lane at E (no yaw, the lane lies across the view)
+        const GU = gx.map((x) => x / SE); // each glyph's world offset along the lane from the name's start
+        const NAME_LEN = WIDE / SE;
+        const LANE_LEN = ARC + NAME_LEN;
+        const camE = { pos: camera.position.clone(), look: V(ECX, EH - 50 * TP, R + DE - 50) };
+
+        // the sung words on the lane: glyph ranges [from, to) of NAME, their time, hero
+        const WORDS = [[0, 7, FEATURE, true], [8, 15, NOTHING, false], [16, 18, ON, false], [19, 22, THE, false], [23, 27, SIDE, true]];
+        const SEPS = [[7, FEATURE], [15, SIDE], [18, SIDE], [22, SIDE]]; // the comma lands with "feature,"; the dashes on "side"
+        const ctx = $("f04-type").getContext("2d");
+        const DPR = window.devicePixelRatio || 1;
+        $("f04-type").width = 1920 * DPR; $("f04-type").height = 1080 * DPR;
+        const mctx = document.createElement("canvas").getContext("2d"); mctx.font = '900 100px "Barlow"';
+        const ADV = [...NAME, ","].map((ch) => mctx.measureText(ch).width);
+        const uEnd = (i) => GU[i] + (ADV[i] / 100) * SIZE * 1.4;
+        const mid = (a, b) => (GU[a] + uEnd(b - 1)) / 2;
+
+        // the pen: the lane peels out of HEAD on "feature," and runs to the last sung word; on "side" it reaches the end
+        // of the name and a white-hot sweep runs down it
+        const PEN = [[FEATURE - 0.08, 0], [FEATURE + 0.12, ARC + uEnd(7)], [NOTHING, ARC + uEnd(7)], [NOTHING + 0.22, ARC + uEnd(14)],
+          [ON, ARC + uEnd(14)], [ON + 0.16, ARC + uEnd(17)], [THE, ARC + uEnd(17)], [THE + 0.1, ARC + uEnd(21)], [SIDE, ARC + uEnd(21)], [SIDE + 0.24, LANE_LEN]];
+        const penAt = (t) => K.keys(t, PEN, K.ease.outCubic);
+        const sweepAt = (t) => (t < SIDE ? -1 : LANE_LEN * K.ease.outCubic(K.clamp((t - SIDE) / 0.32)));
+
+        // ---- the camera (local t) ----
+        // A: trucking in toward HEAD from the right of main through the lead-in; a dive onto the new lane on "feature,";
+        // then following the singer along the lane (each word centred as it is sung); on "side" a pull-out to E
+        const A0 = [V(4.0, 3.0, 17), V(0.4, 0.1, -12)], A1 = [V(2.6, 1.9, 7.5), V(0.4, 0.2, -6)];
+        const FOL = [[FEATURE, mid(0, 7)], [NOTHING - 0.08, mid(0, 7) + 0.7], [NOTHING + 0.3, mid(8, 15)], [ON, mid(8, 15) + 0.5],
+          [ON + 0.2, mid(16, 18) + 0.2], [THE, mid(19, 22) - 0.1], [SIDE, mid(19, 22) + 0.3], [DUR, mid(19, 22) + 0.6]];
+        const FOFF = [[FEATURE, [-1.3, 1.25, 4.3]], [ON, [-1.5, 1.4, 4.7]], [SIDE, [-1.7, 1.55, 5.1]], [DUR, [-1.8, 1.6, 5.3]]];
+        const DIVE = 0.38, PULL = 0.4;
+        function follow(t) {
+          const lx = R + K.keys(t, FOL), o = [0, 1, 2].map((i) => K.keys(t, FOFF.map(([tt, v]) => [tt, v[i]])));
+          const look = V(lx, LIFT + 0.75, R);
+          return [look.clone().add(V(...o)), look];
+        }
+        function aim(t) {
+          let pos, look;
+          if (t < FEATURE - 0.04) {
+            const f = K.ease.outCubic(K.clamp(t / (FEATURE - 0.04))); // carries 03's glide in, settles before the dive
+            pos = A0[0].clone().lerp(A1[0], f); look = A0[1].clone().lerp(A1[1], f);
+          } else {
+            [pos, look] = follow(t);
+            if (t < FEATURE - 0.04 + DIVE) { const f = K.ease.outExpo((t - FEATURE + 0.04) / DIVE); pos = A1[0].clone().lerp(pos, f); look = A1[1].clone().lerp(look, f); }
+            if (t > SIDE - 0.02) { const f = K.ease.outExpo(K.clamp((t - SIDE + 0.02) / PULL)); pos.lerp(camE.pos, f); look.lerp(camE.look, f); }
+          }
+          const T = T0 + t, m = 1 - K.prog(t, SIDE, SIDE + PULL); // the hand settles to E
+          pos.x += K.noise1(T * 0.7, 1) * 0.22 * m; pos.y += (K.noise1(T * 0.6, 2) * 0.15 + 0.1 * HR.hit("kick", T, 0.12)) * m;
+          camera.position.copy(pos); camera.up.set(0, 1, 0); camera.lookAt(look);
+          // a lean as the lane takes the turn, a roll on the fill (25.96), a fov punch on each hero
+          const roll = (t > FEATURE ? 0.05 * Math.exp(-(t - FEATURE) / 0.45) : 0) + 0.02 * Math.sin((T - 25.96) * 20) * K.pulse(T, 25.96, 0.12);
+          camera.rotateZ((K.noise1(T * 0.4, 3) * 0.012 + roll) * m);
+          const land = 0.035 * (K.pulse(t, NOTHING, 0.12) + K.pulse(t, ON, 0.12) + K.pulse(t, THE, 0.1)); // each word lands with a nudge
+          camera.fov = 40 / (1 + (0.09 * K.pulse(t, FEATURE, 0.18) + 0.03 * HR.hit("kick", T, 0.1) + land) * m + 0.05 * K.pulse(t, SIDE, 0.12) * m);
+          camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+        }
+
+        // ---- drawing (pure functions of t) ----
+        const fogged = (p, near = 10, k = 0.011) => Math.exp(-Math.max(0, camera.position.distanceTo(p) - near) * k);
+        const M = new THREE.Vector3(), VS = new THREE.Vector3();
+        function seg(a, b, w, rgb, alpha) {
+          M.addVectors(a, b).multiplyScalar(0.5);
+          const f = fogged(M);
+          if (f * alpha > 0.01) lines.seg(a, b, w, rgb, alpha * f);
+        }
+        function ring(c, r, w, rgb, alpha, n = 14) {
+          for (let i = 0; i < n; i++) {
+            const a0 = (i / n) * Math.PI * 2, a1 = ((i + 1) / n) * Math.PI * 2;
+            seg(V(c.x + Math.cos(a0) * r, c.y + Math.sin(a0) * r, c.z), V(c.x + Math.cos(a1) * r, c.y + Math.sin(a1) * r, c.z), w, rgb, alpha);
+          }
+        }
+        const viewDepth = (p) => -VS.copy(p).applyMatrix4(camera.matrixWorldInverse).z;
+        function scene(t, target) {
+          aim(t);
+          const T = T0 + t, bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.14);
+          lines.clear(); laneL.clear();
+          // the field of lanes
+          for (const [x, z0, z1, mx] of lanes) {
+            if (mx !== undefined) { seg(V(x, 0, z0), V(x + mx, 0, z1), 1.3, BONE, 0.3); continue; }
+            for (let z = z0; z > z1; z -= 4) seg(V(x, 0, z), V(x, 0, Math.max(z1, z - 4)), 1.4, BONE, 0.45);
+            ring(V(x, 0, z1), 0.16, 1.2, BONE, 0.4, 8);
+          }
+          // main and its commits, breathing with the bass; it ends at HEAD
+          for (let z = 0; z > -320; z -= 3) seg(V(0, 0, z), V(0, 0, z - 3), 3, BONE, 0.85);
+          for (const z of commits) ring(V(0, 0, z), 0.22, 2.2, BONE, 0.9 + 0.1 * bass);
+          // HEAD: a fire ring and its pin, the present, pulsing on the kicks
+          const H = V(0, 0, 0);
+          ring(H, 0.38 + 0.06 * kick, 3, FIRE, 1, 20);
+          seg(H, V(0, 0.95, 0), 2.6, FIRE, 0.9);
+          ring(V(0, 0.95, 0), 0.08, 2, HOT, 0.8, 8);
+          // the new lane: fire from HEAD to the pen, a white-hot pen head, the sweep on "side"; at the Enter its straight
+          // hands over to the DOM underline (the same line at E)
+          const pen = penAt(t), sw = sweepAt(t), straightOff = t >= ENTER;
+          const STEP = 0.12;
+          for (let s = 0; s < pen; s += STEP) {
+            const s1 = Math.min(pen, s + STEP);
+            if (straightOff && s >= ARC - 1e-6) break;
+            const a = lanePt(s), b = lanePt(s1);
+            const w = 5.76 * K.clamp(DEPTH_E / Math.max(0.5, viewDepth(a)), 0.5, 2.2);
+            const f = fogged(M.addVectors(a, b).multiplyScalar(0.5));
+            laneL.seg(a, b, w, FIRE, f);
+            const hot = Math.max(sw >= 0 ? Math.exp(-Math.abs(s - sw) / 0.5) * (1 - K.prog(t, SIDE + 0.3, SIDE + 0.55)) : 0, Math.exp(-(pen - s) / 0.35) * (t < SIDE + 0.24 ? 1 : 0));
+            if (hot > 0.04) laneL.seg(a, b, w * 0.45, HOT, hot * f);
+          }
+          lines.draw(renderer, camera, target);
+          laneL.draw(renderer, camera, target);
+        }
+
+        // the type on the lane: glyph by glyph at the DOM's pen positions, standing on the lane
+        const heat = (d) => { const k = Math.exp(-Math.max(0, d) / 0.3); return [255 + (232 - 255) * (1 - k), 236 + (93 - 236) * (1 - k), 220 + (38 - 220) * (1 - k)].map(Math.round).join(", "); };
+        const onLane = (u) => ({ x: R + u, y: LIFT, z: R });
+        function glyph(ch, u, size, rgb, alpha, lit) {
+          const gw = mctx.measureText(ch).width, adv = (gw / 100) * size * 1.4;
+          const qa = project(onLane(u)), qb = project(onLane(u + adv));
+          if (!qa || !qb) return;
+          const len = Math.hypot(qb.x - qa.x, qb.y - qa.y), hpx = 0.5 * (qa.s + qb.s) * size * 1.4;
+          if (len < 0.5 || alpha < 0.003) return;
+          ctx.save();
+          ctx.translate(qa.x, qa.y); ctx.rotate(Math.atan2(qb.y - qa.y, qb.x - qa.x)); ctx.scale(len / Math.max(1, gw), hpx / 100);
+          if (lit < 1) { ctx.strokeStyle = `rgba(240, 236, 229, ${0.35 * alpha})`; ctx.lineWidth = (2.5 * 100) / Math.max(1, hpx); ctx.strokeText(ch, 0, 0); }
+          if (lit > 0) { ctx.fillStyle = `rgba(${rgb}, ${alpha * lit})`; ctx.fillText(ch, 0, 0); }
+          ctx.restore();
+        }
+        function type(t) {
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+          ctx.clearRect(0, 0, 1920, 1080);
+          aim(t);
+          ctx.font = '900 100px "Barlow"'; ctx.textBaseline = "alphabetic";
+          if (t >= ENTER) return; // the DOM name holds from here
+          for (const [a, b, wt, hero] of WORDS) {
+            if (t < wt) continue;
+            const g = b - a, k = hero ? 1 + 0.5 * (1 - K.ease.outExpo(K.clamp((t - wt) / 0.26))) : 1, uc = mid(a, b);
+            for (let i = a; i < b; i++) {
+              const lit = K.clamp((t - wt - ((i - a) / g) * (hero ? 0.1 : 0.14)) / 0.06);
+              glyph(NAME[i], uc + (GU[i] - uc) * k, SIZE * k, hero ? heat(t - wt) : "240, 236, 229", 1, lit);
+            }
+          }
+          for (const [i, st] of SEPS) {
+            if (t < st) continue;
+            const kebab = t >= SIDE, ch = kebab ? NAME[i] : ",", pop = kebab ? 1 + (i === 7 ? 0.7 : 0.3) * (1 - K.ease.outExpo(K.clamp((t - SIDE - (i - 7) * 0.0015) / 0.3))) : 1;
+            const adv = (mctx.measureText(ch).width / 100) * SIZE * 1.4, uc = GU[i] + adv / 2;
+            glyph(ch, uc - (adv / 2) * pop, SIZE * pop, kebab && i === 7 && t < SIDE + 0.2 ? heat(t - SIDE) : "232, 93, 38", 1, 1);
+          }
+          // the HEAD label, standing behind HEAD until the lane takes over
+          const la = 1 - K.prog(t, FEATURE - 0.3, FEATURE - 0.04);
+          if (la > 0) K.textOnPath(ctx, project, (s) => ({ x: 0.55 + s, y: 0.06, z: -0.9 }), "HEAD -> main", 0.4, {
+            font: '500 100px "IBM Plex Mono"', fill: "136, 136, 128", hot: (i) => i < 4, alpha: la,
+          });
+        }
+
+        // ---- per-frame state ----
+        const world = $("f04-world"), dropf = $("f04-dropf"), hud = $("f04-hud");
+        const cmd = $("f04-cmd"), cur1 = $("f04-cur1"), cur2 = $("f04-cur2");
+        const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+        function render() {
+          const t = tl.time();
+          renderer.setRenderTarget(null); renderer.clear();
+          const fast = (t > FEATURE - 0.06 && t < FEATURE - 0.04 + DIVE) || (t > SIDE - 0.04 && t < SIDE + PULL - 0.08);
+          if (fast) shutter((ts, target) => scene(ts, target), t, { samples: 8, angle: 270 });
+          else scene(t, null);
+          type(t);
+          let k = keys[0]; for (const st of keys) if (st[0] <= t) k = st;
+          cmd.textContent = k[1];
+          cur1.style.opacity = t < ENTER && blink(t, Math.max(0, k[0])) ? 1 : 0;
+          cur2.style.opacity = t >= ENTER && blink(t, ENTER) ? 1 : 0;
+          WOW.draw(tl, T0);
+          const inP = t < IN;
+          for (const el of [world, dropf, hud]) {
+            el.style.translate = inP ? px.style.translate : "";
+            el.style.scale = inP ? px.style.scale : "";
+            el.style.filter = inP ? px.style.filter : "";
+          }
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines["04-feature"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

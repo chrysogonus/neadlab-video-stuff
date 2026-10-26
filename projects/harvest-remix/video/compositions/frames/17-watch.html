@@ -11,7 +11,15 @@
          v13 (SYSTEM.md V7): black ground (no wall, ghost irises or bokeh), flat glowing "later", a tighter warm light; the
          turning f-stop scale is engraved SOONER at its open end and LATER in the closed zone, so it turns from one to the
          other as the aperture shuts.
-         v17 (V17.md): `pushIn` in from 04, no hit on the 41.853 kick (the iris opening carries it), `pullOut` out into 18. -->
+         v17 (V17.md): `pushIn` in from 04, no hit on the 41.853 kick (the iris opening carries it), `pullOut` out into 18.
+         v22 r1 (REFINE-1.md, worker G): the array keeps multiplying, but only a ring of lit irises round the lyric is sharp:
+         the outer watchers are defocused and dimmed on their own canvas. "sooner or" is set straight on its own ink band
+         (the harvester's serif, no longer bent round a ring over the irises). No flat rings or flashes: on "later" (44.58)
+         a frame-sized nine-blade shutter snaps shut over the array, a notch tighter on the 44.822 downbeat and the 45.279
+         snare, wiping "sooner or" away, until only "later" is left in its aperture; sparks fly off the blade tips.
+         v22 r2 (REFINE-2.md, worker F): only the irises next to the lyric are lit (an ellipse round the "sooner or" band,
+         moving down to "later" on the slam), the centre one under a lamp; every other watcher is a dark silhouette with a
+         dim ember for a pupil, so the frame's light comes from the lit irises, not from more of them. -->
   </head>
   <body>
     <template>
@@ -54,16 +62,27 @@
         .f17-arc .f17-off { fill: transparent; stroke: transparent; }
         #f17-line { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-family: "Barlow"; }
         .f17-hero { display: inline-block; font-weight: 900; font-size: 12cqw; line-height: 0.92; letter-spacing: -0.05em; color: var(--fire); white-space: nowrap;
-          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 0.08em) rgba(232, 93, 38, 0.55),
+          text-shadow: 0 0 4px rgba(10, 10, 10, 0.95), 0 0 calc(var(--hr-glow, 0.5) * 0.08em) rgba(232, 93, 38, 0.55),
                        0 0 calc(var(--hr-glow, 0.5) * 0.24em) rgba(232, 93, 38, 0.28); }
         .f17-hero .hr-g { transform-origin: 50% 100%; }
         .f17-w { display: inline-block; position: relative; }
 
         /* ---- v16: the watcher grid (canvas), shade under the hero word, effects, watcher count ---- */
         #f17-gridw { position: absolute; inset: 0; }
+        /* v22 r1: the outer watchers on their own canvas; r2: drawn as dark silhouettes, a little out of focus */
+        #f17-gridb { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; filter: blur(2.5px); }
+        /* "sooner or" straight, on its own ink band */
+        #f17-lyr, #f17-shutl, #f17-herol { position: absolute; inset: 0; pointer-events: none; }
+        #f17-band { position: absolute; left: 0; right: 0; top: 326px; height: 166px; background: rgba(10, 10, 10, 0.93);
+          box-shadow: 0 0 60px 20px rgba(10, 10, 10, 0.7), inset 0 2px 0 rgba(240, 236, 229, 0.18), inset 0 -2px 0 rgba(240, 236, 229, 0.18);
+          display: flex; align-items: center; justify-content: center; transform-origin: 50% 50%; }
+        #f17-sline { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 150px; line-height: 1; color: var(--cream);
+          letter-spacing: 0.005em; white-space: nowrap; margin-top: -14px; }
+        .f17-sw { display: inline-block; }
+        #f17-shut { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
         #f17-grid { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
         #f17-shade { position: absolute; left: 160px; top: 690px; width: 1600px; height: 380px; opacity: 0;
-          background: radial-gradient(closest-side, rgba(10,10,10,0.88), rgba(10,10,10,0.6) 60%, rgba(10,10,10,0) 100%); }
+          background: radial-gradient(closest-side, rgba(10,10,10,0.95), rgba(10,10,10,0.8) 60%, rgba(10,10,10,0) 100%); }
         #f17-fx { position: absolute; inset: 0; pointer-events: none; }
         #f17-count { position: absolute; left: 5.5cqw; top: 1004px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 22px;
           letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); white-space: nowrap;
@@ -87,7 +106,7 @@
           <svg data-hf-id="hf-4lp3" id="f17-ghosts" viewBox="0 0 1920 1080"></svg>
           <div data-hf-id="hf-zvyy" id="f17-light"></div>
         </div>
-        <div id="f17-gridw" data-layout-ignore><canvas id="f17-grid" width="1920" height="1080"></canvas></div>
+        <div id="f17-gridw" data-layout-ignore><canvas id="f17-gridb" width="1920" height="1080"></canvas><canvas id="f17-grid" width="1920" height="1080"></canvas></div>
         <div data-hf-id="hf-ecs6" class="hr-layer" id="f17-mid" data-depth="0.65" data-layout-ignore>
           <svg data-hf-id="hf-hd1m" id="f17-art" viewBox="0 0 1920 1080"></svg>
         </div>
@@ -97,8 +116,10 @@
         <div id="f17-shade" data-layout-ignore></div>
         <div data-hf-id="hf-34p3" class="hr-layer" id="f17-type" data-depth="0.85">
           <svg data-hf-id="hf-rp9w" id="f17-rings" viewBox="0 0 1920 1080"></svg>
-          <div data-hf-id="hf-snx4" id="f17-line"></div>
         </div>
+        <div id="f17-lyr"><div id="f17-band"><div id="f17-sline"><span class="f17-sw" id="f17-w3">sooner</span> <span class="f17-sw" id="f17-w4">or</span></div></div></div>
+        <div id="f17-shutl" data-layout-ignore><svg id="f17-shut" viewBox="0 0 1920 1080"></svg></div>
+        <div id="f17-herol"><div data-hf-id="hf-snx4" id="f17-line"></div></div>
         <div data-hf-id="hf-0db0" class="hr-layer" id="f17-chrome" data-depth="0.2">
           <div data-hf-id="hf-8pzj" id="f17-kicker">ARCHIVE · THE WATCHER</div>
           <div id="f17-count"></div>
@@ -415,7 +436,8 @@
           // the harvester's voice runs round the iris: "i'll see you" on the outer ring, "sooner or" on the inner. Each word
           // is its own <text> carrying the whole ring's phrase (the other words transparent), so the browser lays out every
           // word in place and each can slide along the ring on its own.
-          const RINGS = [{ r: 410, ix: [0, 1, 2] }, { r: 330, ix: [3, 4] }];
+          // v22 r1: only the outer ring is bent; "sooner or" (W[3], W[4]) is set straight on its band
+          const RINGS = [{ r: 410, ix: [0, 1, 2] }];
           const rings = $("f17-rings"), ringG = S(rings, "g"), ringG2 = S(rings, "g"), W = [];
           const rdefs = S(rings, "defs");
           RINGS.forEach(({ r, ix }, k) => {
@@ -428,6 +450,7 @@
               W[i] = t;
             });
           });
+          W[3] = $("f17-w3"); W[4] = $("f17-w4");
           const line = $("f17-line");
           W[5] = el("span", "f17-w f17-hero", line, "later");
           const heroRow = W[5];
@@ -436,25 +459,36 @@
           // v16: three shots. (a) 41.72-42.818 one iris snaps open on the kick; (b) 42.818-44.58 the iris multiplies (1 -> 9 -> 25 -> 49 -> 81)
           // while the camera pulls back through the array; (c) 44.58-45.487 every iris slams shut at once, "later" explodes.
           const CUT = 42.818, SLAM = 44.58, TEND = T0 + DUR;
+          // v22 r1: the frame's shutter, centred on "later"; [beat, inradius, lead, index]: snaps on "later", the downbeat, the snare
+          const SCX = 960, SCY = 866, SRB = 1400, SR0 = 1320;
+          const SHUT = [[44.58, 600, 0.07, 0], [44.821, 368, 0.06, 1], [45.279, 318, 0.06, 2]];
+          const SHUT_R = (T) => { let r = SR0, prev = SR0;
+            for (const [t, to, lead] of SHUT) { const p = Math.max(0, Math.min(1, (T - (t - lead)) / 0.1)); const q = p - 1; r += (to - prev) * (1 + 2.2 * q * q * q + 1.2 * q * q); prev = to; }
+            return r; };
+          const SHUT_PHI = (T) => 0.35 + (SR0 - SHUT_R(T)) * 0.0011;
           const tl = gsap.timeline({ paused: true });
           const ORIGIN = `${CX} ${CY}`;
           const fx = $("f17-fx"), gridw = $("f17-gridw"), typeL = $("f17-type"), midL = $("f17-mid");
           lyric.words.forEach(([, T], i) => {
             if (i === 5) return;
+            if (i >= 3) {   // on the band: each word rises onto its baseline, sharp on its start
+              tl.fromTo(W[i], { opacity: 0, y: 26, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.3, ease: "expo.out" }, Math.max(0, L(T) - 0.03));
+              return;
+            }
             tl.fromTo(W[i], { opacity: 0, rotation: i < 3 ? 6 : 0, svgOrigin: ORIGIN, filter: "blur(10px)" },
               { opacity: 1, rotation: 0, svgOrigin: ORIGIN, filter: "blur(0px)", duration: 0.38, ease: "expo.out" }, Math.max(0, L(T) - 0.03));
           });
           // shot a: the first ring drifts round the eye; it is flung away at the cut
           tl.fromTo(ringG, { rotation: 2.2, svgOrigin: ORIGIN }, { rotation: -0.6, svgOrigin: ORIGIN, duration: L(CUT), ease: "sine.inOut" }, 0);
           tl.fromTo(ringG, { scale: 1, opacity: 1, svgOrigin: ORIGIN }, { scale: 2, opacity: 0, svgOrigin: ORIGIN, duration: 0.2, ease: "power3.in", immediateRender: false }, L(CUT) - 0.04);
-          // shot b: "sooner or" spins in on a ring round the centre iris, drifts, and is thrown off on the slam
-          tl.fromTo(ringG2, { rotation: -230, scale: 0.55, svgOrigin: ORIGIN }, { rotation: 0, scale: 1, svgOrigin: ORIGIN, duration: 0.8, ease: "expo.out", immediateRender: false }, L(CUT));
-          tl.fromTo(ringG2, { rotation: 0, svgOrigin: ORIGIN }, { rotation: 13, svgOrigin: ORIGIN, duration: L(SLAM) - 0.12 - (L(CUT) + 0.8), ease: "none", immediateRender: false }, L(CUT) + 0.8);
-          tl.fromTo(ringG2, { rotation: 13, scale: 1, opacity: 1, svgOrigin: ORIGIN }, { rotation: 95, scale: 2.2, opacity: 0, svgOrigin: ORIGIN, duration: 0.22, ease: "power3.in", immediateRender: false }, L(SLAM) - 0.12);
-          // "later": the explosive hero word, centred on the shut array
+          // shot b: the ink band opens across the frame on the cut (it holds "sooner or"), drifting slowly; the shutter's
+          // blades wipe it away from 44.58
+          tl.fromTo("#f17-band", { scaleX: 0, scaleY: 0.6 }, { scaleX: 1, scaleY: 1, duration: 0.24, ease: "power3.out" }, L(CUT) - 0.14);
+          tl.fromTo("#f17-sline", { x: -10 }, { x: 14, duration: L(SLAM) - L(CUT), ease: "none" }, L(CUT));
+          // "later": the hero word, its glyphs thrown in to land on the slam (no ring, rays or flash: the shutter carries it)
           const LATER = L(SLAM), HX = 960, HY = 866;
           tl.fromTo(W[5], { opacity: 0 }, { opacity: 1, duration: 0.01 }, LATER - 0.25);
-          WOW.explode(tl, W[5], LATER, { parent: fx, x: HX, y: HY, shake: typeL, amp: 16, rays: 22, burst: 34, seed: 17 });
+          WOW.explode(tl, W[5], LATER, { fx: false, shake: $("f17-herol"), amp: 8, seed: 17 });
           tl.fromTo("#f17-shade", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out", immediateRender: false }, LATER - 0.1);
 
           // the camera for shot a: a push toward the iris with a punch on the kick
@@ -466,23 +500,22 @@
           tl.fromTo("#f17-near", { x: 0 }, { x: -240, duration: DUR, ease: "none" }, 0);
           tl.fromTo("#f17-ghosts", { x: 0 }, { x: -50, duration: DUR, ease: "none" }, 0);
           // shot a: the iris opens on the 41.853 kick inside the pushIn (v17: no hit there); every click after it hits something
+          // (v22 r1: the blades' own clicks carry 42.28 and 42.52; no rings)
+          WOW.punch(tl, midL, L(41.853), { s: 1.04, dur: 0.3 });   // v22 r1: the opening kick lands on the iris itself
           [42.51].forEach((t) => { WOW.shake(tl, midL, L(t) - 0.04, { amp: 7, dur: 0.3, seed: 22 }); WOW.punch(tl, midL, L(t) - 0.04, { s: 1.05, dur: 0.3 }); });
-          WOW.shock(tl, fx, { x: CX, y: CY, t: L(42.28), r: 600, n: 1, w: 4, color: "cream", dur: 0.35 });
-          WOW.shock(tl, fx, { x: CX, y: CY, t: L(42.52), r: 800, n: 1, w: 5, color: "fire", dur: 0.4 });
-          // the cut into the array (CUT): the iris blows open wide, the grid takes over
-          WOW.flash(tl, fx, L(CUT), { a: 0.45, dur: 0.16 });
-          WOW.shock(tl, fx, { x: CX, y: CY, t: L(CUT), r: 1500, n: 3, w: 8, color: "fire", dur: 0.6, gap: 0.07 });
-          WOW.rays(tl, fx, { x: CX, y: CY, t: L(CUT), n: 30, r0: 160, r1: 1300, seed: 62, color: "cream", dur: 0.5, w: 5 });
-          WOW.shake(tl, gridw, L(CUT), { amp: 16, dur: 0.4, seed: 31 });
-          WOW.shake(tl, typeL, L(CUT), { amp: 8, dur: 0.3, seed: 32 });
-          // shot b: each kick sends a ripple through the array
-          [43.0, 43.7, 44.36].forEach((t, k) => { WOW.shock(tl, fx, { x: CX, y: CY, t: L(t) - 0.02, r: 1300, n: 1, w: 4 + k, color: k % 2 ? "cream" : "fire", dur: 0.55 }); WOW.shake(tl, gridw, L(t) - 0.02, { amp: 6 + k * 2, dur: 0.25, seed: 40 + k }); });
-          // shot c: every iris slams at once
-          WOW.flash(tl, fx, LATER, { a: 0.95, dur: 0.24 });
-          WOW.shock(tl, fx, { x: CX, y: CY, t: LATER, r: 1700, n: 3, w: 10, color: "fire", dur: 0.7, gap: 0.07 });
-          WOW.shock(tl, fx, { x: CX, y: CY, t: LATER + 0.05, r: 1200, n: 1, w: 5, color: "cream", dur: 0.5 });
-          WOW.shake(tl, gridw, LATER, { amp: 26, dur: 0.5, seed: 33 });
-          [44.82, 45.28].forEach((t, k) => { WOW.shock(tl, fx, { x: CX, y: CY, t: L(t), r: 1300, n: 1, w: 6, color: k ? "cream" : "fire", dur: 0.45 }); WOW.shake(tl, gridw, L(t), { amp: 12, dur: 0.3, seed: 50 + k }); WOW.flash(tl, fx, L(t), { a: 0.18, dur: 0.1 }); });
+          // the cut into the array (CUT): the iris blows open wide, the grid takes over; the array's rings pop in on their own
+          WOW.punch(tl, gridw, L(CUT), { s: 1.05, dur: 0.4 });
+          WOW.shake(tl, gridw, L(CUT), { amp: 8, dur: 0.35, seed: 31 });
+          // shot b: each kick opens the irises (envAt) and nudges the array
+          [43.0, 43.7, 44.36].forEach((t, k) => { WOW.shake(tl, gridw, L(t) - 0.02, { amp: 5 + k, dur: 0.25, seed: 40 + k }); WOW.punch(tl, gridw, L(t) - 0.02, { s: 1.045, dur: 0.3 }); });
+          // shot c: every iris slams at once and the frame's shutter snaps shut over them (render), a notch tighter on the
+          // 44.822 downbeat and the 45.279 snare; sparks off the blade tips at each snap
+          WOW.shake(tl, gridw, LATER, { amp: 8, dur: 0.4, seed: 33 });
+          SHUT.forEach(([T, , , k]) => {
+            const g = irisGeom(SHUT_R(T + 0.02), SHUT_PHI(T + 0.02));
+            [7, 8, 0, 6].forEach((v, j) => WOW.burst(tl, fx, { x: SCX + g.V[v][0], y: SCY + g.V[v][1], t: L(T), n: 7, speed: 640, gravity: 1400, size: [3, 8],
+              dur: 0.55, cream: 0.6, seed: 70 + k * 5 + j }));
+          });
           // v17 switches: pushIn from 04 (into the iris), pullOut into 18 (the irises shut, pull back to the title)
           WOW.transition(tl, document.getElementById("el-17-watch"), { in: "pushIn", out: "pullOut", dur: 0.46, total: DUR });
 
@@ -507,6 +540,7 @@
           const shudder = (T) => { let v = 0; for (const t of KICKS) if (T >= t) v = Math.max(v, (t === 44.58 ? 1 : 0.35) * Math.exp(-(T - t) / 0.09)); return v; };
 
           // ---- v16: the array of watchers, drawn on one canvas ------------------------------------------------------
+          const gbx = $("f17-gridb").getContext("2d");
           const gcv = $("f17-grid"), gx = gcv.getContext("2d"), PITCH = 800, KS = 0.6, RING0 = CUT + 0.1, RSTEP = 0.17;
           const countEl = $("f17-count");
           const envAt = (T) => Math.max(HR.hit("kick", T, 0.13), 0.55 * HR.hit("hat", T, 0.08), 0.8 * HR.hit("snare", T, 0.1));
@@ -517,37 +551,59 @@
             return 0.2 * (1 + 1.1 * p * p * p) * (1 + 0.16 * Math.exp(-(T - SLAM) / 0.12) + 0.03 * HR.hit("kick", T, 0.13));
           }
           const rotAt = (T) => 0.28 * ez(clamp((T - CUT) / (SLAM - CUT))) * (T < SLAM ? 1 : 1 - 0.7 * clamp((T - SLAM - 0.2) / (TEND - SLAM - 0.2)));
-          function drawIris(c, rho, phi, lit, flash, detail) {
+          function drawIris(c, rho, phi, lit, flash, detail, lampK = 0, shine = 0) {
             const g = irisGeom(rho, phi), circ = (r) => { c.beginPath(); c.arc(0, 0, r, 0, TAU); };
-            circ(600); c.fillStyle = "#222220"; c.fill();
-            circ(560); c.fillStyle = "#1A1A18"; c.fill(); c.lineWidth = 16; c.strokeStyle = "#505048"; c.stroke();
+            const sk = Math.min(1, shine);   // r2: a lit watcher's bezel and steel catch the lamp
+            circ(600); c.fillStyle = mix("#222220", "#6c695f", 0.7 * sk); c.fill();
+            circ(560); c.fillStyle = mix("#1A1A18", "#45433d", 0.7 * sk); c.fill(); c.lineWidth = 16; c.strokeStyle = mix("#505048", "#a29e92", sk); c.stroke();
             circ(RB); c.fillStyle = "#17120f"; c.fill();
             circ(RB); c.fillStyle = `rgba(232,93,38,${(0.1 + 0.35 * lit).toFixed(3)})`; c.fill();
             c.fillStyle = "#F0ECE5"; c.fillRect(-280, -175, 560, 350);
+            if (lampK > 0.01) {   // r2: the centre watcher under the lamp: a warm pool of light on the letter, from the upper left
+              const lg = c.createRadialGradient(-120, -90, 0, -120, -90, 420);
+              lg.addColorStop(0, `rgba(255,248,236,${(0.55 * lampK).toFixed(3)})`); lg.addColorStop(1, "rgba(255,248,236,0)");
+              circ(RB); c.fillStyle = lg; c.fill();
+            }
             c.lineWidth = 5; c.strokeStyle = "rgba(17,17,17,0.35)";
             c.beginPath(); c.moveTo(-280, -175); c.lineTo(0, 15); c.lineTo(280, -175); c.moveTo(-280, 175); c.lineTo(-60, -10); c.moveTo(280, 175); c.lineTo(60, -10); c.stroke();
             c.beginPath(); c.arc(0, 30, 62, 0, TAU); c.fillStyle = "#E85D26"; c.fill(); c.lineWidth = 7; c.strokeStyle = "#B9431A"; c.stroke();
+            if (lampK > 0.01) { c.beginPath(); c.arc(-20, 12, 13, 0, TAU); c.fillStyle = `rgba(255,240,228,${(0.9 * lampK).toFixed(3)})`; c.fill(); }
             for (let k = 0; k < N; k++) {
               const k1 = (k + 1) % N, km = (k + N - 1) % N, V = g.V, E = g.E;
               c.beginPath(); c.moveTo(V[k][0], V[k][1]); c.lineTo(V[k1][0], V[k1][1]); c.lineTo(E[k][0], E[k][1]);
               c.arc(0, 0, RB, Math.atan2(E[k][1], E[k][0]), Math.atan2(E[km][1], E[km][0]), true); c.closePath();
               const tone = 0.5 + 0.5 * Math.cos(phi + ((k + 0.5) * TAU) / N - LA);
-              c.fillStyle = mix("#1c1c1a", "#4c4c47", tone); c.fill();
+              const bf = mix("#1c1c1a", "#4c4c47", tone);   // r2: a lit watcher's steel catches the lamp, flaring on the hits
+              c.fillStyle = shine > 0.01 ? mix(bf, "#b4b0a4", Math.min(1, shine * (0.35 + 0.65 * tone))) : bf; c.fill();
               c.lineWidth = 3; c.strokeStyle = `rgba(240,236,229,${(0.25 + 0.35 * tone).toFixed(2)})`;
               c.beginPath(); c.moveTo(V[k][0], V[k][1]); c.lineTo(E[k][0], E[k][1]); c.stroke();
             }
             if (rho < 60) { circ(rho * 1.6); c.fillStyle = `rgba(232,93,38,${(0.6 + 0.4 * lit).toFixed(2)})`; c.fill(); }
-            circ(RB + 10); c.lineWidth = 22; c.strokeStyle = "#3a3a36"; c.stroke();
-            circ(578); c.lineWidth = detail ? 40 : 30; c.strokeStyle = "#2c2c2a"; c.stroke();
+            circ(RB + 10); c.lineWidth = 22; c.strokeStyle = mix("#3a3a36", "#7c786d", 0.7 * sk); c.stroke();
+            circ(578); c.lineWidth = detail ? 40 : 30; c.strokeStyle = mix("#2c2c2a", "#5e5b53", 0.7 * sk); c.stroke();
             if (detail) { c.setLineDash([5, 5]); c.lineWidth = 34; c.strokeStyle = "rgba(240,236,229,0.14)"; c.stroke(); c.setLineDash([]); }
             c.beginPath(); c.moveTo(-548, 0); c.lineTo(-580, -16); c.lineTo(-580, 16); c.closePath(); c.fillStyle = "#E85D26"; c.fill();
             if (flash > 0.02) { circ(600); c.fillStyle = `rgba(240,236,229,${flash.toFixed(3)})`; c.fill(); }
           }
+          // r2: an outer watcher, dimmed to a silhouette: a dark disc, a faint rim, the blade edges barely there, an ember pupil
+          function drawSil(c, rho, phi, lit) {
+            const g = irisGeom(rho, phi), circ = (r) => { c.beginPath(); c.arc(0, 0, r, 0, TAU); };
+            circ(600); c.fillStyle = "#121211"; c.fill();
+            circ(578); c.lineWidth = 26; c.strokeStyle = "#1b1b19"; c.stroke();
+            circ(598); c.lineWidth = 3; c.strokeStyle = "rgba(240,236,229,0.09)"; c.stroke();
+            c.beginPath(); g.V.forEach((v, k) => (k ? c.lineTo(v[0], v[1]) : c.moveTo(v[0], v[1]))); c.closePath();
+            c.fillStyle = "#0b0a09"; c.fill();
+            c.lineWidth = 3; c.strokeStyle = "rgba(240,236,229,0.07)"; c.beginPath();
+            for (let k = 0; k < N; k++) { c.moveTo(g.V[k][0], g.V[k][1]); c.lineTo(g.E[k][0], g.E[k][1]); } c.stroke();
+            circ(Math.min(rho * 0.5, 62)); c.fillStyle = `rgba(232,93,38,${(0.14 + 0.16 * lit).toFixed(3)})`; c.fill();
+          }
           function drawGrid(T) {
             const z = zAt(T), rot = rotAt(T), cr = Math.cos(rot), sr = Math.sin(rot);
-            const shut = T >= SLAM, flash = shut ? Math.exp(-(T - SLAM) / 0.09) * 0.9 : 0;
-            gx.clearRect(0, 0, 1920, 1080);
-            gx.save(); gx.translate(CX, CY); gx.rotate(rot); gx.scale(z, z);
+            const shut = T >= SLAM, flash = 0;   // v22 r1: no cream flash over the irises
+            gx.clearRect(0, 0, 1920, 1080); gbx.clearRect(0, 0, 1920, 1080);
+            const lk = clamp((T - SLAM + 0.05) / 0.2), lk2 = lk * lk * (3 - 2 * lk);   // the lit zone follows the lyric down to "later"
+            const LY = 409 + (866 - 409) * lk2, LRX = 640 - 100 * lk2, LRY = 300;
+            for (const c of [gx, gbx]) { c.save(); c.translate(CX, CY); c.rotate(rot); c.scale(z, z); }
             for (let j = -8; j <= 8; j++) for (let i = -8; i <= 8; i++) {
               const ring = Math.max(Math.abs(i), Math.abs(j)), p = ring ? clamp((T - (RING0 + ring * RSTEP)) / 0.18) : 1;
               if (p <= 0) continue;
@@ -561,11 +617,21 @@
                 lit = Math.max(envAt(T - d), 0.9 * Math.exp(-Math.max(0, T - d - CUT) / 0.2));
                 rho = 120 + 215 * lit + 25 * Math.sin(T * 3 - dist * 0.8); phi = -0.35 + (330 - rho) * 0.0024 + dist * 0.4;
               }
-              gx.save(); gx.translate(wx, wy); gx.scale(KS * s, KS * s);
-              drawIris(gx, rho, phi, lit, flash, z * KS > 0.12);
-              gx.restore();
+              // r2: lit only next to the lyric (an ellipse round the band, then round "later"); every other watcher is a
+              // silhouette on the back canvas, crossfading over the ellipse's edge
+              const e = Math.hypot((sx - 960) / LRX, (sy - LY) / LRY), w = 1 - Math.min(1, Math.max(0, (e - 0.75) / 0.3));
+              const ws = w * w * (3 - 2 * w);
+              if (!shut) { lit = Math.max(lit, 0.5 * ws); rho = Math.max(rho, 120 + 95 * ws); }   // r2: the lit ones stand open; the kicks open them wider
+              const shine = ws * (shut ? 0.35 + 0.6 * envAt(T - d) : 0.5 + 0.5 * envAt(T - d));
+              const lampK = i === 0 && j === 0 ? ws * (shut ? Math.exp(-(T - SLAM) / 0.2) : 1) : 0;
+              for (const [c, a] of [[gx, ws], [gbx, 1 - ws]]) {
+                if (a < 0.01) continue;
+                c.save(); c.globalAlpha = a; c.translate(wx, wy); c.scale(KS * s, KS * s);
+                if (c === gx) drawIris(c, rho, phi, lit, flash, z * KS > 0.12, lampK, shine); else drawSil(c, rho, phi, lit);
+                c.restore();
+              }
             }
-            gx.restore();
+            gx.restore(); gbx.restore();
             const rmax = Math.max(0, Math.min(8, Math.floor((T - RING0) / RSTEP) + 1)), n = (2 * rmax + 1) ** 2;
             countEl.innerHTML = shut ? `<b>${n}</b> watchers · all shut` : `watchers <b>${n}</b>`;
           }
@@ -575,6 +641,35 @@
           const mix = (a, b, t) => { const h = (s) => [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16)); const A = h(a), B = h(b);
             return "#" + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, "0")).join(""); };
           const lightEl = $("f17-light");
+          // v22 r1: the frame's shutter (nine blades, flat ink faces toned by the light, a lit hairline on each cutting edge)
+          const shutL = $("f17-shutl"), shutSvg = $("f17-shut"), lineEl = $("f17-line");
+          const shutG = S(shutSvg, "g", { transform: `translate(${SCX} ${SCY})` });
+          const SB = Array.from({ length: N }, () => ({ face: S(shutG, "path", {}) }));
+          SB.forEach((b) => { b.dk = S(shutG, "path", { fill: "none", stroke: "rgba(0,0,0,0.55)", "stroke-width": 12 }); });
+          SB.forEach((b) => { b.hi = S(shutG, "path", { fill: "none", "stroke-width": 2.4, "stroke-linecap": "round" }); });
+          SB.forEach((b) => { b.pin = S(shutG, "circle", { r: 9, fill: "#1f1f1c", stroke: "rgba(240,236,229,0.28)", "stroke-width": 1.6 }); });
+          const kickerEl = $("f17-kicker");
+          function drawShutter(T) {
+            const r = SHUT_R(T), on = r < SR0 - 1;
+            shutL.style.visibility = on ? "visible" : "hidden";
+            kickerEl.style.visibility = r < 1000 ? "hidden" : "visible";   // the blades sweep over the chrome's kicker
+            // "later" recoils on its baseline at each snap
+            let imp = 0; for (const [t] of SHUT) if (T >= t) imp = Math.exp(-(T - t) / 0.08) * Math.cos((T - t) * 40);
+            lineEl.style.transformOrigin = "50% 92%";
+            lineEl.style.transform = imp ? `scale(${(1 + 0.04 * imp).toFixed(4)}, ${(1 - 0.08 * imp).toFixed(4)})` : "";
+            if (!on) return;
+            const phi = SHUT_PHI(T), g = irisGeom(r, phi, SRB);
+            SB.forEach((b, k) => {
+              const u = phi + ((k + 0.5) * TAU) / N, tone = 0.5 + 0.5 * Math.cos(u - LA);
+              b.face.setAttribute("d", bladePath(g, k, SRB));
+              b.face.setAttribute("fill", mix("#0c0c0b", "#1d1d1a", tone));
+              const km = (k + N - 1) % N, k1 = (k + 1) % N, mx = (g.E[k][0] + g.E[km][0]) / 2, my = (g.E[k][1] + g.E[km][1]) / 2;
+              b.pin.setAttribute("cx", f1(g.V[k1][0] + 0.2 * (mx - g.V[k1][0]))); b.pin.setAttribute("cy", f1(g.V[k1][1] + 0.2 * (my - g.V[k1][1])));
+              const e = `M${P(g.V[k])}L${P(g.E[k])}`;
+              b.dk.setAttribute("d", e); b.hi.setAttribute("d", e);
+              b.hi.setAttribute("stroke", `rgba(240,236,229,${(0.3 + 0.45 * tone).toFixed(3)})`);
+            });
+          }
           function render() {
             const t = tl.time(), T = T0 + t, step = Math.floor(t * 15);
             stage.apply(T);
@@ -584,6 +679,7 @@
             midL.style.visibility = $("f17-platel").style.visibility = inA ? "visible" : "hidden";
             gridw.style.visibility = inA ? "hidden" : "visible";
             if (!inA) drawGrid(T); else countEl.innerHTML = "watchers <b>1</b>";
+            drawShutter(T);
             if (!inA) { lightEl.style.transform = `scale(${(0.93 + 0.14 * HR.band("rms", T)).toFixed(3)})`; return; }
 
             const rho = rhoAt(T), phi = -0.35 + (330 - rho) * 0.0024;

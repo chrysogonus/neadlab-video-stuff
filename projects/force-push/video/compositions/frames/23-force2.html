@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 23 — force2 (chorus 2 hook, 114.120–117.160). Forks 10-force (refinement round 1): same set, the world
+         moved on, and louder. The cut is the Enter of 22's `git push --force origin main` (hard): git answers at once.
+         The poster is bigger than 10's: FORCE comes out of the lens on 114.18 at ~93 % of the frame width, centred
+         alone; on 114.78 — the downbeat where the drums come back — PUSH! slams up from below and literally shoves
+         FORCE into the top half, with a fire shockwave and cream rays behind it and the heaviest shake of the chorus.
+         git's answer `+ e81b0d4...9c0ffee main -> main (forced update)` prints in the gutter between them. Just before
+         "baby," (115.298) the poster settles into a smaller hook at the left, and the log called history travels in
+         from the right edge, a step on each kick (115.80, 116.26), lit, at twice 10's type size, while the camera pushes
+         in. On "history" (116.395) the push strikes through what verse 2 added — `Revert "force
+         push"` and the three cherry-picked days, every one by `you` — each row lit in fire as its strike crosses it,
+         and the counter flips 3 → 0. The out is a 0.25 s whipR into 24 (from 116.91, after "history"'s first 0.5 s).
+         Hits are sized by the measured drums (this span's mean over 10's, ~1.13). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f23-cam { position: absolute; inset: 0; }
+        #f23-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f23-old { position: relative; color: var(--fire); font-weight: 600; }
+        #f23-old i { position: absolute; left: -0.3em; right: -0.3em; top: 52%; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
+        #f23-new { color: var(--fire); font-weight: 600; margin-left: 0.6em; }
+        /* git's own answer to the push: in the poster's gutter first, then above the hook (render() moves it) */
+        #f23-out { position: absolute; left: 5.5cqw; top: 7.6cqw; font: 400 1.25cqw/1.55 "IBM Plex Mono", monospace; color: var(--cream-muted);
+          white-space: nowrap; transform-origin: 0 0; }
+        #f23-out .f23-plus { color: var(--fire); font-weight: 600; }
+        #f23-out b { color: var(--cream); font-weight: 500; }
+        /* the hook: render() scales the block from the poster down to this layout */
+        #f23-hook { position: absolute; left: 5.5cqw; top: 12.2cqw; font: 900 14cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em;
+          color: var(--cream); transform-origin: 0 0; }
+        #f23-hook > span { position: relative; display: block; width: max-content; transform-origin: 50% 62%; }
+        #f23-hook .f23-push { color: var(--fire); }
+        #f23-fx { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+        /* the light behind PUSH!: a soft fire glow breathing with the bass (inside the hook, so it scales with it) */
+        #f23-pglow { position: absolute; left: 0; top: 0; width: 170cqw; height: 96cqw; margin: -48cqw 0 0 -85cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.095) 35%, rgba(232, 93, 38, 0.045) 65%, rgba(232, 93, 38, 0) 100%); }
+        /* the line along the bottom, "history" at display size on the same baseline */
+        #f23-line { position: absolute; left: 5.3cqw; top: 41.2cqw; font: 800 5.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
+        #f23-line .f23-hero { color: var(--fire); font-size: 9.2cqw; letter-spacing: -0.04em; }
+        /* "history" is the log: what is left of it, on a lit panel at twice 10's type size */
+        #f23-lglow { position: absolute; left: 72.5cqw; top: 26cqw; width: 80cqw; height: 62cqw; margin: -31cqw 0 0 -40cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.13) 0%, rgba(232, 93, 38, 0.07) 45%, rgba(232, 93, 38, 0) 100%); }
+        #f23-log { position: absolute; left: 50.4cqw; top: 9.6cqw; width: 44.6cqw; box-sizing: border-box; padding: 1.3cqw 1.2cqw 0.9cqw 1.6cqw;
+          background: #171715; border: 1px solid var(--border); border-top-color: #3E3E3A; }
+        #f23-edge { position: absolute; left: -1px; top: -1px; bottom: -1px; width: 0.36cqw; background: var(--fire); transform-origin: 50% 0%; }
+        #f23-log .f23-head { font: 500 0.95cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.7cqw; margin-bottom: 0.9cqw; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+        #f23-log .f23-head b { color: var(--cream); font-weight: 600; }
+        .f23-row { position: relative; display: table; height: 3.75cqw; font: 500 2.2cqw/3.75cqw "IBM Plex Mono", monospace; color: var(--cream); white-space: nowrap; }
+        .f23-row .f23-h { color: var(--cream-muted); font-weight: 400; }
+        .f23-row .f23-a { color: var(--cream); }
+        .f23-row .f23-fl { position: absolute; left: -0.9cqw; right: -0.6cqw; top: 0.25cqw; bottom: 0.25cqw; background: var(--fire); opacity: 0; }
+        .f23-row .f23-x { position: absolute; left: -0.5cqw; right: -0.5cqw; top: 1.78cqw; height: 0.34cqw; background: var(--fire); transform-origin: 0% 50%;
+          box-shadow: 0 0 0.9cqw rgba(232, 93, 38, 0.6); }
+      </style>
+      <div id="root" data-composition-id="23-force2" data-width="1920" data-height="1080" data-duration="3.04">
+        <div id="f23-cam">
+          <div class="hr-layer" data-depth="0.15">
+            <div id="f23-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<span id="f23-old">3<i></i></span><span id="f23-new">0</span></span></div>
+          </div>
+          <div class="hr-layer" data-depth="0.7" data-layout-ignore>
+            <div id="f23-lglow"></div>
+            <div id="f23-log">
+              <i id="f23-edge"></i>
+              <div class="f23-head"><span>history</span><b>git log</b></div>
+              <div class="f23-row"><span class="f23-h">9c0ffee</span> me&nbsp; ready.</div>
+              <div class="f23-row f23-gone"><b class="f23-fl"></b><span class="f23-h">2b7d4e8</span>&nbsp;<span class="f23-a">you</span> Revert "force push"<i class="f23-x"></i></div>
+              <div class="f23-row f23-gone"><b class="f23-fl"></b><span class="f23-h">0e96d4a</span>&nbsp;<span class="f23-a">you</span> that sunday<i class="f23-x"></i></div>
+              <div class="f23-row f23-gone"><b class="f23-fl"></b><span class="f23-h">c7f2b18</span>&nbsp;<span class="f23-a">you</span> the beach<i class="f23-x"></i></div>
+              <div class="f23-row f23-gone"><b class="f23-fl"></b><span class="f23-h">51d0a3e</span>&nbsp;<span class="f23-a">you</span> first date<i class="f23-x"></i></div>
+              <div class="f23-row"><span class="f23-h">8f4c61b</span> me&nbsp; moved in</div>
+              <div class="f23-row"><span class="f23-h">b05d2f8</span> me&nbsp; initial commit</div>
+            </div>
+          </div>
+          <div class="hr-layer" data-depth="1" data-layout-ignore>
+            <div id="f23-out"><span id="f23-o1">To me@home:us.git</span><br /><span id="f23-o2"><span class="f23-plus">+</span> <b>e81b0d4...9c0ffee</b> main -&gt; main (forced update)</span></div>
+          </div>
+          <div class="hr-layer" data-depth="1">
+            <div id="f23-hook" data-layout-allow-overlap><i id="f23-pglow" data-layout-ignore></i><div id="f23-fx" data-layout-ignore></div><span id="f23-force" data-hf-motion-blur='{"fps": 60}'>FORCE</span><span class="f23-push hr-glowbox" id="f23-push" data-hf-motion-blur='{"fps": 60}'>PUSH!</span></div>
+          </div>
+          <div class="hr-layer" data-depth="0.85">
+            <div id="f23-line"><span class="f23-w">baby,</span> <span class="f23-w">you're</span> <span class="f23-w f23-hero hr-glowbox">history</span></div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.04, T0 = 114.12, W = 1920, PX = W / 100; // 1cqw
+          const root = document.querySelector('[data-composition-id="23-force2"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const at = (T) => T - T0;
+          // louder than 10: this span's mean drum envelope over 10's (0.409, measured 53.38–56.291), capped
+          let sum = 0, n = 0;
+          for (let T = T0; T < T0 + DUR; T += 0.02) { sum += HR.band("drums", T); n++; }
+          const K = Math.max(1, Math.min(1.25, sum / n / 0.409));
+          const stage = HR.stage(root, { seed: 23, pulse: K * 1.2 });
+          const tl = gsap.timeline({ paused: true });
+          // the words (lyrics.json, "FORCE PUSH! Baby, you're history") and the drums (HR_ENV): the drums come back on
+          // PUSH! (kick 114.779, downbeat 114.76); kicks 115.238, 115.683, 116.14, 116.615 (downbeat 116.604)
+          const FORCE = at(114.18), PUSH = at(114.78), BABY = at(115.298), YOURE = at(116.18), H = at(116.395);
+          const SET = at(115.06), SET_D = 0.24; // the poster settles from 115.06 and lands just before "baby,"
+          const STEP = [at(115.238) - 0.02, at(115.683), at(116.14)]; // the log travels in on the kicks
+
+          // ---- the cuts: in is the Enter (a hard cut); out is a whipR into 24 over the last 0.25 s (from 116.91) ----
+          const cam = $("f23-cam");
+          WOW.transition(tl, cam, { in: "cut", out: "whipR", dur: 0.25, total: DUR });
+
+          // ---- the Enter: git answers at once, the forced update a beat later ----
+          tl.set($("f23-o2"), { opacity: 0 }, 0).set($("f23-o2"), { opacity: 1 }, 0.2);
+
+          // ---- the hook: two slams on fixed-content wrappers (the motion blur smears the approach, they land sharp) ----
+          const force = $("f23-force"), push = $("f23-push");
+          // FORCE comes out of the lens from the first frame and lands ON 114.18, centred alone (yPercent 50 = half a line down)
+          tl.fromTo(force, { scale: 1.45, yPercent: 42, skewX: -12 }, { scale: 0.96, yPercent: 50, skewX: -6, duration: FORCE, ease: "power3.in" }, 0);
+          tl.fromTo(force, { scale: 0.96, skewX: -6 }, { scale: 1, skewX: 0, duration: 0.09, ease: "power2.out", immediateRender: false }, FORCE);
+          // PUSH! is parked below the frame, slams up ON 114.78 and shoves FORCE into the top half
+          tl.set(push, { yPercent: 420 }, 0);
+          tl.fromTo(push, { scale: 2.4, yPercent: 90, skewX: -12 }, { scale: 0.95, yPercent: 0, skewX: -6, duration: 0.09, ease: "power3.in", immediateRender: false }, PUSH - 0.09);
+          tl.fromTo(push, { scale: 0.95, skewX: -6 }, { scale: 1, skewX: 0, duration: 0.1, ease: "power2.out", immediateRender: false }, PUSH);
+          tl.fromTo(force, { yPercent: 50 }, { yPercent: 0, duration: 0.09, ease: "power3.in", immediateRender: false }, PUSH - 0.09);
+          tl.fromTo(force, { scale: 1, skewX: 0 }, { scale: 1.03, skewX: -3, duration: 0.09, ease: "power3.in", immediateRender: false }, PUSH - 0.09);
+          tl.fromTo(force, { scale: 1.03, skewX: -3 }, { scale: 1, skewX: 0, duration: 0.3, ease: "elastic.out(1, 0.5)", immediateRender: false }, PUSH);
+          WOW.shake(tl, cam, FORCE + 0.01, { amp: 5 * K, dur: 0.22, rot: 0.15, seed: 23 });
+          WOW.shake(tl, cam, PUSH + 0.01, { amp: 12 * K, dur: 0.42, rot: 0.4, seed: 24 });
+          // the drums come back: a fire shockwave and cream rays out of PUSH! (inside the hook, so they scale with the poster)
+          const fx = $("f23-fx");
+          const shock = WOW.shock(tl, fx, { x: 0, y: 0, t: PUSH, r: 820 * K, n: 2, w: 5, dur: 0.6, color: "fire" });
+          const rays = WOW.rays(tl, fx, { x: 0, y: 0, t: PUSH, n: 26, r0: 120, r1: 980, w: 3, dur: 0.5, seed: 23 });
+
+          // ---- the settle: poster → the layout (render() reads S.p) ----
+          const S = { p: 0 };
+          tl.fromTo(S, { p: 0 }, { p: 1, duration: SET_D, ease: "power3.inOut", immediateRender: false }, SET);
+
+          // ---- the line ----
+          const w = root.querySelectorAll(".f23-w");
+          HR.lead(tl, w[0], BABY); HR.lead(tl, w[1], YOURE);
+          HR.hero(tl, w[2], H, { spread: 26 * K, over: 1 + 0.18 * K, pre: 0.14, sharp: true });
+
+          // ---- history: the log travels in from the right on the kicks (render() reads L.x, in cqw) ----
+          const log = $("f23-log"), edge = $("f23-edge");
+          // [start, duration, from, to] in cqw; a pure function of time, so render() can also read its speed
+          const LEGS = [[STEP[0], 0.3, 62, 27], [STEP[1], 0.24, 27, 11], [STEP[2], 0.22, 11, 0]];
+          const logX = (t) => {
+            let x = LEGS[0][2];
+            for (const [s, d, a, b] of LEGS) if (t >= s) { const u = Math.min(1, (t - s) / d); x = a + (b - a) * (1 - Math.pow(1 - u, 3)); }
+            return x;
+          };
+          tl.fromTo(edge, { scaleY: 0 }, { scaleY: 1, duration: 0.3, ease: "power3.out" }, STEP[0] + 0.06);
+          // on "history" every `you` row is struck, top to bottom: the author lights, the row flashes, the strike crosses
+          const gone = root.querySelectorAll(".f23-gone");
+          gone.forEach((row, i) => {
+            const t = H + 0.02 + i * 0.045;
+            const a = row.querySelector(".f23-a"), fl = row.querySelector(".f23-fl"), x = row.querySelector(".f23-x");
+            tl.fromTo(a, { color: "#F0ECE5" }, { color: "#E85D26", duration: 0.06, immediateRender: false }, t);
+            tl.set(fl, { opacity: 0 }, 0);
+            tl.fromTo(fl, { opacity: 0.34 }, { opacity: 0.0, duration: 0.34, ease: "power2.out", immediateRender: false }, t);
+            tl.fromTo(x, { scaleX: 0 }, { scaleX: 1, duration: 0.13, ease: "power2.out" }, t);
+            tl.fromTo(row, { color: "#F0ECE5", x: 0 }, { color: "#A4A49C", x: -0.4 * PX, duration: 0.08, ease: "power2.out", immediateRender: false }, t + 0.06);
+            tl.fromTo(row, { x: -0.4 * PX }, { x: 0, duration: 0.3, ease: "elastic.out(1, 0.5)", immediateRender: false }, t + 0.14);
+          });
+          // the counter: 3 is struck, 0 lands
+          tl.fromTo($("f23-old").querySelector("i"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out" }, H);
+          tl.fromTo($("f23-old"), { opacity: 1 }, { opacity: 0.55, duration: 0.2, immediateRender: false }, H + 0.12);
+          tl.set($("f23-new"), { opacity: 0 }, 0).set($("f23-new"), { opacity: 1 }, H + 0.16);
+          WOW.shake(tl, cam, H + 0.01, { amp: 5 * K, dur: 0.3, rot: 0.15, seed: 25 });
+
+          // ---- the camera: a creep under FORCE, the chorus's biggest punch on PUSH!, still through the settle, a push
+          //      from 1.0 to 1.07 as the log travels in, a punch on "history", held into the whip ----
+          const c = stage.cam;
+          tl.fromTo(c, { z: 1.0, x: 0, y: 0 }, { z: 1.05, y: -4, duration: FORCE, ease: "power2.in" }, 0);
+          tl.to(c, { z: 1.0, y: 0, duration: 0.4, ease: "elastic.out(1, 0.55)" }, FORCE + 0.01);
+          tl.to(c, { z: 1.03, duration: PUSH - 0.08 - (FORCE + 0.41), ease: "sine.in" }, FORCE + 0.41);
+          tl.to(c, { z: 1 + 0.07 * K, y: 14, duration: 0.07, ease: "power2.in" }, PUSH - 0.07); // y lifts the poster a touch
+          tl.to(c, { z: 1.01, y: 0, duration: 0.5, ease: "elastic.out(1, 0.45)" }, PUSH + 0.01);
+          tl.to(c, { z: 1.0, duration: SET_D, ease: "power3.inOut" }, SET);
+          tl.to(c, { z: 1.07, x: -4, y: 6, duration: H - 0.05 - (SET + SET_D + 0.02), ease: "sine.inOut" }, SET + SET_D + 0.02);
+          tl.to(c, { z: 1.07 + 0.025 * K, duration: 0.05, ease: "power2.in" }, H - 0.05);
+          tl.to(c, { z: 1.075, x: -8, duration: DUR - H, ease: "power2.out" }, H + 0.01);
+          tl.set({}, {}, DUR);
+
+          // ---- geometry: the poster is the layout block scaled so FORCE spans ~93 % of the frame (as far as the height
+          //      allows), its ink centred under the strip; git's answer sits in the gutter under FORCE. After the fonts. ----
+          const hook = $("f23-hook"), out = $("f23-out"), pglow = $("f23-pglow");
+          let laid = false, KP = 2.2, TX = 0, TY = 0, KO = 1.2, OX = 0, OY = 0, LH = 1;
+          const cv = document.createElement("canvas").getContext("2d");
+          function layout() {
+            const fs = 14 * PX, lh = 0.87 * fs; // #f23-hook's font-size
+            cv.font = `900 ${fs}px Barlow`;
+            const m = cv.measureText("FORCE");
+            const fa = m.fontBoundingBoxAscent || 1.0 * fs, fd = m.fontBoundingBoxDescent || 0.2 * fs, cap = m.actualBoundingBoxAscent || 0.7 * fs;
+            const base = (lh - (fa + fd)) / 2 + fa, a = base - cap, b = base; // cap top and baseline inside a line box
+            const wMax = Math.max(force.offsetWidth, push.offsetWidth);
+            const inkH = lh + b - a, top = 5.5 * PX, bot = 55.7 * PX;
+            KP = Math.min((0.93 * W) / wMax, (bot - top) / inkH);
+            const Lft = (W - KP * wMax) / 2, Tp = top + (bot - top - KP * inkH) / 2 - KP * a;
+            TX = Lft - hook.offsetLeft; TY = Tp - hook.offsetTop; LH = KP * lh;
+            // the gutter between FORCE's baseline and PUSH!'s cap top, in the poster
+            const g0 = Tp + KP * b, g1 = Tp + KP * (lh + a), oh = out.offsetHeight;
+            KO = Math.min(1.45, (0.86 * (g1 - g0)) / oh);
+            OX = Lft + 0.012 * KP * fs - out.offsetLeft; OY = (g0 + g1) / 2 - (KO * oh) / 2 - out.offsetTop;
+            // the glow and the shockwave sit on PUSH!'s centre, inside the hook
+            const px = push.offsetWidth / 2, py = lh + (a + b) / 2;
+            pglow.style.left = px.toFixed(1) + "px"; pglow.style.top = py.toFixed(1) + "px";
+            shock.style.left = rays.style.left = px.toFixed(1) + "px"; shock.style.top = rays.style.top = py.toFixed(1) + "px";
+            laid = document.fonts.status === "loaded";
+          }
+
+          // ---- per-frame state ----
+          const hist = root.querySelector(".f23-hero"), lglow = $("f23-lglow");
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (!laid) layout();
+            const p = S.p, q = 1 - p;
+            hook.style.transform = `translate(${(TX * q).toFixed(2)}px, ${(TY * q).toFixed(2)}px) scale(${(KP + (1 - KP) * p).toFixed(4)})`;
+            // git's answer rides under FORCE in the poster (FORCE sits half a line lower until PUSH! shoves it up)
+            const fy = (gsap.getProperty(force, "yPercent") / 100) * LH;
+            out.style.transform = `translate(${(OX * q).toFixed(2)}px, ${((OY + fy) * q).toFixed(2)}px) scale(${(KO + (1 - KO) * p).toFixed(4)})`;
+            const mv = Math.sin(Math.PI * p);
+            hook.style.filter = mv > 0.05 ? `blur(${(4 * mv).toFixed(2)}px)` : "";
+            out.style.filter = mv > 0.05 ? `blur(${(2 * mv).toFixed(2)}px)` : "";
+            // the log's travel, with a plain blur by its speed (a render-driven move: no clone blur)
+            const lx = logX(t), v = Math.abs(lx - logX(t - 1 / 60)) * 60; // cqw per second
+            log.style.transform = `translateX(${(lx * PX).toFixed(2)}px)`;
+            lglow.style.transform = `translateX(${(lx * PX).toFixed(2)}px)`;
+            log.style.filter = v > 6 ? `blur(${Math.min(9, v * 0.045).toFixed(1)}px)` : "";
+            // the light: waiting under FORCE, full on PUSH!, breathing with the bass; the log's light swells on "history"
+            const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.2);
+            pglow.style.opacity = Math.min(1, (t < PUSH ? 0.5 : 0.85) + 0.3 * bass + 0.3 * kick).toFixed(3);
+            const swell = t >= H ? 0.6 * Math.exp(-(t - H) / 0.5) : 0;
+            lglow.style.opacity = (t < STEP[0] ? 0 : Math.min(1, (0.6 + 0.35 * bass + swell) * Math.min(1, (t - STEP[0]) / 0.3))).toFixed(3);
+            HR.glow(push, T, 0.25, 0.4 * K); HR.glow(hist, T, 0.32, 0.5 * K);
+            stage.apply(T);
+            WOW.draw(tl, T0);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { laid = false; render(); });
+          window.__timelines["23-force2"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

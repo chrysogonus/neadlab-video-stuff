@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 8 — patches (pre-chorus 1, 46.550–51.907). Claps and rising synths: the terminal climbs, one screen per line,
+         and every move is bigger than the last. Refinement round 1.
+         Cut-in (07's `glideUp` carried on, no blur: "No" starts 30 ms in): the page is already up, 07's conflict aborted in
+         its history (`git merge --abort`), `ls *.patch` listing the four patches at display size.
+         Row 1: every `one-more-try` patch struck on the claps, "patches," the hero (47.02); the camera trucks down the page.
+         Enter (48.432 kick): the page scrolls a whole screen. Row 2, lyric on the left under the log: `git log --author=you`,
+         every commit at 03:12, "logs" the hero (49.34); the camera pushes into the time column, on "night" the times light.
+         Enter (50.032 kick, harder): row 3. On "detached" (50.5) the word "head's" comes loose from its line (a motion-blurred
+         pop) and drifts a third of the frame away, tagged `HEAD detached at 3f2a1c9` (plant 5); the camera pushes in on the
+         heavy kicks. Out: `pushIn` into 09-stop, its origin on "long" (blur dropped: "long" starts 0.25 s before the cut).
+         A fire glow behind each row's hero, breathing with the bass and the hits, grows as the synths rise. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        /* the camera: the push out (WOW.transition) on #f08-cam, the cut-in glide on #f08-in;
+           the push out zooms about "long" (right, lower middle) so the last word stays in frame */
+        #f08-cam, #f08-in { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        #f08-cam { transform-origin: 86% 58%; }
+        #f08-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f08-strip b { color: var(--fire); font-weight: 600; }
+        /* the light: one soft fire glow per row behind its hero, placed and breathed in render() */
+        .f08-glow { position: absolute; left: 0; top: 0; width: 112cqw; height: 80cqw; margin: -40cqw 0 0 -56cqw; pointer-events: none; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.17), rgba(232, 93, 38, 0.11) 45%, rgba(232, 93, 38, 0.06) 75%, rgba(232, 93, 38, 0) 100%); }
+        /* the terminal: rows stacked one screen apart; the page climbs */
+        #f08-view { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; overflow: hidden;
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2.6cqw); mask-image: linear-gradient(to bottom, transparent 0, #000 2.6cqw); }
+        #f08-climb, #f08-page { position: absolute; left: 0; top: 0; width: 100cqw; height: 160cqw; }
+        .f08-row { position: absolute; left: 0; width: 100cqw; height: 50cqw; }
+        .f08-prompt { position: absolute; left: 5.5cqw; font: 500 1.6cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        .f08-prompt .f08-cmd { color: var(--cream); }
+        .f08-prompt .f08-you { color: var(--fire); }
+        .f08-hist { position: absolute; left: 5.5cqw; font: 400 1.3cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        /* the output the joke is in, at display size */
+        .f08-mono { position: absolute; left: 5.5cqw; font: 400 2.9cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: -0.01em; color: var(--cream); }
+        .f08-mono > div { position: relative; width: max-content; white-space: pre; }
+        .f08-x { position: absolute; left: -0.4cqw; right: -0.4cqw; top: 52%; height: 0.34cqw; background: var(--fire); transform-origin: 0% 50%; }
+        .f08-time { color: var(--cream-muted); }
+        .f08-small { position: absolute; left: 5.5cqw; font: 400 1.5cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
+        /* the song: right-aligned (rows 1, 3) or left-aligned under the log (row 2) */
+        .f08-lyric { position: absolute; right: 5.5cqw; text-align: right; font: 800 6cqw/1 "Barlow", sans-serif;
+          letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
+        .f08-lyric.f08-left { right: auto; left: 5.1cqw; text-align: left; }
+        .f08-lyric > div { white-space: nowrap; }
+        .f08-big { font: 900 14cqw/0.86 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        .f08-hero { color: var(--fire); }
+        .f08-w { display: inline-block; padding-bottom: 0.16em; margin-bottom: -0.16em; } /* keeps descenders inside the lead clip */
+        /* head's: the word sung in its slot; on "detached" a copy comes loose (#f08-float) and the slot keeps an outline */
+        #f08-slot { position: relative; display: inline-block; }
+        #f08-ghost { position: absolute; left: 0; top: 0; color: transparent; -webkit-text-stroke: 1px #505048; opacity: 0; }
+        #f08-float { position: absolute; left: 0; top: 0; display: inline-block; padding-bottom: 0.16em; transform-origin: 50% 60%; opacity: 0; }
+        #f08-tag { position: absolute; left: 0.1cqw; top: 100%; margin-top: 0.2cqw; padding: 0.45cqw 0.8cqw; border: 2px solid var(--fire);
+          font: 500 1.9cqw/1 "IBM Plex Mono", monospace; letter-spacing: 0; color: var(--cream); white-space: nowrap; text-align: left; }
+      </style>
+      <div id="root" data-composition-id="08-patches" data-width="1920" data-height="1080" data-duration="5.357">
+        <div id="f08-cam">
+          <div id="f08-in">
+            <div class="hr-layer" data-depth="0.85" data-layout-ignore>
+              <i class="f08-glow" data-layout-ignore></i><i class="f08-glow" data-layout-ignore></i><i class="f08-glow" data-layout-ignore></i>
+            </div>
+            <div class="hr-layer" data-depth="0.15">
+              <div id="f08-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+            </div>
+            <div class="hr-layer" data-depth="0.85">
+              <div id="f08-view">
+                <div id="f08-climb" data-layout-allow-overflow>
+                  <div id="f08-page">
+                    <!-- row 1: no more patches (07's merge aborted in the history) -->
+                    <div class="f08-row" id="f08-r1" style="top: 0">
+                      <div class="f08-hist" style="top: 2.4cqw">~/us (main|MERGING) $ git merge --abort</div>
+                      <div class="f08-prompt" style="top: 5.2cqw"><span>~/us (main) $ </span><span class="f08-cmd">ls *.patch</span></div>
+                      <div class="f08-mono" style="top: 8.4cqw">
+                        <div class="f08-file">0001-one-more-try.patch<i class="f08-x"></i></div>
+                        <div class="f08-file">0002-one-more-try.patch<i class="f08-x"></i></div>
+                        <div class="f08-file">0003-one-more-try-v2.patch<i class="f08-x"></i></div>
+                        <div class="f08-file">0004-one-more-try-final.patch<i class="f08-x"></i></div>
+                      </div>
+                      <div class="f08-lyric" style="top: 22.4cqw">
+                        <div><span class="f08-w f08-a">no</span> <span class="f08-w f08-a">more</span></div>
+                        <div class="f08-big"><span class="f08-w f08-a f08-hero hr-glowbox" id="f08-h1">patches,</span></div>
+                        <div style="margin-top: 0.9cqw"><span class="f08-w f08-a">no</span> <span class="f08-w f08-a">more</span> <span class="f08-w f08-a">one</span> <span class="f08-w f08-a">more</span> <span class="f08-w f08-a">try</span></div>
+                      </div>
+                    </div>
+                    <!-- row 2: no more reading your logs at night -->
+                    <div class="f08-row" id="f08-r2" style="top: 50cqw">
+                      <div class="f08-prompt" id="f08-p2" style="top: 2.6cqw"><span>~/us (main) $ </span><span class="f08-cmd">git log --author=<span class="f08-you">you</span> --date=format:%H:%M --pretty='%ad %s'</span></div>
+                      <div class="f08-mono" style="top: 5.8cqw">
+                        <div class="f08-log"><span class="f08-time">03:12</span> you and me</div>
+                        <div class="f08-log"><span class="f08-time">03:12</span> we'll get to it</div>
+                        <div class="f08-log"><span class="f08-time">03:12</span> just a feature</div>
+                        <div class="f08-log"><span class="f08-time">03:12</span> nothing on the side</div>
+                      </div>
+                      <div class="f08-lyric f08-left" style="top: 24.6cqw">
+                        <div><span class="f08-w f08-b">no</span> <span class="f08-w f08-b">more</span> <span class="f08-w f08-b">reading</span> <span class="f08-w f08-b">your</span></div>
+                        <div><span class="f08-big"><span class="f08-w f08-b f08-hero hr-glowbox" id="f08-h2">logs</span></span> <span class="f08-w f08-b">at</span> <span class="f08-w f08-b">night</span></div>
+                      </div>
+                    </div>
+                    <!-- row 3: head's been detached for way too long -->
+                    <div class="f08-row" id="f08-r3" style="top: 100cqw">
+                      <div class="f08-lyric" style="top: 9.6cqw">
+                        <div><span id="f08-slot"><span id="f08-ghost" data-layout-ignore>head's</span><span class="f08-w f08-c" id="f08-hw">head's</span><span id="f08-float" data-hf-motion-blur='{"fps": 60}' data-layout-allow-overlap>head's<span id="f08-tag">HEAD detached at 3f2a1c9</span></span></span> <span class="f08-w f08-c">been</span></div>
+                        <div class="f08-big"><span class="f08-w f08-c f08-hero hr-glowbox" id="f08-h3">detached</span></div>
+                        <div><span class="f08-w f08-c">for</span> <span class="f08-w f08-c">way</span> <span class="f08-w f08-c">too</span> <span class="f08-w f08-c">long</span></div>
+                      </div>
+                      <div class="f08-prompt" style="top: 30.6cqw"><span>~/us (main) $ </span><span class="f08-cmd">git checkout 3f2a1c9</span></div>
+                      <div class="f08-small" style="top: 33.2cqw"><span id="f08-o1">Note: switching to '3f2a1c9'.</span><br /><span id="f08-o2">You are in 'detached HEAD' state.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script>
+        (() => {
+          const DUR = 5.357, T0 = 46.55, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="08-patches"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 8 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const cam = $("f08-cam"), page = $("f08-page");
+          const R2 = at(48.432), R3 = at(50.032), ROW = 50 * PX; // the two Enters, on the kicks
+
+          // ---- the cut in: 07's glideUp carries on (the page arrives from 80 px below, on #f08-in) as a plain glide: no
+          //      blur because "No" starts 30 ms in, no cover scale because the ground is flat ink (the exposed edge is the
+          //      same ink); the history, the prompt and the patch list are on screen from the first frame ----
+          tl.fromTo($("f08-in"), { y: 80 }, { y: 0, duration: 0.42, ease: "power2.out" }, 0);
+
+          // ---- row 1: "no more patches, no more one more try"; a patch struck on each clap ----
+          const a = root.querySelectorAll(".f08-a");
+          HR.lead(tl, a[0], at(46.58)); HR.lead(tl, a[1], at(46.8));
+          HR.hero(tl, a[2], at(47.02), { spread: 24, over: 1.18, pre: 0.14, sharp: true });
+          [47.327, 47.357, 47.542, 47.7, 47.92].forEach((s, i) => HR.lead(tl, a[3 + i], at(s)));
+          const files = root.querySelectorAll(".f08-file");
+          [47.033, 47.327, 47.542, 47.92].forEach((s, i) => {
+            tl.fromTo(files[i].querySelector(".f08-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.1, ease: "power3.out" }, at(s));
+            tl.fromTo(files[i], { color: "#F0ECE5" }, { color: "#888880", duration: 0.2, immediateRender: false }, at(s) + 0.06);
+          });
+
+          // ---- the climb: a truck down row 1 (one big move for the phrase), then an Enter on each kick scrolls a whole
+          //      screen; each row trucks on as it is sung ----
+          tl.fromTo(page, { y: 0 }, { y: -10 * PX, duration: R2 - 0.05, ease: "sine.inOut" }, 0.05);
+          tl.fromTo(page, { y: -10 * PX }, { y: -ROW, duration: 0.36, ease: "expo.out", immediateRender: false }, R2);
+          tl.fromTo(page, { y: -ROW }, { y: -ROW - 4 * PX, duration: R3 - R2 - 0.36, ease: "sine.inOut", immediateRender: false }, R2 + 0.36);
+          tl.fromTo(page, { y: -ROW - 4 * PX }, { y: -2 * ROW, duration: 0.3, ease: "expo.out", immediateRender: false }, R3);
+          tl.fromTo(page, { y: -2 * ROW }, { y: -2 * ROW - 3 * PX, duration: DUR - R3 - 0.3, ease: "sine.inOut", immediateRender: false }, R3 + 0.3);
+
+          // ---- row 2: "no more reading your logs at night"; the log arrives on the beats, every time 03:12 ----
+          const b = root.querySelectorAll(".f08-b");
+          [48.44, 48.64, 48.88, 49.14].forEach((s, i) => HR.lead(tl, b[i], at(s)));
+          HR.hero(tl, b[4], at(49.34), { spread: 26, over: 1.2, pre: 0.14, sharp: true });
+          HR.lead(tl, b[5], at(49.66)); HR.lead(tl, b[6], at(49.82));
+          tl.set($("f08-p2"), { opacity: 0 }, 0).set($("f08-p2"), { opacity: 1 }, R2); // the command arrives with its Enter
+          const logs = root.querySelectorAll(".f08-log");
+          [48.44, 48.897, 49.358, 49.607].forEach((s, i) => tl.set(logs[i], { opacity: 0 }, 0).set(logs[i], { opacity: 1 }, at(s)));
+          tl.fromTo(root.querySelectorAll(".f08-time"), { color: "#888880" }, { color: "#E85D26", duration: 0.12, stagger: 0.04, immediateRender: false }, at(49.82));
+
+          // ---- row 3: "head's been detached for way too long"; on "detached" head's comes loose and drifts off ----
+          const c = root.querySelectorAll(".f08-c");
+          HR.lead(tl, c[0], at(50.1)); HR.lead(tl, c[1], at(50.28));
+          HR.hero(tl, c[2], at(50.5), { spread: 28, over: 1.22, pre: 0.14, sharp: true });
+          [50.869, 51.18, 51.42, 51.66].forEach((s, i) => HR.lead(tl, c[3 + i], at(s)));
+          // the sung word hands over to its loose copy (fixed content, so it can carry the motion blur): it pops out
+          // sideways on the slam (blurred), then drifts up and away, a third of the frame by the cut
+          const D = at(50.5), flt = $("f08-float");
+          tl.set(flt, { opacity: 0 }, 0).set(flt, { opacity: 1 }, D);
+          tl.set($("f08-hw"), { opacity: 1 }, 0).set($("f08-hw"), { opacity: 0 }, D);
+          tl.set($("f08-ghost"), { opacity: 0 }, 0).set($("f08-ghost"), { opacity: 1 }, D);
+          tl.fromTo(flt, { x: 0, y: 0, rotation: 0 }, { x: -15 * PX, y: -1.6 * PX, rotation: -6, duration: 0.16, ease: "expo.out", immediateRender: false }, D);
+          tl.fromTo(flt, { x: -15 * PX, y: -1.6 * PX, rotation: -6 }, { x: -34 * PX, y: -3.4 * PX, rotation: -11, duration: DUR - D - 0.16, ease: "sine.inOut", immediateRender: false }, D + 0.16);
+          tl.set($("f08-o1"), { opacity: 0 }, 0).set($("f08-o1"), { opacity: 1 }, at(50.314));
+          tl.set($("f08-o2"), { opacity: 0 }, 0).set($("f08-o2"), { opacity: 1 }, at(50.581));
+
+          // ---- the camera: the lean grows row by row as the synths rise (1.05 → 1.13 → 1.14, recoiling on each Enter),
+          //      row 2 leans left into the time column, row 3 right onto "detached"; a punch on each hero ----
+          const C = stage.cam;
+          tl.fromTo(C, { z: 1.0, x: 0 }, { z: 1.05, x: 0, duration: R2, ease: "sine.inOut" }, 0);
+          tl.fromTo(C, { z: 1.05, x: 0 }, { z: 1.0, x: 0, duration: 0.36, ease: "expo.out", immediateRender: false }, R2);
+          tl.fromTo(C, { z: 1.0, x: 0 }, { z: 1.13, x: -150, duration: R3 - R2 - 0.36, ease: "power1.in", immediateRender: false }, R2 + 0.36);
+          tl.fromTo(C, { z: 1.13, x: -150 }, { z: 1.02, x: 30, duration: 0.3, ease: "expo.out", immediateRender: false }, R3);
+          tl.fromTo(C, { z: 1.02, x: 30 }, { z: 1.14, x: 110, duration: DUR - R3 - 0.3, ease: "power1.in", immediateRender: false }, R3 + 0.3);
+          [[47.02, 6], [49.34, 8], [50.5, 11]].forEach(([s, k]) => {
+            tl.fromTo(C, { y: 0 }, { y: -k, duration: 0.06, ease: "power2.in", immediateRender: false }, at(s) - 0.06);
+            tl.fromTo(C, { y: -k }, { y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)", immediateRender: false }, at(s) + 0.01);
+          });
+          // the hits, sized up through the frame: the downbeat just after the cut, the clap, "logs", "night", the second Enter, the two heavy kicks
+          [[46.607, 1.015], [47.033, 1.02], [49.34, 1.025], [49.82, 1.03], [50.032, 1.035], [50.314, 1.045], [50.581, 1.05]].forEach(([s, k]) => WOW.punch(tl, cam, at(s), { s: k, dur: 0.4 }));
+          WOW.shake(tl, cam, R3, { amp: 9, dur: 0.32, seed: 8 });
+          WOW.shake(tl, cam, D, { amp: 11, dur: 0.36, seed: 18 });
+          WOW.pulse(tl, cam, { kind: "kick", amt: 0.008 });
+          WOW.transition(tl, cam, { out: "pushIn", dur: 0.46, total: DUR });
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: the glows, the hero glow, the camera ----
+          const heroes = [$("f08-h1"), $("f08-h2"), $("f08-h3")];
+          const glows = root.querySelectorAll(".f08-glow");
+          const GL = [[72, 32], [26, 27], [66, 22]]; // each row's glow centre (cqw, row coordinates): patches, the log + logs, detached
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            const py = gsap.getProperty(page, "y") / PX, pos = -py / 50; // page offset in cqw, the row on screen (0..2)
+            const level = 0.58 + 0.42 * Math.min(1, t / (DUR - 0.5)); // the synths rise
+            const breathe = 0.8 + 0.6 * HR.band("bass", T) + 0.35 * HR.hit("snare", T, 0.25) + 0.3 * HR.hit("kick", T, 0.25) + 0.15 * HR.band("high", T);
+            glows.forEach((g, k) => {
+              const w = Math.max(0, 1 - Math.abs(pos - k) * 1.4);
+              g.style.transform = `translate(${(GL[k][0] * PX).toFixed(1)}px, ${((6.4 + 50 * k + GL[k][1] + py) * PX).toFixed(1)}px)`;
+              g.style.opacity = (Math.min(1, level * breathe) * w).toFixed(3);
+            });
+            for (const h of heroes) HR.glow(h, T, 0.3, 0.5);
+            stage.apply(T);
+            WOW.draw(tl, T0);
+            // both ends of this frame carry a sung word in its first 0.25 s ("No" 30 ms in, "long" 0.25 s before the
+            // cut): the switches keep their move and drop their blur
+            cam.style.filter = "";
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["08-patches"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

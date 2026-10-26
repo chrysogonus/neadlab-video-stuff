@@ -1,0 +1,2732 @@
+{
+ "title": "Force Push",
+ "note": "aligned to the vocal by ./vid analyze (projects/force-push/data/lyrics.json); track seconds, the audiomap's clock",
+ "lines": [
+  {
+   "i": 0,
+   "section": "Intro",
+   "text": "Git status.",
+   "start": 1.56,
+   "end": 2.759,
+   "words": [
+    {
+     "w": "Git",
+     "start": 1.56,
+     "end": 1.716
+    },
+    {
+     "w": "status.",
+     "start": 1.716,
+     "end": 2.759
+    }
+   ]
+  },
+  {
+   "i": 1,
+   "section": "Intro",
+   "text": "Nothing to commit.",
+   "start": 4.739,
+   "end": 5.797,
+   "words": [
+    {
+     "w": "Nothing",
+     "start": 4.739,
+     "end": 5.3
+    },
+    {
+     "w": "to",
+     "start": 5.3,
+     "end": 5.46
+    },
+    {
+     "w": "commit.",
+     "start": 5.46,
+     "end": 5.797
+    }
+   ]
+  },
+  {
+   "i": 2,
+   "section": "Intro",
+   "text": "Story of your life.",
+   "start": 7.403,
+   "end": 8.94,
+   "words": [
+    {
+     "w": "Story",
+     "start": 7.403,
+     "end": 8.16
+    },
+    {
+     "w": "of",
+     "start": 8.16,
+     "end": 8.28
+    },
+    {
+     "w": "your",
+     "start": 8.28,
+     "end": 8.5
+    },
+    {
+     "w": "life.",
+     "start": 8.5,
+     "end": 8.94
+    }
+   ]
+  },
+  {
+   "i": 3,
+   "section": "Verse 1",
+   "text": "Three years in and you never could commit",
+   "start": 16.86,
+   "end": 19.945,
+   "words": [
+    {
+     "w": "Three",
+     "start": 16.86,
+     "end": 17.4
+    },
+    {
+     "w": "years",
+     "start": 17.4,
+     "end": 17.899
+    },
+    {
+     "w": "in",
+     "start": 17.899,
+     "end": 18.363
+    },
+    {
+     "w": "and",
+     "start": 18.363,
+     "end": 18.54
+    },
+    {
+     "w": "you",
+     "start": 18.54,
+     "end": 18.78
+    },
+    {
+     "w": "never",
+     "start": 18.78,
+     "end": 19.151
+    },
+    {
+     "w": "could",
+     "start": 19.22,
+     "end": 19.46
+    },
+    {
+     "w": "commit",
+     "start": 19.46,
+     "end": 19.945
+    }
+   ]
+  },
+  {
+   "i": 4,
+   "section": "Verse 1",
+   "text": "Hid me in your stash, said we'd get to it",
+   "start": 19.945,
+   "end": 23.756,
+   "words": [
+    {
+     "w": "Hid",
+     "start": 19.945,
+     "end": 20.38
+    },
+    {
+     "w": "me",
+     "start": 20.38,
+     "end": 20.78
+    },
+    {
+     "w": "in",
+     "start": 20.78,
+     "end": 21.1
+    },
+    {
+     "w": "your",
+     "start": 21.1,
+     "end": 21.366
+    },
+    {
+     "w": "stash,",
+     "start": 21.366,
+     "end": 21.955
+    },
+    {
+     "w": "said",
+     "start": 21.955,
+     "end": 22.28
+    },
+    {
+     "w": "we'd",
+     "start": 22.28,
+     "end": 22.72
+    },
+    {
+     "w": "get",
+     "start": 22.72,
+     "end": 23.16
+    },
+    {
+     "w": "to",
+     "start": 23.16,
+     "end": 23.64
+    },
+    {
+     "w": "it",
+     "start": 23.64,
+     "end": 23.756
+    }
+   ]
+  },
+  {
+   "i": 5,
+   "section": "Verse 1",
+   "text": "Said it's just a feature, nothing on the side",
+   "start": 23.756,
+   "end": 27.6,
+   "words": [
+    {
+     "w": "Said",
+     "start": 23.756,
+     "end": 24.2
+    },
+    {
+     "w": "it's",
+     "start": 24.2,
+     "end": 24.3
+    },
+    {
+     "w": "just",
+     "start": 24.3,
+     "end": 24.863
+    },
+    {
+     "w": "a",
+     "start": 24.863,
+     "end": 25.183
+    },
+    {
+     "w": "feature,",
+     "start": 25.183,
+     "end": 25.74
+    },
+    {
+     "w": "nothing",
+     "start": 25.74,
+     "end": 26.36
+    },
+    {
+     "w": "on",
+     "start": 26.36,
+     "end": 26.64
+    },
+    {
+     "w": "the",
+     "start": 26.64,
+     "end": 26.744
+    },
+    {
+     "w": "side",
+     "start": 26.744,
+     "end": 27.6
+    }
+   ]
+  },
+  {
+   "i": 6,
+   "section": "Verse 1",
+   "text": "Then I found the other branch you tried to hide",
+   "start": 27.6,
+   "end": 31.199,
+   "words": [
+    {
+     "w": "Then",
+     "start": 27.6,
+     "end": 27.88
+    },
+    {
+     "w": "I",
+     "start": 27.88,
+     "end": 27.976
+    },
+    {
+     "w": "found",
+     "start": 27.976,
+     "end": 28.32
+    },
+    {
+     "w": "the",
+     "start": 28.32,
+     "end": 28.68
+    },
+    {
+     "w": "other",
+     "start": 28.68,
+     "end": 28.98
+    },
+    {
+     "w": "branch",
+     "start": 28.98,
+     "end": 29.5
+    },
+    {
+     "w": "you",
+     "start": 29.5,
+     "end": 29.88
+    },
+    {
+     "w": "tried",
+     "start": 29.88,
+     "end": 30.36
+    },
+    {
+     "w": "to",
+     "start": 30.36,
+     "end": 30.805
+    },
+    {
+     "w": "hide",
+     "start": 30.805,
+     "end": 31.199
+    }
+   ]
+  },
+  {
+   "i": 7,
+   "section": "Verse 1",
+   "text": "So I ran the blame on every broken line",
+   "start": 31.199,
+   "end": 35.14,
+   "words": [
+    {
+     "w": "So",
+     "start": 31.199,
+     "end": 31.68
+    },
+    {
+     "w": "I",
+     "start": 31.68,
+     "end": 32.02
+    },
+    {
+     "w": "ran",
+     "start": 32.02,
+     "end": 32.272
+    },
+    {
+     "w": "the",
+     "start": 32.46,
+     "end": 32.66
+    },
+    {
+     "w": "blame",
+     "start": 32.66,
+     "end": 33.02
+    },
+    {
+     "w": "on",
+     "start": 33.02,
+     "end": 33.26
+    },
+    {
+     "w": "every",
+     "start": 33.26,
+     "end": 33.703
+    },
+    {
+     "w": "broken",
+     "start": 33.703,
+     "end": 34.5
+    },
+    {
+     "w": "line",
+     "start": 34.5,
+     "end": 35.14
+    }
+   ]
+  },
+  {
+   "i": 8,
+   "section": "Verse 1",
+   "text": "Every single one had your name, not mine",
+   "start": 35.14,
+   "end": 38.76,
+   "words": [
+    {
+     "w": "Every",
+     "start": 35.14,
+     "end": 35.474
+    },
+    {
+     "w": "single",
+     "start": 35.474,
+     "end": 36.437
+    },
+    {
+     "w": "one",
+     "start": 36.437,
+     "end": 36.796
+    },
+    {
+     "w": "had",
+     "start": 36.796,
+     "end": 37.081
+    },
+    {
+     "w": "your",
+     "start": 37.081,
+     "end": 37.32
+    },
+    {
+     "w": "name,",
+     "start": 37.32,
+     "end": 37.84
+    },
+    {
+     "w": "not",
+     "start": 37.84,
+     "end": 38.24
+    },
+    {
+     "w": "mine",
+     "start": 38.24,
+     "end": 38.76
+    }
+   ]
+  },
+  {
+   "i": 9,
+   "section": "Verse 1",
+   "text": "You said we could merge, work the conflicts through",
+   "start": 38.76,
+   "end": 42.16,
+   "words": [
+    {
+     "w": "You",
+     "start": 38.76,
+     "end": 38.857
+    },
+    {
+     "w": "said",
+     "start": 38.857,
+     "end": 39.4
+    },
+    {
+     "w": "we",
+     "start": 39.4,
+     "end": 39.63
+    },
+    {
+     "w": "could",
+     "start": 39.84,
+     "end": 40.1
+    },
+    {
+     "w": "merge,",
+     "start": 40.1,
+     "end": 40.508
+    },
+    {
+     "w": "work",
+     "start": 40.508,
+     "end": 40.678
+    },
+    {
+     "w": "the",
+     "start": 40.8,
+     "end": 40.877
+    },
+    {
+     "w": "conflicts",
+     "start": 40.98,
+     "end": 41.635
+    },
+    {
+     "w": "through",
+     "start": 41.635,
+     "end": 42.16
+    }
+   ]
+  },
+  {
+   "i": 10,
+   "section": "Verse 1",
+   "text": "But every conflict, baby, started with you",
+   "start": 42.16,
+   "end": 46.58,
+   "words": [
+    {
+     "w": "But",
+     "start": 42.16,
+     "end": 42.56
+    },
+    {
+     "w": "every",
+     "start": 42.56,
+     "end": 42.88
+    },
+    {
+     "w": "conflict,",
+     "start": 42.88,
+     "end": 43.78
+    },
+    {
+     "w": "baby,",
+     "start": 43.78,
+     "end": 44.554
+    },
+    {
+     "w": "started",
+     "start": 44.554,
+     "end": 45.14
+    },
+    {
+     "w": "with",
+     "start": 45.14,
+     "end": 45.42
+    },
+    {
+     "w": "you",
+     "start": 45.42,
+     "end": 46.58
+    }
+   ]
+  },
+  {
+   "i": 11,
+   "section": "Pre-Chorus",
+   "text": "No more patches, no more one more try",
+   "start": 46.58,
+   "end": 48.44,
+   "words": [
+    {
+     "w": "No",
+     "start": 46.58,
+     "end": 46.8
+    },
+    {
+     "w": "more",
+     "start": 46.8,
+     "end": 47.02
+    },
+    {
+     "w": "patches,",
+     "start": 47.02,
+     "end": 47.327
+    },
+    {
+     "w": "no",
+     "start": 47.327,
+     "end": 47.357
+    },
+    {
+     "w": "more",
+     "start": 47.357,
+     "end": 47.542
+    },
+    {
+     "w": "one",
+     "start": 47.542,
+     "end": 47.7
+    },
+    {
+     "w": "more",
+     "start": 47.7,
+     "end": 47.92
+    },
+    {
+     "w": "try",
+     "start": 47.92,
+     "end": 48.44
+    }
+   ]
+  },
+  {
+   "i": 12,
+   "section": "Pre-Chorus",
+   "text": "No more reading your logs at night",
+   "start": 48.44,
+   "end": 50.1,
+   "words": [
+    {
+     "w": "No",
+     "start": 48.44,
+     "end": 48.64
+    },
+    {
+     "w": "more",
+     "start": 48.64,
+     "end": 48.88
+    },
+    {
+     "w": "reading",
+     "start": 48.88,
+     "end": 49.14
+    },
+    {
+     "w": "your",
+     "start": 49.14,
+     "end": 49.34
+    },
+    {
+     "w": "logs",
+     "start": 49.34,
+     "end": 49.66
+    },
+    {
+     "w": "at",
+     "start": 49.66,
+     "end": 49.82
+    },
+    {
+     "w": "night",
+     "start": 49.82,
+     "end": 50.1
+    }
+   ]
+  },
+  {
+   "i": 13,
+   "section": "Pre-Chorus",
+   "text": "Head's been detached for way too long",
+   "start": 50.1,
+   "end": 51.967,
+   "words": [
+    {
+     "w": "Head's",
+     "start": 50.1,
+     "end": 50.28
+    },
+    {
+     "w": "been",
+     "start": 50.28,
+     "end": 50.5
+    },
+    {
+     "w": "detached",
+     "start": 50.5,
+     "end": 50.869
+    },
+    {
+     "w": "for",
+     "start": 50.869,
+     "end": 51.18
+    },
+    {
+     "w": "way",
+     "start": 51.18,
+     "end": 51.42
+    },
+    {
+     "w": "too",
+     "start": 51.42,
+     "end": 51.66
+    },
+    {
+     "w": "long",
+     "start": 51.66,
+     "end": 51.967
+    }
+   ]
+  },
+  {
+   "i": 14,
+   "section": "Pre-Chorus",
+   "text": "Stop, one beat and you're gone",
+   "start": 51.967,
+   "end": 53.44,
+   "words": [
+    {
+     "w": "Stop,",
+     "start": 51.967,
+     "end": 52.376
+    },
+    {
+     "w": "one",
+     "start": 52.376,
+     "end": 52.56
+    },
+    {
+     "w": "beat",
+     "start": 52.56,
+     "end": 52.76
+    },
+    {
+     "w": "and",
+     "start": 52.76,
+     "end": 52.885
+    },
+    {
+     "w": "you're",
+     "start": 52.885,
+     "end": 53.06
+    },
+    {
+     "w": "gone",
+     "start": 53.06,
+     "end": 53.44
+    }
+   ]
+  },
+  {
+   "i": 15,
+   "section": "Chorus",
+   "text": "FORCE PUSH! Baby, you're history",
+   "start": 53.44,
+   "end": 56.4,
+   "words": [
+    {
+     "w": "FORCE",
+     "start": 53.44,
+     "end": 53.96
+    },
+    {
+     "w": "PUSH!",
+     "start": 53.96,
+     "end": 54.556
+    },
+    {
+     "w": "Baby,",
+     "start": 54.66,
+     "end": 55.28
+    },
+    {
+     "w": "you're",
+     "start": 55.28,
+     "end": 55.62
+    },
+    {
+     "w": "history",
+     "start": 55.62,
+     "end": 56.4
+    }
+   ]
+  },
+  {
+   "i": 16,
+   "section": "Chorus",
+   "text": "I rewrote the past, there's no you and me",
+   "start": 56.4,
+   "end": 60.84,
+   "words": [
+    {
+     "w": "I",
+     "start": 56.4,
+     "end": 56.5
+    },
+    {
+     "w": "rewrote",
+     "start": 56.5,
+     "end": 57.66
+    },
+    {
+     "w": "the",
+     "start": 57.66,
+     "end": 58.48
+    },
+    {
+     "w": "past,",
+     "start": 58.48,
+     "end": 58.8
+    },
+    {
+     "w": "there's",
+     "start": 58.8,
+     "end": 59.06
+    },
+    {
+     "w": "no",
+     "start": 59.06,
+     "end": 59.28
+    },
+    {
+     "w": "you",
+     "start": 59.28,
+     "end": 59.94
+    },
+    {
+     "w": "and",
+     "start": 59.94,
+     "end": 60.14
+    },
+    {
+     "w": "me",
+     "start": 60.14,
+     "end": 60.84
+    }
+   ]
+  },
+  {
+   "i": 17,
+   "section": "Chorus",
+   "text": "FORCE PUSH! Right over your lies",
+   "start": 60.84,
+   "end": 63.67,
+   "words": [
+    {
+     "w": "FORCE",
+     "start": 60.84,
+     "end": 61.33
+    },
+    {
+     "w": "PUSH!",
+     "start": 61.33,
+     "end": 61.86
+    },
+    {
+     "w": "Right",
+     "start": 61.86,
+     "end": 62.42
+    },
+    {
+     "w": "over",
+     "start": 62.42,
+     "end": 62.72
+    },
+    {
+     "w": "your",
+     "start": 62.72,
+     "end": 62.96
+    },
+    {
+     "w": "lies",
+     "start": 62.96,
+     "end": 63.67
+    }
+   ]
+  },
+  {
+   "i": 18,
+   "section": "Chorus",
+   "text": "Brand new timeline, no goodbyes",
+   "start": 63.88,
+   "end": 68.72,
+   "words": [
+    {
+     "w": "Brand",
+     "start": 63.88,
+     "end": 64.26
+    },
+    {
+     "w": "new",
+     "start": 64.26,
+     "end": 64.52
+    },
+    {
+     "w": "timeline,",
+     "start": 64.52,
+     "end": 67.82
+    },
+    {
+     "w": "no",
+     "start": 67.82,
+     "end": 68.04
+    },
+    {
+     "w": "goodbyes",
+     "start": 68.04,
+     "end": 68.72
+    }
+   ]
+  },
+  {
+   "i": 19,
+   "section": "Chorus",
+   "text": "Keep your local copy, I don't care",
+   "start": 68.72,
+   "end": 72.56,
+   "words": [
+    {
+     "w": "Keep",
+     "start": 68.72,
+     "end": 68.98
+    },
+    {
+     "w": "your",
+     "start": 68.98,
+     "end": 69.24
+    },
+    {
+     "w": "local",
+     "start": 69.24,
+     "end": 69.62
+    },
+    {
+     "w": "copy,",
+     "start": 69.62,
+     "end": 69.911
+    },
+    {
+     "w": "I",
+     "start": 69.911,
+     "end": 70.78
+    },
+    {
+     "w": "don't",
+     "start": 70.78,
+     "end": 71.068
+    },
+    {
+     "w": "care",
+     "start": 71.22,
+     "end": 72.56
+    }
+   ]
+  },
+  {
+   "i": 20,
+   "section": "Chorus",
+   "text": "Origin's mine and you're not there",
+   "start": 72.56,
+   "end": 76.12,
+   "words": [
+    {
+     "w": "Origin's",
+     "start": 72.56,
+     "end": 73.32
+    },
+    {
+     "w": "mine",
+     "start": 73.32,
+     "end": 73.82
+    },
+    {
+     "w": "and",
+     "start": 73.82,
+     "end": 74
+    },
+    {
+     "w": "you're",
+     "start": 74,
+     "end": 74.48
+    },
+    {
+     "w": "not",
+     "start": 74.48,
+     "end": 74.755
+    },
+    {
+     "w": "there",
+     "start": 74.945,
+     "end": 76.12
+    }
+   ]
+  },
+  {
+   "i": 21,
+   "section": "Post-Chorus",
+   "text": "Force! Push! (hey!) Wipe it clean",
+   "start": 76.12,
+   "end": 77.873,
+   "words": [
+    {
+     "w": "Force!",
+     "start": 76.12,
+     "end": 76.54
+    },
+    {
+     "w": "Push!",
+     "start": 76.54,
+     "end": 76.86
+    },
+    {
+     "w": "(hey!)",
+     "start": 76.86,
+     "end": 77.02
+    },
+    {
+     "w": "Wipe",
+     "start": 77.02,
+     "end": 77.284
+    },
+    {
+     "w": "it",
+     "start": 77.284,
+     "end": 77.44
+    },
+    {
+     "w": "clean",
+     "start": 77.44,
+     "end": 77.873
+    }
+   ]
+  },
+  {
+   "i": 22,
+   "section": "Post-Chorus",
+   "text": "Force! Push! (hey!) Like you've never been",
+   "start": 77.873,
+   "end": 79.8,
+   "words": [
+    {
+     "w": "Force!",
+     "start": 77.873,
+     "end": 78.42
+    },
+    {
+     "w": "Push!",
+     "start": 78.42,
+     "end": 78.64
+    },
+    {
+     "w": "(hey!)",
+     "start": 78.64,
+     "end": 78.7
+    },
+    {
+     "w": "Like",
+     "start": 78.7,
+     "end": 78.911
+    },
+    {
+     "w": "you've",
+     "start": 78.911,
+     "end": 79.14
+    },
+    {
+     "w": "never",
+     "start": 79.14,
+     "end": 79.3
+    },
+    {
+     "w": "been",
+     "start": 79.3,
+     "end": 79.8
+    }
+   ]
+  },
+  {
+   "i": 23,
+   "section": "Post-Chorus",
+   "text": "Force! Push! (hey!) Hear the crowd",
+   "start": 79.8,
+   "end": 81.52,
+   "words": [
+    {
+     "w": "Force!",
+     "start": 79.8,
+     "end": 80.283
+    },
+    {
+     "w": "Push!",
+     "start": 80.283,
+     "end": 80.7
+    },
+    {
+     "w": "(hey!)",
+     "start": 80.7,
+     "end": 80.78
+    },
+    {
+     "w": "Hear",
+     "start": 80.78,
+     "end": 80.981
+    },
+    {
+     "w": "the",
+     "start": 80.981,
+     "end": 81.106
+    },
+    {
+     "w": "crowd",
+     "start": 81.106,
+     "end": 81.52
+    }
+   ]
+  },
+  {
+   "i": 24,
+   "section": "Post-Chorus",
+   "text": "You're not in my history now",
+   "start": 81.52,
+   "end": 83.515,
+   "words": [
+    {
+     "w": "You're",
+     "start": 81.52,
+     "end": 81.66
+    },
+    {
+     "w": "not",
+     "start": 81.66,
+     "end": 81.909
+    },
+    {
+     "w": "in",
+     "start": 81.909,
+     "end": 82.32
+    },
+    {
+     "w": "my",
+     "start": 82.32,
+     "end": 82.502
+    },
+    {
+     "w": "history",
+     "start": 82.502,
+     "end": 83.22
+    },
+    {
+     "w": "now",
+     "start": 83.22,
+     "end": 83.515
+    }
+   ]
+  },
+  {
+   "i": 25,
+   "section": "Verse 2",
+   "text": "Squashed three years down to a single line",
+   "start": 84.668,
+   "end": 88.28,
+   "words": [
+    {
+     "w": "Squashed",
+     "start": 84.668,
+     "end": 85.122
+    },
+    {
+     "w": "three",
+     "start": 85.122,
+     "end": 85.86
+    },
+    {
+     "w": "years",
+     "start": 85.86,
+     "end": 86.269
+    },
+    {
+     "w": "down",
+     "start": 86.269,
+     "end": 86.68
+    },
+    {
+     "w": "to",
+     "start": 86.68,
+     "end": 87.04
+    },
+    {
+     "w": "a",
+     "start": 87.04,
+     "end": 87.277
+    },
+    {
+     "w": "single",
+     "start": 87.277,
+     "end": 87.84
+    },
+    {
+     "w": "line",
+     "start": 87.84,
+     "end": 88.28
+    }
+   ]
+  },
+  {
+   "i": 26,
+   "section": "Verse 2",
+   "text": "Commit message says: fix, wasted time",
+   "start": 88.28,
+   "end": 92.146,
+   "words": [
+    {
+     "w": "Commit",
+     "start": 88.28,
+     "end": 88.96
+    },
+    {
+     "w": "message",
+     "start": 88.96,
+     "end": 89.362
+    },
+    {
+     "w": "says:",
+     "start": 89.362,
+     "end": 89.776
+    },
+    {
+     "w": "fix,",
+     "start": 89.776,
+     "end": 90.594
+    },
+    {
+     "w": "wasted",
+     "start": 90.704,
+     "end": 91.427
+    },
+    {
+     "w": "time",
+     "start": 91.52,
+     "end": 92.146
+    }
+   ]
+  },
+  {
+   "i": 27,
+   "section": "Verse 2",
+   "text": "Cherry-picked the good days, there were three",
+   "start": 92.146,
+   "end": 96.16,
+   "words": [
+    {
+     "w": "Cherry-picked",
+     "start": 92.146,
+     "end": 93.36
+    },
+    {
+     "w": "the",
+     "start": 93.36,
+     "end": 93.6
+    },
+    {
+     "w": "good",
+     "start": 93.6,
+     "end": 94.086
+    },
+    {
+     "w": "days,",
+     "start": 94.086,
+     "end": 94.74
+    },
+    {
+     "w": "there",
+     "start": 94.74,
+     "end": 94.98
+    },
+    {
+     "w": "were",
+     "start": 94.98,
+     "end": 95.099
+    },
+    {
+     "w": "three",
+     "start": 95.099,
+     "end": 96.16
+    }
+   ]
+  },
+  {
+   "i": 28,
+   "section": "Verse 2",
+   "text": "Rebased the rest right out of my tree",
+   "start": 96.16,
+   "end": 100.033,
+   "words": [
+    {
+     "w": "Rebased",
+     "start": 96.16,
+     "end": 96.8
+    },
+    {
+     "w": "the",
+     "start": 96.8,
+     "end": 97.06
+    },
+    {
+     "w": "rest",
+     "start": 97.06,
+     "end": 97.5
+    },
+    {
+     "w": "right",
+     "start": 97.5,
+     "end": 98.38
+    },
+    {
+     "w": "out",
+     "start": 98.38,
+     "end": 98.5
+    },
+    {
+     "w": "of",
+     "start": 98.5,
+     "end": 98.64
+    },
+    {
+     "w": "my",
+     "start": 98.64,
+     "end": 99.08
+    },
+    {
+     "w": "tree",
+     "start": 99.08,
+     "end": 100.033
+    }
+   ]
+  },
+  {
+   "i": 29,
+   "section": "Verse 2",
+   "text": "Your pull requests keep lighting up my phone",
+   "start": 100.14,
+   "end": 101.68,
+   "words": [
+    {
+     "w": "Your",
+     "start": 100.14,
+     "end": 100.26
+    },
+    {
+     "w": "pull",
+     "start": 100.26,
+     "end": 100.42
+    },
+    {
+     "w": "requests",
+     "start": 100.42,
+     "end": 100.746
+    },
+    {
+     "w": "keep",
+     "start": 100.746,
+     "end": 100.94
+    },
+    {
+     "w": "lighting",
+     "start": 100.94,
+     "end": 101.22
+    },
+    {
+     "w": "up",
+     "start": 101.22,
+     "end": 101.3
+    },
+    {
+     "w": "my",
+     "start": 101.3,
+     "end": 101.4
+    },
+    {
+     "w": "phone",
+     "start": 101.4,
+     "end": 101.68
+    }
+   ]
+  },
+  {
+   "i": 30,
+   "section": "Verse 2",
+   "text": "Please review? Honey, you're on your own",
+   "start": 101.68,
+   "end": 103.525,
+   "words": [
+    {
+     "w": "Please",
+     "start": 101.68,
+     "end": 102.04
+    },
+    {
+     "w": "review?",
+     "start": 102.04,
+     "end": 102.138
+    },
+    {
+     "w": "Honey,",
+     "start": 102.138,
+     "end": 102.487
+    },
+    {
+     "w": "you're",
+     "start": 102.487,
+     "end": 102.826
+    },
+    {
+     "w": "on",
+     "start": 102.826,
+     "end": 103.04
+    },
+    {
+     "w": "your",
+     "start": 103.04,
+     "end": 103.285
+    },
+    {
+     "w": "own",
+     "start": 103.285,
+     "end": 103.525
+    }
+   ]
+  },
+  {
+   "i": 31,
+   "section": "Verse 2",
+   "text": "Wrote your name at the top of my git-ignore",
+   "start": 103.525,
+   "end": 105.46,
+   "words": [
+    {
+     "w": "Wrote",
+     "start": 103.525,
+     "end": 103.62
+    },
+    {
+     "w": "your",
+     "start": 103.62,
+     "end": 103.72
+    },
+    {
+     "w": "name",
+     "start": 103.72,
+     "end": 103.98
+    },
+    {
+     "w": "at",
+     "start": 103.98,
+     "end": 104.06
+    },
+    {
+     "w": "the",
+     "start": 104.06,
+     "end": 104.16
+    },
+    {
+     "w": "top",
+     "start": 104.16,
+     "end": 104.32
+    },
+    {
+     "w": "of",
+     "start": 104.32,
+     "end": 104.4
+    },
+    {
+     "w": "my",
+     "start": 104.4,
+     "end": 104.62
+    },
+    {
+     "w": "git-ignore",
+     "start": 104.62,
+     "end": 105.46
+    }
+   ]
+  },
+  {
+   "i": 32,
+   "section": "Verse 2",
+   "text": "Whatever you send, I don't see it anymore",
+   "start": 105.46,
+   "end": 107.4,
+   "words": [
+    {
+     "w": "Whatever",
+     "start": 105.46,
+     "end": 105.715
+    },
+    {
+     "w": "you",
+     "start": 105.715,
+     "end": 105.919
+    },
+    {
+     "w": "send,",
+     "start": 105.919,
+     "end": 106.28
+    },
+    {
+     "w": "I",
+     "start": 106.28,
+     "end": 106.34
+    },
+    {
+     "w": "don't",
+     "start": 106.34,
+     "end": 106.438
+    },
+    {
+     "w": "see",
+     "start": 106.438,
+     "end": 106.64
+    },
+    {
+     "w": "it",
+     "start": 106.64,
+     "end": 106.717
+    },
+    {
+     "w": "anymore",
+     "start": 106.717,
+     "end": 107.4
+    }
+   ]
+  },
+  {
+   "i": 33,
+   "section": "Pre-Chorus",
+   "text": "No more patches, no more one more try",
+   "start": 107.4,
+   "end": 109.18,
+   "words": [
+    {
+     "w": "No",
+     "start": 107.4,
+     "end": 107.62
+    },
+    {
+     "w": "more",
+     "start": 107.62,
+     "end": 107.865
+    },
+    {
+     "w": "patches,",
+     "start": 107.865,
+     "end": 108.129
+    },
+    {
+     "w": "no",
+     "start": 108.129,
+     "end": 108.2
+    },
+    {
+     "w": "more",
+     "start": 108.2,
+     "end": 108.354
+    },
+    {
+     "w": "one",
+     "start": 108.354,
+     "end": 108.54
+    },
+    {
+     "w": "more",
+     "start": 108.54,
+     "end": 108.72
+    },
+    {
+     "w": "try",
+     "start": 108.72,
+     "end": 109.18
+    }
+   ]
+  },
+  {
+   "i": 34,
+   "section": "Pre-Chorus",
+   "text": "No more reading your logs",
+   "start": 109.18,
+   "end": 110.48,
+   "words": [
+    {
+     "w": "No",
+     "start": 109.18,
+     "end": 109.46
+    },
+    {
+     "w": "more",
+     "start": 109.46,
+     "end": 109.7
+    },
+    {
+     "w": "reading",
+     "start": 109.7,
+     "end": 109.965
+    },
+    {
+     "w": "your",
+     "start": 109.965,
+     "end": 110.16
+    },
+    {
+     "w": "logs",
+     "start": 110.16,
+     "end": 110.48
+    }
+   ]
+  },
+  {
+   "i": 35,
+   "section": "Pre-Chorus",
+   "text": "And now you want a revert? Baby, that's cute",
+   "start": 110.48,
+   "end": 112.88,
+   "words": [
+    {
+     "w": "And",
+     "start": 110.48,
+     "end": 110.62
+    },
+    {
+     "w": "now",
+     "start": 110.62,
+     "end": 110.86
+    },
+    {
+     "w": "you",
+     "start": 110.86,
+     "end": 111.06
+    },
+    {
+     "w": "want",
+     "start": 111.06,
+     "end": 111.24
+    },
+    {
+     "w": "a",
+     "start": 111.24,
+     "end": 111.32
+    },
+    {
+     "w": "revert?",
+     "start": 111.32,
+     "end": 111.816
+    },
+    {
+     "w": "Baby,",
+     "start": 111.98,
+     "end": 112.22
+    },
+    {
+     "w": "that's",
+     "start": 112.22,
+     "end": 112.42
+    },
+    {
+     "w": "cute",
+     "start": 112.42,
+     "end": 112.88
+    }
+   ]
+  },
+  {
+   "i": 36,
+   "section": "Pre-Chorus",
+   "text": "Watch what I do",
+   "start": 112.88,
+   "end": 114.18,
+   "words": [
+    {
+     "w": "Watch",
+     "start": 112.88,
+     "end": 113.34
+    },
+    {
+     "w": "what",
+     "start": 113.34,
+     "end": 113.632
+    },
+    {
+     "w": "I",
+     "start": 113.632,
+     "end": 113.82
+    },
+    {
+     "w": "do",
+     "start": 113.82,
+     "end": 114.18
+    }
+   ]
+  },
+  {
+   "i": 37,
+   "section": "Chorus",
+   "text": "FORCE PUSH! Baby, you're history",
+   "start": 114.18,
+   "end": 117.22,
+   "words": [
+    {
+     "w": "FORCE",
+     "start": 114.18,
+     "end": 114.78
+    },
+    {
+     "w": "PUSH!",
+     "start": 114.78,
+     "end": 115.218
+    },
+    {
+     "w": "Baby,",
+     "start": 115.298,
+     "end": 116.18
+    },
+    {
+     "w": "you're",
+     "start": 116.18,
+     "end": 116.395
+    },
+    {
+     "w": "history",
+     "start": 116.395,
+     "end": 117.22
+    }
+   ]
+  },
+  {
+   "i": 38,
+   "section": "Chorus",
+   "text": "I rewrote the past, there's no you and me",
+   "start": 117.22,
+   "end": 121.594,
+   "words": [
+    {
+     "w": "I",
+     "start": 117.22,
+     "end": 117.28
+    },
+    {
+     "w": "rewrote",
+     "start": 117.28,
+     "end": 118.5
+    },
+    {
+     "w": "the",
+     "start": 118.5,
+     "end": 118.835
+    },
+    {
+     "w": "past,",
+     "start": 119.1,
+     "end": 119.56
+    },
+    {
+     "w": "there's",
+     "start": 119.56,
+     "end": 119.848
+    },
+    {
+     "w": "no",
+     "start": 119.848,
+     "end": 120.04
+    },
+    {
+     "w": "you",
+     "start": 120.04,
+     "end": 120.66
+    },
+    {
+     "w": "and",
+     "start": 120.66,
+     "end": 120.94
+    },
+    {
+     "w": "me",
+     "start": 120.94,
+     "end": 121.594
+    }
+   ]
+  },
+  {
+   "i": 39,
+   "section": "Chorus",
+   "text": "FORCE PUSH! Right over your lies",
+   "start": 121.594,
+   "end": 124.64,
+   "words": [
+    {
+     "w": "FORCE",
+     "start": 121.594,
+     "end": 122.08
+    },
+    {
+     "w": "PUSH!",
+     "start": 122.08,
+     "end": 122.68
+    },
+    {
+     "w": "Right",
+     "start": 122.68,
+     "end": 123.16
+    },
+    {
+     "w": "over",
+     "start": 123.16,
+     "end": 123.529
+    },
+    {
+     "w": "your",
+     "start": 123.529,
+     "end": 123.72
+    },
+    {
+     "w": "lies",
+     "start": 123.72,
+     "end": 124.64
+    }
+   ]
+  },
+  {
+   "i": 40,
+   "section": "Chorus",
+   "text": "Brand new timeline, no goodbyes",
+   "start": 124.64,
+   "end": 129.4,
+   "words": [
+    {
+     "w": "Brand",
+     "start": 124.64,
+     "end": 125.08
+    },
+    {
+     "w": "new",
+     "start": 125.08,
+     "end": 125.28
+    },
+    {
+     "w": "timeline,",
+     "start": 125.28,
+     "end": 128.54
+    },
+    {
+     "w": "no",
+     "start": 128.54,
+     "end": 128.78
+    },
+    {
+     "w": "goodbyes",
+     "start": 128.78,
+     "end": 129.4
+    }
+   ]
+  },
+  {
+   "i": 41,
+   "section": "Chorus",
+   "text": "Keep your local copy, I don't care",
+   "start": 129.4,
+   "end": 133.28,
+   "words": [
+    {
+     "w": "Keep",
+     "start": 129.4,
+     "end": 129.7
+    },
+    {
+     "w": "your",
+     "start": 129.7,
+     "end": 130
+    },
+    {
+     "w": "local",
+     "start": 130,
+     "end": 130.34
+    },
+    {
+     "w": "copy,",
+     "start": 130.34,
+     "end": 130.853
+    },
+    {
+     "w": "I",
+     "start": 131.092,
+     "end": 131.327
+    },
+    {
+     "w": "don't",
+     "start": 131.5,
+     "end": 131.815
+    },
+    {
+     "w": "care",
+     "start": 131.94,
+     "end": 133.28
+    }
+   ]
+  },
+  {
+   "i": 42,
+   "section": "Chorus",
+   "text": "Origin's mine and you're not there",
+   "start": 133.28,
+   "end": 136.82,
+   "words": [
+    {
+     "w": "Origin's",
+     "start": 133.28,
+     "end": 134.04
+    },
+    {
+     "w": "mine",
+     "start": 134.04,
+     "end": 134.66
+    },
+    {
+     "w": "and",
+     "start": 134.66,
+     "end": 134.76
+    },
+    {
+     "w": "you're",
+     "start": 134.76,
+     "end": 135.2
+    },
+    {
+     "w": "not",
+     "start": 135.2,
+     "end": 135.477
+    },
+    {
+     "w": "there",
+     "start": 135.64,
+     "end": 136.82
+    }
+   ]
+  },
+  {
+   "i": 43,
+   "section": "Post-Chorus",
+   "text": "Force! Push! (hey!) Wipe it clean",
+   "start": 136.82,
+   "end": 138.515,
+   "words": [
+    {
+     "w": "Force!",
+     "start": 136.82,
+     "end": 137.26
+    },
+    {
+     "w": "Push!",
+     "start": 137.26,
+     "end": 137.52
+    },
+    {
+     "w": "(hey!)",
+     "start": 137.52,
+     "end": 137.747
+    },
+    {
+     "w": "Wipe",
+     "start": 137.747,
+     "end": 138.02
+    },
+    {
+     "w": "it",
+     "start": 138.02,
+     "end": 138.12
+    },
+    {
+     "w": "clean",
+     "start": 138.12,
+     "end": 138.515
+    }
+   ]
+  },
+  {
+   "i": 44,
+   "section": "Post-Chorus",
+   "text": "Force! Push! (hey!) Like you've never been",
+   "start": 138.515,
+   "end": 140.44,
+   "words": [
+    {
+     "w": "Force!",
+     "start": 138.515,
+     "end": 138.86
+    },
+    {
+     "w": "Push!",
+     "start": 138.86,
+     "end": 139.06
+    },
+    {
+     "w": "(hey!)",
+     "start": 139.06,
+     "end": 139.18
+    },
+    {
+     "w": "Like",
+     "start": 139.18,
+     "end": 139.34
+    },
+    {
+     "w": "you've",
+     "start": 139.34,
+     "end": 139.54
+    },
+    {
+     "w": "never",
+     "start": 139.54,
+     "end": 139.98
+    },
+    {
+     "w": "been",
+     "start": 139.98,
+     "end": 140.44
+    }
+   ]
+  },
+  {
+   "i": 45,
+   "section": "Post-Chorus",
+   "text": "Force! Push! (hey!) Hear the crowd",
+   "start": 140.44,
+   "end": 142.2,
+   "words": [
+    {
+     "w": "Force!",
+     "start": 140.44,
+     "end": 140.77
+    },
+    {
+     "w": "Push!",
+     "start": 140.77,
+     "end": 141.38
+    },
+    {
+     "w": "(hey!)",
+     "start": 141.38,
+     "end": 141.46
+    },
+    {
+     "w": "Hear",
+     "start": 141.46,
+     "end": 141.64
+    },
+    {
+     "w": "the",
+     "start": 141.64,
+     "end": 141.808
+    },
+    {
+     "w": "crowd",
+     "start": 141.808,
+     "end": 142.2
+    }
+   ]
+  },
+  {
+   "i": 46,
+   "section": "Post-Chorus",
+   "text": "You're not in my history now",
+   "start": 142.2,
+   "end": 144.217,
+   "words": [
+    {
+     "w": "You're",
+     "start": 142.2,
+     "end": 142.36
+    },
+    {
+     "w": "not",
+     "start": 142.36,
+     "end": 142.476
+    },
+    {
+     "w": "in",
+     "start": 142.6,
+     "end": 143.025
+    },
+    {
+     "w": "my",
+     "start": 143.025,
+     "end": 143.2
+    },
+    {
+     "w": "history",
+     "start": 143.2,
+     "end": 143.92
+    },
+    {
+     "w": "now",
+     "start": 143.92,
+     "end": 144.217
+    }
+   ]
+  },
+  {
+   "i": 47,
+   "section": "Bridge",
+   "text": "They say never force it on a shared branch",
+   "start": 144.58,
+   "end": 147.959,
+   "words": [
+    {
+     "w": "They",
+     "start": 144.58,
+     "end": 144.751
+    },
+    {
+     "w": "say",
+     "start": 144.751,
+     "end": 145.08
+    },
+    {
+     "w": "never",
+     "start": 145.08,
+     "end": 145.41
+    },
+    {
+     "w": "force",
+     "start": 145.41,
+     "end": 145.853
+    },
+    {
+     "w": "it",
+     "start": 145.853,
+     "end": 145.998
+    },
+    {
+     "w": "on",
+     "start": 146.198,
+     "end": 146.48
+    },
+    {
+     "w": "a",
+     "start": 146.48,
+     "end": 146.577
+    },
+    {
+     "w": "shared",
+     "start": 146.577,
+     "end": 147.32
+    },
+    {
+     "w": "branch",
+     "start": 147.32,
+     "end": 147.959
+    }
+   ]
+  },
+  {
+   "i": 48,
+   "section": "Bridge",
+   "text": "Somebody could lose it all, no second chance",
+   "start": 147.959,
+   "end": 151.74,
+   "words": [
+    {
+     "w": "Somebody",
+     "start": 147.959,
+     "end": 148.453
+    },
+    {
+     "w": "could",
+     "start": 148.453,
+     "end": 148.76
+    },
+    {
+     "w": "lose",
+     "start": 148.76,
+     "end": 149.12
+    },
+    {
+     "w": "it",
+     "start": 149.12,
+     "end": 149.36
+    },
+    {
+     "w": "all,",
+     "start": 149.36,
+     "end": 149.92
+    },
+    {
+     "w": "no",
+     "start": 149.92,
+     "end": 150.254
+    },
+    {
+     "w": "second",
+     "start": 150.254,
+     "end": 151.002
+    },
+    {
+     "w": "chance",
+     "start": 151.002,
+     "end": 151.74
+    }
+   ]
+  },
+  {
+   "i": 49,
+   "section": "Bridge",
+   "text": "But you checked out a long, long time ago",
+   "start": 151.74,
+   "end": 155.352,
+   "words": [
+    {
+     "w": "But",
+     "start": 151.74,
+     "end": 151.92
+    },
+    {
+     "w": "you",
+     "start": 151.92,
+     "end": 152.16
+    },
+    {
+     "w": "checked",
+     "start": 152.16,
+     "end": 152.468
+    },
+    {
+     "w": "out",
+     "start": 152.468,
+     "end": 152.98
+    },
+    {
+     "w": "a",
+     "start": 152.98,
+     "end": 153.12
+    },
+    {
+     "w": "long,",
+     "start": 153.12,
+     "end": 153.78
+    },
+    {
+     "w": "long",
+     "start": 153.78,
+     "end": 154.06
+    },
+    {
+     "w": "time",
+     "start": 154.06,
+     "end": 154.569
+    },
+    {
+     "w": "ago",
+     "start": 154.569,
+     "end": 155.352
+    }
+   ]
+  },
+  {
+   "i": 50,
+   "section": "Bridge",
+   "text": "So no lease, no warning, here I go",
+   "start": 155.352,
+   "end": 159.078,
+   "words": [
+    {
+     "w": "So",
+     "start": 155.352,
+     "end": 155.66
+    },
+    {
+     "w": "no",
+     "start": 155.66,
+     "end": 156.12
+    },
+    {
+     "w": "lease,",
+     "start": 156.12,
+     "end": 156.6
+    },
+    {
+     "w": "no",
+     "start": 156.6,
+     "end": 157.04
+    },
+    {
+     "w": "warning,",
+     "start": 157.04,
+     "end": 157.98
+    },
+    {
+     "w": "here",
+     "start": 157.98,
+     "end": 158.32
+    },
+    {
+     "w": "I",
+     "start": 158.32,
+     "end": 158.44
+    },
+    {
+     "w": "go",
+     "start": 158.44,
+     "end": 159.078
+    }
+   ]
+  },
+  {
+   "i": 51,
+   "section": "Final Chorus",
+   "text": "Force push. Baby, you're history.",
+   "start": 161.912,
+   "end": 165.4,
+   "words": [
+    {
+     "w": "Force",
+     "start": 161.912,
+     "end": 162.52
+    },
+    {
+     "w": "push.",
+     "start": 162.52,
+     "end": 163.109
+    },
+    {
+     "w": "Baby,",
+     "start": 163.22,
+     "end": 163.84
+    },
+    {
+     "w": "you're",
+     "start": 163.84,
+     "end": 164.047
+    },
+    {
+     "w": "history.",
+     "start": 164.047,
+     "end": 165.4
+    }
+   ]
+  },
+  {
+   "i": 52,
+   "section": "Final Chorus",
+   "text": "I rewrote the past, there's no you and me.",
+   "start": 165.4,
+   "end": 169.33,
+   "words": [
+    {
+     "w": "I",
+     "start": 165.4,
+     "end": 166.003
+    },
+    {
+     "w": "rewrote",
+     "start": 166.003,
+     "end": 166.66
+    },
+    {
+     "w": "the",
+     "start": 166.66,
+     "end": 166.741
+    },
+    {
+     "w": "past,",
+     "start": 166.84,
+     "end": 167.34
+    },
+    {
+     "w": "there's",
+     "start": 167.34,
+     "end": 167.58
+    },
+    {
+     "w": "no",
+     "start": 167.58,
+     "end": 168.063
+    },
+    {
+     "w": "you",
+     "start": 168.063,
+     "end": 168.74
+    },
+    {
+     "w": "and",
+     "start": 168.74,
+     "end": 168.96
+    },
+    {
+     "w": "me.",
+     "start": 168.96,
+     "end": 169.33
+    }
+   ]
+  },
+  {
+   "i": 53,
+   "section": "Drop",
+   "text": "FORCE PUSH! Right over your lies",
+   "start": 169.33,
+   "end": 172.308,
+   "words": [
+    {
+     "w": "FORCE",
+     "start": 169.33,
+     "end": 169.86
+    },
+    {
+     "w": "PUSH!",
+     "start": 169.86,
+     "end": 170.38
+    },
+    {
+     "w": "Right",
+     "start": 170.38,
+     "end": 170.92
+    },
+    {
+     "w": "over",
+     "start": 170.92,
+     "end": 171.16
+    },
+    {
+     "w": "your",
+     "start": 171.16,
+     "end": 171.46
+    },
+    {
+     "w": "lies",
+     "start": 171.46,
+     "end": 172.308
+    }
+   ]
+  },
+  {
+   "i": 54,
+   "section": "Drop",
+   "text": "Brand new timeline, no goodbyes",
+   "start": 172.38,
+   "end": 177.18,
+   "words": [
+    {
+     "w": "Brand",
+     "start": 172.38,
+     "end": 172.76
+    },
+    {
+     "w": "new",
+     "start": 172.76,
+     "end": 172.98
+    },
+    {
+     "w": "timeline,",
+     "start": 172.98,
+     "end": 174.36
+    },
+    {
+     "w": "no",
+     "start": 174.36,
+     "end": 174.94
+    },
+    {
+     "w": "goodbyes",
+     "start": 174.94,
+     "end": 177.18
+    }
+   ]
+  },
+  {
+   "i": 55,
+   "section": "Drop",
+   "text": "Keep your local copy, I don't care",
+   "start": 177.18,
+   "end": 180.16,
+   "words": [
+    {
+     "w": "Keep",
+     "start": 177.18,
+     "end": 177.46
+    },
+    {
+     "w": "your",
+     "start": 177.46,
+     "end": 177.76
+    },
+    {
+     "w": "local",
+     "start": 177.76,
+     "end": 178.04
+    },
+    {
+     "w": "copy,",
+     "start": 178.1,
+     "end": 178.599
+    },
+    {
+     "w": "I",
+     "start": 178.839,
+     "end": 179.26
+    },
+    {
+     "w": "don't",
+     "start": 179.26,
+     "end": 179.547
+    },
+    {
+     "w": "care",
+     "start": 179.7,
+     "end": 180.16
+    }
+   ]
+  },
+  {
+   "i": 56,
+   "section": "Drop",
+   "text": "Origin's mine and you're not there",
+   "start": 180.16,
+   "end": 184.56,
+   "words": [
+    {
+     "w": "Origin's",
+     "start": 180.16,
+     "end": 181.78
+    },
+    {
+     "w": "mine",
+     "start": 181.78,
+     "end": 182.2
+    },
+    {
+     "w": "and",
+     "start": 182.2,
+     "end": 182.5
+    },
+    {
+     "w": "you're",
+     "start": 182.5,
+     "end": 182.94
+    },
+    {
+     "w": "not",
+     "start": 182.94,
+     "end": 183.209
+    },
+    {
+     "w": "there",
+     "start": 183.38,
+     "end": 184.56
+    }
+   ]
+  },
+  {
+   "i": 57,
+   "section": "Post-Chorus",
+   "text": "Force! Push! (hey!) Wipe it clean",
+   "start": 184.56,
+   "end": 186.4,
+   "words": [
+    {
+     "w": "Force!",
+     "start": 184.56,
+     "end": 185.019
+    },
+    {
+     "w": "Push!",
+     "start": 185.019,
+     "end": 185.259
+    },
+    {
+     "w": "(hey!)",
+     "start": 185.259,
+     "end": 185.48
+    },
+    {
+     "w": "Wipe",
+     "start": 185.48,
+     "end": 185.738
+    },
+    {
+     "w": "it",
+     "start": 185.738,
+     "end": 185.907
+    },
+    {
+     "w": "clean",
+     "start": 185.907,
+     "end": 186.4
+    }
+   ]
+  },
+  {
+   "i": 58,
+   "section": "Post-Chorus",
+   "text": "Force! Push! (hey!) Like you've never been",
+   "start": 186.4,
+   "end": 188.22,
+   "words": [
+    {
+     "w": "Force!",
+     "start": 186.4,
+     "end": 186.9
+    },
+    {
+     "w": "Push!",
+     "start": 186.9,
+     "end": 187.1
+    },
+    {
+     "w": "(hey!)",
+     "start": 187.1,
+     "end": 187.16
+    },
+    {
+     "w": "Like",
+     "start": 187.16,
+     "end": 187.42
+    },
+    {
+     "w": "you've",
+     "start": 187.42,
+     "end": 187.58
+    },
+    {
+     "w": "never",
+     "start": 187.58,
+     "end": 187.76
+    },
+    {
+     "w": "been",
+     "start": 187.76,
+     "end": 188.22
+    }
+   ]
+  },
+  {
+   "i": 59,
+   "section": "Post-Chorus",
+   "text": "Force! Push! (hey!) Hear the crowd",
+   "start": 188.22,
+   "end": 189.9,
+   "words": [
+    {
+     "w": "Force!",
+     "start": 188.22,
+     "end": 188.44
+    },
+    {
+     "w": "Push!",
+     "start": 188.44,
+     "end": 189.02
+    },
+    {
+     "w": "(hey!)",
+     "start": 189.02,
+     "end": 189.14
+    },
+    {
+     "w": "Hear",
+     "start": 189.14,
+     "end": 189.38
+    },
+    {
+     "w": "the",
+     "start": 189.38,
+     "end": 189.459
+    },
+    {
+     "w": "crowd",
+     "start": 189.569,
+     "end": 189.9
+    }
+   ]
+  },
+  {
+   "i": 60,
+   "section": "Post-Chorus",
+   "text": "You're not in my history now",
+   "start": 189.9,
+   "end": 192.014,
+   "words": [
+    {
+     "w": "You're",
+     "start": 189.9,
+     "end": 190.1
+    },
+    {
+     "w": "not",
+     "start": 190.1,
+     "end": 190.307
+    },
+    {
+     "w": "in",
+     "start": 190.307,
+     "end": 190.74
+    },
+    {
+     "w": "my",
+     "start": 190.74,
+     "end": 190.931
+    },
+    {
+     "w": "history",
+     "start": 190.931,
+     "end": 191.64
+    },
+    {
+     "w": "now",
+     "start": 191.64,
+     "end": 192.014
+    }
+   ]
+  },
+  {
+   "i": 61,
+   "section": "Outro",
+   "text": "Oh, and the ref-log?",
+   "start": 192.328,
+   "end": 193.81,
+   "words": [
+    {
+     "w": "Oh,",
+     "start": 192.328,
+     "end": 192.777
+    },
+    {
+     "w": "and",
+     "start": 193.06,
+     "end": 193.14
+    },
+    {
+     "w": "the",
+     "start": 193.14,
+     "end": 193.26
+    },
+    {
+     "w": "ref-log?",
+     "start": 193.26,
+     "end": 193.81
+    }
+   ]
+  },
+  {
+   "i": 62,
+   "section": "Outro",
+   "text": "It forgets you in thirty days.",
+   "start": 194.403,
+   "end": 196.124,
+   "words": [
+    {
+     "w": "It",
+     "start": 194.403,
+     "end": 194.503
+    },
+    {
+     "w": "forgets",
+     "start": 194.503,
+     "end": 195
+    },
+    {
+     "w": "you",
+     "start": 195,
+     "end": 195.18
+    },
+    {
+     "w": "in",
+     "start": 195.18,
+     "end": 195.3
+    },
+    {
+     "w": "thirty",
+     "start": 195.3,
+     "end": 195.62
+    },
+    {
+     "w": "days.",
+     "start": 195.62,
+     "end": 196.124
+    }
+   ]
+  },
+  {
+   "i": 63,
+   "section": "Outro",
+   "text": "I can wait.",
+   "start": 196.803,
+   "end": 197.421,
+   "words": [
+    {
+     "w": "I",
+     "start": 196.803,
+     "end": 196.98
+    },
+    {
+     "w": "can",
+     "start": 196.98,
+     "end": 197.16
+    },
+    {
+     "w": "wait.",
+     "start": 197.16,
+     "end": 197.421
+    }
+   ]
+  }
+ ]
+}

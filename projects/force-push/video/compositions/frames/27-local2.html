@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 27 — local2 (chorus 2, 129.340–133.152). Refinement round 1: forks 14-local as refined (big / tiny: my
+         `me@home` window is the frame, the lyric fills its right side, right-aligned; the ex's `you@laptop` clone sits
+         bottom left) with the world moved on and the chorus louder. The world (strip, my window, the clone) whips in
+         from 26 (whipL); the lyric does not, so "keep" (0.06 s in) lands sharp. The clone is already there at half of
+         14's size (20.75cqw), an idle prompt: their copy is smaller and further behind. On "local" (130.00) the word is
+         shoved in from the right and the clone lights up and types `git status`; on the next kick git answers, and the
+         line that carries the joke lifts out of the tiny window to display size: `behind 'origin/main' / by 2
+         commits`, the 2 in the accent (motion-blurred approach). The camera leans toward it while git prints. On
+         "care" (131.94) the word drops in like a weight and its landing kicks the clone off the left edge, the readout
+         after it; the first half steps back, the camera pushes into my screen and the marker notes it: (still.).
+         Out: rise into 28. Light: my screen glows from its top left only (the ground stays black), a fire glow sits
+         behind the current hero, their window glows; all breathe with the bass. Hits are sized by the measured
+         drums (this span's mean over 14's, ~1.12).
+         Round 2 (REFINE-2): cut onto content, as 14 now does. The clone opens close (×1.42, 35 columns, git's answer
+         word-wrapped at h3), lit and already answered: `behind 'origin/main'` / `by 2 commits` is legible from the
+         first frame under the whip, and it creeps back while "keep your" builds. On "local" the window drops to half
+         of 14's size and the joke lifts out of it at display size (the readout, leaving a gap in the window); the
+         prompt returns on the next kick and `git pull` types through "i don't"; "care" kicks the window off the left
+         edge, the readout after it. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f27-cam, #f27-world, #f27-words { position: absolute; inset: 0; }
+        #f27-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f27-strip b { color: var(--fire); font-weight: 600; }
+        /* mine: the same window as 14, but only its top left is lit (the ground stays true black) */
+        #f27-win { position: absolute; left: 2.6cqw; right: 2.6cqw; top: 6.2cqw; bottom: 2.6cqw; background: var(--ink); border: 1px solid var(--border); overflow: hidden; }
+        #f27-wash { position: absolute; inset: 0;
+          background: radial-gradient(62% 88% at 0% 0%, rgba(240, 236, 229, 0.085) 0%, rgba(240, 236, 229, 0.05) 40%, rgba(240, 236, 229, 0.018) 72%, rgba(240, 236, 229, 0) 100%); }
+        .f27-bar { position: relative; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border);
+          font: 500 0.78cqw/1 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; }
+        #f27-win .f27-bar { height: 2.1cqw; padding: 0 2.9cqw; background: var(--ink-alt); color: var(--cream-muted); }
+        #f27-mine { position: absolute; left: 2.9cqw; top: 3.2cqw; font: 400 1.5cqw/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f27-mine .f27-c { color: var(--cream); }
+        /* the lyric, right-aligned inside my window: the first half on top, the second under it */
+        .f27-block { position: absolute; right: 7cqw; text-align: right; color: var(--cream); white-space: nowrap; }
+        #f27-top { top: 9.6cqw; transform-origin: 100% 100%; }
+        #f27-bot { top: 31.4cqw; }
+        .f27-r1 { font: 800 6.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; }
+        .f27-r2 { font: 900 16cqw/0.88 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        .f27-r2 .f27-small { font: 800 6.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; margin-left: 0.3em; }
+        .f27-slam { display: inline-block; }
+        #f27-local { color: var(--fire); }
+        #f27-care { color: var(--fire); }
+        #f27-carew { transform-origin: 85% 100%; } /* the squash widens leftward: "care" sits on the right edge */
+        /* the light behind the current hero */
+        #f27-glow { position: absolute; left: 0; top: 0; width: 96cqw; height: 58cqw; margin: -29cqw 0 0 -48cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.1) 35%, rgba(232, 93, 38, 0.05) 66%, rgba(232, 93, 38, 0) 100%); }
+        /* theirs: 14's window at half its size (scale 0.5 from its bottom-left corner), lit */
+        #f27-clone { position: absolute; left: 5.5cqw; bottom: 2.9cqw; background: var(--ink-alt); transform-origin: 0% 100%;
+          --f27-lit: 1;
+          box-shadow: 0 0 0 1px rgba(240, 236, 229, 0.26), 0 0 calc(var(--f27-lit) * 2.6cqw) rgba(240, 236, 229, 0.16),
+            0 0 calc(var(--f27-lit) * 8cqw) rgba(240, 236, 229, 0.08); }
+        #f27-clone .f27-bar { height: 2cqw; padding: 0 1.2cqw; font-size: 0.9cqw; background: rgba(240, 236, 229, 0.1); color: var(--cream); border-bottom-color: rgba(240, 236, 229, 0.16); }
+        /* 14's pane: 35 columns, git's answer word-wrapped, so it reads at h3 when the window is close */
+        #f27-clone .f27-body { padding: 0.8cqw 1.2cqw 1cqw; font: 400 2cqw/1.35 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f27-clone .f27-cmd, #f27-clone .f27-out { color: var(--cream); }
+        #f27-clone b { color: var(--fire); font-weight: 600; display: inline-block; }
+        .f27-cur { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.18em; }
+        /* the joke at display size: git's answer lifted out of their window */
+        #f27-read { position: absolute; left: 5.5cqw; top: 32.4cqw; font: 500 3cqw/1.22 "IBM Plex Mono", monospace; color: var(--cream);
+          white-space: pre; transform-origin: 0% 0%; }
+        #f27-read b { color: var(--fire); font-weight: 600; }
+        #f27-read i { position: absolute; left: -1.25cqw; top: 0.35cqw; bottom: 0.35cqw; width: 0.32cqw; background: var(--fire); }
+        /* the marker's aside, beside "care" once their window is gone */
+        #f27-note { position: absolute; left: 39cqw; top: 44.2cqw; font: 400 4.4cqw/1 "Caveat Brush", cursive; color: var(--fire); transform: rotate(-5deg);
+          white-space: nowrap; }
+      </style>
+      <div id="root" data-composition-id="27-local2" data-width="1920" data-height="1080" data-duration="3.812">
+        <div id="f27-cam">
+          <!-- the world carries the whip in from 26; the lyric (below) does not -->
+          <div id="f27-world">
+            <div class="hr-layer" data-depth="0.15">
+              <div id="f27-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+            </div>
+            <div class="hr-layer" data-depth="0.4">
+              <div id="f27-win">
+                <div id="f27-wash" data-layout-ignore></div>
+                <div class="f27-bar"><span>me@home</span><span>~/us</span></div>
+                <div id="f27-mine"><div>~/us (main) $ <span class="f27-c">git status</span></div><div class="f27-c">On branch main</div><div class="f27-c">Your branch is up to date with 'origin/main'.</div><div>~/us (main) $ <span class="f27-cur" id="f27-cur0"></span></div></div>
+              </div>
+            </div>
+            <div class="hr-layer" data-depth="0.55">
+              <div id="f27-clone">
+                <div class="f27-bar"><span>you@laptop</span><span>~/us</span></div>
+                <div class="f27-body"><div><span>you@laptop ~/us (main) $ </span><span class="f27-cmd">git status</span></div><div class="f27-out">On branch main</div><div class="f27-out">Your branch is <span id="f27-src">behind 'origin/main'</span></div><div class="f27-out"><span id="f27-src2">by <b class="hr-glowbox" id="f27-n">2</b> commits</span>, and can be</div><div class="f27-out">fast-forwarded.</div><div>  (use "git pull" to update</div><div>  your local branch)</div><div id="f27-o5"><span>you@laptop ~/us (main) $ </span><span class="f27-cmd" id="f27-cmd"></span><span class="f27-cur" id="f27-cur2"></span></div></div>
+              </div>
+              <div id="f27-read" data-hf-motion-blur='{"fps": 60}'><i></i>behind 'origin/main'
+by <b>2</b> commits</div>
+            </div>
+          </div>
+          <div id="f27-words">
+            <div class="hr-layer" data-depth="0.9">
+              <div id="f27-glow" data-layout-ignore></div>
+              <div class="f27-block" id="f27-top">
+                <div class="f27-r1"><span class="f27-w">keep</span> <span class="f27-w">your</span></div>
+                <div class="f27-r2"><span class="f27-slam" id="f27-localw"><span class="f27-slam hr-glowbox" id="f27-local" data-hf-motion-blur='{"fps": 60}'>local</span></span><span class="f27-w f27-small">copy,</span></div>
+              </div>
+              <div class="f27-block" id="f27-bot">
+                <div class="f27-r1"><span class="f27-w">i</span> <span class="f27-w">don't</span></div>
+                <div class="f27-r2"><span class="f27-slam" id="f27-carew"><span class="f27-slam hr-glow" id="f27-care" data-hf-motion-blur='{"fps": 60}'>care</span></span></div>
+              </div>
+              <div id="f27-note">(still.)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.812, T0 = 129.34, PX = 19.2; // PX = 1cqw
+          const root = document.querySelector('[data-composition-id="27-local2"]');
+          const $ = (id) => root.querySelector("#" + id);
+          // louder than 14: this span's mean drum envelope over 14's (0.457, measured 68.69–72.435), capped
+          let sum = 0, n = 0;
+          for (let T = T0; T < T0 + DUR; T += 0.02) { sum += HR.band("drums", T); n++; }
+          const K = Math.max(1, Math.min(1.25, sum / n / 0.457));
+          const stage = HR.stage(root, { seed: 27, pulse: K * 1.2 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          // the words (lyrics.json, L41) and the hits under them (HR_ENV)
+          const KEEP = at(129.4), YOUR = at(129.7), L = at(130.0), COPY = at(130.34), I = at(131.092), DONT = at(131.5), C = at(131.94);
+          const OUT = [at(130.392), at(130.861), at(131.32), at(131.767)]; // kicks: their git answers
+          const N0 = at(132.229), N1 = N0 + 0.36; // the marker, on the kick after "care"
+          const IN = 0.25, RISE = 0.4;
+
+          // ---- the cuts: the world whips in from 26 (whipL); "keep" is outside it, so it lands sharp at 0.06.
+          //      Everything rises out into 28's cream page over the last 0.4 s. ----
+          const cam = $("f27-cam"), world = $("f27-world");
+          WOW.transition(tl, world, { in: "whipL", out: "cut", dur: IN, start: -0.4 * IN, total: DUR });
+          WOW.transition(tl, cam, { in: "cut", out: "rise", dur: RISE, total: DUR });
+
+          // ---- the lyric: "keep your" builds, "local" is shoved in from the right, "copy," leads; "i don't" builds,
+          //      "care" drops in like a weight. Both slams are static words parked off-frame until their tweens, so the
+          //      motion blur smears the approach and never ghosts at the landing spot; the elastic settle after the
+          //      landing is on an outer wrapper, so the word is sharp while it is read ----
+          const w = root.querySelectorAll(".f27-w");
+          HR.lead(tl, w[0], KEEP); HR.lead(tl, w[1], YOUR); HR.lead(tl, w[2], COPY);
+          HR.lead(tl, w[3], I); HR.lead(tl, w[4], DONT);
+          const local = $("f27-local"), care = $("f27-care");
+          const LA = L - 0.04, LB = L + 0.06, CA = C - 0.04, CB = C + 0.08;
+          const LX = 1250 * K, CY = -1150;
+          tl.set(local, { opacity: 0, x: LX, skewX: -24, scale: 1.2 }, 0).set(local, { opacity: 1 }, LA);
+          tl.fromTo(local, { x: LX, skewX: -24, scale: 1.2 }, { x: 0, skewX: 0, scale: 1, duration: LB - LA, ease: "power2.in", immediateRender: false }, LA);
+          tl.fromTo($("f27-localw"), { scale: 1 + 0.07 * K, skewX: 6 }, { scale: 1, skewX: 0, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, LB);
+          tl.set(care, { opacity: 0, y: CY, scaleY: 1.3, scaleX: 0.92 }, 0).set(care, { opacity: 1 }, CA);
+          tl.fromTo(care, { y: CY, scaleY: 1.3, scaleX: 0.92 }, { y: 0, scaleY: 1, scaleX: 1, duration: CB - CA, ease: "power2.in", immediateRender: false }, CA);
+          tl.fromTo($("f27-carew"), { scaleY: 1 - 0.2 * K, scaleX: 1 + 0.07 * K }, { scaleY: 1, scaleX: 1, duration: 0.55, ease: "elastic.out(1, 0.4)", immediateRender: false }, CB);
+          // on "care" the first half steps back (still ≥ 72 px) and gives up the accent
+          tl.fromTo($("f27-top"), { scale: 1 }, { scale: 0.64, duration: 0.32, ease: "power3.out", immediateRender: false }, C);
+          tl.fromTo(local, { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.22, immediateRender: false }, C);
+
+          // ---- theirs: the first frame's object. The clone is close (×1.42, as 14 opens: git's answer at h3), lit and
+          //      already answered; it creeps back under "keep your", and on "local" drops to half of 14's size. The
+          //      prompt returns on the next kick and `git pull` types through "i don't" ----
+          const clone = $("f27-clone"), read = $("f27-read"), S = 0.5, Z0 = 1.42, Z1 = 1.37, SH = L - 0.05, ZX = 0.7 * PX;
+          tl.set(clone, { scale: Z0, x: 0, y: 0, rotation: 0, filter: "blur(0px)" }, 0);
+          tl.fromTo(clone, { scale: Z0, x: 0 }, { scale: Z1, x: ZX, duration: SH, ease: "sine.inOut", immediateRender: false }, 0);
+          tl.fromTo(clone, { scale: Z1, x: ZX }, { scale: S, x: 0, duration: 0.42, ease: "expo.out", immediateRender: false }, SH);
+          const o5 = $("f27-o5");
+          tl.set(o5, { display: "none" }, 0).set(o5, { display: "block" }, OUT[0]);
+          const CMD = "git pull", TA = at(131.15), TB = at(131.55);
+          const keys = [[0, ""]];
+          for (let i = 0; i < CMD.length; i++) keys.push([TA + ((TB - TA) * i) / CMD.length, CMD.slice(0, i + 1)]);
+
+          // ---- the joke at display size: as the window drops, `behind 'origin/main'` / `by 2 commits` lifts out of it
+          //      (from the source's place and size at that moment) to 3cqw mono beside it, leaving a gap in the window.
+          //      Geometry from the pane's metrics (mono advance 0.6em, fixed line heights), so the fonts' load order
+          //      cannot move it: the source is the 16th column of the 3rd body line; the window is 7 lines tall then ----
+          const src = $("f27-src"), src2 = $("f27-src2");
+          const H = (2 + 0.8 + 1 + 7 * 2.7) * PX + 1, srcTop = (2 + 0.8 + 2 * 2.7) * PX + 1, srcLeft = (1.2 + 15 * 0.6 * 2) * PX;
+          const RDX = ZX + srcLeft * Z1, RDY = 1080 - 2.9 * PX - (H - srcTop) * Z1 - 32.4 * PX, RS = (Z1 * 2) / 3;
+          tl.set(read, { x: -2800, y: 0, scale: 1 }, 0);
+          tl.fromTo(read, { x: RDX, y: RDY, scale: RS }, { x: 0, y: 0, scale: 1, duration: 0.42, ease: "expo.out", immediateRender: false }, SH);
+          tl.set([src, src2], { opacity: 1 }, 0).set([src, src2], { opacity: 0 }, SH);
+          // the count kicks on the first downbeat (and the camera with it), before the window drops
+          const num = $("f27-n");
+          tl.fromTo(num, { scale: 1.45 }, { scale: 1, duration: 0.34, ease: "power3.out", immediateRender: false }, at(129.486));
+          WOW.punch(tl, cam, at(129.486), { s: 1 + 0.018 * K, dur: 0.32 });
+
+          // ---- "care": its landing kicks the clone off the left edge, the readout right after it ----
+          tl.fromTo(clone, { x: 0, rotation: 0, filter: "blur(0px)" }, { x: -1350 * K, rotation: -5, filter: "blur(12px)", duration: 0.4, ease: "power2.in", immediateRender: false }, C);
+          tl.fromTo(read, { x: 0, y: 0, scale: 1 }, { x: -1900 * K, y: 24, scale: 1, duration: 0.38, ease: "power2.in", immediateRender: false }, C + 0.08);
+
+          // ---- the camera: a creep in under the whip, a punch on "local" sized by the drums, a lean toward their window
+          //      while git answers, a punch on "care" and the phrase's big move: a push into my screen ----
+          const c = stage.cam, pk = (T) => (0.02 + 0.035 * HR.band("drums", T)) * K;
+          tl.fromTo(c, { z: 1.05, x: 0, y: 0 }, { z: 1.025, x: 0, y: 0, duration: LB - 0.05, ease: "sine.inOut" }, 0);
+          tl.to(c, { z: 1.025 + pk(T0 + LB), y: -7, duration: 0.05, ease: "power2.in" }, LB - 0.05);
+          tl.to(c, { z: 1.03, y: 0, duration: 0.45, ease: "elastic.out(1, 0.5)" }, LB);
+          // (the lean is mostly vertical: a truck left would push the right-aligned lyric off the right edge)
+          tl.to(c, { z: 1.055, x: -10, y: 40, duration: CB - 0.05 - (LB + 0.45), ease: "sine.inOut" }, LB + 0.45);
+          tl.to(c, { z: 1.055 + pk(T0 + CB), y: 34, duration: 0.05, ease: "power2.in" }, CB - 0.05);
+          tl.to(c, { z: 1.15, x: 56, y: 46, duration: 0.6, ease: "power3.out" }, CB);
+          tl.to(c, { z: 1.17, x: 62, y: 50, duration: DUR - (CB + 0.6), ease: "none" }, CB + 0.6);
+          // small punches on the kicks git answers on; a thud under "care"
+          [OUT[0], OUT[1], OUT[2], OUT[3], N0].forEach((k) => WOW.punch(tl, cam, k, { s: 1 + (0.006 + 0.012 * WOW.energy(T0 + k)) * K, dur: 0.3 }));
+          WOW.shake(tl, cam, CB + 0.01, { amp: 8 * K, dur: 0.34, rot: 0.25, seed: 27 });
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: typing, cursors, the marker, the light, the camera ----
+          const cmd = $("f27-cmd"), cur0 = $("f27-cur0"), cur2 = $("f27-cur2"), note = $("f27-note");
+          const top = $("f27-top"), bot = $("f27-bot"), glow = $("f27-glow"), wash = $("f27-wash");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          const e3 = gsap.parseEase("power3.out");
+          // the heroes' centres in the lyric layer (layout offsets, transforms ignored); kept once the fonts are in
+          const ctr = (blk, el) => ({ x: blk.offsetLeft + el.offsetLeft + el.offsetWidth / 2, y: blk.offsetTop + el.offsetTop + el.offsetHeight * 0.55 });
+          let A = null, B = null, Q = null;
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.2);
+            let k = keys[0]; for (const s of keys) if (s[0] <= t) k = s;
+            cmd.textContent = k[1];
+            cur0.style.opacity = blink(t, 0) ? 1 : 0;
+            cur2.style.opacity = t >= OUT[0] && blink(t, Math.max(k[0], OUT[0])) ? 1 : 0;
+            const p = Math.max(0, Math.min(1, (t - N0) / (N1 - N0)));
+            note.style.opacity = p > 0 ? 1 : 0;
+            note.style.clipPath = `inset(-30% ${((1 - p) * 104).toFixed(2)}% -30% -6%)`;
+            // the light: the glow sits behind their close window, moves to "local" as it drops, then to "care";
+            // my screen and their window breathe
+            if (!A || document.fonts.status !== "loaded") {
+              A = ctr(top, local); B = ctr(bot, care);
+              Q = { x: clone.offsetLeft + (clone.offsetWidth * Z0) / 2, y: clone.offsetTop + clone.offsetHeight * (1 - Z0 / 2) };
+            }
+            const v = t < SH ? 0 : e3(Math.min(1, (t - SH) / 0.35)), u = t < C ? 0 : e3(Math.min(1, (t - C) / 0.35));
+            const a = { x: Q.x + (A.x - Q.x) * v, y: Q.y + (A.y - Q.y) * v };
+            glow.style.transform = `translate(${(a.x + (B.x - a.x) * u).toFixed(1)}px, ${(a.y + (B.y - a.y) * u).toFixed(1)}px)`;
+            const up = t < LA ? 0.75 : 0.85;
+            glow.style.opacity = Math.min(1, up + 0.3 * bass + 0.25 * kick).toFixed(3);
+            wash.style.opacity = Math.min(1, 0.86 + 0.14 * bass + 0.08 * kick).toFixed(3);
+            // their window: lit from the first frame, flaring as it drops on "local"
+            const lit = t < L ? 1.2 : 1.5 + 0.6 * Math.max(0, 1 - (t - L) / 0.4);
+            clone.style.setProperty("--f27-lit", ((lit + 0.4 * bass + 0.3 * kick) * 1.6).toFixed(3));
+            local.classList.toggle("hr-glowbox", t < C + 0.12);
+            HR.glow(local, T, 0.25, 0.4 * K); HR.glow(care, T, 0.3, 0.5 * K); HR.glow(num, T, 0.3, 0.4);
+            stage.apply(T);
+            WOW.draw(tl, T0);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["27-local2"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

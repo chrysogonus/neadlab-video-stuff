@@ -1,0 +1,425 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 13 — timeline (chorus 1, L18, 63.679–68.690). The release after 12's overwrite: one clean graph line,
+         straight and single (no fork, no merge), runs edge to edge, and the lyric rides it. The cut whips in (whipL)
+         onto the line already lit, main's history on it (12's rewritten `e81b0d4` the fire tip) and the push's
+         forced update in the prompt's history. "brand" (hero, 63.88) and "new" ride its left end as the pen draws
+         under them; "timeline," slams on 64.52 as the display word while the camera pulls out from close on the left.
+         Through the held "timeline," (3.3 s) the pen is a writing head under the comma and the graph streams under the
+         words: on every kick a commit pops at the head (a ring), a light runs up the line to it, and the whole graph
+         (dots, hashes, the ruler ticks of a literal timeline) steps one commit left, so seven commits travel the width
+         of the frame under the held word. `git merge --ff-only timeline` types at the prompt. On "no" (67.82, kick) the
+         line fast-forwards: the stream lurches three commits, the pen shoots ahead to the new head `7d3a9f1`, git prints
+         `Updating …` and `Fast-forward` (round 2: on "no"); "no goodbyes" hangs from the line's right end, "goodbyes" (hero, 68.04) lands under `Fast-forward`
+         (printed at display size), the stream accelerates and the frame whips along the line into 14 (whipL).
+         Light: a fire glow behind the current hero and a lit band along the line, both breathing with the bass.
+         The glow on hero words is a drop-shadow (.hr-glowbox), so it goes with the glyph when the contrast check hides it.
+         The path text is 05's pattern: each glyph in a wrapper placed on the line (arclength + tangent, re-measured
+         until the fonts are in), the kit animating the glyph inside it.
+         Round 2 (REFINE-2): the cut lands close on main's lit tip, 12's rewritten commits labelled on the line
+         (`7b1e3d8 your lies`, `c40f9a2 over`, `e81b0d4 right`); the held "timeline," gets one big camera move per bar
+         (65.06: dolly along the line toward the head, pulling back and rolling level; 66.909: push in to a steep dutch
+         angle), each held commit drops onto the head on its kick with a double ring; `Fast-forward` prints on "no";
+         from "goodbyes" the camera accelerates along the line into the whip. The camera is keyframed in render(). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f13-cam { position: absolute; inset: 0; }
+        #f13-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f13-strip b { color: var(--fire); font-weight: 600; }
+        /* the light: a lit band along the line, a glow behind the current hero (render() places and breathes both) */
+        #f13-band { position: absolute; left: 0; top: 0; width: 3600px; height: 820px; margin: -410px 0 0 -1800px;
+          background: linear-gradient(180deg, rgba(232, 93, 38, 0) 0%, rgba(232, 93, 38, 0.03) 25%, rgba(232, 93, 38, 0.085) 50%,
+            rgba(232, 93, 38, 0.03) 75%, rgba(232, 93, 38, 0) 100%); }
+        #f13-glow { position: absolute; left: 0; top: 0; width: 100cqw; height: 60cqw; margin: -30cqw 0 0 -50cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.14) 0%, rgba(232, 93, 38, 0.095) 35%, rgba(232, 93, 38, 0.05) 65%, rgba(232, 93, 38, 0) 100%); }
+        /* the singer's prompt, bottom left: the push's answer in its history, the merge types during the held "timeline," */
+        #f13-term { position: absolute; left: 5.5cqw; top: 40.6cqw; width: 60cqw; height: 13cqw; font: 400 1.3cqw/1.65 "IBM Plex Mono", monospace;
+          color: var(--cream-muted); white-space: pre; }
+        #f13-term .f13-plus { color: var(--fire); font-weight: 600; }
+        #f13-term .f13-cmd { color: var(--cream); }
+        /* git's answer at display size: the joke of "no goodbyes" */
+        #f13-o2 { position: absolute; left: -0.25cqw; top: 6.75cqw; font: 600 4.6cqw/1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--cream); }
+        .f13-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.2em; }
+        /* the sung line: glyph wrappers placed on the graph line in JS */
+        .f13-w { position: absolute; left: 0; top: 0; font-family: "Barlow", sans-serif; color: var(--cream); }
+        /* line-height 0.72: the box hugs the letters (baseline 0.76em down, ascenders 0.06em under the top), so it never covers the line */
+        .f13-gp { position: absolute; left: 0; top: 0; line-height: 0.72; white-space: pre; }
+        .f13-up .f13-gp { clip-path: inset(-0.6em -0.4em -0.25em -0.4em); }
+        .f13-down .f13-gp { clip-path: inset(0 -0.4em -0.6em -0.4em); }
+        .f13-small { font-size: 6.4cqw; font-weight: 800; letter-spacing: -0.03em; }
+        #f13-brand { font-size: 6.4cqw; font-weight: 900; letter-spacing: -0.03em; }
+        #f13-time { font-size: 15cqw; font-weight: 900; letter-spacing: -0.04em; }
+        #f13-good { font-size: 10cqw; font-weight: 900; letter-spacing: -0.04em; }
+        .f13-fire { color: var(--fire); }
+        .f13-hash { font: 400 17px "IBM Plex Mono", monospace; fill: #888880; }
+        /* the history's labels: the previous scene's overwritten commits, their messages its words */
+        .f13-hist { font-size: 22px; fill: #B8B4AC; }
+      </style>
+      <div id="root" data-composition-id="13-timeline" data-width="1920" data-height="1080" data-duration="5.011">
+        <div id="f13-cam">
+          <div class="hr-layer" data-depth="0.15">
+            <div id="f13-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+          </div>
+
+          <div class="hr-layer" data-depth="0.45">
+            <div id="f13-term"><div data-layout-allow-overlap><span class="f13-plus">+</span> 3f2a1c9...e81b0d4 main -&gt; main (forced update)</div><div data-layout-allow-overlap><span data-layout-allow-overlap>~/us (main) $ </span><span class="f13-cmd" id="f13-cmd" data-layout-allow-overlap></span><span class="f13-cursor" id="f13-cur1"></span></div><div id="f13-o1" data-layout-allow-overlap>Updating e81b0d4..7d3a9f1</div><div id="f13-o2" data-hf-motion-blur='{"fps": 60}'>Fast-forward</div></div>
+          </div>
+
+          <div class="hr-layer" data-depth="0.8" id="f13-world">
+            <div id="f13-band" data-layout-ignore></div>
+            <div id="f13-glow" data-layout-ignore></div>
+            <svg id="f13-svg" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0; overflow: visible" data-layout-ignore>
+              <!-- the planned line, a hairline far past both edges; the pen lights the timeline over it -->
+              <path id="f13-guide" fill="none" stroke="#3A3A36" stroke-width="2" />
+              <!-- the ruler of a literal timeline: minor ticks every sixth of a commit, a major one per commit; they scroll -->
+              <path id="f13-minor" fill="none" stroke="#3A3A36" stroke-width="7" stroke-dasharray="2 38" />
+              <path id="f13-major" fill="none" stroke="#505048" stroke-width="10" stroke-dasharray="3 237" />
+              <path id="f13-lglow2" class="f13-lit" fill="none" stroke="#E85D26" stroke-opacity="0.07" stroke-width="46" />
+              <path id="f13-lglow" class="f13-lit" fill="none" stroke="#E85D26" stroke-opacity="0.2" stroke-width="14" />
+              <path id="f13-line" class="f13-lit" fill="none" stroke="#F0ECE5" stroke-width="4" />
+              <!-- a light running up the line to the head on each kick -->
+              <path id="f13-pulseg" fill="none" stroke="#E85D26" stroke-width="22" stroke-linecap="round" />
+              <path id="f13-pulse" fill="none" stroke="#F0ECE5" stroke-width="6" stroke-linecap="round" />
+              <circle id="f13-halo" r="0" fill="#E85D26" fill-opacity="0.22" />
+              <g id="f13-dots"></g>
+            </svg>
+            <span class="f13-w f13-up hr-glowbox" id="f13-brand">brand</span>
+            <span class="f13-w f13-up f13-small">new</span>
+            <span class="f13-w f13-up" id="f13-time">timeline,</span>
+            <span class="f13-w f13-down f13-small">no</span>
+            <span class="f13-w f13-down" id="f13-good">goodbyes</span>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script>
+        (() => {
+          const DUR = 5.011, T0 = 63.679;
+          const root = document.querySelector('[data-composition-id="13-timeline"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 13 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const BRAND = at(63.88), NEW = at(64.26), TIME = at(64.52), NO = at(67.82), GOOD = at(68.04);
+          // the kicks of the held "timeline,": one commit each, written at the head as the graph steps left
+          const HOLD = [64.603, 65.064, 65.525, 65.97, 66.447, 66.892, 67.353].map(at);
+          const KBN = at(64.126); // the kick between "brand" and "new": the timeline's first commit
+          const FF = at(67.812); // the kick under "no": the fast-forward
+          const WHIP = 0.25, WHIP0 = DUR - WHIP;
+          const NS = "http://www.w3.org/2000/svg";
+
+          // ---- the cuts: whipL in from 12 (shortened to 0.18 s so "brand" at 0.201 is clear of it), whipL out into 14 ----
+          const cam = $("f13-cam");
+          WOW.transition(tl, cam, { in: "whipL", dur: 0.18, start: -0.07 });
+          WOW.transition(tl, cam, { out: "whipL", dur: WHIP, total: DUR });
+
+          // ---- the words: each glyph in its own wrapper, the kit animates the glyph ----
+          const ws = Array.from(root.querySelectorAll(".f13-w"));
+          for (const w of ws) {
+            const text = w.textContent; w.textContent = ""; w._hrG = [];
+            for (const ch of text) {
+              const wr = document.createElement("span"); wr.className = "f13-gp"; wr.setAttribute("data-layout-allow-overlap", "");
+              const g = document.createElement("span"); g.className = "hr-g"; g.textContent = ch;
+              wr.appendChild(g); w.appendChild(wr); w._hrG.push(g);
+            }
+          }
+          const [brand, neu, time, no, good] = ws;
+          HR.hero(tl, brand, BRAND, { spread: 20, over: 1.2, pre: 0.1, sharp: true, skew: false });
+          HR.lead(tl, neu, NEW); neu.classList.remove("hr-clip");
+          HR.hero(tl, time, TIME, { spread: 44, over: 1.26, pre: 0.14, sharp: true, skew: false });
+          HR.lead(tl, no, NO, { from: -105 }); no.classList.remove("hr-clip");
+          HR.hero(tl, good, GOOD, { spread: 34, over: 1.24, pre: 0.1, sharp: true, skew: false });
+
+          // ---- the prompt: the merge types during the hold, runs on a kick; git answers on "no" and "goodbyes" ----
+          const CMD = "git merge --ff-only timeline", K0 = at(65.97), K1 = at(67.28), ENTER = at(67.353);
+          const rnd = HR.rng(1313), keys = [[0, ""]];
+          { let acc = 0; const gaps = Array.from(CMD, () => 0.7 + rnd() * 0.6), sum = gaps.reduce((a, b) => a + b, 0);
+            for (let i = 0; i < CMD.length; i++) { keys.push([K0 + ((K1 - K0) * acc) / sum, CMD.slice(0, i + 1)]); acc += gaps[i]; } }
+          tl.set($("f13-o1"), { opacity: 0 }, 0).set($("f13-o1"), { opacity: 1 }, FF);
+          // `Fast-forward` slams in from the right at display size: motion-blurred approach, sharp landing
+          const ffw = $("f13-o2");
+          // (it waits off-frame right from the start: the blur's copies ignore opacity and sample the frames before the
+          // slam, so the waiting position must be out of sight)
+          tl.set(ffw, { opacity: 0, x: 1900, skewX: -14 }, 0).set(ffw, { opacity: 1 }, NO - 0.01);
+          tl.fromTo(ffw, { x: 1900, skewX: -14 }, { x: 0, skewX: 0, duration: 0.22, ease: "expo.out", immediateRender: false }, NO - 0.01);
+
+          // ---- the camera (round 2: one big move per held bar). Keyframes resolved after the fonts (they aim at layout
+          //      points) and applied in render(): the cut lands close on main's lit tip; it trucks with the pen under
+          //      "brand new"; the "timeline," slam pulls out to the full line; bar 1 (65.06) dollies along the line toward
+          //      the head while pulling back and rolling, so the lockup rides the line down-left and the unwritten line
+          //      opens on the right where the commits land; bar 2 (66.909) pushes in to a steep dutch angle (the whole
+          //      line stays in frame); "no" (the fast-forward) snaps out to the whole line and its answer; from
+          //      "goodbyes" the camera accelerates along the line into the whip. ----
+          const c = stage.cam, DB1 = at(65.06), DB2 = at(66.909);
+          // [t, z, rot, aim: [layout point, screen x, screen y] | [cam x, cam y], ease of the segment ending here]
+          const CAMK = [
+            [0, 1.45, 0, ["tip", 860, 606]],
+            [BRAND - 0.02, 1.47, 0, ["tip", 846, 602], "sine.out"],
+            [TIME - 0.07, 1.36, 0, ["newEnd", 1250, 560], "power2.out"],
+            [TIME, 1.0, 0, [0, 0], "power2.in"],
+            [TIME + 0.5, 0.99, 0, [6, -4], "elastic.out(1, 0.5)"],
+            [DB1, 1.02, 0, [22, -6], "sine.inOut"],
+            [DB1 + 0.6, 0.93, 5, ["bl", 92, 640], "expo.out"],
+            [DB2, 1.0, 6, ["bl", 44, 630], "sine.inOut"],
+            [DB2 + 0.55, 1.14, -7, ["mid", 960, 650], "expo.out"],
+            [FF, 1.15, -9, ["mid", 948, 640], "sine.inOut"],
+            [FF + 0.07, 1.0, 0, [0, 0], "power2.in"],
+            [GOOD - 0.06, 1.03, 0, [50, -6], "expo.out"],
+            [GOOD, 1.05, 0, [54, -6], "power2.in"],
+            [WHIP0, 1.03, 0, [80, -10], "power2.in"],
+            [DUR, 1.03, 0, [230, -172], "power3.in"],
+          ];
+          let camK = [];
+          const DW = 0.8; // the world layer's depth
+          const camAim = (z, rot, w, sx, sy) => {
+            const s = 1 + (z - 1) * DW, r = (rot * DW * Math.PI) / 180, px = w.x - 960, py = w.y - 540;
+            const qx = Math.cos(r) * px - Math.sin(r) * py, qy = Math.sin(r) * px + Math.cos(r) * py;
+            return { x: (960 + s * qx - sx) / DW, y: (540 + s * qy - sy) / DW };
+          };
+          const camAt = (t) => {
+            if (t <= camK[0].t) return camK[0];
+            for (let i = 1; i < camK.length; i++) if (t < camK[i].t) {
+              const a = camK[i - 1], b = camK[i], u = b.ease((t - a.t) / (b.t - a.t));
+              return { z: a.z + (b.z - a.z) * u, rot: a.rot + (b.rot - a.rot) * u, x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u };
+            }
+            return camK[camK.length - 1];
+          };
+          // a punch on every commit, sized by the drums; a rumble under the "timeline," slam and under the push
+          HOLD.forEach((k) => WOW.punch(tl, cam, k, { s: 1.014 + 0.024 * WOW.energy(T0 + k), dur: 0.32 }));
+          WOW.shake(tl, cam, TIME + 0.01, { amp: 6, dur: 0.3, rot: 0.2, seed: 13 });
+          WOW.shake(tl, cam, DB2 + 0.01, { amp: 5, dur: 0.28, rot: 0.15, seed: 14 });
+          // the kick after "goodbyes", in the acceleration into the whip
+          WOW.punch(tl, cam, at(68.293), { s: 1.03, dur: 0.2 });
+          tl.set({}, {}, DUR);
+
+          // ---- the line: straight, far past both edges (the whip runs along it) ----
+          const line = $("f13-line");
+          const XA = -600, XB = 3600, slope = -180 / 2120, P0 = { x: XA, y: 650 - slope * (-100 - XA) };
+          const P1 = { x: XB, y: P0.y + slope * (XB - XA) };
+          const L = Math.hypot(P1.x - P0.x, P1.y - P0.y), UX = (P1.x - P0.x) / L, UY = (P1.y - P0.y) / L;
+          const NX = -UY, NY = UX; // the normal, pointing down
+          const DEG = (Math.atan2(UY, UX) * 180) / Math.PI;
+          const pt = (s) => ({ x: P0.x + UX * s, y: P0.y + UY * s });
+          const sAtX = (x) => (x - P0.x) / UX;
+          const seg = (dy) => `M ${P0.x} ${(P0.y + dy).toFixed(2)} L ${P1.x} ${(P1.y + dy).toFixed(2)}`;
+          for (const id of ["f13-guide", "f13-line", "f13-lglow", "f13-lglow2", "f13-pulse", "f13-pulseg"]) $(id).setAttribute("d", seg(0));
+          $("f13-minor").setAttribute("d", seg(7.5)); $("f13-major").setAttribute("d", seg(9));
+          const lit = Array.from(root.querySelectorAll(".f13-lit"));
+          for (const p of lit) p.style.strokeDasharray = `${L} ${L}`;
+          const PL = 240; // the light's length
+          for (const id of ["f13-pulse", "f13-pulseg"]) $(id).style.strokeDasharray = `${PL} ${3 * L}`;
+
+          // ---- the scroll: the graph steps one commit left on every held kick, lurches three on the fast-forward,
+          //      and rushes into the whip (a pure function of time) ----
+          const D = 240, LURCH = 3 * D, RUSH = 700, LAND = 0.14, RIP = 0.11; // RIP: the ripple's lift, in em
+          const e3 = gsap.parseEase("power3.out"), eX = gsap.parseEase("expo.out"), popE = gsap.parseEase("back.out(2.2)");
+          const ramp = (t, a, d, ease) => (t <= a ? 0 : t >= a + d ? 1 : ease((t - a) / d));
+          const scrollAt = (t) => {
+            let s = 0;
+            for (const k of HOLD) s += D * ramp(t, k, 0.32, e3);
+            s += LURCH * ramp(t, FF, 0.45, eX);
+            if (t > GOOD) { const u = Math.min(1, (t - GOOD) / (DUR - GOOD)); s += RUSH * u * u * u; }
+            return s;
+          };
+
+          // ---- the path text and the graph: placed once the fonts are in (until then, re-measured every frame) ----
+          const X0 = 125, X1 = 1815; // pad-x 5.5cqw
+          let laid = false, pen = [], sH = 0, commits = [];
+          const place = (w, s, down) => {
+            const em = parseFloat(getComputedStyle(w).fontSize);
+            w._s0 = s;
+            let cx = 0, cy = 0;
+            for (const g of w._hrG) {
+              const wr = g.parentNode, adv = wr.offsetWidth, h = wr.offsetHeight, ctr = s + adv / 2;
+              const p = pt(ctr);
+              // up: the baseline rides 16 px over the line (box bottom clear of the dots); down: the box hangs 14 px under it
+              const dy = down ? 14 : -16 - 0.76 * em;
+              wr.style.transformOrigin = `${adv / 2}px ${-dy}px`;
+              wr._bx = p.x - adv / 2; wr._by = p.y + dy; wr._ctr = ctr; wr._em = em;
+              wr.style.transform = `translate(${wr._bx.toFixed(2)}px, ${wr._by.toFixed(2)}px) rotate(${DEG.toFixed(3)}deg)`;
+              cx += p.x; cy += p.y + (down ? 14 + 0.4 * em : -16 - 0.36 * em);
+              s += adv;
+            }
+            w._s1 = s;
+            w._c = { x: cx / w._hrG.length, y: cy / w._hrG.length };
+            return em;
+          };
+          const width = (w) => w._hrG.reduce((a, g) => a + g.parentNode.offsetWidth, 0);
+          // the commits: hashes are the film's (12's rewritten main) and this branch's own
+          const HOLDH = ["5e0d83b", "c9a27f4", "18e5b6c", "f03d2a9", "6c8e1f5", "b72a04d", "2f6b0e1"];
+          const dotG = $("f13-dots"), N = 3 + 1 + HOLD.length + 3;
+          const marks = Array.from({ length: N }, () => {
+            const g = document.createElementNS(NS, "g"); dotG.appendChild(g);
+            const st = document.createElementNS(NS, "line"); st.setAttribute("stroke", "#E85D26"); st.setAttribute("stroke-width", "5");
+            st.setAttribute("stroke-linecap", "round"); st.setAttribute("stroke-opacity", "0"); g.appendChild(st);
+            const c = document.createElementNS(NS, "circle"); g.appendChild(c);
+            const tx = document.createElementNS(NS, "text"); tx.setAttribute("class", "f13-hash"); tx.setAttribute("text-anchor", "middle"); g.appendChild(tx);
+            return { c, tx, st };
+          });
+          function layout() {
+            const ready = document.fonts.status === "loaded";
+            // top row from the left margin: brand new timeline,
+            let s = sAtX(X0);
+            s = place(brand, s) * 0.26 + brand._s1;
+            s = place(neu, s) * 0.3 + neu._s1;
+            place(time, s);
+            // bottom row, right-aligned to the margin: no goodbyes
+            const gap = parseFloat(getComputedStyle(no).fontSize) * 0.26;
+            const s1 = sAtX(X1) - (width(no) + gap + width(good));
+            place(no, s1, true); place(good, no._s1 + gap, true);
+            // the head: under the comma of "timeline,"; main's tip sits on the ruler under "brand"
+            sH = time._s1 - 10;
+            const sE = sH - Math.round((sH - sAtX(165)) / D) * D;
+            const sBN = (brand._s1 + neu._s0) / 2;
+            // the pen (screen arclength): main's tip, under "brand" as it lands, under "new", across "timeline," on the
+            // slam, held at the head through the hold (the graph moves, not the pen); after the fast-forward it is
+            // computed from the new head (render)
+            pen = [[0, sE], [BRAND - 0.1, sE], [BRAND + 0.2, brand._s1, "power2.inOut"], [KBN, sBN, "power2.out"],
+              [NEW + 0.18, neu._s1, "power3.out"], [TIME - 0.02, neu._s1], [HOLD[0], sH, "expo.out"]];
+            // world arclengths (screen = world − scroll); a commit shows once written: t ≥ its time and the pen past it
+            commits = [
+              { u: sE - 2 * D, t: -1, h: "7b1e3d8 your lies" }, { u: sE - D, t: -1, h: "c40f9a2 over" }, { u: sE, t: -1, h: "e81b0d4 right" },
+              { u: sBN, t: KBN, h: "a41c9d7" },
+              ...HOLD.map((k, i) => ({ u: sH + i * D, t: k, h: HOLDH[i], land: true })),
+              ...[1, 2, 3].map((j) => ({ u: sH + (HOLD.length + j) * D, t: FF + 0.02 + 0.03 * j, h: "", ff: true })),
+            ];
+            // the camera's aim points (world px at zero scroll): main's tip, the end of "new", the line under "brand",
+            // the line under the middle of "brand new timeline,"
+            const P = { tip: pt(sE), newEnd: pt(neu._s1), bl: pt(brand._s0), mid: pt((brand._s0 + time._s1) / 2) };
+            camK = CAMK.map(([t, z, rot, a, ease]) => {
+              const xy = typeof a[0] === "string" ? camAim(z, rot, P[a[0]], a[1], a[2]) : { x: a[0], y: a[1] };
+              return { t, z, rot, x: xy.x, y: xy.y, ease: gsap.parseEase(ease || "none") };
+            });
+            laid = ready;
+          }
+          const uHead = () => commits[commits.length - 1].u;
+          const penAt = (t, sc) => {
+            if (t >= FF) return sH + (uHead() - sc - sH) * eX(Math.min(1, (t - FF) / 0.2));
+            if (t <= pen[0][0]) return pen[0][1];
+            for (let i = 1; i < pen.length; i++) if (t < pen[i][0]) {
+              const [ta, sa] = pen[i - 1], [tb, sb, ease] = pen[i];
+              return sa + (sb - sa) * gsap.parseEase(ease || "none")((t - ta) / (tb - ta));
+            }
+            return pen[pen.length - 1][1];
+          };
+
+          // a ring on each commit at the head (placed once the head is known)
+          const rings = HOLD.map((k) => WOW.shock(tl, $("f13-world"), { x: 0, y: 0, t: k, r: 210, n: 2, w: 4, gap: 0.06, dur: 0.55 }));
+
+          // ---- per-frame state: layout, scroll, pen, ruler, light, dots, the accent, typing, the cursor, glow, camera ----
+          const cmd = $("f13-cmd"), cur1 = $("f13-cur1"), glow = $("f13-glow"), band = $("f13-band"), halo = $("f13-halo");
+          const minor = $("f13-minor"), major = $("f13-major"), pulse = $("f13-pulse"), pulseg = $("f13-pulseg");
+          const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          const eIO = gsap.parseEase("power2.inOut");
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (!laid) {
+              layout();
+              const h = pt(sH); for (const r of rings) { r.style.left = h.x.toFixed(1) + "px"; r.style.top = h.y.toFixed(1) + "px"; }
+              const m = pt(sAtX(960)); band.style.left = m.x.toFixed(1) + "px"; band.style.top = m.y.toFixed(1) + "px"; band.style.transform = `rotate(${DEG.toFixed(3)}deg)`;
+            }
+            const sc = scrollAt(t), p = penAt(t, sc), bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.2);
+            const off = (L - p).toFixed(2);
+            for (const l of lit) l.style.strokeDashoffset = off;
+            // the ruler scrolls with the graph; its major ticks stay on the commits
+            minor.style.strokeDashoffset = (sc - sH + 1).toFixed(2);
+            major.style.strokeDashoffset = (sc - sH + 1.5).toFixed(2);
+            // a light runs up the lit line to the head on every held kick
+            let pv = 0, ps = 0;
+            for (const k of HOLD) if (t >= k && t < k + 0.42) {
+              const u = (t - k) / 0.42, a = sAtX(-40);
+              ps = a + (sH - a) * eIO(u); pv = 1 - u * u * u;
+            }
+            for (const [el, a] of [[pulse, 0.9], [pulseg, 0.35]]) {
+              el.style.strokeDashoffset = (PL - ps).toFixed(2);
+              el.style.strokeOpacity = (a * pv).toFixed(3);
+            }
+            // the commits: written dots pop, the newest is fire with a halo; the hashes ride under them and the
+            // fast-forward wipes them (the hanging "no goodbyes" takes their place)
+            let newest = -1;
+            commits.forEach((cm, i) => { cm.s = cm.u - sc; cm.on = t >= cm.t && cm.s <= p + 1; if (cm.on) newest = i; });
+            const hashA = 1 - ramp(t, FF - 0.05, 0.15, (x) => x);
+            commits.forEach((cm, i) => {
+              const { c: circ, tx, st } = marks[i], k = cm.on ? Math.min(1, (t - Math.max(0, cm.t)) / 0.3) : 0;
+              let q = pt(cm.s), pk = cm.t < 0 ? 1 : k > 0 ? Math.max(0.05, popE(k)) : 0, fall = 0;
+              // a held commit lands: it drops onto the head along the normal in the LAND s before its kick
+              if (cm.land && !cm.on && t >= cm.t - LAND && t < cm.t) {
+                const u = (t - (cm.t - LAND)) / LAND, off = 170 * (1 - u * u);
+                q = { x: q.x - NX * off, y: q.y - NY * off }; pk = 0.8; fall = u;
+              }
+              st.setAttribute("x1", q.x.toFixed(1)); st.setAttribute("y1", q.y.toFixed(1));
+              st.setAttribute("x2", (q.x - NX * 110).toFixed(1)); st.setAttribute("y2", (q.y - NY * 110).toFixed(1));
+              st.setAttribute("stroke-opacity", (0.75 * fall).toFixed(3));
+              circ.setAttribute("cx", q.x.toFixed(1)); circ.setAttribute("cy", q.y.toFixed(1));
+              circ.setAttribute("r", (11 * pk).toFixed(2));
+              circ.setAttribute("fill", i === newest ? "#E85D26" : "#F0ECE5");
+              tx.textContent = cm.h;
+              tx.setAttribute("class", cm.t < 0 ? "f13-hash f13-hist" : "f13-hash");
+              tx.setAttribute("transform", `translate(${(q.x + NX * 38).toFixed(1)} ${(q.y + NY * 38).toFixed(1)}) rotate(${DEG.toFixed(3)})`);
+              tx.setAttribute("opacity", (fall ? 0 : Math.min(1, pk) * hashA).toFixed(3));
+            });
+            if (newest >= 0) {
+              const q = pt(commits[newest].s);
+              halo.setAttribute("cx", q.x.toFixed(1)); halo.setAttribute("cy", q.y.toFixed(1));
+              halo.setAttribute("r", (24 + 34 * kick).toFixed(1));
+            }
+            // the light: the glow follows the current hero, the band breathes along the line
+            const hot = t >= GOOD ? good : t >= TIME ? time : brand, prev = t >= GOOD ? time : brand;
+            const since = t >= GOOD ? t - GOOD : t >= TIME ? t - TIME : 1, gk = e3(Math.min(1, since / 0.35));
+            const gx = prev._c.x + (hot._c.x - prev._c.x) * gk, gy = prev._c.y + (hot._c.y - prev._c.y) * gk;
+            glow.style.transform = `translate(${gx.toFixed(1)}px, ${gy.toFixed(1)}px)`;
+            glow.style.opacity = Math.min(1, 0.7 + 0.3 * bass + 0.25 * kick).toFixed(3);
+            band.style.opacity = Math.min(1, 0.75 + 0.35 * bass + 0.15 * kick).toFixed(3);
+            // the accent points at the current hero
+            for (const w of [brand, time, good]) { const on = w === hot; w.classList.toggle("f13-fire", on); w.classList.toggle("hr-glowbox", on); }
+            HR.glow(hot, T, 0.3, 0.45);
+            // the words ride the line: each held commit's landing sends a ripple back along it, through "timeline,"
+            // to "brand" (each glyph lifts off the line and swells as the wave passes under it)
+            const ripple = (ctr) => {
+              let v = 0;
+              for (const k of HOLD.slice(1)) {
+                const u = (t - k) / 0.62; if (u < 0 || u > 1) continue;
+                const sw = sH + 60 - (sH + 60 - brand._s0 + 80) * u;
+                v = Math.max(v, Math.exp(-(((ctr - sw) / 190) ** 2)) * (1 - 0.55 * u));
+              }
+              return v;
+            };
+            for (const w of [brand, neu, time]) for (const g of w._hrG) {
+              const wr = g.parentNode, v = t < FF ? ripple(wr._ctr) : 0, o = v * RIP * wr._em;
+              wr.style.transform = `translate(${(wr._bx - NX * o).toFixed(2)}px, ${(wr._by - NY * o).toFixed(2)}px) rotate(${DEG.toFixed(3)}deg) scale(${(1 + 0.07 * v).toFixed(4)})`;
+            }
+            let kk = keys[0]; for (const st of keys) if (st[0] <= t) kk = st;
+            cmd.textContent = kk[1];
+            cur1.style.opacity = t < ENTER && blink(t, kk[0]) ? 1 : 0;
+            const cs = camAt(t); c.z = cs.z; c.rot = cs.rot; c.x = cs.x; c.y = cs.y;
+            stage.apply(T);
+            WOW.draw(tl, T0);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["13-timeline"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,7 +1,9 @@
 # House style — the Neadlab look
 
 The look every NEAD video uses. harvest-remix (`projects/harvest-remix/video/`) proved the base, which the user
-approved as the model for future videos. Revision 3 (2026-10-18, harvest-remix V18.md) adds five rules from the
+approved as the model for future videos. Revision 4 (2026-10-26) adds light and depth (item 11): the user approved
+four Force Push scenes rebuilt as lit line drawing in a space against the flat v2. Revision 3 (2026-10-18,
+harvest-remix V18.md) adds five rules from the
 v17 analysis. Revision 2 (2026-10-17) raises it to the level of the two reference
 videos, "LGTM" and "i'm upping my p(doom)": the evidence and the reasons are in
 [REFERENCE-VIDEOS.md](REFERENCE-VIDEOS.md). Read both before planning a new song (music-to-video Step 3) and
@@ -34,8 +36,9 @@ restrained and lit by one accent; 3D only as line drawing.
    - Layouts vary per line (stacked, compare panels, pull quote, lockup, word per cut, text on a path or
      surface, full-bleed); neighbouring scenes never share one, and **neighbouring shots never put the lyric in
      the same position** (rev 3: harvest-remix v17 had a small lead line top left in five shots in a row).
-   - **Every section has at least one sung word set across ≥ 60 % of the frame width** (up to ~25cqw for that
-     word), the way p(doom) sets SERVANT, I'M and P(DOOM) full-frame.
+   - **Hooks are posters:** the hook and the song's key words are set full-frame (up to ~25cqw), the way p(doom)
+     sets SERVANT, I'M and P(DOOM). A section with no word across 60 % of the frame width is a review flag
+     ([visual-guidelines.md](visual-guidelines.md)), not a target.
 4. **Three type voices.** One grotesk for the sung voice (big, tight, animated on width and weight where the font
    allows), one mono for the machine (labels, data, forms, footnotes), one serif italic for the rare tender or
    sacred line. Add a marker hand for the human heckle ("(it isn't)", "(sure.)") when the song suits it.
@@ -59,15 +62,15 @@ restrained and lit by one accent; 3D only as line drawing.
      only; harvest-remix uses `broadside`: ink, fire-orange and cream. **One exception per film:** a single
      literal second-colour moment when the lyric names the colour (p(doom)'s 2 s of acid green; harvest-remix's
      "little green padlock"), ideally planted for a payoff.
-   - The ground is near-black (ink about `#0A0A0A`) and mostly empty: **ground luma ≤ 0.05** (the 20th-percentile
-     luma of each frame, median over the film) and **at least 40 % of pixels darker than 0.09**. Texture lives on
-     objects, never on the ground.
-   - **The accent is light and pointer, never a ground:** about 5 % of the frame or less (median). It marks the
-     sung word, the spark, the number that matters.
+   - The ground is near-black (ink about `#0A0A0A`) and mostly empty; the references measure a ground luma of
+     0.047–0.063 (the 20th-percentile luma of each frame, median over the film). Texture lives on objects, never on
+     the ground.
+   - **The accent is light and pointer, never a ground:** about 3 % of the frame in the references (median). It
+     marks the sung word, the spark, the number that matters.
    - Two registers: the dark register, and a light **cream-paper** register for documents, forms and diagrams
-     (**10–20 % of frames**), cut between on downbeats. The accent keeps its colour on both. **The first
-     cream frame comes in verse 1**, so the opening has the light/dark rhythm too.
-   - Check the figures on the render as described in REFERENCE-VIDEOS.md ("Measuring a render").
+     (9 % of p(doom)'s frames, 20 % of LGTM's), cut between on downbeats. The accent keeps its colour on both.
+     **The first cream frame comes in verse 1**, so the opening has the light/dark rhythm too.
+   - These figures are signals to compare against, not targets ([visual-guidelines.md](visual-guidelines.md)).
 8. **Everything moves, through one motion grammar** (the kit, `assets/kit/hr-kit.js`):
    - words build glyph by glyph, hero words hit in three phases (anticipation, slam on the word, elastic
      settle), lines leave;
@@ -80,16 +83,36 @@ restrained and lit by one accent; 3D only as line drawing.
      type streaks instead of strobing.
 
    Nothing holds dead.
-9. **Light: glow on the accent only.** The accent glows; bone type stays crisp. Film grain, a gentle vignette,
-   low chromatic aberration, and light leaks on the flips to the loud register (the finish layer,
-   `compositions/overlays/finish.html`). The ground stays black.
+9. **Light: glow on the accent only.** The accent emits light; bone type stays crisp. The light pass
+   (`analysis/finish.py`, p(doom)'s post chain, run by `./vid snap`, `proof` and `render`) blooms whatever is drawn in
+   the accent, adds a red-orange halation, low chromatic aberration, a tone shoulder, film grain and a gentle
+   vignette; `STORYBOARD.md`'s frontmatter names the accent (`light: {"accent": "#E85D26"}`), and a frame's
+   `- light: {…}` line changes it for that frame (a drop blooms harder). The finish layer
+   (`compositions/overlays/finish.html`) keeps the light leaks on the flips to the loud register and the drop
+   flashes. **No CSS glow** (`text-shadow`, `drop-shadow`, glow classes, radial-gradient light): the pass does it,
+   and CSS glow on top doubles it. The ground stays black.
 10. **Objects are graphic and tactile; 3D is line drawing.**
     - Cards, forms, seals, drawers, tickets and keys are drawn simply, in the palette, then given detail: paper
       fibre, a rubber-stamp ink speckle, typewriter text. They read as things, not icons.
     - 3D may be used anywhere, drawn as lines: hairline wireframes and engraving-style hatching that follows the
       form, flat matte fills, fog to black. It reads as illustration, never as rendering.
-    - Build it lean for software WebGL: line and instanced geometry, simple materials, no post passes, driven
-      from the timeline.
+    - Build it with the kit's `lines.js` (instanced anti-aliased lines, analytic hatching, the shutter): unlit
+      lines whose accent parts the light pass blooms, fog by distance, driven from the timeline. No lit materials,
+      no shadow maps.
+11. **Light and depth: every scene is a lit set piece in a space** (revision 4; p(doom)'s engine, `git show
+    fa164b7`, is the model).
+    - **One hero set piece per scene,** the line's object built in the song's world as line drawing, at least
+      40 % of the frame: the history as a rail into the dark and a field of lanes, a branch peeling off it, a
+      wall of fire running down it. A headline over a flat ground or a small screen in a void is not one.
+    - **A camera through the space,** keyed to the words and the beats: a dive onto the hero (`outExpo`, about
+      0.35 s, through the shutter), then following the singer along the object, with smooth drift. Depth comes from
+      perspective, parallax and fog to black, not from blur.
+    - **The lyric on the object:** written along the curve, standing on the floor, engraved on the thing
+      (`lines.js` `textOnPath`), sized for the phone (≥ 72 px; a hero ≥ 11cqw on screen). Fixed copy (the strip,
+      a terminal, a label) stays DOM, crisp.
+    - **Light comes from the object:** the accent parts emit; hot moments go white-hot and cool to the accent (a
+      sung hero word, the head of a front, a kick packet). The drop is the hottest stretch of the dark register.
+    - **The quiet scenes keep the space:** one lit thread in deep black, not a black card.
 
 ## What to avoid
 
@@ -104,26 +127,21 @@ restrained and lit by one accent; 3D only as line drawing.
 | A busy, mid-grey ground; texture everywhere | Kills the contrast that makes the type and the accent pop (harvest-remix v12: ground luma 0.078 against 0.047–0.063). |
 | The lyric as a caption beside a prop, one layout template | The lyric must be on or be the object (item 2). |
 | Words that pop in and freeze, static frames, plain hard cuts everywhere | This was v7's "meh". |
-| Full-frame light washes | Leaks are edge-weighted, at most 0.4 opacity. |
+| Full-frame light washes | Leaks are edge-weighted, at most 0.15 opacity: the light pass blooms their accent too (0.4 read as an orange wash under it). |
 | Abstract energy effects on an object: lightning, flat CSS shock rings, colour washes over the frame | harvest-remix v18's cipher-rotor locks read "weird, underwhelming, low quality" to the user. Explosions are mechanical: the object comes apart, its parts and sparks and its own light carry the hit (v19's exploded view). |
 
 ## How to make one
 
-1. Run `./vid new`, `./vid analyze`, then `./vid video`. The last one installs the kit (`hr-kit.js`, `env.js`)
-   and the finish layer from `templates/hyperframes/`.
-2. Plan with `/music-to-video` Steps 2–3: the song's world, its idea and preset; a line table (each sung line
-   and its literal pun); the running devices (counter, plants and payoffs, the bookend, a character only if the
-   story needs one); the small-text jokes.
-3. Write the song's `SYSTEM.md`, using harvest-remix's as the model: the world, the tokens, the three voices,
-   the lyric rule and the kit rules.
-4. **Prove before scaling:**
-   - build two reference frames yourself, the opening and the first chorus with its hook. The default opening
-     is a narrative cold open with a designed YouTube thumbnail; a poster first frame is also fine, but it
-     **holds at most one bar** before the story starts moving;
-   - render `./vid proof <id> --to <end of the first drop>`;
-   - get the user's verdict before dispatching frame-workers.
-5. Dispatch frame-workers three at a time, each with `SYSTEM.md`, the two reference frames and `./vid snap`.
-   Review every contact sheet and motion strip yourself.
-6. Fill the finish layer's `LEAKS` and `FLASHES` with the song's flips and drops, then run `./vid assemble`,
-   `hyperframes check --no-browser-gpu`, the 60 fps render, and `./vid master`. Measure the render against
-   item 7's figures and design the thumbnail.
+The stages are in [AGENTS.md](../AGENTS.md) ("Making a video"). What the house style adds to them:
+
+- **Analyze:** `./vid video` installs the kit (`hr-kit.js`, `wow-kit.js`, `motion-blur.js`, `env.js`, and the kit's
+  `README.md` with its traps) and the finish layer from `templates/hyperframes/`.
+- **Interpret:** the song's world, its idea and preset; a line table (each sung line and its literal pun); the
+  running devices (counter, plants and payoffs, the bookend, a character only if the story needs one); the
+  small-text jokes. The song's `SYSTEM.md` follows harvest-remix's: the world, the tokens, the three voices, the
+  lyric rule and the kit rules.
+- **Motion:** the default opening is a narrative cold open with a designed YouTube thumbnail. A poster first frame
+  is also fine, but it **holds at most one bar** before the story starts moving.
+- **Review:** fill the finish layer's `LEAKS` and `FLASHES` with the song's flips and drops before the 60 fps
+  render. Check the render against [visual-guidelines.md](visual-guidelines.md) (rules firm, signals reviewed),
+  and design the thumbnail.

@@ -1,4 +1,27 @@
-<!doctype html><html><head><meta charset="UTF-8"/></head><body><template>
+<!doctype html><html><head><meta charset="UTF-8"/>
+<!-- Frame 20 — library (150.923–160.058), v22 r1 (REFINE-1.md, worker A): the final drop is the film's peak.
+     150.923 the first instant is v21's: 22's globe at camera z 34, the poster "now" (1180 px, centred 960,735).
+     150.923–152.746 bar 1: the camera dives at the globe in one surge per kick (lamp bands flare, the dial clicks),
+       "now" grows a step per kick to ~85 % of the frame width; it drops onto the near drawer on the downbeat.
+     152.746 through the surface into the archive: a corridor of hairline drawers (ink fronts, cream edges, fire lamps).
+       Downbeats slam whole rows open down the corridor, every kick another row; the drawer's lamp flares white, its
+       record lifts out, and its front carries the "now" stamp. 154.574 the camera cranes up the stacks.
+     156.400 drawer 0001 (the one left shut) slams open by the lens and the letter rises out of it; Archie rolls in
+       and reads it (marker reads on the kicks 157.308 / 157.779 / 158.227); READ lands on the 158.853 kick.
+     158.227 the roll closes the drawers in a cascade toward the lens, one band per hat; lamps go out.
+     ~159.25 the right ~40 % is dark and still (the end-screen window); 159.913 the letter folds into its envelope
+       and lands on 15's thumbnail (centre 1118,381, cracked seal 50 px) at 160.058.
+     No flat rings, rays or washes: every hit is a drawer, a lamp, a record, the paper or the camera.
+     v22 r2 (REFINE-2.md, worker B): no globe bar, no held poster word. 150.923 (hard cut from 22's record in the wall):
+       the corridor from the first instant, the lens at the left wall's first drawer; on the downbeat it slams out toward
+       the lens and "now" slams onto its front as its stamp (from 2.8x down onto the face). Bar 1 the camera pulls back
+       and swings down the corridor in one surge per kick, a row slamming open on each; whole rows on 152.746 and 154.574.
+       158.227 roll: the drawers slam shut toward the lens, one distance band per roll hit (far to near, lamp flash, then
+       out), the camera recoiling a notch on each; 0001 by the lens shuts last (159.741). The letter folds behind itself
+       in thirds on 159.136 and 159.440 (the READ third faces out), drops into its envelope on 159.593 (the flap shuts),
+       and the envelope flies to 15's thumbnail, landing on the 159.913 kick at ENV and holding to the cut. The right
+       ~40 % is dark from 159.35; the rest goes to ink from 159.78. -->
+</head><body><template>
 <style>
 @font-face{font-family:"Barlow";src:url("assets/fonts/barlow-400.woff2") format("woff2");font-weight:400}
 @font-face{font-family:"Barlow";src:url("assets/fonts/barlow-800.woff2") format("woff2");font-weight:800}
@@ -6,73 +29,69 @@
 @font-face{font-family:"IBM Plex Mono";src:url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2");font-weight:500}
 @font-face{font-family:"Instrument Serif";src:url("assets/fonts/instrument-serif-400-italic.woff2") format("woff2");font-style:italic;font-weight:400}
 #root{position:absolute;inset:0;overflow:hidden;container-type:size;background:#0A0A0A;color:#F0ECE5}
-#f23-gl,#f23-bloom{position:absolute;inset:0;width:100%;height:100%}
-#f23-bloom{mix-blend-mode:screen}
-#f23-stage{position:absolute;inset:0}
-#f23-now{position:absolute;left:5.5cqw;top:40cqh;font:900 18.5cqw/.86 "Barlow";letter-spacing:-.045em;color:#E85D26}
-#f23-lock{position:absolute;left:6cqw;top:28cqh;opacity:0;font:800 6.7cqw/.98 "Barlow";letter-spacing:-.035em}
-#f23-lock strong{font-size:12cqw;font-weight:900;display:block;margin-top:.5cqw;color:#E85D26}
-#f23-shield{position:absolute;inset:0;opacity:.88;background:linear-gradient(90deg,#0A0A0A 0%,rgba(10,10,10,.97) 37%,rgba(10,10,10,0) 67%)}
-#f23-pool{position:absolute;left:53cqw;top:8cqh;width:43cqw;height:86cqh;border-radius:50%;opacity:0;
-  background:radial-gradient(closest-side,rgba(240,236,229,.11),rgba(240,236,229,.04) 55%,rgba(240,236,229,0) 100%)}
+#f23-gl{position:absolute;inset:0;width:100%;height:100%}
+#f23-lock{position:absolute;left:5.5cqw;top:28cqh;font:800 6.7cqw/1.02 "Barlow";letter-spacing:-.035em;opacity:0}
+#f23-lock strong{display:block;margin-top:.5cqw;font-size:13cqw;font-weight:900;color:#E85D26}
+/* a calm ink plate behind the giant "now" so it reads over the globe's lamps */
+#f23-plate{position:absolute;left:4cqw;top:38cqh;width:92cqw;height:60cqh;border-radius:50%;opacity:0;
+  background:radial-gradient(closest-side,rgba(10,10,10,.66),rgba(10,10,10,.42) 55%,rgba(10,10,10,0) 100%)}
+/* the archive's deadpan tally, top right while the drawers open */
+#f23-tally{position:absolute;right:5.5cqw;top:6.5cqh;text-align:right;padding:10px 14px;background:rgba(10,10,10,.88);font:500 17px/1.5 "IBM Plex Mono";letter-spacing:.14em;color:#888880;opacity:0;white-space:nowrap}
+#f23-tally b{display:block;font-weight:500;font-size:30px;letter-spacing:.04em;color:#E85D26}
 /* the letter: 13's paper (fibre, three-fold creases, raking light, deckled foot) and its seal, broken */
-#f23-letter{position:absolute;left:0;top:0;width:33cqw;height:62cqh;color:#111111;opacity:0;transform-origin:0 100%}
+#f23-letter{position:absolute;left:0;top:0;width:33cqw;height:62cqh;color:#111111;opacity:0;transform-origin:50% 50%}
 #f23-receipt{position:absolute;left:0;right:0;top:-46px;height:46px;box-sizing:border-box;display:flex;align-items:center;gap:16px;padding:0 16px;
   background:linear-gradient(180deg,#262624,#1f1f1d);border:1.5px solid #3a3a37;box-shadow:inset 0 1px 0 rgba(240,236,229,.24);font:500 16px/1 "IBM Plex Mono";color:#F0ECE5;white-space:nowrap}
 .f23-maildots{display:flex;gap:9px;margin-right:2px}
 .f23-maildots i{width:7px;height:7px;border-radius:50%;background:#505048}
 .f23-maildots i:first-child{background:#E85D26}
 #f23-address{color:#F0ECE5}
-#f23-address span{color:#888880}
+#f23-address span{color:#8E8E86}
 #f23-read{margin-left:auto;padding:7px 9px;border:1px solid #E85D26;color:#E85D26;font-size:13px;letter-spacing:.12em;box-shadow:inset 0 1px 0 rgba(246,140,92,.14)}
 .f23-shd{position:absolute;inset:0;background:#111111}
 #f23-shd1{opacity:.5;filter:blur(22px);transform:translate(14px,30px)}
 #f23-shd2{opacity:.4;filter:blur(3px);transform:translate(3px,5px)}
 #f23-paper{position:absolute;inset:0;background-color:#F0ECE5;background-size:512px 512px;overflow:hidden;padding:3cqw}
-#f23-panels,#f23-rake,#f23-edge,#f23-sweepbox{position:absolute;inset:0;pointer-events:none}
+#f23-panels,#f23-rake,#f23-edge{position:absolute;inset:0;pointer-events:none}
 .f23-crease{position:absolute;left:0;right:0;height:64px;background:linear-gradient(180deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.06) 40%,rgba(17,17,17,.17) 49.5%,rgba(255,255,255,.75) 51%,rgba(255,255,255,.18) 56%,rgba(17,17,17,0) 80%)}
 #f23-rake{background:linear-gradient(112deg,rgba(255,255,255,.2) 0%,rgba(255,255,255,0) 36%,rgba(17,17,17,0) 58%,rgba(17,17,17,.15) 100%)}
 #f23-edge{box-shadow:inset 0 2px 0 rgba(255,255,255,.85),inset 0 -5px 0 rgba(17,17,17,.14),inset 0 0 90px rgba(17,17,17,.10)}
-#f23-sweepbox{overflow:hidden}
-#f23-sweep{position:absolute;top:-20%;left:0;width:26%;height:140%;transform:skewX(-16deg) translateX(-200%);
-  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.34) 50%,rgba(255,255,255,0))}
 #f23-body{position:relative}
 .f23-small{display:flex;justify-content:space-between;font:500 16px/1.5 "IBM Plex Mono";letter-spacing:.12em;color:#5F5B54}
 .f23-hand{font:italic 400 28px/1.2 "Instrument Serif";color:#3A3834}
 #f23-letter .f23-copy{font:italic 400 4.3cqw/.95 "Instrument Serif";letter-spacing:-.015em;margin:.8cqw 0 1cqw}
 .f23-sig{font:italic 400 50px/1 "Instrument Serif";margin-top:6px}
 #f23-seal{position:absolute;right:3cqw;bottom:2.4cqw;width:9.4cqw;height:9.4cqw;overflow:visible;transform:rotate(7deg)}
-#f23-caption{position:absolute;left:6cqw;top:5.5cqh;font:500 18px "IBM Plex Mono";letter-spacing:.14em;color:#888880}
-
-#f23-lock{left:5.5cqw;top:28cqh;font-size:6.7cqw;opacity:1;line-height:1.02}
-#f23-lock strong{font-size:13cqw}
-/* v19: a calm ink plate behind the giant "now" so it reads over the globe's lamps */
-#f23-plate{position:absolute;left:10cqw;top:50cqh;width:80cqw;height:46cqh;border-radius:50%;opacity:0;
-  background:radial-gradient(closest-side,rgba(10,10,10,.62),rgba(10,10,10,.4) 55%,rgba(10,10,10,0) 100%)}
-#f23-counter{position:absolute;left:63cqw;top:83cqh;font:500 18px/1.5 "IBM Plex Mono";letter-spacing:.1em;color:#F0ECE5}
-#f23-counter b{font-weight:500;color:#E85D26;display:block;font-size:28px;letter-spacing:0}
-#f23-arch{position:absolute;inset:0;width:100%;height:100%;opacity:0}
-#f23-finalseal{position:absolute;left:1080px;top:350px;width:50px;height:50px;opacity:0;overflow:visible}
-#f23-fx{position:absolute;inset:0;pointer-events:none}
-#f23-pool{left:30cqw;top:22cqh;width:44cqw;height:70cqh;mix-blend-mode:screen}
-#f23-glowL{position:absolute;inset:0;background:linear-gradient(90deg,rgba(232,93,38,.34),rgba(232,93,38,.08) 30%,rgba(232,93,38,0) 55%)}
+/* the drawer's lamp lights the letter from below as it rises out */
+#f23-glowL{position:absolute;inset:0;background:linear-gradient(0deg,rgba(232,93,38,.26),rgba(232,93,38,.07) 34%,rgba(232,93,38,0) 60%)}
 .f23-hl{position:absolute;background:rgba(232,93,38,.27);border-radius:4px;transform-origin:0 50%;transform:scaleX(0);mix-blend-mode:multiply}
-#f23-stamp{position:absolute;left:14.8cqw;top:12.2cqw;opacity:0;transform-origin:50% 50%;text-align:center;color:#E85D26;mix-blend-mode:multiply}
-#f23-stamp b{display:block;font:900 6cqw/.92 "Barlow";letter-spacing:.03em;padding:.5cqw 1.5cqw .2cqw;border:.5cqw solid #E85D26;border-radius:.6cqw;background:rgba(232,93,38,.06)}
-#f23-stamp i{display:block;margin-top:.5cqw;font:500 15px/1 "IBM Plex Mono";font-style:normal;letter-spacing:.16em}
+#f23-stamp{position:absolute;left:14.8cqw;top:12.2cqw;opacity:0;transform-origin:50% 50%;text-align:center;color:#B8441A;mix-blend-mode:multiply}
+#f23-stamp b{display:block;font:900 6cqw/.92 "Barlow";letter-spacing:.03em;padding:.5cqw 1.5cqw .2cqw;border:.5cqw solid #B8441A;border-radius:.6cqw;background:rgba(232,93,38,.06)}
+#f23-stamp i{display:block;margin-top:.5cqw;font:500 15px/1 "IBM Plex Mono";font-style:normal;letter-spacing:.16em;color:#8A3411}
+/* the folds that close the letter into its envelope on the 159.913 kick */
+#f23-fold{position:absolute;inset:0;opacity:0;pointer-events:none;background:linear-gradient(180deg,rgba(17,17,17,0) 30%,rgba(17,17,17,.22) 33.3%,rgba(255,255,255,.5) 34%,rgba(17,17,17,0) 38%,rgba(17,17,17,0) 63%,rgba(17,17,17,.22) 66.6%,rgba(255,255,255,.5) 67.3%,rgba(17,17,17,0) 71%)}
+#f23-pool{position:absolute;left:0;top:0;width:900px;height:900px;border-radius:50%;opacity:0;mix-blend-mode:screen;
+  background:radial-gradient(closest-side,rgba(240,236,229,.16),rgba(240,236,229,.05) 55%,rgba(240,236,229,0) 100%)}
+#f23-arch{position:absolute;inset:0;width:100%;height:100%;opacity:0}
+/* the envelope it is filed back into: 15's thumbnail (cream, flap lines), the cracked seal on top */
+#f23-env{position:absolute;left:0;top:0;width:240px;height:150px;opacity:0;background-color:#F0ECE5;background-size:288px 180px;transform-origin:50% 50%;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 14px 26px rgba(0,0,0,.55)}
+#f23-env svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#f23-finalseal{position:absolute;left:0;top:0;width:50px;height:50px;opacity:0;overflow:visible}
+#f23-fx{position:absolute;inset:0;pointer-events:none}
 </style>
 <div data-hf-id="hf-nxsq" id="root" data-composition-id="23-library" data-width="1920" data-height="1080" data-duration="9.135">
 <canvas data-hf-id="hf-is9q" id="f23-gl" width="1920" height="1080" data-layout-ignore></canvas>
-<div id="f23-fx" data-layout-ignore></div>
 <div id="f23-plate" data-layout-ignore></div>
 <div data-hf-id="hf-cksg" id="f23-lock"><div data-hf-id="hf-8i1t">harvested then,</div><div data-hf-id="hf-xba0">decrypted</div><strong data-hf-id="hf-pni8" id="f23-lnow" class="hr-glow">now</strong></div>
-<div data-hf-id="hf-ul5e" id="f23-counter">BYTES READ<b data-hf-id="hf-5lad" id="f23-bytes">0</b></div>
-<div id="f23-pool" class="f23-poolbox" data-layout-ignore style="position:absolute;opacity:0;border-radius:50%;background:radial-gradient(closest-side,rgba(240,236,229,.20),rgba(240,236,229,.07) 55%,rgba(240,236,229,0) 100%)"></div>
+<div id="f23-tally">RECORDS OPENED<b id="f23-count">0</b></div>
+<div id="f23-pool" data-layout-ignore></div>
+<svg data-hf-id="hf-jd9p" id="f23-arch" viewBox="0 0 1920 1080" data-layout-ignore></svg>
 <div data-hf-id="hf-qbgk" id="f23-letter" data-layout-allow-overlap>
  <div data-hf-id="hf-ano1" class="f23-shd" id="f23-shd1"></div><div data-hf-id="hf-gtdu" class="f23-shd" id="f23-shd2"></div>
  <div data-hf-id="hf-rv5n" id="f23-receipt"><span data-hf-id="hf-nq4r" class="f23-maildots" aria-hidden="true"><i data-hf-id="hf-wt6k"></i><i data-hf-id="hf-zeb8"></i><i data-hf-id="hf-y7e5"></i></span><span data-hf-id="hf-qkxe" id="f23-address">archive.nead<span data-hf-id="hf-10zh">/0001</span></span><span data-hf-id="hf-vwb1" id="f23-read">READ · 0 TIMES</span></div>
  <div data-hf-id="hf-numx" id="f23-paper">
-  <div data-hf-id="hf-he98" id="f23-panels"></div><div data-hf-id="hf-rtim" id="f23-rake"></div><div data-hf-id="hf-890i" id="f23-sweepbox"><div data-hf-id="hf-axlv" id="f23-sweep"></div></div><div id="f23-glowL"></div><div data-hf-id="hf-5tza" id="f23-edge"></div>
+  <div data-hf-id="hf-he98" id="f23-panels"></div><div data-hf-id="hf-rtim" id="f23-rake"></div><div id="f23-glowL"></div><div data-hf-id="hf-5tza" id="f23-edge"></div>
   <div data-hf-id="hf-5msl" id="f23-body">
    <div data-hf-id="hf-hpg9" class="f23-small"><span data-hf-id="hf-6ja9">OBJ 0001 · OPENED</span><span data-hf-id="hf-g3ky">09.03.2021</span></div>
    <div data-hf-id="hf-8u0o" class="f23-hand" style="margin-top:1.3cqw">my love,</div>
@@ -81,6 +100,7 @@
    <div data-hf-id="hf-g5ga" class="f23-hand">always yours,</div>
    <div data-hf-id="hf-oq6w" class="f23-sig">a.</div>
   </div>
+  <div id="f23-fold"></div>
  </div>
  <div id="f23-stamp" data-layout-allow-overlap><b>READ</b><i>BY THE ARCHIVE</i></div>
  <svg data-hf-id="hf-9w8e" id="f23-seal" class="hr-glowbox" viewBox="-64 -64 128 128">
@@ -107,17 +127,26 @@
   <g data-hf-id="hf-6lss" id="f23-shards"></g>
  </svg>
 </div>
-
-<svg data-hf-id="hf-jd9p" id="f23-arch" viewBox="0 0 1920 1080" data-layout-ignore></svg>
+<div id="f23-env" data-layout-ignore><svg viewBox="0 0 240 150" preserveAspectRatio="none">
+ <path id="f23-flap" d="M0 0 L120 75 L240 0" fill="rgba(17,17,17,0.05)" stroke="rgba(17,17,17,0.24)" stroke-width="1.2"/>
+ <path d="M0 150 L104 70 M240 150 L136 70" stroke="rgba(17,17,17,0.1)" stroke-width="1" fill="none"/></svg></div>
 <svg data-hf-id="hf-vyaj" id="f23-finalseal" viewBox="-64 -64 128 128" data-layout-ignore></svg>
+<div id="f23-fx" data-layout-ignore></div>
 </div>
 <script src="assets/kit/env.js"></script><script src="assets/kit/hr-kit.js"></script><script src="assets/kit/archie.js"></script><script src="assets/kit/wow-kit.js"></script>
 <script type="module">
 import * as THREE from "./assets/vendor/three.module.js";
-import { createArchiveThreat, threatGLSL } from "./assets/kit/archive-threat.js";
 const T0=150.923,DUR=9.135,L=t=>+(t-T0).toFixed(3),clamp=x=>Math.max(0,Math.min(1,x));
 const $=id=>document.getElementById(id);
 await Promise.all([document.fonts.load('900 74px "Barlow"'),document.fonts.load('500 26px "IBM Plex Mono"'),document.fonts.load('italic 400 83px "Instrument Serif"')]);
+const ease=x=>{x=clamp(x);return x*x*(3-2*x)},lerp=(a,b,u)=>a+(b-a)*u,out3=x=>1-Math.pow(1-clamp(x),3);
+// a critically damped step: 0 before u=0, 1 after, landing in ~4τ (the dial's click, the dive's surges)
+const step=(u,tau)=>u<=0?0:1-(1+u/tau)*Math.exp(-u/tau);
+// ---- the music (track seconds) -------------------------------------------------------------------------------------
+const CUT=152.746;                                   // bar 2's downbeat (whole rows slam open)
+const HATS=[...HR.onsetsIn('hat',158.2,159.8),...HR.onsetsIn('kick',158.5,159.0)].sort((a,b)=>a-b);   // the 158.227 roll: nine hats and its two kicks
+const STAMP=L(WOW.on(158.85)),FOLD=L(WOW.on(159.91,{kinds:['kick']}));   // READ on the 158.853 kick; the envelope lands on 159.913
+const F1=L(159.136),F2=L(159.44),WRAP=L(159.593);   // r2: two folds and the envelope on the roll's hits
 // ---- the letter: paper fibre (13's bake), folds, deckle, broken seal -----------------------------------------------
 const bake=(w,h,seed,fibres,amp,flecks)=>{
   const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d'),r=HR.rng(seed);
@@ -130,7 +159,8 @@ const bake=(w,h,seed,fibres,amp,flecks)=>{
   for(let k=0;k<flecks;k++){x.fillStyle=r()<.2?'rgba(232,93,38,0.16)':'rgba(80,80,72,0.16)';x.beginPath();x.ellipse(r()*w,r()*h,.6+r()*1.2,.4+r()*.7,r()*3,0,Math.PI*2);x.fill()}
   return c;
 };
-$('f23-paper').style.backgroundImage=`url(${bake(512,512,1313,340,16,60).toDataURL('image/png')})`;
+const fibre=bake(512,512,1313,340,16,60).toDataURL('image/png');
+$('f23-paper').style.backgroundImage=`url(${fibre})`;$('f23-env').style.backgroundImage=`url(${fibre})`;
 (()=>{const r=HR.rng(77),p=['0 0','100% 0'];for(let x=100;x>=0;x-=2.5)p.push(`${x}% calc(100% - ${(4+(r()-.5)*6).toFixed(1)}px)`);
   const poly=`polygon(${p.join(',')})`;$('f23-paper').style.clipPath=poly;$('f23-shd2').style.clipPath=poly})();
 (()=>{const pn=$('f23-panels');
@@ -166,160 +196,244 @@ $('f23-paper').style.backgroundImage=`url(${bake(512,512,1313,340,16,60).toDataU
     const p=Array.from({length:5},(_,j)=>{const b=j/5*Math.PI*2+r()*.8,q=s*(.6+r()*.6);return[x+Math.cos(b)*q,y+Math.sin(b)*q]});
     S('path',{d:'M'+pts(p).join(' L')+'Z',fill:r()<.5?'#C94A1C':'#E85D26',filter:'url(#f23-sh)'},$('f23-shards'))}
 })();
+// the envelope's seal: the sculpted seal with 15's crack (15's thumbnail seal, at its first-frame pose)
+const seal=$('f23-finalseal');
+{const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href','#f23-sealg');seal.appendChild(use);
+ const crack=document.createElementNS('http://www.w3.org/2000/svg','path');crack.setAttribute('d','M-5 -62 l16 28 -14 19 19 25 -11 25 16 22');crack.setAttribute('fill','none');crack.setAttribute('stroke','#111111');crack.setAttribute('stroke-width','5');seal.appendChild(crack);}
 
-
-// H4: same spherical lattice and lens as22. Two point passes, an ink core, no postprocessing.
-const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(43,1920/1080,.1,150);
 const renderer=new THREE.WebGLRenderer({canvas:$('f23-gl'),antialias:true,preserveDrawingBuffer:true});
 renderer.setPixelRatio(1);renderer.setSize(1920,1080,false);renderer.setClearColor('#0A0A0A',1);
-const pos=[],rows=[],hero=[];
-for(let r=0;r<97;r++)for(let c=0;c<193;c++){
-const lat=-Math.PI/2+r*Math.PI/96,lon=c*2*Math.PI/193;
-pos.push(12*Math.cos(lat)*Math.sin(lon),12*Math.sin(lat),12*Math.cos(lat)*Math.cos(lon));rows.push(r);hero.push(r===48&&c===0?1:0);
-}
-const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('aRow',new THREE.Float32BufferAttribute(rows,1));geo.setAttribute('aHero',new THREE.Float32BufferAttribute(hero,1));
-const uni={uTime:{value:0},uOff:{value:0},uBloom:{value:0},uPulse:{value:0},uThreatTime:{value:5.479},uScan:{value:0},uScanA:{value:0},uBand:{value:-20},uBandA:{value:0},uHit:{value:new THREE.Vector4(0,0,0,0)}};
-const vs=`attribute float aRow,aHero;uniform float uTime,uOff,uBloom,uPulse,uThreatTime,uScan,uScanA,uBand,uBandA;uniform vec4 uHit;varying vec3 vCol;varying float vA;
-${threatGLSL}
-void main(){float hh=fract(sin(dot(position,vec3(12.9898,78.233,37.719)))*43758.5453);
-float bd=uBandA*exp(-pow((aRow-uBand)/3.2,2.))+uHit.y*step(fract(hh*7.13+uHit.x*.618),.14)+uHit.w*step(fract(hh*7.13+uHit.z*.618),.14);vec3 ap=archivePosition(position,uThreatTime)*(1.+uPulse*.035*(.5+.5*sin(aRow*.55))+.05*bd);vec4 mv=modelViewMatrix*vec4(ap,1.);
-vec3 wp=(modelMatrix*vec4(position,1.)).xyz;float facing=smoothstep(-.05,.13,dot(normalize(wp),normalize(cameraPosition-wp)));
-float ang=acos(clamp(position.z/12.,-1.,1.));float wave=1.45+uTime*.65;float read=1.-smoothstep(wave-.035,wave+.035,ang);
-vCol=mix(vec3(.9098,.3647,.149),vec3(.9412,.9255,.898),read);
-vCol=archiveExposure(position,uThreatTime,vCol);float sc=uScanA*exp(-pow((ang-uScan)/.07,2.));vCol=mix(vCol,vec3(1.,.97,.93),min(1.,sc+bd));
-float alive=max(aHero,1.-step(97.-uOff*98.,aRow));vA=alive*facing;
-float px=max(2.8,.045*1371./max(-mv.z,.1));gl_PointSize=px*(1.+1.6*sc+1.8*bd)*(uBloom>.5?4.:1.);gl_Position=projectionMatrix*mv;}`;
-function material(bloom){return new THREE.ShaderMaterial({uniforms:{...uni,uBloom:{value:bloom?1:0}},transparent:true,depthWrite:false,blending:bloom?THREE.AdditiveBlending:THREE.NormalBlending,vertexShader:vs,fragmentShader:bloom?`varying vec3 vCol;varying float vA;void main(){float r=length(gl_PointCoord-.5)*2.;float a=vA*.19*exp(-r*r*5.)*(1.-smoothstep(.75,1.,r));gl_FragColor=vec4(vCol,a);}`:`varying vec3 vCol;varying float vA;void main(){float r=length(gl_PointCoord-.5)*2.;float a=vA*(1.-smoothstep(.55,1.,r));if(a<.004)discard;gl_FragColor=vec4(vCol,a);}`});}
-const globe=new THREE.Group();scene.add(globe);
-const core=new THREE.Mesh(new THREE.SphereGeometry(11.96,64,40),new THREE.MeshBasicMaterial({color:'#0A0A0A'}));globe.add(core);
-const bloom=new THREE.Points(geo,material(true)),sharp=new THREE.Points(geo,material(false));globe.add(bloom,sharp);
-// Sparse engraved latitude rings carry the structure without filling the ground.
-const lp=[];for(let r=1;r<96;r+=4)for(let c=0;c<193;c++){let i=(r*193+c)*3,j=(r*193+(c+1)%193)*3;lp.push(...pos.slice(i,i+3),...pos.slice(j,j+3));}
-const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(lp,3));const lm=new THREE.LineBasicMaterial({color:'#505048',transparent:true,opacity:.21});globe.add(new THREE.LineSegments(lg,lm));
-const threat=createArchiveThreat(THREE,globe);
-// v19: the final drop turns the archive like a vault dial, one click per kick (149.09 → 155.95), a roll about the camera axis
-// so the front lamp (0,0,12) never moves. Same function of track time as 22's tail, so the cut is continuous.
-const DIAL=HR.onsetsIn('kick',149.0,156.0),dialAt=T=>DIAL.reduce((a,k)=>{const u=T-k;return u<=0?a:a-Math.PI/10*(1-(1+u/.09)*Math.exp(-u/.09))},0);
-// a white-hot read scan sweeps the globe front to back on each downbeat until Archie reads
-const SCANS=[150.923,152.746,154.574];
-// and on each kick the next band of drawer rows flares and lifts, top to bottom: the archive read line by line
-const BANDK=HR.onsetsIn('kick',150.9,155.95);
-const HITS=[...HR.onsetsIn('kick',150.9,155.95),...HR.onsetsIn('snare',150.9,155.95)].sort((a,b)=>a-b);
-// One lamp leaves the globe and becomes the letter's broken wax seal, then15's thumbnail seal.
-const seal=$('f23-finalseal');for(const node of $('f23-seal').querySelector('defs').children)seal.appendChild(node.cloneNode(true));
-const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href','#f23-sealg');seal.appendChild(use);
-// The duplicated defs are not needed: refer to the original immutable seal definition by unique id.
-while(seal.firstChild!==use)seal.removeChild(seal.firstChild);
-const crack=document.createElementNS('http://www.w3.org/2000/svg','path');crack.setAttribute('d','M-5 -62 l16 28 -14 19 19 25 -11 25 16 22');crack.setAttribute('fill','none');crack.setAttribute('stroke','#111111');crack.setAttribute('stroke-width','5');seal.appendChild(crack);
+
+// ==== the archive (150.923 →): a corridor of hairline drawers, two walls of 11 rows × 44 drawers ====================
+const scene2=new THREE.Scene(),cam2=new THREE.PerspectiveCamera(58,1920/1080,.05,120);
+const HW=3.2,FW=1.6,FH=1,DD=1.6,EXT=1.15,PZ=1.72,PY=1.1,NR=11,NC=44,ROW=k=>-3.3+PY*k,COL=j=>4-PZ*j;
+const HERO={side:1,k:3,j:10};   // drawer 0001: left wall, eye level; it stays shut until 156.4
+const FIRST={side:1,k:3,j:2};   // r2: the first drawer, "now" stamped on it on the 150.923 downbeat
+// the camera: Catmull-Rom through one key per downbeat; each bar's parameter is warped (u + a·sin 2πu / 2π) so the
+// camera surges on the downbeat and settles mid-bar, with its speed continuous across the keys (the bars are equal)
+const CK=[[150.92,[-.4,.25,6.6],[-3.0,.1,2.6],0],
+ [152.746,[-.5,.3,2.6],[-3.0,.05,-1.3],0],
+ [154.574,[.35,1.7,-4.2],[-1.2,2.4,-14],-2.5],
+ [156.4,[.55,.3,-10.0],[-2.2,.15,-14.8],0],
+ [158.227,[.35,.35,-10.7],[-2.2,.2,-15.4],0],
+ [160.058,[.9,.45,-9.4],[-1.9,.25,-15.2],0],
+ [161.9,[1.4,.55,-8.2],[-1.7,.3,-15],0]];
+const cr=(a,b,c,d,w)=>a.map((_,i)=>.5*(2*b[i]+(-a[i]+c[i])*w+(2*a[i]-5*b[i]+4*c[i]-d[i])*w*w+(-a[i]+3*b[i]-3*c[i]+d[i])*w*w*w));
+// r2, bar 1 (150.923–152.746): from the lens at the first drawer's stamp (A) to the old corridor key (B), one surge per
+// kick (the parameter warped on the beat), arriving with the B→C segment's own velocity so the downbeat surge is unchanged
+const CA={p:[-1.1,-.08,COL(FIRST.j)+.04],q:[-3.2,-.08,COL(FIRST.j)+.04]},MA={p:[.9,.12,.5],q:[0,0,-.4]};
+const MB=[1,2].map(n=>CK[2][n].map((v,i)=>.5*(v-CK[0][n][i])));
+const herm=(a,b,m0,m1,w)=>{const w2=w*w,w3=w2*w;return a.map((_,i)=>(2*w3-3*w2+1)*a[i]+(w3-2*w2+w)*m0[i]+(-2*w3+3*w2)*b[i]+(w3-w2)*m1[i]);};
+const corridorCam=T=>{if(T<CK[1][0]){const u=clamp((T-T0)/(CK[1][0]-T0)),w=u+.62*Math.sin(8*Math.PI*u)/(8*Math.PI);
+  return{p:herm(CA.p,CK[1][1],MA.p,MB[0],w),q:herm(CA.q,CK[1][2],MA.q,MB[1],w),roll:0}}
+  let i=1;while(i<CK.length-3&&T>=CK[i+1][0])i++;const u=clamp((T-CK[i][0])/(CK[i+1][0]-CK[i][0])),w=u+.62*Math.sin(2*Math.PI*u)/(2*Math.PI);
+  const P=cr(CK[i-1][1],CK[i][1],CK[i+1][1],CK[i+2][1],w),Q=cr(CK[i-1][2],CK[i][2],CK[i+1][2],CK[i+2][2],w),r=lerp(CK[i][3],CK[i+1][3],ease(u));
+  return{p:P,q:Q,roll:r}};
+// r2: the roll's hits each knock the camera back a notch (the shut wave coming at the lens)
+const rollKick=T=>HATS.reduce((a,h)=>T<h?a:Math.max(a,Math.exp(-(T-h)/.07)),0);
+const setCam2=(T,c=cam2)=>{const k=corridorCam(T),kick=.09*HR.hit('kick',T,.1)*(T<157.9?1:0)-.07*rollKick(T);
+  c.position.set(k.p[0],k.p[1],k.p[2]);c.lookAt(k.q[0],k.q[1],k.q[2]);c.rotateZ(k.roll*Math.PI/180);c.translateZ(-kick);c.updateMatrixWorld();return c};
+// the opening schedule: downbeats slam whole rows (both walls), every kick another row; each row opens as a wave
+// racing out from the view's centre, 5 ms a drawer
+const OPENS=[[150.923,'L',[3]],[151.376,'L',[4]],[151.833,'L',[2]],[152.288,'L',[5]],
+ [152.746,'B',[3,7]],[153.216,'L',[0,8]],[153.659,'R',[4,8]],[154.114,'L',[6]],[154.574,'B',[1,6]],[155.03,'R',[2]],
+ [155.493,'R',[5,0]],[155.948,'B',[9]],[156.865,'R',[10]],[157.308,'L',[10]]];
+const N=2*NR*NC,aBase=new Float32Array(N*3),aSide=new Float32Array(N),aT=new Float32Array(N*4);
+const scratch=new THREE.PerspectiveCamera(58,1920/1080,.05,120);
+let n=0;const idx={};
+for(const side of[1,-1])for(let k=0;k<NR;k++)for(let j=0;j<NC;j++){
+  aBase.set([-side*HW,ROW(k),COL(j)],n*3);aSide[n]=side;idx[`${side},${k},${j}`]=n;
+  const rnd=HR.rng(9000+n);aT[n*4]=1e4;aT[n*4+1]=1e4;aT[n*4+2]=rnd();aT[n*4+3]=0;n++}
+// the wave starts where the view meets that wall (its first drawers slam on the hit itself) and spreads both ways
+const viewCol=(T,side)=>{const c=corridorCam(T),dx=c.q[0]-c.p[0],wx=-side*HW,u=(wx-c.p[0])/dx;
+  const z=u>0&&isFinite(u)?c.p[2]+u*(c.q[2]-c.p[2]):c.p[2]-6;return Math.max(0,Math.min(NC-1,(4-z)/PZ))};
+for(const[T,w,ks]of OPENS){
+  for(const side of(w==='B'?[1,-1]:w==='L'?[1]:[-1])){const jv=T===T0?FIRST.j:viewCol(T,side);
+   for(const k of ks)for(let j=0;j<NC;j++){
+    if(side===HERO.side&&k===HERO.k&&j===HERO.j)continue;const i=idx[`${side},${k},${j}`];
+    if(aT[i*4]<1e3)continue;aT[i*4]=L(T)+.005*Math.max(0,Math.abs(j-jv)-.5)}}}
+const H1=idx[`${HERO.side},${HERO.k},${HERO.j}`];aT[H1*4]=L(156.4);aT[H1*4+3]=1;
+// the roll closes them toward the lens: a band of drawers per roll hit, farthest first; 0001 shuts on the last hat.
+// r2: the bands span the visible depth (3–16 units from the lens), so every hit shuts a band you can see
+{const c=setCam2(158.227,scratch),cp=c.position,H=HATS.map(L);
+ for(let i=0;i<N;i++){if(aT[i*4]>=L(158.2))continue;
+  const d=Math.hypot(aBase[i*3]-cp.x,aBase[i*3+1]-cp.y,aBase[i*3+2]-cp.z),g=Math.max(0,Math.min(H.length-2,Math.floor((16-d)/13*(H.length-1))));
+  aT[i*4+1]=H[g]+.015*aT[i*4+2]}
+ aT[H1*4+1]=H[H.length-1]}
+const OPEN_T=Array.from({length:N},(_,i)=>aT[i*4]).filter(x=>x<1e3).sort((a,b)=>a-b);
+// textures: the "now" stamp (fire, inked through a pinhole mask) and four opened records (22's record cards)
+const stampTex=(()=>{const c=document.createElement('canvas');c.width=512;c.height=256;const x=c.getContext('2d'),r=HR.rng(2323);
+  x.translate(256,128);x.rotate(-.06);x.strokeStyle='#E85D26';x.fillStyle='#E85D26';x.lineWidth=12;
+  x.beginPath();x.roundRect(-232,-106,464,212,16);x.stroke();x.lineWidth=3;x.beginPath();x.roundRect(-214,-88,428,176,8);x.stroke();
+  x.font='900 176px Barlow';x.textAlign='center';x.fillText('now',0,40);x.font='500 22px "IBM Plex Mono"';x.letterSpacing='8px';x.fillText('READ',4,78);
+  x.setTransform(1,0,0,1,0,0);x.globalCompositeOperation='destination-out';
+  for(let i=0;i<900;i++){x.fillStyle=`rgba(0,0,0,${(.25+r()*.6).toFixed(2)})`;x.fillRect(r()*512,r()*256,1+r()*2.5,1+r()*2.5)}
+  const t=new THREE.CanvasTexture(c);t.generateMipmaps=true;t.minFilter=THREE.LinearMipmapLinearFilter;return t})();
+const recTex=(()=>{const TW=512,TH=320,c=document.createElement('canvas');c.width=TW*2;c.height=TH*2;const x=c.getContext('2d'),r=HR.rng(2201);
+  const REC=[['0417','M.','FRI 14 MAY 2021','ECDHE P-256'],['1138','J.','MON 02 AUG 2021','RSA-3072'],['2046','K.','WED 17 NOV 2021','DH-2048'],['3301','R.','THU 03 FEB 2022','RSA-2048']];
+  const mono=(t,px,py,size,fill,al='left')=>{x.font=`500 ${size}px "IBM Plex Mono"`;x.letterSpacing='1.4px';x.fillStyle=fill;x.textAlign=al;x.fillText(t,px,py);x.textAlign='left';x.letterSpacing='0px'};
+  REC.forEach(([obj,from,cap,ci],v)=>{const X=(v%2)*TW,Y=Math.floor(v/2)*TH;
+   x.fillStyle='#F0ECE5';x.fillRect(X,Y,TW,TH);const img=x.getImageData(X,Y,TW,TH);for(let i=0;i<img.data.length;i+=4){const q=(r()-.5)*14;img.data[i]+=q;img.data[i+1]+=q;img.data[i+2]+=q*.9}x.putImageData(img,X,Y);
+   x.strokeStyle='rgba(17,17,17,.3)';x.lineWidth=2;x.strokeRect(X+10,Y+10,TW-20,TH-20);
+   mono('OPENED RECORD',X+30,Y+44,14,'#5F5B54');x.font='900 46px Barlow';x.textAlign='right';x.fillStyle='#111111';x.fillText(obj,X+484,Y+52);x.textAlign='left';
+   x.fillStyle='#111111';x.fillRect(X+30,Y+62,454,2);
+   mono('SENDER',X+30,Y+96,12,'#5F5B54');mono(from,X+30,Y+120,19,'#111111');mono('CAPTURED',X+130,Y+96,12,'#5F5B54');mono(cap,X+130,Y+120,19,'#111111');
+   mono('KEY EXCHANGE',X+30,Y+156,12,'#5F5B54');mono(ci,X+30,Y+180,19,'#111111');
+   mono('READ: NOW',X+30,Y+228,17,'#5F5B54');
+   x.fillStyle='rgba(95,91,84,.7)';for(let i=0;i<40;i++){const tall=r()<.5;x.fillRect(X+30+i*6,Y+246+(tall?0:12),2.6,tall?34:22)}
+   x.font='900 100px Barlow';x.fillStyle='#E85D26';x.fillText('now',X+300,Y+290)});
+  const t=new THREE.CanvasTexture(c);t.generateMipmaps=true;t.minFilter=THREE.LinearMipmapLinearFilter;return t})();
+const cu={uTime:{value:0},uPulse:{value:0},uSurge:{value:0},uDown:{value:0},uRight:{value:0},uFade:{value:0},uStamp:{value:stampTex},uRec:{value:recTex}};
+const GLSL_T=`attribute vec3 aBase;attribute float aSide;attribute vec4 aT;uniform float uTime;
+float slam(float dt){if(dt<0.)return 0.;float e=exp(-dt/.045);return 1.-e*(cos(dt*30.)+.6*sin(dt*30.));}
+float shut(float dc){if(dc<0.)return 1.;float e=exp(-dc/.04);return max(0.,e*(cos(dc*26.)+.85*sin(dc*26.)));}
+float extAt(){return slam(uTime-aT.x)*shut(uTime-aT.y)*${EXT.toFixed(3)}*(aT.w>.5?1.3:1.);}`;
+const GLSL_F=`uniform float uTime,uPulse,uRight,uFade,uSurge,uDown;
+const vec3 INK=vec3(.0392),FIRE=vec3(.9098,.3647,.149),CREAM=vec3(.9412,.9255,.898),MUTED=vec3(.533,.533,.502),HINT=vec3(.314,.314,.282),BORDER=vec3(.157,.157,.149);
+vec3 finish(vec3 col,float depth){col=mix(col,INK,smoothstep(9.,40.,depth));return mix(col,INK,max(uFade,uRight*smoothstep(1040.,1240.,gl_FragCoord.x)));}`;
+const dGeo=new THREE.InstancedBufferGeometry(),box=new THREE.BoxGeometry(1,1,1);
+dGeo.index=box.index;for(const a of['position','normal','uv'])dGeo.setAttribute(a,box.attributes[a]);
+const IB=new THREE.InstancedBufferAttribute(aBase,3),IS=new THREE.InstancedBufferAttribute(aSide,1),IT=new THREE.InstancedBufferAttribute(aT,4);
+dGeo.setAttribute('aBase',IB);dGeo.setAttribute('aSide',IS);dGeo.setAttribute('aT',IT);dGeo.instanceCount=N;
+const drawers=new THREE.Mesh(dGeo,new THREE.ShaderMaterial({uniforms:cu,side:THREE.DoubleSide,
+ vertexShader:`${GLSL_T}varying vec2 vUv;varying vec3 vN;varying float vDepth;varying vec4 vT;
+ void main(){vec3 p=position;float o=(p.x-.5)*${DD.toFixed(2)}+extAt();
+  vec3 w=aBase+vec3(aSide*o,p.y*${FH.toFixed(2)},p.z*${FW.toFixed(2)});
+  vUv=uv;if(aSide<0.&&normal.x>.5)vUv.x=1.-uv.x;vN=normal;vT=aT;vec4 mv=viewMatrix*vec4(w,1.);vDepth=-mv.z;gl_Position=projectionMatrix*mv;}`,
+ fragmentShader:`precision highp float;uniform sampler2D uStamp;${GLSL_F}varying vec2 vUv;varying vec3 vN;varying float vDepth;varying vec4 vT;
+ float hair(float d,float w){float aa=max(fwidth(d),1e-5);w=max(w,aa*.85);return 1.-smoothstep(w-aa*.5,w+aa*.5,d);}
+ float sd(vec2 p,vec2 c,vec2 h){vec2 d=abs(p-c)-h;return max(d.x,d.y);}
+ float hsh(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
+ void main(){if(vN.x<-.5)discard;
+  float dt=uTime-vT.x,dc=uTime-vT.y,opened=step(0.,dt),closed=step(0.,dc),on=1.-closed,flare=opened*exp(-max(dt,0.)/.3);
+  float hero=step(.5,vT.w);vec3 col;
+  if(vN.x>.5){vec2 fs=vec2(1.6,1.),p=vUv*fs;float d=min(min(p.x,fs.x-p.x),min(p.y,fs.y-p.y));
+   col=vec3(.066,.066,.062);
+   col=mix(col,HINT,.6*hair(abs(d-.07),.005));
+   float lb=sd(p,vec2(.47,.74),vec2(.3,.1));col=mix(col,MUTED*.85,hair(abs(lb),.005));
+   vec2 q=(p-vec2(.22,.71))/vec2(.042,.06);
+   if(q.x>=0.&&q.x<12.&&q.y>=0.&&q.y<1.){vec2 c=floor(q);float ink=step(.3,hsh(c+vec2(vT.z*31.,7.)))*step(.5,mod(c.x+1.,4.));
+    col=mix(col,HINT,ink*step(abs(fract(q.x)-.5),.32)*step(abs(fract(q.y)-.5),.3));}
+   col=mix(col,MUTED,hair(abs(sd(p,vec2(.8,.27),vec2(.21,.035))),.005));
+   // the "now" stamp, slammed on as the drawer opens
+   // r2: the first drawer's stamp (150.923) slams down from 2.8x, at full ink
+   float big=step(vT.x,.001)*(1.-hero);
+   if(opened>.5){float s=.4+.6*clamp(dt/.07,0.,1.);vec2 sq=(p-vec2(.76,.42))/vec2(1.16,.58)/mix(mix(1.5,2.8,big),1.,mix(s,s*s,big))+.5;
+    if(sq.x>0.&&sq.x<1.&&sq.y>0.&&sq.y<1.){float a=texture2D(uStamp,sq).a,fresh=exp(-dt/(.55+1.4*big));col=mix(col,FIRE*(1.+.35*flare)*mix(.55,1.,fresh),a*mix(s,1.,big)*mix(.6,.94,fresh));}}
+   // the lamp: sealed = dim fire, opened = white-hot, then cream (read), shut = out
+   vec2 lc=vec2(1.38,.74);float lr=length(p-lc),aa=max(fwidth(lr),1e-5);
+   vec3 lamp=mix(FIRE*.62,mix(CREAM,vec3(1.),max(flare,uSurge)),opened);lamp=mix(lamp,mix(lamp,FIRE*.5,uDown),opened);lamp=mix(lamp,BORDER,closed);
+   col+=mix(FIRE,CREAM,opened)*on*(.1+.55*flare+(.18*uPulse+.5*uSurge)*opened)*(1.-.6*uDown*opened)*exp(-lr*2.6);
+   col+=vec3(1.,.96,.9)*on*(flare*(.28+.25*hero)*exp(-lr*1.1)+.42*opened*exp(-max(dt,0.)/.12));
+   float last=closed*exp(-max(dc,0.)/.12);col+=FIRE*last*(.7*exp(-lr*1.8)+.16*smoothstep(4.,9.,vDepth));
+   col=mix(col,lamp*(1.+.35*uPulse*opened*on),1.-smoothstep(.062-aa,.062+aa,lr));
+   col=mix(col,mix(MUTED,CREAM,.6*flare*on),hair(d,.007));
+  }else{bool tb=abs(vN.y)>.5;vec2 fs=tb?vec2(${DD.toFixed(2)},1.6):vec2(${DD.toFixed(2)},1.),p=vUv*fs;
+   float d=min(min(p.x,fs.x-p.x),min(p.y,fs.y-p.y));
+   col=vN.y>.5?vec3(.085,.085,.08):vec3(.05);
+   col+=CREAM*flare*on*.18*smoothstep(.6,1.6,p.x);
+   col=mix(col,HINT*(1.+.8*flare*on),hair(d,.006));}
+  gl_FragColor=vec4(finish(col,vDepth),1.);}`}));
+drawers.frustumCulled=false;scene2.add(drawers);
+// the records: one cream card per drawer, lifting out after the slam (and dropped back just before it shuts)
+const rGeo=new THREE.InstancedBufferGeometry(),plane=new THREE.PlaneGeometry(1,1);
+rGeo.index=plane.index;for(const a of['position','uv'])rGeo.setAttribute(a,plane.attributes[a]);
+rGeo.setAttribute('aBase',IB);rGeo.setAttribute('aSide',IS);rGeo.setAttribute('aT',IT);rGeo.instanceCount=N;
+const records=new THREE.Mesh(rGeo,new THREE.ShaderMaterial({uniforms:cu,side:THREE.DoubleSide,
+ vertexShader:`${GLSL_T}varying vec2 vUv;varying float vDepth;varying vec4 vT;varying float vL;
+ void main(){float dt=uTime-aT.x-.05,dc=uTime-aT.y;float rise=dt<0.?0.:1.-(1.+dt/.075)*exp(-dt/.075);float drop=1.-smoothstep(-.1,-.03,dc);
+  float l=rise*drop*(1.-step(.5,aT.w));vL=l;vec3 p=position;
+  float o=extAt()-.42+.18*(p.y+.5)*l;vec3 w=aBase+vec3(aSide*o,.84*l+p.y*.82,-aSide*p.x*1.3);
+  vUv=uv;vT=aT;vec4 mv=viewMatrix*vec4(w,1.);vDepth=-mv.z;gl_Position=projectionMatrix*mv;}`,
+ fragmentShader:`precision highp float;uniform sampler2D uRec;${GLSL_F}varying vec2 vUv;varying float vDepth;varying vec4 vT;varying float vL;
+ void main(){if(vL<.003)discard;float tile=floor(vT.z*4.);vec2 o=vec2(mod(tile,2.),1.-floor(tile/2.));
+  vec3 c=texture2D(uRec,(vUv+o)*.5).rgb;float dt=uTime-vT.x,flare=exp(-max(dt,0.)/.3),on=1.-step(0.,uTime-vT.y);
+  c*=.6+.3*flare+.12*uPulse;c+=FIRE*(.08+.1*flare)*(1.-vUv.y);gl_FragColor=vec4(finish(c,vDepth),1.);}`}));
+records.frustumCulled=false;scene2.add(records);
+
+// ==== the timeline ================================================================================================
 const tl=gsap.timeline({paused:true});const clock={t:0};tl.to(clock,{t:DUR,duration:DUR,ease:'none'},0);
-const ease=x=>{x=clamp(x);return x*x*(3-2*x)},lerp=(a,b,u)=>a+(b-a)*u;
-// ---- the camera is a pure function of time; the pull-back and the handoff pose (t=0: z 34, look 0,0,0) are unchanged.
-// After the text leaves, the whole shot slides right (a pure translation) so the globe sits at the left and lights the letter.
-const camAt=t=>{const pull=clamp(t/L(156.4)),S=22*ease((t-L(155.7))/.7);
-  return{x:.65*Math.sin(t*.42)+S,y:.25*Math.sin(t*.31),z:34+22*(1-Math.pow(1-pull,1.35)),lx:-6*ease(t/2.2)+S}};
-const scratch=new THREE.PerspectiveCamera(43,1920/1080,.1,150);
-const screenOf=(t,x,y,z)=>{const c=camAt(t);scratch.position.set(c.x,c.y,c.z);scratch.lookAt(c.lx,0,0);scratch.updateMatrixWorld();
-  const v=new THREE.Vector3(x,y,z).project(scratch);return{x:(v.x*.5+.5)*1920,y:(.5-v.y*.5)*1080}};
-const globeR=t=>16451/camAt(t).z;
-// ---- the hits of "now": every kick punches the globe and the words, rings leave the rim; snares add rays and sparks
-const fx=$('f23-fx'),KICKS=HR.onsetsIn('kick',T0+.3,156.35),SNARES=HR.onsetsIn('snare',T0+.3,156.35);
-const ring=(t,x,y,r0,r1,w,color,dur)=>{const el=document.createElement('div'),c=color==='cream'?'240,236,229':'232,93,38';
-  Object.assign(el.style,{position:'absolute',left:x-100+'px',top:y-100+'px',width:'200px',height:'200px',borderRadius:'50%',boxSizing:'border-box',opacity:0,
-    border:`${w}px solid rgba(${c},.9)`,boxShadow:`0 0 24px rgba(${c},.5)`});fx.appendChild(el);
-  tl.fromTo(el,{opacity:1,scale:r0/100},{scale:r1/100,opacity:0,borderWidth:.5,duration:dur,ease:'expo.out',immediateRender:false},t)};
-KICKS.forEach((tk,i)=>{const t=L(tk),c=screenOf(t,0,0,0),R=globeR(t),f=i/Math.max(1,KICKS.length-1);
-  // v17 outro: soft kick breaths, no shakes
-  WOW.punch(tl,$('f23-gl'),t,{s:1.012+.012*f,dur:.42});
-  WOW.punch(tl,$('f23-lnow'),t,{s:1.05,dur:.32});   // v20: the poster word hits on every kick
-  WOW.punch(tl,$('f23-counter'),t,{s:1.025,dur:.36});
-  ring(t,c.x,c.y,R*.95,R*(1.3+.3*f),2+2*f,i%2?'cream':'fire',.7)});
-SNARES.forEach((tk,i)=>{const t=L(tk),c=screenOf(t,0,0,0),R=globeR(t),a=[-35,200,-150,20][i%4];
-  ring(t,c.x,c.y,R*.85,R*1.9,5,'fire',.8);
-  WOW.rays(tl,fx,{x:c.x,y:c.y,t,n:12,r0:R*.95,r1:R*1.8,seed:200+i,color:'cream',w:3,dur:.6})});
-// ---- Archie rolls in with the letter and reads it by the globe's light
-const archie=HR.archie($('f23-arch'),{id:'f23a',x:2300,y:1040,scale:.7,seed:23,pose:{...HR.archie.MOODS.curious,shR:80,elR:-30,clawR:.9,lookX:-1,lookY:-.2}});
-const ARM={shR:80,elR:-30,clawR:.9};
-const STAMP=L(WOW.on(158.85)),st=$('f23-stamp');   // the READ stamp lands on the 158.853 kick
-archie.rollTo(tl,930,L(155.4),.95,'power2.out');
-archie.to(tl,{lookX:-1,lookY:-.1,turn:-.4},L(155.4),.2);
-archie.to(tl,{lookX:-.9,lookY:-.9,turn:-.3,...ARM},L(156.45),.12);       // eyes snap up to the letter
-archie.to(tl,{lookX:-.9,lookY:-1,turn:-.3,glow:1.1},L(157.1),.1);
-// v19: three calm reads (two lines each) instead of six full-width sweeps at ~4 Hz, which read as darting eyes
-const READS=[[157.2,157.73],[157.73,158.26],[158.26,158.78]];
-READS.forEach(([a,b],k)=>{const y=-1+.26*k;
-  archie.to(tl,{lookX:-.45,lookY:y,turn:-.12},L(a),.2,'power2.inOut');                        // back to the line start
-  archie.to(tl,{lookX:.45,lookY:y+.1,turn:.12},L(a)+.2,b-a-.22,'power1.inOut')});           // along the lines
-const LINES=READS.flatMap(r=>[r,r]);   // the marker fills both lines of a read together
-archie.blink(tl,L(158.8));
-archie.to(tl,{...HR.archie.MOODS.surprised,lookX:.4,lookY:-.4,turn:0,...ARM},STAMP,.12,'power2.out'); // the stamp lands
-archie.bump(tl,STAMP,.09);
-archie.to(tl,{...HR.archie.MOODS.sad,lookX:.6,lookY:-.1,...ARM},L(159.12),.3,'power2.inOut');
-// ---- the letter: 13's paper, unfolded, held in Archie's claw; a marker follows his eyes line by line
-const paper=$('f23-paper'),body=$('f23-body'),letter=$('f23-letter'),hl=$('f23-panels');
+const proj=(c,x,y,z)=>{const v=new THREE.Vector3(x,y,z).project(c);return{x:(v.x*.5+.5)*1920,y:(.5-v.y*.5)*1080}};
+// ---- the letter rises out of 0001 (156.4), unfolds on the 156.865 kick and the 157.083 hat, is read line by line
+const letter=$('f23-letter'),paper=$('f23-paper'),body=$('f23-body'),hl=$('f23-panels'),LW=letter.offsetWidth,LH=letter.offsetHeight;
+const C1={x:700,y:560};                                  // the letter's resting centre: inside the left 55 % of the frame
 const lineEls=[...body.children].filter(e=>e.matches('.f23-hand')).concat([...body.querySelectorAll('.f23-copy>div')]);
-const order=[0,1,2,3,4,5].map(i=>[lineEls[0],lineEls[1],lineEls[2],lineEls[3],lineEls[4],lineEls[5]][i]);
+const order=[0,1,3,4,5,2].map(i=>lineEls[i]);           // reading order: my love, / padlock says / no one else / will ever / read it. / always yours,
 const bars=order.map(el=>{const m=document.createElement('span'),cs=getComputedStyle(el);
   Object.assign(m.style,{position:'absolute',visibility:'hidden',whiteSpace:'nowrap',font:cs.font,letterSpacing:cs.letterSpacing});m.textContent=el.textContent;paper.appendChild(m);
   const w=m.offsetWidth;m.remove();const b=document.createElement('div');b.className='f23-hl';
   Object.assign(b.style,{left:body.offsetLeft+el.offsetLeft-6+'px',top:body.offsetTop+el.offsetTop+el.offsetHeight*.16+'px',width:w+14+'px',height:el.offsetHeight*.7+'px'});
   hl.appendChild(b);return b});
-const LH=letter.offsetHeight;
-// the giant "now": its centre goes to (960, 735), the lower third under the globe; G makes it ~61 % of the frame width
-const NOW=(()=>{const n=$('f23-lnow'),rg=document.createRange();rg.selectNodeContents(n);
-  const rt=$('root').getBoundingClientRect(),k=rt.width/1920,g=rg.getBoundingClientRect(),nb=n.getBoundingClientRect();
-  const cx=(g.left+g.width/2-rt.left)/k,cy=(g.top+g.height/2-rt.top)/k;
-  n.style.transformOrigin=`${(cx-(nb.left-rt.left)/k).toFixed(1)}px ${(cy-(nb.top-rt.top)/k).toFixed(1)}px`;
-  return{dx:960-cx,dy:735-cy,G:1180/(g.width/k)}})();
-// the READ stamp lands on a kick; the receipt's counter flips with it
+const READS=[[157.308,157.76],[157.779,158.2],[158.227,158.68]];   // the marker sweeps start on the kicks and the roll
+const LINES=READS.flatMap(r=>[r,r]);
+// ---- Archie rolls in at the bottom left and reads it by the drawer's light
+const archie=HR.archie($('f23-arch'),{id:'f23a',x:-330,y:1052,scale:.7,seed:23,pose:{...HR.archie.MOODS.curious,lookX:1,lookY:-.7,turn:.4}});
+archie.rollTo(tl,205,L(156.95),.5,'power2.out');
+archie.to(tl,{lookX:.9,lookY:-.9,turn:.35},L(157.0),.18);
+archie.to(tl,{glow:1.1},L(157.15),.1);
+READS.forEach(([a,b],k)=>{const y=-1+.26*k;
+  archie.to(tl,{lookX:.45,lookY:y,turn:.15},L(a),.16,'power2.inOut');
+  archie.to(tl,{lookX:.98,lookY:y+.1,turn:.42},L(a)+.16,b-a-.18,'power1.inOut')});
+archie.bump(tl,L(158.542),.07);
+archie.blink(tl,L(158.78));
+archie.to(tl,{...HR.archie.MOODS.surprised,lookX:.8,lookY:-.6,turn:.35},STAMP,.12,'power2.out');
+archie.bump(tl,STAMP,.09);
+archie.to(tl,{...HR.archie.MOODS.sad,lookX:.85,lookY:-.3},L(159.12),.3,'power2.inOut');
+archie.rollTo(tl,-360,L(159.45),.5,'power2.in');
+// ---- READ lands on the 158.853 kick: the stamp, its ink crumbs, the paper's recoil (no ring, no rays)
+const st=$('f23-stamp');
 tl.fromTo(st,{opacity:0,scale:2,rotation:-16},{opacity:.92,scale:1,rotation:-8,duration:.14,ease:'power3.in',immediateRender:false},STAMP-.14);
 tl.fromTo(st,{scale:1},{scale:1,duration:.01,immediateRender:false},STAMP);
-const sx=letter.offsetWidth*.62,sy=letter.offsetHeight*.43;
-// v17: the stamp is the outro's one accent (on the 158.853 kick): one ring, rays and a few crumbs, a soft punch, no shakes or grey flash
-const sh=WOW.shock(tl,letter,{x:sx,y:sy,t:STAMP,r:560,n:1,w:5,color:'fire',dur:.7});sh.setAttribute('data-layout-ignore','');
-const sr=WOW.rays(tl,letter,{x:sx,y:sy,t:STAMP,n:16,r0:90,r1:700,seed:158,color:'cream',w:4,dur:.6});sr.setAttribute('data-layout-ignore','');
-const sb=WOW.burst(tl,letter,{x:sx,y:sy,t:STAMP,n:12,speed:700,size:[4,10],seed:159,dur:.9});sb.setAttribute('data-layout-ignore','');
-WOW.punch(tl,letter,STAMP,{s:1.03,dur:.5});WOW.punch(tl,$('f23-gl'),STAMP,{s:1.025,dur:.5});
-// the letter leaves the globe's front lamp on 156.4 and unfolds in two steps as it reaches Archie's claw
-const flash=(t)=>{const c=screenOf(t,0,0,12);ring(t,c.x,c.y,40,420,6,'fire',.5);
-  const h=WOW.rays(tl,fx,{x:c.x,y:c.y,t,n:16,r0:40,r1:800,seed:156,color:'cream',dur:.45})};flash(L(156.4));
-function render(){const t=tl.time(),T=T0+t,ramp=clamp(t/.4);
-const cs=camAt(t),kick=HR.hit('kick',T,.12)*ramp*(T<156.45?1:0);
-camera.position.set(cs.x,cs.y,cs.z-1.1*kick);camera.lookAt(cs.lx,0,0);camera.updateMatrixWorld();
-globe.rotation.z=dialAt(T);
-const sd=SCANS.reduce((m,d)=>T>=d?d:m,-9),su=(T-sd)/.95;uni.uScan.value=Math.PI*(1-Math.pow(1-clamp(su),2));uni.uScanA.value=su>=0&&su<1?(1-su*su*su):0;
-const bi=BANDK.reduce((m,k,i)=>T>=k?i:m,-1),ba=bi<0?0:Math.exp(-(T-BANDK[bi])/.22);
-uni.uBand.value=bi<0?-20:92-bi*7.5;
-{const hi=HITS.reduce((m,k,i)=>T>=k?i:m,-1),fade=1-ease((T-155.6)/.4),en=i=>i<0?0:Math.exp(-(T-HITS[i])/.24)*fade;uni.uHit.value.set(hi,en(hi),hi-1,en(hi-1));}uni.uBandA.value=ba*(1-ease((T-155.6)/.4));
-uni.uTime.value=t;uni.uPulse.value=kick;uni.uThreatTime.value=T-145.444;threat.update(T-145.444);const off=ease((T-T0-STAMP)/.45);uni.uOff.value=off;lm.opacity=.21*(1-off);
-sharp.visible=bloom.visible=T<159.3;renderer.render(scene,camera);
-//29 has already reached its held final word at this scene's start; no replayed word onsets.
-const lk=$('f23-lock'),out=ease((T-155.6)/.6);lk.style.opacity=1-out;lk.style.transform=`translate(${-300*out}px,${-8*t}px) scale(${1+.004*t})`;
-// v19: on the 152.746 downbeat the held "now" grows to the poster (≥ 60 % of the width) over the globe and the already-sung
-// lines step aside; it breathes on the kicks and leaves with the block at 155.6
-// v20 (V20.md #3): the poster holds from the cut (22 grows it into this pose on the kicks), swelling to +5 % by 155.2
-const gN=1,ln=$('f23-lnow');
-lk.children[0].style.opacity=lk.children[1].style.opacity=(1-gN).toFixed(3);
-lk.children[0].style.transform=lk.children[1].style.transform=`translateY(${(-40*gN).toFixed(1)}px)`;
-const gO=ease((T-155.25)/.35);ln.style.opacity=(1-gO).toFixed(3);   // the giant word clears before Archie rolls in
-ln.style.transform=`translate(${(NOW.dx*gN).toFixed(1)}px,${((NOW.dy+8*t)*gN-120*gO).toFixed(1)}px) scale(${(NOW.G*(1+.05*clamp((T-T0)/4.3))).toFixed(4)})`;
-$('f23-plate').style.opacity=(.5*ease(t/.5)*(1-out)).toFixed(3);   // v20: eased in after the cut (22 has no plate)
+const sb=WOW.burst(tl,letter,{x:LW*.62,y:LH*.43,t:STAMP,n:14,speed:620,size:[4,10],seed:159,dur:.8,gravity:900});sb.setAttribute('data-layout-ignore','');
+WOW.punch(tl,letter,STAMP,{s:1.03,dur:.45});
+// the kicks after 0001 opens: the paper answers them (a 1 % breath), the drawers behind answer with their rows
+[156.865,157.308,157.779,158.542].forEach(k=>WOW.punch(tl,$('f23-gl'),L(k),{s:1.012,dur:.36}));
+tl.set({},{},DUR);
+// ---- the envelope: 15's thumbnail at its first frame (centre 1118,381; 240×150 objs px at ×1.087, -2°)
+const ENV={x:338.3,y:405.3,s:1.068,rot:-2.12}; // 15-secure's first-frame envelope (v22: the end card moved to the upper left)
+const env=$('f23-env');
 
-HR.glow($('f23-lnow'),T,.3+.3*HR.band('vocal',T),.65);
-$('f23-counter').style.opacity=0;   // v20: the poster word holds the lower third from the cut   // v19: it clears for the poster word$('f23-bytes').textContent=Math.floor(8796093022208).toLocaleString('en-US');
-archie.apply(T);const hand=archie.handAt('R');
-const ar=ease((T-156.4)/.5),leave=ease((T-159.3)/.6),spot0=screenOf(t,0,0,12);
-const gx=hand.x-10,gy=hand.y+8,u=ar,px=lerp(spot0.x-30,gx,1-Math.pow(1-u,3)),py=lerp(spot0.y+10,gy,1-Math.pow(1-u,3)),sc=lerp(.07,1.12,u);
-letter.style.opacity=T>=156.4?1-leave:0;
-letter.style.transform=`translate(${px}px,${py-LH+40*leave}px) rotate(${lerp(-28,-3,u)}deg) scale(${sc})`;
-const vis=.34+.33*ease((T-156.865)/.26)+.33*ease((T-157.0)/.28);
-letter.style.clipPath=vis>=1?'none':`inset(-80px -80px ${((1-vis)*100).toFixed(2)}% -80px)`;
-LINES.forEach(([a,b],k)=>{const p=clamp((T-a)/(b-a)),el=bars[k];el.style.transform=`scaleX(${p.toFixed(3)})`;el.style.boxShadow=p>0&&p<1?'inset -4px 0 0 rgba(232,93,38,.95)':'none'});
-$('f23-read').textContent=t>=STAMP?'READ · 1 TIME':'READ · 0 TIMES';
-const pool=$('f23-pool');pool.style.opacity=ar*(1-leave)*(.6+.4*HR.hit('kick',T,.2));
-const a=ease((T-155.4)/.1)*(1-leave);$('f23-arch').style.opacity=a;
-// A descending row-front leaves exactly one surviving lamp. The final arc lands on15's thumbnail at its initial pose.
-const final=ease((T-159.28)/.7),spot=new THREE.Vector3(0,0,12).project(camera),sx=(spot.x*.5+.5)*1920-25,sy=(.5-spot.y*.5)*1080-25;seal.style.opacity=ease((T-159.1)/.2);seal.style.left=`${sx+(1093-sx)*final}px`;seal.style.top=`${sy+(356-sy)*final}px`;seal.style.transform=`scale(${.24+.76*final})`;
-WOW.draw(tl,T0);
+// the letter's drift at rest (a function of time only, so the envelope can start from the folded letter's pose)
+const drift=t=>({x:C1.x+6*Math.sin(t*1.3),y:C1.y-4*Math.sin(t*.9),r:-3+.6*Math.sin(t*.7)});
+const flap=$('f23-flap'),E0=(()=>{const d=drift(WRAP);return{x:d.x,y:d.y,s:2.6,r:d.r}})();
+function render(){const t=tl.time(),T=T0+t;
+ setCam2(T);cu.uTime.value=t;cu.uPulse.value=Math.max(HR.hit('snare',T,.14),.7*HR.hit('kick',T,.12))*(T<158.2?1:0);
+ cu.uSurge.value=Math.max(T>=156.4?Math.exp(-(T-156.4)/.28):0,T<158.2?.6*HR.hit('kick',T,.1):0);   // r2: every open lamp flares white on each kick
+ cu.uDown.value=0;cu.uRight.value=ease((T-159.05)/.3);cu.uFade.value=ease((T-159.78)/.14);   // right 40 % dark by 159.35: ≥ 5 s of end-screen room to 164.4
+ renderer.render(scene2,cam2);
+ // the tally: drawers opened so far (it counts the slams)
+ const cnt=OPEN_T.reduce((a,x)=>x<=t?a+1:a,0);$('f23-count').textContent=(cnt+412).toLocaleString('en-US');
+ $('f23-tally').style.opacity=(T>=CUT?1-ease((T-158.2)/.3):0).toFixed(3);   // from the corridor's first downbeat
+ // the letter: rises out of 0001's open front, grows to its resting pose; folds behind itself in thirds; into the envelope
+ archie.apply(T);$('f23-arch').style.opacity=T>=156.5&&T<160.04?'1':'0';
+ const rise=out3((T-156.4)/.55),dr=drift(t);
+ let lx=dr.x,ly=dr.y,ls=1,lr=dr.r;
+ if(T>=156.4&&T<157.2){const ex=1.15*1.3*(1-Math.exp(-(T-156.4)/.05)),s0=proj(cam2,-HW+ex,.55,COL(HERO.j));
+  lx=lerp(s0.x,dr.x,rise);ly=lerp(s0.y-LH*.08,dr.y,rise);ls=lerp(.09,1,rise);lr=lerp(-22,dr.r,rise)}
+ const fa=ease((t-F1)/.1),fb=ease((t-F2)/.1),wrap=ease((t-WRAP)/.07);
+ ls*=1-.03*Math.sin(Math.PI*clamp((t-F1)/.14))-.03*Math.sin(Math.PI*clamp((t-F2)/.14));   // each fold presses the sheet
+ const vis=.34+.33*ease((T-156.865)/.1)+.33*ease((T-157.083)/.1);
+ letter.style.opacity=T>=156.4&&t<WRAP?'1':'0';
+ letter.style.transform=`translate(${(lx-LW/2).toFixed(1)}px,${(ly-LH/2).toFixed(1)}px) rotate(${lr.toFixed(2)}deg) scale(${ls.toFixed(4)})`;
+ // mountain folds: the bottom third (the broken seal) goes behind on 159.136, the top third (the receipt, "my love,") on
+ // 159.440; the middle third, with READ, faces out
+ const top=fb>0?lerp(-80,LH/3,fb):-80,bot=vis<1?(1-vis)*LH:lerp(-80,LH/3,fa);
+ letter.style.clipPath=(vis>=1&&fa<=0&&fb<=0)?'none':`inset(${top.toFixed(1)}px -80px ${bot.toFixed(1)}px -80px)`;
+ $('f23-fold').style.opacity=(.85*Math.max(fa,fb)).toFixed(3);
+ LINES.forEach(([a,b],k)=>{const p=clamp((T-a)/(b-a)),el=bars[k];el.style.transform=`scaleX(${p.toFixed(3)})`;el.style.boxShadow=p>0&&p<1?'inset -4px 0 0 rgba(232,93,38,.95)':'none'});
+ $('f23-read').textContent=t>=STAMP?'READ · 1 TIME':'READ · 0 TIMES';
+ const pool=$('f23-pool');pool.style.opacity=(rise*(1-wrap)*(.55+.35*HR.hit('kick',T,.2))*(1-.5*ease((T-159.3)/.4))).toFixed(3);
+ pool.style.transform=`translate(${(lx-450).toFixed(1)}px,${(ly-430).toFixed(1)}px)`;
+ // the envelope: on 159.593 it closes round the folded letter (the flap swings shut), then flies to 15's thumbnail,
+ // accelerating, and lands on the 159.913 kick with a squash; at rest on ENV from 160.013 to the cut
+ const u=clamp((t-WRAP-.07)/(FOLD-WRAP-.07)),fly=u*u,land=t>=FOLD?Math.sin(Math.PI*clamp((t-FOLD)/.1)):0;
+ const ex=lerp(E0.x,ENV.x,fly),ey=lerp(E0.y,ENV.y,fly)+6*land,es=E0.s*Math.pow(ENV.s/E0.s,fly)*(.92+.08*wrap),er=lerp(E0.r,ENV.rot,fly);
+ env.style.opacity=t>=WRAP?'1':'0';env.style.filter=fly>0&&fly<1?`blur(${(3.5*fly).toFixed(2)}px)`:'none';
+ env.style.transform=`translate(${(ex-120).toFixed(1)}px,${(ey-75).toFixed(1)}px) rotate(${er.toFixed(2)}deg) scale(${(es*(1+.05*land)).toFixed(4)},${(es*(1-.06*land)).toFixed(4)})`;
+ const fy=lerp(-70,75,wrap);flap.setAttribute('d',`M0 0 L120 ${fy.toFixed(1)} L240 0`);flap.setAttribute('fill',fy<0?'#E4DFD7':'rgba(17,17,17,0.05)');
+ seal.style.opacity=t>=WRAP&&wrap>=1?'1':'0';
+ seal.style.transform=`translate(${(ex-25).toFixed(1)}px,${(ey-25).toFixed(1)}px) rotate(${(er-ENV.rot).toFixed(2)}deg) scale(${(es/ENV.s).toFixed(4)})`;
+ WOW.draw(tl,T0);
 }
 tl.eventCallback('onUpdate',render);tl.seek(0);render();window.__timelines['23-library']=tl;
 </script></template></body></html>

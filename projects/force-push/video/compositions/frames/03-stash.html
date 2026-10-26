@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 3 — stash (verse 1, 19.885–23.696). L4 "Hid me in your stash, said we'd get to it". Refinement round 2
+         (REFINE-2.md): cut onto content. The cut is a terminal scroll: 02's last lines glide up out of 02 and the first
+         frame is the terminal they belong to, lit: `Aborting commit due to empty commit message.`, the prompt with
+         `git stash list --date=relative` (recalled and entered across the cut) and git's one-row answer set large in the
+         centre, `stash@{3 years ago}: On main: me` on a lit row, its text still dim (plant 3). The terminal lines scroll
+         on to the top while "hid me in your" builds above the row under a slow push. On "stash," (21.366) the sung word
+         slams display-scale between the line and the row and the row lights (`stash@{3 years ago}` in cream, the accent
+         edge flares). "stash," then shrinks up into its slot in the line ("hid me in your stash,"), and on the 22.509
+         downbeat kick the row's `me` stamps in the accent. On "get" (22.72) the last line re-centres under the slam, the
+         frame's biggest punch; "it" lands on the cut, which glides left into 04 (`glideL`). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f03-cam, #f03-in { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        #f03-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f03-strip b { color: var(--fire); font-weight: 600; }
+        /* the light: a soft accent glow behind the hero object, breathing with the bass */
+        #f03-glow { position: absolute; left: 50%; top: 28.6cqw; width: 150cqw; height: 74cqw; margin: -37cqw 0 0 -75cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.11) 38%, rgba(232, 93, 38, 0.05) 68%, rgba(232, 93, 38, 0) 100%); }
+        /* the terminal: 02's last lines where its glide left them, scrolling to the top; the command types there */
+        #f03-term { position: absolute; inset: 0; }
+        #f03-scroll { position: absolute; inset: 0; transform-origin: 5.5cqw 30.4cqw; }
+        .f03-tl { position: absolute; left: 5.5cqw; font: 500 3cqw/1 "IBM Plex Mono", monospace; white-space: pre; }
+        #f03-abort { top: 26.2cqw; color: var(--cream); }
+        #f03-prompt { top: 30.4cqw; color: var(--cream-muted); }
+        #f03-prompt .f03-cmd { color: var(--cream); }
+        /* the sung line, centred: line 1 with its slot for "stash,", the display "stash,", line 3 with "get" */
+        .f03-line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap;
+          font: 800 6.8cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); }
+        #f03-l1 { top: 10.6cqw; }
+        #f03-l3 { top: 40.6cqw; }
+        .f03-w { display: inline-block; }
+        #f03-me1 { color: var(--fire); }
+        #f03-slot { display: inline-block; font-weight: 900; font-size: 6.8cqw; line-height: 0.84; letter-spacing: -0.045em; visibility: hidden; }
+        #f03-bigbox { position: absolute; left: 0; right: 0; top: 17.6cqw; text-align: center; white-space: nowrap; }
+        #f03-stashw { display: inline-block; transform-origin: 0 0; }
+        #f03-stash { display: inline-block; font: 900 16.5cqw/0.84 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--fire); }
+        #f03-get { font: 900 11cqw/0.86 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--fire); margin: 0 0.04em; }
+        /* git's answer, set large in the centre: a lit list row with the accent edge */
+        #f03-row { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 33.2cqw; height: 6.2cqw; display: flex; align-items: center; justify-content: center;
+          background: var(--ink-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+          font: 500 4cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; transform-origin: 50% 50%; }
+        #f03-edge { position: absolute; left: 0; top: 0; bottom: 0; width: 0.5cqw; background: var(--fire); transform-origin: 0 50%; }
+        #f03-row .f03-ref { color: var(--cream-muted); font-weight: 600; }
+        #f03-row #f03-me2 { display: inline-block; color: var(--cream-muted); font-weight: 600; }
+      </style>
+      <div id="root" data-composition-id="03-stash" data-width="1920" data-height="1080" data-duration="3.811">
+        <div id="f03-cam">
+          <div id="f03-in">
+            <div class="hr-layer" data-depth="0.6">
+              <div id="f03-glow" data-layout-ignore></div>
+            </div>
+            <div class="hr-layer" data-depth="0.15">
+              <div id="f03-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+            </div>
+            <div class="hr-layer" data-depth="0.5">
+              <div id="f03-term"><div id="f03-scroll">
+                <div class="f03-tl" id="f03-abort" data-layout-allow-overlap>Aborting commit due to empty commit message.</div>
+                <div class="f03-tl" id="f03-prompt"><span>~/us (main) $ </span><span class="f03-cmd" id="f03-cmd">git stash list --date=relative</span></div>
+              </div></div>
+            </div>
+            <div class="hr-layer" data-depth="0.85" id="f03-lyr">
+              <div class="f03-line" id="f03-l1"><span class="f03-w">hid</span> <span class="f03-w" id="f03-me1">me</span> <span class="f03-w">in</span> <span class="f03-w" id="f03-your">your</span> <span id="f03-slot">stash,</span></div>
+              <div id="f03-row"><span id="f03-edge"></span><span class="f03-ref" id="f03-ref">stash@{3 years ago}</span>: On main: <span id="f03-me2" class="hr-glow">me</span></div>
+              <div id="f03-bigbox"><span id="f03-stashw"><span id="f03-stash" class="hr-glow">stash,</span></span></div>
+              <div class="f03-line" id="f03-l3"><span class="f03-w">said</span> <span class="f03-w" id="f03-wed">we'd</span> <span class="f03-w hr-glow" id="f03-get">get</span> <span class="f03-w">to</span> <span class="f03-w" id="f03-it">it</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.811, T0 = 19.885;
+          const root = document.querySelector('[data-composition-id="03-stash"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 3 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const PX = 19.2; // px per cqw
+          const STASH = at(21.366), ENTER = at(22.509), GET = at(22.72); // ENTER: the downbeat kick
+          const FLIP_A = ENTER - 0.36, FLIP_B = ENTER - 0.05; // "stash," files into its slot in line 1
+          const OUT = 0.28; // the glideL out, shortened from 0.42 so it never covers "to"'s first 0.25 s
+
+          // ---- the cut in: 02's glideUp carries on (offset + cover scale as WOW's glideUp), no blur on the lyric ----
+          tl.fromTo($("f03-in"), { y: 80, scale: 1 + (80 / 540) * 1.04 }, { y: 0, scale: 1, duration: 0.42, ease: "power1.out" }, 0);
+          tl.fromTo($("f03-term"), { filter: "blur(7px)" }, { filter: "blur(0px)", duration: 0.42, ease: "power1.out" }, 0);
+          // the terminal keeps scrolling: 02's lines start where its last frame left them (3cqw, abort at 26.2cqw under the
+          // cover scale), now with the command entered and its answer (the row) below; the prompt rides to the top and
+          // settles to 1.9cqw, the abort line scrolls away under the strip (faded before it crosses "hid")
+          const scrollEl = $("f03-scroll"), SCROLL_Y = (8.4 - 30.4) * PX;
+          tl.fromTo(scrollEl, { y: 0, scale: 1 }, { y: SCROLL_Y, scale: 1.9 / 3, duration: 0.55, ease: "power3.out" }, 0);
+          tl.fromTo($("f03-abort"), { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power1.in" }, 0.03);
+
+          // ---- the sung line: every word on its own start ----
+          const w = root.querySelectorAll(".f03-w");
+          HR.lead(tl, w[0], at(19.945)); HR.lead(tl, w[1], at(20.38)); HR.lead(tl, w[2], at(20.78)); HR.lead(tl, w[3], at(21.1));
+          HR.hero(tl, $("f03-stash"), STASH, { spread: 30, over: 1.2, pre: 0.12, sharp: true });
+          HR.lead(tl, w[4], at(21.955)); HR.lead(tl, w[5], at(22.28));
+          HR.hero(tl, $("f03-get"), GET, { spread: 36, over: 1.26, pre: 0.14, sharp: true });
+          HR.lead(tl, w[7], at(23.16));
+          // "it" lands 56 ms before the cut: a 0 ms reveal, so it is whole for every frame it is on screen
+          tl.fromTo($("f03-it"), { opacity: 0 }, { opacity: 1, duration: 0.001, ease: "none" }, at(23.64));
+          // the accent is a pointer: "stash," goes cream as it files into the line; the row's `me` and "get" take it
+          tl.fromTo($("f03-stash"), { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.24, ease: "power2.out", immediateRender: false }, FLIP_A + 0.06);
+
+          // ---- git's answer: the row is on screen from the first frame, dim; "stash," lights it, the downbeat stamps `me` ----
+          const row = $("f03-row"), ref = $("f03-ref"), edge = $("f03-edge"), me2 = $("f03-me2");
+          tl.set(ref, { color: "#888880" }, 0).set(ref, { color: "#F0ECE5" }, STASH);
+          tl.set(row, { scale: 1 }, 0);
+          tl.fromTo(row, { scale: 1.06 }, { scale: 1, duration: 0.5, ease: "elastic.out(1, 0.5)", immediateRender: false }, STASH);
+          tl.set(edge, { scaleX: 1 }, 0);
+          tl.fromTo(edge, { scaleX: 6 }, { scaleX: 1.6, duration: 0.5, ease: "expo.out", immediateRender: false }, STASH);
+          tl.set(me2, { color: "#888880", scale: 1 }, 0).set(me2, { color: "#E85D26" }, ENTER);
+          tl.fromTo(me2, { scale: 1.8 }, { scale: 1, duration: 0.32, ease: "expo.out", immediateRender: false }, ENTER);
+
+          // ---- the camera: a push through line 1, a punch on "stash,", the pull back on the Enter, the biggest punch on "get" ----
+          const cam = $("f03-cam");
+          tl.fromTo(stage.cam, { z: 1.0, x: 0, y: 0 }, { z: 1.12, x: -14, y: 18, duration: STASH - 0.06, ease: "sine.inOut" }, 0);
+          tl.to(stage.cam, { z: 1.16, y: 10, duration: 0.06, ease: "power2.in" }, STASH - 0.06);
+          tl.to(stage.cam, { z: 1.12, y: 18, duration: 0.5, ease: "elastic.out(1, 0.55)" }, STASH);
+          tl.to(stage.cam, { z: 1.13, x: -22, duration: FLIP_A - STASH - 0.5, ease: "none" }, STASH + 0.5);
+          tl.to(stage.cam, { z: 0.99, x: 0, y: 6, duration: 0.42, ease: "power3.inOut" }, FLIP_A);
+          tl.to(stage.cam, { z: 1.0, x: 18, y: 0, duration: DUR - FLIP_A - 0.42, ease: "sine.inOut" }, FLIP_A + 0.42);
+          WOW.punch(tl, cam, ENTER, { s: 1.025, dur: 0.3 });
+          WOW.punch(tl, cam, GET, { s: 1.06, dur: 0.5 });
+          WOW.transition(tl, cam, { out: "glideL", dur: OUT, total: DUR });
+          tl.set({}, {}, DUR);
+
+          // ---- layout, measured once the fonts are in: the FLIP of "stash," and the centring of lines 1 and 3 ----
+          const l1 = $("f03-l1"), l3 = $("f03-l3"), slot = $("f03-slot"), your = $("f03-your"), box = $("f03-bigbox"), sw = $("f03-stashw");
+          const wed = $("f03-wed"), it = $("f03-it");
+          let M = null;
+          function measure() {
+            const big = $("f03-stash");
+            M = {
+              l1: ((slot.offsetLeft + slot.offsetWidth) - (your.offsetLeft + your.offsetWidth)) / 2,
+              l3: ((it.offsetLeft + it.offsetWidth) - (wed.offsetLeft + wed.offsetWidth)) / 2,
+              dx: (l1.offsetLeft + slot.offsetLeft) - (box.offsetLeft + sw.offsetLeft),
+              dy: (l1.offsetTop + slot.offsetTop) - (box.offsetTop + sw.offsetTop),
+              k: slot.offsetWidth / Math.max(1, big.offsetWidth),
+            };
+          }
+          if (document.fonts.check('900 100px "Barlow"') && document.fonts.check('800 100px "Barlow"')) measure();
+          Promise.all([document.fonts.load('900 100px "Barlow"'), document.fonts.load('800 100px "Barlow"')]).then(() => { measure(); render(); });
+
+          // ---- per-frame state: the FLIP, line centring, the light, the camera ----
+          const stash = $("f03-stash"), get = $("f03-get"), glow = $("f03-glow");
+          const ease3 = (u) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
+          const eout = (u) => 1 - Math.pow(1 - u, 3);
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (M) {
+              // line 1 is centred on "hid me in your" until "stash," files into its slot
+              const p = ease3(clamp01((t - FLIP_A) / (FLIP_B - FLIP_A)));
+              // ... and it rides up with the terminal's scroll (the next line under the prompt), landing as the scroll settles
+              const ride = (gsap.getProperty(scrollEl, "y") || 0) - SCROLL_Y;
+              l1.style.translate = `${(M.l1 * (1 - p)).toFixed(2)}px ${ride.toFixed(2)}px`;
+              const k = 1 + (M.k - 1) * p;
+              sw.style.transform = `translate(${(M.dx * p).toFixed(2)}px, ${(M.dy * p).toFixed(2)}px) scale(${k.toFixed(4)})`;
+              // line 3 is centred on "said we'd" until "get" lands, then on the whole line
+              const q = eout(clamp01((t - (GET - 0.04)) / 0.3));
+              l3.style.translate = `${(M.l3 * (1 - q)).toFixed(2)}px 0px`;
+            }
+            if (t < FLIP_A) HR.glow(stash, T); else stash.style.setProperty("--hr-glow", Math.max(0, 0.6 - (t - FLIP_A) * 2).toFixed(3));
+            HR.glow(get, T, 0.3, 0.45);
+            if (t >= ENTER) HR.glow(me2, T, 0.35, 0.6); else me2.style.setProperty("--hr-glow", "0");
+            glow.style.opacity = Math.min(1, 0.68 + 0.9 * HR.band("bass", T) + 0.25 * HR.hit("kick", T, 0.22)).toFixed(3);
+            stage.apply(T);
+            WOW.draw(tl, T0);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["03-stash"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

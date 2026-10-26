@@ -1,0 +1,383 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 25 — lies2 (chorus 2, L39, 121.534–124.580). Light-and-depth rebuild, one design with frame 12 (lies): the
+         same set (the rail across the repo's floor seen from above and in front, origin/main's three newest commits on it
+         with their messages, the ex's lies, standing on the rail; the hook standing on the floor behind; the camera
+         holding the whole line) with the world moved on. The lies are verse 2's, as 23's push found origin: `please
+         review?` (d4e19a6), `lgtm` (a35c07b) and `Revert "force push"` (2b7d4e8, the revert 24 dropped locally, still on
+         origin); chorus 1's overwritten lies lie struck through in the foreground and the floor holds more ghost lanes
+         (the past rewritten twice). Louder than 12: both hook words drop out of the dark onto the floor (FORCE on the
+         121.669 kick, PUSH! on the 122.12 downbeat, harder, and the lies on the rail jump with it), more sparks, a bigger
+         stroke and heavier shakes. The stroke writes the line right over the lies: "right" (122.68) on `please review?`,
+         "over" (123.16) on `lgtm`, "your" (123.529) and "lies" (123.72, display scale, white-hot cooling to fire) on
+         `Revert "force push"`, each commit re-struck as 9c0ffee / 5f2b8e1 / c81d3a4 (26 labels its line with these),
+         `you` → `me`. `3 commits overwritten` lands on the 123.965 downbeat with the sweep of light down the new main; the
+         camera pulls back so the line rests whole before the 0.25 s whipR into 26. In: 24's whipL (0.1 s).
+         Layers: WebGL lines (assets/kit/lines.js), a Canvas2D layer for the type in the space, then the DOM. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        #f25-cam { position: absolute; inset: 0; }
+        #f25-gl, #f25-type, #f25-shade { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #f25-shade { background: linear-gradient(180deg, rgba(10, 10, 10, 0.8) 0%, rgba(10, 10, 10, 0.2) 12%, rgba(10, 10, 10, 0) 22%, rgba(10, 10, 10, 0) 80%, rgba(10, 10, 10, 0.55) 100%); }
+        #f25-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); background: var(--ink); }
+        #f25-strip b { color: var(--fire); font-weight: 600; }
+        /* git's answer to the push, under the strip: the deadpan layer */
+        #f25-out { position: absolute; left: 5.5cqw; top: 5.6cqw; font: 400 20px/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f25-out b { color: var(--cream); font-weight: 500; }
+        #f25-out .f25-plus { color: var(--fire); font-weight: 600; }
+      </style>
+      <div id="root" data-composition-id="25-lies2" data-width="1920" data-height="1080" data-duration="3.046">
+        <div id="f25-cam">
+          <canvas id="f25-gl" width="1920" height="1080" data-layout-ignore></canvas>
+          <div id="f25-shade" data-layout-ignore></div>
+          <canvas id="f25-type" width="1920" height="1080" data-layout-ignore></canvas>
+          <div id="f25-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+          <div id="f25-out"><span id="f25-o1">To me@home:us.git</span>
+<span id="f25-o2"><span class="f25-plus">+</span> <b>e81b0d4...9c0ffee</b> main -&gt; main (forced update)</span></div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script type="module">
+        import * as THREE from "./assets/vendor/three.module.js";
+        import * as K from "./assets/kit/lines.js";
+
+        const ID = "25-lies2", P = "f25-", DUR = 3.046, T0 = 121.534;
+        const root = document.querySelector('[data-composition-id="25-lies2"]');
+        const $ = (id) => root.querySelector("#" + P + id);
+        const at = (T) => T - T0;
+        // ---- the song: lyrics.json L39, every word on its start; the kicks (HR_ENV) the hook lands on ----
+        const HOOK = [["FORCE", 121.594, 121.669], ["PUSH!", 122.08, 122.12]]; // [word, start, landing kick]
+        const ROW = [["right", 122.68, 0], ["over", 123.16, 1], ["your", 123.529, 2], ["lies", 123.72, 2]]; // [word, start, the lie it overwrites]
+        // origin/main's three newest commits: [old hash, new hash, his lie]
+        const LIES = [["d4e19a6", "9c0ffee", "please review?"], ["a35c07b", "5f2b8e1", "lgtm"], ["2b7d4e8", "c81d3a4", 'Revert "force push"']];
+        const DB = at(123.965), FOOT = at(123.965), OUT = 0.25;
+        const LOUD = 1.2; // chorus 2 is louder
+        const GSTEP = 2.0, PUSHDROP = true; // a denser floor; PUSH! drops too
+        const OLD = [{ txt: "we'll get to it", x: -16, z: -21 }, { txt: "just a feature", x: 0, z: -24 }, { txt: "nothing on the side", x: 15, z: -20 }]; // chorus 1's burnt lies, behind the hook
+        await document.fonts.load('900 100px "Barlow"');
+        await document.fonts.load('800 100px "Barlow"');
+        await document.fonts.load('600 100px "IBM Plex Mono"');
+        await document.fonts.load('400 100px "IBM Plex Mono"');
+        const tl = gsap.timeline({ paused: true });
+        const FORCE = at(HOOK[0][1]), FL = at(HOOK[0][2]), PUSH = at(HOOK[1][1]), PL = at(HOOK[1][2]);
+        const [RIGHT, OVER, YOUR, LIESW] = ROW.map((r) => at(r[1]));
+
+        // ---- the cuts: 24's whipL lands (0.1 s, from -0.05: FORCE starts 0.06 s in); a whipR into 26 over the last 0.25 s ----
+        const cam = $("cam");
+        WOW.transition(tl, cam, { in: "whipL", dur: 0.1, start: -0.05 });
+        WOW.transition(tl, cam, { out: "whipR", dur: OUT, total: DUR });
+        WOW.shake(tl, cam, FL + 0.01, { amp: 6 * LOUD, dur: 0.28, rot: 0.2, seed: 25 });
+        WOW.shake(tl, cam, PL + 0.01, { amp: 9 * LOUD, dur: 0.36, rot: 0.3, seed: 52 });
+        WOW.shake(tl, cam, LIESW + 0.01, { amp: 9 * LOUD, dur: 0.3, rot: 0.15, seed: 26 });
+        // git answers the push: the remote on FORCE's kick, the forced update on PUSH!'s
+        tl.set($("o1"), { opacity: 0 }, 0).set($("o1"), { opacity: 1 }, FL);
+        tl.set($("o2"), { opacity: 0 }, 0).set($("o2"), { opacity: 1 }, PL);
+        tl.set({}, {}, DUR);
+
+        // ---- the type's geometry (world units; the rail along x at z = 0 on the floor y = 0) ----
+        const tctx = $("type").getContext("2d");
+        const DPR = window.devicePixelRatio || 1;
+        $("type").width = 1920 * DPR; $("type").height = 1080 * DPR;
+        const LEAD = '800 100px "Barlow"', HERO = '900 100px "Barlow"', MONO6 = '600 100px "IBM Plex Mono"', MONO4 = '400 100px "IBM Plex Mono"';
+        const glyphs = (w, size, font) => { tctx.font = font; let u = 0; const us = []; for (const ch of [...w]) { us.push(u); u += (tctx.measureText(ch).width / 100) * size * 1.4; } return { us, len: u }; };
+        const adv = (w, size, font) => glyphs(w, size, font).len;
+        const LS = 0.4, WS = 1.6 * (1 + 0.04 * (LOUD - 1)), HS = 3.0 * (1 + 0.06 * (LOUD - 1)), KS = 3.8 * (1 + 0.04 * (LOUD - 1)); // lie, word, hero, hook (cap heights)
+        const gapOf = (a, b) => 0.32 * Math.max(a, b, 1.4);
+        const lie = LIES.map(([old, nw, txt]) => ({ old, nw, txt, g: glyphs(txt, LS, MONO4) }));
+        const words = ROW.map(([w, T, k], i) => {
+          const hero = i === ROW.length - 1, size = hero ? HS : WS, font = hero ? HERO : LEAD;
+          return { w, t: at(T), k, hero, size, font, g: glyphs(w, size, font) };
+        });
+        // each commit sits where its word starts; its lie stands on the rail after the ring; the next commit clears both
+        let x = 0;
+        lie.forEach((L, k) => {
+          L.x = x; L.u0 = x + 0.6;
+          let u = x - 0.35;
+          words.filter((p) => p.k === k).forEach((p, i, ws) => { if (i) u += gapOf(p.size, ws[i - 1].size); p.u0 = u; u += p.g.len; });
+          L.wend = u; L.end = L.u0 + L.g.len;
+          x = Math.max(L.end + 0.9, u + 1.35);
+        });
+        const ROW0 = -0.35, ROWEND = Math.max(lie[2].end, lie[2].wend), CX = (ROW0 + ROWEND) / 2;
+        // the hook: standing on the floor behind the rail, centred over the line (the camera looks down over both)
+        const HZ = -12, HY = 0.05, HGAP = 0.3 * KS;
+        const hook = HOOK.map(([w], i) => ({ w, t: i ? PUSH : FORCE, land: i ? PL : FL, g: glyphs(w, KS, HERO), hot: i === 1 }));
+        const HW = hook[0].g.len + HGAP + hook[1].g.len;
+        hook[0].u0 = CX - HW / 2; hook[1].u0 = hook[0].u0 + hook[0].g.len + HGAP;
+        const LZ = 3.0; // the hash labels lie on the floor in front of the rail
+
+        // ---- the stroke: my main, pushed in along the rail on PUSH!, then one run per word over the lies ----
+        const STOPS = [
+          [PUSH - 0.03, -0.95, 0.32],
+          [RIGHT - 0.04, lie[0].end + 0.25, 0.24],
+          [OVER - 0.04, lie[1].end + 0.25, 0.22],
+          [YOUR - 0.04, words[3].u0 - 0.2, 0.17],
+          [LIESW - 0.04, ROWEND + 0.7, 0.22],
+        ];
+        const XFAR = -70;
+        function frontX(t) {
+          let x = XFAR;
+          for (const [s, to, d] of STOPS) { if (t < s) break; x = x + (to - x) * K.ease.outExpo(K.clamp((t - s) / d)); }
+          return x;
+        }
+        // when the stroke passes x (a table of the front, so each glyph and ring knows its moment)
+        const TAB = []; for (let t = 0; t <= DUR; t += 1 / 480) TAB.push([t, frontX(t)]);
+        const passT = (x) => { for (const [t, f] of TAB) if (f >= x) return t; return Infinity; };
+        lie.forEach((L) => { L.tr = passT(L.x); L.gt = L.g.us.map((u) => passT(L.u0 + u + 0.1)); });
+        if (OLD) OLD.forEach((o) => { o.len = adv(o.txt, 0.9, MONO4); });
+
+        // ---- the camera: close under FORCE, a pull-back to the whole hook on PUSH!, a dive onto the rail on "right",
+        //      following the stroke with the line kept whole, a push on "lies", a pull-back to rest on the downbeat ----
+        const hx0 = hook[0].u0 + hook[0].g.len / 2;
+        const wc = words.map((w) => w.u0 + w.g.len / 2); // the words' centres along the rail
+        // the camera's rest: high over the floor, far enough back to hold the whole line (the row on the rail, the hook behind)
+        const CH = 12;
+        let DF = 14; while ((ROWEND - ROW0 + 4.8) > 1.294 * Math.hypot(DF, CH - 1.5) || (HW + 4.6) > 1.294 * Math.hypot(DF - HZ, CH - 2)) DF += 0.25;
+        const KEYS = [
+          [0, [hx0 + 2.0, 8.2, 11.5], [hx0 + 1.0, 1.4, HZ], K.ease.linear],
+          [FORCE, [hx0 + 1.9, 8.2, 11.3], [hx0 + 0.9, 1.4, HZ], K.ease.linear],
+          [FL + 0.3, [hx0 + 2.4, 8.8, 12.8], [hx0 + 1.6, 1.5, HZ], K.ease.outExpo],
+          [PUSH - 0.04, [hx0 + 2.8, 9.0, 13.2], [hx0 + 2.0, 1.5, HZ], K.ease.linear],
+          [PL + 0.3, [CX + 1.5, CH, DF], [CX, 1.5, -5], K.ease.outCubic],
+          [RIGHT - 0.04, [CX + 1.3, CH, DF + 0.2], [CX, 1.5, -5], K.ease.linear],
+          [RIGHT + 0.3, [CX + 4.6, CH - 0.6, DF - 1.2], [CX + 0.4, 1.4, -5], K.ease.outExpo],
+          [OVER - 0.04, [CX + 4.4, CH - 0.6, DF - 1.1], [CX + 0.4, 1.4, -5], K.ease.linear],
+          [OVER + 0.22, [CX + 3.0, CH - 0.5, DF - 0.8], [CX + 0.3, 1.45, -5], K.ease.outCubic],
+          [YOUR + 0.2, [CX + 1.6, CH - 0.3, DF - 0.4], [CX + 0.2, 1.5, -5], K.ease.outCubic],
+          [LIESW - 0.02, [CX + 1.5, CH - 0.3, DF - 0.3], [CX + 0.2, 1.5, -5], K.ease.linear],
+          [LIESW + 0.3, [CX + 1.0, CH - 0.5, DF - 0.5], [CX + 0.2, 1.4, -5], K.ease.outExpo], // "lies" lands in the word, its ring and a shake: the line stays whole
+          [DB - 0.02, [CX + 1.0, CH - 0.5, DF - 0.4], [CX + 0.2, 1.4, -5], K.ease.linear],
+          [DB + 0.36, [CX + 3.0, CH, DF + 0.4], [CX + 0.3, 1.5, -5], K.ease.outExpo],
+          [DUR, [CX + 2.6, CH + 0.2, DF + 0.8], [CX + 0.1, 1.5, -5], K.ease.linear],
+        ];
+        const camera = new THREE.PerspectiveCamera(40, 16 / 9, 0.1, 800);
+        const lerp3 = (a, b, f) => [0, 1, 2].map((i) => a[i] + (b[i] - a[i]) * f);
+        function aim(t) {
+          let i = 1; while (i < KEYS.length - 1 && KEYS[i][0] <= t) i++;
+          const a = KEYS[i - 1], b = KEYS[i], f = b[3](K.clamp((t - a[0]) / (b[0] - a[0])));
+          const p = lerp3(a[1], b[1], f), l = lerp3(a[2], b[2], f), T = T0 + t;
+          p[0] += K.noise1(T * 0.7, 1) * 0.14; p[1] += K.noise1(T * 0.6, 2) * 0.09 + 0.08 * LOUD * HR.hit("kick", T, 0.12);
+          camera.position.set(...p); camera.lookAt(...l);
+          camera.rotateZ(K.noise1(T * 0.4, 3) * 0.01 + 0.03 * LOUD * K.pulse(t, PL, 0.25) - 0.025 * K.prog(t, RIGHT, YOUR, K.ease.inOutCubic) + 0.02 * K.prog(t, DB, DUR, K.ease.inOutCubic));
+          const kick = HR.hit("kick", T, 0.1) * (0.6 + 0.6 * HR.band("drums", T));
+          const strike = words.reduce((m, w) => Math.max(m, K.pulse(t, w.t, 0.08)), 0) * 0.6;
+          camera.fov = 40 / (1 + 0.03 * LOUD * kick + 0.04 * strike + LOUD * (0.1 * K.pulse(t, FL, 0.15) + 0.12 * K.pulse(t, PL, 0.18) + 0.035 * K.pulse(t, LIESW, 0.2) + 0.04 * K.pulse(t, DB, 0.2)));
+          camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+        }
+
+        // ---- the world (pure functions of t) ----
+        const renderer = K.renderer(THREE, $("gl"));
+        const lines = K.createLines(THREE, 60000);
+        const shutter = K.createShutter(THREE, renderer);
+        const BONE = K.BONE, FIRE = K.ACCENT, HOT = [1, 0.86, 0.72], MUTED = [0x88 / 255, 0x88 / 255, 0x80 / 255];
+        const V = (x, y, z) => new THREE.Vector3(x, y, z);
+        const rnd = HR.rng(2525);
+        // `you`'s torn lanes from 10 and 11: dashed ghosts on the floor
+        const ghosts = [];
+        for (let z = -34; z <= 16; z += GSTEP) {
+          if (Math.abs(z + 1) < 3.5 || Math.abs(z - HZ) < 1.2) continue; // keep the rail's strip and the shelf clear
+          let gx = -40 + rnd() * 10;
+          while (gx < 90) { const len = 6 + rnd() * 26; ghosts.push([z + (rnd() - 0.5) * 0.6, gx, gx + len]); gx += len + 3 + rnd() * 12; }
+        }
+        const fogged = (p, near = 12, k = 0.012) => Math.exp(-Math.max(0, camera.position.distanceTo(p) - near) * k);
+        const mid = new THREE.Vector3();
+        function seg(a, b, w, rgb, alpha) {
+          mid.addVectors(a, b).multiplyScalar(0.5);
+          const f = fogged(mid);
+          if (f * alpha > 0.01) lines.seg(a, b, w, rgb, alpha * f);
+        }
+        const mix3 = (a, b, f) => [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
+        const cool = (age) => (age < 0.06 ? HOT : mix3(HOT, FIRE, K.clamp((age - 0.06) / 0.3)));
+        const ringPts = (c, r, n = 16) => { const p = []; for (let i = 0; i <= n; i++) { const a = (i / n) * Math.PI * 2; p.push(V(c.x + Math.cos(a) * r, c.y + Math.sin(a) * r, c.z)); } return p; };
+        const RING = 0.44, XR = ROWEND + 26;
+        const fallIn = (h, t, d) => (t < h.land ? d * (1 - Math.pow(K.clamp((t - (h.t - 0.04)) / (h.land - h.t + 0.04)), 3)) : 0);
+        const hookY = (h, t) => // FORCE drops onto the floor (25: PUSH! too); each bounces once off it
+          HY + (h === hook[0] ? fallIn(h, t, 9) : PUSHDROP ? fallIn(h, t, 12) : 0) + (h.hot ? 0.18 : 0.25) * LOUD * Math.sin(Math.PI * K.prog(t, h.land, h.land + 0.18));
+        const hookDX = (h, t) => (h === hook[1] && !PUSHDROP ? fallIn(h, t, 18) : 0); // PUSH! shoved in from the right
+        // the impact of a landing runs out from it along the rail: the lies jump
+        const hop = (gx, t) => {
+          let y = 0;
+          for (const h of hook) { const dt = t - h.land - Math.abs(gx - (h.u0 + h.g.len / 2)) * 0.012; if (dt > 0 && dt < 0.3) y += (h.hot ? 0.45 : 0.25) * LOUD * Math.sin(Math.PI * dt / 0.3) * Math.exp(-dt * 3); }
+          return y;
+        };
+        function scene(t, target) {
+          aim(t);
+          const T = T0 + t, F = frontX(t);
+          lines.clear();
+          // the floor: a faint grid, the ghost lanes
+          for (let z = -40; z <= 20; z += 5) for (let gx = -44; gx < 90; gx += 6) seg(V(gx, -0.02, z), V(gx + 6, -0.02, z), 1.1, MUTED, 0.25);
+          for (let gx = -44; gx <= 90; gx += 6) for (let z = -40; z < 20; z += 5) seg(V(gx, -0.02, z), V(gx, -0.02, z + 5), 1.1, MUTED, 0.25);
+          for (const [z, x0, x1] of ghosts) {
+            for (let gx = x0; gx < x1; gx += 1.6) seg(V(gx, 0, z), V(Math.min(x1, gx + 0.8), 0, z), 1.4, MUTED, 0.6);
+            for (const ex of [x0, x1]) { const r = ringPts(V(ex, 0, z), 0.16, 8); for (let i = 1; i < r.length; i++) seg(r[i - 1], r[i], 1.3, MUTED, 0.5); }
+          }
+          // the hook's shelf: a hairline under each word, flashing white-hot as the word lands on it
+          for (const h of hook) {
+            const y = 0.01, x0 = h.u0 - 0.2, x1 = h.u0 + h.g.len + 0.2, fl = K.pulse(t, h.land, 0.12);
+            if (t < h.t - 0.04 && h === hook[1]) continue;
+            seg(V(x0, y, HZ), V(x1, y, HZ), 1.6 + 5 * fl, fl > 0.3 ? HOT : h.hot ? FIRE : MUTED, 0.6 + 0.4 * fl);
+          }
+          // the rail: origin/main in bone ahead of the stroke, my main in fire behind it, a white-hot head on the front
+          for (let gx = XFAR; gx < XR; gx += 1) {
+            const a = V(gx, 0, 0), b = V(gx + 1, 0, 0);
+            if (gx + 0.5 < F) {
+              seg(a, b, 4.2 * LOUD, FIRE, 1);
+              const heat = Math.exp(-(F - gx - 1) / (4 * LOUD));
+              if (heat > 0.05) seg(a, b, 1.8, HOT, 0.85 * heat);
+            } else seg(a, b, 2.6, BONE, 0.62);
+          }
+          if (t >= STOPS[0][0] && t < DB + 0.2) {
+            const p = V(F, 0, 0);
+            seg(V(F - 3, 0, 0), p, 12 * LOUD, FIRE, 1);
+            seg(V(F - 2.2, 0, 0), p, 5, HOT, 1);
+            seg(p, V(F, 2.2, 0), 4.5, FIRE, 1);
+            seg(p, V(F, 1.5, 0), 1.8, HOT, 1);
+          }
+          // the sweep on the downbeat: light runs the new main
+          if (t >= DB) {
+            const xs = ROW0 - 8 + (XR - ROW0) * K.ease.outCubic(K.clamp((t - DB) / 0.5)), fade = 1 - K.prog(t, DB + 0.35, DB + 0.7);
+            for (let gx = Math.max(XFAR, xs - 8); gx < Math.min(F, xs); gx += 1) seg(V(gx, 0, 0), V(gx + 1, 0, 0), 2.6, HOT, fade * Math.exp(-(xs - gx - 1) / 3));
+          }
+          // the commits: re-struck as the stroke passes (old ring knocked up as a dashed ghost, new one stamped white-hot)
+          lie.forEach((L, k) => {
+            const c = V(L.x, 0, 0), age = t - L.tr;
+            if (age < 0) { const pts = ringPts(V(L.x, hop(L.x, t), 0), RING); for (let i = 1; i < pts.length; i++) seg(pts[i - 1], pts[i], 2.2, BONE, 0.9); return; }
+            const flare = k === 2 ? 1.1 * K.pulse(t, LIESW, 0.12) : 0; // "lies": its commit flares
+            const r = RING * (1 + 0.9 * K.pulse(t, L.tr, 0.1) + flare + 0.12 * HR.hit("kick", T, 0.14));
+            const pts = ringPts(c, r);
+            for (let i = 1; i < pts.length; i++) seg(pts[i - 1], pts[i], 2.8 + 2 * flare, flare > 0.3 ? HOT : cool(age), 1);
+            if (age < 1.6) {
+              const lift = 2.4 * K.ease.outCubic(K.clamp(age / 0.7)) + 0.4 * age, gp = ringPts(V(c.x - 0.3 * age, lift, -0.8 * age), RING, 20);
+              const al = 0.85 * (1 - K.smoothstep(0.5, 1.6, age));
+              for (let i = 1; i < gp.length; i += 2) seg(gp[i - 1], gp[i], 1.6, MUTED, al);
+            }
+            for (let i = 0; i < 18 * LOUD; i++) { // sparks thrown up off the re-strike
+              const a = age - 0.012 * (i % 3); if (a < 0 || a > 0.5) continue;
+              const h1 = K.hash(k, i, 1), h2 = K.hash(k, i, 2), h3 = K.hash(k, i, 3);
+              const v = V((h1 - 0.5) * 8, 3 + 6 * h2, (h3 - 0.5) * 6), p = V(L.x, 0.2, 0).addScaledVector(v, a).add(V(0, -6 * a * a, 0));
+              if (p.y < 0) continue;
+              seg(p, p.clone().addScaledVector(v, -0.04), 2, a < 0.1 ? HOT : FIRE, (1 - a / 0.5) ** 2);
+            }
+          });
+          // sparks off the stroke's head while it writes, and off each hook word as it lands
+          for (let i = 0; i < 70 * LOUD; i++) {
+            const te = STOPS[1][0] + (i / (70 * LOUD)) * (STOPS[4][0] + 0.25 - STOPS[1][0]), a = t - te;
+            if (a < 0 || a > 0.45 || frontX(te + 0.02) - frontX(te) < 0.02) continue;
+            const h1 = K.hash(i, 7), h2 = K.hash(i, 8), h3 = K.hash(i, 9), v = V(-2 - 5 * h1, 2.5 + 5 * h2, (h3 - 0.5) * 6);
+            const p = V(frontX(te), 0.1, 0).addScaledVector(v, a).add(V(0, -6 * a * a, 0));
+            if (p.y < 0) continue;
+            seg(p, p.clone().addScaledVector(v, -0.035), 2, a < 0.08 ? HOT : FIRE, (1 - a / 0.45) ** 2);
+          }
+          for (const h of hook) for (let i = 0; i < 26 * LOUD; i++) {
+            const a = t - h.land; if (a < 0 || a > 0.55) break;
+            const h1 = K.hash(i, h.hot ? 3 : 4, 1), h2 = K.hash(i, h.hot ? 3 : 4, 2), h3 = K.hash(i, h.hot ? 3 : 4, 3);
+            const v = V((h1 - 0.5) * 9, 1.5 + 4 * h2, 1 + 4 * h3), p = V(h.u0 + h1 * h.g.len, HY - 0.1, HZ).addScaledVector(v, a).add(V(0, -7 * a * a, 0));
+            if (p.y < 0) continue;
+            seg(p, p.clone().addScaledVector(v, -0.035), 2, a < 0.08 ? HOT : h.hot ? FIRE : BONE, (1 - a / 0.55) ** 2);
+          }
+          // chorus 1's burnt lies (25): struck through where they stand
+          if (OLD) for (const o of OLD) seg(V(o.x - 0.3, 0.34, o.z), V(o.x + o.len + 0.3, 0.34, o.z), 2.2, MUTED, 0.8);
+          lines.draw(renderer, camera, target);
+        }
+
+        // ---- the type in the space (Canvas2D) ----
+        const project = K.projector(THREE, camera);
+        const HEX = "0123456789abcdef";
+        const HOTS = "255, 236, 220", FIRES = "232, 93, 38", BONES = "240, 236, 229", DIMS = "136, 136, 128";
+        const mixS = (a, b, f) => { const A = a.split(",").map(Number), B = b.split(",").map(Number); return A.map((v, i) => Math.round(v + (B[i] - v) * f)).join(", "); };
+        const coolS = (dt, to) => mixS(HOTS, to, 1 - Math.exp(-Math.max(0, dt) / 0.3)); // a word landing white-hot, cooling
+        function glyph(ch, p, ang, size, font, col, alpha) {
+          const c = Math.cos(ang), s = Math.sin(ang);
+          K.textOnPath(tctx, project, (u) => V(p.x + c * u, p.y + s * u, p.z), ch, size, { font, color: () => col, alpha });
+        }
+        function type(t) {
+          tctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+          tctx.clearRect(0, 0, 1920, 1080);
+          aim(t);
+          const F = frontX(t);
+          // chorus 1's burnt lies, further back on the floor behind the hook (25 only)
+          if (OLD) for (const o of OLD) K.textOnPath(tctx, project, (u) => V(u, 0.02, o.z), o.txt, 0.9, { start: o.x, font: MONO4, color: () => DIMS, alpha: 0.55 });
+          // the hook on its shelf
+          for (const h of hook) {
+            if (t < h.t - 0.04) continue;
+            const y = hookY(h, t), dx = hookDX(h, t);
+            K.textOnPath(tctx, project, (u) => V(u + dx, y, HZ), h.w, KS, { start: h.u0, font: HERO, color: () => coolS(t - h.land, h.hot ? FIRES : BONES) });
+          }
+          // the commits' labels in front of the rail: old hash and `you`; re-struck, the new hash scrambles in, `me`
+          lie.forEach((L, k) => {
+            const age = t - L.tr, on = (u) => V(L.x - 0.5 + u, 0.02, LZ);
+            let hash = L.old, col = DIMS;
+            if (age >= 0) {
+              hash = [...L.nw].map((ch, i) => (age >= (0.2 * (i + 1)) / 8 ? ch : HEX[Math.floor(K.hash(k, Math.floor(t * 30), i) * 16)])).join("");
+              col = age < 0.22 ? HOTS : age < 0.6 ? mixS(HOTS, FIRES, K.clamp((age - 0.22) / 0.2)) : mixS(FIRES, BONES, K.clamp((age - 0.6) / 0.6));
+            }
+            const HL = adv(L.old, 0.34, MONO6), au = age >= 0.2 ? "me" : "you";
+            K.textOnPath(tctx, project, on, hash, 0.34, { font: MONO6, color: () => col });
+            K.textOnPath(tctx, project, on, au, 0.3, { start: HL + 0.4, font: MONO6, color: () => (au === "you" ? FIRES : BONES), alpha: 0.95 });
+          });
+          // origin/main's name at the rail's end; it lights when the push reaches it
+          const lit = t >= LIESW + 0.1;
+          K.textOnPath(tctx, project, (u) => V(lie[2].x + 4.6 + u, 0.02, LZ), "origin/main", 0.34, { font: MONO6, color: () => (lit ? coolS(t - LIESW - 0.1, FIRES) : DIMS) });
+          // the footer, lying on the floor under the last commit
+          if (t >= FOOT) K.textOnPath(tctx, project, (u) => V(lie[2].x - 0.5 + u, 0.02, LZ + 1.1), "3 commits overwritten", 0.3, { font: MONO4, color: (i) => (i === 0 ? FIRES : BONES), alpha: K.prog(t, FOOT, FOOT + 0.06) });
+          // the lies on the rail: whole until the stroke reaches them, then each glyph knocked off, burning to ash
+          lie.forEach((L, k) => {
+            [...L.txt].forEach((ch, i) => {
+              if (ch === " ") return;
+              const gx = L.u0 + L.g.us[i], age = t - L.gt[i];
+              if (age < 0) { glyph(ch, V(gx, 0.08 + hop(gx, t), 0.12), 0, LS, MONO4, BONES, 0.82); return; }
+              if (age > 0.8) return;
+              const h1 = K.hash(k, i, 11), h2 = K.hash(k, i, 12), h3 = K.hash(k, i, 13), h4 = K.hash(k, i, 14);
+              const p = V(gx + (-1 + 3 * h1) * age, 0.08 + (3 + 4 * h2) * age - 8 * age * age, 0.12 + (0.6 + 2.4 * h3) * age);
+              if (p.y < -0.3) return;
+              const col = age < 0.05 ? HOTS : age < 0.25 ? mixS(HOTS, FIRES, (age - 0.05) / 0.2) : mixS(FIRES, DIMS, K.clamp((age - 0.25) / 0.35));
+              glyph(ch, p, (h4 - 0.5) * 7 * age, LS, MONO4, col, (1 - age / 0.8) ** 1.5);
+            });
+          });
+          // the sung words, standing on the rail where the lies were: lit glyph by glyph as the stroke passes
+          for (const p of words) {
+            if (t < p.t - 0.04) continue;
+            const nx = words.find((w) => w.hero && w.t > p.t), rec = p.hero ? 0.22 * LOUD * Math.sin(Math.PI * K.prog(t, p.t, p.t + 0.16)) * Math.exp(-(t - p.t) * 2) : 0;
+            K.textOnPath(tctx, project, (u) => V(u, 0.06 - rec, -0.05), p.w, p.size * (p.hero ? 1 + 0.14 * LOUD * K.pulse(t, p.t + 0.03, 0.09) : 1), {
+              start: p.u0, font: p.font,
+              lit: (i) => Math.max(K.clamp((F - (p.u0 + p.g.us[i])) / 0.5), K.clamp((t - p.t - 0.2) / 0.05)),
+              color: () => (p.hero ? coolS(t - p.t, FIRES) : nx && t >= nx.t ? BONES : coolS((t - p.t) * 2.2, BONES)),
+            });
+          }
+        }
+
+        // ---- per-frame state ----
+        function render() {
+          const t = tl.time();
+          renderer.setRenderTarget(null); renderer.clear();
+          const fast = (t > FORCE - 0.03 && t < FL + 0.3) || (t > PUSH - 0.03 && t < PL + 0.4) ||  (t > LIESW - 0.04 && t < LIESW + 0.32) || (t > DB - 0.02 && t < DB + 0.3);
+          if (fast) shutter((ts, target) => scene(ts, target), t, { samples: 8, angle: 270 });
+          else scene(t, null);
+          type(t);
+          WOW.draw(tl, T0);
+        }
+        tl.eventCallback("onUpdate", render);
+        render();
+        window.__timelines[ID] = tl;
+      </script>
+    </template>
+  </body>
+</html>

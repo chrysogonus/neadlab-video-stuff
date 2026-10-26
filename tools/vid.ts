@@ -8,7 +8,12 @@
 //   ./vid video <id>                         the HyperFrames project for the music-to-video skill (see HYPERFRAMES)
 //   ./vid assemble <id>                      its index.html: the skill's assembler, plus compositions/overlays/ on top
 //   ./vid snap <id> [<frame_id>] --at <t,...> stills at track seconds, of the project or of one frame on its own
-//   ./vid proof <id> --to <s>                a 60 fps proof render of the project's first <s> seconds
+//                                            (checked first: a frame whose script throws fails here)
+//   ./vid proof <id> [--from <s>] --to <s>   a 60 fps proof render of the project between two track seconds
+//   ./vid render <id> [--4k]                 the whole film -> video/renders/video.mp4
+//     proof and render use the GPU (tools/chrome-gpu) unless --no-browser-gpu, and the light pass (analysis/finish.py)
+//     when the project's finish layer leaves grain and glow to it (light: in STORYBOARD.md), unless --raw; snap too
+//   ./vid audit <id> [--file <mp4>] [--name <n>]  measure a render against the references, per scene (step A)
 //   ./vid master <id>                        its render with the master's audio -> out/<id>.mp4
 // A step runs when an output is missing or its inputs' contents changed since it last ran (hashes in
 // work/steps.json). A step with no record whose outputs all exist is adopted as current: committed data
@@ -172,6 +177,40 @@ function ffmpeg(args: string[]) {
 // It scaffolds the project once and refreshes those three files on every run; the brief, storyboard and frames
 // are never touched. `./vid master` swaps the render's lossy audio for the master's (AAC 320k) for the upload.
 const HF = ['npx', '--yes', 'hyperframes@0.8.164'];
+const RAW = argv.includes('--raw');
+
+/** Headless Chrome needs no display, but connects to one when DISPLAY is set and blocks for good when WSLg's X server
+ *  hangs (2026-10-26: every check and snapshot timed out until DISPLAY was unset). */
+const HEADLESS = Object.fromEntries(Object.entries(process.env).filter(([k]) => k !== 'DISPLAY' && k !== 'WAYLAND_DISPLAY'));
+
+/** Render flags: the GPU through tools/chrome-gpu (HyperFrames' own headless Chrome gets no GPU under WSL; it needs
+ *  WSLg), or SwiftShader with --no-browser-gpu. */
+function renderEnv(): [string[], Record<string, string | undefined>] {
+  if (argv.includes('--no-browser-gpu')) return [['--no-browser-gpu'], HEADLESS];
+  return [['--browser-gpu', '--workers', '4'],
+    { ...process.env, HYPERFRAMES_BROWSER_PATH: path.join(ROOT, 'tools', 'chrome-gpu'), PRODUCER_BROWSER_GPU_MODE: 'hardware' }];
+}
+
+/** Does the project use the light pass? Its finish layer says so (the template's since 2026-10-26 leaves grain, vignette
+ *  and glow to analysis/finish.py); an older project keeps its own grain and renders as before. The pass then needs
+ *  STORYBOARD.md's `light: {"accent": …}` and fails loudly without it. */
+function lit(vdir: string) {
+  const fin = path.join(vdir, 'compositions', 'overlays', 'finish.html');
+  return !RAW && existsSync(fin) && readFileSync(fin, 'utf8').includes('analysis/finish.py');
+}
+
+/** Render `dir` to `out`; with the light pass, a near-lossless <out>.raw.mp4 goes through analysis/finish.py (kept, so
+ *  the light can be redone without rendering again: uv run python finish.py --project <id> --video … --out …). */
+function render(pid: string, dir: string, out: string, offset: number, extra: string[]) {
+  const vdir = path.join(ROOT, 'projects', pid, 'video'), pass = lit(vdir);
+  const raw = pass ? out.replace(/\.mp4$/, '.raw.mp4') : out;
+  const [flags, env] = renderEnv();
+  const r = Bun.spawnSync([...HF, 'render', dir, '-q', 'delivery', ...(pass ? ['--crf', '8'] : []), ...extra, ...flags, '-o', raw],
+    { stdout: 'inherit', stderr: 'inherit', env });
+  if (r.exitCode !== 0) throw new Error(`render failed (exit ${r.exitCode})`);
+  if (pass) python('finish.py', ['--project', pid, '--video', raw, '--out', out, '--offset', String(offset)]);
+  console.log(path.relative(ROOT, out));
+}
 const ANALYZER = path.join(ROOT, '.agents', 'skills', 'music-to-video', 'scripts', 'analyze-beatgrid.py');
 
 function video(pid: string) {
@@ -201,7 +240,7 @@ function video(pid: string) {
   for (const ph of am.phrases) { ph.start = toDownbeat(ph.start); ph.end = toDownbeat(ph.end); }
   writeFileSync(audiomap, JSON.stringify(am, null, 1) + '\n');
   // the music as data for the compositions (assets/kit/env.js, window.HR_ENV): band envelopes at 50 Hz (0..1) and
-  // the drum onsets [t, strength], so frames can breathe with the track without a render-time fetch
+  // the drum onsets [t, strength], the downbeats and beats, so frames can breathe with the track without a render-time fetch
   const full = JSON.parse(readFileSync(path.join(dir, 'data', 'audio.json'), 'utf8')) as Record<string, any>;
   const step = Math.round(full.fps / 50), q = (x: number) => Math.round(x * 100) / 100;
   const env = {
@@ -209,11 +248,13 @@ function video(pid: string) {
     bands: Object.fromEntries(['rms', 'bass', 'drums', 'vocal', 'high'].map((k) => [k, (full[k] as number[]).filter((_, i) => i % step === 0).map(q)])),
     onsets: Object.fromEntries(['kick', 'snare', 'hat'].map((k) => [k, (full.onsets[k] as [number, number][]).map(([t, s]) => [ms(t), q(s)])])),
     downbeats: ours.downbeats,
+    beats: ours.beats,
   };
   // the house-style kit and finish layer (docs/HOUSE-STYLE.md): installed once from templates/hyperframes/, never
   // overwritten — a project keeps the copy it was made with
   const tpl = path.join(ROOT, 'templates', 'hyperframes');
-  for (const f of ['assets/kit/hr-kit.js', 'compositions/overlays/finish.html']) {
+  for (const f of ['assets/kit/hr-kit.js', 'assets/kit/wow-kit.js', 'assets/kit/motion-blur.js', 'assets/kit/lines.js', 'assets/kit/README.md',
+    'assets/vendor/three.module.js', 'assets/vendor/three.core.js', 'assets/vendor/three-LICENSE', 'compositions/overlays/finish.html']) {
     const dst = path.join(vdir, f);
     if (existsSync(dst)) continue;
     mkdirSync(path.dirname(dst), { recursive: true });
@@ -275,12 +316,13 @@ function linkProject(vdir: string, dir: string) {
 /**
  * Stills at track seconds: of the assembled project, or of one frame (`frame` = its file stem, e.g. 02-sent) mounted
  * on its own at its STORYBOARD.md span — so a frame-worker can look at its frame before the others exist.
- * Software WebGL (SwiftShader): headless Chrome gets no GPU context under WSL.
+ * Software WebGL (SwiftShader): headless Chrome gets no GPU context under WSL. With light: in STORYBOARD.md the stills
+ * get the light pass (the look is judged in its final light).
  */
 function snap(pid: string, frame: string | undefined, at: string | undefined) {
   if (!at) throw new Error('usage: ./vid snap <id> [<frame_id>] --at <track seconds,...>');
   const vdir = path.join(ROOT, 'projects', pid, 'video');
-  let dir = vdir, start = 0;
+  let dir = vdir, start = 0, checkFailed = false;
   if (frame) {
     const sb = readFileSync(path.join(vdir, 'STORYBOARD.md'), 'utf8');
     const m = sb.match(new RegExp(`src:\\s*compositions/frames/${frame}\\.html[\\s\\S]*?span_sec:\\s*\\[\\s*([\\d.]+)\\s*,\\s*([\\d.]+)\\s*\\]`));
@@ -291,6 +333,8 @@ function snap(pid: string, frame: string | undefined, at: string | undefined) {
     rmSync(dir, { recursive: true, force: true });
     mkdirSync(dir, { recursive: true });
     linkProject(vdir, dir);
+    // only this frame: check lints every composition in the copy, and another frame's error is not this one's
+    for (const f of readdirSync(path.join(dir, 'compositions', 'frames'))) if (f !== `${frame}.html`) rmSync(path.join(dir, 'compositions', 'frames', f));
     writeFileSync(path.join(dir, 'index.html'), `<!doctype html>
 <html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" />
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
@@ -303,42 +347,123 @@ function snap(pid: string, frame: string | undefined, at: string | undefined) {
 <script>window.__timelines["main"] = gsap.timeline({ paused: true });</script>
 </body></html>
 `);
+    // a frame whose script throws renders as a dead frame in the film without failing anything; check catches it.
+    // The stills are taken either way (they are how you find the fault); a failed check fails the command after them.
+    const c = Bun.spawnSync([...HF, 'check', dir, '--no-browser-gpu'], { stdout: 'pipe', stderr: 'pipe', env: HEADLESS });
+    const log = c.stdout.toString() + c.stderr.toString();
+    checkFailed = c.exitCode !== 0;
+    if (checkFailed) console.error(log);
+    else {
+      for (const line of log.split('\n').filter((l) => /^\s*[✗⚠]/.test(l))) console.log(line);
+      console.log(`check passed: ${frame} on its own`);
+    }
   }
   const times = at.split(',').map((t) => Math.round((Number(t) - start) * 1000) / 1000);
   const out = path.join(vdir, 'snapshots', frame ?? 'all');
   const r = Bun.spawnSync([...HF, 'snapshot', dir, '--at', times.join(','), '--no-end', '--keep', '-o', out, '--no-browser-gpu', '--describe', 'false'],
-    { stdout: 'inherit', stderr: 'inherit' });
+    { stdout: 'inherit', stderr: 'inherit', env: HEADLESS });
   if (r.exitCode !== 0) throw new Error(`hyperframes snapshot failed (exit ${r.exitCode})`);
   const stills = times.map((t) => path.join(out, `at-${t}s.png`));
+  if (lit(vdir)) python('finish.py', ['--project', pid, '--stills', stills.join(','), '--times', at]);
   for (const [i, t] of at.split(',').entries()) console.log(`track ${t}s -> ${path.relative(ROOT, stills[i]!)}`);
   // one contact sheet in the order asked, three across
   const list = path.join(out, 'sheet.txt');
   writeFileSync(list, stills.map((f) => `file '${f}'\nduration 1\n`).join(''));
   ffmpeg(['-f', 'concat', '-safe', '0', '-i', list, '-vf', `scale=640:-1,tile=3x${Math.ceil(stills.length / 3)}:padding=6`, '-frames:v', '1', path.join(out, 'sheet.png')]);
   console.log(`sheet: ${path.relative(ROOT, path.join(out, 'sheet.png'))}`);
+  if (checkFailed) throw new Error(`hyperframes check failed on ${frame} on its own (its report is above the stills)`);
 }
 
 /**
- * A proof clip: the assembled project cut at --to (track seconds) — later frames dropped, clips and audio trimmed —
- * rendered at 60 fps to video/renders/proof.mp4. HyperFrames renders whole compositions only, so the cut is a copy.
+ * A proof clip: the assembled project cut to [--from, --to] (track seconds) — clips outside dropped, the rest shifted
+ * and trimmed — rendered at 60 fps to video/renders/proof-<from>-<to>.mp4 (one working copy per range, so frame-workers
+ * can proof side by side). HyperFrames renders whole compositions only, so the cut is a copy. --from moves back to the
+ * start of the frame playing there (pick it inside the previous frame to see the handoff). HyperFrames clamps a
+ * negative data-start to 0, so a clip that began before the cut (the full-length overlays) is played from its offset:
+ * media through data-media-start, a composition by moving its timeline (offsetComposition).
+ * ponytail: a media clip's data-automation envelope is not shifted; shift it too when one is cut from the front.
  */
-function proof(pid: string, to: number) {
-  const vdir = path.join(ROOT, 'projects', pid, 'video'), dir = path.join(vdir, '.hyperframes', 'proof');
+function proof(pid: string, from: number, to: number) {
+  const vdir = path.join(ROOT, 'projects', pid, 'video');
+  const r3 = (x: number) => Math.round(x * 1000) / 1000;
+  const clip = /<(div|audio|video)\b[^>]*?data-start="([\d.]+)"[^>]*?data-duration="([\d.]+)"[^>]*>(?:<\/\1>)?/gs;
+  const index = readFileSync(path.join(vdir, 'index.html'), 'utf8');
+  const total = Number(index.match(/data-composition-id="main"[\s\S]*?data-duration="([\d.]+)"/)?.[1]);
+  let t0 = from;
+  for (const [tag, , start, dur] of index.matchAll(clip)) {
+    const a = Number(start);
+    if (tag.includes('data-composition-src="compositions/frames/') && a <= from && from < r3(a + Number(dur!))) t0 = a;
+  }
+  if (!(t0 >= 0 && to > t0 && to <= total)) throw new Error(`usage: ./vid proof <id> [--from <s>] --to <s> (track seconds, 0 ≤ --from < --to ≤ ${total})`);
+  const dir = path.join(vdir, '.hyperframes', `proof-${t0}-${to}`), out = path.join(vdir, 'renders', `proof-${t0}-${to}.mp4`);
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   linkProject(vdir, dir);
-  const html = readFileSync(path.join(vdir, 'index.html'), 'utf8').replace(/<(div|audio)\b[^>]*?data-start="([\d.]+)"[^>]*?data-duration="([\d.]+)"[^>]*>(?:<\/\1>)?/gs,
-    (tag, _k, start, dur) => {
-      const a = Number(start), b = a + Number(dur);
-      if (tag.includes('data-composition-id="main"')) return tag.replace(`data-duration="${dur}"`, `data-duration="${to}"`);
-      if (a >= to) return '';
-      return b > to ? tag.replace(`data-duration="${dur}"`, `data-duration="${Math.round((to - a) * 1000) / 1000}"`) : tag;
-    });
+  const html = index.replace(clip, (tag, kind, start, dur) => {
+    const a = Number(start), b = r3(a + Number(dur)); // r3: 143.604 + 1.84 is 145.44400000000002, past a cut at 145.444
+    if (tag.includes('data-composition-id="main"')) return tag.replace(`data-duration="${dur}"`, `data-duration="${r3(to - t0)}"`);
+    if (b <= t0 || a >= to) return '';
+    let out = tag.replace(`data-start="${start}"`, `data-start="${r3(Math.max(a - t0, 0))}"`)
+      .replace(`data-duration="${dur}"`, `data-duration="${r3(Math.min(b, to) - Math.max(a, t0))}"`);
+    if (a < t0) {
+      const off = r3(t0 - a), media = out.match(/data-media-start="([\d.]+)"/);
+      if (kind !== 'div') out = media ? out.replace(media[0], `data-media-start="${r3(Number(media[1]) + off)}"`) : out.replace(`<${kind}`, `<${kind} data-media-start="${off}"`);
+      else offsetComposition(dir, tag, off);
+    }
+    return out;
+  });
   writeFileSync(path.join(dir, 'index.html'), html);
-  const out = path.join(vdir, 'renders', 'proof.mp4');
-  const r = Bun.spawnSync([...HF, 'render', dir, '-q', 'delivery', '--fps', '60', '--no-browser-gpu', '-o', out], { stdout: 'inherit', stderr: 'inherit' });
-  if (r.exitCode !== 0) throw new Error(`proof render failed (exit ${r.exitCode})`);
-  console.log(path.relative(ROOT, out));
+  console.log(`proof ${t0}–${to} s${t0 < from ? ` (from the start of the frame playing at ${from})` : ''}`);
+  render(pid, dir, out, t0, ['--fps', '60']);
+}
+
+/** The whole film to video/renders/video.mp4 (60 fps; --4k for the master). */
+function film(pid: string) {
+  const vdir = path.join(ROOT, 'projects', pid, 'video');
+  render(pid, vdir, path.join(vdir, 'renders', 'video.mp4'), 0, ['--fps', '60', ...(argv.includes('--4k') ? ['--resolution', '4k'] : [])]);
+}
+
+/**
+ * In the proof copy, move a composition's timeline `off` seconds earlier, in place: the runtime's seek fixes up the
+ * timeline's own children, so a wrapper timeline renders immediateRender:false tweens wrong. GSAP shifts a timeline
+ * whose child starts below 0, so: a child over before the cut is rendered at its end and removed; one under way at the
+ * cut plays on through a tween of its totalTime; the rest move. (An overlay reading tl.time() itself sees proof time.)
+ * It needs the timeline registered by the end of the composition's script, as the frame contract asks; otherwise the
+ * injected script throws and the proof shows the clip without its animation.
+ */
+function offsetComposition(dir: string, tag: string, off: number) {
+  const src = tag.match(/data-composition-src="([^"]+)"/)?.[1], id = tag.match(/data-composition-id="([^"]+)"/)?.[1];
+  if (!src || !id) return; // a plain timed element has no timeline of its own
+  const file = path.join(dir, src), text = readFileSync(file, 'utf8');
+  if (!text.includes('</template>')) throw new Error(`${src}: no </template>, so the proof cannot offset it`);
+  writeFileSync(file, text.replace('</template>', `<script>(() => { // ./vid proof: this clip began ${off} s before the cut
+  const off = ${off}, id = ${JSON.stringify(id)}, T = (window.__timelines = window.__timelines || {});
+  const shift = (tl) => {
+    for (const c of tl.getChildren(false, true, true)) {
+      const s = c.startTime() - off, e = c.endTime() - off;
+      if (e <= 0) { c.totalProgress(1); tl.remove(c); }
+      else if (s < 0) { tl.remove(c); tl.fromTo(c, { totalTime: -s }, { totalTime: c.totalDuration(), duration: e, ease: "none" }, 0); }
+      else c.startTime(s);
+    }
+  };
+  if (T[id]) shift(T[id]);
+  else { // registered later (after an await): shift it the moment it is registered
+    let v;
+    Object.defineProperty(T, id, { configurable: true, enumerable: true, get: () => v, set: (tl) => { v = tl; shift(tl); } });
+  }
+})();</script>
+</template>`));
+}
+
+/**
+ * Pipeline step A (AGENTS.md): measure a render against the reference videos and per scene (analysis/audit.py).
+ * --file defaults to renders/video.mp4; a range proof (proof-<from>-<to>.mp4) is measured from its track second.
+ */
+function audit(pid: string, file: string | undefined, name: string | undefined) {
+  const video = path.resolve(file ?? path.join(ROOT, 'projects', pid, 'video', 'renders', 'video.mp4'));
+  if (!existsSync(video)) throw new Error(`${path.relative(ROOT, video)} is missing; render or proof it first`);
+  const offset = path.basename(video).match(/^proof-([\d.]+)-[\d.]+\.mp4$/)?.[1] ?? '0';
+  python('audit.py', ['--project', pid, '--video', video, '--offset', offset, '--name', name ?? path.basename(video, '.mp4')]);
 }
 
 function master(pid: string) {
@@ -359,13 +484,15 @@ try {
     process.exit(r.exitCode);
   }
   else if (cmd === 'new') create(id!);
-  else if (!id) throw new Error('usage: ./vid check | new|analyze|status|video|assemble|snap|proof|master <id> (see tools/vid.ts)');
+  else if (!id) throw new Error('usage: ./vid check | new|analyze|status|video|assemble|snap|proof|render|audit|master <id> (see tools/vid.ts)');
   else if (cmd === 'analyze') analyze(id, opt('force')?.split(',') ?? []);
   else if (cmd === 'status') status(id);
   else if (cmd === 'video') video(id);
   else if (cmd === 'assemble') assemble(id);
   else if (cmd === 'snap') snap(id, argv[2]?.startsWith('--') ? undefined : argv[2], opt('at'));
-  else if (cmd === 'proof') proof(id, Number(opt('to')));
+  else if (cmd === 'proof') proof(id, Number(opt('from') ?? 0), Number(opt('to')));
+  else if (cmd === 'render') film(id);
+  else if (cmd === 'audit') audit(id, opt('file'), opt('name'));
   else if (cmd === 'master') master(id);
   else throw new Error(`unknown command '${cmd}'`);
 } catch (e) {

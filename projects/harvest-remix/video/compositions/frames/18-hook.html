@@ -5,16 +5,20 @@
     <!-- Frame 7 — hook (45.487–48.491), v10. The hook is pressed into the archive's record sheet: "harvest now," as
          textured ink impressions on the orange form, rubber stamps on the bare kicks, then a 0 ms flip to the dark
          register on "decrypt" (the title card's cream + fire), and velocity into the drop. SYSTEM.md v4 reference.
-         v13 (SYSTEM.md V7), hook 1 of 3, the clean one: the whole hook on black. The record sheet is printed in faint cream,
-         "harvest now," is pressed in cream, the stamps land in fire (with motion blur on the slam), a light gathers
-         before each impression instead of a shadow. No orange stock, no register flip.
-         v17 (V17.md): one continuous push-in while the line builds (no rolls, no hard camera set on "decrypt"); "decrypt later"
-         waits as cipher glyphs and resolves on each word; the ghost record folds into the sealed envelope, the seal lands on
-         "later", and the camera dives through it (pullOut in from 17, pushIn out into 05). No ink dots.
-         v20 (V20.md #11): hold → hit. The cipher is captured one block per hit (hat 45.946, hat 46.432, kick 47.133): the
-         block rolls, then holds still in cream until its word resolves it; a deadpan counter under it. The ARCHIVE stamp
-         slams on the 46.195 snare (motion blur on the slam, ink flecks, a sheet recoil); the record folds on the 46.662
-         downbeat, the flap closes and COPY lands on the 47.133 kick. The camera steps on each hit (eased 0.4 s). -->
+         v13 (SYSTEM.md V7), hook 1 of 3, the clean one: the whole hook on black.
+         v17 (V17.md): "decrypt later" waits as cipher glyphs and resolves on each word; the seal lands on "later", and the
+         camera dives through it (pullOut in from 17, pushIn out into 05).
+         v20 (V20.md #11): the cipher is captured one block per hit (hat 45.946, hat 46.432, kick 47.133); the ARCHIVE stamp
+         slams on the 46.195 snare; COPY lands on the 47.133 kick.
+         r1 (REFINE-1 row E): hook 1 in chorus 2's hook grammar (08-mine: one full-bleed word per shot, cut on the sung words
+         and the kick), on the dark register so hook 2's cream flash escalates it. Three shots, no orange haze, no rings:
+           1  0 → 0.888   "harvest" full-width, pressed into the record sheet on the 45.531 kick; ARCHIVE stamp on the snare;
+                          the captured cipher row runs small under it.
+           2  0.888 → 1.646  "now," stamped full-width while the archive's shutters slam down behind it (46.375, hat 46.432,
+                          downbeat 46.662), sparks off each bottom bar.
+           3  1.646 → end  cut on the 47.133 kick: the same cipher row, now full-width on the sealed envelope, COPY slams; it
+                          resolves into "decrypt" (47.56) and "later" (48.011), the seal presses on "later" (wax, not a
+                          ring), the camera dives through the seal and "later" re-scrambles into 05's drop. -->
   </head>
   <body>
     <template>
@@ -27,74 +31,70 @@
           --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --cream-muted: #888880;
           background: var(--ink); color: var(--cream);
         }
+        .f18-shot { position: absolute; inset: 0; opacity: 0; }
+        .f18-fx { position: absolute; left: 0; top: 0; width: 0; height: 0; }
 
-        /* ---- background plane: the record sheet printed on the orange stock ---- */
-        #f18-paper { position: absolute; inset: -60px; background-size: 512px 512px; }
-        #f18-light { position: absolute; left: -240px; top: 40px; width: 1700px; height: 1000px; border-radius: 50%;
-          background: radial-gradient(closest-side, rgba(232,93,38,0.1), rgba(232,93,38,0.03) 55%, rgba(232,93,38,0) 100%); }
-        #f18-form { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+        /* ---- background plane: the record sheet (1), the archive's shutters (2), the sealed envelope (3) ---- */
+        #f18-form, #f18-shut, #f18-env { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
 
-        /* ---- midground plane: rubber stamps that land on the bare kicks ---- */
+        /* ---- midground plane: rubber stamps and the seal ---- */
         .f18-stamp { position: absolute; opacity: 0; color: var(--fire); }
         .f18-stamp svg { display: block; width: 100%; height: 100%; overflow: visible; }
-        #f18-round { left: 1420px; top: 600px; width: 360px; height: 360px; }
-        #f18-copy { left: 150px; top: 790px; width: 400px; height: 132px; }
+        #f18-round { left: 1530px; top: 700px; width: 320px; height: 320px; }
+        #f18-copy { left: 150px; top: 800px; width: 400px; height: 132px; }
+        #f18-sealpos { position: absolute; left: 960px; top: 780px; width: 0; height: 0; }
+        #f18-seal { position: absolute; left: -105px; top: -105px; width: 210px; height: 210px; opacity: 0; overflow: visible; }
 
         /* ---- type plane: the hook ---- */
-        #f18-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-weight: 500;
-          font-size: 18px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #F27A4C; /* v17: lifted fire, ≥ 4.5:1 over the light pool */ white-space: nowrap; }
+        #f18-kicker { position: absolute; left: 5.5cqw; top: 4.2cqw; font-family: "IBM Plex Mono"; font-size: 18px; font-weight: 600;
+          letter-spacing: 0.14em; text-transform: uppercase; color: #F27A4C; white-space: nowrap; }
         #f18-kicker::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor;
           vertical-align: middle; margin-right: 16px; }
-        #f18-type { position: absolute; left: 0; right: 0; top: 112px; text-align: center; font-family: "Barlow"; font-weight: 900;
-          font-size: 12.2cqw; line-height: 0.9; letter-spacing: -0.045em; }
-        /* rows carry padding so the ink mask covers the slam's overscale and the spatter */
-        .f18-row { display: block; white-space: nowrap; padding: 0.22em 0.4em; margin: -0.22em -0.4em; }
-        #f18-r1 { color: var(--cream);
-          -webkit-mask-size: 420px 420px; mask-size: 420px 420px; }
-        #f18-r2 { color: var(--fire); margin-top: -0.18em; }
-        .f18-w { display: inline-block; position: relative; margin-right: 0.16em; isolation: isolate; }
-        .f18-shadow { position: absolute; left: -12%; right: -12%; top: -18%; bottom: -24%; border-radius: 50%;
-          background: radial-gradient(closest-side, rgba(240,236,229,0.14), rgba(240,236,229,0.05) 60%, rgba(240,236,229,0) 100%);
-          opacity: 0; }
+        .f18-big { position: absolute; left: 0; right: 0; text-align: center; font-family: "Barlow"; font-weight: 900; line-height: 1;
+          letter-spacing: -0.045em; white-space: nowrap; }
+        #f18-w1 { top: 214px; font-size: 440px; color: var(--cream); -webkit-mask-size: 420px 420px; mask-size: 420px 420px; }
+        #f18-w2 { top: 60px; font-size: 680px; color: var(--cream); -webkit-mask-size: 420px 420px; mask-size: 420px 420px; }
+        #f18-w2 .f18-comma { color: var(--fire); }
+        .f18-word { display: inline-block; transform-origin: 50% 80%; }
+        /* the cipher row: small under shots 1–2, full-width on the envelope in shot 3 (the same object, rescaled at the cut) */
+        #f18-r2wrap { position: absolute; left: 0; right: 0; top: 300px; height: 300px; transform-origin: 50% 50%; }
+        #f18-r2 { display: block; text-align: center; font-family: "Barlow"; font-weight: 900; font-size: 276px; line-height: 1;
+          letter-spacing: -0.045em; white-space: nowrap; color: var(--fire); }
+        .f18-w { display: inline-block; position: relative; margin-right: 0.16em; }
         .f18-c { display: inline-block; position: relative; }
         .f18-c > b { font-weight: inherit; }
         .f18-x { position: absolute; left: 50%; top: 0.3em; transform: translateX(-50%); font-family: "IBM Plex Mono";
           font-weight: 600; font-size: 0.74em; letter-spacing: 0; -webkit-text-stroke: 0.03em currentColor; opacity: 0; }
-        /* v20: the capture counter under the cipher */
-        #f18-held { position: absolute; left: 0; right: 0; top: 632px; text-align: center; font-family: "IBM Plex Mono"; font-weight: 600;
-          font-size: 22px; letter-spacing: 0.16em; color: var(--cream-muted); white-space: nowrap; }
+        /* the capture counter under the cipher */
+        #f18-held { position: absolute; left: 50%; top: 900px; transform: translateX(-50%); padding: 6px 14px; background: rgba(10, 10, 10, 0.88);
+          font-family: "IBM Plex Mono"; font-weight: 600; font-size: 22px; letter-spacing: 0.16em; color: #9a9a92; white-space: nowrap; }
         #f18-held b { color: var(--cream); font-weight: 600; }
-        /* the sealed envelope the record folds into, and its wax seal */
-        #f18-env { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
-        #f18-sealpos { position: absolute; left: 960px; top: 780px; width: 0; height: 0; }
-        #f18-seal { position: absolute; left: -105px; top: -105px; width: 210px; height: 210px; opacity: 0; overflow: visible; }
-
-        /* ---- near plane: out-of-focus hex passing in front ---- */
-        .f18-bokeh { position: absolute; font-family: "IBM Plex Mono"; font-weight: 600; color: var(--ink);
-          opacity: 0.03; filter: blur(16px); white-space: nowrap; }
       </style>
 
       <div data-hf-id="hf-2e7j" id="root" data-composition-id="18-hook" data-width="1920" data-height="1080" data-duration="3.004">
         <div data-hf-id="hf-2fjf" class="hr-layer" id="f18-bg" data-depth="0.6" data-layout-ignore>
-          <div data-hf-id="hf-mfyj" id="f18-paper"></div>
-          <div data-hf-id="hf-z0mt" id="f18-light"></div>
-          <svg data-hf-id="hf-1h8k" id="f18-form" viewBox="0 0 1920 1080"></svg>
-          <svg data-hf-id="hf-f18e" id="f18-env" viewBox="0 0 1920 1080"></svg>
+          <div class="f18-shot" id="f18-b1"><svg data-hf-id="hf-1h8k" id="f18-form" viewBox="0 0 1920 1080"></svg></div>
+          <div class="f18-shot" id="f18-b2"><svg id="f18-shut" viewBox="0 0 1920 1080"></svg><div class="f18-fx" id="f18-fx2"></div></div>
+          <div class="f18-shot" id="f18-b3"><svg data-hf-id="hf-f18e" id="f18-env" viewBox="0 0 1920 1080"></svg></div>
         </div>
         <div data-hf-id="hf-oubd" class="hr-layer" id="f18-mid" data-depth="0.85" data-layout-ignore>
-          <div data-hf-id="hf-f18p" id="f18-sealpos"><svg data-hf-id="hf-f18s" id="f18-seal" class="hr-glowbox" viewBox="-64 -64 128 128"></svg></div>
-          <div data-hf-id="hf-rd9l" class="f18-stamp" id="f18-round" data-hf-motion-blur='{"fps": 60}'><svg data-hf-id="hf-g8al" viewBox="-180 -180 360 360"></svg></div>
-          <div data-hf-id="hf-e1uk" class="f18-stamp" id="f18-copy" data-hf-motion-blur='{"fps": 60}'><svg data-hf-id="hf-0gdb" viewBox="0 0 400 132"></svg></div>
+          <div class="f18-shot" id="f18-m1">
+            <div data-hf-id="hf-rd9l" class="f18-stamp" id="f18-round" data-hf-motion-blur='{"fps": 60}'><svg data-hf-id="hf-g8al" viewBox="-180 -180 360 360"></svg></div>
+            <div class="f18-fx" id="f18-fx1"></div>
+          </div>
+          <div class="f18-shot" id="f18-m3">
+            <div data-hf-id="hf-f18p" id="f18-sealpos"><svg data-hf-id="hf-f18s" id="f18-seal" class="hr-glowbox" viewBox="-64 -64 128 128"></svg><div class="f18-fx" id="f18-fx3"></div></div>
+            <div data-hf-id="hf-e1uk" class="f18-stamp" id="f18-copy"><svg data-hf-id="hf-0gdb" viewBox="0 0 400 132"></svg></div>
+            <div class="f18-fx" id="f18-fxc"></div>
+          </div>
         </div>
         <div data-hf-id="hf-gp3n" class="hr-layer" id="f18-fg" data-depth="1">
           <div data-hf-id="hf-gd06" id="f18-kicker">THE ARCHIVE RECORD</div>
-          <div data-hf-id="hf-j7vz" id="f18-type">
-            <span data-hf-id="hf-mtgq" class="f18-row" id="f18-r1"></span>
-            <span data-hf-id="hf-gnqx" class="f18-row" id="f18-r2"></span>
-          </div>
+          <div class="f18-shot" id="f18-t1"><div class="f18-big" id="f18-w1"><span class="f18-word" id="f18-harvest">harvest</span></div></div>
+          <div class="f18-shot" id="f18-t2"><div class="f18-big" id="f18-w2"><span class="f18-word" id="f18-now">now<span class="f18-comma">,</span></span></div></div>
+          <div id="f18-r2wrap"><span data-hf-id="hf-gnqx" id="f18-r2"></span></div>
           <div id="f18-held"></div>
         </div>
-        <div data-hf-id="hf-2vt4" class="hr-layer" id="f18-near" data-depth="1.7" data-layout-ignore></div>
       </div>
 
       <script src="assets/kit/env.js"></script>
@@ -105,32 +105,20 @@
         (() => {
           const T0 = 45.487, DUR = 3.004;
           const L = (T) => +(T - T0).toFixed(3);
-          // the sung words (lyrics.json L9) and the bare kicks between them
+          // the sung words (lyrics.json L9)
           const W = { harvest: L(45.487), now: L(46.375), decrypt: L(47.56), later: L(48.011) };
-          // v20: the hits (env.js): hats capture cipher blocks, the snare stamps ARCHIVE, the downbeat folds, the kick stamps COPY
-          const HAT1 = L(45.946), ROUND = L(46.195), HAT2 = L(46.432), DOWN = L(46.662), COPY = L(47.133);
+          // the hits (env.js): kick 45.531 presses "harvest"; hats capture cipher blocks; the snare stamps ARCHIVE; the shutters
+          // slam on "now", the 46.432 hat and the 46.662 downbeat; the 47.133 kick cuts to the envelope and stamps COPY
+          const PRESS = L(45.531), HAT1 = L(45.946), ROUND = L(46.195), HAT2 = L(46.432), DOWN = L(46.662), COPY = L(47.133);
+          const CUT2 = W.now, CUT3 = COPY;
           const LOCKS = [HAT1, HAT2, COPY];   // block i of the cipher is captured on LOCKS[i]
           const $ = (id) => document.getElementById(id);
           const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
           const NS = "http://www.w3.org/2000/svg";
           const S = (parent, tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+          const sm = (u) => { u = Math.max(0, Math.min(1, u)); return u * u * (3 - 2 * u); };
 
-          // ---- baked textures ----------------------------------------------------------------------------------
-          // orange stock: seeded tone noise and short fibres
-          (() => {
-            const c = document.createElement("canvas"); c.width = c.height = 512;
-            const x = c.getContext("2d"), r = HR.rng(1801);
-            x.fillStyle = "#E85D26"; x.fillRect(0, 0, 512, 512);
-            const img = x.getImageData(0, 0, 512, 512);
-            for (let i = 0; i < img.data.length; i += 4) { const v = (r() - 0.5) * 12; img.data[i] += v; img.data[i + 1] += v * 0.8; img.data[i + 2] += v * 0.6; }
-            x.putImageData(img, 0, 0);
-            x.lineWidth = 0.7;
-            for (let k = 0; k < 160; k++) { const px = r() * 512, py = r() * 512, a = r() * Math.PI, l = 8 + r() * 22;
-              x.strokeStyle = r() < 0.5 ? "rgba(120,40,10,0.10)" : "rgba(255,220,190,0.10)";
-              x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(a) * l, py + Math.sin(a) * l * 0.35); x.stroke(); }
-            // v13: no orange stock; the hook sits on the black ground
-          })();
-          // ink: an alpha mask with pinholes and starved streaks, so the impression reads as pressed, not printed
+          // ---- baked texture: an ink mask with pinholes and starved streaks, so an impression reads as pressed ------------
           const inkMask = (() => {
             const c = document.createElement("canvas"); c.width = c.height = 420;
             const x = c.getContext("2d"), r = HR.rng(1802);
@@ -142,12 +130,11 @@
               x.fillRect(r() * 420, r() * 420, 30 + r() * 140, 1 + r() * 3); }
             return `url(${c.toDataURL("image/png")})`;
           })();
-          $("f18-r1").style.webkitMaskImage = inkMask;
-          $("f18-r1").style.maskImage = inkMask;
+          for (const id of ["f18-w1", "f18-w2"]) { $(id).style.webkitMaskImage = inkMask; $(id).style.maskImage = inkMask; }
 
-          // ---- the record sheet (ink at ~11 %, cream after the flip) -------------------------------------------
+          // ---- shot 1: the record sheet ---------------------------------------------------------------------------------
           const form = $("f18-form");
-          const ink = S(form, "g", { fill: "none", stroke: "#F0ECE5", "stroke-width": 2, opacity: 0.1, id: "f18-forminner" });
+          const ink = S(form, "g", { fill: "none", stroke: "#F0ECE5", "stroke-width": 2, opacity: 0.12, id: "f18-forminner" });
           for (let y = 40; y < 1080; y += 64) S(ink, "circle", { cx: 46, cy: y, r: 9 });
           S(ink, "path", { d: "M86 0 V1080 M86 206 H1888 M86 952 H1888 M1440 206 V952" });
           for (let y = 270; y < 952; y += 64) S(ink, "path", { d: `M120 ${y} H1408`, opacity: 0.35, "stroke-width": 1 });
@@ -167,7 +154,7 @@
           const bc = HR.rng(1803);
           for (let x = 1560; x < 1880;) { const w = 2 + ((bc() * 4) | 0); S(ink, "rect", { x, y: 978, width: w, height: 44, fill: "#F0ECE5", stroke: "none" }); x += w + 2 + ((bc() * 5) | 0); }
 
-          // ---- stamps -------------------------------------------------------------------------------------------
+          // ---- stamps ----------------------------------------------------------------------------------------------------
           (() => {
             const g = $("f18-round").querySelector("svg");
             S(g, "defs", {}).innerHTML = '<path id="f18-arc" d="M -128 0 A 128 128 0 1 1 128 0 A 128 128 0 1 1 -128 0" />';
@@ -191,23 +178,60 @@
           })();
           for (const id of ["f18-round", "f18-copy"]) { $(id).style.webkitMaskImage = inkMask; $(id).style.maskImage = inkMask; }
 
-          // near plane
-          const nr = HR.rng(1805);
-          for (let i = 0; i < 0; i++) {
-            const b = el("div", "f18-bokeh", $("f18-near"), HR.cipher(2 + (i % 2), 1810 + i));
-            Object.assign(b.style, { left: `${-80 + nr() * 1900}px`, top: `${-60 + nr() * 1080}px`, fontSize: `${200 + nr() * 160}px` });
-          }
+          // ---- shot 2: three bays of the archive behind roller shutters (line drawing on ink) -------------------------------
+          const BAYS = [[96, 640], [688, 1232], [1280, 1824]], HY = 128, TOP = 196, FLOOR = 1000;
+          const shut = $("f18-shut");
+          const sdefs = S(shut, "defs", {});
+          S(shut, "path", { d: `M0 ${FLOOR} H1920`, stroke: "rgba(240,236,229,0.22)", "stroke-width": 2, fill: "none" });
+          const curtains = BAYS.map(([x0, x1], b) => {
+            const w = x1 - x0, g = S(shut, "g", {});
+            // the bay: drawers in the dark, two posts, the roll housing with its lamp and plate
+            for (let c = 0; c < 4; c++) for (let r = 0; r < 8; r++) {
+              const dx = x0 + 22 + c * ((w - 44) / 4), dy = TOP + 20 + r * 98;
+              S(g, "rect", { x: dx + 4, y: dy, width: (w - 44) / 4 - 8, height: 84, fill: "none", stroke: "rgba(240,236,229,0.08)", "stroke-width": 1.5 });
+              S(g, "rect", { x: dx + (w - 44) / 8 - 14, y: dy + 34, width: 20, height: 6, fill: "rgba(240,236,229,0.10)" });
+            }
+            S(g, "rect", { x: x0 - 10, y: HY, width: 10, height: FLOOR - HY, fill: "#1f1f1d", stroke: "rgba(240,236,229,0.3)", "stroke-width": 1.5 });
+            S(g, "rect", { x: x1, y: HY, width: 10, height: FLOOR - HY, fill: "#1f1f1d", stroke: "rgba(240,236,229,0.3)", "stroke-width": 1.5 });
+            S(S(sdefs, "clipPath", { id: `f18-bay${b}` }), "rect", { x: x0, y: TOP, width: w, height: FLOOR - TOP });
+            const clip = S(g, "g", { "clip-path": `url(#f18-bay${b})` });
+            const cur = S(clip, "g", {});
+            for (let y = TOP; y < FLOOR - 26; y += 30) {
+              S(cur, "rect", { x: x0, y, width: w, height: 30, fill: "#21201e" });
+              S(cur, "path", { d: `M${x0} ${y + 1} H${x1}`, stroke: "rgba(240,236,229,0.24)", "stroke-width": 1.2 });
+              S(cur, "path", { d: `M${x0} ${y + 29} H${x1}`, stroke: "#070707", "stroke-width": 2 });
+            }
+            S(cur, "rect", { x: x0, y: FLOOR - 26, width: w, height: 26, fill: "#2a2a27", stroke: "rgba(240,236,229,0.4)", "stroke-width": 1.5 });
+            S(cur, "rect", { x: x0 + w / 2 - 40, y: FLOOR - 18, width: 80, height: 8, fill: "#111111", stroke: "rgba(240,236,229,0.35)", "stroke-width": 1 });
+            S(cur, "text", { x: x0 + 18, y: FLOOR - 8, fill: "#A09F97", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 2 }, `BAY 0${b + 1} · HELD`);
+            S(g, "rect", { x: x0 - 12, y: HY, width: w + 24, height: TOP - HY, fill: "#222220", stroke: "rgba(240,236,229,0.36)", "stroke-width": 1.5 });
+            S(g, "path", { d: `M${x0 - 12} ${HY + 2} H${x1 + 12}`, stroke: "rgba(240,236,229,0.35)", "stroke-width": 1.5 });
+            const lamp = S(g, "circle", { cx: x1 - 26, cy: (HY + TOP) / 2, r: 8, fill: "#3a3a37" });
+            return { cur, lamp, x: (x0 + x1) / 2 };
+          });
+          // a shutter slams down (from open: −(FLOOR − TOP)), bounces once on its bottom bar, its lamp goes fire
+          const tl0 = []; // timeline work queued until `tl` exists (built below)
+          const SLAMS = [[CUT2, 1, 0.08], [HAT2, 0, 0.16], [DOWN, 2, 0.16]];
+          SLAMS.forEach(([t, b, pre], k) => {
+            const c = curtains[b], open = -(FLOOR - TOP), part = k === 0 ? -260 : open;
+            tl0.push(() => {
+              tl.set(c.cur, { y: open }, 0);
+              tl.fromTo(c.cur, { y: part }, { y: 0, duration: pre, ease: "power3.in", immediateRender: false }, t - pre);
+              tl.fromTo(c.cur, { y: 0 }, { y: -18, duration: 0.07, ease: "power2.out", immediateRender: false }, t);
+              tl.fromTo(c.cur, { y: -18 }, { y: 0, duration: 0.16, ease: "power2.in", immediateRender: false }, t + 0.07);
+              tl.set(c.lamp, { attr: { fill: "#E85D26" } }, t);
+              WOW.burst(tl, $("f18-fx2"), { x: c.x, y: FLOOR - 4, t, n: 14, speed: 640, size: [3, 8], gravity: 1200, spread: 150, aim: -90, dur: 0.6, cream: 0.4, seed: 1870 + k });
+              WOW.shake(tl, $("f18-shut"), t, { amp: k === 2 ? 7 : 4, dur: 0.3, rot: 0.1, seed: 60 + k });
+            });
+          });
 
-          // ---- the envelope the record folds into (v17) -----------------------------------------------------------
+          // ---- shot 3: the sealed envelope -------------------------------------------------------------------------------
           const env = $("f18-env");
-          const eg = S(env, "g", { fill: "none", stroke: "#F0ECE5", "stroke-linejoin": "round", opacity: 0 });
-          const draw = (d, o) => S(eg, "path", Object.assign({ d, pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1 }, o));
           const TIP = { x: 960, y: 780 };
-          S(eg, "rect", { x: 86, y: 206, width: 1802, height: 746, fill: "rgba(240,236,229,0.025)", stroke: "rgba(240,236,229,0.32)", "stroke-width": 2 });
-          const folds = [draw("M86 952 L860 600", { stroke: "rgba(240,236,229,0.22)", "stroke-width": 2 }),
-            draw("M1888 952 L1060 600", { stroke: "rgba(240,236,229,0.22)", "stroke-width": 2 })];
-          const flapFill = S(eg, "path", { d: `M86 206 L${TIP.x} ${TIP.y} L1888 206 Z`, fill: "#121211", stroke: "none", opacity: 0 });
-          const flap = draw(`M86 206 L${TIP.x} ${TIP.y} L1888 206`, { stroke: "rgba(240,236,229,0.5)", "stroke-width": 2.5 });
+          S(env, "rect", { x: 86, y: 206, width: 1802, height: 746, fill: "rgba(240,236,229,0.025)", stroke: "rgba(240,236,229,0.32)", "stroke-width": 2 });
+          S(env, "path", { d: `M86 206 L${TIP.x} ${TIP.y} L1888 206 Z`, fill: "#121211" });
+          S(env, "path", { d: "M86 952 L860 600 M1888 952 L1060 600", fill: "none", stroke: "rgba(240,236,229,0.2)", "stroke-width": 2 });
+          S(env, "path", { d: `M86 206 L${TIP.x} ${TIP.y} L1888 206`, fill: "none", stroke: "rgba(240,236,229,0.45)", "stroke-width": 2.5, "stroke-linejoin": "round" });
           // the wax seal on the flap's point (01's design, the sender's "a.")
           (() => {
             const g = $("f18-seal");
@@ -227,16 +251,10 @@
             S(g, "path", { d: "M-38 -24 A44 44 0 0 1 -8 -45", stroke: "rgba(255,236,224,0.6)", "stroke-width": 3.5, "stroke-linecap": "round", fill: "none" });
           })();
 
-          // ---- the hook ------------------------------------------------------------------------------------------
-          const tl = gsap.timeline({ paused: true });
-          const words = {};
-          const mk = (row, key, text) => { const w = el("span", "f18-w", $(row), text); if (row === "f18-r1" && key === "harvest") el("span", "", $(row), " "); if (key === "decrypt") el("span", "", $(row), " "); words[key] = w; return w; };
-          mk("f18-r1", "harvest", "harvest"); mk("f18-r1", "now", "now,");
-          $("f18-r2").classList.add("hr-glow");
-          // "decrypt later" waits on the sheet as cipher: each letter carries a hex glyph until its word is sung
+          // ---- the cipher row: "decrypt later" waits as hex; each letter carries a hex glyph until its word is sung ---------
           const chars = [];
           [["decrypt", W.decrypt, 0.012], ["later", W.later, 0.01]].forEach(([key, t, each], wi) => {
-            const w = el("span", "f18-w", $("f18-r2")); words[key] = w;
+            const w = el("span", "f18-w", $("f18-r2"));
             if (wi === 0) el("span", "", $("f18-r2"), " ");
             [...key].forEach((ch, i) => {
               const c = el("span", "f18-c", w), b = el("b", "", c, ch), x = el("span", "f18-x", c, "0");
@@ -244,98 +262,96 @@
               x.style.transform = `translateX(-50%) scaleX(${Math.max(0.62, Math.min(1, (adv + 0.02) / 0.444))})`;
               b.style.display = "inline-block";
               const grp = key === "later" ? 2 : i < 4 ? 0 : 1;
-              chars.push({ b, x, c, at: t - 0.05 + i * each, word: key, i, grp, lock: LOCKS[grp] + (key === "later" ? i : i % 4) * 0.018,
-                base: x.style.transform });
+              chars.push({ b, x, c, at: t - 0.05 + i * each, word: key, i, grp, lock: LOCKS[grp] + (key === "later" ? i : i % 4) * 0.018 });
             });
           });
-          // resolve: each letter flips from hex on its slot time and pops into place (the word is readable on its time)
-          for (const c of chars) tl.fromTo(c.b, { scale: 1.28 }, { scale: 1, duration: 0.32, ease: "power3.out", immediateRender: false }, c.at);
-          // v20: a captured block jumps up and drops back into its slot (each glyph a hair after the last)
-          for (const c of chars) tl.fromTo(c.c, { y: -46, scale: 1.18 }, { y: 0, scale: 1, duration: 0.34, ease: "back.out(2.4)", immediateRender: false }, c.lock);
+          $("f18-r2").classList.add("hr-glow");
 
-          // "harvest" is cut on its own slam (the frame starts on the word); "now," gathers and slams on its time
-          const hg = words.harvest._hrG = HR.glyphs(words.harvest);
-          tl.fromTo(hg, { opacity: 1, scale: 1.16 }, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.42)" }, 0);
-          tl.fromTo(hg, { filter: "blur(2px)" }, { filter: "blur(0px)", duration: 0.6, ease: "power2.out" }, 0);
-          HR.hero(tl, words.now, W.now, { pre: 0.11, spread: 12, over: 1.14, skew: false, sharp: true });
+          // ---- the timeline -----------------------------------------------------------------------------------------------
+          const tl = gsap.timeline({ paused: true });
+          tl0.forEach((f) => f());
+          tl.set({}, {}, DUR);
 
-          // the press: a light gathers over the spot just before each impression
-          const press = (w, t) => {
-            const sh = document.createElement("span"); sh.className = "f18-shadow"; w.prepend(sh);
-            if (t > 0.05) {
-              tl.fromTo(sh, { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.11, ease: "power2.in" }, t - 0.11);
-              tl.to(sh, { opacity: 0, duration: 0.05, ease: "none" }, t);
-            }
-          };
-          for (const k of ["harvest", "now", "decrypt", "later"]) press(words[k], W[k]);
-
-          // impressions squash into the sheet
-          for (const [k, t] of [["harvest", W.harvest], ["now", W.now], ["decrypt", W.decrypt], ["later", W.later]]) {
-            tl.fromTo(words[k], { scaleY: 1, scaleX: 1 }, { scaleY: 0.93, scaleX: 1.025, duration: 0.05, ease: "power2.out", immediateRender: false }, t);
-            tl.fromTo(words[k], { scaleY: 0.93, scaleX: 1.025 }, { scaleY: 1, scaleX: 1, duration: 0.4, ease: "elastic.out(1, 0.45)", immediateRender: false }, t + 0.05);
-          }
-
-          // rubber stamps on the downbeat and the kick: anticipation above, slam, a hair of rebound
-          const stamp = (id, t, rot) => {
+          // shot 1: "harvest" is on screen from the frame's first instant (the pullOut in), pressed into the sheet on the kick
+          const hw = $("f18-harvest");
+          tl.fromTo(hw, { scale: 1.06 }, { scale: 1, duration: 0.5, ease: "power2.out" }, 0);
+          tl.fromTo(hw, { scaleY: 1, scaleX: 1 }, { scaleY: 0.88, scaleX: 1.04, duration: 0.045, ease: "power2.out", immediateRender: false }, PRESS);
+          tl.fromTo(hw, { scaleY: 0.88, scaleX: 1.04 }, { scaleY: 1, scaleX: 1, duration: 0.45, ease: "elastic.out(1, 0.45)", immediateRender: false }, PRESS + 0.045);
+          WOW.punch(tl, $("f18-t1"), PRESS, { s: 1.045, dur: 0.35 });
+          WOW.burst(tl, $("f18-fx1"), { x: 960, y: 560, t: PRESS, n: 34, speed: 1000, size: [4, 13], gravity: 1000, spread: 160, aim: 90, dur: 0.6, cream: 0.85, color: "cream", seed: 1860 });
+          WOW.shake(tl, $("f18-form"), PRESS, { amp: 5, dur: 0.3, rot: 0.12, seed: 17 });
+          // the ARCHIVE stamp on the snare: anticipation above, slam, ink flecks off its rim, the sheet recoils
+          const stamp = (id, t, rot, pre) => {
             tl.fromTo("#" + id, { opacity: 0, scale: 1.7, rotation: rot, filter: "blur(9px)" },
-              { opacity: 0.8, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.12, ease: "power4.in" }, t - 0.12);
+              { opacity: 0.85, scale: 1, rotation: 0, filter: "blur(0px)", duration: pre, ease: "power4.in", immediateRender: false }, t - pre);
             tl.fromTo("#" + id, { scale: 1 }, { scale: 1.03, duration: 0.04, ease: "power2.out", immediateRender: false }, t);
             tl.fromTo("#" + id, { scale: 1.03 }, { scale: 1, duration: 0.35, ease: "elastic.out(1, 0.5)", immediateRender: false }, t + 0.04);
           };
-          stamp("f18-round", ROUND, -10);
-          stamp("f18-copy", COPY, 8);
-          // v20: the slam is mechanical: ink flecks off the stamp's rim, the sheet recoils under it (≤ 6 px, 11 Hz)
-          WOW.burst(tl, $("f18-mid"), { x: 1600, y: 780, t: ROUND, n: 18, speed: 620, size: [3, 9], gravity: 900, dur: 0.6, cream: 0.15, seed: 1861 });
-          WOW.burst(tl, $("f18-mid"), { x: 350, y: 856, t: COPY, n: 12, speed: 520, size: [3, 8], gravity: 900, dur: 0.55, cream: 0.15, seed: 1862 });
+          stamp("f18-round", ROUND, -10, 0.12);
+          WOW.burst(tl, $("f18-fx1"), { x: 1690, y: 860, t: ROUND, n: 18, speed: 620, size: [3, 9], gravity: 900, dur: 0.6, cream: 0.15, seed: 1861 });
           WOW.shake(tl, $("f18-form"), ROUND, { amp: 6, dur: 0.32, rot: 0.15, seed: 18 });
-          WOW.shake(tl, $("f18-form"), COPY, { amp: 5, dur: 0.3, rot: 0.12, seed: 19 });
-          WOW.punch(tl, $("f18-type"), ROUND, { s: 1.025, dur: 0.35 });
+          WOW.punch(tl, $("f18-t1"), ROUND, { s: 1.02, dur: 0.35 });
 
-          // the record folds into the envelope: from the downbeat stamp to "decrypt" the sheet's print fades and the folds draw
-          // v20: the folds snap in on the 46.662 downbeat, the flap draws down and closes on the 47.133 kick
-          const FOLD = W.decrypt - DOWN;
-          tl.fromTo("#f18-forminner", { opacity: 0.1 }, { opacity: 0, duration: FOLD, ease: "sine.inOut", immediateRender: false }, DOWN);
-          tl.fromTo(eg, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out", immediateRender: false }, DOWN);
-          tl.fromTo(folds, { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.3, ease: "power3.out", immediateRender: false }, DOWN);
-          tl.fromTo(flap, { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: COPY - DOWN, ease: "power2.in", immediateRender: false }, DOWN);
-          tl.fromTo(flapFill, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, COPY);
-          tl.to(".f18-stamp", { opacity: 0.55, duration: 0.3, ease: "power2.out" }, W.decrypt);
-          // the seal presses onto the flap's point on "later": the hero accent (chorus), a ring and a few rays from the seal
+          // shot 2: "now," is stamped full-width on its time while the centre shutter slams behind it
+          const nw = $("f18-now");
+          tl.fromTo(nw, { scale: 1.12, filter: "blur(1.5px)" }, { scale: 1, filter: "blur(0px)", duration: 0.07, ease: "power4.in", immediateRender: false }, CUT2 - 0.001);
+          tl.fromTo(nw, { scaleY: 1, scaleX: 1 }, { scaleY: 0.93, scaleX: 1.02, duration: 0.05, ease: "power2.out", immediateRender: false }, CUT2 + 0.07);
+          tl.fromTo(nw, { scaleY: 0.93, scaleX: 1.02 }, { scaleY: 1, scaleX: 1, duration: 0.45, ease: "elastic.out(1, 0.45)", immediateRender: false }, CUT2 + 0.12);
+          // each later shutter knocks the word on its baseline (a recoil, ≤ 8 px)
+          [[HAT2, 4, 0.17], [DOWN, 8, 0.3]].forEach(([t, a, back]) => {
+            tl.fromTo(nw, { y: 0 }, { y: a, duration: 0.05, ease: "power2.out", immediateRender: false }, t);
+            tl.fromTo(nw, { y: a }, { y: 0, duration: back, ease: "power2.out", immediateRender: false }, t + 0.05);
+          });
+
+          // shot 3: COPY is struck on the cut (the kick), the row resolves word by word, the seal presses on "later"
+          tl.fromTo("#f18-copy", { opacity: 0.85, scale: 1.08, rotation: 4 }, { opacity: 0.85, scale: 1, rotation: 0, duration: 0.3, ease: "elastic.out(1, 0.5)", immediateRender: false }, CUT3);
+          WOW.burst(tl, $("f18-fxc"), { x: 350, y: 866, t: CUT3, n: 12, speed: 520, size: [3, 8], gravity: 900, dur: 0.55, cream: 0.15, seed: 1862 });
+          for (const c of chars) tl.fromTo(c.b, { scale: c.word === "later" ? 1.1 : 1.28 }, { scale: 1, duration: 0.32, ease: "power3.out", immediateRender: false }, c.at);
+          // a captured block jumps up and drops back into its slot (each glyph a hair after the last)
+          for (const c of chars) tl.fromTo(c.c, { y: -46, scale: 1.18 }, { y: 0, scale: 1, duration: 0.34, ease: "back.out(2.4)", immediateRender: false }, c.lock);
+          // the seal on "later": it drops onto the flap's point, squashes the wax flat and throws it (no ring, no rays)
           tl.fromTo("#f18-seal", { opacity: 0, scale: 1.7 }, { opacity: 1, scale: 1, duration: 0.12, ease: "power4.in", immediateRender: false }, W.later - 0.12);
-          tl.fromTo("#f18-seal", { scale: 1 }, { scale: 1.06, duration: 0.05, ease: "power2.out", immediateRender: false }, W.later);
-          tl.fromTo("#f18-seal", { scale: 1.06 }, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.5)", immediateRender: false }, W.later + 0.05);
-          WOW.shock(tl, $("f18-sealpos"), { x: 0, y: 0, t: W.later, r: 1100, n: 2, w: 6, color: "fire", dur: 0.6 });
-          WOW.rays(tl, $("f18-sealpos"), { x: 0, y: 0, t: W.later, n: 16, r0: 120, r1: 900, seed: 18, color: "cream", dur: 0.45 });
-          WOW.punch(tl, $("f18-type"), W.later, { s: 1.04, dur: 0.4 });
+          tl.fromTo("#f18-seal", { scaleX: 1, scaleY: 1 }, { scaleX: 1.16, scaleY: 0.88, duration: 0.05, ease: "power2.out", immediateRender: false }, W.later);
+          tl.fromTo("#f18-seal", { scaleX: 1.16, scaleY: 0.88 }, { scaleX: 1, scaleY: 1, duration: 0.42, ease: "elastic.out(1, 0.45)", immediateRender: false }, W.later + 0.05);
+          for (let k = 0; k < 6; k++) {
+            const a = -90 + k * 60 + 30, ax = Math.cos((a * Math.PI) / 180), ay = Math.sin((a * Math.PI) / 180);
+            WOW.burst(tl, $("f18-fx3"), { x: ax * 100, y: ay * 96, t: W.later + (k % 2) * 0.01, n: 6, speed: 900, size: [4, 13], gravity: 1300, spread: 60, aim: a, dur: 0.8, cream: 0.05, seed: 1880 + k });
+          }
+          tl.fromTo("#f18-env", { y: 0 }, { y: 7, duration: 0.05, ease: "power2.out", immediateRender: false }, W.later);
+          tl.fromTo("#f18-env", { y: 7 }, { y: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, W.later + 0.05);
+          WOW.punch(tl, $("f18-r2wrap"), W.later, { s: 1.035, dur: 0.4 });
 
-          // ---- the camera: one continuous push (a pure function of time), then the dive into the seal ----------------
+          // ---- the camera: a push per shot (a pure function of time), steps on the hits, then the dive into the seal ----------
           const stage = HR.stage($("root"), { seed: 18, drift: 1 });
           const cam = stage.cam;
           cam.focus = 1;
-          const DIVE = 2.62; // after "later" has held for 0.1 s; quadratic start, so the speed never jumps
-          // v20: on top of the slow push, the camera steps on each hit (smoothstep over 0.4 s: no jolts), alternating sides
-          const STEPS = [[HAT1, 0.012, -40, -0.5], [ROUND, 0.016, 52, 0.7], [HAT2, 0.012, -46, -0.6], [DOWN, 0.016, 44, 0.6], [COPY, 0.016, -50, -0.7], [W.decrypt, 0.01, 30, 0.3]];
-          const sm = (u) => { u = Math.max(0, Math.min(1, u)); return u * u * (3 - 2 * u); };
+          const DIVE = 2.72; // r1: after "later" has held for 0.2 s; quadratic start, so the speed never jumps
+          const STEPS = [[ROUND, 0.014, 34, 0.4], [HAT2, 0.012, -30, -0.4], [DOWN, 0.022, 40, 0.5], [W.decrypt, 0.012, -24, -0.3]];
           const camAt = (t) => {
-            const u = Math.max(0, (t - DIVE) / (DUR - DIVE));
             let dz = 0, dx = 0, dr = 0;
             for (const [a, z, x, r] of STEPS) { const k = sm((t - a) / 0.4); dz += z * k; dx += x * k; dr += r * k; }
-            const keep = 1 - u * u;   // the steps hand over to the dive, so the frame's last instant is v19's
-            cam.rot = dr * keep;
-            cam.z = 1 + 0.075 * (t / DUR) + dz * keep + 0.45 * u * u;
-            cam.y = (cam.z - 1) * (TIP.y - 540); // keeps the seal fixed in frame while the camera closes on it
-            cam.x = 24 - 48 * (t / DUR) + dx * keep;
+            if (t < CUT3) {
+              const a = t < CUT2 ? 0 : CUT2, u = t < CUT2 ? t / CUT2 : (t - CUT2) / (CUT3 - CUT2);
+              cam.z = 1 + (t < CUT2 ? 0.05 : 0.06) * u + dz;
+              cam.x = (t < CUT2 ? 20 - 40 * u : -18 + 36 * u) + dx;
+              cam.y = 0; cam.rot = dr;
+            } else {
+              const u = (t - CUT3) / (DUR - CUT3), d = Math.max(0, (t - DIVE) / (DUR - DIVE)), keep = 1 - d * d;
+              cam.z = 1 + 0.075 * u + dz * keep * 0.5 + 0.45 * d * d;
+              cam.y = (cam.z - 1) * (TIP.y - 540); // keeps the seal fixed in frame while the camera closes on it
+              cam.x = 12 - 36 * u + dx * keep * 0.3;
+              cam.rot = dr * keep * 0.5;
+            }
           };
-          tl.fromTo("#f18-near", { x: 0 }, { x: -240, duration: DUR, ease: "none" }, 0);
           const host = document.getElementById("el-18-hook");
-          // the pullOut in pivots on the line (so "harvest" stays in frame), the dive out on the seal; the host is
-          // unscaled between the two switches, so the pivot changes invisibly at mid-frame
-          const pivot = (t) => { host.style.transformOrigin = t < DUR / 2 ? "50% 22%" : `${(TIP.x / 19.2).toFixed(1)}% ${(TIP.y / 10.8).toFixed(1)}%`; };
+          // the pullOut in pivots on "harvest", the dive out on the seal; the host is unscaled between the two switches
+          const pivot = (t) => { host.style.transformOrigin = t < DUR / 2 ? "50% 40%" : `${(TIP.x / 19.2).toFixed(1)}% ${(TIP.y / 10.8).toFixed(1)}%`; };
           WOW.transition(tl, host, { in: "pullOut", out: "pushIn", dur: 0.46, total: DUR });
 
-          // ---- per frame -----------------------------------------------------------------------------------------
+          // ---- per frame -----------------------------------------------------------------------------------------------
           const h18 = (a, b) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x); };
-          const lightEl = $("f18-light"), held = $("f18-held");
+          const held = $("f18-held"), r2w = $("f18-r2wrap");
+          const shots = [["f18-b1", "f18-m1", "f18-t1"], ["f18-b2", "f18-t2"], ["f18-b3", "f18-m3"]].map((ids) => ids.map($));
           const heldTxt = (t) => {
             const n = LOCKS.filter((a) => t >= a).length;
             if (t >= W.later) return "HELD <b>3/3</b> BLOCKS · KEY: <b>LATER</b>";
@@ -344,22 +360,25 @@
           };
           function render() {
             const t = tl.time(), T = T0 + t;
+            // the shot switches: one clock (this function) for every element of a cut
+            const si = t < CUT2 ? 0 : t < CUT3 ? 1 : 2;
+            shots.forEach((els, i) => els.forEach((e) => { e.style.opacity = i === si ? "1" : "0"; }));
+            r2w.style.transform = si < 2 ? "translateY(392px) scale(0.3)" : "";
+            held.style.top = si < 2 ? "1018px" : "968px"; // under the shutters' floor in shot 2, under the envelope in shot 3
             camAt(t); pivot(t);
             stage.apply(T);
             WOW.draw(tl); HR.draw(tl);
             HR.glow($("f18-r2"), T, 0.4, 0.9);
             HR.glow($("f18-seal"), T, 0.4, 0.8);
-            const rms = HR.band("rms", T);
-            lightEl.style.transform = `scale(${(0.94 + 0.12 * rms).toFixed(3)})`;
             // cipher until each letter's slot time; the last instant before the drop, "later" falls back into hex
             const back = Math.max(0, (t - 2.86) / (DUR - 2.86)), hat = HR.hit("hat", T, 0.08);
-            const lit = Math.min(1, 0.62 + 0.2 * Math.min(1, t / W.decrypt) + 0.18 * hat); // v17: ≥ 3:1 at its dimmest
+            const lit = Math.min(1, 0.62 + 0.2 * Math.min(1, t / W.decrypt) + 0.18 * hat);
             chars.forEach((c, n) => {
               const lg = c.word === "later" && c.i >= 2 && back > 0 && (c.i - 1) / 4 < back;
               const hex = t < c.at || lg;
               c.b.style.opacity = hex ? 0 : 1;
               c.x.style.opacity = hex ? (lg ? 1 : lit).toFixed(3) : 0;
-              // v20: an uncaptured glyph flickers; a captured one rolls fast for 0.22 s, then holds its byte in cream
+              // an uncaptured glyph flickers; a captured one rolls fast for 0.22 s, then holds its byte in cream
               const dl = t - c.lock, kept = dl >= 0.22 && !lg, roll = dl >= 0 && dl < 0.22 && !lg;
               if (hex) c.x.textContent = kept ? HR.HEX[(h18(n + 3, 91) * 16) | 0]
                 : HR.HEX[(h18(n + 7, Math.floor(t * (roll ? 30 : 5 + (n % 3)) + n * 0.37) + (hat > 0.5 ? 1 : 0)) * 16) | 0];

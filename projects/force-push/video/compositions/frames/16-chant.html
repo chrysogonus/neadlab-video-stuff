@@ -1,0 +1,403 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 16 — chant (post-chorus 1, L21–L24, 76.090–83.484). The stomp set, the template of 29 and 35.
+         Dark, centred, full-bleed. The upper zone is the chant: FORCE! (cream, a cream light behind it) and PUSH! (fire,
+         a fire glow behind it) swap full-frame on their word starts. Each slam is ONE fixed-content wrapper that comes out
+         of the lens (FORCE!) or up from below (PUSH!) in 0.04 s, motion-blurred on the approach, and lands sharp ON its
+         word; slam size, camera punch and the floor's flare are sized by the measured drums. Every (hey!) is stamped as a
+         tag in the top right, and the tags pile up. The lower zone is the singer's terminal, a lit window whose top edge
+         is the fire floor the stomps land on (the accent, always on screen); during each chant a command types at the
+         prompt, and each line's tail (centred, the hero in fire) gets git's answer.
+         "wipe it clean": `git status` → `nothing to commit, working tree clean` on "clean" (plant 2, now big).
+         "like you've never been": `git log --author=you` → Enter on "never", and on "been" just the prompt again.
+         "hear the crowd": `git push` → Enter on "crowd": `Everything up-to-date`, and rows of it stack up the frame on
+         the hits, a lit wall like a crowd. On "You're" (81.52) the drums drop out: a hard cut to a cleared terminal,
+         `git log` types, and on "history" (82.502) the post-rebase log prints, every author `me`; "now" gets the next
+         prompt. The camera trucks ±100 px across each chant line (a pendulum, with parallax) and pushes to 1.12 through
+         the last line. Refinement round 1: in = `zoom` from 15 on the world only (FORCE! starts 30 ms in and stays
+         sharp), out = `pullOut` into 17 (the lyric scales with it unblurred: "now" starts inside the out).
+         Forks (29, 35): change the tables (CHANT / LAST / TERM_A / LOG / TERM_B / CROWD) and the times; keep the set. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
+          --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          background: var(--ink); color: var(--cream);
+        }
+        /* two wrappers: the world takes the transitions (zoom in, pullOut out); the front (lights, tags, lyric) is kept
+           out of the zoom in and scales unblurred with the pullOut */
+        #f16-world, #f16-front { position: absolute; inset: 0; }
+        #f16-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        #f16-strip b { color: var(--fire); font-weight: 600; }
+
+        /* ---- the light behind the slams: cream behind FORCE!, fire behind PUSH! and the heroes (render() breathes them) ---- */
+        /* confined (as 29): the light pools behind the slams and leaves the corners and the floor's foot true black */
+        .f16-light { position: absolute; left: 50cqw; top: 21.6cqw; width: 112cqw; height: 54cqw; margin: -27cqw 0 0 -56cqw; opacity: 0; }
+        #f16-lightF { background: radial-gradient(closest-side, rgba(240, 236, 229, 0.11) 0%, rgba(240, 236, 229, 0.07) 35%, rgba(240, 236, 229, 0.03) 65%, rgba(240, 236, 229, 0) 100%); }
+        #f16-lightP { background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.1) 35%, rgba(232, 93, 38, 0.045) 65%, rgba(232, 93, 38, 0) 100%); }
+
+        /* ---- the chant: one word full-frame at a time; the span is the fixed-content slam (motion-blurred) ---- */
+        .f16-chant { position: absolute; left: 0; right: 0; top: 11cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 27cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        .f16-chant > span { display: inline-block; transform-origin: 50% 62%; }
+        .f16-chant.f16-push { color: var(--fire); }
+        /* (hey!): a tag, stamped; the tags pile up across the top right */
+        .f16-tag { position: absolute; top: 6.4cqw; opacity: 0; padding: 0.25cqw 1.1cqw 0.45cqw; border: 0.28cqw solid var(--cream);
+          font: 900 4.2cqw/1 "Barlow", sans-serif; letter-spacing: -0.02em; color: var(--cream); white-space: nowrap; }
+        /* each line's tail: centred, the hero in fire */
+        .f16-tail { position: absolute; left: 0; right: 0; top: 16.6cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 7.5cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        .f16-tail .f16-hero, #f16-l24 .f16-hero { color: var(--fire); font-size: 1.5em; letter-spacing: -0.045em; }
+        /* the last line, after the drums drop out */
+        #f16-l24 { position: absolute; left: 0; right: 0; top: 6.6cqw; text-align: center; white-space: nowrap; opacity: 0;
+          font: 900 7.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f16-l24 .f16-b { margin-top: -1.2cqw; }
+        #f16-l24 .f16-hero { font-size: 1.85em; }
+
+        /* ---- the terminal (the singer's, ~/us on main): a lit window; its top edge is the fire floor ---- */
+        /* the window is lit from its fire top edge down and falls off to ink, so the ground stays true black below */
+        #f16-panel { position: absolute; left: 3.6cqw; right: 3.6cqw; top: 35.8cqw; height: 32cqw;
+          background: linear-gradient(180deg, #1C1B19 0%, #161614 22%, #0E0E0D 48%, var(--ink) 68%);
+          border: 1px solid var(--border); border-top: 0; }
+        #f16-screen { position: absolute; inset: 0; opacity: 0.8;
+          background: radial-gradient(ellipse 70% 90% at 34% 0%, rgba(240, 236, 229, 0.05) 0%, rgba(240, 236, 229, 0.02) 55%, rgba(240, 236, 229, 0) 100%); }
+        #f16-floor { position: absolute; left: -1px; right: -1px; top: 0; height: 0.72cqw; background: var(--fire); transform-origin: 50% 0%;
+          box-shadow: 0 0 1.4cqw rgba(232, 93, 38, 0.45); }
+        .f16-term { position: absolute; left: 5.5cqw; right: 5.5cqw; overflow: hidden; font: 400 2cqw/3cqw "IBM Plex Mono", monospace;
+          color: var(--cream-muted); }
+        #f16-termA { top: 37.8cqw; height: 15cqw; }
+        #f16-termB { top: 30.6cqw; height: 21.6cqw; font-size: 1.8cqw; line-height: 2.7cqw; opacity: 0; }
+        .f16-rows { position: absolute; left: 0; right: 0; top: 0; }
+        .f16-row { white-space: pre; opacity: 0; }
+        .f16-row .f16-cmd { color: var(--cream); }
+        .f16-row .f16-hl { color: var(--fire); font-weight: 600; }
+        .f16-row.f16-key { color: var(--cream); font-weight: 500; }
+        .f16-row b { color: var(--cream); font-weight: 600; }
+        .f16-cur { display: inline-block; width: 0.6em; height: 1.1em; margin-left: 0.06em; background: var(--fire); vertical-align: -0.2em; opacity: 0; }
+        .f16-u { position: relative; display: inline-block; }
+        .f16-u i { position: absolute; left: 0; right: 0; bottom: -0.1em; height: 0.12em; background: var(--fire); transform-origin: 0% 50%; transform: scaleX(0); }
+
+        /* the crowd: rows of git's answer stacking up the frame, a lit wall (decorative) */
+        #f16-crowd { position: absolute; inset: 0; }
+        .f16-crow { position: absolute; left: 0; white-space: pre; opacity: 0; font: 500 1.8cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+      </style>
+      <div id="root" data-composition-id="16-chant" data-width="1920" data-height="1080" data-duration="7.394">
+        <div id="f16-world">
+          <div class="hr-layer" data-depth="0.15">
+            <div id="f16-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+          </div>
+          <div class="hr-layer" data-depth="0.3" data-layout-ignore>
+            <div id="f16-crowd"></div>
+          </div>
+          <div class="hr-layer" data-depth="0.5">
+            <div id="f16-panel" data-layout-ignore><div id="f16-screen"></div><i id="f16-floor"></i></div>
+            <div class="f16-term" id="f16-termA"><div class="f16-rows"></div></div>
+            <div class="f16-term" id="f16-termB"><div class="f16-rows"></div></div>
+          </div>
+        </div>
+        <div id="f16-front">
+          <div class="hr-layer" data-depth="0.9" data-layout-ignore>
+            <div class="f16-light" id="f16-lightF"></div>
+            <div class="f16-light" id="f16-lightP"></div>
+          </div>
+          <div class="hr-layer" data-depth="0.45">
+            <div class="f16-tag" id="f16-tag1" data-layout-allow-overlap style="right: 5.5cqw; transform: rotate(-5deg)">(hey!)</div>
+            <div class="f16-tag" id="f16-tag2" data-layout-allow-overlap style="right: 21.4cqw; transform: rotate(3deg)">(hey!)</div>
+            <div class="f16-tag" id="f16-tag3" data-layout-allow-overlap style="right: 37.2cqw; transform: rotate(-2.5deg)">(hey!)</div>
+          </div>
+          <div class="hr-layer" data-depth="1">
+            <div class="f16-chant" id="f16-force"><span id="f16-fw" data-hf-motion-blur='{"fps": 60}'>FORCE!</span></div>
+            <div class="f16-chant f16-push" id="f16-push"><span id="f16-pw" class="hr-glow" data-hf-motion-blur='{"fps": 60}'>PUSH!</span></div>
+            <div class="f16-tail" id="f16-t1"><span class="f16-w">wipe</span> <span class="f16-w">it</span> <span class="f16-w f16-hero hr-glow">clean</span></div>
+            <div class="f16-tail" id="f16-t2"><span class="f16-w">like</span> <span class="f16-w">you've</span> <span class="f16-w f16-hero hr-glow">never</span> <span class="f16-w">been</span></div>
+            <div class="f16-tail" id="f16-t3"><span class="f16-w">hear</span> <span class="f16-w">the</span> <span class="f16-w f16-hero hr-glow">crowd</span></div>
+            <div id="f16-l24">
+              <div class="f16-a"><span class="f16-w">you're</span> <span class="f16-w">not</span> <span class="f16-w">in</span> <span class="f16-w">my</span></div>
+              <div class="f16-b"><span class="f16-w f16-hero">history</span> <span class="f16-w">now</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script>
+        (() => {
+          const DUR = 7.394, T0 = 76.09, PX = 19.2; // 1cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="16-chant"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const stage = HR.stage(root, { seed: 16 });
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+
+          // ================= the song (track seconds, lyrics.json L21–L24) =================
+          // per chant line: FORCE!, PUSH!, (hey!), the tail's word starts, the tail's hero index
+          const CHANT = [
+            { force: 76.12, push: 76.54, hey: 76.86, tail: [77.02, 77.284, 77.44], hero: 2 },
+            { force: 77.873, push: 78.42, hey: 78.64, tail: [78.7, 78.911, 79.14, 79.3], hero: 2 },
+            { force: 79.8, push: 80.283, hey: 80.7, tail: [80.78, 80.981, 81.106], hero: 2 },
+          ];
+          const LAST = { words: [81.52, 81.66, 81.909, 82.32, 82.502, 83.22], hero: 4 };
+          const CUT = LAST.words[0]; // the drums drop out: the cleared terminal
+          // the cuts (REFINE-1's table): in from 15, out into 17
+          const IN = { kind: "zoom", dur: 0.35 }, OUT = { kind: "pullOut", dur: 0.46 };
+
+          // ================= the world: what the terminal says (forks change this table) =================
+          // rows: { at, out } printed whole at `at` (−1: already on screen) · { at, cmd, type: [a, b], enter, hl } a prompt
+          // that appears at `at`, types `cmd` from a to b, and is entered at `enter` (the cursor leaves)
+          const PS = "~/us (main) $ ";
+          const TERM_A = [
+            { at: -1, out: "To me@home:us.git" },
+            { at: -1, out: '<span class="f16-hl">+</span> 3f2a1c9...e81b0d4 main -&gt; main (forced update)' },
+            { at: -1, cmd: "git status", type: [76.2, 76.68], enter: 77.44 },
+            { at: 77.48, out: "On branch main" },
+            { at: 77.48, out: 'nothing to commit, working tree <span class="f16-u">clean<i></i></span>', key: true },
+            { at: 77.504, cmd: "git log --author=you", hl: [17, 20], type: [77.94, 78.96], enter: 79.14 },
+            { at: 79.32, cmd: "git push", type: [79.86, 80.27], enter: 81.106 },
+            { at: 81.106, out: "Everything up-to-date", key: true },
+          ];
+          const LOG = [["e81b0d4", "ready."], ["6b1e9f3", "we'll get to it"], ["d27a0c5", "just a feature"],
+            ["8f4c61b", "moved in"], ["1a93e7d", "nothing on the side"], ["b05d2f8", "initial commit"]];
+          const TERM_B = [
+            { at: CUT, cmd: "git log", type: [81.6, 81.92], enter: 82.502 },
+            ...LOG.map(([h, m], i) => ({ at: 82.502 + i * 0.022, out: `<span>${h}</span>  <b>me</b>  ${m}` })),
+            { at: 83.22, cmd: "", type: null, enter: 99 },
+          ];
+          // the crowd: rows of `Everything up-to-date` stacking up from the terminal on the hits after "crowd"
+          const CROWD = [81.106, 81.106, 81.106, 81.164, 81.164, 81.183, 81.183, 81.25, 81.25, 81.32, 81.32, 81.393, 81.393, 81.45];
+
+          // ================= build the terminals =================
+          const rng = HR.rng(1616);
+          function buildTerm(el, script) {
+            const box = el.querySelector(".f16-rows");
+            return script.map((r) => {
+              const d = document.createElement("div");
+              d.className = "f16-row" + (r.key ? " f16-key" : "");
+              d.setAttribute("data-layout-allow-occlusion", ""); // rows scroll out under the window's top edge (clipped)
+              const row = { ...r, el: d, t: r.at < 0 ? -1 : at(r.at) };
+              if (r.cmd !== undefined) {
+                d.innerHTML = `<span>${PS}</span><span class="f16-cmd"></span><i class="f16-cur"></i>`;
+                row.cmdEl = d.querySelector(".f16-cmd"); row.cur = d.querySelector(".f16-cur");
+                row.enterT = at(r.enter);
+                // keystrokes at a human rhythm: even spacing with a seeded wobble
+                row.keys = [];
+                if (r.type) {
+                  const a = at(r.type[0]), b = at(r.type[1]), n = r.cmd.length;
+                  for (let i = 0; i < n; i++) row.keys.push(a + ((b - a) * (i + 0.35 * (rng() - 0.5))) / Math.max(1, n - 1));
+                }
+                row.shown = -1;
+              } else d.innerHTML = r.out;
+              d.querySelectorAll("*").forEach((e) => e.setAttribute("data-layout-allow-occlusion", ""));
+              box.appendChild(d);
+              return row;
+            });
+          }
+          const termA = { el: $("f16-termA"), rows: buildTerm($("f16-termA"), TERM_A), cap: 5, rowH: 3 * PX };
+          const termB = { el: $("f16-termB"), rows: buildTerm($("f16-termB"), TERM_B), cap: 8, rowH: 2.7 * PX };
+          termA.box = termA.el.querySelector(".f16-rows"); termB.box = termB.el.querySelector(".f16-rows");
+
+          // the crowd rows, bottom up from the terminal's top edge: a lit wall, brightest at the bottom
+          const crowdBox = $("f16-crowd");
+          const crowd = CROWD.map((T, k) => {
+            const d = document.createElement("div");
+            d.className = "f16-crow";
+            d.textContent = Array(5).fill("Everything up-to-date").join("    ");
+            d.style.top = (35.2 - 2.15 * (k + 1)).toFixed(2) + "cqw";
+            d.style.left = (-(k % 2) * 13 - rng() * 9).toFixed(2) + "cqw";
+            d.style.opacity = 0;
+            crowdBox.appendChild(d);
+            const top = 35.2 - 2.15 * (k + 1), behind = top > 14.6 && top < 29.2; // the tail's band
+            return { el: d, t: at(T), a: behind ? 0.24 : Math.max(0.45, 0.9 - k * 0.03), ph: 0.5 + rng() * 0.5 };
+          });
+
+          // ================= the chant =================
+          const drumsPeak = (T) => { let m = 0; for (let d = 0; d <= 0.14; d += 0.02) m = Math.max(m, HR.band("drums", T + d)); return m; };
+          const show = (el, a, b) => { tl.set(el, { opacity: 0 }, 0); tl.set(el, { opacity: 1 }, Math.max(0.001, a)); if (b != null) tl.set(el, { opacity: 0 }, b); };
+          // one FORCE! and one PUSH! element, each shown in three windows (so 2 motion-blurred targets, fixed content)
+          const fEl = $("f16-force"), pEl = $("f16-push"), fw = $("f16-fw"), pw = $("f16-pw"), floor = $("f16-floor");
+          const PRE = 0.04; // the slam's approach: begins at start − 0.04, lands ON the word's start
+          const fWin = [], pWin = [], heroT = [];
+          const hits = []; // camera: { T (local), a (z punch), y, settle }
+          const fromF = (d) => ({ scale: 1.6 + 0.6 * d, yPercent: -10, skewX: -8 });
+          const fromP = (d) => ({ scale: 1.9 + 0.5 * d, yPercent: 32, skewX: -10 });
+          CHANT.forEach((c, i) => {
+            const n = i + 1, F = at(c.force), P = at(c.push), H = at(c.hey);
+            const tail = $("f16-t" + n), words = tail.querySelectorAll(".f16-w");
+            const W0 = at(c.tail[0]);
+            const next = i + 1 < CHANT.length ? at(CHANT[i + 1].force) - PRE : at(CUT);
+            // FORCE! from its approach to PUSH!'s; PUSH! to the tail's first word; the tail to the next FORCE!
+            fWin.push([Math.max(0, F - PRE), P - PRE]); pWin.push([P - PRE, W0 - 0.03]);
+            show(tail, W0 - 0.03, i + 1 < CHANT.length ? next - 0.001 : at(CUT) - 0.031);
+            const dF = drumsPeak(c.force), dP = drumsPeak(c.push);
+            // the slams: parked at their approach pose while hidden, so the blur never smears a jump
+            const sF = i === 0 ? { ...fromF(dF), scale: 1.3 } : fromF(dF), sP = fromP(dP), aF = Math.min(PRE, F), aP = PRE;
+            // park at the pose from the frame's start (FORCE!) or from the previous window's end (both hidden then)
+            if (i === 0) gsap.set(fw, sF), gsap.set(pw, sP);
+            else tl.set(fw, sF, fWin[i - 1][1] + 0.001), tl.set(pw, sP, pWin[i - 1][1] + 0.001);
+            tl.fromTo(fw, sF, { scale: 0.965, yPercent: 0, skewX: -4, duration: aF, ease: "power3.in", immediateRender: false }, F - aF);
+            tl.fromTo(fw, { scale: 0.965, yPercent: 0, skewX: -4 }, { scale: 1, yPercent: 0, skewX: 0, duration: 0.1, ease: "power2.out", immediateRender: false }, F);
+            tl.fromTo(pw, sP, { scale: 0.96, yPercent: 0, skewX: -5, duration: aP, ease: "power3.in", immediateRender: false }, P - aP);
+            tl.fromTo(pw, { scale: 0.96, yPercent: 0, skewX: -5 }, { scale: 1, yPercent: 0, skewX: 0, duration: 0.1, ease: "power2.out", immediateRender: false }, P);
+            // the floor takes each stomp: it flares and settles
+            tl.fromTo(floor, { scaleY: 1.6 + 1.6 * dF }, { scaleY: 1, duration: 0.32, ease: "power3.out", immediateRender: false }, F);
+            tl.fromTo(floor, { scaleY: 1.8 + 1.8 * dP }, { scaleY: 1, duration: 0.36, ease: "power3.out", immediateRender: false }, P);
+            hits.push({ T: F, a: 0.018 + 0.04 * dF, y: -6, settle: 0.36 }, { T: P, a: 0.024 + 0.05 * dP, y: -9, settle: 0.42 });
+            // (hey!): stamped, 0 ms, a short settle; it stays until the drums drop
+            const tag = $("f16-tag" + n);
+            show(tag, H, at(CUT));
+            tl.fromTo(tag, { scale: 1.32 }, { scale: 1, duration: 0.12, ease: "power4.out", immediateRender: false }, H);
+            // the tail: words build on their starts, the hero slams
+            words.forEach((w, j) => {
+              if (j === c.hero) HR.hero(tl, w, at(c.tail[j]), { spread: 16, over: 1.2, pre: 0.06, sharp: true, skew: false });
+              else HR.lead(tl, w, at(c.tail[j]));
+            });
+            heroT.push(at(c.tail[c.hero]));
+            hits.push({ T: at(c.tail[c.hero]), a: i === 2 ? 0.045 : 0.022, y: i === 2 ? -10 : -4, settle: 0.4 });
+          });
+          // the slams' windows (one element each, shown three times)
+          const showWins = (el, wins) => {
+            if (wins[0][0] <= 0) gsap.set(el, { opacity: 1 }); // on screen from the first frame (a set at 0 never fires)
+            wins.forEach(([a, b]) => { if (a > 0) tl.set(el, { opacity: 1 }, a); tl.set(el, { opacity: 0 }, b); });
+          };
+          showWins(fEl, fWin); showWins(pEl, pWin);
+          tl.set(floor, { scaleY: 1 }, 0);
+
+          // the answers: `clean` underlined as the hero lands
+          tl.fromTo(root.querySelector(".f16-u i"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out", immediateRender: false }, at(77.52));
+
+          // ================= the last line: the drums drop out, a cleared terminal =================
+          const cutT = at(CUT), HIST = at(LAST.words[LAST.hero]);
+          show($("f16-l24"), cutT - 0.03);
+          tl.set($("f16-termA"), { opacity: 1 }, 0).set($("f16-termA"), { opacity: 0 }, cutT - 0.03);
+          tl.set($("f16-termB"), { opacity: 0 }, 0).set($("f16-termB"), { opacity: 1 }, cutT - 0.03);
+          // the window grows up to hold the log (a hard cut, with the terminal)
+          tl.set($("f16-panel"), { y: 0 }, 0).set($("f16-panel"), { y: -7.2 * PX }, cutT - 0.03);
+          tl.fromTo(floor, { scaleY: 2.2 }, { scaleY: 1, duration: 0.45, ease: "power3.out", immediateRender: false }, HIST);
+          const lw = $("f16-l24").querySelectorAll(".f16-w");
+          lw.forEach((w, j) => {
+            if (j === LAST.hero) HR.hero(tl, w, at(LAST.words[j]), { spread: 18, over: 1.16, pre: 0.06, sharp: true, skew: false });
+            else HR.lead(tl, w, at(LAST.words[j]));
+          });
+
+          // ================= the camera =================
+          // z/y: a punch on every stomp sized by the measured drums, a settle, a slow climb between; after the cut a push
+          // to 1.12 through the last line. x: one truck per chant line, ±100 px (a pendulum; layers move with their depth)
+          const cam = stage.cam; let cz = 1, cy = 0, ct = 0;
+          const camTo = (t, dur, z, y, ease) => {
+            if (dur <= 0.001) return;
+            tl.fromTo(cam, { z: cz, y: cy }, { z, y, duration: dur, ease, immediateRender: ct === 0 }, t);
+            cz = z; cy = y; ct = t + dur;
+          };
+          hits.sort((p, q) => p.T - q.T);
+          hits.forEach((h, k) => {
+            const nextT = k + 1 < hits.length ? hits[k + 1].T : cutT;
+            const base = 1 + 0.008 * Math.min(2, Math.floor(k / 3));
+            camTo(ct, h.T - 0.05 - ct, base, 0, "sine.inOut");
+            camTo(h.T - 0.05, 0.05, base + h.a, h.y, "power2.in");
+            camTo(h.T, Math.min(h.settle, nextT - 0.05 - h.T), base, 0, "elastic.out(1, 0.5)");
+          });
+          camTo(ct, cutT - 0.001 - ct, cz + 0.004, 0, "none");
+          tl.set(cam, { z: 1, y: 0 }, cutT); cz = 1; cy = 0; ct = cutT;
+          camTo(cutT, HIST - 0.06 - cutT, 1.07, -4, "sine.inOut");
+          camTo(HIST - 0.06, 0.06, 1.095, -6, "power2.in");
+          camTo(HIST, DUR - HIST, 1.12, -2, "power2.out");
+          // x is drawn in render(): a sway that crosses the centre on every FORCE! (the slams land centred, uncropped)
+          // and swings ±TRUCK out over each tail, alternating sides — 200 px of travel per chant line, continuous
+          const TRUCK = 100, lineStarts = [at(CHANT[0].force), ...CHANT.slice(1).map((c) => at(c.force)), cutT];
+          const swayX = (t) => {
+            if (t >= cutT) return 36 * gsap.parseEase("sine.inOut")(Math.min(1, (t - cutT) / (DUR - cutT)));
+            for (let i = 0; i < CHANT.length; i++) {
+              const a = lineStarts[i], b = lineStarts[i + 1];
+              if (t < b) return (i % 2 ? -1 : 1) * TRUCK * Math.sin(Math.PI * Math.max(0, (t - a) / (b - a)));
+            }
+            return 0;
+          };
+
+          // ================= the cuts =================
+          const world = $("f16-world"), front = $("f16-front");
+          WOW.transition(tl, world, { in: IN.kind, dur: IN.dur, total: DUR });
+          WOW.transition(tl, world, { out: OUT.kind, dur: OUT.dur, total: DUR });
+          tl.set({}, {}, DUR);
+
+          // ================= per frame: terminals, crowd, lights, camera, cuts =================
+          const scrollE = gsap.parseEase("power3.out");
+          function drawTerm(term, t) {
+            let f = 0, active = null;
+            for (const r of term.rows) {
+              const on = r.t <= t;
+              r.el.style.opacity = on ? 1 : 0;
+              if (!on) continue;
+              f += r.t < 0 ? 1 : scrollE(Math.min(1, (t - r.t) / 0.09));
+              if (r.cmdEl) {
+                let n = 0; while (n < r.keys.length && r.keys[n] <= t) n++;
+                if (n !== r.shown) {
+                  const s = r.cmd.slice(0, n);
+                  if (r.hl && n > r.hl[0]) r.cmdEl.innerHTML = s.slice(0, r.hl[0]) + `<span class="f16-hl">${s.slice(r.hl[0], r.hl[1])}</span>` + s.slice(r.hl[1]);
+                  else r.cmdEl.textContent = s;
+                  r.shown = n;
+                }
+                r.cur.style.opacity = 0;
+                if (t < r.enterT) active = { r, last: n ? r.keys[n - 1] : r.t };
+              }
+            }
+            if (active) {
+              const idle = t - active.last;
+              active.r.cur.style.opacity = idle < 0.3 || Math.floor((idle - 0.3) * 4) % 2 === 1 ? 1 : 0;
+            }
+            term.box.style.transform = `translateY(${(-Math.max(0, f - term.cap) * term.rowH).toFixed(1)}px)`;
+          }
+          const inWin = (wins, t) => wins.some(([a, b]) => t >= a && t < b);
+          const sinceHero = (t) => { let s = 99; for (const h of [...heroT, HIST]) if (t >= h) s = Math.min(s, t - h); return s; };
+          const glows = Array.from(root.querySelectorAll(".hr-glow"));
+          const lightF = $("f16-lightF"), lightP = $("f16-lightP"), screen = $("f16-screen");
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            if (t < cutT) drawTerm(termA, t); else drawTerm(termB, t);
+            const live = t < cutT;
+            for (const c of crowd) {
+              const on = live && t >= c.t;
+              c.el.style.opacity = on ? c.a : 0;
+              if (!on) continue;
+              const rise = 1 - scrollE(Math.min(1, (t - c.t) / 0.16));
+              const bob = (HR.hit("kick", T, 0.12) + HR.hit("snare", T, 0.12)) * 7 * c.ph;
+              c.el.style.transform = `translateY(${(rise * 18 - bob).toFixed(1)}px)`;
+            }
+            // the light: cream behind FORCE!, fire behind PUSH!; between the stomps a low cream ambience and the fire
+            // swelling behind each hero; all breathing with the bass and flaring on the kicks
+            const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.2), hs = sinceHero(t);
+            const heroGlow = hs < 99 ? 0.35 + 0.45 * Math.exp(-hs / 0.6) : 0.25;
+            let lf, lp;
+            if (inWin(fWin, t)) { lf = 0.85; lp = 0.12; } else if (inWin(pWin, t)) { lf = 0.15; lp = 0.9; }
+            else if (live) { lf = 0.42; lp = heroGlow; } else { lf = 0.32; lp = t < HIST ? 0.2 : heroGlow; }
+            lightF.style.opacity = Math.min(1, lf + 0.2 * bass + 0.2 * kick).toFixed(3);
+            lightP.style.opacity = Math.min(1, lp + 0.2 * bass + 0.2 * kick).toFixed(3);
+            screen.style.opacity = (0.7 + 0.3 * bass).toFixed(3);
+            for (const g of glows) HR.glow(g, T, 0.2, 0.32);
+            cam.x = swayX(t);
+            stage.apply(T);
+            WOW.draw(tl, T0);
+            // the front rides the pullOut's scale without its blur ("now" is read through the out)
+            const u = Math.max(0, Math.min(1, (t - (DUR - OUT.dur)) / OUT.dur));
+            front.style.scale = u > 0 ? (1 + 0.1 * u * u).toFixed(4) : "";
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["16-chant"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Frame 15 — origin (chorus 1's last line, 72.435–76.090). Cream: the repository's settings, printed as a form and
+         lying as a sheet on a desk under a lamp (07's treatment), a mono label column on the left and the values on the
+         right. Refinement round 1. The sheet rises in (14's `rise` carries on, shortened to a 0.2 s settle: "origin's" starts
+         0.125 s in). REMOTES: the value is the lyric, "origin's mine", over git's own `git remote -v` printout; on "mine"
+         (73.32) the push line prints, its `me` is marked and a fat marker underline draws under "mine". ACCESS: on the cut
+         the table already holds `Collaborators: 2`, row 1 `me` and row 2 `you` (in the accent). On "and" the camera
+         trucks ~220 px down and pushes in (1.04 → 1.14) onto the second half and the table. On "you're" the gutter
+         pointer slams onto your row (blurred approach); on "not" a marker selection wipes across it and the row empties;
+         on "there" (74.945) the empty row COLLAPSES — it squashes shut, the table's closing rule slams up onto row 1, the
+         seam lands in the accent, the count drops to `Collaborators: 1` and the paper jolts. The camera keeps pushing into
+         the seam and zooms through it into 16's chant (`zoom`, 0.35 s). -->
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
+        #root {
+          position: absolute; inset: 0; overflow: hidden; container-type: size;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --ink-on-cream: #111111; --muted-on-cream: #5F5B54; --marker: #C8481A;
+          --hr-accent-rgb: 200, 72, 26;
+          /* the desk the sheet lies on: the cream ground in the lamp's shade (07) */
+          --desk: color-mix(in srgb, var(--cream) 91%, var(--ink));
+          background: var(--desk); color: var(--ink-on-cream);
+        }
+        #f15-cam, #f15-in { position: absolute; inset: 0; }
+        /* the zoom out pushes through the seam (its place on screen at the end of the frame) */
+        #f15-cam { transform-origin: 50% 63.8%; }
+        /* the header strip on its band; the sheet slides under the band's lip */
+        #f15-band { position: absolute; left: 0; right: 0; top: 0; height: 6.4cqw; background: var(--desk);
+          box-shadow: 0 0.35cqw 0.9cqw rgba(10, 10, 10, 0.16); }
+        #f15-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #3F3C37;
+          padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
+        #f15-strip b { color: #7E2E12; font-weight: 600; }
+        /* the view under the band: the sheet drifts in it (drift coordinates: y = frame y − 6.4cqw) */
+        #f15-view { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; overflow: hidden; }
+        #f15-drift { position: absolute; left: 0; top: 0; width: 100cqw; height: 100cqw; transform-origin: 0 0; }
+        #f15-jolt { position: absolute; inset: 0; transform-origin: 52% 40%; }
+        /* the sheet: paper on the desk, a shadow under it */
+        #f15-sheet { position: absolute; left: 2.6cqw; right: 2.6cqw; top: 1.2cqw; height: 70cqw; background: var(--cream);
+          box-shadow: 0 1.3cqw 3cqw rgba(10, 10, 10, 0.2), 0 0.15cqw 0.35cqw rgba(10, 10, 10, 0.16); }
+        /* the lamp: light falls off from what is being read, breathing with the bass; it follows the camera down */
+        #f15-lamp { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; pointer-events: none; --lx: 46%; --ly: 30%;
+          background: radial-gradient(ellipse 66% 84% at var(--lx) var(--ly), rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 0) 38%,
+            rgba(10, 10, 10, 0.07) 72%, rgba(10, 10, 10, 0.15) 100%); }
+        /* the form: label column at 5.5cqw, value column at ~21cqw */
+        .f15-lbl { position: absolute; left: 5.5cqw; font: 500 0.86cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--muted-on-cream); }
+        #f15-lbl1 { top: 2.8cqw; }
+        #f15-lbl2 { top: 22.5cqw; }
+        #f15-sep1 { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 21.2cqw; height: 1px; background: rgba(17, 17, 17, 0.22); }
+        /* REMOTES: the lyric is the value; git's printout is its detail */
+        #f15-a { position: absolute; left: 20.4cqw; top: 1.2cqw; font: 900 12cqw/0.92 "Barlow", sans-serif; letter-spacing: -0.045em;
+          color: var(--ink-on-cream); white-space: nowrap; }
+        .f15-hw { position: relative; display: inline-block; isolation: isolate; }
+        /* the marker underline under "mine": fat, the accent */
+        .f15-ul { position: absolute; z-index: -1; left: -0.03em; right: 0.02em; bottom: -0.07em; height: 0.2em; background: var(--marker); opacity: 0.92;
+          border-radius: 0.3cqw; transform-origin: 0% 50%; transform: rotate(-0.8deg) scaleX(0); }
+        #f15-remote { position: absolute; left: 21cqw; top: 14cqw; font: 400 1.3cqw/1.6 "IBM Plex Mono", monospace; color: var(--muted-on-cream);
+          white-space: pre; }
+        #f15-remote .f15-cmd { color: var(--ink-on-cream); font-weight: 500; }
+        #f15-remote .f15-url { color: var(--ink-on-cream); }
+        #f15-remote .f15-me { color: #B8461C; font-weight: 600; position: relative; display: inline-block; }
+        #f15-remote .f15-me i { position: absolute; left: -0.1em; right: -0.1em; bottom: -0.12em; height: 0.16em; background: var(--marker);
+          transform-origin: 0% 50%; }
+        /* the second half of the line: the access section's heading */
+        #f15-b { position: absolute; left: 20.6cqw; top: 22.2cqw; font: 800 7.8cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.04em;
+          color: var(--ink-on-cream); white-space: nowrap; }
+        #f15-b .f15-hero { font-weight: 900; }
+        /* ACCESS: the collaborators, large; your row is the joke */
+        #f15-tab { position: absolute; left: 21cqw; right: 8cqw; top: 31.4cqw; }
+        .f15-head { position: relative; height: 3cqw; font: 400 1.6cqw/3cqw "IBM Plex Mono", monospace; color: var(--muted-on-cream); }
+        .f15-head b { font-weight: 600; color: var(--ink-on-cream); }
+        .f15-row { position: relative; height: 6.4cqw; }
+        .f15-cells { position: absolute; inset: 0; display: flex; align-items: center; font: 600 3.6cqw/1 "IBM Plex Mono", monospace;
+          color: var(--ink-on-cream); transform-origin: 50% 0%; }
+        .f15-n { width: 5.2cqw; font-weight: 400; color: var(--muted-on-cream); }
+        .f15-name { width: 13cqw; }
+        .f15-addr { font: 400 2.3cqw/1 "IBM Plex Mono", monospace; color: var(--muted-on-cream); }
+        .f15-role { margin-left: auto; font: 400 1.6cqw/1 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase;
+          color: var(--muted-on-cream); }
+        .f15-rule { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: rgba(17, 17, 17, 0.28); }
+        /* your row, in the accent */
+        #f15-r2 .f15-name, #f15-r2 .f15-addr, #f15-r2 .f15-role { color: var(--marker); }
+        /* the selection that deletes your row on "not" */
+        #f15-sel { position: absolute; left: 4.6cqw; right: -0.6cqw; top: 17%; bottom: 17%; background: var(--marker);
+          transform-origin: 0% 50%; transform: scaleX(0); }
+        /* the gutter pointer, slammed onto your row */
+        #f15-ptr { position: absolute; left: -2cqw; top: 16%; bottom: 16%; width: 0.6cqw; background: var(--marker); }
+        /* the table's closing rule: it slams up when your row closes; the seam lands in the accent */
+        #f15-close { position: absolute; left: 0; right: 0; top: 15.8cqw; height: 0.26cqw; margin-top: -0.13cqw; background: var(--ink-on-cream); }
+        #f15-seam { position: absolute; left: -2cqw; right: -0.6cqw; top: 9.4cqw; height: 0.62cqw; margin-top: -0.31cqw; background: var(--marker);
+          transform-origin: 0% 50%; transform: scaleX(0); }
+      </style>
+      <div id="root" data-composition-id="15-origin" data-width="1920" data-height="1080" data-duration="3.655">
+        <div id="f15-cam">
+          <div id="f15-in">
+            <div id="f15-view">
+              <div id="f15-drift" data-layout-allow-overflow>
+                <div id="f15-jolt">
+                  <div id="f15-sheet"></div>
+                  <div class="f15-lbl" id="f15-lbl1">remotes</div>
+                  <div id="f15-sep1"></div>
+                  <div class="f15-lbl" id="f15-lbl2">access</div>
+                  <div id="f15-a"><span class="f15-hw"><span class="f15-w" id="f15-origin">origin's</span></span> <span class="f15-hw"><span class="f15-w" id="f15-mine">mine</span><i class="f15-ul" id="f15-ul"></i></span></div>
+                  <div id="f15-remote"><div><span class="f15-cmd">$ git remote -v</span></div><div id="f15-r1">origin&#9;<span class="f15-url">me@home:us.git</span> (fetch)</div><div id="f15-push">origin&#9;<span class="f15-url"><span class="f15-me">me<i></i></span>@home:us.git</span> (push)</div></div>
+                  <div id="f15-b"><span class="f15-w">and</span> <span class="f15-w">you're</span> <span class="f15-w">not</span> <span class="f15-w f15-hero" id="f15-there">there</span></div>
+                  <div id="f15-tab">
+                    <div class="f15-head">Collaborators: <b id="f15-count">2</b><i class="f15-rule"></i></div>
+                    <div class="f15-row" id="f15-r1row">
+                      <div class="f15-cells"><span class="f15-n">1</span><span class="f15-name">me</span><span class="f15-addr">me@home</span><span class="f15-role">owner</span></div>
+                      <i class="f15-rule"></i>
+                    </div>
+                    <div class="f15-row" id="f15-r2">
+                      <div class="f15-cells" id="f15-r2cells"><span class="f15-n">2</span><span class="f15-name f15-gone">you</span><span class="f15-addr f15-gone">you@laptop</span><span class="f15-role f15-gone">write</span><i id="f15-sel"></i><i id="f15-ptr" data-hf-motion-blur='{"fps": 60}'></i></div>
+                    </div>
+                    <i id="f15-close" data-hf-motion-blur='{"fps": 60}'></i>
+                    <i id="f15-seam"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="f15-lamp" data-layout-ignore></div>
+            <div id="f15-band">
+              <div id="f15-strip"><span>~/us &nbsp;·&nbsp; settings</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="assets/kit/env.js"></script>
+      <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
+      <script>
+        (() => {
+          const DUR = 3.655, T0 = 72.435, PX = 19.2; // px per cqw at 1920 wide
+          const root = document.querySelector('[data-composition-id="15-origin"]');
+          const $ = (id) => root.querySelector("#" + id);
+          const tl = gsap.timeline({ paused: true });
+          const at = (T) => T - T0;
+          const ORIGIN = at(72.56), MINE = at(73.32), AND = at(73.82), YOURE = at(74.0), NOT = at(74.48), THERE = at(74.945);
+          const DOWN = at(74.279), OUT = 0.35;
+          const cam = $("f15-cam"), drift = $("f15-drift"), jolt = $("f15-jolt");
+          const drums = (t) => HR.band("drums", T0 + t + 0.03);
+
+          // ---- the cut: 14's `rise` carries on (the content keeps travelling up), shortened to a short settle because
+          //      "origin's" starts 0.125 s in: the page is on screen from the first frame and in place by the word ----
+          tl.fromTo($("f15-in"), { y: 300 }, { y: 0, duration: 0.2, ease: "expo.out" }, 0);
+          WOW.transition(tl, cam, { out: "zoom", dur: OUT, total: DUR });
+
+          // ---- REMOTES: the push line prints on "mine", its `me` is marked ----
+          tl.set($("f15-push"), { opacity: 0 }, 0).set($("f15-push"), { opacity: 1 }, MINE);
+          tl.fromTo(root.querySelector(".f15-me i"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out" }, MINE + 0.06);
+
+          // ---- the sung words, each on its own start ----
+          HR.hero(tl, $("f15-origin"), ORIGIN, { spread: 30, over: 1.18, pre: 0.1, sharp: true });
+          HR.hero(tl, $("f15-mine"), MINE, { spread: 24, over: 1.2, pre: 0.14, sharp: true });
+          tl.fromTo($("f15-ul"), { scaleX: 0, rotation: -0.8 }, { scaleX: 1, rotation: -0.8, duration: 0.22, ease: "power2.out" }, MINE + 0.04);
+          const w = root.querySelectorAll("#f15-b .f15-w");
+          HR.lead(tl, w[0], AND); HR.lead(tl, w[1], YOURE); HR.lead(tl, w[2], NOT);
+          HR.hero(tl, w[3], THERE, { spread: 26, over: 1.22, pre: 0.14, sharp: true });
+
+          // ---- ACCESS: "you're" — the gutter pointer slams onto your row (parked off-frame, blurred approach, lands sharp) ----
+          const ptr = $("f15-ptr");
+          tl.set(ptr, { x: -34 * PX, scaleY: 1 }, 0);
+          tl.fromTo(ptr, { x: -34 * PX, scaleY: 1 }, { x: 0, scaleY: 1, duration: 0.09, ease: "power3.in", immediateRender: false }, YOURE - 0.09);
+          tl.fromTo(ptr, { scaleY: 1.7 }, { scaleY: 1, duration: 0.45, ease: "elastic.out(1, 0.5)", immediateRender: false }, YOURE);
+          // "not": a marker selection wipes across your row and the row is empty under it
+          tl.fromTo($("f15-sel"), { scaleX: 0 }, { scaleX: 1, duration: 0.14, ease: "power2.out", immediateRender: false }, NOT);
+          const gone = root.querySelectorAll(".f15-gone");
+          tl.set(gone, { opacity: 1 }, 0).set(gone, { opacity: 0 }, NOT + 0.14);
+          // "there": the empty row collapses — it squashes shut onto row 1 and the closing rule slams up (blurred), the seam
+          // lands in the accent, the count drops to 1
+          const SHUT = 0.09, ROW = 6.4 * PX;
+          tl.fromTo($("f15-r2cells"), { scaleY: 1 }, { scaleY: 0, duration: SHUT, ease: "power3.in", immediateRender: false }, THERE - SHUT + 0.02);
+          tl.set($("f15-close"), { y: 0 }, 0);
+          tl.fromTo($("f15-close"), { y: 0 }, { y: -ROW, duration: SHUT, ease: "power3.in", immediateRender: false }, THERE - SHUT + 0.02);
+          tl.set($("f15-seam"), { scaleX: 0, scaleY: 1 }, 0);
+          tl.fromTo($("f15-seam"), { scaleX: 0.35, scaleY: 2.4 }, { scaleX: 1, scaleY: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, THERE + 0.02);
+          WOW.shake(tl, jolt, THERE + 0.02, { amp: 9, dur: 0.36, rot: 0.3, seed: 15 });
+
+          // ---- the camera: punches sized by the measured drums; one big move for the phrase — on "and" it trucks ~220 px
+          //      down and pushes in (1.04 → 1.14) onto the second half and the table, then keeps pushing into the seam ----
+          // a framing: drift point (cx, cy) in cqw shown at view point (sx, sy) at zoom s
+          const frame = (cx, cy, sx, sy, s) => ({ x: (sx - cx * s) * PX, y: (sy - cy * s) * PX, scale: s });
+          tl.fromTo(drift, { x: 0, y: 0, scale: 1 }, { ...frame(55, 10, 55, 10, 1.04), duration: AND, ease: "none" }, 0);
+          tl.to(drift, { ...frame(55.3, 35, 52, 27.5, 1.14), duration: 0.55, ease: "power3.inOut" }, AND);
+          tl.to(drift, { ...frame(55.3, 35, 52, 27.5, 1.16), duration: THERE - AND - 0.55, ease: "none" }, AND + 0.55);
+          tl.to(drift, { ...frame(52, 40.8, 50, 29.5, 1.22), duration: DUR - THERE, ease: "sine.in" }, THERE);
+          WOW.punch(tl, cam, ORIGIN, { s: 1.02 + 0.03 * drums(ORIGIN), dur: 0.45 });
+          WOW.punch(tl, cam, MINE, { s: 1.02 + 0.03 * drums(MINE), dur: 0.45 });
+          WOW.punch(tl, cam, DOWN, { s: 1.012, dur: 0.3 });
+          WOW.punch(tl, cam, THERE, { s: 1.035 + 0.035 * drums(THERE), dur: 0.5 });
+          WOW.pulse(tl, cam, { kind: "kick", amt: 0.005 });
+          tl.set({}, {}, DUR);
+          // the remotes block scrolls under the band's lip once its line is done (deliberate)
+          root.querySelectorAll("#f15-a, #f15-a *, #f15-remote, #f15-remote *, #f15-lbl1")
+            .forEach((el) => el.setAttribute("data-layout-allow-occlusion", ""));
+
+          // ---- per-frame state: the count, the lamp, the seam on the kicks, the camera ----
+          const lamp = $("f15-lamp"), count = $("f15-count"), seam = $("f15-seam");
+          const ease = (u) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
+          function render() {
+            const t = tl.time(), T = T0 + t;
+            const after = t >= THERE;
+            count.textContent = after ? "1" : "2";
+            count.style.color = after ? "#B8461C" : "";
+            const p = ease(Math.max(0, Math.min(1, (t - AND) / 0.55)));
+            lamp.style.setProperty("--lx", (46 + 4 * p).toFixed(2) + "%");
+            lamp.style.setProperty("--ly", (30 + 30 * p).toFixed(2) + "%");
+            lamp.style.opacity = Math.max(0.45, 1 - 0.4 * HR.band("bass", T) - 0.25 * HR.hit("kick", T, 0.22)).toFixed(3);
+            seam.style.opacity = after ? (0.85 + 0.15 * HR.hit("kick", T, 0.2)).toFixed(3) : "";
+            WOW.draw(tl, T0);
+          }
+          tl.eventCallback("onUpdate", render);
+          render();
+          window.__timelines["15-origin"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

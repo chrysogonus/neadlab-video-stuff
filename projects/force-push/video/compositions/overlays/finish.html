@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- The finish layer (docs/HOUSE-STYLE.md): light leaks on the register flips, drop flashes. Grain, vignette, bloom
+         and halation are the light pass's (analysis/finish.py, run by ./vid proof and render). Mounted above every
+         frame for the whole film by ./vid assemble. Set data-duration to the song's length and
+         LEAKS / FLASHES to its track seconds; the leak colours are the palette's accent and light. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        #root { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .fin-leak { position: absolute; inset: -20%; opacity: 0; mix-blend-mode: screen; will-change: transform, opacity; }
+        .fin-leak i { position: absolute; display: block; border-radius: 50%; filter: blur(60px); }
+        .fin-leak .a { width: 40%; height: 130%; left: -16%; top: -15%; background: rgba(232, 93, 38, 0.8); }
+        .fin-leak .b { width: 16%; height: 70%; left: -2%; top: 14%; background: rgba(240, 236, 229, 0.55); }
+        .fin-leak .c { width: 14%; height: 150%; left: 14%; top: -25%; background: rgba(232, 93, 38, 0.45); transform: rotate(12deg); }
+        #fin-flash { position: absolute; inset: 0; background: #F0ECE5; opacity: 0; }
+      </style>
+
+      <div id="root" data-composition-id="finish" data-width="1920" data-height="1080" data-duration="209.64" data-layout-ignore>
+        <div id="fin-leaks"></div>
+        <div id="fin-flash"></div>
+      </div>
+
+      <script>
+        (() => {
+          // at most 0.15: the light pass blooms the accent in a leak too (0.4 read as an orange wash under it, 2026-10-26)
+          // light arrives on every flip to the orange register and on the big hits (track seconds)
+          const LEAKS = [53.38, 60.78, 76.09, 114.12, 121.534, 136.79, 169.27, 177.15, 184.53, 197.431]; // the hooks, chants and drops (track seconds)
+          const FLASHES = [53.38, 169.27, 197.431]; // the first Enter, the key-change drop, the beat's return (at most three)
+
+          const box = document.getElementById("fin-leaks");
+          const leaks = LEAKS.map((t, k) => {
+            const d = document.createElement("div"); d.className = "fin-leak"; d.innerHTML = "<i class='a'></i><i class='b'></i><i class='c'></i>";
+            box.appendChild(d); return { t, d, flip: k % 2 ? -1 : 1 };
+          });
+
+          const tl = gsap.timeline({ paused: true });
+          for (const { t, d, flip } of leaks) {
+            tl.fromTo(d, { opacity: 0, xPercent: -20, scale: 0.9 }, { opacity: 0.15, xPercent: 6, scale: 1, duration: 0.3, ease: "power2.out" }, Math.max(0, t - 0.06));
+            tl.fromTo(d, { opacity: 0.15, xPercent: 6 }, { opacity: 0, xPercent: 46, duration: 1.2, ease: "sine.in", immediateRender: false }, t + 0.24);
+          }
+          for (const t of FLASHES) {
+            tl.fromTo("#fin-flash", { opacity: 0.16 }, { opacity: 0, duration: 0.1, ease: "power2.out", immediateRender: false }, t);
+          }
+
+          window.__timelines["finish"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

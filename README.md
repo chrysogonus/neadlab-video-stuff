@@ -28,8 +28,9 @@ two reference videos work is in [`docs/REFERENCE-VIDEOS.md`](docs/REFERENCE-VIDE
 - `vid` — the pipeline (`tools/vid.ts`).
 - `tools/` — `vid.ts` and the repository checks (TypeScript, bun).
 - `analysis/` — the Python (uv) analysis: Demucs stems, CTC forced alignment cross-checked with Whisper, beat,
-  downbeat and onset analysis.
-- `templates/hyperframes/` — the house-style kit and finish layer `./vid video` installs into a new project.
+  downbeat and onset analysis; the light pass (`finish.py`) and the render audit (`audit.py`).
+- `templates/hyperframes/` — the house-style kit (with `lines.js`, the set-piece kit, and vendored three.js) and the
+  finish layer `./vid video` installs into a new project.
 - `.agents/skills/` (linked from `.claude/skills/`) — the HyperFrames skills.
 - `successful-videos-reference/analysis/` — frame analysis of the two reference videos (the videos themselves are
   not in the repo).
@@ -38,8 +39,10 @@ two reference videos work is in [`docs/REFERENCE-VIDEOS.md`](docs/REFERENCE-VIDE
 ## Requirements
 
 [bun](https://bun.sh) 1.4, Node.js (for `npx hyperframes`, pinned to 0.8.164), ffmpeg with libx264, and
-[uv](https://docs.astral.sh/uv/). The analysis needs, in practice, an NVIDIA GPU; its models download a few GB of
-weights into `analysis/.cache/`. Run `cd tools && bun install` once.
+[uv](https://docs.astral.sh/uv/). The analysis and the light pass need, in practice, an NVIDIA GPU (CUDA through
+torch); the analysis models download a few GB of weights into `analysis/.cache/`. GPU renders use the Playwright
+Chrome (`~/.cache/ms-playwright`) windowed on WSLg through `tools/chrome-gpu`; without them, pass `--no-browser-gpu`.
+Run `cd tools && bun install` once.
 
 ## Making a video
 
@@ -50,8 +53,11 @@ weights into `analysis/.cache/`. Run `cd tools && bun install` once.
 ./vid video my-song               # the HyperFrames project at projects/my-song/video/
 #   ... build it with /music-to-video (AGENTS.md) ...
 ./vid assemble my-song            # index.html from STORYBOARD.md, plus the overlays
-./vid snap my-song [02-sent] --at 12.5,14   # stills + contact sheet (one frame on its own, or the whole film)
+./vid snap my-song [02-sent] --at 12.5,14   # stills + contact sheet (one frame on its own, checked first, or the whole film)
 ./vid proof my-song --to 30       # a 60 fps proof of the first 30 s
+./vid proof my-song --from 84 --to 92   # ... or of a range (from the start of the frame playing at 84 s)
+./vid render my-song [--4k]       # the whole film -> renders/video.mp4 (GPU capture, then the light pass)
+./vid audit my-song               # measure renders/video.mp4 against the references, per scene (AGENTS.md step A)
 ./vid master my-song              # renders/video.mp4 + the master's audio -> out/my-song.mp4
 ```
 

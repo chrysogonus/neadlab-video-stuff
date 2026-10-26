@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# GPU rendering under WSL (4K masters): HyperFrames always launches Chrome headless, which gets no GPU context here. Pass
+# this script as HYPERFRAMES_BROWSER_PATH to run the full Playwright Chrome windowed on WSLg instead; WebGL then reaches
+# the NVIDIA GPU through Mesa D3D12. It drops the headless and GL flags HyperFrames passes and adds its own.
+#   HYPERFRAMES_BROWSER_PATH=tools/chrome-gpu PRODUCER_BROWSER_GPU_MODE=hardware npx hyperframes render … --browser-gpu --workers 4
+# Measured on harvest-remix (2026-10-19): 4K60 capture ≈ 1.6× faster than software; no gain at 1080p.
+chrome=$(ls -d "$HOME"/.cache/ms-playwright/chromium-*/chrome-linux64/chrome 2>/dev/null | sort -V | tail -1)
+[ -x "$chrome" ] || { echo "chrome-gpu: no Playwright Chrome in ~/.cache/ms-playwright" >&2; exit 1; }
+args=()
+for a in "$@"; do
+  case "$a" in
+    --headless*|--use-angle=*|--use-gl=*|--ozone-platform=*|--disable-gpu|--enable-unsafe-swiftshader) ;;
+    *) args+=("$a") ;;
+  esac
+done
+export LD_LIBRARY_PATH=/usr/lib/wsl/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} GALLIUM_DRIVER=d3d12 MESA_D3D12_DEFAULT_ADAPTER_NAME=NVIDIA
+exec "$chrome" --ozone-platform=wayland --use-gl=angle --use-angle=gl-egl --window-position=-4000,-4000 "${args[@]}"
