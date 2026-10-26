@@ -46,10 +46,13 @@
         (() => {
           // light arrives on every flip to the orange register and on the big hits (track seconds)
           // v20 (V20.md #4, #9): + the chorus-1 entry 33.806, the hook shots 96.82, the final chorus 123.479
-          const LEAKS = [6.117, 33.806, 45.487, 48.491, 81.463, 85.147, 96.82, 117.94, 123.479, 145.444];
+          // v22: no leak where a scene opens without a register flip (CREAM below; was also 33.806, 45.487, 123.479)
+          const LEAKS = [6.117, 48.491, 81.463, 85.147, 96.82, 117.94, 145.444];
           const FLASHES = [48.491, 145.444];
           // v12: light-sweep transitions on chosen cuts; edge punches on the chorus and drop downbeats
-          const SWEEPS = [7.96, 23.656, 61.346, 75.987, 105.243, 123.479, 134.514, 160.058];
+          // v22: none at 160.058, where the right 40 % stays dark for the end screen
+          // v22: none at 23.656 either (03 opens on 16's drawer, an object match); each sweep keeps its v21 direction
+          const SWEEPS = [[7.96, 1], [61.346, 1], [75.987, -1], [105.243, 1], [123.479, -1], [134.514, 1]];
           const HITS = [35.631, 37.47, 39.308, 41.147, 42.987, 44.821, 50.338, 52.181, 54.016, 55.847, 57.684, 59.512,
             86.966, 88.792, 90.626, 92.461, 94.278, 96.108, 125.288, 127.105, 128.911, 130.734, 147.279, 149.101,
             150.923, 152.746];   // v20: the held "now" gets the climax's downbeats too
@@ -83,8 +86,8 @@
             tl.fromTo("#fin-flash", { opacity: 0.16 }, { opacity: 0, duration: 0.1, ease: "power2.out", immediateRender: false }, t);
           }
 
-          SWEEPS.forEach((t, k) => {
-            const dir = k % 2 ? -1 : 1, a = dir > 0 ? -1000 : 2020, b = dir > 0 ? 2020 : -1000;
+          SWEEPS.forEach(([t, dir]) => {
+            const a = dir > 0 ? -1000 : 2020, b = dir > 0 ? 2020 : -1000;
             tl.fromTo("#fin-sweep", { x: a, opacity: 1 }, { x: b, opacity: 1, duration: 0.24, ease: "power2.inOut", immediateRender: false }, t - 0.12);
             tl.set("#fin-sweep", { opacity: 0 }, t + 0.12);
             tl.fromTo("#fin-streak", { opacity: 0.9, scaleX: 0.3 }, { opacity: 0, scaleX: 1.2, duration: 0.28, ease: "power2.out", immediateRender: false }, t);
@@ -96,7 +99,7 @@
           }
 
           // v17: the black vignette greys cream-paper frames; over the cream spans it drops to a trace (switched on their cuts)
-          const CREAM = [[7.96, 12.357], [81.463, 85.147], [105.243, 117.94], [137.54, 143.454]]; // v18: 02's printed mail
+          const CREAM = [[7.96, 12.357], [81.463, 85.147], [105.243, 117.94], [137.54, 143.604]]; // v18: 02's printed mail
           for (const [a, b] of CREAM) {
             tl.set("#fin-vignette", { opacity: 0.25 }, a);
             tl.set("#fin-vignette", { opacity: 1 }, b);

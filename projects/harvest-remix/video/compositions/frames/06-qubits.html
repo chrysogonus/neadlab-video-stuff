@@ -20,7 +20,14 @@
          Switches: in = 05's drawer match cut; C→s4 pushIn, inside s4 glideL / glideUp (half-beat), out to 07 glideL (0.46).
          Small text (SYSTEM.md V7): LOGICAL QUBITS: WORKING ON IT, SOURCE: EXPERTS (2015), NO FORECAST BEYOND THIS POINT,
          LAST MODIFIED 09 MAR 2021, COPY FILED 2021 · UNAFFECTED BY PASSWORD CHANGE. The MAIL / BANK / CLOUD fields are a
-         plant (paid off in 22). -->
+         plant (paid off in 22).
+         r1 (REFINE-1.md, worker D): one object hit per drum hit. A: the crane drops a plate (now 10, N = 14) from above
+         the frame ON each kick/snare (61.502 … 65.455): squash, white-hot top face, sparks off the posts, the stack gives;
+         the crane up to the runway is quicker (65.16–65.65). B: a pair of runway lamps and a pool of light per decade tick
+         light in sequence on the hits 65.697 … 68.66 (approach lamps in view on the first), the beam steps lamp to lamp,
+         the end band flares on the 68.66 kick. C: the monitor sleeps until the 68.999 kick and wakes; B→C settles by
+         69.3; on the kicks 69.356 / 69.811 / 70.264 every field fills fire and re-types. s4: the blueprint's drawer room
+         lights on the 73.461 kick; the birthday → drawer cut moves to the 74.604 snare ("stays" enters in the birthday shot). -->
   </head>
   <body>
     <template>
@@ -104,6 +111,11 @@
           box-shadow: 0 0 14px 4px rgba(240, 236, 229, 0.45); }
         #f06-endband { position: absolute; left: 0; width: 1100px; height: 24px; margin-top: -12px; background: var(--fire);
           box-shadow: 0 0 30px 8px rgba(232, 93, 38, 0.55); }
+        /* r1: each decade tick has a pair of runway lamps and a pool of light; they light in sequence on the drums */
+        .f06-pool { position: absolute; left: -150px; width: 1400px; height: 560px; margin-top: -280px; border-radius: 50%; opacity: 0;
+          background: radial-gradient(closest-side, rgba(255, 232, 210, 0.85), rgba(232, 93, 38, 0.38) 45%, rgba(232, 93, 38, 0) 100%); }
+        .f06-tlamp { position: absolute; width: 96px; height: 42px; margin-top: -21px; border-radius: 4px; background: #2a2926;
+          border: 2px solid #4a4a45; box-sizing: border-box; }
         #f06-hatch { position: absolute; left: 0; width: 1100px; background: repeating-linear-gradient(45deg, rgba(240, 236, 229, 0.07) 0 4px, rgba(0, 0, 0, 0) 4px 40px); }
         #f06-rglow { position: absolute; left: 0; top: 0; width: 1500px; height: 700px; margin: -350px 0 0 -750px; border-radius: 50%;
           background: radial-gradient(closest-side, rgba(232, 93, 38, 0.16), rgba(232, 93, 38, 0) 100%); }
@@ -174,13 +186,13 @@
           background: linear-gradient(118deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 32%, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 0.05)); }
         #f06-l12 { left: 36px; top: 58px; gap: 0; }
         #f06-l12 .f06-row { font-size: 70px; color: #111; text-shadow: none; }
-        #f06-l12 .f06-row.f06-big { font-size: 168px; color: var(--fire); margin: 2px 0 10px -6px;
+        #f06-l12 .f06-row.f06-big { font-size: 168px; color: #CF4F1C; margin: 2px 0 10px -6px; /* r1: fire deepened for 3:1 on the paper */
           text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 14px) rgba(232, 93, 38, 0.35); }
         #f06-fields { position: relative; margin: 0 0 14px; display: flex; flex-direction: column; gap: 6px; }
         .f06-field { position: relative; width: 600px; height: 48px; overflow: hidden; border: 2px solid #3a3833;
           background: #FBF8F2; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.18); }
         .f06-field .f06-label { left: 16px; top: 14px; font-size: 15px; color: #5F5B54; }
-        .f06-field .f06-stat { left: auto; right: 16px; top: 15px; font-size: 13px; color: var(--fire); }
+        .f06-field .f06-stat { left: auto; right: 16px; top: 15px; font-size: 13px; color: #9E3A14; }
         .f06-dots { position: absolute; left: 120px; top: 14px; display: flex; gap: 11px; }
         .f06-dot { display: block; width: 16px; height: 16px; border-radius: 50%; background: #111; }
         .f06-scr { position: absolute; left: 118px; top: 6px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 26px; line-height: 34px;
@@ -258,6 +270,7 @@
                 <div id="f06-rails"></div>
                 <div id="f06-chips"></div>
                 <div id="f06-years"></div>
+                <div class="f06-fx" id="f06-fxA"></div>
               </div>
               <!-- B: the runway -->
               <div class="f06-set" id="f06-B" style="left: 0; top: -1080px" data-layout-allow-overflow>
@@ -348,10 +361,12 @@
           const T0 = 61.346, DUR = 14.641, END = T0 + DUR; // frame span, track seconds
           const L = (t) => +(t - T0).toFixed(3);
           const C2 = 65.616, C3 = 69.04, C4 = 73.0; // line starts
-          const PA0 = 65.16, PA1 = 65.96, PB0 = 68.72, PB1 = 69.52; // the camera's two travels between sets
+          const PA0 = 65.16, PA1 = 65.65, PB0 = 68.72, PB1 = 69.3; // the camera's two travels between sets (r1: B→C settles before the 69.356 kick)
+          const WAKE = 68.999; // r1: the office monitor wakes on this kick as the camera arrives
           const DECADE = 66.8, HERE = 68.619, PASS = 70.505, STAMP = 71.861, PRESS = 72.775;
           const BLUE = 73.22, BDAY = 74.14, TRUE = 75.02, TRUE2 = 75.96;
-          const XB = WOW.on(73.74), XC = 74.496; // s4 inner cuts: the 73.691 snare, "stays"
+          const XB = WOW.on(73.74), XC = 74.604; // s4 inner cuts: the 73.691 snare; r1: the 74.604 snare, so "birthday" holds 0.1 s longer
+          const ROOM = 73.461; // r1: the blueprint's drawer room lights on this kick
           const $ = (id) => document.getElementById(id);
           const el = (tag, cls, parent, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; parent.appendChild(e); return e; };
           const NS = "http://www.w3.org/2000/svg";
@@ -398,10 +413,12 @@
 
           // ---- A: the tower ----------------------------------------------------------------------------------------
           // Chip k sits at world y = BASE − k·GAP; the top chip of the opening (k = 3) has its core on 05's drawer lamp (1194, 707).
-          const W = 380, DX = 140, DY = 64, TH = 16, POST = 34, GAP = TH + POST, X0 = 965, BASE = 875, K0 = 4, N = 13;
+          const W = 380, DX = 140, DY = 64, TH = 16, POST = 34, GAP = TH + POST, X0 = 965, BASE = 875, K0 = 4, N = 14;
           const coreX = X0 + 0.5 * W + 0.28 * DX, coreY = (k) => BASE - k * GAP - 0.28 * DY;
           const Z0 = 3.2, ZEND = 62.6; // v19 opening: the core's zoom at the cut, and when the pull-out settles
-          const DROPS = [61.799, 62.26, 62.721, 63.168, 63.633, 64.088, 64.544, 64.997, 65.456].map((b) => WOW.on(b)); // k = 4..12
+          // r1: one plate per drum hit, k = 4..13: the kicks 61.502, 61.806, 61.981, 63.168, 63.855, 64.31, 64.994 and the
+          // snares 63.629, 64.539, 65.455 (the drums rest under "stacking up the")
+          const DROPS = [61.502, 61.806, 61.981, 63.168, 63.629, 63.855, 64.31, 64.539, 64.994, 65.455];
           const P = (u, v) => `${(u * W + v * DX).toFixed(1)},${(DY - v * DY).toFixed(1)}`;
           const quad = (a, b, c, d) => `${P(...a)} ${P(...b)} ${P(...c)} ${P(...d)}`;
           function slab(parent, i, plinth) {
@@ -441,13 +458,15 @@
               sv("rect", core, { x: W * 0.455, y: DY + 4, width: W * 0.09, height: TH - 8, fill: "#E85D26" });
             }
             const hot = plinth ? null : sv("polygon", s, { points: quad([0.475, 0.23], [0.525, 0.23], [0.525, 0.33], [0.475, 0.33]), fill: "#F0ECE5", opacity: 0 });
+            // r1: the plate's top face goes white-hot for a moment when it lands
+            const flareP = plinth ? null : sv("polygon", s, { points: quad([0, 0], [1, 0], [1, 1], [0, 1]), fill: "#FFE2C4", opacity: 0 });
             sv("line", s, { x1: 0, y1: DY, x2: W, y2: DY, stroke: "#F0ECE5", "stroke-opacity": 0.36, "stroke-width": 1.2 });
             sv("line", s, { x1: 0, y1: DY, x2: DX, y2: 0, stroke: "#F0ECE5", "stroke-opacity": 0.16, "stroke-width": 1 });
             const lab = sv("text", s, plinth
               ? { x: 18, y: DY + th - 7, transform: "scale(0.8333 1)", "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 14, "letter-spacing": 2, fill: "#888880" }
               : { x: 14, y: DY + th - 4, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 10, "letter-spacing": 2, fill: "#66665e" });
             lab.textContent = plinth ? "LOGICAL QUBITS: WORKING ON IT" : "Q" + String(i + 1).padStart(2, "0") + " · " + HR.cipher(6, 80 + i);
-            return { box, core, hot, spill, rig };
+            return { box, core, hot, spill, rig, flareP };
           }
           // the gantry: two rails with a height gauge, running up to the catwalk
           for (const x of [X0 - 46, X0 + W + DX + 40]) { const r = el("i", "f06-rail", $("f06-rails")); Object.assign(r.style, { left: x + "px", top: "-40px", height: BASE + GAP + 40 + "px" }); }
@@ -480,15 +499,21 @@
             ghost(1620, 120, 16, 0.55);
           })();
 
-          // chips are lowered on the crane: they arrive decelerating ON their beat, the sling fades once they sit
+          // r1: the crane drops each plate from above the frame, accelerating, so it lands ON its hit: the plate squashes,
+          // its top face goes white-hot, sparks jump off the two front posts, the stack gives (render); the sling fades
+          const FALL = 0.2;
           chips.forEach(({ box, rig, b, k }) => {
             if (k < K0) return;
-            tl.set(box, { opacity: 0, y: -260 }, 0);
+            tl.set(box, { opacity: 0, y: -340 }, 0);
             tl.set(rig, { opacity: 1 }, 0);
-            const a = Math.max(0, L(b) - 0.44);
-            tl.fromTo(box, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "none", immediateRender: false }, a);
-            tl.fromTo(box, { y: -260 }, { y: 0, duration: L(b) - a, ease: "power2.out", immediateRender: false }, a);
+            const fall = Math.min(FALL, L(b) - 0.005), a = L(b) - fall; // the first plate is already falling at the cut
+            tl.set(box, { opacity: 1 }, a);
+            tl.fromTo(box, { y: -340 }, { y: 0, duration: fall, ease: "power2.in", immediateRender: false }, a);
+            tl.fromTo(box, { scaleY: 0.9, scaleX: 1.025 }, { scaleY: 1, scaleX: 1, duration: 0.34, ease: "elastic.out(1, 0.45)", immediateRender: false }, L(b));
             tl.fromTo(rig, { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power1.in", immediateRender: false }, L(b) + 0.05);
+            const yc = BASE - (k - 1) * GAP; // the posts' feet meet the plate below
+            for (const [x, aim, sd] of [[X0 + 14, 200, 1], [X0 + W - 12, -20, 2]])
+              WOW.burst(tl, $("f06-fxA"), { x, y: yc, t: L(b), n: 7, speed: 560, size: [3, 7], dur: 0.5, gravity: 1500, spread: 70, aim, cream: 0.55, seed: 300 + k * 7 + sd });
           });
           years.forEach(({ e, b }) => { if (b > 0) WOW.word(tl, e, L(b), { kind: "glideR" }); });
 
@@ -524,11 +549,22 @@
             m.style.background = `repeating-linear-gradient(0deg, rgba(240,236,229,0.38) 0 3px, rgba(0,0,0,0) 3px ${YR / 12}px)`;
             m.style.backgroundPosition = `0 ${-(SH - D0) % (YR / 12)}px`;
           }
+          // r1: tick i's lamps light ON these hits (kicks, snares, the 66.605 / 68.432 hats), 0 → 10, the last on "here"'s kick
+          const LT = [65.697, 66.14, 66.369, 66.605, 66.824, 67.285, 67.519, 67.966, 68.199, 68.432, 68.66];
           const ticks = Array.from({ length: 11 }, (_, i) => {
+            const pool = el("div", "f06-pool", strip); pool.style.top = at(dTick(i));
             const t = el("div", "f06-major", strip); t.style.top = at(dTick(i));
             const n = el("div", "f06-num", strip, String(i)); n.style.top = at(dTick(i));
-            return { t, n };
+            const lamps = [12, RW - 108].map((x) => { const e = el("i", "f06-tlamp", strip); e.style.left = x + "px"; e.style.top = at(dTick(i)); return e; });
+            return { t, n, pool, lamps };
           });
+          // the approach lamps (in view while tick 0 is still above the frame) light with tick 0 on the 65.697 kick
+          const appr = (() => {
+            const d = 960, pool = el("div", "f06-pool", strip); pool.style.top = at(d);
+            strip.insertBefore(pool, strip.firstChild);
+            const lamps = [12, RW - 108].map((x) => { const e = el("i", "f06-tlamp", strip); e.style.left = x + "px"; e.style.top = at(d); return e; });
+            return { pool, lamps, lt: LT[0] };
+          })();
           el("div", "f06-rtxt", strip, "FORECAST · 2015").style.cssText += `left: 150px; top: ${at(D0 - 80)};`;
           for (const [d, txt] of [[300, "RUNWAY · EXPERTS ONLY"], [800, "APPROACH · 2015"]]) el("div", "f06-rtxt", strip, txt).style.cssText += `left: 150px; top: ${at(d)}; color: #6a6a62;`;
           for (let d = 200; d < D0; d += YR) { const c = el("div", "f06-major", strip); c.style.cssText += `top: ${at(d)}; width: 160px; left: 470px; height: 5px; background: #4a4a45;`; }
@@ -552,7 +588,7 @@
           paint.setAttribute("data-layout-allow-overlap", "");
           const beamOn = { v: 0 }, flare = { v: 0 };
           tl.fromTo(beamOn, { v: 0 }, { v: 1, duration: 0.4, ease: "power2.out", immediateRender: false }, L(DECADE) - 0.06);
-          tl.fromTo(flare, { v: 1 }, { v: 0, duration: 0.9, ease: "power2.out", immediateRender: false }, L(HERE));
+          tl.fromTo(flare, { v: 1 }, { v: 0, duration: 0.9, ease: "power2.out", immediateRender: false }, L(68.66)); // r1: on the kick after "here"
 
           // ---- C (v21): the office monitor (the line is typed into its password dialog), the sticky notes, drawer 0001 --
           // The four strong hats in the line (69.117, 70.47, 71.26, 72.232): a new sticky note slaps on the bezel, the old one
@@ -573,8 +609,12 @@
             return { box, ds, caret, scan, stat, scr, f };
           });
           $("f06-dhex").textContent = Array.from({ length: 5 }, (_, i) => HR.cipher(24, 7001 + i).replace(/(.{4})/g, "$1 ")).join("\n");
-          const HATS_C = NH; // one field scrambles per strong hat (MAIL, BANK, CLOUD, MAIL)
-          const SCR = 0.34; // scramble length, s
+          // r1: on the kicks 69.356, 69.811, 70.264 every field re-types at once (all accounts), then one
+          // field per strong hat (71.26 MAIL, 72.232 BANK) as before
+          const FE = [];
+          for (const t of [69.356, 69.811, 70.264]) for (let f = 0; f < 3; f++) FE.push([t, f]);
+          for (const [t, f] of [[71.26, 0], [72.232, 1]]) FE.push([t, f]);
+          const SCR = 0.26; // scramble length, s
           const pwLen = (f, k) => 7 + Math.floor(HR.rng(f * 131 + k * 17 + 5)() * 7); // 7..13 dots
           // the notes: #10 is up when the camera arrives; #11..#14 slap on the hats (22 pays off "passwords changed ×14")
           const NOTES = ["Summer2019!", "hunter2", "Password1!", "Password2!", "Password3!"];
@@ -633,10 +673,11 @@
             return words.map(([w, t]) => ({ s: el("span", "f06x-w", row, w.toLowerCase()), t, big, row }));
           });
           const xa = xLine("f06x-la", [[[["But", 73.0], ["a", 73.16]]], [[["blueprint", 73.22]], true]]);
-          const xb = xLine("f06x-lb", [[[["or", 73.78], ["a", 74.0]]], [[["birthday", 74.14]], true]]);
+          const xb = xLine("f06x-lb", [[[["or", 73.78], ["a", 74.0]]], [[["birthday", 74.14]], true], [[["stays", 74.496]]]]); // r1: "stays" is sung before the 74.604 cut
           const xc = xLine("f06x-lc", [[[["stays", 74.496], ["as", 74.88]]], [[["true", 75.02]], true], [[["as", 75.598], ["true", 75.96]]]]);
           const xBig = Array.from(document.querySelectorAll("#f06x .f06x-big"));
-          for (const w of [...xa, ...xb, ...xc]) {
+          tl.set(xc[0].s, { opacity: 0 }, 0); tl.set(xc[0].s, { opacity: 1 }, L(XC)); // shot C opens with "stays" already sung in B
+          for (const w of [...xa, ...xb, ...xc.slice(1)]) {
             if (!w.big) { WOW.word(tl, w.s, L(w.t), { kind: "rise" }); continue; }
             WOW.word(tl, w.s, L(w.t), { kind: "settle", dur: 0.32 });
             WOW.punch(tl, w.row, L(w.t), { s: 1.04, dur: 0.6 });
@@ -645,6 +686,7 @@
 
           // shot A: the blueprint, cream hairlines on ink, drawn complete ON "blueprint" (73.22), then lit
           const bp = $("f06x-bp"), bpPaths = [];
+          let bpRoom;
           (() => {
             let g = "";
             for (let x = 0; x <= 2400; x += 40) g += `M${x} 0V1080`;
@@ -654,6 +696,7 @@
             for (let x = 0; x <= 2400; x += 200) G += `M${x} 0V1080`;
             for (let y = 0; y <= 1080; y += 200) G += `M0 ${y}H2400`;
             sv("path", bp, { d: G, stroke: "rgba(240,236,229,0.1)", "stroke-width": 1.2 });
+            bpRoom = sv("rect", bp, { x: 1502, y: 622, width: 238, height: 258, fill: "#E85D26", opacity: 0 });
             const Pp = (d, w, c = "#F0ECE5") => bpPaths.push(sv("path", bp, { d, fill: "none", stroke: c, "stroke-width": w, pathLength: 100, "stroke-dasharray": 100, "stroke-dashoffset": 100, "stroke-linecap": "square" }));
             Pp("M860 200 H1760 V900 H860 Z", 6); Pp("M878 218 H1742 V882 H878 Z", 2);
             Pp("M1240 218 V600", 5); Pp("M878 620 H1180 M1300 620 H1500 V882", 5); Pp("M1500 620 H1742", 5);
@@ -774,7 +817,8 @@
           WOW.transition(tl, $("f06-scn"), { out: "pushIn", dur: SW, total: L(C4) });
           WOW.transition(tl, $("f06x"), { in: "pushIn", dur: SW, start: L(C4) });
           WOW.transition(tl, $("f06x-a"), { out: "glideL", dur: HALF, total: L(XB) });
-          WOW.transition(tl, $("f06x-b"), { in: "glideL", out: "glideUp", dur: HALF, start: L(XB), total: L(XC) });
+          WOW.transition(tl, $("f06x-b"), { in: "glideL", dur: HALF, start: L(XB) });
+          WOW.transition(tl, $("f06x-b"), { out: "glideUp", dur: 0.16, total: L(XC) });
           WOW.transition(tl, $("f06x-c"), { in: "glideUp", dur: HALF, start: L(XC) });
           WOW.transition(tl, $("f06-all"), { out: "glideL", dur: SW, total: DUR });
 
@@ -815,7 +859,7 @@
           // ---- per-frame draw (a pure function of timeline time) ----------------------------------------------------
           const world = $("f06-world"), bg = $("f06-bg"), slight = $("f06-slight"), chipsEl = $("f06-chips");
           const rglow = $("f06-rglow"), rview = $("f06-rview"), dlight = $("f06-dlight"), lamp = $("f06-lamp");
-          const cBack = $("f06-Cback"), glass = $("f06-glass"), mglow = $("f06-mglow"), refresh = $("f06-refresh"), drawerEl = $("f06-drawer");
+          const dlg = $("f06-dlg"), cBack = $("f06-Cback"), glass = $("f06-glass"), mglow = $("f06-mglow"), refresh = $("f06-refresh"), drawerEl = $("f06-drawer");
           function render() {
             const t = tl.time(), T = t + T0;
             WOW.draw(tl, T0);
@@ -852,14 +896,15 @@
                 const g = 0.3 + 0.5 * (n / N) + 0.3 * bass + 1.1 * flash + 0.5 * wave + 0.7 * kick + 0.4 * hat;
                 c.core.style.setProperty("--hr-glow", g.toFixed(3));
                 c.hot.setAttribute("opacity", clamp01(flash + 0.4 * wave + 0.5 * hat * (j === n - 1 ? 1 : 0.3)).toFixed(3));
+                c.flareP.setAttribute("opacity", (c.b > 0 && T >= c.b ? 0.75 * env(T - c.b, 0.09) : 0).toFixed(3));
                 c.spill.setAttribute("opacity", clamp01(0.25 + 0.35 * g).toFixed(3));
                 latest = Math.max(latest, flash);
               });
-              // the stack takes each landing with a 2 px give
-              let give = 0; for (const c of chips) if (c.b > 0) { const d = T - c.b; if (d >= 0 && d < 0.4) give = Math.max(give, 2 * Math.sin(Math.PI * d / 0.4)); }
+              // r1: the stack takes each landing with a sharp 4 px give that rings out
+              let give = 0; for (const c of chips) if (c.b > 0) { const d = T - c.b; if (d >= 0 && d < 0.4) give = Math.max(give, 4 * Math.exp(-d / 0.08) * Math.cos(d * 32)); }
               chipsEl.style.transform = `translateY(${give.toFixed(2)}px)`;
               plinth.spill.setAttribute("opacity", clamp01(0.2 + 0.03 * n + 0.3 * bass).toFixed(3));
-              const top = chips[Math.max(0, n - 1)].k;
+              const top = chips[Math.max(0, n - 1)].k; // (k = 13 has no year label)
               slight.style.left = coreX + "px"; slight.style.top = coreY(top) + 120 + "px";
               slight.style.opacity = clamp01(0.5 + 0.4 * (n / N) + 0.3 * bass + 0.25 * latest + 0.2 * kick).toFixed(3);
               const cur = years.filter((y) => T >= y.b - 1e-6).length - 1;
@@ -891,18 +936,30 @@
               let dip = 0; for (const k of KB) dip = Math.max(dip, Math.sin(Math.PI * clamp01((T - k) / SURGE)));
               rview.style.perspectiveOrigin = `${(760 + 150 * Math.sin((T - C2) * 1.7) + 60 * Math.sin((T - C2) * 0.7)).toFixed(1)}px ${(120 - 70 * dip + 30 * Math.sin((T - C2) * 1.1)).toFixed(1)}px`;
               rview.style.transform = `translateX(${(-50 * Math.sin((T - C2) * 1.7)).toFixed(2)}px) rotate(${(2.4 * Math.sin((T - C2) * 1.7 + 0.6)).toFixed(3)}deg)`;
-              const q = clamp01((T - DECADE) / (HERE - DECADE));
-              const head = Math.min(D10, y + NEAR + 900 * (1 - q));
+              // r1: the beam's head steps from lamp to lamp as they light (0.12 s eased step each)
+              let hs = -1; for (const x of LT) hs += 1 - Math.pow(1 - clamp01((T - x) / 0.12), 3);
+              const head = D0 + YR * Math.max(0, hs);
               const on = beamOn.v;
               beam.style.top = at(head); beam.style.height = Math.max(0, head - D0) + "px";
               beam.style.opacity = (on * (0.75 + 0.25 * bass)).toFixed(3);
               bhead.style.top = at(head); bhead.style.opacity = on.toFixed(3);
               bhead.firstChild.style.transform = `scale(${(0.9 + 0.3 * bass + 1.2 * flare.v + 0.5 * snare).toFixed(3)})`;
-              ticks.forEach(({ t: tk, n }, i) => {
-                const lit = on > 0.05 && dTick(i) <= head + 1;
-                tk.style.backgroundColor = lit ? "#E85D26" : `rgb(${Math.round(136 + 80 * snare)}, ${Math.round(136 + 80 * snare)}, ${Math.round(128 + 80 * snare)})`;
-                tk.style.boxShadow = lit ? "0 0 18px rgba(232, 93, 38, 0.6)" : "none";
-                n.style.color = lit ? (i === 10 ? "#E85D26" : "#c4642e") : "#7a7a72";
+              const lampSet = (pool, lamps, lit, fl) => {
+                pool.style.opacity = lit ? (0.14 + 0.86 * fl).toFixed(3) : "0";
+                for (const lp of lamps) {
+                  lp.style.background = lit ? (fl > 0.3 ? "#FFFFFF" : "#F0ECE5") : "#2a2926";
+                  lp.style.borderColor = lit ? "#E85D26" : "#4a4a45";
+                  lp.style.boxShadow = lit ? `0 0 ${(16 + 70 * fl).toFixed(1)}px ${(5 + 26 * fl).toFixed(1)}px rgba(232, 93, 38, ${(0.5 + 0.4 * fl).toFixed(3)})` : "none";
+                  lp.style.transform = `scale(${(1 + 0.45 * fl).toFixed(3)})`;
+                }
+              };
+              lampSet(appr.pool, appr.lamps, T >= appr.lt, T >= appr.lt ? env(T - appr.lt, 0.16) : 0);
+              ticks.forEach(({ t: tk, n, pool, lamps }, i) => {
+                const lit = T >= LT[i], fl = lit ? env(T - LT[i], 0.16) : 0;
+                tk.style.backgroundColor = lit ? (fl > 0.35 ? "#F0ECE5" : "#E85D26") : `rgb(${Math.round(136 + 80 * snare)}, ${Math.round(136 + 80 * snare)}, ${Math.round(128 + 80 * snare)})`;
+                tk.style.boxShadow = lit ? `0 0 ${(18 + 40 * fl).toFixed(1)}px rgba(232, 93, 38, ${(0.6 + 0.3 * fl).toFixed(3)})` : "none";
+                n.style.color = lit ? (fl > 0.35 ? "#F0ECE5" : i === 10 ? "#E85D26" : "#c4642e") : "#7a7a72";
+                lampSet(pool, lamps, lit, fl);
               });
               band.style.boxShadow = `0 0 ${(30 + 70 * flare.v).toFixed(1)}px ${(8 + 20 * flare.v).toFixed(1)}px rgba(232, 93, 38, ${(0.45 + 0.4 * flare.v).toFixed(3)})`;
               // the paint: sprayed on left to right from 0.06 s before the word, then glowing with the bass
@@ -921,8 +978,8 @@
               const lastKick = KC.length ? KC[KC.length - 1] : -9;
               for (const { box, ds, caret, scan, stat, scr, f } of fields) {
                 let k = -1;
-                for (let i = 0; i < HATS_C.length; i++) if (i % 3 === f && T >= HATS_C[i]) k = i;
-                const dt = k < 0 ? 9 : T - HATS_C[k], len = pwLen(f, k);
+                for (let i = 0; i < FE.length; i++) if (FE[i][1] === f && T >= FE[i][0]) k = i;
+                const dt = k < 0 ? 9 : T - FE[k][0], len = pwLen(f, k);
                 const scrambling = k >= 0 && dt < SCR;
                 if (scrambling) {
                   const r = HR.rng(f * 977 + step * 31);
@@ -939,13 +996,19 @@
                 stat.style.opacity = k >= 0 && !scrambling ? (0.6 + 0.4 * env(dt - SCR, 0.3)).toFixed(3) : "0";
                 const fl = Math.max(k >= 0 ? env(dt, 0.2) : 0, 0.6 * kick);
                 box.style.borderColor = fl > 0.3 ? "#E85D26" : "#3a3833";
-                const w = k >= 0 ? env(dt, 0.14) : 0;
-                box.style.background = w > 0.02 ? `rgb(${Math.round(lerp(251, 246, w))}, ${Math.round(lerp(248, 178, w))}, ${Math.round(lerp(242, 140, w))})` : "";
+                const w = k >= 0 ? env(dt, 0.16) : 0; // r1: the field fills fire on its hit and cools back to paper
+                box.style.background = w > 0.02 ? `rgb(${Math.round(lerp(251, 232, w))}, ${Math.round(lerp(248, 93, w))}, ${Math.round(lerp(242, 38, w))})` : "";
+                scr.style.color = w > 0.45 ? "#FBF8F2" : "#111";
                 box.style.boxShadow = `inset 0 2px 4px rgba(0, 0, 0, 0.18), 0 0 ${(2 + 18 * fl).toFixed(1)}px rgba(232, 93, 38, ${(0.6 * fl).toFixed(3)})`;
               }
+              // r1: the screen is asleep until the 68.999 kick, then wakes: a bright line opens to the full dialog, overbright
+              const wu = clamp01((T - WAKE) / 0.08), wf = T >= WAKE ? env(T - WAKE, 0.2) : 0;
+              dlg.style.clipPath = wu >= 1 ? "none" : `inset(${(50 - 49.5 * wu).toFixed(2)}% 0 ${(50 - 49.5 * wu).toFixed(2)}% 0)`;
+              dlg.style.opacity = T >= WAKE ? "1" : "0";
+              dlg.style.filter = wf > 0.02 ? `brightness(${(1 + 0.35 * wf).toFixed(3)})` : "";
               // the screen: its light on the room breathes with the kicks; a slow refresh band rolls down the glass
-              glass.style.setProperty("--scr", (0.9 + 0.7 * kick + 0.2 * bass).toFixed(3));
-              mglow.style.opacity = (0.75 + 0.35 * kick + 0.2 * bass).toFixed(3);
+              glass.style.setProperty("--scr", ((T >= WAKE ? 0.9 + 0.7 * kick + 0.2 * bass + 1.2 * wf : 0.15)).toFixed(3));
+              mglow.style.opacity = (T >= WAKE ? 0.75 + 0.35 * kick + 0.2 * bass + 0.6 * wf : 0.2).toFixed(3);
               refresh.style.top = (((T - PB0) * 0.55 % 1) * 800 - 120).toFixed(1) + "px";
               // the notes: slap ON the hat (from 0.1 s before), wobble, the top one's free edge lifts on every kick;
               // the replaced one is ripped 0.1 s before the next slap and flutters down onto the desk
@@ -996,6 +1059,7 @@
                   const lit = env(T - BLUE, 0.28) * (i < 5 ? 1 : 0.6);
                   p.setAttribute("stroke", lit > 0.05 ? `rgb(${Math.round(lerp(240, 232, lit))}, ${Math.round(lerp(236, 93, lit))}, ${Math.round(lerp(229, 38, lit))})` : "#F0ECE5");
                 });
+                bpRoom.setAttribute("opacity", (T >= ROOM ? 0.22 + 0.5 * env(T - ROOM, 0.22) : 0).toFixed(3));
                 const pb = 1 + 0.035 * env(T - BLUE, 0.3) * (T >= BLUE ? 1 : 0);
                 $("f06x-ca").style.transform = `scale(${((1.1 - 0.06 * u) * pb * kp).toFixed(4)}) rotate(${(-0.8 + 0.8 * u).toFixed(3)}deg)`;
               } else if (T < XC) {
@@ -1008,9 +1072,9 @@
                 const pb = 1 + 0.03 * (T >= BDAY ? env(T - BDAY, 0.3) : 0);
                 $("f06x-cb").style.transform = `scale(${((1.2 + 0.1 * u) * pb * kp).toFixed(4)})`;
               } else {
-                const fall = (t0) => { const q = clamp01((T - t0) / 0.34); return -110 + 680 * q * q; };
-                drRoll.setAttribute("transform", `translate(1150 ${fall(XC).toFixed(1)}) rotate(${(-8 + 30 * clamp01((T - XC) / 0.32)).toFixed(1)})`);
-                drCake.setAttribute("transform", `translate(1440 ${fall(XC + 0.08).toFixed(1)}) rotate(${(6 - 14 * clamp01((T - XC - 0.08) / 0.32)).toFixed(1)})`);
+                const fall = (t0) => { const q = clamp01((T - t0) / 0.24); return -110 + 680 * q * q; }; // r1: 0.24 s, the roll lands on the 74.844 kick
+                drRoll.setAttribute("transform", `translate(1150 ${fall(XC).toFixed(1)}) rotate(${(-8 + 30 * clamp01((T - XC) / 0.24)).toFixed(1)})`);
+                drCake.setAttribute("transform", `translate(1440 ${fall(XC + 0.04).toFixed(1)}) rotate(${(6 - 14 * clamp01((T - XC - 0.04) / 0.24)).toFixed(1)})`);
                 const cl = sio((T - (SLAM - 0.24)) / 0.24), d = T - SLAM;
                 const settle = d > 0 ? 3 * Math.exp(-d / 0.12) * Math.cos(d * 26) : 0;
                 drFront.setAttribute("transform", `translate(0 ${(-120 * cl + settle).toFixed(1)})`);

@@ -20,7 +20,18 @@
            own concentric ring of lamps and the receiver lamps, with a push and a kick; the wheel ratchets on each bolt,
            spins on the last three and stops on 33.787. v15 keeps the entire rim and bolts in view: round door centre
            (1030, 550), radius 405 px, with a contact-bound light tracing the seam as the bolts lock.
-           Engraved on the door: RETENTION: INDEFINITE, BOLT n/7. -->
+           Engraved on the door: RETENTION: INDEFINITE, BOLT n/7.
+         r1 (v22, REFINE-1 H): the door ends as 04's clock — at 33.806 its rim lies on the enamel dial (centre 1246.5, 518.8,
+         r 380.6 with 04's opening punch) and the jamb on the bezel; the bolt pattern turns 22° so the last, white-hot bolt lies
+         on 04's second hand; the last bolt's slam is 04's 1.035 opening punch, carried across the cut. No flat rings anywhere:
+         each bolt strikes its own sparks off the receiver (vault canvas, riding the push), "break" recoils and spits chips,
+         "keep" squirts ink; no bolt shakes.
+         r2 (v22, REFINE-2 row E): the way in is a match on drawer 0001. At 23.656 16's frosted drawer front is there at the size
+         and place 16 leaves it (lower right, ≈ 1171 px wide); the world camera pulls back while the drawer slides home into
+         Plan B's housing, flush on the 24.391 kick (frost shaken off, its lamp lights, it thaws over 1.5 s); "break" slams into
+         the now empty upper half on 24.54 and the bass entry (24.584) settles the layout down once. The l4 lyric moved out of
+         the world group (it keeps the world's drift but not the pull-back). The camera is solved per frame from the drawer's
+         own layer transform. The 33.806 vault → clock match (END_X/END_Y/END_R) is unchanged. -->
   </head>
   <body>
     <template>
@@ -136,7 +147,13 @@
           letter-spacing: -0.02em; transform-origin: 0 100%; }
         .f03-row.f03-big { font-weight: 900; font-size: 13cqw; line-height: 0.86; letter-spacing: -0.04em; margin: 0.3cqw 0 0.5cqw -0.5cqw; }
         .f03-w { display: inline-block; position: relative; }
-        #f03-left { position: absolute; inset: 0; }
+        #f03-left { position: absolute; inset: 0; transform-origin: 0 0; }
+        /* r2: drawer 0001 arrives from 16 frosted (rime from the edges, a frosted glass), and thaws once it is home */
+        #f03-dfrost { position: absolute; inset: -2px; pointer-events: none; overflow: hidden;
+          background: radial-gradient(ellipse 72% 78% at 50% 50%, rgba(228, 235, 238, 0.2) 25%, rgba(228, 235, 238, 0.46) 72%, rgba(244, 247, 248, 0.82) 100%); }
+        #f03-dfrost i { position: absolute; left: 24px; top: 74px; width: 352px; height: 54px; background: rgba(226, 233, 236, 0.42);
+          box-shadow: inset 0 0 18px rgba(244, 247, 248, 0.55); }
+        #f03-dfsvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
         #f03-l4 { left: 5.5cqw; top: 6.6cqw; color: var(--cream); width: 92cqw; }
         /* v18: "break" is the pre-chorus's full-width word (≈ 60 % of the frame); "you" sits on its baseline, at lead size */
         #f03-l4 .f03-row.f03-big { font-size: 22.5cqw; align-items: flex-end; column-gap: 0; }
@@ -270,11 +287,6 @@
             </svg>
             <div data-hf-id="hf-jrqg" class="f03-mark" id="f03-mark1" style="left: 1296px; top: 556px; transform: rotate(-4deg); clip-path: inset(-30% 100% -40% -5%);">(not happening)</div>
           </div>
-          <div data-hf-id="hf-b90i" class="hr-layer" id="f03-tl" data-depth="0.85">
-            <div data-hf-id="hf-ix0k" id="f03-left">
-              <div data-hf-id="hf-oe2c" class="f03-line" id="f03-l4"></div>
-            </div>
-          </div>
           </div>
           <div id="f03-gb" class="f03-grp">
             <div data-hf-id="hf-gcp8" class="hr-layer" id="f03-midb" data-depth="0.62">
@@ -311,9 +323,16 @@
               <div data-hf-id="hf-zv2h" class="f03-pl" style="right: 24px">RET ∞</div>
               <div data-hf-id="hf-8hra" id="f03-pull"><i data-hf-id="hf-1e40" style="left: 0"></i><i data-hf-id="hf-scr1" style="right: 0"></i><b data-hf-id="hf-xujp"></b></div>
               <div data-hf-id="hf-oedg" id="f03-rake"></div>
+              <div id="f03-dfrost"><i></i><svg id="f03-dfsvg" viewBox="0 0 404 204" preserveAspectRatio="none" aria-hidden="true"></svg></div>
             </div>
             <div data-hf-id="hf-v21l" id="f03-wlamp" data-layout-ignore><svg data-hf-id="hf-v21s" viewBox="0 0 120 90"><path d="M60 -600 V20" stroke="#505048" stroke-width="2"/><path d="M28 70 L44 22 H76 L92 70 Z" fill="#1A1A18" stroke="#888880" stroke-width="2"/><ellipse cx="60" cy="70" rx="32" ry="6" fill="#FFE3C8"/></svg><i data-hf-id="hf-v21c"></i></div>
           </div>
+          </div>
+        </div>
+        <!-- r2: the l4 lyric rides the world's drift but not the opening pull-back (screen-anchored like l5) -->
+        <div data-hf-id="hf-b90i" class="hr-layer" id="f03-tl" data-depth="0.85">
+          <div data-hf-id="hf-ix0k" id="f03-left">
+            <div data-hf-id="hf-oe2c" class="f03-line" id="f03-l4"></div>
           </div>
         </div>
         <div data-hf-id="hf-j58k" id="f03-tr">
@@ -453,6 +472,24 @@
           };
           bars($("f03-cbar"), 3302, 40, 28, false);
           bars($("f03-ybar"), 3303, 24, 130, true);
+          // r2: the rime on drawer 0001 (16's frost, seeded): needles in from every edge with 60° side ticks, more on the glass
+          (() => {
+            const g = $("f03-dfsvg"), r = HR.rng(1607);
+            const line = (x, y, a, len, w, o) => { S(g, "path", { d: `M${x.toFixed(1)} ${y.toFixed(1)} l${(Math.cos(a) * len).toFixed(1)} ${(Math.sin(a) * len).toFixed(1)}`,
+              stroke: "#F4F6F5", "stroke-opacity": o.toFixed(2), "stroke-width": w, "stroke-linecap": "round", fill: "none" }); return [x + Math.cos(a) * len, y + Math.sin(a) * len]; };
+            const needle = (x, y, a, len, w, o) => {
+              const [ex, ey] = line(x, y, a, len, w, o);
+              for (const f of [0.3, 0.52, 0.74]) for (const sg of [-1, 1]) if (r() < 0.75) line(x + (ex - x) * f, y + (ey - y) * f, a + sg * Math.PI / 3, len * (1 - f) * (0.35 + 0.3 * r()), w * 0.7, o * 0.85);
+            };
+            const edge = (X, Y, W, H, n, l0, l1, w) => { for (let i = 0; i < n; i++) {
+              const sd = i % 4; let x, y, a;
+              if (sd === 0) { x = X + r() * W; y = Y; a = Math.PI / 2; } else if (sd === 1) { x = X + r() * W; y = Y + H; a = -Math.PI / 2; }
+              else if (sd === 2) { x = X; y = Y + r() * H; a = 0; } else { x = X + W; y = Y + r() * H; a = Math.PI; }
+              needle(x, y, a + (r() - 0.5) * 1.2, l0 + r() * l1, w, 0.55 + r() * 0.35);
+            } };
+            edge(2, 2, 400, 200, 34, 10, 30, 1.3);
+            edge(26, 76, 352, 54, 18, 6, 14, 1);
+          })();
 
           // ---- Plan A: the brute-force rig (steel plate, tries odometer, combination dial) -------------------------
           const plate = $("f03-plate");
@@ -649,8 +686,16 @@
           const D0 = (DW * U) / FW;                               // drawer 0001 exactly 1240 px wide
           const LOFF = [(1042 / FW - 0.5) * DW, (0.5 - 199 / 797) * DH]; // the lamp's place on every drawer face
           const ZD = 3, ZF = 2, ZW = 8, RD = 100;
-          const D_FAR = 345, D_END = ZD + (RD * U) / 520;        // v18: the door rim ends at 520 px — it fills the frame height
-          const BA = Array.from({ length: 7 }, (_, k) => ((64.2857 - (k * 360) / 7) * Math.PI) / 180); // clockwise on screen
+          // r1 (REFINE-1 H): the door IS 04's clock. At 33.806 the door rim sits on the enamel dial's edge (04-wait: clock at
+          // 1230,520 × 0.675, r 540; on screen with its 1.035 opening punch, drift and kick: centre 1246.5, 518.8, r 380.6) and
+          // the jamb on the bezel (113/100 ≈ 600/540). The last bolt's slam is 04's opening punch (1.035 over 0.6 s), so the base
+          // pose is the unpunched dial (r 368.4) and the punch runs on across the cut. The door arrives wider (rim 300 px) and
+          // pushes in to it over the roll.
+          const END_X = 1246.48, END_Y = 518.77, END_R = 380.63 / 1.0332, ARR_X = 1120, ARR_Y = 535;
+          const D_FAR = ZD + (RD * U) / 300, D_END = ZD + (RD * U) / END_R;
+          // r1: the bolt pattern turns 22° so the last bolt (k = 6, 138°) lies on 04's second hand (312° on the dial): the
+          // white-hot bolt becomes the hand
+          const BA = Array.from({ length: 7 }, (_, k) => ((86.5714 - (k * 360) / 7) * Math.PI) / 180); // clockwise on screen
           const clamp01 = (x) => Math.min(1, Math.max(0, x));
           const smooth = (a, b, x) => { const u = clamp01((x - a) / (b - a)); return u * u * (3 - 2 * u); };
           const lerp = (a, b, u) => a + (b - a) * u;
@@ -1013,11 +1058,23 @@
             else if (t >= ARRIVE) { const u = clamp01((t - ARRIVE) / (B6 - ARRIVE)); let st = 0; for (const b of BOLTS) st += Math.pow(clamp01((t - (b - 0.06)) / 0.06), 2) / 7; D = Math.exp(lerp(Math.log(D_FAR), Math.log(D_END), 0.7 * u * u + 0.3 * st)); }
             let px = 960 + 6 * Math.sin(t * 0.9), py = FACE_CY;
             if (t >= TILT0) py = lerp(FACE_CY, 540, sineIO(clamp01((t - TILT0) / (TILT1 - TILT0))));
-            if (t >= PULL) { const k = smooth(Math.log(4), Math.log(D_FAR), Math.log(D)); px = lerp(960 + 6 * Math.sin(t * 0.9), 1000, k); py = lerp(540, 550, k); }
+            if (t >= PULL) { const k = smooth(Math.log(4), Math.log(D_FAR), Math.log(D)); px = lerp(960 + 6 * Math.sin(t * 0.9), ARR_X, k); py = lerp(540, ARR_Y, k); }
             const bp = sineIO(clamp01((t - ARRIVE) / (B6 - ARRIVE)));
-            if (t >= ARRIVE) { px = lerp(1000, 1030, bp); py = 550; }
+            if (t >= ARRIVE) { px = lerp(ARR_X, END_X, bp); py = lerp(ARR_Y, END_Y, bp); }
             const off = 0.1 * D * smooth(Math.log(14), Math.log(60), Math.log(D)) * (1 - bp);
+            // r1: each bolt's slam is a camera punch on the door plane (was a VG punch + shake); the last one is 04's opening punch
+            if (t >= B0) { const p = boltPunch(t); D = ZD + (D - ZD) / p; }
+            // r1: the kicks between the bolts still lift the door (was VG's kick pulse), gone by the last bolt so the end pose is exact
+            if (t >= ARRIVE - 0.3 && t < B6) D = ZD + (D - ZD) / (1 + 0.016 * HR.hit("kick", T0 + t, 0.16) * (1 - smooth(B6 - 0.06, B6, t)));
             return { D, px, py, cx: -off, cy: 0.45 * off };
+          }
+          function boltPunch(t) {
+            let p = 1;
+            BOLTS.forEach((b, k) => {
+              const d = t - b, last = k === 6, dur = last ? 0.6 : 0.3;
+              if (d >= 0 && d <= dur) p *= 1 + (last ? 0.035 : 0.016 + k * 0.003) * Math.pow(1 - d / dur, 3);
+            });
+            return p;
           }
           function placeCamera(c) {
             camera.position.set(c.cx, c.cy, c.D);
@@ -1036,7 +1093,7 @@
           }
 
           // engravings on the door (2D, over the GL): RETENTION: INDEFINITE and the bolt count, in the top gap
-          const fx = $("f03-fx").getContext("2d");
+          const fxEl = $("f03-fx"), fx = fxEl.getContext("2d");
           const arcText = (text, cx, cy, r, size, spacing, fill, glow) => {
             fx.font = `600 ${size.toFixed(1)}px "IBM Plex Mono"`;
             const ws = Array.from(text, (ch) => fx.measureText(ch).width + spacing);
@@ -1053,13 +1110,24 @@
               a += ws[i] / r;
             });
           };
+          // r1: the bolt sparks (seeded): a fan off each receiver, more and faster bolt by bolt
+          const SPARKS = [];
+          BOLTS.forEach((b, k) => {
+            const r = HR.rng(7300 + k), n = 22 + k * 4;
+            for (let i = 0; i < n; i++) {
+              const s = (r() - 0.5) * 2, a = BA[k] + s * 1.35, v = (110 + 200 * r()) * (1 + 0.06 * k), along = (r() - 0.5) * 0.05;
+              SPARKS.push({ t: b + r() * 0.025, x: Math.cos(BA[k] + along) * 101, y: Math.sin(BA[k] + along) * 101, vx: Math.cos(a) * v, vy: Math.sin(a) * v,
+                life: 0.28 + 0.4 * r(), w: 1.3 + 1.4 * r() });
+            }
+          });
           const vtmp = new THREE.Vector3();
           const toScreen = (x, y, z) => { vtmp.set(x, y, z).project(camera); return [(vtmp.x + 1) * 960, (1 - vtmp.y) * 540]; };
           const ksEl = $("f03-ks"), dtag = $("f03-dtag");
           function renderVault(t, T) {
             fx.clearRect(0, 0, 1920, 1080);
-            if (t < FLIP) { glCanvas.style.visibility = "hidden"; ksEl.style.opacity = "0"; dtag.style.opacity = "0"; return; }
-            glCanvas.style.visibility = "visible";
+            // r1: the engraving/spark canvas is hidden with the GL until "keep" (the check read it as covering the lyric)
+            if (t < FLIP) { glCanvas.style.visibility = fxEl.style.visibility = "hidden"; ksEl.style.opacity = "0"; dtag.style.opacity = "0"; return; }
+            glCanvas.style.visibility = fxEl.style.visibility = "visible";
             const c = camAt(t);
             placeCamera(c);
             const kick = HR.hit("kick", T, 0.12), snare = HR.hit("snare", T, 0.1), bass = HR.band("bass", T);
@@ -1125,6 +1193,27 @@
               fx.beginPath(); fx.arc(sx, sy, seamR, head - 0.035, head + 0.012);
               fx.strokeStyle = `rgba(255,243,221,${envelope.toFixed(3)})`;
               fx.lineWidth = 0.42 * sk; fx.shadowColor = "#E85D26"; fx.shadowBlur = 4 * sk; fx.stroke();
+              fx.restore();
+              // r1: the bolts' own sparks, struck off the receiver as each bolt slams home (door units on the frame plane,
+              // projected each frame so they ride the push), white-hot heads with fire tails, falling; a hot spot at the seam
+              fx.save(); fx.globalCompositeOperation = "lighter"; fx.lineCap = "round";
+              for (const S0 of SPARKS) {
+                const d = t - S0.t;
+                if (d < 0 || d > S0.life) continue;
+                const at = (q) => { const e = (1 - Math.exp(-3 * q)) / 3; return toScreen(S0.x + S0.vx * e, S0.y + S0.vy * e - 0.5 * 260 * q * q, ZF + 0.05); };
+                const [hx, hy] = at(d), [tx, ty] = at(Math.max(0, d - 0.04)), [mx, my] = at(Math.max(0, d - 0.015)), f = Math.pow(1 - d / S0.life, 1.3);
+                fx.strokeStyle = `rgba(232,93,38,${(0.85 * f).toFixed(3)})`; fx.lineWidth = S0.w * 1.8;
+                fx.beginPath(); fx.moveTo(tx, ty); fx.lineTo(hx, hy); fx.stroke();
+                fx.strokeStyle = `rgba(255,244,224,${f.toFixed(3)})`; fx.lineWidth = S0.w;
+                fx.beginPath(); fx.moveTo(mx, my); fx.lineTo(hx, hy); fx.stroke();
+              }
+              BOLTS.forEach((b, k) => {
+                const d = t - b; if (d < 0 || d > 0.3) return;
+                const [qx, qy] = toScreen(Math.cos(BA[k]) * 101, Math.sin(BA[k]) * 101, ZF + 0.05), rr = 9 * sk, a = Math.exp(-d / 0.07);
+                const g = fx.createRadialGradient(qx, qy, 0, qx, qy, rr);
+                g.addColorStop(0, `rgba(255,244,224,${a.toFixed(3)})`); g.addColorStop(0.35, `rgba(255,178,117,${(0.6 * a).toFixed(3)})`); g.addColorStop(1, "rgba(232,93,38,0)");
+                fx.fillStyle = g; fx.beginPath(); fx.arc(qx, qy, rr, 0, Math.PI * 2); fx.fill();
+              });
               fx.restore();
             }
 
@@ -1250,7 +1339,7 @@
           archie.to(tl, { neck: 0.75, sqx: 0.97, sqy: 1.04 }, FLIP + 1.0, 0.12, "power2.out");          // inhale
           archie.to(tl, { neck: 0.45, sqx: 1.03, sqy: 0.97, lidL: 0.6, lidR: 0.6 }, FLIP + 1.12, 0.08, "power2.out"); // blow
           // the puff: a little cloud of ink dust leaves the rubber face on the blow, rises and fades
-          tl.fromTo("#f03-puff", { opacity: 0, scale: 0.4, y: 0, transformOrigin: "0px 92px" }, { opacity: 1, scale: 1, y: 6, duration: 0.12, ease: "power2.out", immediateRender: false }, FLIP + 1.12);
+          tl.fromTo("#f03-puff", { opacity: 0, scale: 0.4, y: 0, transformOrigin: "0px 92px" }, { opacity: 1, scale: 1, y: 6, transformOrigin: "0px 92px", duration: 0.12, ease: "power2.out", immediateRender: false }, FLIP + 1.12);
           tl.to("#f03-puff", { opacity: 0, scale: 1.8, y: 40, duration: 0.45, ease: "power1.out" }, FLIP + 1.24);
           archie.to(tl, { shR: 24, elR: 14, turn: 0, tilt: 0, lidL: 0.1, lidR: 0.1, lowL: 0, lowR: 0, sqx: 1, sqy: 1 }, YOU - 0.3, 0.2, "power2.inOut");
           archie.look(tl, 1, -0.2, YOU - 0.12, 0.16);            // up at the tag dropping in
@@ -1316,8 +1405,10 @@
           tl.fromTo(np, { scale: 0.97 }, { scale: 1, duration: 0.35, ease: "power2.out", immediateRender: false }, NPT);
           WOW.burst(tl, rfx, { x: 404, y: 190, t: NPT, n: 18, speed: 700, size: [4, 10], seed: 22, dur: 0.8, gravity: 900 });
 
-          // -- "break": the line's one shockwave; the slash on "you" cracks it (above), no flash, no shake
-          WOW.shock(tl, wfx, { x: 705, y: 463, t: BRK, r: 1100, n: 1, w: 5, color: "fire", dur: 0.7 });
+          // -- "break": r1 (REFINE-1 rule 2): no ring. The word recoils on its baseline as it lands and spits glyph chips;
+          // the slash on "you" cracks it (above), no flash, no shake
+          WOW.punch(tl, breakW.s, BRK, { s: 1.045, dur: 0.4 });
+          WOW.burst(tl, wfx, { x: 705, y: 470, t: BRK, n: 20, speed: 800, size: [5, 13], gravity: 1500, spread: 160, aim: -90, seed: 329, dur: 0.8, cream: 0.4 });
           // v18: "break" is hammered on the bass entry's two kicks after the word (25.119, 25.316): it cracks, chips fly, it holds
           const crack = S(breakW.s, "svg", { class: "f03-crack", viewBox: "0 0 100 100", preserveAspectRatio: "none", "data-layout-ignore": "" });
           const CR = [["M19 6 L23 28 L17 47 L25 64 L20 90", "M23 28 L32 36", "M25 64 L13 71"],
@@ -1335,29 +1426,41 @@
           tl.set(crack, { opacity: 0 }, SLASH);
           WOW.pulse(tl, GA, { kind: "snare", amt: 0.012 });
 
-          // -- "keep": the stamp is the hit; one shockwave, its own ink dots, Archie's recoil
-          WOW.shock(tl, wfx, { x: 990, y: 800, t: FLIP, r: 1300, n: 1, w: 7, color: "fire", dur: 0.75 });
+          // -- "keep": the stamp is the hit; r1: no ring — ink squirts out from under the rubber face, its own ink dots,
+          // the envelope's squash, Archie's recoil
+          WOW.burst(tl, wfx, { x: 1000, y: 830, t: FLIP, n: 26, speed: 1100, size: [4, 11], gravity: 1800, spread: 360, seed: 2812, dur: 0.6, cream: 0 });
           WOW.pulse(tl, $("f03-env"), { kind: "kick", amt: 0.012 });
-          // -- the bolt fill (the snares 31.943 … 33.556): a thin ring round the door as each bolt locks
-          // v18 (rule 2: sized by the drums, 0.5–0.6 here): each bolt slams home with sparks off its receiver, a ring off the
-          // hub and a punch; the last four shake the door
-          const VG = $("f03-vg");
-          WOW.pulse(tl, VG, { kind: "kick", amt: 0.012 });
-          BOLTS.forEach((b, k) => {
-            placeCamera(camAt(b));
-            const [bx, by] = toScreen(Math.cos(BA[k]) * 106, Math.sin(BA[k]) * 106, ZF + 0.05), [ox, oy] = toScreen(0, 0, ZD);
-            const aim = (Math.atan2(by - oy, bx - ox) * 180) / Math.PI;
-            WOW.burst(tl, wfx, { x: bx, y: by, t: b, n: 16 + k * 3, speed: 700 + k * 90, size: [4, 11], gravity: 1200, spread: 140, aim, seed: 700 + k, dur: 0.75, cream: 0.6 });
-            WOW.shock(tl, wfx, { x: ox, y: oy, t: b, r: 900 + k * 90, n: 1, w: 4 + k * 0.6, color: k % 2 ? "cream" : "fire", dur: 0.5 });
-            WOW.punch(tl, VG, b, { s: 1.02 + k * 0.004, dur: 0.3 });
-            if (k >= 3) WOW.shake(tl, VG, b, { amp: 3 + k, dur: 0.3, seed: 40 + k });
-          });
+          // -- the bolt fill (the snares 31.943 … 33.787). r1 (REFINE-1 H): no rings, no shakes. Each bolt slams home with
+          // its own sparks off the receiver (drawn on the vault canvas, riding the door), its lamp ring and receiver lamps,
+          // a white-hot throw and a camera punch on the door (camAt); the last punch carries across the cut into 04.
 
           // -- the world camera: a slow drift on Plan A, then one sine glide onto Plan B (the copy's drawer), still creeping in
           const DRIFT = (t) => { const p = t / NPT; return { s: 1.08 + 0.06 * p, x: -30 - 40 * p, y: -60 - 20 * p }; };
           const PB = (t) => { const s = 1.66 + 0.1 * clamp01((t - GL0) / (FLIP - GL0)); return { s, x: 1060 - 1307 * s, y: 650 - 818 * s }; };
           const worldCam = (t) => { const u = sineIO(clamp01((t - GL0) / (GL1 - GL0))), a = DRIFT(t), b = PB(t);
             return { u, s: lerp(a.s, b.s, u), x: lerp(a.x, b.x, u), y: lerp(a.y, b.y, u) }; };
+
+          // ---- r2 (REFINE-2 row E): the way in is a match on drawer 0001 ---------------------------------------------
+          // 16 ends on its frosted drawer front, filling the lower right (764, 645, 1171 px wide, after its glideDown out).
+          // At 23.656 the same drawer, frosted, is there at that size; the world camera pulls back while the drawer slides home
+          // into its slot in Plan B's housing, slamming flush on the 24.391 kick (frost shaken off, its lamp lights, it thaws).
+          // The bass entry (24.584) under the slam of "break" settles the whole layout down, once. The camera is solved per
+          // frame from the drawer's own layer transform, so the drawer follows its path exactly whatever the parallax does.
+          const LAND = L(24.391), BASSIN = L(24.584), R16 = { x: 764, y: 645, w: 1171 }, PR0 = 0.1;
+          const DRW = $("f03-drawer"), MIDB = $("f03-midb"), DFROST = $("f03-dfrost"), LEFT = $("f03-left");
+          const protrude = (t) => t < LAND ? 1 + PR0 * (1 - Math.pow(clamp01(t / LAND), 2))
+            : 1 - 0.022 * Math.sin((t - LAND) * 30) * Math.exp(-(t - LAND) / 0.1);
+          // the layer's CSS (individual translate/rotate/scale from WOW.draw, then the stage transform; origin 960, 540)
+          const layerMap = (e) => {
+            const m = new DOMMatrix().translateSelf(960, 540), st = e.style;
+            if (st.translate) { const [a, b] = st.translate.split(" ").map(parseFloat); m.translateSelf(a || 0, b || 0); }
+            if (st.rotate) m.rotateSelf(parseFloat(st.rotate));
+            if (st.scale) m.scaleSelf(parseFloat(st.scale));
+            if (st.transform) m.multiplySelf(new DOMMatrix(st.transform));
+            return m.translateSelf(-960, -540);
+          };
+          WOW.burst(tl, DRW, { x: 200, y: 100, t: LAND, n: 26, speed: 520, size: [2, 7], gravity: 1000, spread: 360, seed: 1608, dur: 0.9, cream: 1, color: "cream" });
+          WOW.burst(tl, DRW, { x: 200, y: 2, t: LAND + 0.01, n: 14, speed: 380, size: [2, 5], gravity: 900, spread: 120, aim: -90, seed: 1609, dur: 0.8, cream: 1, color: "cream" });
 
           function render() {
             const t = tl.time(), T = t + T0, step = Math.floor(t * 15);
@@ -1409,8 +1512,28 @@
 
             // v17: the world camera (Plan A → Plan B); Plan B comes up to full light as the camera arrives
             const wc = worldCam(Math.min(t, FLIP));
-            WORLD.style.transform = `translate(${wc.x.toFixed(2)}px, ${wc.y.toFixed(2)}px) scale(${wc.s.toFixed(4)})`;
-            GB.style.opacity = (0.85 + 0.15 * wc.u).toFixed(3);   // v18: Plan B is lit before the glide reaches it
+            // r2: the bass entry settles the layout down once (props and lyric together)
+            const sd = t >= BASSIN ? 7 * Math.sin(Math.min(Math.PI, (t - BASSIN) * 18)) * Math.exp(-(t - BASSIN) / 0.16) : 0;
+            LEFT.style.transform = `translate(${wc.x.toFixed(2)}px, ${(wc.y + sd).toFixed(2)}px) scale(${wc.s.toFixed(4)})`;
+            let WX = wc.x, WY = wc.y + sd, WS = wc.s;
+            if (t < LAND) {
+              // r2: the opening pull-back, solved so drawer 0001 runs from 16's rect to its home in the housing
+              const M = layerMap(MIDB), a = M.transformPoint(new DOMPoint(1066, 720)), b = M.transformPoint(new DOMPoint(1466, 920));
+              const qw = b.x - a.x, hw = wc.s * qw, hx = wc.x + wc.s * a.x, hy = wc.y + wc.s * a.y;
+              const u = clamp01(t / LAND), e = 1 - Math.pow(1 - u, 2.2), pr = protrude(t);
+              const w = Math.exp(lerp(Math.log(R16.w), Math.log(hw), e));
+              const cx = lerp(R16.x + R16.w / 2, hx + hw / 2, e), cy = lerp(R16.y + R16.w / 4, hy + hw / 4, e);
+              const fw = w / pr;
+              WS = fw / qw; WX = cx - fw / 2 - WS * a.x; WY = cy - fw / 4 - WS * a.y;
+              // the glideDown's blur is in layer pixels: scale it back so the zoomed world is as soft as 16's last frame
+              for (const e of [MIDB, MIDA, MARKL]) { const m = /blur\(([\d.]+)px\)/.exec(e.style.filter);
+                if (m) e.style.filter = `blur(${(parseFloat(m[1]) * wc.s / WS).toFixed(2)}px)`; }
+            }
+            WORLD.style.transform = `translate(${WX.toFixed(2)}px, ${WY.toFixed(2)}px) scale(${WS.toFixed(4)})`;
+            DRW.style.transform = `scale(${protrude(t).toFixed(4)})`;
+            DFROST.style.opacity = (1 - smooth(LAND + 0.05, LAND + 1.5, t)).toFixed(3);
+            if (t < LAND + 0.02) lampEl.style.opacity = "0.18";   // dark until it is home, then the bass lamp
+            GB.style.opacity = Math.max(0.85 + 0.15 * wc.u, 1 - smooth(LAND, LAND + 0.8, t)).toFixed(3);   // v18: Plan B is lit before the glide reaches it
             DIV.style.opacity = (1 - wc.u).toFixed(3);
             // Plan A's words leave the frame before "i only have to" arrives; the rig dims into the background
             const fadeA = 1 - clamp01((wc.u - 0.1) / 0.4);

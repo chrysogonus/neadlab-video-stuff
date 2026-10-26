@@ -20,7 +20,23 @@
          (board cards in A, thread comments in C) a few px and recoils the camera 2 px; B's Gantt slides a quarter per kick
          (eased steps, never stopping) while the bar is still shoved two; "again." writes on the snares (112.067, 112.979,
          113.879). Multiplayer cursors move through the UI on the kicks: a. (security) types and clicks CREATE, then
-         walks the priority list down to LOW; brad (vp velocity) drags the bar; somebody (vp) drifts down to the question. -->
+         walks the priority list down to LOW; brad (vp velocity) drags the bar; somebody (vp) drifts down to the question.
+         v22 r1 (REFINE-1.md, worker B): the bridge builds with the music. A: the issue number SEC-0001 is stamped on the
+         modal on the 107.062 downbeat. B is now a world, not a window: the ticket card itself jumps one quarter cell per
+         kick along a 16-quarter roadmap (110.694 … 113.899) and each cell it leaves takes a DEFERRED stamp slam (ink
+         spits, squash); the camera trucks with it, goes tight on the 112.524 downbeat and pulls wide on "row" to show the
+         row of stamps. C: on the bass return (114.35) the thread races through four years, one year per kick (a sticky
+         year that slams over, vertical speed blur, the OPEN FOR counter racing to 1,461 days), settling on the question;
+         the archive's "me." is written in the reply box and its dot swells into 11's lamp 0001 (1210,474, Ø154) as the
+         camera pushes into it for the cut. No flat rings (the "low", "row" and "store" rings are gone).
+         v22 r2 (REFINE-2.md, worker D): the bass return is the bridge's biggest move. C opens with the thread already
+         filling the frame (z 1.9) and whips in to z 2.2 on the 114.35 kick: the sticky year band is the top of the
+         frame, each of the four kicks slams the next year (2022–2025, 250 px numerals) past while OPEN FOR races to
+         1,461 days and the camera bumps; the scroll decelerates onto the question, and the pull quote is the comment
+         itself ("who'd even store it?" set in the serif, in the card, "store" in fire). "somebody asked," sits on the
+         thread's composer strip at the bottom of the frame. The camera eases back to frame the question and the reply
+         box, "me." is written in it, and the push into its dot lands on 11's lamp (1210,474, Ø154) at 117.94. -->
+
   </head>
   <body>
     <template>
@@ -86,6 +102,8 @@
         .f10-caret { display: inline-block; width: 2.5px; height: 0.95em; background: var(--fire); vertical-align: -0.12em; margin-left: 2px; }
         #f10-create { position: absolute; right: 30px; bottom: 26px; width: 150px; height: 44px; background: var(--fire); color: var(--ink);
           font-family: "IBM Plex Mono"; font-weight: 600; font-size: 16px; letter-spacing: 0.18em; display: flex; align-items: center; justify-content: center; }
+        #f10-idst { position: absolute; right: 26px; top: 16px; padding: 5px 12px 4px; border: 3px solid #C8481A; color: #C8481A; opacity: 0;
+          font-family: "IBM Plex Mono"; font-weight: 600; font-size: 24px; letter-spacing: 0.14em; mix-blend-mode: multiply; transform-origin: 50% 60%; }
         #f10-drop { opacity: 0; position: absolute; left: 262px; top: 96px; width: 360px; height: 300px; background: #fff; border: 1.5px solid var(--ink);
           box-shadow: 0 18px 36px rgba(90,70,40,0.2); transform-origin: 0 0; }
         #f10-droph { height: 40px; padding: 13px 16px 0; font-size: 11px; color: var(--muted); border-bottom: 1.5px solid var(--ink); }
@@ -98,35 +116,68 @@
           letter-spacing: -0.04em; color: var(--fire); white-space: nowrap; }
         #f10-wmarks { position: absolute; left: 0; top: 0; width: 900px; height: 700px; overflow: visible; }
 
-        /* B: the roadmap (screen px; the Gantt scrolls inside its window) */
-        #f10-road { left: 70px; top: 40px; width: 1780px; height: 650px; overflow: hidden; }
+        /* B: the roadmap as a world (world px; the camera trucks along it), under a screen-fixed app bar */
+        #f10-bbar { z-index: 2; box-shadow: 0 6px 16px rgba(90,70,40,0.12); }
         #f10-rcount { position: absolute; right: 22px; top: 0; height: 44px; display: flex; align-items: center; gap: 12px; }
         #f10-rcount span { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; letter-spacing: 0.14em; color: #5F5B54; }
         #f10-rcount b { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 24px; letter-spacing: 0.06em; color: var(--ink); }
-        #f10-gview { position: absolute; left: 330px; top: 44px; right: 0; bottom: 0; overflow: hidden; }
-        #f10-gantt { position: absolute; left: 0; top: 0; }
-        #f10-glab { position: absolute; left: 0; top: 44px; width: 330px; bottom: 0; background: #EFEBE3; border-right: 1.5px solid var(--rule); }
+        #f10-board { position: absolute; left: -400px; top: 0; overflow: visible; }
+        #f10-tk { position: absolute; left: 0; top: 0; width: 300px; height: 196px; background: #fff; border: 2px solid var(--ink);
+          box-shadow: 0 14px 28px rgba(60,50,40,0.2), 0 3px 0 rgba(60,50,40,0.08); padding: 16px 18px; transform-origin: 50% 100%; }
+        #f10-tk .f10-tkid { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 14px; letter-spacing: 0.12em; color: var(--muted); white-space: nowrap; }
+        #f10-tk .f10-chip { position: absolute; right: 14px; top: 13px; }
+        #f10-tk .f10-tkt { font-family: "Barlow"; font-weight: 700; font-size: 31px; line-height: 1.04; color: var(--ink); margin-top: 14px; white-space: nowrap; }
+        #f10-tk .f10-tkf { position: absolute; left: 18px; bottom: 14px; font-family: "IBM Plex Mono"; font-weight: 500; font-size: 11px;
+          letter-spacing: 0.12em; color: #5F5B54; white-space: nowrap; }
+        .f10-stamp { position: absolute; width: 252px; height: 84px; border: 4px solid #C8481A; color: #C8481A; text-align: center;
+          font-family: "IBM Plex Mono"; mix-blend-mode: multiply; opacity: 0; box-sizing: border-box; }
+        .f10-stamp b { display: block; font-weight: 600; font-size: 33px; letter-spacing: 0.16em; line-height: 1; margin-top: 11px; padding-left: 0.16em; }
+        .f10-stamp small { display: block; font-weight: 500; font-size: 12px; letter-spacing: 0.22em; margin-top: 7px; }
+        .f10-stamp i { position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; margin: -3.5px; border-radius: 50%; background: #C8481A; opacity: 0; }
+        .f10-again { position: absolute; font-family: "Caveat Brush"; font-size: 54px; line-height: 1; color: #C8481A; white-space: nowrap; }
 
         /* C: the thread */
         #f10-thread { left: 980px; top: 66px; width: 870px; height: 968px; overflow: hidden; }
         #f10-tstat { position: absolute; left: 28px; top: 62px; font-size: 12px; color: var(--muted); }
-        #f10-tcount { position: absolute; right: 28px; top: 54px; display: flex; align-items: baseline; gap: 12px; }
-        #f10-tcount span { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; letter-spacing: 0.14em; color: #5F5B54; }
-        #f10-tcount b { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 26px; letter-spacing: 0.04em; color: var(--ink); }
-        #f10-tview { position: absolute; left: 0; right: 0; top: 104px; bottom: 0; overflow: hidden; border-top: 1.5px solid var(--rule);
-          -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 40px); mask-image: linear-gradient(180deg, transparent 0, #000 40px); }
+        #f10-tview { position: absolute; left: 0; right: 0; top: 104px; bottom: 0; overflow: hidden; border-top: 1.5px solid var(--rule); }
         #f10-cms { position: absolute; left: 0; right: 0; top: 0; }
+        #f10-yband { position: absolute; left: 0; right: 0; top: 0; height: 132px; background: #F4F1EB; border-bottom: 1.5px solid var(--rule);
+          overflow: hidden; box-shadow: 0 8px 18px rgba(90,70,40,0.1); }
+        .f10-yr { position: absolute; left: 26px; top: 10px; font-family: "Barlow"; font-weight: 900; font-size: 112px; line-height: 1;
+          letter-spacing: -0.035em; color: var(--ink); transform-origin: 0 100%; }
+        #f10-tcount { position: absolute; right: 28px; top: 34px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+        #f10-tcount span { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 13px; letter-spacing: 0.14em; color: #5F5B54; }
+        #f10-tcount b { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 40px; letter-spacing: 0.02em; color: var(--ink); line-height: 1; }
+        .f10-ydiv { position: absolute; left: 28px; right: 28px; height: 52px; display: flex; align-items: center; gap: 18px;
+          font-family: "IBM Plex Mono"; font-weight: 600; font-size: 15px; letter-spacing: 0.3em; color: #5F5B54; }
+        .f10-ydiv::before, .f10-ydiv::after { content: ""; flex: 1; height: 1.5px; background: var(--rule); }
+        .f10-cm.f10-cmp { height: 170px; background: transparent; border: 1.5px dashed #A9A399; }
+        .f10-cm.f10-cmp .f10-av { background: transparent; border: 1.5px dashed #A9A399; }
+        #f10-cfoot { position: absolute; left: 28px; font-size: 11px; color: #5F5B54; }
+        #f10-dot { position: absolute; left: 0; top: 0; width: 0; height: 0; opacity: 0; }
+        #f10-dot i { position: absolute; left: -50px; top: -50px; width: 100px; height: 100px; border-radius: 50%; background: var(--fire); }
+        #f10-dot b { position: absolute; left: -200px; top: -200px; width: 400px; height: 400px; border-radius: 50%; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232,93,38,0.55), rgba(232,93,38,0.18) 45%, rgba(232,93,38,0)); }
         .f10-cm { position: absolute; left: 28px; right: 28px; height: 104px; padding: 16px 18px 0 82px; background: #FBF9F5; border: 1.5px solid var(--rule); }
         .f10-cm .f10-av { position: absolute; left: 18px; top: 22px; width: 46px; height: 46px; border-radius: 50%; background: #DCD6CB;
           font-family: "Barlow"; font-weight: 800; font-size: 20px; color: var(--muted); display: flex; align-items: center; justify-content: center; }
         .f10-cm .f10-who { font-family: "IBM Plex Mono"; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
         .f10-cm .f10-say { font-family: "Barlow"; font-weight: 600; font-size: 29px; color: var(--ink); margin-top: 6px; white-space: nowrap; }
-        .f10-cm.f10-bot { background: transparent; border-style: dashed; }
-        .f10-cm.f10-bot .f10-say { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 19px; letter-spacing: 0.06em; color: var(--muted); margin-top: 12px; }
-        .f10-cm.f10-q { background: #fff; border-color: var(--ink); box-shadow: 0 10px 24px rgba(90,70,40,0.14); }
+        .f10-cm.f10-bot { background: transparent; border-style: dashed; height: 72px; padding-top: 11px; }
+        .f10-cm.f10-bot .f10-av { top: 13px; width: 40px; height: 40px; left: 21px; font-size: 18px; }
+        .f10-cm.f10-bot .f10-say { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 18px; letter-spacing: 0.06em; color: var(--muted); margin-top: 3px; }
+        .f10-cm.f10-q { height: 156px; background: #fff; border-color: var(--ink); box-shadow: 0 10px 24px rgba(90,70,40,0.14); }
         .f10-cm.f10-q .f10-av { background: var(--ink); color: var(--cream); }
-        #f10-typing { font-family: "IBM Plex Mono"; font-weight: 500; font-size: 18px; letter-spacing: 0.08em; color: var(--muted); }
-        .f10-qw { display: inline-block; margin-right: 0.24em; }
+        /* r2: the pull quote is the comment itself */
+        .f10-cm.f10-q .f10-say { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-size: 72px; line-height: 1.05;
+          letter-spacing: -0.01em; margin-top: 8px; }
+        #f10-typing { position: absolute; left: 82px; top: 62px; font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-size: 18px; letter-spacing: 0.08em; color: var(--muted); }
+        .f10-qw { display: inline-block; margin-right: 0.22em; }
+        /* r2: the thread's composer strip (screen space) carries "somebody asked," */
+        #f10-cbar { position: absolute; inset: 0; pointer-events: none; }
+        #f10-strip { position: absolute; left: 0; right: 0; top: 880px; height: 220px; background: #F4F1EB; border-top: 1.5px solid var(--rule);
+          box-shadow: 0 -12px 26px rgba(90,70,40,0.13); }
+        #f10-strip span { position: absolute; right: 5.5cqw; top: 42px; font-size: 14px; color: #5F5B54; }
 
         /* v20: multiplayer cursors (screen px; positioned in render) */
         .f10-cur { position: absolute; left: 0; top: 0; width: 0; height: 0; pointer-events: none; }
@@ -183,6 +234,7 @@
                 <div class="f10-lab" style="margin-top:26px">REPORTER · A. (SECURITY) &nbsp;&nbsp; CREATED · TUE 09 MAR 2021</div>
                 <div class="f10-lab" style="margin-top:12px">IMPACT · EVERYTHING EVER SENT &nbsp;&nbsp; EFFORT · ??</div>
                 <div id="f10-create">CREATE</div>
+                <div id="f10-idst">SEC-0001</div>
               </div>
               <div id="f10-drop">
                 <div class="f10-mono" id="f10-droph">PRIORITY · SEC-0001</div>
@@ -196,51 +248,59 @@
           </div>
         </div>
 
-        <!-- B: the roadmap -->
+        <!-- B: the roadmap — a world the camera trucks along; the ticket card hops a quarter per kick -->
         <div class="f10-scene" id="f10-sB" style="opacity:0" data-layout-ignore>
           <div class="f10-pulse" id="f10-pB">
-            <div class="f10-scene" id="f10-wB" style="transform-origin:960px 40px">
-              <div class="f10-win" id="f10-road">
-                <div class="f10-tbar"><i style="left:22px;background:#E85D26"></i><i style="left:42px"></i><i style="left:62px"></i>nead tracker · <b>&nbsp;ROADMAP 2021–2024</b>&nbsp;· approved by leadership</div>
-                <div id="f10-rcount"><span>DEFERRED</span><b id="f10-rcv">×00</b></div>
-                <svg id="f10-glab" viewBox="0 0 330 606"></svg>
-                <div id="f10-gview"><svg id="f10-gantt"></svg></div>
-              </div>
-              <div class="f10-cur" id="f10-curB"><svg viewBox="0 0 34 44"><path d="M3 2 L3 34 L11 27 L17 41 L23 38 L17 25 L28 25 Z" fill="#E85D26" stroke="#0A0A0A" stroke-width="2.4" stroke-linejoin="round" /></svg><span>brad · vp velocity</span></div>
+            <div class="f10-world" id="f10-wB">
+              <svg id="f10-board"></svg>
+              <div id="f10-tk"><div class="f10-tkid">SEC-0001 · OPEN</div><span class="f10-chip f10-hot">low</span>
+                <div class="f10-tkt">Migrate to<br />post-quantum crypto</div><div class="f10-tkf">A. (SECURITY) · TUE 09 MAR 2021</div></div>
             </div>
+            <div class="f10-tbar" id="f10-bbar"><i style="left:22px;background:#E85D26"></i><i style="left:42px"></i><i style="left:62px"></i>nead tracker · <b>&nbsp;ROADMAP 2021–2024</b>&nbsp;· approved by leadership
+              <div id="f10-rcount"><span>DEFERRED</span><b id="f10-rcv">×00</b></div></div>
+            <div class="f10-cur" id="f10-curB"><svg viewBox="0 0 34 44"><path d="M3 2 L3 34 L11 27 L17 41 L23 38 L17 25 L28 25 Z" fill="#E85D26" stroke="#0A0A0A" stroke-width="2.4" stroke-linejoin="round" /></svg><span>brad · vp velocity</span></div>
           </div>
         </div>
 
-        <!-- C: the thread -->
+        <!-- C: the thread — four years in four kicks, then the question and the archive's reply -->
         <div class="f10-scene" id="f10-sC" style="opacity:0" data-layout-ignore>
           <div class="f10-pulse" id="f10-pC">
-            <div class="f10-scene" id="f10-wC" style="transform-origin:1420px 900px">
+            <div class="f10-world" id="f10-wC">
               <div class="f10-win" id="f10-thread">
                 <div class="f10-tbar"><i style="left:22px;background:#E85D26"></i><i style="left:42px"></i><i style="left:62px"></i>SEC-0001 · <b>&nbsp;post-quantum migration</b></div>
-                <div class="f10-mono" id="f10-tstat">OPEN · LOW · UNASSIGNED · 11 COMMENTS</div>
-                <div id="f10-tcount"><span>OPEN FOR</span><b id="f10-tcv">0 DAYS</b></div>
-                <div id="f10-tview"><div id="f10-cms"></div></div>
+                <div class="f10-mono" id="f10-tstat">OPEN · LOW · UNASSIGNED · 18 COMMENTS</div>
+                <div id="f10-tview"><div id="f10-cms"></div>
+                  <div id="f10-yband"><b class="f10-yr" id="f10-yA">2021</b><b class="f10-yr" id="f10-yB">2021</b>
+                    <div id="f10-tcount"><span>OPEN FOR</span><b id="f10-tcv">0 DAYS</b></div></div>
+                </div>
               </div>
+              <svg id="f10-wmC" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible"></svg>
+              <div class="f10-mark" id="f10-me" style="left:1094px;top:508px;transform:rotate(-5deg);font-size:110px">me</div>
+              <div id="f10-dot"><b></b><i></i></div>
+              <div class="f10-mark" id="f10-mes" style="left:1290px;top:578px;transform:rotate(-5deg);font-size:36px">— the archive</div>
               <div class="f10-cur" id="f10-curC"><svg viewBox="0 0 34 44"><path d="M3 2 L3 34 L11 27 L17 41 L23 38 L17 25 L28 25 Z" fill="#E85D26" stroke="#0A0A0A" stroke-width="2.4" stroke-linejoin="round" /></svg><span>somebody · vp</span></div>
             </div>
           </div>
+          <svg width="0" height="0" style="position:absolute"><defs><filter id="f10-vblur" x="0" y="-5%" width="100%" height="110%"><feGaussianBlur id="f10-vbs" stdDeviation="0 0" /></filter></defs></svg>
         </div>
 
         <div id="f10-warm" data-layout-ignore></div>
 
         <!-- the sung lines -->
         <div id="f10-type">
+          <!-- r2: under B's leaving line -->
+          <div id="f10-cbar" style="opacity:0">
+            <div id="f10-strip" data-layout-ignore><span class="f10-mono">SEC-0001 · REPLY · 1 WATCHER</span></div>
+            <div class="f10-line" id="f10-lC" style="top:48cqw"></div>
+          </div>
           <div class="f10-line" id="f10-lA" style="top:10.4cqw"></div>
           <div class="f10-line" id="f10-lB" style="top:41.6cqw;opacity:0"></div>
-          <div class="f10-line" id="f10-lC" style="top:6.2cqw;opacity:0"></div>
         </div>
 
         <!-- the archive's marker (screen space) -->
         <div id="f10-ml" data-layout-ignore>
           <svg id="f10-marks" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible"></svg>
           <div class="f10-mark" id="f10-obv" style="left:132px;top:700px;transform:rotate(-6deg)">(obviously)</div>
-          <div class="f10-mark" id="f10-me" style="left:560px;top:790px;transform:rotate(-5deg);font-size:110px">me.</div>
-          <div class="f10-mark" id="f10-mes" style="left:586px;top:904px;transform:rotate(-5deg);font-size:36px">— the archive</div>
         </div>
       </div>
 
@@ -280,87 +340,111 @@
             $("f10-paper").style.backgroundImage = `url(${c.toDataURL("image/png")})`;
           })();
 
-          // B: the Gantt — 16 quarters 2021–2024 and a hatched Q-DAY column; leadership's bars ship, ours is shoved
-          const G = $("f10-gantt"), GL = $("f10-glab"), QW = 150, GH = 606, ROWY = 92, RH = 92, QDAY = 16 * QW, GW = QDAY + 330;
-          const qx = (q) => q * QW;
-          const ROWG = [];   // v20: leadership's bars, one group per row (they jostle on the kicks)
-          G.setAttribute("viewBox", `0 0 ${GW} ${GH}`); G.setAttribute("width", GW); G.setAttribute("height", GH);
-          const rows = [["AI everything", 1, 15, "SHIPPED"], ["Rebrand (rounder)", 2, 5, "SHIPPED"], ["Kombucha on tap", 3, 4, "SHIPPED"],
-            ["SEC-0001 · post-quantum", 0, 0, null], ["Return to office", 6, 9, "SHIPPED"]];
+          // B: the roadmap as a world — 16 quarter cells 2021–2024 in our lane, leadership's lanes above (they ship),
+          // the hatched Q-DAY column after them. World px; the camera maps them to the screen in render().
+          const CW = 360, qx = (q) => q * CW, CARDY = 382, STY = 470, BX0 = -400, BW = 6800;
+          const BRD = $("f10-board"), wBw = $("f10-wB");
+          BRD.setAttribute("viewBox", `${BX0} 0 ${BW} 640`); BRD.setAttribute("width", BW); BRD.setAttribute("height", 640);
+          const ROWG = [];   // leadership's bars, one group per lane (they jostle on the kicks)
           (() => {
-            const defs = sv("defs", G, {});
-            const pat = sv("pattern", defs, { id: "f10-hatch", width: 12, height: 12, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
-            sv("rect", pat, { width: 3, height: 12, fill: "rgba(232,93,38,0.3)" });
+            const defs = sv("defs", BRD, {});
+            const pat = sv("pattern", defs, { id: "f10-hatch", width: 14, height: 14, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+            sv("rect", pat, { width: 3.5, height: 14, fill: "rgba(232,93,38,0.32)" });
+            // our lane: a warm band with sixteen quarter cells
+            sv("rect", BRD, { x: BX0, y: 330, width: BW, height: 282, fill: "rgba(232,93,38,0.06)" });
+            sv("rect", BRD, { x: BX0, y: 330, width: 6, height: 282, fill: "#E85D26" });
+            sv("text", BRD, { x: -370, y: 452, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 20, "letter-spacing": 2, fill: "#111111" }, "SEC-0001");
+            sv("text", BRD, { x: -370, y: 484, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 15, "letter-spacing": 1.5, fill: "#5F5B54" }, "POST-QUANTUM");
             for (let y = 0; y < 4; y++) {
-              sv("text", G, { x: qx(y * 4) + 12, y: 36, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 20, "letter-spacing": 2, fill: "#111111" }, String(2021 + y));
+              sv("text", BRD, { x: qx(y * 4) + 16, y: 60, "font-family": "Barlow", "font-weight": 800, "font-size": 48, "letter-spacing": -1, fill: "#111111" }, String(2021 + y));
               for (let q = 0; q < 4; q++) {
-                sv("text", G, { x: qx(y * 4 + q) + 12, y: 64, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 14, "letter-spacing": 1.5, fill: "#6E6A62" }, "Q" + (q + 1));
-                sv("line", G, { x1: qx(y * 4 + q), y1: 46, x2: qx(y * 4 + q), y2: GH, stroke: q ? "#E6E1D8" : "#CFC9BE", "stroke-width": q ? 1 : 1.5 });
+                const i = y * 4 + q;
+                sv("text", BRD, { x: qx(i) + 16, y: 94, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 15, "letter-spacing": 1.5, fill: "#6E6A62" }, "Q" + (q + 1));
+                sv("line", BRD, { x1: qx(i), y1: q ? 74 : 8, x2: qx(i), y2: 620, stroke: q ? "#E2DCD2" : "#CFC9BE", "stroke-width": q ? 1.2 : 2 });
+                sv("rect", BRD, { x: qx(i) + 8, y: 340, width: CW - 16, height: 262, fill: "#FBF9F5", stroke: "#DDD7CC", "stroke-width": 1.5 });
+                sv("text", BRD, { x: qx(i) + 22, y: 368, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 1.6, fill: "#6E6A62" }, `Q${q + 1} · ${2021 + y}`);
               }
             }
-            sv("rect", G, { x: QDAY, y: 46, width: GW - QDAY, height: GH - 46, fill: "url(#f10-hatch)" });
-            sv("line", G, { x1: QDAY, y1: 46, x2: QDAY, y2: GH, stroke: "#E85D26", "stroke-width": 2, "stroke-dasharray": "6 5" });
-            sv("text", G, { x: QDAY + 14, y: 36, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 20, "letter-spacing": 2, fill: "#C8481A" }, "Q-DAY ?");
-            sv("text", G, { x: QDAY + 14, y: 64, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 13, "letter-spacing": 1.2, fill: "#6E6A62" }, "DATE UNKNOWN");
-            sv("line", G, { x1: 0, y1: 76, x2: GW, y2: 76, stroke: "#CFC9BE", "stroke-width": 1.5 });
-            sv("line", GL, { x1: 0, y1: 76, x2: 330, y2: 76, stroke: "#CFC9BE", "stroke-width": 1.5 });
-            sv("text", GL, { x: 24, y: 50, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 2, fill: "#6E6A62" }, "INITIATIVE");
-            rows.forEach(([name, a, b, tag], i) => {
-              const y = ROWY + i * RH, ours = !tag;
-              if (ours) sv("rect", GL, { x: 0, y: y, width: 330, height: RH - 10, fill: "rgba(232,93,38,0.1)" });
-              if (ours) sv("rect", GL, { x: 0, y: y, width: 5, height: RH - 10, fill: "#E85D26" });
-              sv("text", GL, { x: 24, y: y + 48, "font-family": ours ? "IBM Plex Mono" : "Barlow", "font-weight": 600, "font-size": ours ? 17 : 24,
-                "letter-spacing": ours ? 1.2 : 0, fill: ours ? "#111111" : "#6E6A62" }, name);
-              sv("line", G, { x1: 0, y1: y + RH - 6, x2: GW, y2: y + RH - 6, stroke: "#EEEAE2", "stroke-width": 1 });
-              sv("line", GL, { x1: 0, y1: y + RH - 6, x2: 330, y2: y + RH - 6, stroke: "#E6E1D8", "stroke-width": 1 });
-              if (tag) {
-                const rg = sv("g", G, {}); ROWG.push(rg);
-                sv("rect", rg, { x: qx(a) + 5, y: y + 18, width: (b - a) * QW - 10, height: 40, fill: "#2a2a27" });
-                sv("text", rg, { x: qx(b) - 16, y: y + 44, "text-anchor": "end", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 1.5, fill: "#F0ECE5" }, tag);
-              }
+            sv("line", BRD, { x1: BX0, y1: 106, x2: BX0 + BW, y2: 106, stroke: "#CFC9BE", "stroke-width": 1.5 });
+            // the Q-DAY column, date unknown
+            sv("rect", BRD, { x: qx(16), y: 8, width: 560, height: 612, fill: "url(#f10-hatch)" });
+            sv("line", BRD, { x1: qx(16), y1: 8, x2: qx(16), y2: 620, stroke: "#E85D26", "stroke-width": 3, "stroke-dasharray": "8 6" });
+            sv("text", BRD, { x: qx(16) + 18, y: 60, "font-family": "Barlow", "font-weight": 800, "font-size": 48, "letter-spacing": -1, fill: "#C8481A" }, "Q-DAY ?");
+            sv("text", BRD, { x: qx(16) + 18, y: 94, "font-family": "IBM Plex Mono", "font-weight": 500, "font-size": 15, "letter-spacing": 1.5, fill: "#6E6A62" }, "DATE UNKNOWN");
+            // leadership's lanes: every one of them shipped
+            [["AI everything", 1, 16], ["Rebrand (rounder)", 2, 5], ["Kombucha on tap", 3, 4], ["Return to office", 6, 9]].forEach(([name, a, b], i) => {
+              const y = 120 + i * 52;
+              sv("text", BRD, { x: -370, y: y + 29, "font-family": "Barlow", "font-weight": 600, "font-size": 23, fill: "#6E6A62" }, name);
+              sv("line", BRD, { x1: BX0, y1: y + 46, x2: BX0 + BW, y2: y + 46, stroke: "#ECE7DF", "stroke-width": 1 });
+              const rg = sv("g", BRD, {}); ROWG.push(rg);
+              sv("rect", rg, { x: qx(a) + 6, y: y + 2, width: (b - a) * CW - 12, height: 38, fill: "#2a2a27" });
+              sv("text", rg, { x: qx(a) + 20, y: y + 27, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 1.5, fill: "#F0ECE5" }, name.toUpperCase());
+              sv("text", rg, { x: qx(b) - 20, y: y + 27, "text-anchor": "end", "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 1.5, fill: "#E85D26" }, "SHIPPED ✓");
             });
           })();
-          const SECY = ROWY + 3 * RH;
-          const ghosts = sv("g", G, {});
-          const bar = sv("g", G, {});
-          sv("rect", bar, { x: 5, y: SECY + 18, width: QW * 2 - 10, height: 40, fill: "#E85D26" });
-          sv("rect", bar, { x: 5, y: SECY + 18, width: QW * 2 - 10, height: 5, fill: "rgba(255,230,214,0.6)" });
-          sv("text", bar, { x: 18, y: SECY + 44, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 14, "letter-spacing": 1.6, fill: "#111111" }, "PQC MIGRATION");
-          const ghostEls = PUSHES.map((_, i) => {
-            const g = sv("g", ghosts, { opacity: 0 });
-            sv("rect", g, { x: qx(i * 2) + 5, y: SECY + 18, width: QW * 2 - 10, height: 40, fill: "rgba(232,93,38,0.05)", stroke: "rgba(232,93,38,0.65)", "stroke-width": 1.5, "stroke-dasharray": "6 4" });
-            sv("text", g, { x: qx(i * 2) + 16, y: SECY + 43, "font-family": "IBM Plex Mono", "font-weight": 600, "font-size": 13, "letter-spacing": 1.6, fill: "rgba(200,72,26,0.9)" }, "DEFERRED");
-            const lit = sv("rect", g, { x: qx(i * 2) + 5, y: SECY + 18, width: QW * 2 - 10, height: 40, fill: "rgba(232,93,38,0.16)", stroke: "#E85D26", "stroke-width": 2.5, opacity: 0 });
-            return { g, lit };
+          // the DEFERRED stamps: one per push, on the cell the ticket is shoved out of (above the card: the stamp kicks it on)
+          const STAMPS = PUSHES.map((p, i) => {
+            const r = HR.rng(3100 + i), d = el("div", "f10-stamp", wBw);
+            d.style.left = qx(i) + CW / 2 - 126 + "px"; d.style.top = STY - 42 + "px";
+            el("b", "", d, "DEFERRED");
+            el("small", "", d, `→ Q${((i + 1) % 4) + 1} ${2021 + Math.floor((i + 1) / 4)}`);
+            const dots = Array.from({ length: 6 }, (_, k) => {
+              const a = (k / 6) * Math.PI * 2 + r() * 0.8, e = el("i", "", d);
+              return { e, x: Math.cos(a) * (150 + r() * 70), y: Math.sin(a) * (58 + r() * 50), s: 0.6 + r() * 0.9 };
+            });
+            return { d, p, rot: -9 + r() * 14, dots };
           });
-          // "again." in the marker, on the Gantt itself (it scrolls with it), written on the snares over pushes 4, 6, 8 (v20)
+          // "again." in the marker under three stamps, written on the snares (112.067, 112.979, 113.879)
           const agains = [[3, 112.067], [5, 112.979], [7, 113.879]].map(([i, T], k) => {
-            const m = sv("text", G, { x: qx(i * 2) + 26, y: SECY - 4, "font-family": "Caveat Brush", "font-size": 46, fill: "#C8481A",
-              transform: `rotate(${[-7, 4, -4][k]} ${qx(i * 2) + 60} ${SECY - 16})` }, "again.");
+            const m = el("div", "f10-again", wBw, "again.");
+            m.style.left = qx(i) + 92 + "px"; m.style.top = 528 + "px"; m.style.transform = `rotate(${[-7, 4, -4][k]}deg)`;
             return { m, t: L(T) };
           });
 
-          // C: the comment thread — the ticket's history, bumped and bumped; then somebody's question
-          const thread = [["A", "a. · security · mar 2021", "they can record our TLS today and read it later."],
-            ["⟳", "roadmap-bot · jun 2021", "moved to next quarter", true], ["B", "brad · vp velocity · sep 2021", "bumped to Q1, sorry"],
-            ["⟳", "roadmap-bot · jan 2022", "moved to next quarter", true], ["B", "brad · vp velocity · apr 2022", "not this quarter"],
-            ["R", "ruth · brand · oct 2022", "after the rebrand"], ["⟳", "roadmap-bot · feb 2023", "moved to next quarter", true],
-            ["B", "brad · vp velocity · may 2023", "is this still relevant?"], ["A", "a. · security · aug 2024", "NIST published FIPS 203 (ML-KEM). it's real."],
-            ["⟳", "roadmap-bot · sep 2024", "moved to next quarter", true]];
-          const CMH = 120;
-          thread.forEach(([av, who, say, bot], i) => {
-            const c = el("div", "f10-cm" + (bot ? " f10-bot" : ""), $("f10-cms"));
-            c.style.top = i * CMH + "px";
+          // C: the comment thread — the ticket's four years, bumped and bumped; then somebody's question and a reply box
+          const thread = [[2021, "A", "a. · security · mar 2021", "they can record our TLS today and read it later.", 2, 9],
+            [2021, "⟳", "roadmap-bot · jun 2021", "moved to next quarter", 5, 15, true], [2021, "B", "brad · vp velocity · sep 2021", "bumped to Q1, sorry", 8, 15],
+            [2021, "⟳", "roadmap-bot · dec 2021", "moved to next quarter", 11, 15, true],
+            [2022, "⟳", "roadmap-bot · mar 2022", "moved to next quarter", 2, 15, true], [2022, "B", "brad · vp velocity · apr 2022", "not this quarter", 3, 15],
+            [2022, "R", "ruth · brand · oct 2022", "after the rebrand", 9, 15], [2022, "⟳", "roadmap-bot · dec 2022", "moved to next quarter", 11, 15, true],
+            [2023, "⟳", "roadmap-bot · feb 2023", "moved to next quarter", 1, 15, true], [2023, "B", "brad · vp velocity · may 2023", "is this still relevant?", 4, 15],
+            [2023, "⟳", "roadmap-bot · sep 2023", "moved to next quarter", 8, 15, true], [2023, "⟳", "roadmap-bot · dec 2023", "moved to next quarter", 11, 15, true],
+            [2024, "B", "brad · vp velocity · mar 2024", "let’s revisit after the offsite", 2, 15], [2024, "⟳", "roadmap-bot · jun 2024", "moved to next quarter", 5, 15, true],
+            [2024, "A", "a. · security · aug 2024", "NIST published FIPS 203 (ML-KEM). it's real.", 7, 15], [2024, "⟳", "roadmap-bot · sep 2024", "moved to next quarter", 8, 15, true],
+            [2024, "⟳", "roadmap-bot · dec 2024", "moved to next quarter", 11, 15, true]];
+          const DAY = (y, m, d) => Math.round((Date.UTC(y, m, d) - Date.UTC(2021, 2, 9)) / 864e5);
+          const TOP0 = 148, BAND = 132, QV = 150;   // r2: the question settles QV px into the view, just under the year band
+          let ty = TOP0, yr = 2021;
+          const DIVS = {}, ANCH = [[0, 0]];   // DIVS: year → divider top; ANCH: [scroll at which an item sits QV px into the view, its day]
+          const cms0 = $("f10-cms");
+          const divider = (y) => { const d = el("div", "f10-ydiv", cms0, String(y)); d.style.top = ty + "px"; DIVS[y] = ty; ty += 64; };
+          for (const [y, av, who, say, m, dd, bot] of thread) {
+            if (y !== yr) { yr = y; divider(y); }
+            const c = el("div", "f10-cm" + (bot ? " f10-bot" : ""), cms0);
+            c.style.top = ty + "px";
             el("div", "f10-av", c, av); el("div", "f10-who", c, who); el("div", "f10-say", c, say);
-          });
-          const q = el("div", "f10-cm f10-q", $("f10-cms"));
-          q.style.top = thread.length * CMH + "px";
+            if (ty - QV > 0) ANCH.push([ty - QV, DAY(y, m, dd)]);   // the scroll at which the item sits where the question will (day 0 at the top)
+            ty += bot ? 84 : 120;
+          }
+          divider(2025);
+          const q = el("div", "f10-cm f10-q", cms0);
+          const QTOP = ty; q.style.top = QTOP + "px";
           el("div", "f10-av", q, "?"); el("div", "f10-who", q, "somebody · vp · mar 2025");
           const qsay = el("div", "f10-say", q);
           const typing = el("span", "", qsay); typing.id = "f10-typing";
-          const QWORDS = [["who’d", 116.12], ["even", 116.6], ["store", 116.944], ["it?", 117.76]].map(([w, t]) => ({ s: el("span", "f10-qw", qsay, w), t: L(t) }));
+          // r2: the sung pull quote is the comment's own text (world space, in the card), word by word on the sung times
+          const QWORDS = [["“who’d", 116.12], ["even", 116.6], ["store", 116.944, true], ["it?”", 117.76]].map(([w, t, hero]) => {
+            const s = el("span", "f10-w f10-qw" + (hero ? " f10-hot" : ""), qsay), i = el("span", "f10-wi", s, w);
+            return { s, i, t: L(t), hero: !!hero };
+          });
+          const cmp = el("div", "f10-cm f10-cmp", cms0); cmp.style.top = QTOP + 172 + "px";
+          el("div", "f10-av", cmp, ""); el("div", "f10-who", cmp, "reply · add a comment…");
+          const cfoot = el("div", "f10-mono", cms0, "WATCHERS · 1 (A.) · LINKED · NONE"); cfoot.id = "f10-cfoot"; cfoot.style.top = QTOP + 360 + "px";
+          // the question settles QV px into the view (world y 320), the reply box under it (world y 492)
+          const SF = QTOP - QV;
+          ANCH.push([SF, DAY(2025, 2, 9)]);   // 1,461 days
 
-          // marker strokes (pathLength 100, drawn on in render): the circle around "low" (world), the arrow from "me." to "store"
+          // marker strokes (pathLength 100, drawn on in render): the circle around "low" (world), the arrow from "me" toward "store"
           const wob = (cx, cy, rx, ry, seed) => {
             const r = HR.rng(seed); let d = "";
             for (let k = 0; k <= 64; k++) { const a = -0.5 + (k / 64) * Math.PI * 2.15, j = 1 + (r() - 0.5) * 0.05;
@@ -371,7 +455,7 @@
             "stroke-linecap": "round", "stroke-linejoin": "round", "stroke-dasharray": 100, "stroke-dashoffset": 100 }) });
           const strokes = [
             stroke($("f10-wmarks"), wob(352, 318, 112, 36, 31), LOW + 0.08, 0.34, 3),
-            stroke($("f10-marks"), "M600 806 C 540 770, 470 730, 452 668 M452 668 l -16 26 M452 668 l 26 16", on(117.45, ["kick", "snare", "hat"]), 0.22, 5.5),
+            stroke($("f10-wmC"), "M1240 560 C 1300 540, 1400 500, 1460 446 M1460 446 l -24 3 M1460 446 l -5 23", on(117.45, ["kick", "snare", "hat"]), 0.22, 5.5),
           ];
 
           // ---- the sung lines --------------------------------------------------------------------------------------
@@ -388,35 +472,31 @@
             ...mk($("f10-lB"), "", [["pushed", 110.66], ["to", 110.92], ["next", 111.14], ["quarter,", 111.56]]),
             ...mk($("f10-lB"), "", [["four", 111.931], ["years", 112.5], ["in", 112.819], ["a", 113.048], ["row", 113.22, true, true]]),
             ...mk($("f10-lC"), "", [["somebody", 114.2], ["asked,", 115.747]]),
-            ...mk($("f10-lC"), "f10-serif", [["“who’d", 116.12], ["even", 116.6]]),
-            ...mk($("f10-lC"), "f10-serif", [["store", 116.944, true, true], ["it?”", 117.76]]),
+            ...QWORDS,   // r2: “who’d even store it?” in the question card
           ];
-          // verse rules: soft entrances only; the hero settles in and gets one soft punch and a thin ring
+          // verse rules: soft entrances only; the hero settles in and recoils on its baseline (r1: no ring — the object answers:
+          // "row" lights the row of stamps, "store" is typed into the thread)
           for (const { s, i, t, hero } of W) {
             WOW.word(tl, i, t, { kind: hero ? "settle" : "rise" });
-            if (hero) {
-              WOW.punch(tl, s, t, { s: 1.04, dur: 0.5 });
-              const ring = WOW.shock(tl, s, { x: 0, y: 0, t, r: 230, n: 1, w: 2, color: "fire", dur: 0.9 });
-              ring.style.left = "50%"; ring.style.top = "55%";
-            }
+            if (hero) WOW.punch(tl, s, t, { s: 1.05, dur: 0.5 });
           }
           // the hero "low" is the LOW option itself (world space, in the dropdown)
           const lowW = el("span", "", $("f10-lowbox")); lowW.id = "f10-lowwrap"; lowW.style.cssText = "position:absolute;inset:0;transform-origin:30% 70%";
           const low = el("span", "", lowW, "low"); low.id = "f10-low";
           WOW.word(tl, low, LOW, { kind: "settle" });
-          WOW.punch(tl, lowW, LOW, { s: 1.04, dur: 0.5 });
-          const lring = WOW.shock(tl, lowW, { x: 0, y: 0, t: LOW, r: 130, n: 1, w: 1.2, color: "fire", dur: 1.0 });
-          lring.style.left = "42%"; lring.style.top = "45%";
+          WOW.punch(tl, lowW, LOW, { s: 1.05, dur: 0.5 });
           tl.fromTo("#f10-lowlab", { color: "#8A857C" }, { color: "rgba(138,133,124,0)", duration: 0.12, ease: "none", immediateRender: false }, LOW - 0.06);
           // the question in the thread is typed word by word, on the sung times
-          tl.set(typing, { opacity: 1 }, 0); tl.set(typing, { opacity: 0 }, QWORDS[0].t);
-          QWORDS.forEach(({ s, t }) => { tl.set(s, { opacity: 0 }, 0); tl.set(s, { opacity: 1 }, t); });
+          tl.set(typing, { opacity: 1 }, 0); tl.set(typing, { opacity: 0 }, QWORDS[0].t - 0.06);
 
           // lines leave softly just before the switch (they stay readable until the next line starts)
           const leave = (sel, t) => tl.fromTo(sel, { opacity: 1, y: 0, filter: "blur(0px)" }, { opacity: 0, y: -18, filter: "blur(3px)", duration: 0.22, ease: "power2.in", immediateRender: false }, t - 0.22);
           tl.set("#f10-lA", { opacity: 1 }, 0); leave("#f10-lA", G2); tl.set("#f10-lA", { opacity: 0 }, G2);
           tl.set("#f10-lB", { opacity: 1 }, G2); leave("#f10-lB", G3); tl.set("#f10-lB", { opacity: 0 }, G3);
-          tl.set("#f10-lC", { opacity: 1 }, G3);
+          // r2: the composer strip slides up with "somebody" on it as B leaves, and drops away under the push into the dot
+          tl.set("#f10-cbar", { opacity: 1 }, G3 - 0.24);
+          tl.fromTo("#f10-cbar", { y: 240 }, { y: 0, duration: 0.22, ease: "power3.out", immediateRender: false }, G3 - 0.24);
+          tl.fromTo("#f10-cbar", { y: 0 }, { y: 240, duration: 0.26, ease: "power2.in", immediateRender: false }, L(117.62));
           tl.set("#f10-sA", { opacity: 1 }, 0); tl.set("#f10-sA", { opacity: 0 }, G2);
           tl.set("#f10-sB", { opacity: 1 }, G2); tl.set("#f10-sB", { opacity: 0 }, G3);
           tl.set("#f10-sC", { opacity: 1 }, G3);
@@ -439,7 +519,7 @@
           // one spline camera (world point at screen centre, log zoom) through these keys: velocity never drops to 0
           const KEYS = [[0, 380, 318, 2.45], [0.9, 404, 314, 2.32], [1.9, 248, 318, 1.84], [3.0, 216, 334, 1.64], [L(109.54), 349, 248, 3.0], [G2, 354, 254, 3.32]]
             .map(([t, x, y, z]) => ({ t, v: [x, y, Math.log(z)] }));
-          const camAt = (t) => {
+          const spline = (KEYS) => (t) => {
             const n = KEYS.length; t = Math.max(KEYS[0].t, Math.min(KEYS[n - 1].t, t));
             let i = 0; while (i < n - 2 && t > KEYS[i + 1].t) i++;
             const a = KEYS[i], b = KEYS[i + 1], h = b.t - a.t, u = (t - a.t) / h;
@@ -447,11 +527,27 @@
             const h00 = 2 * u ** 3 - 3 * u * u + 1, h10 = u ** 3 - 2 * u * u + u, h01 = -2 * u ** 3 + 3 * u * u, h11 = u ** 3 - u * u;
             return [0, 1, 2].map((c) => h00 * a.v[c] + h10 * h * tan(i, c) + h01 * b.v[c] + h11 * h * tan(i + 1, c));
           };
+          const camAt = spline(KEYS);
           const KEYT = Array.from({ length: TITLE.length }, (_, i) => 0.14 + i * ((1.42 - 0.14) / TITLE.length));
           // CREATE goes down on the kick before "opened"; the modal files itself into the backlog on "opened"
           const PRESS = on(107.518);
           tl.fromTo("#f10-create", { scale: 1 }, { scale: 0.93, duration: 0.08, ease: "power2.out", immediateRender: false }, PRESS);
           tl.fromTo("#f10-create", { scale: 0.93 }, { scale: 1, duration: 0.24, ease: "power2.out", immediateRender: false }, PRESS + 0.08);
+          // r1: the drum fill into "ticket" (106.139 snare, 106.494, 106.829) hits the modal: it recoils and the field flares fire
+          [[106.139, 7], [106.494, 4], [106.829, 5]].forEach(([T, a]) => {
+            const t = L(T);
+            tl.fromTo("#f10-modal", { y: 0 }, { y: a, duration: 0.04, ease: "power2.out", immediateRender: false }, t);
+            tl.fromTo("#f10-modal", { y: a }, { y: 0, duration: Math.min(0.26, L(107.062) - t - 0.045), ease: "power2.out", immediateRender: false }, t + 0.04);   // r2: done before the stamp's recoil
+            tl.fromTo("#f10-field", { borderColor: "#E85D26", borderWidth: 3 }, { borderColor: "#0A0A0A", borderWidth: 1.5, duration: 0.3, ease: "power2.out", immediateRender: false }, t);
+          });
+          // r1: "ticket" — the issue gets its number: SEC-0001 is stamped on the modal on the 107.062 downbeat (the modal recoils)
+          const DB1 = L(107.062);
+          tl.set("#f10-idst", { opacity: 0 }, 0);
+          tl.fromTo("#f10-idst", { opacity: 0, scale: 1.8, rotation: -14 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.07, ease: "power2.in", immediateRender: false }, DB1 - 0.07);
+          tl.fromTo("#f10-idst", { scaleX: 1, scaleY: 1 }, { scaleX: 1.06, scaleY: 0.9, duration: 0.05, ease: "power2.out", immediateRender: false }, DB1);
+          tl.fromTo("#f10-idst", { scaleX: 1.06, scaleY: 0.9 }, { scaleX: 1, scaleY: 1, duration: 0.3, ease: "elastic.out(1, 0.5)", immediateRender: false }, DB1 + 0.05);
+          tl.fromTo("#f10-modal", { y: 0 }, { y: 7, duration: 0.05, ease: "power2.out", immediateRender: false }, DB1);
+          tl.fromTo("#f10-modal", { y: 7 }, { y: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, DB1 + 0.05);
           tl.fromTo("#f10-modal", { x: 0, y: 0, scale: 1, opacity: 1 }, { x: -50, y: -44, scale: 0.36, opacity: 0, duration: 0.34, ease: "power2.inOut", immediateRender: false }, OPENED - 0.16);
           tl.set("#f10-sec", { opacity: 0 }, 0);
           tl.fromTo("#f10-sec", { opacity: 0, scale: 1.06, y: -6 }, { opacity: 1, scale: 1, y: 0, duration: 0.36, ease: "power2.out", immediateRender: false }, OPENED - 0.02);
@@ -465,32 +561,62 @@
           const steps = [on(108.885), on(109.334), LOW];
           steps.forEach((t, i) => tl.fromTo("#f10-hl", { y: 52 * i }, { y: 52 * (i + 1), duration: 0.16, ease: "power2.inOut", immediateRender: false }, t - 0.12));
 
-          // ---- B: one block per kick; the Gantt glides at constant speed under a frozen label column --------------
-          const SCROLL = GW - (1780 - 330) + 10;   // from 2021 Q1 to the whole Q-DAY column in view
-          gsap.set(bar, { x: 0 });
-          PUSHES.forEach((p, i) => {
-            tl.fromTo(bar, { x: qx(i * 2) }, { x: qx(i * 2 + 2), duration: 0.36, ease: "power2.out", immediateRender: false }, p);
-            tl.fromTo(ghostEls[i].g, { opacity: 0 }, { opacity: 1, duration: 0.24, ease: "power1.out", immediateRender: false }, p);
-          });
-          // "row": the row of DEFERRED blocks lights up, left to right, and fades back
-          ghostEls.forEach(({ lit }, i) => {
-            if (PUSHES[i] > ROW) return;
-            tl.fromTo(lit, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out", immediateRender: false }, ROW + i * 0.045);
-            tl.fromTo(lit, { opacity: 1 }, { opacity: 0.25, duration: 0.7, ease: "power2.inOut", immediateRender: false }, ROW + i * 0.045 + 0.14);
-          });
-          agains.forEach(({ m, t }) => { tl.set(m, { opacity: 0 }, 0); tl.set(m, { opacity: 1 }, t); });
-
-          // ---- C: the thread scrolls on the beat (a surge after each, never stopping), decelerating onto the question
-          const BEATS = [G3, ...[114.351, 114.805, 115.252, 115.707, 116.17, 116.621, 117.082, 117.545].map(L), DUR];
-          const SPOS = [0, 40, 168, 284, 384, 444, 474, 494, 506, 512, 516];
-          const scrollAt = (t) => {
-            if (t <= BEATS[0]) return 0;
-            for (let i = 0; i < BEATS.length - 1; i++) if (t <= BEATS[i + 1]) {
-              const u = (t - BEATS[i]) / (BEATS[i + 1] - BEATS[i]), e = 0.7 * u + 0.3 * (1 - (1 - u) * (1 - u));
-              return SPOS[i] + (SPOS[i + 1] - SPOS[i]) * e;
+          // ---- B: the ticket jumps one quarter cell per kick; the camera trucks with it --------------------------------
+          // keys [t, world x at screen centre, world y at screen y 420, zoom]: mid on the cut, tight from the 112.524
+          // downbeat, then the phrase's big move: a fast pull-out on "row" (113.22) that shows the whole row of stamps
+          const KEYSB = [[G2, 380, 470, 1.0], [L(111.6), 1030, 470, 1.05], [L(112.524), 1720, 482, 1.22], [L(113.1), 2230, 482, 1.34],
+            [L(113.56), 1660, 330, 0.58], [G3, 2300, 380, 0.68]].map(([t, x, y, z]) => ({ t, v: [x, y, Math.log(z)] }));
+          const camB = spline(KEYSB);
+          // the card: shoved on the kick (fast out, eased in), lifted on an arc, squashed on landing
+          const cardAt = (t) => {
+            let cell = 0, lift = 0, rot = 0, sy = 1;
+            for (const p of PUSHES) {
+              const d = t - p; if (d < 0) break;
+              const u = clamp01(d / 0.3); cell += 1 - Math.pow(1 - u, 3);
+              if (d < 0.3) { lift = -44 * Math.sin(Math.PI * u); rot = -5 * Math.sin(Math.PI * u); sy = 1; }
+              else if (d < 0.45) { lift = 0; rot = 0; sy = 1 - 0.07 * Math.sin(Math.PI * (d - 0.3) / 0.15); }
+              else { lift = 0; rot = 0; sy = 1; }
             }
-            return SPOS[SPOS.length - 1];
+            return { x: qx(cell) + 30, lift, rot, sy };
           };
+
+          // ---- C: four years in four kicks — each kick on the bass return races the thread one year on --------------
+          const SURGE = [114.35, 114.805, 115.252, 115.707].map(L);
+          const TGT = [DIVS[2022] - BAND + 4, DIVS[2023] - BAND + 4, DIVS[2024] - BAND + 4, SF];
+          const scrollAt = (t) => {
+            let s = 26 * clamp01((t - G3) / (SURGE[0] - G3));
+            for (let k = 0; k < SURGE.length; k++) {
+              if (t < SURGE[k]) break;
+              const from = k ? TGT[k - 1] : 26, u = clamp01((t - SURGE[k]) / 0.42);
+              s = from + (TGT[k] - from) * (1 - Math.pow(1 - u, 3));
+            }
+            return s;
+          };
+          const daysAt = (s) => {
+            if (s <= ANCH[0][0]) return ANCH[0][1];
+            for (let i = 0; i < ANCH.length - 1; i++) if (s <= ANCH[i + 1][0])
+              return ANCH[i][1] + (ANCH[i + 1][1] - ANCH[i][1]) * (s - ANCH[i][0]) / (ANCH[i + 1][0] - ANCH[i][0]);
+            return ANCH[ANCH.length - 1][1];
+          };
+          // the archive's reply: "me" is written in the reply box; its dot swells into 11's lamp 0001 (screen 1210,474, Ø154)
+          // while the camera pushes into it, so the cut to the dark archive matches on the lamp
+          const DOT = [1198, 599], LAMP = [1210, 474], ZEND = 2.6, PUSH = L(117.62), PEND = DUR - 0.035;
+          const DOTON = writes[1][1] + writes[1][2];
+          // r2: C's camera keys [t, world x at screen centre, world y at screen centre, zoom]: the thread fills the frame on
+          // the cut (z 1.9), whips in on the 114.35 kick so the year band is the top of the frame (z 2.2), holds through
+          // the four years, then eases back from the 116.169 downbeat to frame the question and the reply box (z 2.0)
+          const KC = [[G3, 1415, 440, 1.9], [L(114.33), 1415, 438, 1.92], [L(114.62), 1415, 415.5, 2.2], [L(116.169), 1415, 415.5, 2.2],
+            [L(116.87), 1415, 491, 2.0]].map(([t, x, y, z]) => [t, x, y, Math.log(z)]);
+          const camC = (t) => {
+            if (t <= KC[0][0]) return KC[0].slice(1);
+            for (let i = 0; i < KC.length - 1; i++) {
+              const a = KC[i], b = KC[i + 1];
+              if (t < b[0]) { const u = (t - a[0]) / (b[0] - a[0]), e = u * u * (3 - 2 * u); return [1, 2, 3].map((c) => a[c] + (b[c] - a[c]) * e); }
+            }
+            return KC[KC.length - 1].slice(1);
+          };
+          // each year's kick bumps the camera in (fast attack, decaying), so the slams land on the lens
+          const bumpAt = (t) => SURGE.reduce((v, s) => { const d = t - s + 0.03; return v + (d <= 0 ? 0 : d < 0.05 ? 0.045 * d / 0.05 : 0.045 * Math.exp(-(d - 0.05) / 0.16)); }, 0);
 
           // ---- v20: the kick carrier --------------------------------------------------------------------------------
           // every kick (sized by its strength) moves the cards to a new seeded offset, eased over 0.24 s
@@ -498,17 +624,7 @@
           const shuffler = (els, amp, seed) => { const r = HR.rng(seed);
             return els.map((e) => ({ e, o: KALL.map(([, a]) => amp.map((m) => (r() - 0.5) * 2 * m * a)) })); };
           const SHUF = [...shuffler([...$("f10-app").querySelectorAll(".f10-card:not(#f10-sec)")], [7, 4, 1.0], 2001),
-            ...shuffler([...$("f10-cms").querySelectorAll(".f10-cm:not(.f10-q)")], [8, 3, 0.4], 2002), ...shuffler(ROWG, [5, 4, 0], 2003)];
-          // B: the Gantt slides one quarter per push (an eased step plus a large linear share, so it never stops)
-          const stepped = (times, step, t, d = 0.32) => {
-            let v = 0;
-            for (let i = 0; i < times.length; i++) {
-              const a = times[i]; if (t < a) break;
-              const b = i + 1 < times.length ? times[i + 1] : a + 0.45, u = clamp01((t - a) / d), lin = clamp01((t - a) / Math.max(d, b - a));
-              v += step * (0.55 * u * u * (3 - 2 * u) + 0.45 * lin);
-            }
-            return v;
-          };
+            ...shuffler([...$("f10-cms").querySelectorAll(".f10-cm:not(.f10-q):not(.f10-cmp)")], [8, 3, 0.4], 2002), ...shuffler(ROWG, [6, 5, 0], 2003)];
           // cursors: keys [t, x, y, d] leave the previous point at t and arrive at t + d (smoothstep), with a hand's idle drift
           const curPath = (K, t, seed, drift = 1) => {
             let x = K[0][1], y = K[0][2];
@@ -524,15 +640,16 @@
           const CA = [[0, 650, 356], [on(106.829), 606, 434, 0.5], [on(107.967), 196, 156, 0.42], [on(108.418), 548, 168, 0.3],
             [steps[0] - 0.12, 548, 220, 0.2], [steps[1] - 0.12, 548, 272, 0.2], [LOW - 0.12, 548, 324, 0.2]];
           const CLA = [PRESS, LOW];
-          // C (screen px in the thread's scene): somebody's cursor wanders down the thread on the kicks to the question
-          const CC = [[0, 1560, 330], ...[[114.35, 1480, 430], [114.805, 1600, 520], [115.252, 1500, 640], [115.707, 1620, 720],
-            [116.17, 1520, 830], [116.621, 1600, 930], [117.082, 1580, 905, 0.3]].map(([T, x, y, d]) => [L(T), x, y, d])];
-          const DB2 = L(112.524), DC2 = L(116.169);   // downbeats: B goes tight on the bar, C leans into the question
+          // C (world px of the thread's scene): somebody's cursor rides the scroll on the kicks, then rests on the question
+          const CC = [[0, 1560, 420], ...[[114.35, 1480, 400], [114.805, 1640, 470], [115.252, 1520, 520], [115.707, 1660, 430],
+            [116.17, 1600, 400], [116.621, 1700, 452], [117.082, 1730, 440, 0.3]].map(([T, x, y, d]) => [L(T), x, y, d])];
+          const DC2 = L(116.169);   // downbeat: C leans into the question
           const curA = $("f10-curA"), curB = $("f10-curB"), curC = $("f10-curC");
           const placeCur = (c, x, y, s) => { c.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`; c.firstChild.style.transform = s < 1 ? `scale(${s.toFixed(3)})` : ""; };
 
           // ---- per frame -------------------------------------------------------------------------------------------
-          const wA = $("f10-wA"), wB = $("f10-wB"), wC = $("f10-wC"), gantt = $("f10-gantt"), cms = $("f10-cms"), bg = $("f10-bg");
+          const wA = $("f10-wA"), wB = $("f10-wB"), wC = $("f10-wC"), cms = $("f10-cms"), bg = $("f10-bg"), tk = $("f10-tk"), vbs = $("f10-vbs");
+          const yA = $("f10-yA"), yB = $("f10-yB"), yband = $("f10-yband"), dot = $("f10-dot"), dotI = dot.querySelector("i"), dotB = dot.querySelector("b");
           const ftext = $("f10-ftext"), fcaret = $("f10-fcaret"), pchip = $("f10-pchip"), rcv = $("f10-rcv"), tcv = $("f10-tcv");
           function render() {
             const t = tl.time(), T = t + T0;
@@ -545,29 +662,70 @@
               const [ux, uy] = curPath(CA, t, 1);
               placeCur(curA, 960 + (ux - cx) * z + dx, 540 + (uy - cy) * z + dy, clickS(CLA, t));
             }
-            // B: three framings: mid on the cut, easing out to the whole roadmap, then tight from the 112.524 downbeat;
-            // the Gantt slides a quarter per push
+            // B: the truck along the roadmap; the card hops, the stamps slam, the row lights on "row"
             if (t >= G2 - 0.01 && t < G3 + 0.01) {
-              const u = clamp01((t - G2) / (G3 - G2));
-              const po = clamp01((t - G2) / 1.4), pv = clamp01((t - DB2) / 0.7);
-              const zB = 1 + 0.065 * (0.5 + 0.5 * Math.cos(Math.PI * po)) + 0.015 * u + 0.045 * pv * pv * (3 - 2 * pv);
-              wB.style.transform = `translate(${(dx - 4 * u).toFixed(2)}px, ${dy.toFixed(2)}px) scale(${zB.toFixed(4)})`;
-              const sc = stepped(PUSHES, SCROLL / PUSHES.length, t);
-              gantt.style.transform = `translateX(${(-sc).toFixed(2)}px)`;
-              // brad's cursor holds the bar's head and drags it (a press on every push)
-              const bx = gsap.getProperty(bar, "x");
-              placeCur(curB, 70 + 330 + bx + QW * 0.6 - sc + Math.sin(T * 1.9) * 3, 40 + 44 + SECY + 46 + Math.sin(T * 1.4) * 2, clickS(PUSHES, t));
+              const [cx, cy, lz] = camB(t), z = Math.exp(lz), ox = 960 - cx * z + dx, oy = 420 - cy * z + dy;
+              wB.style.transform = `translate(${ox.toFixed(2)}px, ${oy.toFixed(2)}px) scale(${z.toFixed(4)})`;
+              const c = cardAt(t);
+              tk.style.transform = `translate(${c.x.toFixed(2)}px, ${(CARDY + c.lift).toFixed(2)}px) rotate(${c.rot.toFixed(3)}deg) scale(${(2 - c.sy).toFixed(4)}, ${c.sy.toFixed(4)})`;
+              STAMPS.forEach(({ d, p, rot, dots }, i) => {
+                const a = t - (p - 0.04);
+                if (a < 0) { d.style.opacity = "0"; return; }
+                const u = clamp01(a / 0.04), land = t - p, sc = 1 + 0.6 * (1 - u * u);
+                const sq = land > 0 && land < 0.18 ? 1 - 0.1 * Math.sin(Math.PI * land / 0.18) : 1;
+                d.style.opacity = Math.min(0.92, a / 0.02).toFixed(3);
+                d.style.transform = `rotate(${rot.toFixed(2)}deg) scale(${(sc * (2 - sq)).toFixed(4)}, ${(sc * sq).toFixed(4)})`;
+                // "row" lights the stamps left to right; they keep a warm wash
+                const r0 = ROW + i * 0.045, ld = t - r0;
+                const lit = p > ROW + 0.01 || ld < 0 ? 0 : ld < 0.14 ? ld / 0.14 : 1 - 0.7 * clamp01((ld - 0.14) / 0.7);
+                d.style.backgroundColor = lit > 0 ? `rgba(232,93,38,${(0.22 * lit).toFixed(3)})` : "";
+                d.style.boxShadow = lit > 0 ? `0 0 0 ${(6 * lit).toFixed(1)}px rgba(232,93,38,${(0.25 * lit).toFixed(3)})` : "";
+                // ink spits off the stamp's edge as it lands
+                const v = clamp01(land / 0.38);
+                for (const { e, x, y, s } of dots) {
+                  if (land < 0 || v >= 1) { e.style.opacity = "0"; continue; }
+                  const f = 1 - (1 - v) * (1 - v);
+                  e.style.opacity = (1 - v).toFixed(3);
+                  e.style.transform = `translate(${(x * f).toFixed(1)}px, ${(y * f).toFixed(1)}px) scale(${s.toFixed(2)})`;
+                }
+              });
+              // brad's cursor pushes the card from behind (a press on every push)
+              placeCur(curB, ox + (c.x - 14) * z, oy + (CARDY + c.lift + 96) * z, clickS(PUSHES, t));
             }
-            // C: a slow push while the thread scrolls on the beat
+            // C: four years in four kicks, then the lean into the question and the push into the dot
             if (t >= G3 - 0.01) {
-              const u = clamp01((t - G3) / (DUR - G3));
-              const pc = clamp01((t - DC2) / 2.2), zC = 1 + 0.04 * u + 0.1 * (0.5 - 0.5 * Math.cos(Math.PI * pc));
-              wC.style.transform = `translate(${dx.toFixed(2)}px, ${(dy - 10 * u).toFixed(2)}px) scale(${zC.toFixed(4)})`;
+              const s = scrollAt(t), v = (s - scrollAt(t - 1 / 60)) * 60;
+              cms.style.transform = `translateY(${(-s).toFixed(2)}px)`;
+              const bl = Math.min(13, Math.abs(v) * 0.0032);
+              vbs.setAttribute("stdDeviation", `0 ${bl.toFixed(2)}`);
+              cms.style.filter = bl > 0.3 ? "url(#f10-vblur)" : "";
+              const nd = Math.round(daysAt(s)); tcv.textContent = nd.toLocaleString("en-US") + (nd === 1 ? " DAY" : " DAYS");
+              // the sticky year slams over on each kick (the old one is shoved up and out)
+              let yi = 0; while (yi < SURGE.length && t >= SURGE[yi]) yi++;
+              const yd = yi ? t - SURGE[yi - 1] : 1, ye = 1 - Math.pow(1 - clamp01(yd / 0.16), 3);
+              yA.textContent = String(2021 + yi); yB.textContent = String(2020 + yi);
+              yA.style.transform = `translateY(${(78 * (1 - ye)).toFixed(1)}px) scale(${(1 + 0.22 * (1 - ye)).toFixed(4)})`;
+              yB.style.opacity = yi && yd < 0.16 ? (1 - ye).toFixed(3) : "0";
+              yB.style.transform = `translateY(${(-90 * ye).toFixed(1)}px)`;
+              yband.style.transform = yi && yd < 0.24 ? `translateY(${(6 * Math.sin(Math.PI * clamp01(yd / 0.24))).toFixed(2)}px)` : "";
+              // r2 camera: the keyed framing (thread full frame, the whip in on 114.35, the ease back onto the question) with a
+              // bump per year, then the push that lands the dot on the lamp
+              const [ccx, ccy, clz] = camC(t), z1 = Math.exp(clz) * (1 + bumpAt(t));
+              const e = Math.pow(clamp01((t - PUSH) / (PEND - PUSH)), 2), z = z1 + (ZEND - z1) * e;
+              const lag = Math.max(-14, Math.min(14, -v * 0.006));
+              const t1x = 960 - ccx * z1 + dx, t1y = 540 - ccy * z1 + dy + lag;
+              const tx = t1x + (LAMP[0] - ZEND * DOT[0] - t1x) * e, tyy = t1y + (LAMP[1] - ZEND * DOT[1] - t1y) * e;
+              wC.style.transform = `translate(${tx.toFixed(2)}px, ${tyy.toFixed(2)}px) scale(${z.toFixed(4)})`;
               const [ux, uy] = curPath(CC, t, 4, 0.8);
               placeCur(curC, ux, uy, 1);
-              const s = scrollAt(t);
-              cms.style.transform = `translateY(${(-s).toFixed(2)}px)`;
-              tcv.textContent = Math.round(1461 * Math.min(1, 0.18 + 0.82 * s / 444)).toLocaleString("en-US") + " DAYS";
+              // the dot: drawn with "me", then it swells into the lamp (world Ø 17 → 154 / ZEND), its glow coming up
+              const dd = t - DOTON;
+              dot.style.opacity = dd < 0 ? "0" : "1";
+              const dia = 17 + (154 / ZEND - 17) * e + (dd >= 0 && dd < 0.12 ? 6 * Math.sin(Math.PI * dd / 0.12) : 0);
+              dot.style.transform = `translate(${DOT[0]}px, ${DOT[1]}px)`;
+              dotI.style.transform = `scale(${(dia / 100).toFixed(4)})`;
+              dotB.style.opacity = (0.15 + 0.85 * e).toFixed(3);
+              dotB.style.transform = `scale(${((0.18 + 0.82 * e) * 1.25 / ZEND).toFixed(4)})`;   // the glow's screen size as in r1 (ZEND was 1.25)
             }
             WOW.draw(tl, T0);
             // the kick shuffle (one eased step per kick, from the previous offset)
@@ -588,6 +746,7 @@
             for (const s of strokes) s.p.setAttribute("stroke-dashoffset", (100 * (1 - clamp01((t - s.t) / s.dur))).toFixed(1));
             for (const [m, t0, d] of writes) m.style.clipPath = `inset(-30% ${(100 - 100 * clamp01((t - t0) / d)).toFixed(1)}% -40% -5%)`;
           }
+          tl.set({}, {}, DUR);   // pin the timeline to the frame's full span
           tl.eventCallback("onUpdate", render);
           tl.seek(0);
           render();

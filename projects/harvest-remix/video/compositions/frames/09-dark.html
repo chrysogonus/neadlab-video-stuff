@@ -23,7 +23,13 @@
          chart). The x bar carries the archive envelope at its front and steps on each snare and kick; a year reel rides the
          front; the y drawer slides out a notch per hat; the gate slams 2031 → 2028 on the 102.49 snare with sparks;
          HARVEST WINDOW is stamped on the 104.32 snare. A faint far drawer wall and foreground formula ghosts give depth.
-         v19: backups/v19-sources/. -->
+         v19: backups/v19-sources/.
+         v22 r1 (REFINE-1.md, worker G): no hard cut onto a still chart and no pan that crops the "x". The frame opens on
+         08's last instant, the "harvest now, / decrypt later" lockup, and transforms it: the cream plate slams down
+         with x on the 99.756 downbeat while "harvest now, decrypt" falls away, and "later" slides out of the lockup down
+         onto the timeline, where it lands on the 100.444 snare as the Q-Day marker's flag (the marker's line drops to the
+         axis). The three framings stay, one per bar (a push in low on the marker, a truck along the chart to the gate, the
+         whole chart wide), and every one keeps the whole formula in frame. -->
   </head>
   <body>
     <template>
@@ -36,7 +42,7 @@
         @font-face { font-family: "Caveat Brush"; src: url("assets/fonts/caveat-brush-400.woff2") format("woff2"); font-weight: 400; }
         #root {
           position: absolute; inset: 0; overflow: hidden; container-type: size;
-          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --muted: #888880; --paper-ink: #5F5B54;
+          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --muted: #888880; --paper-ink: #45423D; /* ≥ 5:1 on the plate where the vignette greys it */
           background: var(--ink); color: var(--cream);
         }
         .f09-mono { font-family: "IBM Plex Mono"; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
@@ -127,6 +133,24 @@
         .f09-fgg { position: absolute; font-family: "Instrument Serif"; font-style: italic; font-size: 620px; line-height: 1;
           color: var(--cream); opacity: 0.05; }
 
+        /* ---- v22 r1: 08's lockup, carried over the cut (same type, place and 1.05 push as 08's last instant) ---- */
+        #f09-lock { position: absolute; inset: 0; pointer-events: none; }
+        #f09-lhaze { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 80% at 40% 45%, #1c120c, #0A0A0A 70%); }
+        #f09-lcam { position: absolute; inset: 0; transform-origin: 768px 486px; transform: scale(1.05); }
+        #f09-hlock { position: absolute; left: 110px; top: 262px; font-family: "Barlow"; font-weight: 900; font-size: 290px; line-height: 0.92;
+          letter-spacing: -0.04em; white-space: nowrap; color: var(--cream); }
+        #f09-hlock .f09-hl { display: block; }
+        #f09-hlock .f09-lw { display: inline-block; }
+        #f09-hlater { display: inline-block; color: var(--fire); transform-origin: 0 0; will-change: transform;
+          text-shadow: 0 0 26px rgba(232, 93, 38, 0.6), 0 0 80px rgba(232, 93, 38, 0.3); }
+        #f09-lkick { position: absolute; left: 96px; top: 80px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 16px;
+          letter-spacing: 0.16em; color: var(--fire); white-space: nowrap; }
+        #f09-lkick::before { content: ""; display: inline-block; width: 36px; height: 2px; background: currentColor; vertical-align: middle; margin-right: 16px; }
+        /* "later" as the Q-Day marker's flag, right-aligned against the marker's dot */
+        #f09-zlater { position: absolute; right: 16px; top: 772px; font-family: "Barlow"; font-weight: 900; font-size: 84px; line-height: 0.92;
+          letter-spacing: -0.04em; white-space: nowrap; color: var(--fire); transform-origin: 100% 100%; opacity: 0;
+          text-shadow: 0 0 calc(var(--hr-glow, 0.5) * 18px) rgba(232, 93, 38, 0.55), 0 0 calc(var(--hr-glow, 0.5) * 50px) rgba(232, 93, 38, 0.25); }
+
         /* ---- chrome ---- */
         #f09-kicker { position: absolute; left: 5.5cqw; top: 1000px; font-family: "IBM Plex Mono"; font-weight: 600; font-size: 20px;
           letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
@@ -150,6 +174,7 @@
           <div data-hf-id="hf-5uh3" class="f09-bar f09-mono" id="f09-yb"><div data-hf-id="hf-z63w" class="f09-bt"><em data-hf-id="hf-aesq">y</em><span><b>migration</b><small>5–10 years · example</small></span></div></div>
           <div data-hf-id="hf-lcnt" id="f09-band" class="f09-mono hr-glowbox" style="clip-path: inset(0 100% 0 0)"><b data-hf-id="hf-hzgq">harvest window</b><span data-hf-id="hf-cbml">readable while it should still be secret</span></div>
           <div data-hf-id="hf-agos" id="f09-z">
+            <div id="f09-zlater">later</div>
             <div data-hf-id="hf-atj2" id="f09-zdot" class="hr-glowbox"></div>
             <div data-hf-id="hf-yqfc" id="f09-zlab" class="f09-mono">
               <div data-hf-id="hf-ugdq" class="f09-zt"><em data-hf-id="hf-at3r">z</em>q-day</div>
@@ -165,6 +190,14 @@
             <svg data-hf-id="hf-v20s" viewBox="0 0 96 66"><rect x="0.75" y="0.75" width="94.5" height="64.5" rx="3" fill="#F0ECE5" stroke="#CFC9BE" stroke-width="1.5"/>
               <path d="M2 3 L48 38 L94 3" fill="none" stroke="#B9B2A6" stroke-width="1.6"/><path d="M2 63 L36 30 M94 63 L60 30" fill="none" stroke="#D9D3C8" stroke-width="1.2"/></svg>
             <div data-hf-id="hf-v20d" id="f09-seal" class="hr-glowbox"></div>
+          </div>
+        </div>
+
+        <div id="f09-lock" aria-hidden="true">
+          <div id="f09-lhaze"></div>
+          <div id="f09-lkick">STILL HELD</div>
+          <div id="f09-lcam">
+            <div id="f09-hlock" data-layout-allow-overlap><span class="f09-hl"><span class="f09-lw">harvest</span> <span class="f09-lw">now,</span></span><span class="f09-hl"><span class="f09-lw">decrypt</span> <span id="f09-hlater">later</span></span></div>
           </div>
         </div>
 
@@ -220,6 +253,8 @@
           const HATS = [103.746, 104.087, 104.564].map((t) => L(WOW.on(t, { kinds: ["hat"] })));   // the window's three steps
           const MINE = HATS[0], ARROW = L(WOW.on(104.506, { kinds: ["kick"] }));
           const STAMP = L(WOW.on(104.32, { kinds: ["snare"] }));
+          // v22 r1: "later" leaves 08's lockup on the cut and lands on the Q-Day marker on the first snare
+          const LAND = L(WOW.on(100.444, { kinds: ["snare"] })), ZT = L(WOW.on(101.12, { kinds: ["hat"] }));
           const on = (t, k) => L(WOW.on(t, { kinds: k }));
           // the bars' fronts as keys [local time, fraction]: each move does 80 % of its distance in 0.15 s, the rest
           // linearly until the next key, so the front steps on the hit and never stops between hits
@@ -347,6 +382,8 @@
           tl.set("#f09-xsub", { opacity: 1 }, 0);
 
           // bar 2: "+" slams on the downbeat, y inks in; the marker strikes "in a decade" on the snare and writes "sooner"
+          // v22 r1: the inked x thuds on the bar's loudest snare (100.667) as the front steps
+          seg("#f09-fx", { scale: 1.1, y: -6 }, { scale: 1, y: 0 }, on(100.667, ["snare"]), on(100.667, ["snare"]) + 0.3, "power3.out");
           seg(S, { fp: 0 }, { fp: 1 }, D1 - 0.02, D1 + 0.06, "none"); slam("f09-fp", D1);
           ink("fy", "f09-fy", D1 + 0.12, 0.6);
           legend("f09-ly", D1 + 0.15);
@@ -374,16 +411,36 @@
           const cam = stage.cam; cam.focus = 0.75;
           const at = (px, py, z) => { const s = 1 + (z - 1) * 0.9; return { x: s * (px - 960) / 0.9, y: s * (py - 540) / 0.9, z }; };
           const camTo = (a, b, t0, t1, ease) => tl.fromTo(cam, a, { ...b, duration: t1 - t0, ease, immediateRender: false }, t0);
-          const F1a = at(640, 400, 1.75), F1b = at(990, 420, 1.75), F2a = at(1010, 560, 1.3), F2b = at(1060, 560, 1.34),
-            F3a = at(960, 540, 1.0), F3b = at(990, 560, 1.04);
+          // v22 r1: every framing keeps the whole plate (x at its left, the legend at its right) in frame: no crop of "x".
+          // Bar 1 pushes in low on the bars and the marker, bar 2 trucks left along the chart to the Q-Day gate, bar 3 is
+          // the whole chart, wide.
+          const F1a = at(940, 585, 1.04), F1b = at(945, 560, 1.14), F2a = at(1010, 525, 1.02), F2b = at(925, 535, 1.05),
+            F3a = at(960, 540, 1.0), F3b = at(968, 548, 1.03);
           tl.set(cam, F1a, 0);
-          camTo(F1a, F1b, 0, D1 - 0.15, "power1.inOut");            // bar 1: tight on x, trucking right with the envelope
+          camTo(F1a, F1b, 0, D1 - 0.15, "power1.inOut");            // bar 1: close on x and the marker, drifting right with the envelope
           camTo(F1b, F2a, D1 - 0.15, D1 + 0.45, "power2.inOut");    // → mid on the downbeat
-          camTo(F2a, F2b, D1 + 0.45, D2 - 0.15, "none");            // bar 2: on the gate and the drawer
+          camTo(F2a, F2b, D1 + 0.45, D2 - 0.15, "sine.inOut");      // bar 2: trucking to the gate
           camTo(F2b, F3a, D2 - 0.15, D2 + 0.5, "power2.inOut");     // → wide on the downbeat
           camTo(F3a, F3b, D2 + 0.5, DUR, "power1.out");              // bar 3: the whole chart, a slow push
-          // the plate settles a little lower as the chart below grows (its own slow drift against the camera)
-          tl.fromTo("#f09-plate", { y: -6 }, { y: 8, duration: DUR, ease: "none" }, 0);
+          // v22 r1: the plate slams down from above with x on the downbeat (the cut), then settles a little lower as the
+          // chart below grows (its own slow drift against the camera)
+          const DROP = 0.3;
+          tl.fromTo("#f09-plate", { y: -480 }, { y: -6, duration: DROP, ease: "power3.out" }, 0);
+          tl.fromTo("#f09-plate", { y: -6 }, { y: 8, duration: DUR - DROP, ease: "none", immediateRender: false }, DROP);
+          // 08's lockup falls away under it: the words drop and blur out, one after another; the chart comes up behind
+          tl.fromTo(".f09-lw", { y: 0, rotation: 0, opacity: 1, filter: "blur(0px)" },
+            { y: (i) => 330 + 60 * i, rotation: (i) => [-7, 5, -4][i], opacity: 0, filter: "blur(8px)", duration: 0.34, ease: "power2.in",
+              stagger: 0.03 }, 0);
+          tl.fromTo("#f09-lhaze", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power1.in" }, 0);
+          tl.set("#f09-lkick", { opacity: 1 }, 0); tl.set("#f09-lkick", { opacity: 0 }, 0.08);   // the plate has covered it by then
+          tl.fromTo(["#f09-mid", "#f09-bg", "#f09-fg"], { opacity: 0 }, { opacity: 1, duration: 0.42, ease: "power1.inOut" }, 0.03);
+          // the Q-Day marker is built by "later" landing: the line shoots up from the axis to the dot, the dot pops,
+          // "z q-day" and "in a decade" type in on the next hats; sparks off the axis where it lands
+          tl.fromTo("#f09-zdot", { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(3)" }, LAND + 0.16);
+          tl.fromTo("#f09-zlab .f09-zt", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, ZT - 0.03);
+          tl.fromTo("#f09-zlab .f09-zd", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, ZT + 0.2);
+          WOW.burst(tl, $("f09-mid"), { x: X(Z0) - 90, y: 852, t: LAND, n: 16, speed: 520, gravity: 1500, spread: 150, aim: -90,
+            size: [3, 7], dur: 0.6, cream: 0.6, seed: 31 });
 
           // out: glideUp into 10's paper (hard cut in from 08: the music stops)
           WOW.transition(tl, document.getElementById("el-09-dark"), { out: "glideUp", dur: 0.46, total: DUR });
@@ -391,7 +448,7 @@
           // ---- per frame ---------------------------------------------------------------------------------------------
           const xb = $("f09-xb"), yb = $("f09-yb"), zg = $("f09-z"), zl = $("f09-zl"), win = $("f09-win"), band = $("f09-band");
           const heat = $("f09-heat"), zdot = $("f09-zdot");
-          const env = $("f09-env"), seal = $("f09-seal"), xsub = $("f09-xsub");
+          const kicker = $("f09-kicker"), env = $("f09-env"), seal = $("f09-seal"), xsub = $("f09-xsub");
           const glyphs = [["fx", $("f09-fx")], ["fp", $("f09-fp")], ["fy", $("f09-fy")], ["fg", $("f09-fg")], ["fz", $("f09-fz")]];
           const WIN0 = X(Z1), WINW = 1176;
           const mix = (a, b, u) => a.map((v, i) => Math.round(v + (b[i] - v) * u));
@@ -403,6 +460,29 @@
               ? `linear-gradient(90deg, ${base} 0 ${(a * 100).toFixed(2)}%, ${tint} ${(a * 100).toFixed(2)}% ${(b * 100).toFixed(2)}%, ${base} ${(b * 100).toFixed(2)}%)`
               : base;
           };
+          // the flight of "later": its box in the lockup (08's place and 1.05 push) to the flag's box on the marker, through
+          // the camera. Both boxes are read from the layout each frame (deterministic once the fonts are in).
+          const flyer = $("f09-hlater"), flag = $("f09-zlater"), hlock = $("f09-hlock"), midEl = $("f09-mid");
+          const camOf = (el) => { const m = el.style.transform.match(/translate3d\(([-\d.]+)px, ([-\d.]+)px, 0px?\) scale\(([-\d.]+)\) rotate\(([-\d.]+)deg\)/);
+            return m ? { tx: +m[1], ty: +m[2], s: +m[3], r: (+m[4] * Math.PI) / 180 } : { tx: 0, ty: 0, s: 1, r: 0 }; };
+          function flight(t) {
+            const c = camOf(midEl), px = X(S.zx) + flag.offsetLeft - 960, py = flag.offsetTop - 540;
+            const tx = 960 + c.tx + c.s * (px * Math.cos(c.r) - py * Math.sin(c.r)), ty = 540 + c.ty + c.s * (px * Math.sin(c.r) + py * Math.cos(c.r));
+            const hx = 768 + 1.05 * (hlock.offsetLeft + flyer.offsetLeft - 768), hy = 486 + 1.05 * (hlock.offsetTop + flyer.offsetTop - 486);
+            const u = clamp01(t / LAND), e = u * u * (1.6 - 0.6 * u);   // leaves from rest, lands at speed on the snare
+            const k = 1 + (84 * c.s / (290 * 1.05) - 1) * (1 - Math.pow(1 - u, 1.6));
+            flyer.style.transform = `translate(${((tx - hx) * e / 1.05).toFixed(2)}px, ${((ty - hy) * e / 1.05).toFixed(2)}px) scale(${k.toFixed(4)})`;
+            const landed = t >= LAND;
+            flyer.style.visibility = landed ? "hidden" : "visible";
+            flag.style.opacity = landed ? "1" : "0";
+            // the landing: the flag squashes on its baseline and springs back
+            const d = t - LAND, imp = landed ? Math.exp(-d / 0.09) * Math.cos(d * 38) : 0;
+            flag.style.transform = `scale(${(1 + 0.08 * imp).toFixed(4)}, ${(1 - 0.16 * imp).toFixed(4)})`;
+            HR.glow(flag, t + T0, 0.4, 0.6);
+            // the marker's line shoots up from the axis behind the flag
+            const up = 1 - Math.pow(1 - clamp01((t - LAND) / 0.24), 3);
+            zl.style.clipPath = `inset(${(100 * (1 - up)).toFixed(2)}% 0 0 0)`;
+          }
           function render() {
             const t = tl.time(), T = t + T0;
             stage.apply(T);
@@ -419,11 +499,14 @@
             REEL.style.opacity = (clamp01((front - 360) / 160) * (1 - smooth(clamp01((t - HATS[0]) / 0.4)))).toFixed(3);
             reelDigits(yearAt(t)).forEach((v, i) => { strips[i].style.transform = `translateY(${(-52 * v).toFixed(1)}px)`; });
             // "x is love letters · …" types in a character at a time, across bar 1
+            // the figure's caption types in once the camera is wide enough to clear the axis labels (bar 3)
+            kicker.style.clipPath = `inset(-10px ${(100 - 100 * Math.floor(44 * clamp01((t - D2 - 0.2) / 0.9)) / 44).toFixed(2)}% -10px -10px)`;
             xsub.style.clipPath = `inset(-10px ${(100 - 100 * Math.floor(46 * clamp01((t - 0.35) / 1.2)) / 46).toFixed(2)}% -10px -10px)`;
             tinted(xb, 160, 1050, "#F0ECE5", "#EE9A76");
             tinted(yb, 1210, 420, "#2A2A27", "#6E3018");
             zg.style.transform = `translateX(${X(S.zx).toFixed(1)}px)`;
             zl.style.transform = `translateX(${X(S.zx).toFixed(1)}px)`;
+            flight(t);
             const clip = `inset(0 ${(100 * (1 - S.fire)).toFixed(2)}% 0 0)`;
             win.style.clipPath = clip; band.style.clipPath = clip;
             heat.style.opacity = (S.heat * (0.7 + 0.5 * HR.band("bass", T))).toFixed(3);

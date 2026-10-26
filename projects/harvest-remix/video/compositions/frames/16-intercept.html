@@ -29,7 +29,12 @@
          hat; after "copy" each packet forks down the copy fibre. The tap bites at the fibre on every snare and, once shut,
          pulses on the snares (squash, leak flare, its COPY plate lights). "read" and "copy" are set at 460 px (2.1×), each
          line in its own place: line 1 a top-left stack, line 2 a lockup lower down that steps back to make room for the
-         drawer on "put". -->
+         drawer on "put".
+         r1 (v22, REFINE-1 H): the lyric's column is clear — the tray tag and the title block are gone, the cutaway inset leaves
+         with line 1, line 2 is a left column off the cable's jacket, and Archie stands 150 px further right, then sinks out of
+         shot. During the held "on" the camera pushes onto drawer 0001 (taller, with a glass window); the copy drops in and the
+         drawer slams on the 22.738 downbeat; on "ice" frost grows over its front and glass and "on ice" stands on the glass at
+         hero size (250 px), frosting over. The clamp's ring is now sparks squirting from its jaws. -->
   </head>
   <body>
     <template>
@@ -106,6 +111,13 @@
         .f16-frost .f16-fg { display: inline-block; color: transparent; background-size: 100% 100%;
           -webkit-background-clip: text; background-clip: text; -webkit-text-stroke: 1.4px rgba(255,255,255,0.85); }
         .f16-dend { position: absolute; left: 0; top: 0; width: 1px; height: 1px; overflow: visible; }
+        /* r1: "on ice", the lockup on drawer 0001's glass (screen space; it follows the drawer's creep in render) */
+        #f16-icet { position: absolute; inset: 0; pointer-events: none; transform-origin: 1300px 800px; }
+        #f16-icebox { position: absolute; left: 1300px; top: 665px; translate: -50% 0; display: flex; align-items: baseline; gap: 0 0.22em;
+          white-space: nowrap; font-family: "Barlow"; font-weight: 900; font-size: 250px; line-height: 1; letter-spacing: -0.03em;
+          color: #EEF2F3; text-shadow: 0 0 14px rgba(225,235,242,0.35), 0 6px 22px rgba(0,0,0,0.7); }
+        .f16-iw { display: inline-block; position: relative; transform-origin: 50% 80%; }
+        .f16-itx { display: inline-block; position: relative; }
       </style>
 
       <div data-hf-id="hf-m3ai" id="root" data-composition-id="16-intercept" data-width="1920" data-height="1080" data-duration="7.596">
@@ -124,6 +136,7 @@
         <div data-hf-id="hf-3h8z" id="f16-shade" data-layout-ignore></div>
         <div id="f16-inset" data-layout-ignore><svg id="f16-insetsvg" class="f16-svg" viewBox="0 0 1920 1080"></svg></div>
         <div data-hf-id="hf-isnc" class="hr-layer" id="f16-lyrics"><div data-hf-id="hf-d94g" id="f16-path"></div></div>
+        <div id="f16-icet"><div id="f16-icebox"></div></div>
         <!-- the archive's marker voice -->
         <div data-hf-id="hf-yqq2" class="hr-layer" id="f16-markl" data-layout-ignore>
           <svg data-hf-id="hf-t5bv" id="f16-markpath" viewBox="0 0 1920 1080" aria-hidden="true">
@@ -328,21 +341,7 @@
           const bc = HR.rng(1604);
           for (let x = 1338; x < 1462;) { const w = 1.5 + ((bc() * 3) | 0); S(lo, "rect", { x, y: 780, width: w, height: 26, fill: "#E85D26", opacity: 0.85 }); x += w + 1.5 + ((bc() * 4) | 0); }
           sockets.push(screw(lo, 1296, 800), screw(lo, 1504, 800));
-          // v13: the tap's paper tag, lying on the tray on a string tied to the lower screw
-          const TG = { x: 530, y: 852, w: 518, h: 42 };
-          S(cab, "rect", { x: TG.x + 6, y: TG.y + 8, width: TG.w, height: TG.h, fill: "#000", opacity: 0.6, filter: "url(#f16-b4)" });
-          const tagD = `M${TG.x + 10} ${TG.y} H${TG.x + TG.w} V${TG.y + TG.h} H${TG.x + 10} L${TG.x} ${TG.y + TG.h - 10} V${TG.y + 10} Z`;
-          S(cab, "clipPath", { id: "f16-tagclip" }).appendChild(S(cab, "path", { d: tagD }));
-          S(cab, "image", { href: paperURL, x: TG.x, y: TG.y, width: TG.w, height: TG.h, preserveAspectRatio: "none", "clip-path": "url(#f16-tagclip)", opacity: 0.9 });
-          S(cab, "path", { d: tagD, fill: "url(#f16-grake)", stroke: "#0A0A0A", "stroke-opacity": 0.35, "stroke-width": 1 });
-          S(cab, "path", { d: `M${TG.x + 10} ${TG.y + 0.8} H${TG.x + TG.w}`, stroke: "#fff", "stroke-opacity": 0.5, "stroke-width": 1.2 });
-          const EY = [TG.x + TG.w - 16, TG.y + TG.h / 2];
-          S(cab, "circle", { cx: EY[0], cy: EY[1], r: 8, fill: "#C9C3B8", stroke: "#8F897E", "stroke-width": 1 });
-          S(cab, "circle", { cx: EY[0], cy: EY[1], r: 4, fill: "#0A0A0A" });
-          const tagTxt = mono(cab, TG.x + 18, TG.y + 26, 14, "", { fill: "#5F5B54", "letter-spacing": 0.2 });
-          S(tagTxt, "tspan", { "font-weight": 600 }, "COPY");
-          S(tagTxt, "tspan", {}, " · RETENTION: INDEFINITE · REASON: JUST IN CASE");
-          const tagString = S(cab, "path", { d: "", fill: "none", stroke: "#B9B2A6", "stroke-opacity": 0.75, "stroke-width": 1.4, "stroke-linecap": "round" });
+          // r1 (REFINE-1 H): the tap's paper tag on the tray is gone (it crossed both lines' lyric column)
 
           // ---- an attached, longitudinal cable cutaway: sleeve, glass and the continuing signal ------------
           const DX = 1540, DY = 298;
@@ -386,8 +385,9 @@
           const copyPulses = Array.from({ length: 4 }, () => S(copyG, "circle", { r: 5, fill: "#FFD9C2", opacity: 0 }));
           for (const h of HATS) { h.cg = S(copyG, "circle", { r: 20, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0 }); h.cc = S(copyG, "circle", { r: 8, fill: "#FFEADC", opacity: 0 }); }
 
-          // the drawer: open, its interior showing older copies
-          const DR = { x: 1500, y: 918, w: 320, h: 112 };
+          // the drawer: open, its interior showing older copies. r1 (REFINE-1 H): a taller front with a glass window across
+          // its middle — the camera ends on it, and "on ice" is set on the frosted glass
+          const DR = { x: 1500, y: 918, w: 320, h: 150 };
           const drawer = S(art, "g", {});
           S(drawer, "rect", { x: DR.x - 18, y: DR.y - 46, width: DR.w + 36, height: DR.h + 200, fill: "#141413" });
           S(drawer, "rect", { x: DR.x - 18, y: DR.y - 46, width: 2, height: DR.h + 200, fill: "#F0ECE5", opacity: 0.12 });
@@ -414,86 +414,102 @@
           for (let i = 0; i < 3; i++) mono(cardBody, 1606, 786 + i * 10, 7, HR.cipher(12, 1620 + i), { fill: "#5F5B54", "letter-spacing": 1 });
           const scan = S(cardBody, "rect", { x: 1598, y: 768, width: 2, height: 112, fill: "#FFD9C2", opacity: 0 });
           const scanGlow = S(cardBody, "rect", { x: 1594, y: 768, width: 10, height: 112, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0 });
-          // drawer front
+          // drawer front (r1): label, notes and lamp along the top, the glass window across the middle, the pull and the
+          // price along the bottom
           const front = S(art, "g", { id: "f16-front" });
           S(front, "rect", { x: DR.x, y: DR.y, width: DR.w, height: DR.h, fill: "url(#f16-gdrawer)" });
           S(front, "rect", { x: DR.x, y: DR.y, width: DR.w, height: DR.h, fill: "url(#f16-grain)", opacity: 0.35 });
-          S(front, "rect", { x: DR.x + 10, y: DR.y + 10, width: DR.w - 20, height: DR.h - 20, fill: "none", stroke: "#0c0c0b", "stroke-width": 2 });
-          S(front, "path", { d: `M${DR.x + 11} ${DR.y + DR.h - 11} H${DR.x + DR.w - 11} V${DR.y + 11}`, fill: "none", stroke: "#F0ECE5", "stroke-opacity": 0.14, "stroke-width": 1 });
+          S(front, "rect", { x: DR.x + 6, y: DR.y + 6, width: DR.w - 12, height: DR.h - 12, fill: "none", stroke: "#0c0c0b", "stroke-width": 2 });
+          S(front, "path", { d: `M${DR.x + 7} ${DR.y + DR.h - 7} H${DR.x + DR.w - 7} V${DR.y + 7}`, fill: "none", stroke: "#F0ECE5", "stroke-opacity": 0.14, "stroke-width": 1 });
           S(front, "rect", { x: DR.x, y: DR.y, width: DR.w, height: 2, fill: "#F0ECE5", opacity: 0.42 });
           S(front, "rect", { x: DR.x, y: DR.y, width: DR.w, height: DR.h, fill: "url(#f16-grake)" });
-          // label card holder
-          S(front, "rect", { x: DR.x + 22, y: DR.y + 20, width: 136, height: 52, fill: "#0e0e0d" });
-          S(front, "image", { href: paperURL, x: DR.x + 26, y: DR.y + 24, width: 128, height: 44, preserveAspectRatio: "none" });
-          S(front, "text", { x: DR.x + 36, y: DR.y + 60, fill: "#111111", "font-family": "Barlow", "font-weight": 900, "font-size": 30, "letter-spacing": -0.5 }, "0001");
-          const drLabel = mono(front, DR.x + 150, DR.y + 38, 8.5, "COPY · HELD", { "text-anchor": "end", fill: "#5F5B54", "font-weight": 600, "letter-spacing": 1 });
-          S(front, "path", { d: `M${DR.x + 22} ${DR.y + 20} H${DR.x + 158}`, stroke: "#F0ECE5", "stroke-opacity": 0.25, "stroke-width": 1 });
-          // handle
-          S(front, "rect", { x: DR.x + 176, y: DR.y + 76, width: 120, height: 18, fill: "#000", opacity: 0.5, filter: "url(#f16-b4)" });
-          S(front, "rect", { x: DR.x + 170, y: DR.y + 64, width: 120, height: 16, fill: "url(#f16-ghandle)" });
-          S(front, "rect", { x: DR.x + 170, y: DR.y + 64.5, width: 120, height: 1.5, fill: "#F0ECE5", opacity: 0.6 });
-          S(front, "rect", { x: DR.x + 164, y: DR.y + 60, width: 10, height: 24, fill: "#3a3935" });
-          S(front, "rect", { x: DR.x + 286, y: DR.y + 60, width: 10, height: 24, fill: "#3a3935" });
-          // lamp
-          S(front, "rect", { x: DR.x + DR.w - 44, y: DR.y + 22, width: 20, height: 20, fill: "#0c0c0b" });
-          const drLamp = S(front, "rect", { x: DR.x + DR.w - 40, y: DR.y + 26, width: 12, height: 12, fill: "#E85D26" });
-          const drLampGlow = S(front, "rect", { x: DR.x + DR.w - 48, y: DR.y + 18, width: 28, height: 28, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0.6 });
-          const drTemp = mono(front, DR.x + 262, DR.y + 40, 13, "JUST IN CASE", { "text-anchor": "end", fill: "#E85D26", "font-weight": 600, "letter-spacing": 0.6 });
-          // frost: hairlines growing in from the edges (hidden until "ice")
+          // label card holder (top left) and its notes
+          S(front, "rect", { x: DR.x + 14, y: DR.y + 12, width: 96, height: 32, fill: "#0e0e0d" });
+          S(front, "image", { href: paperURL, x: DR.x + 17, y: DR.y + 15, width: 90, height: 26, preserveAspectRatio: "none" });
+          S(front, "text", { x: DR.x + 24, y: DR.y + 36, fill: "#111111", "font-family": "Barlow", "font-weight": 900, "font-size": 21, "letter-spacing": -0.3 }, "0001");
+          S(front, "path", { d: `M${DR.x + 14} ${DR.y + 12} H${DR.x + 110}`, stroke: "#F0ECE5", "stroke-opacity": 0.25, "stroke-width": 1 });
+          const drLabel = mono(front, DR.x + 120, DR.y + 24, 7, "COPY · HELD", { fill: "#888880", "font-weight": 600, "letter-spacing": 1 });
+          const drTemp = mono(front, DR.x + 120, DR.y + 39, 10, "JUST IN CASE", { fill: "#E85D26", "font-weight": 600, "letter-spacing": 0.8 });
+          // lamp (top right)
+          S(front, "rect", { x: DR.x + DR.w - 34, y: DR.y + 14, width: 20, height: 20, fill: "#0c0c0b" });
+          const drLamp = S(front, "rect", { x: DR.x + DR.w - 30, y: DR.y + 18, width: 12, height: 12, fill: "#E85D26" });
+          const drLampGlow = S(front, "rect", { x: DR.x + DR.w - 38, y: DR.y + 10, width: 28, height: 28, fill: "#E85D26", filter: "url(#f16-b4)", opacity: 0.6 });
+          // the glass window: dark glass over the held copies, a lit lower lip, a faint streak of reflection
+          const WN = { x: DR.x + 12, y: DR.y + 52, w: DR.w - 24, h: 62 };
+          S(front, "rect", { x: WN.x - 3, y: WN.y - 3, width: WN.w + 6, height: WN.h + 6, fill: "#0c0c0b" });
+          S(front, "rect", { x: WN.x, y: WN.y, width: WN.w, height: WN.h, fill: "#060606" });
+          const held = S(front, "g", {});
+          for (let i = 0; i < 2; i++) mono(held, WN.x + 10, WN.y + 24 + i * 20, 9, HR.cipher(36, 1690 + i).replace(/(.{4})/g, "$1 "), { fill: "#505048", opacity: 0.5, "letter-spacing": 1.2 });
+          S(front, "path", { d: `M${WN.x + 40} ${WN.y} L${WN.x + 78} ${WN.y} L${WN.x + 38} ${WN.y + WN.h} L${WN.x} ${WN.y + WN.h} Z`, fill: "#FFFFFF", opacity: 0.045 });
+          S(front, "path", { d: `M${WN.x} ${WN.y + WN.h} V${WN.y} H${WN.x + WN.w}`, fill: "none", stroke: "#000", "stroke-opacity": 0.85, "stroke-width": 2 });
+          S(front, "path", { d: `M${WN.x} ${WN.y + WN.h + 0.6} H${WN.x + WN.w} V${WN.y}`, fill: "none", stroke: "#F0ECE5", "stroke-opacity": 0.22, "stroke-width": 1 });
+          // the pull (bottom centre)
+          S(front, "rect", { x: DR.x + 116, y: DR.y + 126, width: 92, height: 9, fill: "#000", opacity: 0.5, filter: "url(#f16-b4)" });
+          S(front, "rect", { x: DR.x + 112, y: DR.y + 120, width: 96, height: 8, fill: "url(#f16-ghandle)" });
+          S(front, "rect", { x: DR.x + 112, y: DR.y + 120.4, width: 96, height: 1.2, fill: "#F0ECE5", opacity: 0.6 });
+          S(front, "rect", { x: DR.x + 106, y: DR.y + 117, width: 8, height: 14, fill: "#3a3935" });
+          S(front, "rect", { x: DR.x + 206, y: DR.y + 117, width: 8, height: 14, fill: "#3a3935" });
+          // frost (hidden until "ice"): a white bloom from the edges in (face and glass), and hairline crystals
+          S(S(art, "defs"), "radialGradient", { id: "f16-gfrost", cx: 0.5, cy: 0.5, r: 0.62 }).innerHTML =
+            '<stop offset="0.3" stop-color="#E6ECEE" stop-opacity="0"/><stop offset="0.8" stop-color="#E6ECEE" stop-opacity="0.32"/><stop offset="1" stop-color="#F4F7F8" stop-opacity="0.6"/>';
           const frost = S(art, "g", { opacity: 1 });
-          const frostTint = S(frost, "rect", { x: DR.x, y: DR.y, width: DR.w, height: DR.h, fill: "#F0ECE5", opacity: 0 });
+          const frostTint = S(frost, "rect", { x: DR.x, y: DR.y, width: DR.w, height: DR.h, fill: "url(#f16-gfrost)", opacity: 0 });
+          const glassTint = S(frost, "rect", { x: WN.x, y: WN.y, width: WN.w, height: WN.h, fill: "url(#f16-gfrost)", opacity: 0 });
           const fr = HR.rng(1606), frostLines = [];
           const seedLine = (x, y, a, len, w, o, delay) => {
             const x2 = x + Math.cos(a) * len, y2 = y + Math.sin(a) * len;
-            const p = S(frost, "path", { d: `M${x.toFixed(1)} ${y.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`, stroke: "#F0ECE5", "stroke-opacity": o.toFixed(2),
-              "stroke-width": w.toFixed(2), "stroke-dasharray": len.toFixed(1), "stroke-dashoffset": len.toFixed(1), fill: "none" });
-            frostLines.push({ p, len, delay });
+            const p = S(frost, "path", { d: `M${x.toFixed(1)} ${y.toFixed(1)} L${x2.toFixed(1)} ${y2.toFixed(1)}`, stroke: "#F4F6F5", "stroke-opacity": o.toFixed(2),
+              "stroke-width": w.toFixed(2), "stroke-linecap": "round", pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1, fill: "none" });
+            frostLines.push({ p, delay, dur: 0.12 + len / 160 });
             return [x2, y2];
           };
-          for (let i = 0; i < 64; i++) {
+          // rime needles with 60° side ticks, growing in from an edge; the frost front starts bottom-left
+          const needle = (x, y, a, len, w, o) => {
+            const d = Math.hypot(x - DR.x, y - (DR.y + DR.h)) / 420;
+            const [ex, ey] = seedLine(x, y, a, len, w, o, d * 0.5 + fr() * 0.06);
+            for (const f of [0.3, 0.52, 0.74]) for (const sg of [-1, 1]) if (fr() < 0.75) {
+              const bx = x + (ex - x) * f, by = y + (ey - y) * f;
+              seedLine(bx, by, a + sg * Math.PI / 3, len * (1 - f) * (0.35 + 0.3 * fr()), w * 0.7, o * 0.85, d * 0.5 + 0.08 + f * (0.12 + len / 160));
+            }
+          };
+          for (let i = 0; i < 26; i++) {
             const side = i % 4; let x, y, a;
             if (side === 0) { x = DR.x + fr() * DR.w; y = DR.y; a = Math.PI / 2; }
             else if (side === 1) { x = DR.x + fr() * DR.w; y = DR.y + DR.h; a = -Math.PI / 2; }
             else if (side === 2) { x = DR.x; y = DR.y + fr() * DR.h; a = 0; }
             else { x = DR.x + DR.w; y = DR.y + fr() * DR.h; a = Math.PI; }
-            a += (fr() - 0.5) * 1.6;
-            const len = 8 + fr() * fr() * 44, d = fr() * 0.35;
-            const [mx, my] = seedLine(x, y, a, len, 0.8 + fr() * 0.7, 0.4 + fr() * 0.45, d);
-            if (len > 22) for (const s of [-1, 1]) if (fr() < 0.6) {
-              const t = 0.35 + fr() * 0.4, bx = x + (mx - x) * t, by = y + (my - y) * t;
-              seedLine(bx, by, a + s * (0.6 + fr() * 0.3), len * (0.25 + fr() * 0.3), 0.7, 0.35 + fr() * 0.3, d + 0.12 + t * 0.15);
-            }
+            needle(x, y, a + (fr() - 0.5) * 1.2, 10 + fr() * 26, 1.1, 0.55 + fr() * 0.35);
           }
-          for (let i = 0; i < 14; i++) seedLine(DR.x + fr() * DR.w, DR.y - 2, -Math.PI / 2 + (fr() - 0.5) * 1.4, 6 + fr() * 20, 0.8, 0.35 + fr() * 0.3, 0.1 + fr() * 0.3);
+          for (let i = 0; i < 18; i++) {   // across the glass, in from its frame
+            const side = i % 4; let x, y, a;
+            if (side === 0) { x = WN.x + fr() * WN.w; y = WN.y; a = Math.PI / 2; }
+            else if (side === 1) { x = WN.x + fr() * WN.w; y = WN.y + WN.h; a = -Math.PI / 2; }
+            else if (side === 2) { x = WN.x; y = WN.y + fr() * WN.h; a = 0; }
+            else { x = WN.x + WN.w; y = WN.y + fr() * WN.h; a = Math.PI; }
+            needle(x, y, a + (fr() - 0.5) * 1.0, 8 + fr() * 18, 0.9, 0.5 + fr() * 0.3);
+          }
+          for (let i = 0; i < 10; i++) seedLine(DR.x + fr() * DR.w, DR.y - 2, -Math.PI / 2 + (fr() - 0.5) * 1.4, 6 + fr() * 16, 0.9, 0.35 + fr() * 0.3, 0.1 + fr() * 0.3);
           const frontTxt = S(art, "g", {});   // above the frost, so the price stays legible
-          S(frontTxt, "rect", { x: DR.x + 12, y: DR.y + 86, width: DR.w - 24, height: 20, fill: "#121211" });
-          S(frontTxt, "rect", { x: DR.x + 12, y: DR.y + 105, width: DR.w - 24, height: 1, fill: "#F0ECE5", opacity: 0.12 });
-          mono(frontTxt, DR.x + 18, DR.y + 100, 13, "COLD STORAGE ≈ $0.001/GB·MONTH", { fill: "#888880", "letter-spacing": 0.2 });
-          const flakes = Array.from({ length: 12 }, (_, i) => {
-            const c = S(art, "circle", { cx: DR.x + 20 + fr() * (DR.w - 40), cy: DR.y, r: (1.2 + fr() * 2.2).toFixed(1), fill: "#F0ECE5", opacity: 0 });
-            return { c, dx: (fr() - 0.5) * 120, dy: -30 - fr() * 70 };
+          S(frontTxt, "rect", { x: DR.x + 12, y: DR.y + 134, width: DR.w - 24, height: 12, fill: "#121211" });
+          mono(frontTxt, DR.x + 18, DR.y + 143, 8.5, "COLD STORAGE ≈ $0.001/GB·MONTH", { fill: "#888880", "letter-spacing": 0.2 });
+          const flakes = Array.from({ length: 14 }, (_, i) => {
+            const c = S(art, "circle", { cx: DR.x + 20 + fr() * (DR.w - 40), cy: DR.y + (i % 2 ? 0 : DR.h * fr()), r: (1 + fr() * 1.6).toFixed(1), fill: "#F0ECE5", opacity: 0 });
+            return { c, dx: (fr() - 0.5) * 90, dy: -20 - fr() * 50 };
           });
-
-          // ---- title block (bottom left) ---------------------------------------------------------------------
-          const tb = S(art, "g", { opacity: 0.85 });
-          S(tb, "path", { d: "M120 976 H690", stroke: "#505048", "stroke-width": 1, fill: "none" });
-          mono(tb, 120, 960, 15, "COPY FIRST. ASK NEVER.", { fill: "#888880", "letter-spacing": 1 });
-          mono(tb, 120, 1008, 13, "ARCHIVE COPY", { fill: "#888880", "letter-spacing": 0.8 });
-          const counter = mono(tb, 344, 1008, 16, "0 B", { fill: "#E85D26", "font-weight": 600, "letter-spacing": 0.4 });
 
           // ---- lyrics ---------------------------------------------------------------------------------------------
           const tl = gsap.timeline({ paused: true });
           const type = $("f16-lyrics");
           const lines = [{"i": 2, "section": "Verse 1", "text": "I couldn't read a word of it, I didn't even try", "start": 16.06, "end": 19.74, "words": [{"w": "I", "start": 16.06, "end": 16.18}, {"w": "couldn't", "start": 16.18, "end": 16.7}, {"w": "read", "start": 16.7, "end": 17.04}, {"w": "a", "start": 17.04, "end": 17.16}, {"w": "word", "start": 17.16, "end": 17.48}, {"w": "of", "start": 17.48, "end": 17.57}, {"w": "it,", "start": 17.57, "end": 17.9}, {"w": "I", "start": 17.9, "end": 18.06}, {"w": "didn't", "start": 18.06, "end": 18.56}, {"w": "even", "start": 18.56, "end": 18.98}, {"w": "try", "start": 18.98, "end": 19.74}]}, {"i": 3, "section": "Verse 1", "text": "I made myself a copy and I put it on ice", "start": 19.74, "end": 23.656, "words": [{"w": "I", "start": 19.74, "end": 19.92}, {"w": "made", "start": 19.92, "end": 20.16}, {"w": "myself", "start": 20.16, "end": 20.68}, {"w": "a", "start": 20.68, "end": 20.74}, {"w": "copy", "start": 20.74, "end": 21.42}, {"w": "and", "start": 21.42, "end": 21.62}, {"w": "I", "start": 21.62, "end": 21.76}, {"w": "put", "start": 21.76, "end": 21.98}, {"w": "it", "start": 21.98, "end": 22.06}, {"w": "on", "start": 22.06, "end": 22.96}, {"w": "ice", "start": 22.96, "end": 23.656}]}];
           // each line rides four fibre strands laid parallel to the cable; the hero owns the second strand as a display row
-          const LAYOUT = [[[0, 1], [2], [3, 4, 5, 6], [7, 8, 9, 10]], [[0, 1, 2, 3], [4], [5, 6, 7, 8], [9, 10]]];
+          const LAYOUT = [[[0, 1], [2], [3, 4, 5, 6], [7, 8, 9, 10]], [[0, 1, 2, 3], [4], [5, 6, 7, 8]]];   // r1: "on ice" is the lockup on the drawer (below)
           // v20: the heroes at 460 px; each line has its own rows (left x, baseline in the cable's axis space)
           const HS = 460;
           const ROWS = [[[170, 150], [150, 520], [170, 640], [170, 745]],
-                        [[560, 300], [120, 600], [110, 760], [110, 860]]];
+                        [[140, 330], [120, 650], [130, 830]]];   // r1: line 2 a left column, off the cable's jacket
           const BASE = ROWS[0].map((r) => r[1]);
           const heroes = [], boxes = [];
-          let iceWe = null, iceTx = null, readWe = null;
+          let readWe = null;
           const path = $("f16-path");
           lines.forEach((line, j) => {
             const box = el("div", "f16-line", path);
@@ -518,14 +534,8 @@
                   WOW.word(tl, tx, t, { kind: w.w === "read" ? "glide" : "settle", dur: 0.46 });
                   heroes.push([re, we, t]); if (w.w === "read") readWe = we; continue;
                 }
-                // lead words rise out of their strand; "ice" sinks into it
-                WOW.word(tl, tx, t, { kind: w.w === "ice" ? "sink" : "rise" });
-                if (w.w === "ice") {   // v13: "ice" lands cold, then frosts over in render()
-                  iceWe = we; iceTx = tx;
-                  tl.fromTo(we, { color: "#FFFFFF", textShadow: "0 0 18px rgba(225,235,242,0.7)" },
-                    { color: "#F0ECE5", textShadow: "0 0 6px rgba(225,235,242,0.25)", duration: 0.6, ease: "power1.in" }, t + 0.04);
-                  continue;
-                }
+                // lead words rise out of their strand
+                WOW.word(tl, tx, t, { kind: "rise" });
                 tl.fromTo(we, { color: "#E85D26", textShadow: "0 0 22px rgba(232,93,38,0.95)" },
                   { color: "#F0ECE5", textShadow: "0 0 0px rgba(232,93,38,0)", duration: 0.5, ease: "power1.in" }, t + 0.04);
               }
@@ -534,22 +544,26 @@
           });
           // v17: line 1 slides on along its strands and fades as line 2 begins (no whip)
           // v18: it leaves across the first word of line 2, so the frame never stands without a lyric
-          tl.fromTo(boxes[0], { x: 0, opacity: 1, filter: "blur(0px)" }, { x: -90, opacity: 0, filter: "blur(4px)", duration: 0.3, ease: "power2.in", immediateRender: false }, LINE2 - 0.12);
-          tl.set(boxes[0], { opacity: 0 }, LINE2 + 0.18);
+          // r1: a little quicker (0.2 s), so line 2's column never stands on the fading "read"
+          tl.fromTo(boxes[0], { x: 0, opacity: 1, filter: "blur(0px)" }, { x: -90, opacity: 0, filter: "blur(4px)", duration: 0.2, ease: "power2.in", immediateRender: false }, LINE2 - 0.12);
+          tl.set(boxes[0], { opacity: 0 }, LINE2 + 0.08);
           // v20: "copy" holds the frame at full size, then steps back on the 21.567 hat (eased, 0.45 s) so Archie and the
           // cold store have the right of the frame for "put it on ice"
           const STEPBACK = L(21.567), copyRow = heroes[1][0];
           copyRow.style.transformOrigin = "0% 90%";
           tl.fromTo(copyRow, { scale: 1, y: 0 }, { scale: 0.5, y: 80, duration: 0.45, ease: "power2.inOut", immediateRender: false }, STEPBACK);
 
-          // ---- "on ice": frost grows across the word's glyphs ------------------------------------------------
-          // a seeded crystal texture clipped to the type (a copy of the glyphs over the word), revealed from the
-          // bottom-left by a mask, plus dendrites that grow off its edges from behind the glyphs
+          // ---- r1 (REFINE-1 H): "on ice" is the lockup, set at hero size on the drawer's glass window ----------------
+          // The camera pushes onto drawer 0001 during the held "on" (21.80–22.50); "on" stands on the glass from its word
+          // time, "ice" lands cold on 22.96 and both frost over: a seeded crystal texture clipped to the type (a copy of the
+          // glyphs over each word), revealed from the bottom-left by a mask, and dendrites growing off "ice"'s edges.
+          const IFS = 250, iceBox = $("f16-icebox"), iceW = [];
+          [9, 10].forEach((wi) => { const w = lines[1].words[wi]; iceW.push({ we: el("span", "f16-iw", iceBox), w, t: L(w.start) }); });
           const frostURL = (() => {
             const W = 240, H = 180, c = document.createElement("canvas"); c.width = W; c.height = H;
             const x = c.getContext("2d"), r = HR.rng(1608);
             const g = x.createLinearGradient(0, 0, 0, H);
-            g.addColorStop(0, "#D4D8D7"); g.addColorStop(0.55, "#B3B9BA"); g.addColorStop(1, "#C8CDCD");
+            g.addColorStop(0, "#DCE1E1"); g.addColorStop(0.55, "#BFC6C8"); g.addColorStop(1, "#D2D8D9");
             x.fillStyle = g; x.fillRect(0, 0, W, H);
             x.fillStyle = "rgba(190,214,232,0.16)"; x.fillRect(0, 0, W, H);
             const arm = (px, py, a, len, w, depth) => {
@@ -566,17 +580,22 @@
             for (let i = 0; i < 140; i++) { x.fillStyle = `rgba(255,255,255,${(0.3 + 0.6 * r()).toFixed(2)})`; x.fillRect(r() * W, r() * H, 1.2, 1.2); }
             return c.toDataURL("image/png");
           })();
-          const frostEl = el("span", "f16-frost", iceWe);
-          frostEl.setAttribute("data-layout-allow-occlusion", "");   // the frost copy deliberately lies over the word
-          for (const ch of "ice") el("span", "f16-fg", frostEl, ch).style.backgroundImage = `url(${frostURL})`;
-          // dendrites from the glyph edges (word box: 84 px Barlow; x-height top ≈ 34, baseline ≈ 76, width ≈ 110)
+          const frostEls = iceW.map(({ we, w }) => {
+            const tx = el("span", "f16-itx", we, w.w.toLowerCase());
+            const f = el("span", "f16-frost", we);
+            f.setAttribute("data-layout-allow-occlusion", "");   // the frost copy deliberately lies over the word
+            for (const ch of w.w.toLowerCase()) el("span", "f16-fg", f, ch).style.backgroundImage = `url(${frostURL})`;
+            return f;
+          });
+          const iceWe = iceW[1].we;
+          // dendrites from the glyph edges, drawn in an 84 px word box (x-height top ≈ 34, baseline ≈ 76, width ≈ 110) scaled up
           const dend = document.createElementNS(NS, "svg");
           dend.setAttribute("class", "f16-dend"); dend.setAttribute("aria-hidden", "true");
+          dend.style.transform = `scale(${(IFS / 84).toFixed(4)})`; dend.style.transformOrigin = "0 0";
           iceWe.insertBefore(dend, iceWe.firstChild);
-          iceTx.style.position = "relative";   // the glyphs paint over the dendrites' roots
           const dr = HR.rng(1609), dends = [];
           const seg = (x0, y0, x1, y1, w, o, delay, dur) => dends.push({ delay, dur, p: S(dend, "path", { d: `M${x0.toFixed(1)} ${y0.toFixed(1)} L${x1.toFixed(1)} ${y1.toFixed(1)}`,
-            pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1, stroke: "#F4F6F5", "stroke-opacity": o.toFixed(2), "stroke-width": w, "stroke-linecap": "round", fill: "none" }) });
+            pathLength: 1, "stroke-dasharray": 1, "stroke-dashoffset": 1, stroke: "#F4F6F5", "stroke-opacity": o.toFixed(2), "stroke-width": w * 0.6, "stroke-linecap": "round", fill: "none" }) });
           const fern = (px, py, a, len, delay) => {   // a rime needle with 60° side ticks, growing outward
             const ex = px + Math.cos(a) * len, ey = py + Math.sin(a) * len, dur = 0.08 + len / 120;
             seg(px, py, ex, ey, 1.1, 0.6 + 0.35 * dr(), delay, dur);
@@ -594,6 +613,13 @@
             const d = Math.hypot(rx, ry - 80) / 130;            // reached by the frost front from the bottom-left
             fern(rx, ry, a + (dr() - 0.5) * 0.9, len, 0.1 + d * 0.34 + dr() * 0.06);
           });
+          // "on" rises onto the glass on its word time; "ice" is there ON 22.96, white-cold, and settles
+          WOW.word(tl, iceW[0].we, iceW[0].t, { kind: "rise" });
+          tl.set(iceWe, { opacity: 0 }, 0);
+          tl.set(iceWe, { opacity: 1 }, ICE);
+          tl.fromTo(iceWe, { scale: 1.1, y: -10 }, { scale: 1, y: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, ICE);
+          tl.fromTo(iceWe, { color: "#FFFFFF", textShadow: "0 0 30px rgba(225,235,242,0.9), 0 6px 22px rgba(0,0,0,0.7)" },
+            { color: "#EEF2F3", textShadow: "0 0 14px rgba(225,235,242,0.35), 0 6px 22px rgba(0,0,0,0.7)", duration: 0.6, ease: "power1.in", immediateRender: false }, ICE);
           const FROST = L(22.96) + 0.06;
 
           // the archive's marker: "(didn't need to)", drawn on after "even", leaves with the line
@@ -634,6 +660,8 @@
           }
           tl.fromTo(lensFrost,{opacity:0},{opacity:1,duration:0.24,ease:"power2.out"},ICE);
           tl.fromTo("#f16-archw", { y: 560, rotation: 7 }, { y: 0, rotation: 0, duration: 0.7, ease: "power3.out" }, RISE - 0.5);
+          // r1: his copy handed on, he sinks back out of shot as the camera pushes onto the drawer (never across the lyric)
+          tl.fromTo("#f16-archw", { y: 0, rotation: 0 }, { y: 520, rotation: -4, duration: 0.4, ease: "power2.in", immediateRender: false }, L(21.64));
 
           // ---- the clamp: hovering open, jolted by the kicks, slammed shut on "copy" (drawn in render) ---------
           const CLOSE = 0.34;   // v17: the halves glide shut over a third of a second, meeting ON "copy"
@@ -646,21 +674,29 @@
           tl.set(cardBody,{opacity:1},PRINT);
           // Print, clasp to the chest, then file: all authored in the archive's world coordinates.
           tl.fromTo(cardBody,{x:-538,y:103,scale:0.04,svgOrigin:"1688 824"},
-            {x:-538,y:64,scale:0.64,duration:PRINT_D,ease:"power2.out"},PRINT);
+            {x:-538,y:64,scale:0.64,svgOrigin:"1688 824",duration:PRINT_D,ease:"power2.out"},PRINT);
           tl.fromTo(cardBody,{x:-538,y:64,rotation:0},{x:-538,y:80,rotation:-8,duration:PUT-PRINT-PRINT_D,ease:"sine.inOut",immediateRender:false},PRINT+PRINT_D);
-          // v17: Archie lifts the copy over the cold store in one arc, it hovers, then sinks into the drawer, gone ON "ice"
-          const HOVER = PUT + 0.5;
-          S(S(art, "defs"), "clipPath", { id: "f16-cardclip" }).appendChild(S(art, "rect", { x: 0, y: -2000, width: 1920, height: 2918 }));
+          // v17: Archie lifts the copy over the cold store in one arc and it hovers. r1 (REFINE-1 H): it drops into drawer
+          // 0001 ON the 22.738 downbeat and the drawer slams shut (the open top folds away, the front jolts back, a breath of
+          // cold); on "ice" (22.96) frost grows over the front and its glass
+          const HOVER = PUT + 0.5, DROP = L(22.738);
+          S(S(art, "defs"), "clipPath", { id: "f16-cardclip" }).appendChild(S(art, "rect", { x: 0, y: -2000, width: 1920, height: 2000 + DR.y }));
           tl.fromTo(cardBody,{x:-538,y:80,rotation:-8,scale:0.64},
-            {x:0,y:-170,rotation:5,scale:1,duration:HOVER-PUT,ease:"sine.inOut",immediateRender:false},PUT);
-          tl.fromTo(cardBody,{x:0,y:-170,rotation:5},
-            {x:0,y:150,rotation:1,duration:ICE - HOVER,ease:"power1.inOut",immediateRender:false},HOVER);
+            {x:0,y:-60,rotation:5,scale:1,duration:HOVER-PUT,ease:"sine.inOut",immediateRender:false},PUT);
+          tl.fromTo(cardBody,{x:0,y:-60,rotation:5},
+            {x:0,y:-40,rotation:2,duration:DROP - 0.17 - HOVER,ease:"sine.inOut",immediateRender:false},HOVER);
+          tl.fromTo(cardBody,{x:0,y:-40,rotation:2},
+            {x:0,y:150,rotation:0,duration:0.17,ease:"power2.in",immediateRender:false},DROP - 0.17);
           tl.set(card, { attr: { "clip-path": "url(#f16-cardclip)" } }, HOVER);
-          tl.set(card, { opacity: 0 }, ICE + 0.05);
-          // "ice": the drawer frosts over, slowly, from its edges in
-          tl.fromTo(inside, { opacity: 1 }, { opacity: 0.4, duration: 0.6, ease: "power2.out", immediateRender: false }, ICE);
-          tl.fromTo(frostTint, { opacity: 0 }, { opacity: 0.32, duration: 0.7, ease: "power2.out" }, ICE);
-          frostLines.forEach(({ p, len, delay }) => tl.fromTo(p, { attr: { "stroke-dashoffset": len } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.5, ease: "power2.out" }, ICE + delay * 1.3));
+          tl.set(card, { opacity: 0 }, DROP + 0.02);
+          tl.fromTo(inside, { scaleY: 1, svgOrigin: `1660 ${DR.y}` }, { scaleY: 0, svgOrigin: `1660 ${DR.y}`, duration: 0.09, ease: "power3.in", immediateRender: false }, DROP);
+          const SHUTG = [front, frontTxt, frost], DRC = `1660 ${DR.y + DR.h / 2}`;
+          tl.fromTo(SHUTG, { scale: 1, svgOrigin: DRC }, { scale: 0.975, svgOrigin: DRC, duration: 0.06, ease: "power2.in", immediateRender: false }, DROP);
+          tl.fromTo(SHUTG, { scale: 0.975, svgOrigin: DRC }, { scale: 1, svgOrigin: DRC, duration: 0.4, ease: "elastic.out(1, 0.45)", immediateRender: false }, DROP + 0.06);
+          // "ice": a white bloom from the edges in (face and glass); the crystals grow in render()
+          tl.fromTo(frostTint, { opacity: 0 }, { opacity: 0.8, duration: 0.8, ease: "power2.out", immediateRender: false }, ICE);
+          tl.fromTo(glassTint, { opacity: 0 }, { opacity: 0.45, duration: 0.7, ease: "power2.out", immediateRender: false }, ICE + 0.05);
+          tl.fromTo(held, { opacity: 1 }, { opacity: 0.2, duration: 0.5, ease: "power1.out", immediateRender: false }, ICE);
 
           // ---- the camera (v17): one continuous move. A: a constant-speed glide along the cable onto the open clamp;
           // then a crane back onto Archie's copy machine (no cut), a slow drift through the print, on to the cold store ----
@@ -670,14 +706,25 @@
           const cf = (P, S2, z) => { const sc = 1 + (z - 1) * D; return { x: -(S2[0] - 960 - sc * (P[0] - 960)) / D, y: -(S2[1] - 540 - sc * (P[1] - 540)) / D, z }; };
           const AXP = (x, dy = 0) => rot(x, 720 + dy);
           const SC = [1250, 650];
+          // r1 (REFINE-1 H): C. During the held "on" the camera pushes off Archie onto drawer 0001 (sine, 0.7 s), so its
+          // glass window carries "on ice" at hero size; then a slow creep to the cut
+          const PUSH0 = L(21.80), PUSH1 = L(22.50);
+          const C0 = { P: [1150, 880], S: [1420, 650], z: 1.5 }, C1 = { P: [1660, DR.y + DR.h / 2], S: [1300, 800], z: 4.27 };
+          const S1 = 1 + (C1.z - 1) * D;
           const KEYS = [
             // A (v20): three framings on the downbeats: mid at the cut, tight on the strike (17.188), wider onto the clamp (19.028)
             [0, cf(AXP(470), SC, 1.95)], [L(17.188), cf(AXP(820), SC, 2.4)], [L(19.028) - 0.1, cf(AXP(1250, -20), SC, 1.85)], [3.2, cf(AXP(1350), SC, 1.95)],
-            [4.15, cf([1390, 800], [1520, 610], 1.42)], [COPY, cf([1380, 795], [1520, 605], 1.72)],       // B: the copy machine (v20: right of the giant "copy")
-            [PUT, cf([1150, 880], [1300, 650], 1.5)], [ICE, cf([1660, 974], [1560, 700], 1.85)], [DUR, cf([1660, 974], [1560, 690], 2.0)],   // v18: onto the cold store, large, as it frosts
+            // B: the copy machine (r1: 150 px further right, so Archie stands clear of the giant "copy")
+            [4.15, cf([1390, 800], [1670, 610], 1.42)], [COPY, cf([1380, 795], [1670, 605], 1.72)],
+            [L(21.45), cf(C0.P, C0.S, C0.z)], [PUSH0, cf(C0.P, C0.S, C0.z)],
           ];
           // a C1 cubic through the keys (Catmull-Rom tangents on non-uniform times): the camera never stops or jerks
           const camAt = (t) => {
+            if (t > PUSH0) {
+              if (t >= PUSH1) { const u = (t - PUSH1) / (DUR - PUSH1); return cf(C1.P, C1.S, C1.z * (1 + 0.04 * u * Math.sqrt(u))); }
+              const u = 0.5 - 0.5 * Math.cos(Math.PI * (t - PUSH0) / (PUSH1 - PUSH0)), lp = (a, b) => a + (b - a) * u;
+              return cf([lp(C0.P[0], C1.P[0]), lp(C0.P[1], C1.P[1])], [lp(C0.S[0], C1.S[0]), lp(C0.S[1], C1.S[1])], Math.exp(lp(Math.log(C0.z), Math.log(C1.z))));
+            }
             const n = KEYS.length; let i = 0;
             while (i < n - 2 && t > KEYS[i + 1][0]) i++;
             const [t0, p0] = KEYS[i], [t1, p1] = KEYS[i + 1], h = t1 - t0, u = Math.max(0, Math.min(1, (t - t0) / h));
@@ -708,10 +755,16 @@
           const deny = el("div", "f16-deny", readWe); deny.setAttribute("data-layout-allow-overflow", ""); deny.innerHTML = "read ✗<br>0 bytes decoded";
           tl.fromTo(deny, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, STRIKE_END);
           tl.fromTo(deny, { opacity: 1 }, { opacity: 0, duration: 0.3, immediateRender: false }, NOTE - 0.3);
-          // "copy": the clamp meets ON the word: a soft punch on the world and one thin ring off the clamp
-          const CLX = 1397, CLY = 690;
+          // "copy": the clamp meets ON the word: a soft punch on the world; r1: no ring — light and sparks squirt out of
+          // both ends of the jaws' seam, along the fibre
           WOW.punch(tl, $("f16-mid"), COPY, { s: 1.03, dur: 0.6 });
-          WOW.shock(tl, fxw, { x: CLX, y: CLY, t: COPY, r: 560, n: 1, w: 2, color: "fire", dur: 1.0 });
+          [[1272, 180 + ANG], [1528, ANG]].forEach(([ax, aim], k) => { const [x, y] = rot(ax, 720);
+            WOW.burst(tl, fxw, { x, y, t: COPY, n: 14, speed: 900, size: [3, 8], gravity: 900, spread: 50, aim, seed: 1630 + k, dur: 0.55, cream: 0.6 }); });
+          // the drawer's slam on the 22.738 downbeat: the world takes the hit, a breath of cold leaves the seam
+          WOW.punch(tl, $("f16-mid"), DROP, { s: 1.02, dur: 0.35 });
+          WOW.burst(tl, fxw, { x: 1660, y: DR.y - 3, t: DROP, n: 18, speed: 240, size: [3, 7], gravity: -80, spread: 150, aim: -90, seed: 1620, dur: 0.7, color: "cream", cream: 1 });
+          // the cutaway inset belongs to the cable shot: it leaves as line 2 begins
+          tl.fromTo("#f16-inset", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, LINE2 - 0.3);
           // the frame: glides in from 02 (the pan along the wire), the copy sinks out into 03
           WOW.transition(tl, document.getElementById("el-16-intercept"), { in: "glideL", out: "glideDown", dur: 0.46, total: DUR });
 
@@ -726,11 +779,13 @@
             e.style.top = y + "px";
             RUSH.push({ e, streak, len: streak ? len : 1500, speed: streak ? 1300 + rr() * 900 : 380 + rr() * 420, ph: rr() * 4000, base: streak ? 0.7 : 0.18 + rr() * 0.24 });   // v20: brighter flow
           }
-          const rushI = (t) => 0.25 + 0.6 * (1 - clamp01((t - 3.2) / 1.0));   // full along the cable, eases back on the machine
+          const rushI = (t) => (0.25 + 0.6 * (1 - clamp01((t - 3.2) / 1.0))) * (1 - clamp01((t - PUSH0) / (PUSH1 - PUSH0)));   // full along the cable, eases back on the machine, gone on the drawer
 
           // ---- per frame (all from timeline time) --------------------------------------------------------------
           const FX0 = 1152, FX1 = 2120, lightEl = $("f16-light");
                     const riderStr = Array.from({ length: 8 }, (_, i) => HR.cipher(8, 1640 + i)).join("  ");
+          const icet = $("f16-icet");
+          const drift = (T) => [Math.sin(T * 0.41 + 16) * 7 + Math.sin(T * 0.13 + 32) * 5, Math.sin(T * 0.33 + 48) * 5 + Math.sin(T * 0.09 + 16) * 4];   // HR.stage's, seed 16
           function render() {
             const t = tl.time(), T = T0 + t, step = Math.floor(t * 15);
             HR.draw(tl);
@@ -823,8 +878,6 @@
             const sx = 1 + (1 - sy) * 0.3, sq = `translate(1400 720) scale(${sx.toFixed(4)} ${sy.toFixed(4)}) translate(-1400 -720)`;
             up.setAttribute("transform", `${sq} translate(0 ${(-(open + jolt)).toFixed(2)})`);
             lo.setAttribute("transform", `${sq} translate(0 ${(open + jolt).toFixed(2)})`);
-            const ky = 720 + (80 + open + jolt) * sy;
-            tagString.setAttribute("d", `M${EY[0]} ${EY[1]} Q${((EY[0] + 1296) / 2).toFixed(1)} ${(Math.max(EY[1], ky) + 34).toFixed(1)} 1296 ${ky.toFixed(1)}`);
             const sr = 60 * (t < COPY + 0.02 ? 0 : 1 - Math.pow(1 - clamp01((t - COPY - 0.02) / 0.3), 3));
             sockets.forEach((h, i) => h.setAttribute("transform", `rotate(${Math.max(0, sr - i * 6).toFixed(1)})`));
             // the print scanline
@@ -872,12 +925,18 @@
             mark1.style.clipPath = `inset(-20% ${(100 - mp * 100).toFixed(1)}% -30% -5%)`;
             // "ice" frosts over from the bottom-left
             const fp = clamp01((t - FROST) / 0.5), fr2 = (fp * fp * (3 - 2 * fp)) * 115;
-            frostEl.style.opacity = fp > 0 ? 1 : 0;
-            frostEl.style.webkitMaskImage = frostEl.style.maskImage = `radial-gradient(circle at 0% 105%, #000 ${(fr2 - 12).toFixed(1)}%, rgba(0,0,0,0) ${fr2.toFixed(1)}%)`;
+            for (const f of frostEls) {
+              f.style.opacity = fp > 0 ? 1 : 0;
+              f.style.webkitMaskImage = f.style.maskImage = `radial-gradient(circle at 0% 105%, #000 ${(fr2 - 12).toFixed(1)}%, rgba(0,0,0,0) ${fr2.toFixed(1)}%)`;
+            }
             for (const { p, delay, dur } of dends) p.setAttribute("stroke-dashoffset", (1 - clamp01((t - FROST - delay) / dur)).toFixed(3));
-            // the copy counter
-            const k = clamp01((t - PRINT) / PRINT_D);
-            counter.textContent = t < PRINT ? "0 B" : `${Math.round(k * 2048).toLocaleString("en-US")} / 2,048 B`;
+            // r1: the drawer's crystals grow in from its edges, the front starting bottom-left
+            for (const { p, delay, dur } of frostLines) p.setAttribute("stroke-dashoffset", (1 - clamp01((t - ICE - delay) / dur)).toFixed(3));
+            // r1: the lockup rides the drawer's creep after the push (same scale about its anchor, same drift as the world)
+            if (t >= PUSH1) {
+              const sN = 1 + (cc.z - 1) * D, [dx, dy] = drift(T), [dx1, dy1] = drift(T0 + PUSH1);
+              icet.style.transform = `translate(${(-(dx - dx1) * D).toFixed(2)}px, ${(-(dy - dy1) * D).toFixed(2)}px) scale(${(sN / S1).toFixed(4)})`;
+            } else icet.style.transform = "";
           }
           tl.eventCallback("onUpdate", render);
           render();

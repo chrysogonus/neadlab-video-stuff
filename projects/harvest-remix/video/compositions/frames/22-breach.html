@@ -1,7 +1,20 @@
 <!doctype html>
 <html><head><meta charset="UTF-8" />
-<!-- v14: record 0001 opens, the read front spreads across the archive, and the camera
-     pulls continuously into 23's radius-12 globe. The exact endpoint is camera (0,0,34), FOV 43. -->
+<!-- v22 (REFINE-1 C): one "now". ON the drop (145.444) 14's wax "now" slams onto the opened record 0001 as its READ
+     stamp: a 0 ms register flip from black to the cream record, the stamp at 14's exact place and size (ink box x 106,
+     top 570, 1220 px wide), card and stamp one object (the stamp is projected onto the record's plane every frame).
+     The drop's kicks are answered by the record and the archive, never rings: each kick the camera steps back a notch
+     (the record recoils), the read front jumps one ring outward across the wall (records flip open, lamps turn cream),
+     and BYTES READ rolls. On 147.28 the big pull-back: the record among the wall. From 147.28 every kick reads a band of
+     rows outward from the record's row. On 149.09 the stamp lifts off the record toward the lens into the lower-third
+     poster while the record files itself back into its slot and the camera pulls out to the whole globe; the archive
+     turns one dial click per kick from 149.09 (23's own function). Ends on 23's handoff: camera (0,0,34), FOV 43,
+     the globe unrotated and fully read, "now" centred on (960,735), 1180 px wide.
+     v22 r2 (REFINE-2 B): no "now" floating free over the globe. The stamp stays printed on the record to the end; from
+     149.4 the camera pulls back into the wall a notch per kick (149.568, 150.021, 150.466), trucking until the record's
+     "now" sits at the frame's centre: one lit record among the wall's records, which keep flipping open and flaring
+     band by band. BYTES READ stays on to the cut. Hard cut on the 150.923 downbeat into 23's drawer corridor, where "now"
+     slams onto the first drawer at the same centre. -->
 </head><body><template>
 <style>
 @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
@@ -10,17 +23,17 @@
 @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
 #root { position:absolute; inset:0; overflow:hidden; container-type:size; --ink:#0A0A0A; --fire:#E85D26; --cream:#F0ECE5; background:var(--ink); color:var(--cream); }
 #f22-gl { position:absolute; left:0; top:0; width:100%; height:100%; display:block; }
-/* the records' light: the canvas, thresholded and blurred small, screened back over the wall (and a little past its edge) */
-#f22-bloom { position:absolute; left:37%; top:0; width:63%; height:100%; display:block; mix-blend-mode:screen; }
-/* v17: 23's opening lockup, built here so the cut at 150.923 is exact. "now" starts as the drop's bottom-left word on an
-   ink backing (--bk) and rises into the lockup; the two sung-before lines settle in above it. Same metrics as #f23-lock. */
-#f22-lock { position:absolute; left:5.5cqw; top:28cqh; font:800 6.7cqw/1.02 "Barlow"; letter-spacing:-.035em; white-space:nowrap; color:var(--cream); }
-#f22-now { display:block; width:max-content; margin-top:.5cqw; font-size:13cqw; font-weight:900; color:var(--fire); transform-origin:0 70%; background:rgba(10,10,10,var(--bk,0)); }
-#f22-c2 { position:absolute; left:63cqw; top:83cqh; font:500 18px/1.5 "IBM Plex Mono"; letter-spacing:.1em; color:var(--cream); }
-#f22-c2 b { font-weight:500; color:var(--fire); display:block; font-size:28px; letter-spacing:0; }
+/* v22: the READ stamp, a canvas projected onto the record (matrix3d), lifted into the poster from 149.09 */
+#f22-stamp { position:absolute; left:0; top:0; transform-origin:0 0; mix-blend-mode:multiply; }
+/* 23's opening "now" and its ink plate, same metrics, so the lifted stamp hands over to 23's first instant exactly */
+#f22-plate { position:absolute; left:4cqw; top:38cqh; width:92cqw; height:60cqh; border-radius:50%; opacity:0;
+  background:radial-gradient(closest-side,rgba(10,10,10,.66),rgba(10,10,10,.42) 55%,rgba(10,10,10,0) 100%); }
+#f22-lock { position:absolute; left:5.5cqw; top:28cqh; font:800 6.7cqw/1.02 "Barlow"; letter-spacing:-.035em; }
+#f22-lock div { opacity:0; }
+#f22-lock strong { display:block; margin-top:.5cqw; font-size:13cqw; font-weight:900; color:var(--fire); opacity:0; }
 #f22-chrome { position:absolute; left:5.5cqw; top:4.2cqw; font:500 16px "IBM Plex Mono"; letter-spacing:.14em; white-space:nowrap; color:#888880; }
 #f22-chrome::before { content:""; display:inline-block; width:36px; height:2px; background:currentColor; vertical-align:middle; margin-right:16px; }
-#f22-count { position:absolute; left:59cqw; top:79cqh; width:650px; height:164px; box-sizing:border-box; padding:16px 20px;
+#f22-count { position:absolute; left:1356px; top:922px; transform:scale(.82); transform-origin:0 0; width:650px; height:164px; box-sizing:border-box; padding:16px 20px;
 background:linear-gradient(180deg,#282826,#1A1A18 30%,#111111); border:2px solid; border-color:#888880 #282826 #111111 #505048;
 box-shadow:inset 0 2px 0 rgba(240,236,229,.18),inset 0 -3px 0 rgba(0,0,0,.55),0 14px 26px rgba(0,0,0,.6); }
 #f22-clabel { font:500 20px "IBM Plex Mono"; letter-spacing:.14em; white-space:nowrap; color:var(--cream); }
@@ -42,10 +55,11 @@ box-shadow:inset 0 2px 0 rgba(240,236,229,.18),inset 0 -3px 0 rgba(0,0,0,.55),0 
 <div data-hf-id="hf-7lt8" id="root" data-composition-id="22-breach" data-width="1920" data-height="1080" data-duration="5.479">
 <canvas data-hf-id="hf-uf4z" id="f22-gl" width="1920" height="1080" data-layout-ignore></canvas>
 
-<div data-hf-id="hf-zo24" id="f22-lock"><div id="f22-l1">harvested then,</div><div id="f22-l2">decrypted</div><strong data-hf-id="hf-zajy" id="f22-now" class="hr-glow">now</strong></div>
+<div id="f22-plate" data-layout-ignore></div>
+<canvas id="f22-stamp" data-layout-ignore></canvas>
+<div id="f22-lock"><div>harvested then,</div><div>decrypted</div><strong id="f22-lnow" class="hr-glow">now</strong></div>
 <div data-hf-id="hf-2mkv" class="hr-layer" data-depth="0.2">
 <div data-hf-id="hf-ys1n" id="f22-count"><div data-hf-id="hf-pkjr" id="f22-clabel">BYTES <span data-hf-id="hf-4a4n" id="f22-held">HELD<i data-hf-id="hf-k5v0" id="f22-strike"></i></span><span data-hf-id="hf-c27d" id="f22-read">READ</span> <span data-hf-id="hf-4x1d" id="f22-status">RISING</span></div><div data-hf-id="hf-4sod" id="f22-dwin" data-layout-ignore></div><i data-hf-id="hf-u48v" class="f22-bracket" id="f22-bl" data-layout-ignore></i><i data-hf-id="hf-bcf5" class="f22-bracket" id="f22-br" data-layout-ignore></i></div></div>
-<div id="f22-c2" data-layout-allow-overlap>BYTES READ<b>8,796,093,022,208</b></div>
 </div>
 <script src="assets/kit/env.js"></script><script src="assets/kit/hr-kit.js"></script><script src="assets/kit/wow-kit.js"></script>
 <script type="module">
@@ -128,25 +142,23 @@ for(let v=0;v<1;v++){
  const sh=ctx.createLinearGradient(0,y,0,y+TH);sh.addColorStop(0,"rgba(17,17,17,0)");sh.addColorStop(1,"rgba(17,17,17,.07)");ctx.fillStyle=sh;ctx.fillRect(x,y,TW,TH);
  ctx.strokeStyle="rgba(17,17,17,.3)";ctx.lineWidth=2;ctx.strokeRect(x+10,y+10,TW-20,TH-20);ctx.strokeStyle="rgba(17,17,17,.12)";ctx.lineWidth=1;ctx.strokeRect(x+16.5,y+16.5,TW-33,TH-33);
  header(x,y,"OPENED RECORD",obj,"#111111","#5F5B54");
+ // v22: the fields sit in the upper part; the lower part (tile y ~180-300) is the READ field the stamp lands on
  const field=(k,val,fx,fy,col="#111111")=>{mono(k,fx,fy,11,"#5F5B54",{ls:1.4});mono(val,fx,fy+22,17,col,{w:600,ls:.6});};
- field("SENDER",from,x+30,y+84);field("CAPTURED",cap,x+130,y+84);
- ctx.fillStyle="rgba(17,17,17,.2)";ctx.fillRect(x+30,y+116,330,1);ctx.fillRect(x+30,y+166,330,1);ctx.fillRect(x+30,y+216,330,1);
- field("KEY EXCHANGE",ci,x+30,y+134);field("SIZE",size,x+210,y+134);
- // v13 payoffs: 01's handshake footer with X25519 struck in fire, 06's re-typed passwords, the read date
- mono("TLS 1.3 · X25519 · FORWARD SECRECY ✓",x+30,y+190,13,"#5F5B54",{w:600,ls:.6});
+ field("SENDER",from,x+30,y+72);field("CAPTURED",cap,x+130,y+72);
+ ctx.fillStyle="rgba(17,17,17,.2)";ctx.fillRect(x+30,y+102,330,1);ctx.fillRect(x+30,y+142,330,1);
+ field("KEY EXCHANGE",ci,x+30,y+112);field("SIZE",size,x+210,y+112);
+ // v13 payoffs: 01's handshake footer with X25519 struck in fire, 06's re-typed passwords
+ mono("TLS 1.3 · X25519 · FORWARD SECRECY ✓",x+30,y+158,13,"#5F5B54",{w:600,ls:.6});
  ctx.font="600 13px 'IBM Plex Mono'";ctx.letterSpacing=".6px";const sx=ctx.measureText("TLS 1.3 · ").width,sw=ctx.measureText("X25519").width;ctx.letterSpacing="0px";
- ctx.fillStyle="#E85D26";ctx.fillRect(x+28+sx,y+184.5,sw+3,3);
+ ctx.fillStyle="#E85D26";ctx.fillRect(x+28+sx,y+152.5,sw+3,3);
  // v18 payoff: 02's little green padlock at the end of the handshake line, struck through in fire
  {ctx.font="600 13px 'IBM Plex Mono'";ctx.letterSpacing=".6px";const lw=ctx.measureText("TLS 1.3 · X25519 · FORWARD SECRECY ✓").width;ctx.letterSpacing="0px";
-  const px=x+30+lw+18,py=y+186;ctx.save();ctx.strokeStyle="#1FA055";ctx.fillStyle="#1FA055";ctx.lineWidth=2.4;
+  const px=x+30+lw+18,py=y+154;ctx.save();ctx.strokeStyle="#1FA055";ctx.fillStyle="#1FA055";ctx.lineWidth=2.4;
   ctx.beginPath();ctx.moveTo(px-5,py-4);ctx.lineTo(px-5,py-9);ctx.arc(px,py-9,5,Math.PI,0);ctx.lineTo(px+5,py-4);ctx.stroke();ctx.fillRect(px-8,py-4,16,12);
   ctx.strokeStyle="#E85D26";ctx.lineWidth=3;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(px-12,py+11);ctx.lineTo(px+12,py-15);ctx.stroke();ctx.restore();}
- mono("passwords changed ×14 · irrelevant",x+30,y+213,13,"#5F5B54",{w:600,ls:.6});
- mono("READ: NOW",x+30,y+240,15,"#5F5B54",{w:600,ls:1.6});
- barcode(x+30,y+252,42,.7,2300+v,"95,91,84");
- // The lyric is physically printed on each opened record, carried by the existing atlas/instance surface.
- ctx.font="900 96px Barlow";ctx.fillStyle="#E85D26";ctx.fillText("now",x+310,y+287);
- crackedSeal(x+420,y+150,46,ini,2400+v);
+ mono("passwords changed ×14 · irrelevant",x+30,y+174,13,"#5F5B54",{w:600,ls:.6});
+ mono("READ",x+484,y+296,11,"#5F5B54",{align:"right",ls:1.4});
+ crackedSeal(x+432,y+112,46,ini,2400+v);
 }
 // the inside of a cover: cream stock printed with a ciphertext security tint, the torn seal's footprint
 {const x=0,y=TH*4;ctx.fillStyle="#E4DFD7";ctx.fillRect(x,y,TW,TH);grain(x,y,TW,TH,12,"rgba(110,100,90,.12)");
@@ -178,7 +190,7 @@ for(let r=0;r<ROWS;r++){const lat=-Math.PI/2+r*Math.PI/96;for(let c=0;c<COLS;c++
 const lon=c*2*Math.PI/COLS,x=R*Math.cos(lat)*Math.sin(lon),y=R*Math.sin(lat),z=R*Math.cos(lat)*Math.cos(lon);
 positions.push(x,y,z);angles.push(Math.acos(Math.max(-1,Math.min(1,z/R))));}}
 const geo=new THREE.BufferGeometry();geo.setAttribute("position",new THREE.Float32BufferAttribute(positions,3));geo.setAttribute("aAngle",new THREE.Float32BufferAttribute(angles,1));
-const uni={uFront:{value:0},uScale:{value:1371},uGain:{value:1},uThreatTime:{value:0},uReadY:{value:13},uBandY:{value:20},uBandA:{value:0}};
+const uni={uFront:{value:0},uScale:{value:1371},uGain:{value:1},uThreatTime:{value:0},uReadY:{value:-1},uBandY:{value:20},uBandA:{value:0},uReadA:{value:1}};
 // v17: the breach light in the one accent: the kit's cyan/violet streaks become cream heads on fire (SYSTEM V9 allowed them
 // locally; V17 removes them). Patched here as text so the kit stays untouched; a no-op once the kit itself is recoloured.
 const CREAM3="vec3(.9412,.9255,.898)",FIRE3="vec3(.9098,.3647,.149)";
@@ -188,13 +200,13 @@ const RECOLOR=[["vec3 hot = mix(vec3(.14,.77,.94), vec3(.65,.28,.98),",`vec3 hot
  ["mix(vec3(.2,.8,1.),vec3(.72,.25,1.),.5+.5*sin(aRoute))",`mix(${CREAM3},vec3(1.,.55,.3),.5+.5*sin(aRoute))`]];
 const recolor=src=>RECOLOR.reduce((s,[a,b])=>s.split(a).join(b),src);
 const breachGLSL=recolor(threatGLSL);
-const pointVS=`attribute float aAngle;uniform float uFront;uniform float uScale;uniform float uGain,uThreatTime;uniform float uReadY,uBandY,uBandA;varying vec3 vColor;varying float vAlpha;
+const pointVS=`attribute float aAngle;uniform float uFront;uniform float uScale;uniform float uGain,uThreatTime;uniform float uReadY,uBandY,uBandA,uReadA;varying vec3 vColor;varying float vAlpha;
 ${breachGLSL}
 void lamp(){vec4 mv=modelViewMatrix*vec4(archivePosition(position,uThreatTime),1.);float opened=1.-smoothstep(uFront-.035,uFront+.035,aAngle);
 vColor=mix(vec3(.9098,.3647,.149),vec3(.9412,.9255,.898),opened);
 vColor=archiveExposure(position,uThreatTime,vColor);
 vec3 wp=(modelMatrix*vec4(position,1.)).xyz;float facing=smoothstep(-.05,.13,dot(normalize(wp),normalize(cameraPosition-wp)));
-float band=uBandA*exp(-pow((position.y-uBandY)/.8,2.)),read=smoothstep(uReadY-.6,uReadY+.6,position.y);
+float ay=abs(position.y),band=uBandA*exp(-pow((ay-uBandY)/.8,2.)),read=uReadA*(1.-smoothstep(uReadY-.6,uReadY+.6,ay));
 vColor=mix(vColor,vec3(1.,.97,.92),clamp(band+.6*read,0.,1.));
 vAlpha=facing*uGain*(1.+1.8*read+2.2*band);gl_Position=projectionMatrix*mv;gl_PointSize=max(2.8,.045*uScale/max(.1,-mv.z))*(1.+.7*read+1.3*band);}`;
 const sharpMat=new THREE.ShaderMaterial({uniforms:uni,transparent:true,depthWrite:false,vertexShader:pointVS+`void main(){lamp();}`,
@@ -239,80 +251,101 @@ function bytesAt(T){
  return value;
 }
 const tl=gsap.timeline({paused:true});const L=T=>T-T0;
+const smoothIO=(a,b,t,p=2)=>{const u=clamp((t-a)/(b-a));return u<.5?Math.pow(2*u,p)/2:1-Math.pow(2-2*u,p)/2;};
 // v19: from the 149.09 kick the archive turns like a vault dial, one click per kick (the same function of track time as 23's,
 // so the cut is continuous): a roll about the camera axis, which 23's unrotated handoff pose does not depend on.
 const DIAL=HR.onsetsIn("kick",149.0,156.0),dialAt=T=>DIAL.reduce((a,k)=>{const u=T-k;return u<=0?a:a-Math.PI/10*(1-(1+u/.09)*Math.exp(-u/.09))},0);
-// ---- v17 carrier. One continuous camera pull from the record to 23's handoff pose (z 34 at DUR): v16's path (slow drift on
-// the record, the pull-back from 1.25 s, the globe whole by ~2.75 s) as Hermite keys [t, z, dz/dt], so the speed never jumps
-// and the camera enters 23 at 23's own pull-back speed (22 · 1.35 / 5.477 per s).
-const ZK=[[0,16.6,.16],[1.25,16.8,.16],[2.75,23,4],[DUR,34,22*1.35/5.477]];
-const camZ=t=>{let k=0;while(k<ZK.length-2&&t>ZK[k+1][0])k++;const [t0,z0,v0]=ZK[k],[t1,z1,v1]=ZK[k+1],h=t1-t0,s=clamp((t-t0)/h),s2=s*s,s3=s2*s;
- return (2*s3-3*s2+1)*z0+(s3-2*s2+s)*v0*h+(-2*s3+3*s2)*z1+(s3-s2)*v1*h;};
-// The globe's slow orbit: angular speed g(t) (a drift behind the record, full on the held "now", easing out into the cut),
-// integrated backwards so the rotation is exactly 0 at DUR — 23's unrotated globe.
+// ---- v22 camera: a truck (x, y) and distance d from the record (z = 12.025 + d), looking straight down -z.
+// t = 0: the record fills the left of the frame (1600 px wide), recoiling from the stamp's slam; each kick of the first
+// bar steps back a notch; 147.28 the big pull-back to the record among the wall (truck to centre); a notch per kick;
+// 149.09 the pull-out to the whole globe, arriving at rest at 23's handoff (0, 0, 34): 23 dives in on the 150.923 kick.
+const KD=[[145.912,3.75],[146.367,4.3],[146.81,4.9],[147.279,8.5],[147.736,9.1],[148.197,9.7],[148.632,10.3]];
+const D0=3.432,X0=.292,Y0=-.076,CREEP=.06;
+// r2: from 149.4 the pull-back into the wall, a notch per kick, trucking onto the stamp's centre (SC, solved with the stamp)
+const PULL=[[149.568,1.3],[150.021,1.3],[150.466,1.5]],PT=PULL.reduce((a,p)=>a+p[1],0);let SC={x:0,y:0};
+function camAt(t){
+ let d=D0*(1-.035*Math.exp(-t/.09)*Math.cos(t*22)),x=X0,y=Y0;           // the slam's recoil: pressed in, settling back
+ let prev=D0;for(const[k,v]of KD){const lk=L(k),big=v-prev>2,e=big?smoothIO(lk-.15,lk+.6,t,3):smoothIO(lk-.12,lk+.26,t,2);
+  d+=(v-prev)*e;if(big){x=X0*(1-e);y=Y0*(1-e);}prev=v;}
+ d+=CREEP*t;
+ let pe=0;for(const[k,v]of PULL){const lk=L(k),e=smoothIO(lk-.18,lk+.3,t,2);d+=v*e;pe+=v*e/PT;}
+ x+=(SC.x-x)*pe;y+=(SC.y-y)*pe;
+ return{d,x,y};}
+// The globe's slow orbit: angular speed g(t) (a drift behind the record, full while the poster holds, easing out into the
+// cut), integrated backwards so the rotation is exactly 0 at DUR — 23's unrotated globe.
 const ORB=(()=>{const N=1200,g=t=>(.15+.85*smooth(1.6,3,t))*(1-smooth(DUR-1.5,DUR,t)),c=new Float64Array(N+1);
  for(let i=N-1;i>=0;i--)c[i]=c[i+1]+g((i+.5)*DUR/N);for(let i=N;i>=0;i--)c[i]/=c[0];
  return t=>{const x=clamp(t/DUR)*N,i=Math.min(N-1,Math.floor(x));return c[i]+(c[i+1]-c[i])*(x-i);};})();
 // A soft breath on every snare: an 80 ms swell into the hit, a .25 s release; silent by the cut.
 const SNARES=HR.onsetsIn("snare",T0-1,T0+DUR);
 const breath=T=>{let v=0;for(const s of SNARES){const d=T-s;v=Math.max(v,d<0?smooth(-.08,0,d):Math.exp(-d/.25));}return v*(1-smooth(DUR-.4,DUR,T-T0));};
-// ---- the drop (145.444): the cover flips open on the downbeat, HELD is struck, READ stamps in
-tl.to(hinge.rotation,{y:-2.8,duration:.32,ease:"power3.out"},0);
+// ---- the read front: one ring outward across the wall per kick (records flip open on their hinges, lamps turn cream)
+const FK=HR.onsetsIn("kick",145.8,150.6).map(L),FV=[.12,...FK.map((_,i)=>.2+1.25*Math.pow((i+1)/FK.length,1.15))];
+const frontAt=t=>{let v=FV[0];FK.forEach((k,i)=>{if(t>=k)v=FV[i]+(FV[i+1]-FV[i])*(1-Math.pow(1-clamp((t-k)/.16),2));});return v;};   // ends on 1.45, 23's front at its first instant
+// From the 147.28 kick every kick reads a band of rows outward from the record's row (|y| grows to the poles; 9 bands, the
+// last on the 150.92 kick under the cut), so the archive arrives fully read at 23's lit first frame; 149.09's band is the widest.
+const RK=HR.onsetsIn("kick",147.2,151).map(L),NB=RK.length,HMAX=12.7;
+const readAt=t=>{let y=-1,by=20,ba=0;RK.forEach((k,i)=>{if(t<k)return;const u=clamp((t-k)/.2),e=1-Math.pow(1-u,3);
+ const lo=i?HMAX*i/NB:-1,hi=HMAX*(i+1)/NB;y=lo+(hi-lo)*e;by=Math.max(0,(lo+hi)/2);ba=Math.exp(-(t-k)/.28)*(Math.abs(k-L(149.09))<.05?1.6:1);});
+ return{y,by,ba};};
+// ---- the stamp: 14's word at 14's ink box, as rubber-stamp ink (flat fire, seeded pinholes and worn patches)
+await document.fonts.load('900 100px "Barlow"');
+const NX=106,NY=570,NW=1220,PAD=40,FONT=v=>`900 ${v}px "Barlow"`;
+const mc=document.createElement("canvas").getContext("2d");mc.font=FONT(400);mc.letterSpacing=(-.045*400)+"px";
+const m0=mc.measureText("now"),FS=400*NW/(m0.actualBoundingBoxLeft+m0.actualBoundingBoxRight);
+mc.font=FONT(FS);mc.letterSpacing=(-.045*FS)+"px";
+const mt=mc.measureText("now"),NH=mt.actualBoundingBoxAscent+mt.actualBoundingBoxDescent,SW=NW+PAD*2,SH=Math.ceil(NH+PAD*2),RES=2;
+const stamp=$("f22-stamp");stamp.width=SW*RES;stamp.height=SH*RES;stamp.style.width=SW+"px";stamp.style.height=SH+"px";
+{const w=stamp.getContext("2d"),r=HR.rng(2231);w.scale(RES,RES);w.font=FONT(FS);w.letterSpacing=(-.045*FS)+"px";
+ w.fillStyle="#E85D26";w.fillText("now",PAD+mt.actualBoundingBoxLeft,PAD+mt.actualBoundingBoxAscent);
+ w.globalCompositeOperation="destination-out";
+ for(let i=0;i<2600;i++){const x=r()*SW,y=r()*SH,s=.4+r()*r()*2.6;w.globalAlpha=.35+.65*r();w.beginPath();w.ellipse(x,y,s,s*(.5+r()*.5),r()*3,0,Math.PI*2);w.fill();}
+ for(let i=0;i<14;i++){const x=r()*SW,y=r()*SH,s=30+r()*90;const g=w.createRadialGradient(x,y,0,x,y,s);g.addColorStop(0,"rgba(0,0,0,.28)");g.addColorStop(1,"rgba(0,0,0,0)");w.globalAlpha=1;w.fillStyle=g;w.fillRect(x-s,y-s,s*2,s*2);}
+ w.globalAlpha=.5;w.lineWidth=1.2;for(let i=0;i<40;i++){const x=r()*SW,y=r()*SH;w.beginPath();w.moveTo(x,y);w.lineTo(x+20+r()*60,y+(r()-.5)*6);w.stroke();}
+ w.globalAlpha=1;w.globalCompositeOperation="source-over";}
+// the homography that maps the stamp canvas onto four screen points (CSS matrix3d, origin 0 0)
+function quadMatrix(P){const[[x0,y0],[x1,y1],[x2,y2],[x3,y3]]=P,sx=x0-x1+x2-x3,sy=y0-y1+y2-y3;let A,B,C=x0,D,E,F=y0,G=0,H=0;
+ if(Math.abs(sx)<1e-9&&Math.abs(sy)<1e-9){A=x1-x0;B=x3-x0;D=y1-y0;E=y3-y0;}
+ else{const dx1=x1-x2,dx2=x3-x2,dy1=y1-y2,dy2=y3-y2,den=dx1*dy2-dx2*dy1;G=(sx*dy2-dx2*sy)/den;H=(dx1*sy-sx*dy1)/den;A=x1-x0+G*x1;B=x3-x0+H*x3;D=y1-y0+G*y1;E=y3-y0+H*y3;}
+ A/=SW;D/=SW;G/=SW;B/=SH;E/=SH;H/=SH;return `matrix3d(${[A,D,0,G,B,E,0,H,0,0,1,0,C,F,0,1].map(v=>+v.toFixed(8)).join(",")})`;}
+// ---- the drop (145.444): the record is open (the cover already thrown back), HELD is struck, READ stamps in
+hinge.rotation.y=-2.8;
 tl.fromTo("#f22-strike",{scaleX:0},{scaleX:1,duration:.1,ease:"power2.out"},0);
 tl.fromTo("#f22-read",{opacity:0,scale:1.9},{opacity:1,scale:1,duration:.12,ease:"power3.in"},.1);
-// ---- "now" (sung 145.270-153.636): the drop's word at the bottom left on its ink backing, then it rises into 23's lockup
-// on the snares 148.636 -> 149.552; "harvested then," / "decrypted" (already sung) settle in above it on 149.101 / 149.552.
-const now=$("f22-now"),S0=8.8/13,NH=now.offsetHeight,NTOP=$("f22-lock").offsetTop+now.offsetTop;
-const DY0=(.84*1080+.43*8.8*19.2)-NH*S0/2-.7*NH*(1-S0)-NTOP-8*(DUR-L(149.552)); // v16's word box centre (top 84cqh, 8.8cqw at line-height .86)
-const UP=L(WOW.on(148.636)),LAND=L(WOW.on(149.552)),lock=$("f22-lock");
-// once the lockup has landed it takes on 23's own drift (translate 0,-8t px, scale 1+.004t from 23's t=0), so the cut is
-// continuous in position and speed; before that it holds the landing offset.
-const lockAt=t=>{const u=Math.max(t,LAND)-DUR;return `translate(0px,${(-8*u).toFixed(2)}px) scale(${(1+.004*u).toFixed(5)})`;};
-// v20 (V20.md #3): the held "now" is the climax. From the 147.28 kick it grows a step on every kick (80 % of each step in
-// 0.12 s, the rest gliding to the next kick) from the drop's bottom-left word into the lower-third poster: its glyphs centred
-// on (960, 735), 1180 px wide, the pose 23 holds from its first frame, so the cut is continuous. The already-sung
-// "harvested then," / "decrypted" lines no longer return.
-// measured once the fonts are in (as 23 does), with the word's and the lockup's transforms cleared
-let POSTER=null;
-const poster=()=>{if(POSTER)return POSTER;const tr=now.style.transform,lt=lock.style.transform;now.style.transform="none";lock.style.transform="none";
- const rt=$("root").getBoundingClientRect(),k=rt.width/1920,rg=document.createRange();rg.selectNodeContents(now);
- const g=rg.getBoundingClientRect(),nb=now.getBoundingClientRect(),cx=(g.left+g.width/2-rt.left)/k,cy=(g.top+g.height/2-rt.top)/k;
- const ox=(nb.left-rt.left)/k,oy=(nb.top-rt.top)/k+.7*nb.height/k,G=1180/(g.width/k);
- now.style.transform=tr;lock.style.transform=lt;
- const P={x:960-ox-G*(cx-ox),y:735-oy-G*(cy-oy),s:G};if(document.fonts.status==="loaded")POSTER=P;return P;};
-const GROW=L(WOW.on(147.28,{kinds:["kick"]})),GK=HR.onsetsIn("kick",147.2,150.6).map(L);
-// v21 (V21.md W7): the globe is read while the poster grows: on each kick from 147.28 a latitude band flashes white-hot
-// and stays lit cream, top to bottom (9 bands, the last on the 150.92 kick under the cut), so the archive arrives fully
-// read at 23's lit first frame; the 149.10 downbeat's band is the widest
-const RK=HR.onsetsIn("kick",147.2,151).map(L),NB=RK.length;
-const readAt=t=>{let y=13,by=20,ba=0;RK.forEach((k,i)=>{if(t<k)return;const u=clamp((t-k)/.2),e=1-Math.pow(1-u,3);
- const top=12-24*i/NB,bot=12-24*(i+1)/NB;y=top+(bot-top)*e;by=(top+bot)/2;ba=Math.exp(-(t-k)/.28)*(Math.abs(k-L(149.09))<.05?1.6:1);});
- return{y,by,ba};};
-const growAt=t=>{const n=GK.length;let v=0;
- for(let i=0;i<n;i++){const a=GK[i];if(t<a)break;const b=i+1<n?GK[i+1]:DUR,f0=.93*i/n,to=i===n-1?1:.93*(i+1)/n;
-  const fast=Math.min(1,(t-a)/.12),lin=Math.min(1,(t-a)/Math.max(.12,b-a));v=f0+(to-f0)*(.8*(1-Math.pow(1-fast,3))+.2*lin);}return v;};
-// 0–.42 s: the drop's elastic pop (GSAP); from .42 s render() owns the pose (seek-safe): a slow swell until 147.28, then the steps
-tl.fromTo(now,{x:0,y:DY0,scale:S0*1.12,"--bk":1},{scale:S0,duration:.42,ease:"elastic.out(1,.5)"},0);
-tl.set(["#f22-l1","#f22-l2"],{opacity:0},0);
-const nowPose=(t,T)=>{const P=poster(),p=growAt(t),k=1+.05*HR.hit("kick",T,.14)*clamp(p*4)*(1-smooth(DUR-.25,DUR-.02,t)),s0=S0*(1+.04*clamp((t-.42)/(GROW-.42)));
- return{x:P.x*p,y:DY0+(P.y-DY0)*p,scale:(s0+(P.s-s0)*p)*k,"--bk":1-smooth(0,.3,p)};};
-// ---- the counter box clears for the growing poster; 23's small BYTES READ line stays off (the poster holds the lower third)
-tl.to("#f22-count",{opacity:0,duration:.4},L(149.09));
-tl.set("#f22-c2",{opacity:0},0);
-tl.set({},{},DUR);   // v20: the timeline must run to DUR (its last tween now ends at ~4 s)
-function render(){const t=tl.time(),T=T0+t,cz=camZ(t),o=ORB(t),br=breath(T);
-camera.position.set(0,0,cz);camera.lookAt(0,0,0);
-globe.rotation.set(-.1*o,.45*o,dialAt(T));globe.scale.setScalar(1+.045*br*smooth(2.9,3.3,t));uni.uScale.value=1371*(1+.35*br);
-uni.uThreatTime.value=t;threat.update(t);{const r=readAt(t);uni.uReadY.value=r.y;uni.uBandY.value=r.by;uni.uBandA.value=r.ba;}
-uni.uFront.value=.015+1.435*smooth(.3,DUR,t);uni.uGain.value=(.62+.38*smooth(.8,2.8,t))*(1+.8*br);rings.material.opacity=.21*(1+2*br);
-cardUni.uFade.value=1-smooth(22,28,cz);cards.visible=cz<28;hero.visible=t<3.3;
-hero.rotation.set(-.03+.012*t,.08-.05*t,0);hero.scale.setScalar((1-.999*smooth(1.4,3.3,t))*(1+.015*HR.hit("kick",T,.14)));
+tl.set("#f22-count",{opacity:1},0);   // r2: on to the cut (no poster lift any more)
+tl.set({},{},DUR);
+// the record's pose: a press on the slam, a recoil per kick, and from the lift it files itself back into its slot in the wall
+function heroPose(t,T){const kb=1+.03*HR.hit("kick",T,.14);
+ const press=1-.025*Math.exp(-t/.12);   // the slam presses the record (a scale, so it never sinks behind the wall)
+ hero.position.z=12.2;   // .175 in front of the wall (its yaw would sink the right half); r2: it stays on the wall to the cut
+ hero.rotation.set(-.03+.012*t,.08-.05*t,0);hero.scale.setScalar(kb*press);}
+// the stamp's quad on the record, solved once at t = 0 so the projected stamp sits exactly on 14's word
+const ray=new THREE.Raycaster(),plane=new THREE.Plane(),v3=new THREE.Vector3();
+let STAMP=null;
+function setCamera(t){const c=camAt(t);camera.position.set(c.x,c.y,12.025+c.d);camera.lookAt(c.x,c.y,0);camera.updateMatrixWorld();}
+function toScreen(p){v3.copy(p).project(camera);return[(v3.x+1)/2*1920,(1-v3.y)/2*1080];}
+function solveStamp(){heroPose(0,T0);setCamera(0);hero.updateMatrixWorld(true);
+ plane.setFromNormalAndCoplanarPoint(new THREE.Vector3(0,0,1),new THREE.Vector3(0,0,.004)).applyMatrix4(hero.matrixWorld);
+ STAMP=[[NX-PAD,NY-PAD],[NX-PAD+SW,NY-PAD],[NX-PAD+SW,NY-PAD+SH],[NX-PAD,NY-PAD+SH]].map(([x,y])=>{
+  ray.setFromCamera(new THREE.Vector2(x/1920*2-1,1-y/1080*2),camera);const hit=new THREE.Vector3();ray.ray.intersectPlane(plane,hit);return hero.worldToLocal(hit);});
+ // r2: the stamp's ink centre on the record at the cut's pose: where the pull-back trucks to
+ heroPose(DUR,T0+DUR);hero.updateMatrixWorld(true);const c=new THREE.Vector3();STAMP.forEach(p=>c.add(p));c.multiplyScalar(.25);
+ hero.localToWorld(c);SC={x:c.x,y:c.y};}
+function render(){const t=tl.time(),T=T0+t,o=ORB(t),br=breath(T);
+if(!STAMP)solveStamp();
+setCamera(t);heroPose(t,T);scene.updateMatrixWorld(true);
+globe.rotation.set(-.1*o,.45*o,dialAt(T));uni.uScale.value=1371*(1+.35*br);
+uni.uThreatTime.value=t;threat.update(t);{const r=readAt(t);uni.uReadA.value=1;uni.uReadY.value=r.y;uni.uBandY.value=r.by;uni.uBandA.value=r.ba;}
+uni.uFront.value=frontAt(t);uni.uGain.value=(.62+.38*smooth(.8,2.8,t))*(1+.8*br)*(1+.55*HR.hit("kick",T,.12)*smooth(3.5,3.6,t));   // r2: the wall's lamps flare on every kick of the pull-backrings.material.opacity=.21*(1+2*br);
+const cz=camera.position.z;cardUni.uFade.value=1-smooth(34,40,cz);cards.visible=cz<40;
+// the stamp: printed on the record to the cut (r2: no lift, no poster, no glow)
+const onRec=STAMP.map(p=>toScreen(hero.localToWorld(v3.copy(p)).clone()));
+stamp.style.transform=quadMatrix(onRec);
 const value=bytesAt(T),rate=Math.max(0,(value-bytesAt(T-.016))/.016),digits=String(Math.round(value)).length;
 for(let d=0;d<ND;d++){const place=Math.pow(10,ND-1-d),lower=value%place;
 const p=place===1?value%10:Math.floor(value/place)%10+clamp(lower-(place-1));cols[d].style.transform=`translateY(${(-p*DH).toFixed(2)}px)`;
 const blur=Math.min(2,Math.max(0,(rate/place-5)/8));cols[d].style.filter=blur<.05?"none":`blur(${blur.toFixed(1)}px)`;cells[d].style.opacity=d<ND-digits?"0.3":"1";}
-$("f22-status").textContent=T>=149.321?"PEAK":"RISING";HR.glow(now,T,.3+.3*HR.band("vocal",T),.65);lock.style.transform=lockAt(t);
-if(t>=.42)gsap.set(now,nowPose(t,T));
+$("f22-status").textContent=T>=149.321?"PEAK":"RISING";
 renderer.render(scene,camera);WOW.draw(tl,T0);HR.draw(tl);}
 tl.eventCallback("onUpdate",render);tl.seek(0);render();window.__timelines["22-breach"]=tl;
 </script></template></body></html>

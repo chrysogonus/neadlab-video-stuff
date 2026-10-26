@@ -6,7 +6,10 @@
          One three.js canvas, five downbeat shots followed by one continuous archive descent; "harvest" strobes over the vocal chops.
          v13 (SYSTEM.md V7): ink #0A0A0A (#root, the clear colour and the shader's INK, so the fog falls to the new
          black); "harvest" stays flat fire with hr-glow (no extrusion). The drawer corridor is the subject and stays.
-         The counter's rate tag is solid --cream-muted; its rolling drum is a mechanism (data-layout-ignore, as 04/12). -->
+         The counter's rate tag is solid --cream-muted; its rolling drum is a mechanism (data-layout-ignore, as 04/12).
+         v22 r2 (REFINE-2.md, worker F): the well's ledges are plain structure (the fire ledge's glowing hoop was the orange
+         ring that expanded round the letter at 59.1–59.3); on the 59.06 kick the drawer rows round the lens flare white-hot
+         and the letter's wax glints as it lands face-up (59.19, again on 59.53 and 59.99). -->
   </head>
   <body>
     <template>
@@ -130,15 +133,22 @@
 
         // One small shader: drawers, lines of light, cards, and solid archive structure.
         // colors are the brand tokens in sRGB, written straight to the framebuffer
-        const uniforms = { uHeroBend: { value: 1 }, uTime: { value: 0 }, uFogNear: { value: 10 }, uFogFar: { value: 100 }, uDim: { value: 1 }, uPulse: { value: 0 }, uHat: { value: 0 } };
+        // r1: the kick flare. On every kick one row of drawers flares white-hot: the drawers whose centre lies on a plane
+        // (normal uFlN, offset uFlD, half-width uFlW), at strength uFlA (attack on the kick, decay, sized by the drums).
+        // uLine: the drawers drawn as hairlines on flat ink (the wall and the city, 52.18–55.85).
+        const uniforms = { uHeroBend: { value: 1 }, uTime: { value: 0 }, uFogNear: { value: 10 }, uFogFar: { value: 100 }, uDim: { value: 1 }, uPulse: { value: 0 }, uHat: { value: 0 },
+          uFlA: { value: 0 }, uFlN: { value: new THREE.Vector3(0, 0, -1) }, uFlD: { value: 0 }, uFlW: { value: 1 }, uLine: { value: 0 },
+          uGlint: { value: 0 }, uGlintP: { value: 0 } }; // r2: the hero letter's wax glints (amount, sweep 0..1)
         const material = new THREE.ShaderMaterial({
           uniforms,
           vertexShader: `
             attribute vec4 aData;
             uniform float uTime, uHeroBend;
-            varying vec3 vN; varying vec3 vWN; varying vec2 vUv; varying vec4 vD; varying float vDepth; varying vec3 vWP; varying float vSl;
+            varying vec3 vN; varying vec3 vWN; varying vec2 vUv; varying vec4 vD; varying float vDepth; varying vec3 vWP; varying float vSl; varying vec3 vIC; varying float vHero;
             void main() {
               vN = normal; vWN = mat3(instanceMatrix) * normal; vUv = uv; vD = aData;
+              vHero = aData.x > 1.5 && aData.x < 2.5 && gl_InstanceID == 0 ? 1.0 : 0.0;
+              vIC = (instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
               vec3 pos = position; vSl = 0.0;
               if (aData.x > 1.5 && aData.x < 2.5) {
                 // v17: the paper bows a little (flutters in flight); vSl = the face's slope, shaded two-tone in the fragment
@@ -154,8 +164,8 @@
             }`,
           fragmentShader: `
             precision highp float;
-            uniform float uTime, uFogNear, uFogFar, uDim, uPulse, uHat;
-            varying vec3 vN; varying vec3 vWN; varying vec2 vUv; varying vec4 vD; varying float vDepth; varying vec3 vWP; varying float vSl;
+            uniform float uTime, uFogNear, uFogFar, uDim, uPulse, uHat, uFlA, uFlD, uFlW, uLine, uGlint, uGlintP; uniform vec3 uFlN;
+            varying vec3 vN; varying vec3 vWN; varying vec2 vUv; varying vec4 vD; varying float vDepth; varying vec3 vWP; varying float vSl; varying vec3 vIC; varying float vHero;
             const vec3 INK = vec3(0.0392, 0.0392, 0.0392); // #0A0A0A: the fog falls to the ground ink
             const vec3 INKALT = vec3(0.102, 0.102, 0.094);
             const vec3 FIRE = vec3(0.910, 0.365, 0.149);
@@ -170,6 +180,8 @@
               return 1.0 - smoothstep(w - aa * 0.5, w + aa * 0.5, d); }
             float seg(vec2 p, vec2 a, vec2 b) { vec2 pa = p - a, ba = b - a; float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
               return length(pa - ba * h); }
+            float sdr(vec2 p, vec2 c, vec2 h) { vec2 d = abs(p - c) - h; return max(d.x, d.y); }
+            float flareAt(vec3 c) { if (uFlA < 0.002) return 0.0; float s = (dot(c, uFlN) - uFlD) / uFlW; return uFlA * exp(-s * s); }
             void main() {
               float kind = vD.x;
               vec3 col;
@@ -242,9 +254,30 @@
                   col = mix(col, lit > 0.5 ? mix(BORDER, lamp, 0.28 + 0.72 * fl) : BORDER, rect(p, lc, vec2(0.065)));
                   col = mix(col, CREAM, 0.55 * on * detail * rect(p, lc + vec2(-0.03, 0.03), vec2(0.012)));
                   col = mix(col, vD.w > 0.5 && vD.w < 1.5 ? FIRE : MUTED, hair(d, 0.012));
+                  if (uLine > 0.5) {
+                    // r1 line drawing: flat ink, the drawer's edges, panel, label holder and pull as hairlines; the lamp kept
+                    col = vec3(0.047, 0.047, 0.045);
+                    col = mix(col, HINT, 0.9 * hair(abs(d - 0.06), 0.006));
+                    col = mix(col, MUTED, 0.85 * hair(abs(sdr(p, vec2(0.40, 0.72), vec2(0.262, 0.092))), 0.006));
+                    col = mix(col, HINT, 0.8 * hair(abs(sdr(p, vec2(0.8, 0.19), vec2(0.19, 0.03))), 0.006));
+                    col += FIRE * on * (0.10 + 0.06 * uPulse) * exp(-length(p - lc) * 3.0);
+                    col = mix(col, HINT, hair(abs(sdr(p, lc, vec2(0.083))), 0.006));
+                    col = mix(col, lit > 0.5 ? mix(BORDER, lamp, 0.28 + 0.72 * fl) : vec3(0.047), rect(p, lc, vec2(0.065)));
+                    col = mix(col, vD.w > 0.5 && vD.w < 1.5 ? FIRE : mix(MUTED, CREAM, 0.35), hair(d, 0.011));
+                  }
+                  // r1 the kick flare: the lamp white-hot, its light washing the face, the edges catching it
+                  float flr = vD.w > 0.5 && vD.w < 1.5 ? 0.0 : flareAt(vIC); // drawer 0001 keeps its own lamp cue
+                  if (flr > 0.001) {
+                    float lr = length(p - lc);
+                    col += vec3(1.0, 0.97, 0.92) * flr * (0.04 + 0.95 * exp(-lr * 1.9)); // light falls off from the lamp across the face
+                    col = mix(col, vec3(1.0), clamp(flr, 0.0, 1.0) * rect(p, lc, vec2(0.075)));
+                    col = mix(col, CREAM, clamp(flr, 0.0, 1.0) * hair(d, 0.016));
+                  }
                 } else {
                   col = n.y > 0.5 ? INKALT : INK;
                   col = mix(col, n.y > 0.5 ? HINT : BORDER, hair(d, 0.012));
+                  if (uLine > 0.5) col = mix(vec3(0.042), HINT * 0.85, hair(d, 0.010));
+                  col += CREAM * 0.1 * flareAt(vIC);
                 }
               } else if (kind < 1.5) {
                 // ---- a line of light
@@ -260,6 +293,7 @@
                 col = mix(INKALT, HINT, face * (0.65 + 0.55 * vD.z));
                 float edge = min(min(vUv.x, 1.0-vUv.x), min(vUv.y, 1.0-vUv.y));
                 col = mix(col, MUTED, 0.16 * (1.0-smoothstep(0.015,0.045,edge)));
+                if (uLine > 0.5) col = mix(vec3(0.045), MUTED * 0.8, hair(edge, 0.004));
               } else {
                 // ---- an envelope (01's design): shaded flaps, fold highlights, ciphertext, the sculpted fire seal;
                 // its back is the address side: postmark, address rows, a fire stamp and a sorting barcode.
@@ -344,6 +378,19 @@
                       float arc = hair(abs(r - 0.112), 0.006) * smoothstep(1.7, 2.1, ang) * (1.0 - smoothstep(2.6, 3.0, ang));
                       col = mix(col, vec3(1.0, 0.925, 0.878), detail * 0.6 * disc * arc);
                     }
+                    if (vHero > 0.5 && uGlint > 0.002) {
+                      // r2: the wax glints on the kick: a hot band of light sweeps across the bead (upper left to lower
+                      // right), a specular point burns where it crosses the dome and throws a short four-point sparkle
+                      float gp = mix(-0.17, 0.17, uGlintP), gd = (c.x - c.y) * 0.7071 - gp;
+                      float sweep = exp(-gd * gd / 0.0022) * disc;
+                      vec2 sp0 = vec2(-0.045, 0.05) + vec2(0.7071, -0.7071) * gp * 0.6;
+                      vec2 sd = c - sp0;
+                      float spot = exp(-dot(sd, sd) / 0.0007);
+                      float star = exp(-abs(sd.x) / 0.005) * exp(-abs(sd.y) / 0.12) + exp(-abs(sd.y) / 0.005) * exp(-abs(sd.x) / 0.12);
+                      vec3 hot = vec3(1.0, 0.95, 0.88);
+                      col = mix(col, hot, clamp(uGlint * (0.9 * sweep + spot), 0.0, 1.0));
+                      col += hot * uGlint * 0.9 * star * smoothstep(0.0, 0.03, rim + 0.12 - r);
+                    }
                   } else {
                     // the address side
                     if (detail > 0.0) {
@@ -419,14 +466,15 @@
         // gN.x = packet speed along a line of light (as the line itself), gN.y = lamp seed (hat flicker)
         const GS = 14, MAXG = 6600, MAXTR = 1500; // floats per glow; static glows per layout; dynamic trails
         const glowUniforms = { uTime: uniforms.uTime, uFogNear: uniforms.uFogNear, uFogFar: uniforms.uFogFar, uDim: uniforms.uDim,
-          uPulse: uniforms.uPulse, uHat: uniforms.uHat, uHaze: { value: 1 }, uStreak: { value: 0 }, uVel: { value: new THREE.Vector3() } };
+          uPulse: uniforms.uPulse, uHat: uniforms.uHat, uHaze: { value: 1 },
+          uFlA: uniforms.uFlA, uFlN: uniforms.uFlN, uFlD: uniforms.uFlD, uFlW: uniforms.uFlW, uStreak: { value: 0 }, uVel: { value: new THREE.Vector3() } };
         const glowMat = new THREE.ShaderMaterial({
           uniforms: glowUniforms, transparent: true, depthWrite: false, depthTest: true, side: THREE.DoubleSide,
           blending: THREE.CustomBlending, blendEquation: THREE.AddEquation,
           blendSrc: THREE.OneFactor, blendDst: THREE.OneFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
           vertexShader: `
             attribute vec3 gA, gB; attribute vec4 gN, gC;
-            uniform float uTime, uStreak, uHat; uniform vec3 uVel;
+            uniform float uTime, uStreak, uHat, uFlA, uFlD, uFlW; uniform vec3 uVel, uFlN;
             varying float vS, vT, vU, vLen, vW, vAmt, vKind, vCream, vDepth, vPk;
             void main() {
               float kind = gN.w;
@@ -436,6 +484,10 @@
               if (age < 0.0) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); return; }
               vAmt = gC.w * (kind < 2.5 ? 1.0 + 1.6 * exp(-age * 7.0) : 1.0); // a lamp flares as it ignites
               if (kind < 0.5) vAmt *= 1.0 - 0.72 * uHat * step(0.6, fract(gN.y * 7.13)); // the lamp's own hat stutter
+              if (kind < 0.5 && uFlA > 0.002) { // r1: the kick flare's row of lamps blooms white-hot
+                float s = (dot(gA, uFlN) - uFlD) / uFlW, fl = uFlA * exp(-s * s);
+                vAmt *= 1.0 + 2.6 * fl; vW *= 1.0 + 0.7 * fl; vCream = max(vCream, min(1.0, 1.2 * fl));
+              }
               vec3 B = kind < 0.5 ? gA + uVel * uStreak : gB;
               vec3 a = (viewMatrix * vec4(gA, 1.0)).xyz, b = (viewMatrix * vec4(B, 1.0)).xyz;
               vec3 d = b - a; float len = length(d);
@@ -730,7 +782,10 @@
         const pullAt = (lt) => { const x = clamp01(lt / PSPAN) * PN, i = Math.min(PN - 1, Math.floor(x)); return 3.5 * lerp(pullTab[i], pullTab[i + 1], x - i); };
         const HB = BEATS.filter((b) => b >= CUTS[5] - 1e-6).map((b) => b - CUTS[5]); // the last shot's local beats
         const WSHUT = L(60.894) - CUTS[5]; // shot-local: 0001 shuts on the 60.894 kick
-        const shut = (lt) => { if (lt < WSHUT) return in2((lt - (WSHUT - 0.3)) / 0.3); const d = lt - WSHUT; return 1 - 0.06 * Math.exp(-d * 14) * Math.abs(Math.sin(d * 40)); };
+        // r1: on the 60.415 kick, the letter in, 0001 ratchets a quarter shut (a knock and a little rebound); it slams on 60.894
+        const WRAT = L(60.415) - CUTS[5];
+        const ratchet = (lt) => { const d = lt - WRAT; return d < 0 ? 0 : 0.4 * smooth(d / 0.06) + 0.05 * Math.exp(-d * 12) * Math.sin(Math.min(d, 0.5) * 30); };
+        const shut = (lt) => { if (lt < WSHUT) { const r = ratchet(lt); return r + (1 - r) * in2((lt - (WSHUT - 0.3)) / 0.3); } const d = lt - WSHUT; return 1 - 0.06 * Math.exp(-d * 14) * Math.abs(Math.sin(d * 40)); };
         const LAMP1 = L(WOW.on(T0 + DUR - 0.23, { kinds: ["hat"] })); // 0001's lamp lights on the 61.107 hat, as the latch seats
 
         // the well (shot 6): a narrow shaft of inward-facing drawers, lit all the way down. Lamps light in waves on the
@@ -749,12 +804,12 @@
           }
           const H = WROWS * 1.1, yMid = -H / 2;
           for (let j = 1; j < WN - 1; j += 2) { const a = (j + 0.5) / WN * TAU - Math.PI / 2; o.solid((WR + 0.04) * Math.cos(a), yMid, (WR + 0.04) * Math.sin(a), 0.42, H, 0.36, 0.5, -a); }
-          // ledges every eight rows (none just over 0001), each with a line of light (cream and fire in turn)
+          // ledges every eight rows (none just over 0001). v22 r2: plain structure (a shaded lip), no line of light: the
+          // fire ledge's glowing hoop was the orange ring that expanded round the letter as the lens fell through it (59.1–59.3)
           for (let k = 4; k < WROWS; k += 8) {
-            const y = WROW(k) + 0.55, N = WN * 2, rad = WR - 0.03, len = TAU * rad / N * 1.02;
-            for (let j = 0; j < N; j++) { const a = (j + 0.5) / N * TAU, a0 = j / N * TAU, a1 = (j + 1) / N * TAU;
-              o.push(rad * Math.cos(a), y, rad * Math.sin(a), 0, -a, 0, 0.05 / 1.6, 0.05, len / 1.6, 1, ALWAYS, (k >> 3) % 2 ? 0 : 1, 0);
-              o.glow([rad * Math.cos(a0), y, rad * Math.sin(a0)], [rad * Math.cos(a1), y, rad * Math.sin(a1)], [0, 0, 0], 1, 0.6, ALWAYS, (k >> 3) % 2 ? 0 : 1, 0.2); }
+            const y = WROW(k) + 0.55, N = WN * 2, rad = WR - 0.12, len = TAU * rad / N * 1.04;
+            for (let j = 0; j < N; j++) { const a = (j + 0.5) / N * TAU;
+              o.solid(rad * Math.cos(a), y, rad * Math.sin(a), 0.26, 0.12, len, 0.45, -a); }
           }
           // the floor at the foot: drawers face up, most of them lit
           const yF = WROW(WROWS - 1) - 0.55 - 0.8;
@@ -970,7 +1025,7 @@
           // orientation: face up (toward the falling lens), a slow turn in the frame plane, a little wobble, the beat flips
           hq.setFromEuler(hE.set(-Math.PI / 2, 0, 0));
           let flip = 0;
-          HB.forEach((b, i) => { const d = lt - b; if (d >= 0 && i < 4) flip += smooth(d / 0.34); });
+          HB.forEach((b, i) => { const d = lt - b; if (d >= 0 && i < 4) flip += 1 - Math.pow(1 - clamp01(d / 0.4), 2.4); }); // r1: the kick slaps it over (fast start, long settle)
           hq.premultiply(hq2.setFromAxisAngle(AZ, k * 0.14 * Math.sin(lt * 4.1)));
           hq.premultiply(hq2.setFromAxisAngle(AX, Math.PI * flip));
           hq.premultiply(hq2.setFromAxisAngle(AY, k * (0.25 + 0.5 * Math.sin(lt * 0.9))));
@@ -999,6 +1054,32 @@
           return n + 1;
         }
 
+        // r1: HR_ENV's kicks (frame-local); the kit's pulse never reaches the canvas, so the shots read them here.
+        // surge(): the stream of copies is gulped on each kick (a short rush; positions stay continuous)
+        const KICKS = HR.onsetsIn("kick", T0 + 0.05, T0 + DUR).map(L);
+        const surge = (s, lt, amt, rise = 0.08) => { const t = lt + CUTS[s]; let v = 0;
+          for (const k of KICKS) { if (k > t) break; if (k >= CUTS[s] + 0.03) v += smooth((t - k) / rise); } return amt * v; };
+
+        // r1: the wall shot's paper whites. Cream cards fly at the lens from down the wall and pass it on either side
+        // (camera space: a distance along the view, a side offset), facing the lens and tumbling a little.
+        const NNEAR = 16, nB = new THREE.Matrix4(), nF = new THREE.Vector3(), nR = new THREE.Vector3(), nU = new THREE.Vector3(),
+          nq = new THREE.Quaternion(), nE = new THREE.Euler();
+        function nearCards(lt, pos, at, i0) {
+          nF.copy(at).sub(pos).normalize(); nR.crossVectors(nF, AY).normalize(); nU.crossVectors(nR, nF);
+          nB.makeBasis(nR, nU, nF.clone().negate());
+          for (let j = 0; j < NNEAR; j++) {
+            const n = i0 + j, a = CR[n], c = CX[n];
+            const ph = wrap(a[3] + j / NNEAR + lt * (0.7 + 0.35 * a[2]), 1), dist = lerp(7.5, 0.3, Math.pow(ph, 1.4));
+            const side = j % 2 ? 1 : -1, lat = side * (0.55 + 0.75 * a[1]), up = (a[4] - 0.45) * 1.3;
+            dummy.position.copy(pos).addScaledVector(nF, dist).addScaledVector(nR, lat).addScaledVector(nU, up);
+            dummy.quaternion.setFromRotationMatrix(nB).multiply(nq.setFromEuler(nE.set(
+              0.35 * Math.sin(lt * 2.3 + a[5] * 9), 0.45 * Math.sin(lt * 1.7 + a[4] * 7) - side * 0.35, (a[5] - 0.5) * 0.9 + 0.3 * Math.sin(lt * 1.3 + j))));
+            const s = 0.4 * c.sz;
+            dummy.scale.set(s * c.asp, s, s); dummy.updateMatrix(); dummy.matrix.toArray(cm, n * 16);
+          }
+          return NNEAR;
+        }
+
         // ---- the shots: one bold camera idea per bar --------------------------------------------------------
         const V = (x, y, z) => new THREE.Vector3(x, y, z);
         const SHOTS = [
@@ -1011,20 +1092,21 @@
           },
           // 2 — 50.338: straight down the shaft as the cards spiral in
           (lt) => {
-            shaftCards(lt, 620, 0);
+            shaftCards(lt + surge(1, lt, 0.13), 620, 0);
             const ph = 0.5 + 0.42 * lt;
             return { pos: V(0, 3.5 - 3.2 * lt, 0), at: V(0, -60, 0), up: V(Math.cos(ph), 0, Math.sin(ph)), roll: 0, fov: 80, fog: [6, 58] };
           },
           // 3 — 52.181: tracking along the wall, a column of lamps igniting on every beat
           (lt) => {
-            const x = s3Cam(lt).x;
+            const x = s3Cam(lt).x, ls = lt + surge(2, lt, 0.12);
             for (let i = 0; i < 220; i++) {
               const a = CR[i], c = CX[i], fl = c.fa * Math.sin(lt * c.ff + c.fp);
-              card(i, WX0 + wrap(a[3] * 120 + 15 * lt, 120), 2.45 + (a[1] - 0.5) * 0.7, 3.2 + (a[2] - 0.5) * 1.6,
+              card(i, WX0 + wrap(a[3] * 120 + 15 * ls, 120), 2.45 + (a[1] - 0.5) * 0.7, 3.2 + (a[2] - 0.5) * 1.6,
                 0.5 * Math.sin(lt * 2.2 + a[4] * 8) + fl, 0.6 * Math.sin(lt * 1.3 + a[5] * 8), (a[4] - 0.5) * 0.5 + 0.5 * fl, 0.42 * c.sz);
             }
-            cards.count = 220;
-            return { pos: V(x, 4.2, 6.5), at: V(x + S3AHEAD, 5.4, 0), up: V(0, 1, 0), roll: 0.04, fov: 60, fog: [6, 46] };
+            const pos = V(x, 4.2, 6.5), at = V(x + S3AHEAD, 5.4, 0);
+            cards.count = 220 + nearCards(ls, pos, at, 220);
+            return { pos, at, up: V(0, 1, 0), roll: 0.04, fov: 60, fog: [6, 46] };
           },
           // 4 — 54.016: the harvest. The camera flies low down the river of envelopes, drawers slamming shut on every kick,
           // then rises over the lit city.
@@ -1069,7 +1151,7 @@
             const h = heroRel(lt);
             const carried = pos.clone().addScaledVector(fwd, h.f).addScaledVector(right, h.r).addScaledVector(upc, h.u).lerp(filed, arrive);
             heroPose(lt, carried, fwd, right, upc, arrive);
-            cards.count = wellCards(lt, y, 1 - smooth((lt - 2.0) / 0.8));
+            cards.count = wellCards(lt + surge(5, lt, 0.12), y, 1 - smooth((lt - 2.0) / 0.8));
             return { pos, at: pos.clone().add(fwd), up, roll: 1.3 * Math.pow(1 - clamp01(lt / WLAND), 2), fov: lerp(62, 46, q), fog: [5, 34] };
           },
         ];
@@ -1158,11 +1240,10 @@
         // ---- WOW: kick punches and shakes on the downbeats (HITS in finish.html) and on the in-between beats of the two big shots ----
         const fx = document.getElementById("f05-fx");
         const HITS = [50.338, 52.181, 54.016, 55.847, 57.684, 59.512].map(L);
+        // r1: no flat rings and no white washes on the cuts any more; the drawers' own lamps answer every kick (render())
         HITS.forEach((t, k) => {
           WOW.punch(tl, canvas, t, { s: 1.055, dur: 0.38 });
           WOW.shake(tl, canvas, t, { amp: 8, dur: 0.3, seed: 20 + k });
-          if (t < CUTS[4]) WOW.shock(tl, fx, { x: 960, y: 540, t, r: 1300, n: 1, w: 5, color: k % 2 ? "cream" : "fire", dur: 0.5 }); // v19: no flat rings over the macro and the well
-          WOW.flash(tl, fx, t, { a: 0.1, dur: 0.12 });
         });
         BEATS.forEach((b, k) => {
           if (b < 0.01 || HITS.some((h) => Math.abs(h - b) < 0.01) || !((b >= CUTS[3] && b < CUTS[4]) || b >= CUTS[5])) return;
@@ -1207,6 +1288,37 @@
         }
         let glowStatic = 0;
 
+        // ---- r1: every kick lights one row of drawers white-hot (HR_ENV's kicks; the kit's pulse never reaches the canvas) --
+        // corridor, shaft, city and well: a row across the archive just ahead of the lens, running away down it;
+        // the wall and the macro wall: one whole row of the wall, a different one each kick. Sized by the drums.
+        const WALLROWS = [4, 6, 3, 5, 4, 6, 3, 5], MACROROWS = [1, -1, 0, 1, -1]; // the macro: the rows whose lamps are in view
+        const FLN = [V(0, 0, -1), V(0, -1, 0), V(0, 1, 0), V(0, 0, -1), V(0, 1, 0), V(0, -1, 0)];
+        const NEARK = L(59.06);
+        // r2: the hero letter's wax glints as it lands face-up after the 59.06 kick's flip, and again on the next two kicks
+        const GLINTS = [[59.19, 1.0], [59.53, 0.6], [59.99, 0.6]].map(([t, a]) => [L(t), a]), GLD = 0.3;
+        const glintAt = (t) => { for (const [g, a] of GLINTS) { const p = (t - g) / GLD; if (p >= 0 && p <= 1) return [a * Math.sin(Math.PI * p), p]; } return [0, 0]; };
+        const kickEnv = (age) => (age < 0 || age > 0.4) ? 0 : smooth(age / 0.03) * Math.exp(-age / 0.17) * (1 - smooth((age - 0.26) / 0.14));
+        function flare(t, s, lt, shot) {
+          let j = -1; while (j + 1 < KICKS.length && t >= KICKS[j + 1]) j++;
+          const tk = j < 0 ? -1 : KICKS[j], age = t - tk;
+          const amp = j < 0 || shotAt(tk) !== Math.min(5, shotAt(t)) ? 0 : kickEnv(age) * (0.75 + 0.5 * HR.band("drums", T0 + tk)) * (s === 2 ? 1.6 : 1);
+          uniforms.uFlA.value = amp;
+          uniforms.uFlN.value.copy(FLN[s]);
+          const k = Math.max(0, j - KICKS.findIndex((x) => x >= CUTS[s] - 0.02)); // the kick's index in its shot
+          let D = 0, W = 1;
+          if (s === 2) { D = 1.1 + WALLROWS[k % WALLROWS.length] * 1.1; W = 0.7; } // two rows of the wall
+          else if (s === 4) { D = MACROROWS[k % MACROROWS.length] * 1.1; W = 0.42; }
+          else if (s === 5 && tk - CUTS[5] >= 1.75) { D = -(W1Y + (k === 5 ? 1.1 : 0)); W = 0.42; } // levelled at 0001: its own row (0001 itself excepted), once the row above
+          else if (s === 5 && Math.abs(tk - NEARK) < 0.01) { D = -shot.pos.y + 2.5 + 6 * age; W = 2.0; uniforms.uFlA.value *= 1.3; } // r2: the 59.06 kick (where the fire hoop was): the rows round the lens and the letter flare
+          else {
+            const p = s === 0 ? [2.5, 34, 1.3] : s === 1 ? [6, 30, 1.6] : s === 3 ? [5, 40, 2.4] : [5.5, 22, 0.9];
+            D = FLN[s].dot(shot.pos) + p[0] + p[1] * age; W = p[2];
+          }
+          uniforms.uFlD.value = D; uniforms.uFlW.value = W;
+          // the camera pushes into each kick (eased in over two frames); none on the last kick before the match cut into 06
+          return tk < DUR - 0.5 && amp > 0 ? smooth(age / 0.05) * Math.exp(-age / 0.22) : 0;
+        }
+
         function render() {
           const t = Math.min(DUR - 1e-4, Math.max(0, tl.time()));
           const T = t + T0;
@@ -1222,7 +1334,9 @@
           camera.up.copy(shot.up);
           camera.lookAt(shot.at);
           if (shot.roll) camera.rotateZ(shot.roll);
-          camera.fov = shot.fov;
+          const push = flare(t, s, lt, shot);
+          uniforms.uLine.value = s === 2 || s === 3 ? 1 : 0;
+          camera.fov = shot.fov * (1 - 0.022 * push);
           camera.clearViewOffset();
           if (s === 5) {
             const end = smooth((lt - 1.6) / (TT - 1.6));
@@ -1245,6 +1359,8 @@
           uniforms.uPulse.value = HR.hit("kick", T, 0.13);
           uniforms.uHat.value = HR.hit("hat", T, 0.07);
           uniforms.uDim.value = hit ? 1 - 0.38 * hit.a : 1;
+          const gl = s === 5 ? glintAt(t) : [0, 0];
+          uniforms.uGlint.value = gl[0]; uniforms.uGlintP.value = gl[1];
           glowUniforms.uHaze.value = 0.75 + 0.6 * HR.band("bass", T);
           glowUniforms.uVel.value.copy(camVel);
           glowUniforms.uStreak.value = 1 / 120 + (s === 0 ? 0.02 * Math.exp(-lt / 0.22) : 0);

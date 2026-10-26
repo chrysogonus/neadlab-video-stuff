@@ -18,7 +18,11 @@
          "about" (a thin ring, a soft punch). pushIn into (B) 137.54–143.604: the letter on warm cream paper, full bleed (no
          desk, no black band, no grey room-dim); the sung lines are the biggest type on the page, the letter's sentence is
          secondary; Archie reads from the bottom-right corner, clear of the letter's text, and stamps READ on the
-         downbeat 141.739. glideL in from 21; hard cut (with the fire swell) into 14. -->
+         downbeat 141.739. glideL in from 21; hard cut (with the fire swell) into 14.
+         v22 r2 (REFINE-2.md, worker D): the fire swell over the last 0.15 s is gone (it read as an orange wash over the
+         page, rule 9): a plain hard cut from the page into 14. ON "then," (141.96) Archie hammers READ a second time: a
+         second impression across the first, the page recoils, the broken seal jumps and its crumbs fall down the page.
+         The shot-A crumbs' fromTo no longer carries opacity/scale only in `from` (the renderer trap). -->
   </head>
   <body>
     <template>
@@ -589,6 +593,38 @@
           tl.set(readImpression, { opacity: 1 }, STAMP);
           tl.fromTo(readImpression, { scale: 1.14 }, { scale: 1, duration: 0.3, ease: "power3.out", immediateRender: false }, STAMP);
           tl.set(stampProp, { opacity: 0 }, STAMP + 0.9);
+          // r2: ON "then," (141.96) Archie hammers READ a second time while he is still bouncing off the first: the arm whips
+          // back up and down, a second impression lands across the first, the page recoils and the broken seal jumps,
+          // shaking its crumbs down the page (render)
+          const STAMP2 = L(141.96);
+          archie.to(tl, { shL: 118, elL: -4 }, STAMP + 0.03, 0.1, "power2.out");
+          archie.to(tl, { shL: 24, elL: -6 }, STAMP2 - 0.07, 0.07, "power3.in");
+          archie.to(tl, { sqx: 1.12, sqy: 0.88 }, STAMP2, 0.05, "power2.out");
+          const readImpression2 = el("div", "f13-read-stamp", $("f13-g2"), "READ");
+          readImpression2.setAttribute("data-layout-ignore", "");
+          Object.assign(readImpression2.style, { position: "absolute", left: "1190px", top: "818px", font: '600 62px "IBM Plex Mono"', color: "#C8481A", border: "4px solid #C8481A", padding: "1px 12px", opacity: 0, mixBlendMode: "multiply" });
+          gsap.set(readImpression2, { rotation: 4 });
+          tl.set(readImpression2, { opacity: 0 }, 0);
+          tl.set(readImpression2, { opacity: 0.92 }, STAMP2);
+          tl.fromTo(readImpression2, { scale: 1.2 }, { scale: 1, duration: 0.24, ease: "power3.out", immediateRender: false }, STAMP2);
+          // r2: the downbeat 138.018 (the display sentence's last glyph lands) presses the page down once, too
+          tl.fromTo("#f13-sheet", { y: 0, scale: 1 }, { y: 5, scale: 1.006, duration: 0.04, ease: "power2.out", immediateRender: false }, DOWN - 0.01);
+          tl.fromTo("#f13-sheet", { y: 5, scale: 1.006 }, { y: 0, scale: 1, duration: 0.34, ease: "power2.out", immediateRender: false }, DOWN + 0.03);
+          tl.fromTo("#f13-sheet", { y: 0 }, { y: 7, duration: 0.04, ease: "power2.out", immediateRender: false }, STAMP2);
+          tl.fromTo("#f13-sheet", { y: 7 }, { y: 0, duration: 0.32, ease: "power2.out", immediateRender: false }, STAMP2 + 0.04);
+          tl.fromTo("#f13-seal2", { y: 0 }, { y: -16, duration: 0.07, ease: "power2.out", immediateRender: false }, STAMP2);
+          tl.fromTo("#f13-seal2", { y: -16 }, { y: 0, duration: 0.34, ease: "bounce.out", immediateRender: false }, STAMP2 + 0.07);
+          // the crumbs shaken off the broken seal (positions are a pure function of time in render)
+          const fallBox = el("div", "", $("f13-sheet"));
+          fallBox.setAttribute("data-layout-ignore", "");
+          Object.assign(fallBox.style, { position: "absolute", left: "1710px", top: "270px", width: "0px", height: "0px" });
+          const fr = HR.rng(1396);
+          const falls = Array.from({ length: 14 }, () => {
+            const d = el("div", "f13-crumb", fallBox);
+            d.style.clipPath = `polygon(${Array.from({ length: 5 }, (_, j) => { const b = (j / 5) * Math.PI * 2 + fr() * 0.9, q = 30 + fr() * 20; return `${(50 + Math.cos(b) * q).toFixed(0)}% ${(50 + Math.sin(b) * q).toFixed(0)}%`; }).join(", ")})`;
+            const a = (fr() - 0.5) * 2.2;
+            return { d, x0: (fr() - 0.5) * 120, y0: 30 + fr() * 60, vx: Math.sin(a) * (120 + fr() * 220), vy: -(160 + fr() * 260), s: 0.9 + fr() * 1.6, spin: (fr() - 0.5) * 900, t0: STAMP2 + fr() * 0.04 };
+          });
           const stage = HR.stage($("root"), { seed: 13, drift: 0.7, pulse: 0 });
           const cam = stage.cam;
           tl.set(["#f13-g1", "#f13-a"], { opacity: 1 }, 0);
@@ -618,7 +654,7 @@
           tl.fromTo("#f13-keywrap", { x: 600, rotation: -3 }, { x: 24, rotation: 0, duration: IN - 0.16, ease: "power2.out" }, 0);
           tl.fromTo("#f13-keywrap", { x: 24 }, { x: -48, duration: 0.2, ease: "power2.inOut", immediateRender: false }, IN - 0.16);
           tl.fromTo("#f13-card", { x: 0 }, { x: -3, duration: 0.06, ease: "power2.out" }, IN);
-          tl.fromTo("#f13-card", { x: -3 }, { x: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, IN + 0.06);
+          tl.fromTo("#f13-card", { x: -3 }, { x: 0, duration: L(136.197) - 0.01 - IN - 0.06, ease: "power2.out", immediateRender: false }, IN + 0.06);   // r2: done before the bite
           // v20: ON "on" (kick 136.19) the key starts to turn against the wax and stalls a third of the way; ON the kick
           // 136.548 the fractures run out and it shudders; ON "about" it snaps through the rest of its half turn and the
           // seal splits. KT.s is the blade's scaleY (1 → −1 = a half turn about the shaft); render() shades it edge-on.
@@ -629,6 +665,11 @@
           tl.fromTo(KT, { s: 0.38 }, { s: -1.06, duration: 0.12, ease: "power3.in", immediateRender: false }, ABOUT - 0.12);
           tl.fromTo(KT, { s: -1.06 }, { s: -1, duration: 0.3, ease: "power2.out", immediateRender: false }, ABOUT);
           tl.fromTo("#f13-seal", { rotation: 0 }, { rotation: -3.5, duration: K2 - ON, ease: "power2.in" }, ON);
+          // r2: the downbeat 136.197 is the key biting into the wax (a short shove in, then it eases back)
+          tl.fromTo("#f13-keywrap", { x: -48 }, { x: -58, duration: 0.04, ease: "power2.out", immediateRender: false }, L(136.197) - 0.01);
+          tl.fromTo("#f13-keywrap", { x: -58 }, { x: -48, duration: 0.22, ease: "power2.out", immediateRender: false }, L(136.197) + 0.03);
+          tl.fromTo("#f13-card", { x: 0 }, { x: -4, duration: 0.04, ease: "power2.out", immediateRender: false }, L(136.197) - 0.01);
+          tl.fromTo("#f13-card", { x: -4 }, { x: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, L(136.197) + 0.03);
           crackPaths[2].forEach((p) => tl.fromTo(p, { strokeDashoffset: 1 }, { strokeDashoffset: 0.55, duration: K2 - ON - 0.07, ease: "power1.in" }, ON + 0.03));
           // ON the kick: every fracture runs out to the rim, the seal eases back, a glint runs along the key
           crackPaths.forEach((pp, k) => pp.forEach((p) => tl.fromTo(p, { strokeDashoffset: k === 2 ? 0.55 : 1 }, { strokeDashoffset: 0, duration: 0.08, ease: "expo.out", immediateRender: false }, K2 - 0.04 + (k === 2 ? 0 : 0.012 * Math.abs(k - 2)))));
@@ -650,9 +691,11 @@
           tl.fromTo("#f13-keywrap", { x: -48 }, { x: -33, duration: 0.5, ease: "power2.out", immediateRender: false }, ABOUT);
           crumbs.forEach(({ d, dx, dy, s, burst, x0, y0 }, i) => {
             const t0 = (burst ? ABOUT : K2 + 0.03) + (i % 3) * 0.01, dur = burst ? 0.7 : 0.5;
-            tl.fromTo(d, { opacity: 1, x: x0, rotation: 0, scale: s }, { x: x0 + dx, rotation: (i % 2 ? 1 : -1) * 200, duration: dur, ease: "power2.out", immediateRender: false }, t0);
+            // r2: every property in both from and to (a from-only opacity/scale is skipped by the render's seeks)
+            tl.set(d, { opacity: 1, scale: s }, t0);
+            tl.fromTo(d, { x: x0, rotation: 0 }, { x: x0 + dx, rotation: (i % 2 ? 1 : -1) * 200, duration: dur, ease: "power2.out", immediateRender: false }, t0);
             tl.fromTo(d, { y: y0 }, { y: y0 + dy, duration: dur * 0.4, ease: "power2.out", immediateRender: false }, t0);
-            tl.fromTo(d, { y: y0 + dy }, { y: y0 + dy + 110, opacity: 0, scale: s * 0.5, duration: dur * 0.6, ease: "power2.in", immediateRender: false }, t0 + dur * 0.4);
+            tl.fromTo(d, { y: y0 + dy, opacity: 1, scale: s }, { y: y0 + dy + 110, opacity: 0, scale: s * 0.5, duration: dur * 0.6, ease: "power2.in", immediateRender: false }, t0 + dur * 0.4);
           });
           WOW.punch(tl, $("f13-g1"), ABOUT, { s: 1.035, dur: 0.6 });
           // v20: the split throws wax chips off the seal (mechanical; was a flat ring)
@@ -702,11 +745,7 @@
           }
           HR.exit(tl, $("f13-l28"), L(140.675) - 0.3, { stagger: 0.004, dur: 0.22 });
 
-          // v16: the last 0.15 s swell to fire; 14-now opens on the same fire (0.35) and the seal breaks on "decrypted"
-          const swell = el("div", "", document.getElementById("el-13-reading"));
-          swell.setAttribute("data-layout-ignore", "");
-          Object.assign(swell.style, { position: "absolute", inset: "0", opacity: 0, pointerEvents: "none", background: "radial-gradient(ellipse at 81% 50%, #E85D26 0%, #E85D26 60%, #B9431A 100%)" });
-          tl.fromTo(swell, { opacity: 0 }, { opacity: 0.35, duration: 0.15, ease: "power2.in", immediateRender: false }, DUR - 0.15);
+          // r2: the v16 fire swell over the last 0.15 s is gone (a colour wash, rule 9): the cut into 14 is from the page itself
 
           // ---- per-frame draw -------------------------------------------------------------------------------
           const HATS = HR.onsetsIn("hat", T0 + DOWN + 0.3, T0 + DUR);
@@ -750,6 +789,14 @@
             if (t < SHOT) lightEl.style.opacity = (0.7 + 0.4 * rms + 0.6 * flare).toFixed(3);
             HR.glow(sealEl, T, 0.4 + 1.4 * flare, 0.7);
             HR.glow(seal2, T, 0.25, 0.5);
+            // r2: the crumbs shaken off the seal by the second stamp: thrown up, then falling down the page under gravity
+            for (const c of falls) {
+              const u = t - c.t0;
+              if (u < 0 || u > 1.3) { if (c.d._on !== 0) { c.d.style.opacity = "0"; c.d._on = 0; } continue; }
+              const x = c.x0 + c.vx * u, y = c.y0 + c.vy * u + 0.5 * 2600 * u * u;
+              c.d.style.opacity = (1 - clamp01((u - 1.0) / 0.3)).toFixed(3); c.d._on = 1;
+              c.d.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${(c.spin * u).toFixed(1)}deg) scale(${c.s.toFixed(2)})`;
+            }
             keyEl.style.setProperty("--hr-glow", (0.08 + 1.3 * flare + 0.15 * HR.band("bass", T)).toFixed(3));
             // The reference’s draw-on treatment: path and word masks are pure functions of timeline time.
             const ap = clamp01((t - SHOT) / 0.3);
