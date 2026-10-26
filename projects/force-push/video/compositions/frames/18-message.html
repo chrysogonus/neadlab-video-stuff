@@ -2,13 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 18 — message (verse 2, L26, 88.220–92.086). Cream: the squashed commit, printed as `git show`. The page is
-         on the cut (the command and the fuller header: authored by `you`, committed by `me`). "commit message says:" is
-         the heading over the message body; "message" (88.96) punches. The stat line prints on the 89.022 kick (a bar of
-         minus signs, in the accent, across the page) and the shortstat on the 89.487 kick. "fix," (89.776) slams in at
-         the message's 4-space indent and its type gets the marker underline; the drums drop out. On "wasted" (90.704)
-         the sung comma snaps to the Conventional Commit colon: the lyric has become the message `fix: wasted time`.
-         "time" (91.52) completes it; a slow push carries the page to the hard cut into 19. -->
+    <!-- Frame 18 — message (verse 2, L26, 88.220–92.086). Cream: the squashed commit printed as `git show --stat
+         --format=fuller`, a sheet on a desk under a lamp (07's treatment). Refinement round 1. The sheet rises in (17's
+         `rise` carries on, shortened to a 0.22 s settle: "commit" starts 0.06 s in), framed tight on the header: authored
+         by `you` (the accent), committed by `me`. Phrase 1, "commit message says:": the camera reads down the printout
+         and pulls back to the whole page (truck ~300 px, zoom 1.36 → 0.98), arriving on the 89.022 downbeat, where the stat
+         prints and the 1095 minus bar SWEEPS across the page (blurred, the paper jolts); the shortstat prints on the
+         89.487 kick. Phrase 2: a crash push (0.98 → 1.45) slams onto the message as "fix," lands at git's 4-space indent,
+         a fat marker underline under its type; the drums drop out. Phrase 3: on "wasted" (90.704) the sung comma is
+         knocked off the line and the Conventional Commit colon slams down in the accent (blurred approach, paper jolt):
+         the lyric is the message `fix: wasted time`. The camera pulls back and trucks right along the line so "time"
+         (91.52) completes it in frame; then the paper falls away into 19 (`drop`, 0.32 s, tilting off the desk). -->
   </head>
   <body>
     <template>
@@ -22,73 +26,119 @@
           position: absolute; inset: 0; overflow: hidden; container-type: size;
           --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --ink-on-cream: #111111; --muted-on-cream: #5F5B54; --marker: #C8481A;
           --hr-accent-rgb: 200, 72, 26;
-          background: var(--cream); color: var(--ink-on-cream);
+          /* the desk the sheet lies on: the cream ground in the lamp's shade (07) */
+          --desk: color-mix(in srgb, var(--cream) 91%, var(--ink));
+          /* the ground under the desk: when the paper falls away, 19's dark is behind it */
+          background: var(--ink); color: var(--ink-on-cream);
         }
-        /* header strip, cream register (07's colours) */
+        #f18-cam, #f18-in { position: absolute; inset: 0; }
+        #f18-cam { transform-origin: 50% 50%; }
+        #f18-in { transform-origin: 0% 0%; }
+        /* the desk stays put under the rising sheet (no ground at the cut); it falls with the camera into 19 */
+        #f18-desk { position: absolute; inset: 0; background: var(--desk); }
+        /* the header strip on its band; the sheet slides under the band's lip */
+        #f18-band { position: absolute; left: 0; right: 0; top: 0; height: 6.4cqw; background: var(--desk);
+          box-shadow: 0 0.35cqw 0.9cqw rgba(10, 10, 10, 0.16); }
         #f18-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
-          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-on-cream);
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #3F3C37;
           padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
-        #f18-strip b { color: #B8461C; font-weight: 600; }
-        /* the finish layer's vignette darkens the corners of the cream page: the strip's small text needs a darker ink */
-        #f18-strip { color: #3F3C37; } #f18-strip b { color: #7E2E12; }
+        #f18-strip b { color: #7E2E12; font-weight: 600; }
+        /* the view under the band: the sheet drifts in it (drift coordinates: y = frame y − 6.4cqw) */
+        #f18-view { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; overflow: hidden; }
+        #f18-drift { position: absolute; left: 0; top: 0; width: 100cqw; height: 100cqw; transform-origin: 0 0; }
+        #f18-jolt { position: absolute; inset: 0; transform-origin: 40% 40%; }
+        /* the sheet: paper on the desk, a shadow under it */
+        #f18-sheet { position: absolute; left: 2.6cqw; right: 2.6cqw; top: 1.2cqw; height: 62cqw; background: var(--cream);
+          box-shadow: 0 1.3cqw 3cqw rgba(10, 10, 10, 0.2), 0 0.15cqw 0.35cqw rgba(10, 10, 10, 0.16); }
+        /* the lamp: light falls off from what is being read, breathing with the bass; it follows the camera */
+        #f18-lamp { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; pointer-events: none; --lx: 40%; --ly: 36%;
+          background: radial-gradient(ellipse 64% 84% at var(--lx) var(--ly), rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 0) 38%,
+            rgba(10, 10, 10, 0.07) 72%, rgba(10, 10, 10, 0.15) 100%); }
         /* the printout: the command, then git show's fuller header */
-        #f18-head { position: absolute; left: 5.5cqw; top: 7.6cqw; font: 400 1.12cqw/1.62 "IBM Plex Mono", monospace; color: var(--muted-on-cream);
+        #f18-head { position: absolute; left: 5.5cqw; top: 3cqw; font: 400 1.5cqw/1.62 "IBM Plex Mono", monospace; color: var(--muted-on-cream);
           white-space: pre; }
         #f18-head .f18-cmd { color: var(--ink-on-cream); font-weight: 500; }
         #f18-head .f18-hash { color: var(--ink-on-cream); font-weight: 500; }
         #f18-head .f18-who { color: var(--ink-on-cream); font-weight: 600; }
-        /* the stat: one file, a bar of minus signs across the page, then the shortstat */
-        #f18-stat { position: absolute; left: 5.5cqw; top: 43.4cqw; white-space: pre;
-          font: 400 1.32cqw/1.6 "IBM Plex Mono", monospace; color: var(--ink-on-cream); }
-        #f18-bar { color: #B8461C; font-weight: 600; }
-        #f18-short { position: absolute; left: 5.5cqw; top: 45.9cqw; font: 400 1.32cqw/1.6 "IBM Plex Mono", monospace; color: var(--muted-on-cream);
-          white-space: pre; }
+        #f18-head .f18-you { color: #A83C15; font-weight: 600; }
         /* the sung line: the heading, then the message body at git's 4-space indent */
-        #f18-a { position: absolute; left: 5.2cqw; top: 21.4cqw; font: 800 5cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em;
+        #f18-a { position: absolute; left: 5.2cqw; top: 21cqw; font: 800 5cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em;
           color: var(--ink-on-cream); white-space: nowrap; }
         #f18-a .f18-hero { font-weight: 900; }
-        #f18-b { position: absolute; left: 8.1cqw; top: 28.6cqw; font: 900 10.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.045em;
+        #f18-b { position: absolute; left: 8.1cqw; top: 28.4cqw; font: 900 10.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.045em;
           color: var(--ink-on-cream); white-space: nowrap; }
         .f18-hw { position: relative; display: inline-block; isolation: isolate; }
-        .f18-ul { position: absolute; z-index: -1; left: -0.02em; right: 0.02em; bottom: 0.03em; height: 0.07em; background: var(--marker); opacity: 0.85;
-          border-radius: 0.2cqw; transform-origin: 0% 50%; transform: rotate(-0.6deg) scaleX(0); }
-        .f18-sep { display: inline-block; transform-origin: 50% 70%; }
+        /* the marker underline under "fix": fat, the accent (15's "mine") */
+        .f18-ul { position: absolute; z-index: -1; left: -0.03em; right: 0.02em; bottom: -0.09em; height: 0.25em; background: var(--marker); opacity: 0.92;
+          border-radius: 0.3cqw; transform-origin: 0% 50%; transform: rotate(-0.8deg) scaleX(0); }
+        /* the separator: the sung comma, and the colon that replaces it */
+        .f18-sepbox { position: relative; display: inline-block; }
+        #f18-comma { display: inline-block; transform-origin: 50% 70%; }
+        #f18-colon { position: absolute; left: 0; top: 0; color: var(--marker); transform-origin: 50% 80%; }
+        /* the stat: one file, a bar of minus signs across the page, then the shortstat */
+        #f18-stat { position: absolute; left: 5.5cqw; top: 43cqw; width: 88cqw; height: 1.6em; white-space: pre;
+          font: 500 2.2cqw/1.6 "IBM Plex Mono", monospace; color: var(--ink-on-cream); }
+        #f18-barclip { position: absolute; left: 15ch; top: 0; width: 51ch; height: 1.6em; overflow: hidden; }
+        #f18-bar { position: absolute; left: 0; top: 0; color: var(--marker); font-weight: 600; transform-origin: 0% 55%; }
+        #f18-short { position: absolute; left: 5.5cqw; top: 46.6cqw; font: 400 2.2cqw/1.6 "IBM Plex Mono", monospace; color: var(--muted-on-cream);
+          white-space: pre; }
+        #f18-short b { color: var(--ink-on-cream); font-weight: 600; }
+        /* the marker swipe behind what the commit did (07's swipe) */
+        .f18-hl { position: absolute; z-index: -1; left: -0.3em; right: -0.2em; top: 0.22em; bottom: 0.16em; background: var(--marker); opacity: 0.62;
+          transform-origin: 0% 50%; transform: rotate(-0.6deg) scaleX(0); pointer-events: none; }
       </style>
       <div id="root" data-composition-id="18-message" data-width="1920" data-height="1080" data-duration="3.866">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f18-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1</b></span></div>
-        </div>
-        <div class="hr-layer" data-depth="0.5">
-          <div id="f18-head"><span class="f18-cmd">~/us (main) $ git show --stat --format=fuller</span>
+        <div id="f18-cam">
+          <div id="f18-desk"></div>
+          <div id="f18-in">
+            <div id="f18-view">
+              <div id="f18-drift" data-layout-allow-overflow>
+                <div id="f18-jolt">
+                  <div id="f18-sheet"></div>
+                  <div id="f18-head"><span class="f18-cmd">~/us (main) $ git show --stat --format=fuller</span>
 <span class="f18-hash">commit 7e0c3b2a9f41d6085be2c7d19a3f60e4b8c51d27</span> (HEAD -&gt; main)
-Author:     <span class="f18-who">you</span> &lt;you@laptop&gt;
+Author:     <span class="f18-you">you</span> &lt;you@laptop&gt;
 AuthorDate: Fri Oct 20 21:14:02 2023 +0200
 Commit:     <span class="f18-who">me</span> &lt;me@home&gt;
 CommitDate: Mon Oct 19 23:41:57 2026 +0200</div>
-          <div id="f18-stat"><span> us.txt | 1095 </span><span id="f18-bar">----------------------------------------------------------------------------------------------</span></div>
-          <div id="f18-short"> 1 file changed, 1095 deletions(-)</div>
-        </div>
-        <div class="hr-layer" data-depth="0.85">
-          <div id="f18-a"><span class="f18-w">commit</span> <span class="f18-w f18-hero" id="f18-message">message</span> <span class="f18-w">says:</span></div>
-          <div id="f18-b"><span class="f18-hw"><span class="f18-w" id="f18-fix">fix</span><i class="f18-ul" id="f18-ul"></i></span><span class="f18-sep" id="f18-sep">,</span> <span class="f18-w" id="f18-wasted">wasted</span> <span class="f18-w" id="f18-time">time</span></div>
+                  <div id="f18-a"><span class="f18-w">commit</span> <span class="f18-w f18-hero" id="f18-message">message</span> <span class="f18-w">says:</span></div>
+                  <div id="f18-b"><span class="f18-hw"><span class="f18-w" id="f18-fix">fix</span><i class="f18-ul" id="f18-ul"></i></span><span class="f18-sepbox"><span id="f18-comma">,</span><span id="f18-colon" data-hf-motion-blur='{"fps": 60}'>:</span></span> <span class="f18-w" id="f18-wasted">wasted</span> <span class="f18-w" id="f18-time">time</span></div>
+                  <div id="f18-stat"><span id="f18-label"> us.txt | 1095 </span><span id="f18-barclip"><span id="f18-bar" data-hf-motion-blur='{"fps": 60}'>--------------------------------------------------</span></span></div>
+                  <div id="f18-short"> 1 file changed, <span class="f18-hw"><b>1095 deletions(-)</b><i class="f18-hl" id="f18-hl"></i></span></div>
+                </div>
+              </div>
+            </div>
+            <div id="f18-lamp" data-layout-ignore></div>
+            <div id="f18-band">
+              <div id="f18-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1</b></span></div>
+            </div>
+          </div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
-          const DUR = 3.866, T0 = 88.22;
+          const DUR = 3.866, T0 = 88.22, PX = 19.2; // px per cqw at 1920 wide
           const root = document.querySelector('[data-composition-id="18-message"]');
           const $ = (id) => root.querySelector("#" + id);
-          const stage = HR.stage(root, { seed: 18 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
           const COMMIT = at(88.28), MSG = at(88.96), SAYS = at(89.362), FIX = at(89.776), WASTED = at(90.704), TIME = at(91.52);
-          const K_STAT = at(89.022), K_SHORT = at(89.487);
+          const K1 = at(88.561), K_STAT = at(89.022), K_SHORT = at(89.487);
+          // `drop` into 19, shortened from the table's 0.40 s so it never covers the first 0.25 s of "time" (91.52)
+          const OUT = 0.32;
+          const cam = $("f18-cam"), inn = $("f18-in"), drift = $("f18-drift"), jolt = $("f18-jolt");
+          const drums = (t) => HR.band("drums", T0 + t + 0.03);
 
-          // ---- the printout: the header is on the page at the cut; git's stat prints whole on the kicks ----
-          tl.set($("f18-stat"), { opacity: 0 }, 0).set($("f18-stat"), { opacity: 1 }, K_STAT);
-          tl.set($("f18-short"), { opacity: 0 }, 0).set($("f18-short"), { opacity: 1 }, K_SHORT);
+          // ---- the cut: 17's `rise` carries on (the content keeps travelling up), shortened to a settle because "commit"
+          //      starts 0.06 s in: the sheet is on screen from the first frame and in place by the word ----
+          tl.fromTo(inn, { y: 280 }, { y: 0, duration: 0.22, ease: "expo.out" }, 0);
+          WOW.transition(tl, cam, { out: "drop", dur: OUT, total: DUR });
+          // the paper falls away: it tilts off the desk's edge as it drops (WOW.draw moves the camera; this is the sheet)
+          tl.fromTo(inn, { rotation: 0 }, { rotation: 3.2, duration: OUT, ease: "power2.in", immediateRender: false }, DUR - OUT);
 
           // ---- the sung line, every word on its start ----
           const w = root.querySelectorAll("#f18-a .f18-w");
@@ -97,33 +147,77 @@ CommitDate: Mon Oct 19 23:41:57 2026 +0200</div>
           HR.lead(tl, w[2], SAYS);
           // "fix," slams in at the message's indent; the comma lands with it; the type gets the marker
           HR.hero(tl, $("f18-fix"), FIX, { spread: 34, over: 1.22, pre: 0.12, sharp: true });
-          const sep = $("f18-sep");
-          tl.set(sep, { opacity: 0 }, 0).set(sep, { opacity: 1 }, FIX);
-          tl.fromTo($("f18-ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power2.out" }, FIX + 0.04);
-          // "wasted": the sung comma snaps to the Conventional Commit colon (text swap in render), with a pop
+          const comma = $("f18-comma"), colon = $("f18-colon");
+          tl.set(comma, { opacity: 0 }, 0).set(comma, { opacity: 1 }, FIX);
+          tl.fromTo($("f18-ul"), { scaleX: 0, rotation: -0.8 }, { scaleX: 1, rotation: -0.8, duration: 0.22, ease: "power2.out" }, FIX + 0.04);
           HR.hero(tl, $("f18-wasted"), WASTED, { spread: 24, over: 1.14, pre: 0.1, sharp: true });
-          tl.fromTo(sep, { scale: 1.9, y: -8 }, { scale: 1, y: 0, duration: 0.36, ease: "expo.out", immediateRender: false }, WASTED);
           HR.lead(tl, $("f18-time"), TIME);
 
-          // ---- the camera: a slow push on the page, a punch on "message", the biggest on "fix," (the last drums);
-          //      the drop-out is carried by a calm push down onto the message, a soft nudge on "wasted" ----
-          const punch = (T) => 0.016 + 0.03 * HR.band("drums", T0 + T + 0.03);
-          tl.fromTo(stage.cam, { z: 1.0, y: -6, x: 0 }, { z: 1.012, y: 0, duration: MSG - 0.06, ease: "power1.in" }, 0);
-          tl.to(stage.cam, { z: 1.012 + punch(MSG), y: -4, duration: 0.06, ease: "power2.in" }, MSG - 0.06);
-          tl.to(stage.cam, { z: 1.016, y: 0, duration: 0.5, ease: "elastic.out(1, 0.55)" }, MSG);
-          tl.to(stage.cam, { z: 1.022, y: 6, duration: FIX - MSG - 0.56, ease: "none" }, MSG + 0.5);
-          tl.to(stage.cam, { z: 1.034 + punch(FIX), y: 2, duration: 0.06, ease: "power2.in" }, FIX - 0.06);
-          tl.to(stage.cam, { z: 1.028, y: 8, duration: 0.6, ease: "elastic.out(1, 0.5)" }, FIX);
-          tl.to(stage.cam, { z: 1.04, y: 14, x: 8, duration: WASTED - FIX - 0.66, ease: "sine.inOut" }, FIX + 0.6);
-          tl.to(stage.cam, { z: 1.054, y: 12, duration: 0.06, ease: "power2.in" }, WASTED - 0.06);
-          tl.to(stage.cam, { z: 1.044, y: 14, duration: 0.55, ease: "elastic.out(1, 0.55)" }, WASTED);
-          tl.to(stage.cam, { z: 1.06, y: 18, x: 16, duration: DUR - WASTED - 0.55, ease: "none" }, WASTED + 0.55);
-          tl.set({}, {}, DUR);
+          // ---- the colon snap (the hit of the frame): on "wasted" the sung comma is knocked off the line and the
+          //      Conventional Commit colon slams down in the accent (parked off-frame above, blurred approach, lands sharp) ----
+          tl.fromTo(comma, { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: 46, y: 260, rotation: 120, opacity: 0, duration: 0.42, ease: "power2.in", immediateRender: false }, WASTED);
+          tl.set(colon, { y: -1100, scaleX: 1, scaleY: 1 }, 0);
+          tl.fromTo(colon, { y: -1100, scaleY: 1.5, scaleX: 1 }, { y: 0, scaleY: 1.5, scaleX: 1, duration: 0.07, ease: "power3.in", immediateRender: false }, WASTED - 0.07);
+          tl.fromTo(colon, { scaleY: 0.72, scaleX: 1.3 }, { scaleY: 1, scaleX: 1, duration: 0.45, ease: "elastic.out(1, 0.42)", immediateRender: false }, WASTED);
+          WOW.shake(tl, jolt, WASTED, { amp: 10, dur: 0.36, rot: 0.35, seed: 18 });
 
+          // ---- the printout: git's stat prints whole on the downbeat kick, its minus bar SWEEPS across the page (blurred,
+          //      landing sharp) and the paper jolts; the shortstat prints whole on the next kick ----
+          const label = $("f18-label"), bar = $("f18-bar"), short = $("f18-short");
+          tl.set(label, { opacity: 0 }, 0).set(label, { opacity: 1 }, K_STAT);
+          tl.set(bar, { xPercent: -104, scaleY: 1 }, 0);
+          tl.fromTo(bar, { xPercent: -104, scaleY: 1.6 }, { xPercent: 0, scaleY: 1.6, duration: 0.2, ease: "power4.out", immediateRender: false }, K_STAT);
+          tl.fromTo(bar, { scaleY: 1.6 }, { scaleY: 1, duration: 0.4, ease: "elastic.out(1, 0.5)", immediateRender: false }, K_STAT + 0.2);
+          WOW.shake(tl, jolt, K_STAT, { amp: 7, dur: 0.3, rot: 0.25, seed: 81 });
+          tl.set(short, { opacity: 0 }, 0).set(short, { opacity: 1 }, K_SHORT);
+          tl.fromTo($("f18-hl"), { scaleX: 0, rotation: -0.6 }, { scaleX: 1, rotation: -0.6, duration: 0.2, ease: "power2.out", immediateRender: false }, K_SHORT + 0.02);
+
+          // ---- the camera, one big move per phrase (a framing: drift point (cx, cy) in cqw shown at view point (sx, sy) at
+          //      zoom s). 1: down the printout and back to the whole page by the downbeat (truck ~300 px, zoom 1.36 → 0.98).
+          //      2: a crash push onto the message, landing on "fix," (0.98 → 1.45). 3: after the colon snap, a pull back and a
+          //      truck right along the line so "time" completes it in frame (1.5 → 1.12) ----
+          const frame = (cx, cy, sx, sy, s) => ({ x: (sx - cx * s) * PX, y: (sy - cy * s) * PX, scale: s });
+          const A = frame(30, 11.5, 40, 19, 1.36), B = frame(50, 26.6, 50, 25, 0.98), B2 = frame(49, 28, 49, 25.4, 1.0);
+          const C = frame(22, 33, 36, 24.6, 1.45), C2 = frame(22.5, 33.2, 36, 24.4, 1.5);
+          const D = frame(46, 33.5, 50, 24, 1.12), D2 = frame(46, 33.6, 50, 24, 1.14);
+          const PUSH = 0.2;
+          tl.set(drift, A, 0);
+          tl.fromTo(drift, A, { ...B, duration: K_STAT - 0.1, ease: "power3.inOut", immediateRender: false }, 0.1);
+          tl.fromTo(drift, B, { ...B2, duration: FIX - PUSH - K_STAT, ease: "none", immediateRender: false }, K_STAT);
+          tl.fromTo(drift, B2, { ...C, duration: PUSH, ease: "power3.in", immediateRender: false }, FIX - PUSH);
+          tl.fromTo(drift, C, { ...C2, duration: WASTED + 0.06 - FIX, ease: "none", immediateRender: false }, FIX);
+          tl.fromTo(drift, C2, { ...D, duration: TIME - WASTED - 0.12, ease: "power3.inOut", immediateRender: false }, WASTED + 0.06);
+          tl.fromTo(drift, D, { ...D2, duration: DUR - TIME + 0.06, ease: "none", immediateRender: false }, TIME - 0.06);
+          // punches sized by the measured drums; the colon snap gets a fixed one (the drums are out by then)
+          WOW.punch(tl, cam, K1, { s: 1.01 + 0.02 * drums(K1), dur: 0.3 });
+          WOW.punch(tl, cam, MSG, { s: 1.015 + 0.02 * drums(MSG), dur: 0.4 });
+          WOW.punch(tl, cam, K_STAT, { s: 1.02 + 0.03 * drums(K_STAT), dur: 0.45 });
+          WOW.punch(tl, cam, K_SHORT, { s: 1.012 + 0.02 * drums(K_SHORT), dur: 0.3 });
+          WOW.punch(tl, cam, FIX, { s: 1.03 + 0.03 * drums(FIX), dur: 0.5 });
+          WOW.punch(tl, cam, WASTED, { s: 1.045, dur: 0.5 });
+          WOW.punch(tl, cam, at(90.867), { s: 1.018, dur: 0.35 }); // the downbeat under "wasted" (no drums: a nudge)
+          WOW.pulse(tl, cam, { kind: "kick", amt: 0.005 });
+          // the lamp follows what is being read
+          const L = { x: 40, y: 36 };
+          tl.fromTo(L, { x: 40, y: 36 }, { x: 50, y: 50, duration: K_STAT - 0.1, ease: "power3.inOut", immediateRender: false }, 0.1);
+          tl.fromTo(L, { x: 50, y: 50 }, { x: 34, y: 52, duration: PUSH, ease: "power3.in", immediateRender: false }, FIX - PUSH);
+          tl.fromTo(L, { x: 34, y: 52 }, { x: 50, y: 50, duration: TIME - WASTED - 0.12, ease: "power3.inOut", immediateRender: false }, WASTED + 0.06);
+          tl.set({}, {}, DUR);
+          // the header scrolls under the band's lip once its lines are read; the stat is below the view at the cut
+          // (deliberate; the flag goes on each text node after the kit's glyph spans are built)
+          root.querySelectorAll("#f18-head, #f18-head *, #f18-a, #f18-a *, #f18-stat, #f18-stat *, #f18-short, #f18-short *")
+            .forEach((el) => el.setAttribute("data-layout-allow-occlusion", ""));
+
+          // ---- per-frame state: the crash push's blur (render-driven, so no motion-blur copies), the lamp, the camera ----
+          const lamp = $("f18-lamp");
           function render() {
-            const t = tl.time();
-            sep.textContent = t >= WASTED ? ":" : ",";
-            stage.apply(T0 + t);
+            const t = tl.time(), T = T0 + t;
+            const u = (t - (FIX - PUSH)) / PUSH;
+            drift.style.filter = u > 0.15 && u < 1 ? `blur(${(5 * u * u).toFixed(2)}px)` : "";
+            lamp.style.setProperty("--lx", L.x.toFixed(2) + "%");
+            lamp.style.setProperty("--ly", L.y.toFixed(2) + "%");
+            lamp.style.opacity = Math.max(0.45, 1 - 0.4 * HR.band("bass", T) - 0.25 * HR.hit("kick", T, 0.22) - 0.12 * HR.band("vocal", T)).toFixed(3);
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();

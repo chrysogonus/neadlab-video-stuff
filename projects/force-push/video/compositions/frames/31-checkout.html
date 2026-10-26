@@ -2,13 +2,23 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 31 — checkout (bridge rising, 151.680–160.731). Cream, continuing 30's printed page with the lyric moved
-         to the right. L49: "checked out" slams, and the reflog printed under it scrolls a long, long way back in time,
-         landing on "ago" on `3f2a1c9 HEAD@{2 years ago}: checkout: moving from us to somewhere-else`. On "so" the page
-         scrolls on to the push command: `--force-with-lease` (30's plant) loses `-with-lease` to a marker strike on
-         "lease" and is gone with no warning, 0 ms, on "warning". "here I go" builds under it; on the drums' entry
-         (158.88) the paper flips to the terminal, 0 ms: the printed `git push --force` is the prompt now, unsent, its
-         cursor blinking while the drums build into 32. -->
+    <!-- Frame 31 — checkout (bridge rising, 151.680–160.731). Cream paper on a lamp-lit desk, then the terminal under it.
+         Refinement round 1: the scene turns the breath back toward the drop.
+         The cut: 30's `glideUp` carries on as a short settle with no blur ("but" starts 0.06 s in), onto the reflog
+         already printed on the page (the object, never an empty prompt).
+         L49, soft: "checked out" slams in place; ONE slow continuous move carries the phrase — the reflog scrolls back
+         a long, long way under a fixed reading pointer (the accent) while the camera drifts in; "long," stretches while
+         it is sung; on "ago" the pointer stops on `3f2a1c9 HEAD@{2 years ago}: checkout: moving from us to
+         somewhere-else`, the date marked, the message underlined. The lamp breathes with the pads.
+         L50, rising: on the downbeat the printout scrolls on to the push command, printed at display size
+         (`--force-with-lease` at 7.2cqw); the camera pushes in faster and faster towards "go". On "lease" (156.12) a
+         fat marker strike slashes through `-with-lease` (motion-blurred); on "warning" (157.04) the struck piece is
+         ripped off the page with no warning (motion-blurred) and the page jolts: `--force` is left.
+         "here I go": on "go" (158.44) the sheet peels off the desk from its bottom edge and whips up and away over the
+         top (blurred, shading as it turns from the lamp), landing on the drums' entry (158.875): the black terminal
+         was under it all along — the same line, `~/us (main) $ git push --force` unsent at 32's place, "go" in fire.
+         The drum fill punches the camera on every hit while it pushes in on the prompt; the cursor flickers with the
+         hits; hard cut on the downbeat into 32 (the same prompt). -->
   </head>
   <body>
     <template>
@@ -24,138 +34,203 @@
           --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5;
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826; --ink-on-cream: #111111; --muted-on-cream: #5F5B54;
           --marker: #C8481A;
-          background: var(--cream); color: var(--ink-on-cream);
+          --hr-accent-rgb: 200, 72, 26;
+          /* the desk at the lamp's edge: what the in-glide uncovers above the sheet */
+          background: color-mix(in srgb, var(--cream) 88%, var(--ink)); color: var(--ink-on-cream);
         }
-        /* the register lives on an inner wrapper (the scoped root does not take a class) */
-        #f31-reg { position: absolute; inset: 0; background: var(--cream); color: var(--ink-on-cream); }
-        #f31-reg.f31-dark { background: var(--ink); color: var(--cream); }
-        /* header strip, cream register (07's colours); flips with the page */
-        #f31-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
-          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-on-cream);
-          padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
-        #f31-strip b { color: #B8461C; font-weight: 600; }
-        /* the finish layer's vignette darkens the corners of the cream page: the strip's small text needs a darker ink */
-        #f31-strip { color: #3F3C37; } #f31-strip b { color: #7E2E12; }
-        .f31-dark #f31-strip { color: var(--cream-muted); border-bottom-color: var(--border); }
-        .f31-dark #f31-strip b { color: var(--fire); }
+        #f31-cam, #f31-in, #f31-flipbox { position: absolute; inset: 0; }
+        #f31-flipbox { perspective: 1500px; perspective-origin: 50% 30%; }
+
+        /* ================= the terminal: under the paper all along ================= */
+        #f31-term { position: absolute; inset: 0; background: var(--ink); color: var(--cream); visibility: hidden;
+          --hr-accent-rgb: 232, 93, 38; }
+        #f31-tcam { position: absolute; inset: 0; transform-origin: 0 0; }
+        #f31-tglow { position: absolute; left: 4cqw; top: 28cqw; width: 52cqw; height: 26cqw; pointer-events: none;
+          background: radial-gradient(ellipse 50% 50% at 50% 55%, rgba(232, 93, 38, 1) 0%, rgba(232, 93, 38, 0.35) 45%, rgba(232, 93, 38, 0) 100%);
+          opacity: 0; }
+        #f31-tstrip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); opacity: 0.8; }
+        #f31-tstrip .f31-n { color: var(--fire); font-weight: 600; margin-left: 0.6em; }
+        .f31-tl { position: absolute; left: 5.1cqw; font: 800 8.2cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.04em;
+          color: var(--cream-muted); white-space: nowrap; }
+        .f31-tl .f31-hero { font-weight: 900; }
+        /* 32's first frame: the unsent command, same place and size */
+        #f31-prompt { position: absolute; left: 5.5cqw; top: 28.2cqw; font: 500 4.2cqw/1 "IBM Plex Mono", monospace; color: var(--cream);
+          white-space: pre; }
+        #f31-tpfx { color: var(--cream-muted); }
+        #f31-block { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        #f31-t3 { position: absolute; left: 4.6cqw; top: 36cqw; font: 900 14cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.05em;
+          color: var(--cream); white-space: nowrap; }
+        #f31-tgo { color: var(--fire); }
+
+        /* ================= the paper: a sheet on the desk, lit by the lamp ================= */
+        #f31-sheet { position: absolute; inset: 0; background: var(--cream); overflow: hidden; transform-origin: 50% 0%;
+          backface-visibility: hidden; }
+        /* the accent light behind the object being read (6–14 %), breathing with the voice */
+        #f31-aglow { position: absolute; left: 0; top: 0; width: 70cqw; height: 40cqw; pointer-events: none; margin: -20cqw 0 0 -35cqw;
+          background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(200, 72, 26, 1) 0%, rgba(200, 72, 26, 0.4) 40%, rgba(200, 72, 26, 0) 100%);
+          opacity: 0; }
+        /* the page moves under the strip's rule, never through it */
+        #f31-pclip { position: absolute; inset: 0; clip-path: inset(5.7cqw 0 0 0); }
+        #f31-pcam { position: absolute; inset: 0; transform-origin: 0 0; }
         .f31-page { position: absolute; inset: 0; }
-        /* the printout scrolls under the header strip, never through it */
-        .f31-clip { clip-path: inset(5.5cqw -10cqw -10cqw -10cqw); }
+        /* the lamp: the light falls off towards the edges of the sheet */
+        #f31-lamp { position: absolute; inset: 0; pointer-events: none; --lx: 60%; --ly: 52%;
+          background: radial-gradient(ellipse 70% 86% at var(--lx) var(--ly), rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 0) 40%,
+            rgba(10, 10, 10, 0.06) 72%, rgba(10, 10, 10, 0.13) 100%); }
+        /* the sheet turning away from the lamp */
+        #f31-shade { position: absolute; inset: 0; pointer-events: none; opacity: 0;
+          background: linear-gradient(to bottom, rgba(10, 10, 10, 0.55), rgba(10, 10, 10, 0.85)); }
+        /* header strip, cream register; the vignette darkens the corners, so the small text takes the darker inks */
+        #f31-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #3F3C37;
+          padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
+        #f31-strip b { color: #7E2E12; font-weight: 600; }
 
         /* ---- page A: L49, right-aligned; the reflog printed under it ---- */
-        #f31-a { position: absolute; right: 5.5cqw; top: 7.6cqw; text-align: right; color: var(--ink-on-cream); white-space: nowrap; }
+        #f31-a { position: absolute; right: 5.5cqw; top: 7.4cqw; text-align: right; color: var(--ink-on-cream); white-space: nowrap; }
         #f31-a1 { font: 800 5.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em; }
         #f31-a2 { font: 900 12.6cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.045em; margin-top: 0.2cqw; }
         #f31-a3 { font: italic 400 7.2cqw/1.05 "Instrument Serif", serif; letter-spacing: -0.01em; margin-top: 0.4cqw; }
         #f31-a3 .f31-s { display: inline-block; }
         #f31-a3 .f31-hero { color: var(--marker); }
-        #f31-rl { position: absolute; left: 5.5cqw; top: 36.4cqw; width: 70cqw; }
-        #f31-rlhead { font: 500 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--ink-on-cream); padding-bottom: 0.7cqw;
+        #f31-rl { position: absolute; left: 5.5cqw; top: 34.6cqw; width: 89cqw; }
+        #f31-rlhead { font: 500 1.3cqw/1 "IBM Plex Mono", monospace; color: var(--ink-on-cream); padding-bottom: 0.7cqw;
           border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
-        #f31-rlhead span { color: var(--muted-on-cream); }
-        #f31-view { position: relative; height: 14.4cqw; margin-top: 0.5cqw; overflow: hidden;
-          -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22%, #000 70%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0, #000 22%, #000 70%, transparent 100%); }
-        .f31-row { position: relative; height: 2.4cqw; font: 400 1.45cqw/2.4cqw "IBM Plex Mono", monospace; color: var(--muted-on-cream);
+        #f31-rlhead span { color: #4F4B45; }
+        #f31-view { position: relative; height: 15.5cqw; margin-top: 0.5cqw; overflow: hidden;
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 78%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 78%, transparent 100%); }
+        /* the reading pointer: fixed in the view while the reflog scrolls under it */
+        #f31-hover { position: absolute; left: 0; right: 0; top: 6.2cqw; height: 3.1cqw; }
+        #f31-hover .f31-tint { position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: rgba(200, 72, 26, 0.1); }
+        #f31-hover .f31-ptr { position: absolute; left: 0; width: 0.5cqw; top: 14%; bottom: 14%; background: var(--marker); }
+        #f31-list { position: absolute; left: 1.4cqw; top: 0; }
+        .f31-row { position: relative; height: 3.1cqw; font: 400 1.85cqw/3.1cqw "IBM Plex Mono", monospace; color: #4F4B45;
           white-space: pre; transform-origin: 0% 50%; width: max-content; }
-        .f31-row .f31-h { color: #8C877E; }
-        #f31-target .f31-sel { position: relative; }
-        #f31-target .f31-msg { position: relative; display: inline-block; }
-        #f31-ul { position: absolute; left: -0.1em; right: -0.1em; bottom: 0.2em; height: 0.2em; background: var(--marker); opacity: 0.85;
+        .f31-row .f31-h { color: #6A665E; }
+        .f31-row.f31-on { color: var(--ink-on-cream); }
+        .f31-row.f31-on .f31-h { color: #3F3C37; }
+        #f31-target .f31-sel, #f31-target .f31-msg { position: relative; display: inline-block; }
+        #f31-ul { position: absolute; left: -0.1em; right: -0.1em; bottom: 0.25em; height: 0.2em; background: var(--marker); opacity: 0.85;
           border-radius: 0.2cqw; transform-origin: 0% 50%; transform: rotate(-0.5deg) scaleX(0); }
 
-        /* ---- page B: L50 at the left, over the push command; flips to the terminal ---- */
+        /* ---- page B: L50 at the left, over the push command printed at display size ---- */
         .f31-bl { position: absolute; left: 5.1cqw; font: 800 8.2cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.04em;
           color: var(--ink-on-cream); white-space: nowrap; }
-        #f31-b1 { top: 8.4cqw; }
-        #f31-b2 { top: 16.8cqw; }
+        #f31-b1 { top: 7.4cqw; }
+        #f31-b2 { top: 15.6cqw; }
         .f31-bl .f31-hero { font-weight: 900; }
-        #f31-cmd { position: absolute; left: 5.5cqw; top: 28.2cqw; font: 500 4.2cqw/1 "IBM Plex Mono", monospace; color: var(--ink-on-cream);
+        #f31-cmd1 { position: absolute; left: 5.5cqw; top: 25.1cqw; font: 500 3cqw/1 "IBM Plex Mono", monospace; color: var(--ink-on-cream);
           white-space: pre; }
-        #f31-pfx { color: var(--muted-on-cream); }
-        #f31-lease { position: relative; display: inline-block; }
-        #f31-strike { position: absolute; left: -0.08em; right: -0.08em; top: 50%; height: 0.14em; margin-top: -0.07em; background: var(--marker);
-          transform-origin: 0% 50%; transform: scaleX(0); }
-        #f31-cur { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; opacity: 0; }
-        #f31-b3 { position: absolute; left: 4.6cqw; top: 35.4cqw; font: 900 14cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.05em;
+        #f31-cmd1 span { color: #4F4B45; }
+        #f31-flag { position: absolute; left: 5.2cqw; top: 29cqw; font: 600 7.2cqw/1 "IBM Plex Mono", monospace; color: var(--ink-on-cream);
+          white-space: pre; }
+        #f31-fptr { position: absolute; left: -1.7cqw; width: 0.6cqw; top: 0.2em; height: 0.66em; background: var(--marker); }
+        #f31-wl { position: relative; display: inline-block; }
+        .f31-strike { position: absolute; left: -0.1em; right: -0.1em; top: 50%; height: 0.17em; margin-top: -0.06em; background: var(--marker);
+          border-radius: 0.04em; transform-origin: 0% 50%; }
+        #f31-strike { transform: rotate(-1.4deg) scaleX(0); }
+        /* the struck piece as torn off: the same glyphs and strike, fixed content (motion blur clones it once) */
+        #f31-chip { position: absolute; left: 7ch; top: 0; color: #5F5B54; white-space: pre; transform-origin: 30% 60%; }
+        #f31-chip .f31-strike { transform: rotate(-1.4deg); }
+        #f31-b3 { position: absolute; left: 4.6cqw; top: 36cqw; font: 900 14cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.05em;
           color: var(--ink-on-cream); white-space: nowrap; }
         #f31-go { color: var(--marker); }
-        /* the terminal: same page, inverted */
-        .f31-dark .f31-bl { color: var(--cream-muted); }
-        .f31-dark #f31-cmd { color: var(--cream); }
-        .f31-dark #f31-pfx { color: var(--cream-muted); }
-        .f31-dark #f31-b3 { color: var(--cream); }
-        .f31-dark #f31-go { color: var(--fire); }
       </style>
       <div id="root" data-composition-id="31-checkout" data-width="1920" data-height="1080" data-duration="9.051">
-        <div id="f31-reg">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f31-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
-        </div>
+        <div id="f31-cam">
+          <div id="f31-in">
+            <!-- the terminal under the paper (shown once the sheet starts to lift) -->
+            <div id="f31-term" data-layout-allow-overlap>
+              <div id="f31-tcam">
+                <div id="f31-tglow" data-layout-ignore></div>
+                <div class="f31-tl" style="top: 7.4cqw"><span>so</span> <span>no</span> <span class="f31-hero">lease,</span></div>
+                <div class="f31-tl" style="top: 15.6cqw"><span>no</span> <span class="f31-hero">warning,</span></div>
+                <div id="f31-prompt"><span id="f31-tpfx">~/us (main) $ </span><span id="f31-pgit">git</span> <span id="f31-ppush">push</span> <span id="f31-pforce">--force</span><span id="f31-block"></span></div>
+                <div id="f31-t3"><span id="f31-there">here</span> <span>I</span> <span id="f31-tgo">go</span></div>
+              </div>
+              <div id="f31-tstrip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin<span class="f31-n">0</span></span></div>
+            </div>
 
-        <div class="hr-layer f31-clip" data-depth="0.5" data-layout-ignore>
-          <div class="f31-page" id="f31-pageA2">
-            <div id="f31-rl">
-              <div id="f31-rlhead"><span>$</span> git reflog --date=relative</div>
-              <div id="f31-view">
-                <div id="f31-list">
-                  <div class="f31-row"><span class="f31-h">9c0ffee</span> HEAD@{4 minutes ago}: rebase (finish): returning to refs/heads/main</div>
-                  <div class="f31-row"><span class="f31-h">9c0ffee</span> HEAD@{4 minutes ago}: rebase (pick): ready.</div>
-                  <div class="f31-row"><span class="f31-h">2b7d4e8</span> HEAD@{2 hours ago}: revert: Revert "force push"</div>
-                  <div class="f31-row"><span class="f31-h">0e96d4a</span> HEAD@{3 hours ago}: cherry-pick: that sunday</div>
-                  <div class="f31-row"><span class="f31-h">c7f2b18</span> HEAD@{3 hours ago}: cherry-pick: the beach</div>
-                  <div class="f31-row"><span class="f31-h">51d0a3e</span> HEAD@{3 hours ago}: cherry-pick: first date</div>
-                  <div class="f31-row"><span class="f31-h">e81b0d4</span> HEAD@{6 hours ago}: rebase (finish): returning to refs/heads/main</div>
-                  <div class="f31-row"><span class="f31-h">6b1e9f3</span> HEAD@{6 hours ago}: rebase (pick): we'll get to it</div>
-                  <div class="f31-row"><span class="f31-h">d27a0c5</span> HEAD@{6 hours ago}: rebase (pick): just a feature</div>
-                  <div class="f31-row"><span class="f31-h">b05d2f8</span> HEAD@{6 hours ago}: rebase (start): checkout b05d2f8</div>
-                  <div class="f31-row"><span class="f31-h">e81b0d4</span> HEAD@{11 months ago}: commit: ready.</div>
-                  <div class="f31-row"><span class="f31-h">9d03b7e</span> HEAD@{1 year ago}: merge you: Merge made by the 'ort' strategy.</div>
-                  <div class="f31-row" id="f31-target"><span class="f31-h">3f2a1c9</span> <span class="f31-sel">HEAD@{2 years ago}</span>: <span class="f31-msg">checkout: moving from us to somewhere-else<i id="f31-ul"></i></span></div>
-                  <div class="f31-row"><span class="f31-h">3f2a1c9</span> HEAD@{2 years ago}: commit: you and me</div>
-                  <div class="f31-row"><span class="f31-h">a7c21f0</span> HEAD@{2 years ago}: commit: we'll get to it</div>
-                  <div class="f31-row"><span class="f31-h">4c9d7a1</span> HEAD@{2 years ago}: commit: just a feature</div>
-                  <div class="f31-row"><span class="f31-h">91be33a</span> HEAD@{3 years ago}: commit: moved in</div>
-                  <div class="f31-row"><span class="f31-h">0b5f6e2</span> HEAD@{3 years ago}: commit: nothing on the side</div>
+            <!-- the paper -->
+            <div id="f31-flipbox">
+              <div id="f31-sheet">
+                <div id="f31-aglow" data-layout-ignore></div>
+                <div id="f31-pclip">
+                  <div id="f31-pcam">
+                    <div class="f31-page" id="f31-pageA">
+                      <div id="f31-a">
+                        <div id="f31-a1"><span class="f31-w">but</span> <span class="f31-w">you</span></div>
+                        <div id="f31-a2"><span class="f31-w" id="f31-checked">checked</span> <span class="f31-w">out</span></div>
+                        <div id="f31-a3"><span class="f31-s">a</span> <span class="f31-s f31-hero">long,</span> <span class="f31-s">long</span> <span class="f31-s">time</span> <span class="f31-s">ago</span></div>
+                      </div>
+                      <div id="f31-rl">
+                        <div id="f31-rlhead"><span>$</span> git reflog --date=relative</div>
+                        <div id="f31-view" data-layout-ignore>
+                          <div id="f31-hover"><i class="f31-tint"></i><i class="f31-ptr"></i></div>
+                          <div id="f31-list">
+                            <div class="f31-row"><span class="f31-h">9c0ffee</span> HEAD@{4 minutes ago}: rebase (finish): returning to refs/heads/main</div>
+                            <div class="f31-row"><span class="f31-h">9c0ffee</span> HEAD@{4 minutes ago}: rebase (pick): ready.</div>
+                            <div class="f31-row"><span class="f31-h">2b7d4e8</span> HEAD@{2 hours ago}: revert: Revert "force push"</div>
+                            <div class="f31-row"><span class="f31-h">0e96d4a</span> HEAD@{3 hours ago}: cherry-pick: that sunday</div>
+                            <div class="f31-row"><span class="f31-h">c7f2b18</span> HEAD@{3 hours ago}: cherry-pick: the beach</div>
+                            <div class="f31-row"><span class="f31-h">51d0a3e</span> HEAD@{3 hours ago}: cherry-pick: first date</div>
+                            <div class="f31-row"><span class="f31-h">e81b0d4</span> HEAD@{6 hours ago}: rebase (finish): returning to refs/heads/main</div>
+                            <div class="f31-row"><span class="f31-h">6b1e9f3</span> HEAD@{6 hours ago}: rebase (pick): we'll get to it</div>
+                            <div class="f31-row"><span class="f31-h">d27a0c5</span> HEAD@{6 hours ago}: rebase (pick): just a feature</div>
+                            <div class="f31-row"><span class="f31-h">b05d2f8</span> HEAD@{6 hours ago}: rebase (start): checkout b05d2f8</div>
+                            <div class="f31-row"><span class="f31-h">e81b0d4</span> HEAD@{11 months ago}: commit: ready.</div>
+                            <div class="f31-row"><span class="f31-h">9d03b7e</span> HEAD@{1 year ago}: merge you: Merge made by the 'ort' strategy.</div>
+                            <div class="f31-row" id="f31-target"><span class="f31-h">3f2a1c9</span> <span class="f31-sel">HEAD@{2 years ago}</span>: <span class="f31-msg">checkout: moving from us to somewhere-else<i id="f31-ul"></i></span></div>
+                            <div class="f31-row"><span class="f31-h">3f2a1c9</span> HEAD@{2 years ago}: commit: you and me</div>
+                            <div class="f31-row"><span class="f31-h">a7c21f0</span> HEAD@{2 years ago}: commit: we'll get to it</div>
+                            <div class="f31-row"><span class="f31-h">4c9d7a1</span> HEAD@{2 years ago}: commit: just a feature</div>
+                            <div class="f31-row"><span class="f31-h">91be33a</span> HEAD@{3 years ago}: commit: moved in</div>
+                            <div class="f31-row"><span class="f31-h">0b5f6e2</span> HEAD@{3 years ago}: commit: nothing on the side</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="f31-page" id="f31-pageB">
+                      <div class="f31-bl" id="f31-b1"><span class="f31-v">so</span> <span class="f31-v">no</span> <span class="f31-v f31-hero">lease,</span></div>
+                      <div class="f31-bl" id="f31-b2"><span class="f31-v">no</span> <span class="f31-v f31-hero">warning,</span></div>
+                      <div id="f31-cmd1"><span>$ </span>git push</div>
+                      <div id="f31-flag"><i id="f31-fptr"></i>--force<span id="f31-wl">-with-lease<i class="f31-strike" id="f31-strike" data-hf-motion-blur='{"fps": 60}'></i></span><span id="f31-chip" data-hf-motion-blur='{"fps": 60}'>-with-lease<i class="f31-strike"></i></span></div>
+                      <div id="f31-b3"><span class="f31-v">here</span> <span class="f31-v">I</span> <span class="f31-v" id="f31-go">go</span></div>
+                    </div>
+                  </div>
                 </div>
+                <div id="f31-lamp" data-layout-ignore></div>
+                <div id="f31-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+                <div id="f31-shade" data-layout-ignore></div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="hr-layer f31-clip" data-depth="0.9">
-          <div class="f31-page" id="f31-pageA">
-            <div id="f31-a">
-              <div id="f31-a1"><span class="f31-w">but</span> <span class="f31-w">you</span></div>
-              <div id="f31-a2"><span class="f31-w" id="f31-checked">checked</span> <span class="f31-w">out</span></div>
-              <div id="f31-a3"><span class="f31-s">a</span> <span class="f31-s f31-hero">long,</span> <span class="f31-s">long</span> <span class="f31-s">time</span> <span class="f31-s">ago</span></div>
-            </div>
-          </div>
-          <div class="f31-page" id="f31-pageB">
-            <div class="f31-bl" id="f31-b1"><span class="f31-v">so</span> <span class="f31-v">no</span> <span class="f31-v f31-hero" id="f31-leasew">lease,</span></div>
-            <div class="f31-bl" id="f31-b2"><span class="f31-v">no</span> <span class="f31-v f31-hero" id="f31-warn">warning,</span></div>
-            <div id="f31-cmd"><span id="f31-pfx">$ </span>git push --force<span id="f31-lease">-with-lease<i id="f31-strike"></i></span><span id="f31-cur"></span></div>
-            <div id="f31-b3"><span class="f31-v">here</span> <span class="f31-v">I</span> <span class="f31-v" id="f31-go">go</span></div>
-          </div>
-        </div>
-        </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
-          const DUR = 9.051, T0 = 151.68, PX = 19.2;
+          const DUR = 9.051, T0 = 151.68, PX = 19.2; // px per cqw at 1920 wide
           const root = document.querySelector('[data-composition-id="31-checkout"]');
           const $ = (id) => root.querySelector("#" + id);
-          const stage = HR.stage(root, { seed: 31, pulse: 1.6 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
-          // the word starts (lyrics.json), the page turn, and the drums' entry (HR_ENV: kick + snare at 158.88)
+          // the word starts (lyrics.json), the downbeats and the drums' entry (HR_ENV: kick + snare at 158.875)
           const BUT = at(151.74), YOU = at(151.92), CHECKED = at(152.16), OUT = at(152.468);
           const A = at(152.98), LONG1 = at(153.12), LONG2 = at(153.78), TIME = at(154.06), AGO = at(154.569);
           const SO = at(155.352), NO1 = at(155.66), LEASE = at(156.12), NO2 = at(156.6), WARN = at(157.04);
-          const HERE = at(157.98), I = at(158.32), GO = at(158.44), FLIP = at(158.88);
-          const TURN = at(155.3), TURN_D = 0.55;
+          const HERE = at(157.98), I = at(158.32), GO = at(158.44), DRUM = at(158.875);
+          const TURN = at(155.224), TURN_D = 0.38; // the downbeat before "so"
+          const cam = $("f31-cam"), pcam = $("f31-pcam"), sheet = $("f31-sheet"), term = $("f31-term"), tcam = $("f31-tcam");
+
+          // ---- the cut: 30's glideUp carries on as a short settle; no blur, so "but" (0.06 s in) reads from its start ----
+          tl.fromTo($("f31-in"), { y: 80 }, { y: 0, duration: 0.32, ease: "power2.out" }, 0);
 
           // ---- L49: "but you" builds, "checked out" slams, the soft voice says how long ----
           const wa = root.querySelectorAll("#f31-a .f31-w");
@@ -164,78 +239,166 @@
           HR.lead(tl, wa[3], OUT);
           const sa = root.querySelectorAll("#f31-a .f31-s");
           [A, LONG2, TIME, AGO].forEach((t, i) => HR.lead(tl, sa[[0, 2, 3, 4][i]], t, { from: 60, dur: 0.45 }));
-          // "long," is the soft line's hero: it lands, then keeps stretching for as long as it is sung
+          // "long," lands, then keeps stretching for as long as it is sung (the line is right-aligned: it grows leftwards)
           const lg = HR.hero(tl, sa[1], LONG1, { spread: 18, over: 1.12, pre: 0.12, sharp: true, skew: false });
-          // the line is right-aligned, so the word stretches leftwards: each glyph's wrapper (the hero owns the glyph's
-          // own x) and the "a" before it move left; the right edge stays put
           const lgw = lg.map((g) => { const s = document.createElement("span"); s.style.display = "inline-block"; g.replaceWith(s); s.appendChild(g); return s; });
-          const ST = 9, n = lg.length;
+          const ST = 11, n = lg.length;
           tl.fromTo(lgw, { x: 0 }, { x: (i) => -(n - 1 - i) * ST, duration: LONG2 - LONG1, ease: "sine.out", immediateRender: false }, LONG1);
           tl.fromTo(sa[0], { x: 0 }, { x: -(n - 1) * ST, duration: LONG2 - LONG1, ease: "sine.out", immediateRender: false }, LONG1);
 
-          // ---- the reflog scrolls back a long, long way and lands on the checkout on "ago" ----
-          const ROW = 2.4 * PX, SLOT = 2, TARGET = 12;
-          tl.fromTo($("f31-list"), { y: 0 }, { y: -(TARGET - SLOT) * ROW, duration: AGO - CHECKED - 0.05, ease: "power2.inOut" }, CHECKED + 0.05);
+          // ---- the one slow move: the reflog scrolls back a long, long way under the pointer and stops on "ago" ----
+          const ROW = 3.1 * PX, SLOT = 2, TARGET = 12, list = $("f31-list");
+          tl.fromTo(list, { y: 0 }, { y: -(TARGET - SLOT) * ROW, duration: AGO, ease: "power1.inOut" }, 0);
           const tgt = $("f31-target");
-          tl.fromTo(tgt, { color: "#5F5B54", scale: 1 }, { color: "#111111", scale: 1.12, duration: 0.4, ease: "power3.out", immediateRender: false }, AGO);
-          tl.fromTo(tgt.querySelector(".f31-sel"), { color: "#5F5B54" }, { color: "#B8461C", duration: 0.2, immediateRender: false }, AGO);
-          tl.fromTo($("f31-ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.32, ease: "power2.out" }, AGO + 0.06);
+          tl.fromTo(tgt, { scale: 1 }, { scale: 1.1, duration: 0.45, ease: "power3.out", immediateRender: false }, AGO);
+          tl.fromTo(tgt.querySelector(".f31-sel"), { color: "#111111" }, { color: "#8A3412", duration: 0.2, immediateRender: false }, AGO);
+          tl.fromTo($("f31-ul"), { scaleX: 0, rotation: -0.5 }, { scaleX: 1, rotation: -0.5, duration: 0.34, ease: "power2.out" }, AGO + 0.06);
+          // a framing of the page: point (cx, cy) in cqw shown at (sx, sy) at zoom s
+          const fr = (cx, cy, sx, sy, s) => ({ x: (sx - cx * s) * PX, y: (sy - cy * s) * PX, scale: s });
+          // the camera drifts in with the scroll: soft, continuous
+          tl.fromTo(pcam, { ...fr(50, 30, 50, 30, 1) }, { ...fr(50, 30, 50, 30, 1.07), duration: TURN, ease: "sine.inOut" }, 0);
 
-          // ---- the page turns: the printout scrolls on to the push command ----
-          tl.fromTo([$("f31-pageA"), $("f31-pageA2")], { yPercent: 0 }, { yPercent: -100, duration: TURN_D, ease: "power3.inOut" }, TURN);
-          tl.set([$("f31-pageA"), $("f31-pageA2")], { autoAlpha: 0 }, TURN + TURN_D);
-          tl.fromTo($("f31-pageB"), { yPercent: 100, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: TURN_D, ease: "power3.inOut" }, TURN);
+          // ---- the printout scrolls on (the downbeat): page A leaves upward, page B arrives under "so" ----
+          tl.fromTo($("f31-pageA"), { yPercent: 0 }, { yPercent: -100, duration: TURN_D, ease: "power2.inOut", immediateRender: false }, TURN);
+          tl.set($("f31-pageA"), { autoAlpha: 1 }, 0).set($("f31-pageA"), { autoAlpha: 0 }, TURN + TURN_D);
+          tl.set($("f31-pageB"), { yPercent: 100, autoAlpha: 0 }, 0).set($("f31-pageB"), { autoAlpha: 1 }, TURN);
+          tl.fromTo($("f31-pageB"), { yPercent: 100 }, { yPercent: 0, duration: TURN_D, ease: "power2.inOut", immediateRender: false }, TURN);
+          // L50 rises: the camera lands close on the printed command (the strike reads at display size), creeps in
+          // through "lease" and "warning", then pulls back faster and faster to the whole page on "go"
+          tl.to(pcam, { ...fr(30, 20, 30, 20, 1.12), duration: TURN_D, ease: "power2.inOut" }, TURN);
+          tl.to(pcam, { ...fr(30, 20, 30, 20, 1.145), duration: WARN - (TURN + TURN_D), ease: "none" }, TURN + TURN_D);
+          tl.to(pcam, { ...fr(30, 20, 30, 20, 1.0), duration: HERE - 0.06 - (WARN + 0.2), ease: "power2.inOut" }, WARN + 0.2);
+          // "here I go": the last push gathers speed into the flip
+          tl.to(pcam, { ...fr(26, 44, 26, 44, 1.035), duration: GO - (HERE - 0.06), ease: "power2.in" }, HERE - 0.06);
 
           // ---- L50: no lease, no warning ----
           const wb = root.querySelectorAll("#f31-pageB .f31-v");
           HR.lead(tl, wb[0], SO); HR.lead(tl, wb[1], NO1);
           HR.hero(tl, wb[2], LEASE, { spread: 22, over: 1.16, pre: 0.12, sharp: true });
-          tl.fromTo($("f31-strike"), { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power2.out" }, LEASE + 0.04);
-          tl.fromTo($("f31-lease"), { opacity: 1 }, { opacity: 0.55, duration: 0.25, immediateRender: false }, LEASE + 0.2);
+          // "lease": the marker slashes through `-with-lease` (a fixed bar scaled by a tween: blurred approach, lands sharp)
+          tl.fromTo($("f31-strike"), { scaleX: 0, rotation: -1.4 }, { scaleX: 1, rotation: -1.4, duration: 0.14, ease: "power3.out", immediateRender: false }, LEASE + 0.02);
+          tl.fromTo($("f31-wl"), { color: "#111111" }, { color: "#5F5B54", duration: 0.3, ease: "power2.out", immediateRender: false }, LEASE + 0.12);
           HR.lead(tl, wb[3], NO2);
           HR.hero(tl, wb[4], WARN, { spread: 24, over: 1.18, pre: 0.12, sharp: true });
-          // no warning: the struck lease is simply gone, 0 ms, and the command closes up to `--force`
-          tl.set($("f31-lease"), { display: "none" }, WARN);
-          tl.fromTo($("f31-cmd"), { x: 10 }, { x: 0, duration: 0.3, ease: "power3.out", immediateRender: false }, WARN);
+          // "warning": no warning — the struck piece is ripped off the page (the fixed-content chip, parked off-frame
+          // until then, takes its place and flies; blurred), and the paper jolts
+          const chip = $("f31-chip");
+          tl.set(chip, { x: 2400, y: 0, rotation: 0 }, 0);
+          tl.set($("f31-wl"), { visibility: "visible" }, 0).set($("f31-wl"), { visibility: "hidden" }, WARN);
+          tl.set(chip, { x: 0, y: 0, rotation: 0 }, WARN);
+          tl.fromTo(chip, { x: 0, y: 0, rotation: 0 }, { x: 1500, y: 760, rotation: 26, duration: 0.42, ease: "power2.in", immediateRender: false }, WARN);
+          tl.set(chip, { x: 2400, y: 0, rotation: 0 }, WARN + 0.44);
+          WOW.shake(tl, pcam, WARN, { amp: 9, dur: 0.32, rot: 0.3, seed: 31 });
+          // the 153.372 downbeat under "long,": a soft breath of the whole sheet
+          WOW.punch(tl, cam, at(153.372), { s: 1.015, dur: 0.5 });
 
           // ---- here I go ----
           HR.lead(tl, wb[5], HERE); HR.lead(tl, wb[6], I);
           HR.hero(tl, wb[7], GO, { spread: 30, over: 1.26, pre: 0.14, sharp: true });
+          // the same line on the terminal under the paper: "go" slams there on its own start too
+          tl.set(term, { visibility: "hidden" }, 0).set(term, { visibility: "visible" }, GO - 0.02);
+          HR.hero(tl, $("f31-tgo"), GO, { spread: 30, over: 1.26, pre: 0.14, sharp: true });
 
-          // ---- the camera: the bridge breathes, the rise pushes in, the drums punch ----
-          const cam = stage.cam;
-          tl.fromTo(cam, { z: 1.0, x: 0, y: 0 }, { z: 1.008, duration: CHECKED - 0.06, ease: "sine.inOut" }, 0);
-          tl.to(cam, { z: 1.026, y: -3, duration: 0.06, ease: "power2.in" }, CHECKED - 0.06);
-          tl.to(cam, { z: 1.012, y: 0, duration: 0.6, ease: "power3.out" }, CHECKED);
-          // the soft line: a slow push and drift, trucking with the reflog
-          tl.to(cam, { z: 1.035, x: -14, y: 6, duration: TURN - CHECKED - 0.6, ease: "sine.inOut" }, CHECKED + 0.6);
-          tl.to(cam, { z: 1.0, x: 0, y: 0, duration: TURN_D, ease: "power3.inOut" }, TURN);
-          // L50 rises: the push gets faster towards "go"
-          tl.to(cam, { z: 1.012, duration: LEASE - TURN - TURN_D - 0.06, ease: "sine.inOut" }, TURN + TURN_D);
-          tl.to(cam, { z: 1.03, duration: 0.06, ease: "power2.in" }, LEASE - 0.06);
-          tl.to(cam, { z: 1.018, duration: 0.5, ease: "power3.out" }, LEASE);
-          tl.to(cam, { z: 1.024, duration: WARN - LEASE - 0.56, ease: "none" }, LEASE + 0.5);
-          tl.to(cam, { z: 1.046, y: -4, duration: 0.06, ease: "power2.in" }, WARN - 0.06);
-          tl.to(cam, { z: 1.03, y: 0, duration: 0.5, ease: "power3.out" }, WARN);
-          tl.to(cam, { z: 1.05, y: 12, x: -8, duration: GO - WARN - 0.56, ease: "power1.in" }, WARN + 0.5);
-          tl.to(cam, { z: 1.085, y: 8, duration: 0.06, ease: "power2.in" }, GO - 0.06);
-          tl.to(cam, { z: 1.06, y: 12, duration: FLIP - GO - 0.04, ease: "power3.out" }, GO);
-          // the flip: a hard punch with the drums' entry, then a push that builds with them to the cut
-          tl.to(cam, { z: 1.09, duration: 0.04, ease: "power2.in" }, FLIP - 0.04);
-          tl.to(cam, { z: 1.065, duration: 0.35, ease: "power3.out" }, FLIP);
-          tl.to(cam, { z: 1.11, y: 18, x: -14, duration: DUR - FLIP - 0.35, ease: "power2.in" }, FLIP + 0.35);
+          // ---- the flip: on "go" the sheet peels off from its bottom edge, then whips up and over, onto the drums ----
+          const flip = { p: 0 };
+          tl.fromTo(flip, { p: 0 }, { p: 1, duration: DRUM - GO - 0.02, ease: "power3.in", immediateRender: false }, GO + 0.02);
+          tl.set(sheet, { visibility: "visible" }, 0).set(sheet, { visibility: "hidden" }, DRUM);
+
+          // ---- the terminal: the drum fill punches on every hit while the camera pushes in on the prompt ----
+          const fill = [...HR.onsetsIn("kick", T0 + DRUM, T0 + DUR), ...HR.onsetsIn("snare", T0 + DRUM, T0 + DUR)]
+            .sort((p, q) => p - q).filter((t, i, a) => i === 0 || t - a[i - 1] > 0.02);
+          const strength = (T) => Math.max(HR.hit("kick", T + 0.001, 0.05), HR.hit("snare", T + 0.001, 0.05));
+          // the punches stop before the last two hits, so the cut frame is exactly 32's first (no punch left on it)
+          fill.filter((T) => T < 160.5).forEach((T, i) => WOW.punch(tl, cam, at(T), { s: 1 + (i === 0 ? 0.04 : 0.012 + 0.014 * strength(T)), dur: i === 0 ? 0.42 : 0.24 }));
+          WOW.shake(tl, tcam, DRUM, { amp: 6 + 10 * HR.band("drums", T0 + DRUM + 0.1), dur: 0.42, rot: 0.25, seed: 7 });
+          // Round 2: the fill's hits carry the camera. On the drums' entry it slams in on "go"; the next hits walk it back
+          // across "here", then up onto the unsent command, reading it a word per hit (`~/us (main) $`, git, push,
+          // --force, the cursor); the last kick pulls it back to the whole terminal, landing ON the cut (32's first frame,
+          // the prompt at 5.5/28.2cqw, 4.2cqw, unscaled). Each step is a fast eased glide (0.13 s, then sharp until the next hit), blurred by its own speed.
+          const CAM_STEPS = [
+            [at(158.875), "go", 1.75, 0.58, 0.56], [at(159.104), "here", 1.75, 0.42, 0.56],
+            [at(159.332), "pfx", 2.15, 0.5, 0.46], [at(159.561), "git", 2.15, 0.5, 0.46], [at(159.791), "push", 2.2, 0.5, 0.46],
+            [at(160.022), "force", 2.3, 0.5, 0.46], [at(160.252), "block", 2.65, 0.5, 0.46], [at(160.531), null, 1, 0, 0],
+          ];
           tl.set({}, {}, DUR);
+          // deliberate: a hero's gathering glyphs and the sheet folded edge-on overlap their own neighbours for a few frames
+          root.querySelectorAll("#f31-pageB .f31-bl, #f31-pageB .f31-bl *, #f31-b3, #f31-b3 *, #f31-flag, #f31-flag *, #f31-cmd1, #f31-cmd1 *")
+            .forEach((el) => el.setAttribute("data-layout-allow-overlap", ""));
 
-          // ---- per-frame state: the register, the prompt, the cursor, the glow, the camera ----
-          const reg = $("f31-reg"), pfx = $("f31-pfx"), cur = $("f31-cur"), go = $("f31-go");
+          // ---- per-frame state: the reading pointer, the lamp, the glows, the turn's blur, the flip, the cursor ----
+          const rows = Array.from(root.querySelectorAll(".f31-row")), lamp = $("f31-lamp"), aglow = $("f31-aglow");
+          const shade = $("f31-shade"), tglow = $("f31-tglow"), block = $("f31-block"), tgo = $("f31-tgo");
+          const pageA = $("f31-pageA"), pageB = $("f31-pageB");
+          // the camera's targets on the terminal (tcam px, measured after the fonts: a point's centre)
+          const promptEl = $("f31-prompt"), t3 = $("f31-t3");
+          const TGT = { go: [t3, tgo], here: [t3, $("f31-there")], pfx: [promptEl, $("f31-tpfx")], git: [promptEl, $("f31-pgit")],
+            push: [promptEl, $("f31-ppush")], force: [promptEl, $("f31-pforce")], block: [promptEl, block] };
+          // fixed layout (only transforms move these), so the measure is cached once the fonts are in
+          const cache = {};
+          const centre = (k) => {
+            if (cache[k]) return cache[k];
+            const [box, el] = TGT[k], c = [box.offsetLeft + el.offsetLeft + el.offsetWidth / 2, box.offsetTop + el.offsetTop + el.offsetHeight / 2];
+            if (!document.fonts || document.fonts.status === "loaded") cache[k] = c;
+            return c;
+          };
+          const e3o = gsap.parseEase("power3.out");
+          // a framing: [x, y, z] = tcam translate (px) and scale with origin 0 0; neutral = [0, 0, 1]
+          const frameOf = (st) => { if (!st[1]) return [0, 0, 1]; const [cx, cy] = centre(st[1]), z = st[2]; return [st[3] * 1920 - cx * z, st[4] * 1080 - cy * z, z]; };
+          function tcamAt(t) {
+            let cur = [0, 0, 1];
+            for (let i = 0; i < CAM_STEPS.length; i++) {
+              const st = CAM_STEPS[i]; if (t < st[0]) break;
+              const next = i + 1 < CAM_STEPS.length ? CAM_STEPS[i + 1][0] : DUR;
+              const d = Math.min(0.13, next - st[0]), u = i === CAM_STEPS.length - 1 ? e3o(Math.min(1, (t - st[0]) / (DUR - st[0]))) : e3o(Math.min(1, (t - st[0]) / d));
+              const to = frameOf(st);
+              cur = [cur[0] + (to[0] - cur[0]) * u, cur[1] + (to[1] - cur[1]) * u, cur[2] + (to[2] - cur[2]) * u];
+            }
+            return cur;
+          }
+          const lerp = (a, b, u) => a + (b - a) * Math.max(0, Math.min(1, u));
+          let lastTurn = 0, lastFlip = 0, lastT = -1;
           function render() {
-            const t = tl.time(), T = T0 + t, dark = t >= FLIP;
-            reg.classList.toggle("f31-dark", dark);
-            go.classList.toggle("hr-glowbox", dark);
-            pfx.textContent = dark ? "~/us (main) $ " : "$ ";
-            cur.style.opacity = dark && (t - FLIP < 0.35 || Math.floor((t - FLIP) * 2) % 2 === 0) ? 1 : 0;
-            if (dark) HR.glow(go, T, 0.35, 0.3);
-            stage.apply(T);
+            const t = tl.time(), T = T0 + t;
+            // the row under the pointer reads in ink (the target stays lit once found)
+            const y = gsap.getProperty(list, "y") || 0;
+            rows.forEach((r, i) => r.classList.toggle("f31-on", Math.abs(i * ROW + y - SLOT * ROW) < ROW * 0.5 || (r === tgt && t >= AGO)));
+            // the lamp breathes with the pads (no bass here) and follows what is read
+            const pad = HR.band("rms", T), voc = HR.band("vocal", T);
+            const ph2 = t >= TURN;
+            lamp.style.setProperty("--lx", (ph2 ? 40 : 58).toFixed(1) + "%");
+            lamp.style.setProperty("--ly", (ph2 ? 58 : 50).toFixed(1) + "%");
+            lamp.style.opacity = (1.05 - 0.4 * pad).toFixed(3);
+            // the accent light behind the object: the lyric and the reflog's pointer, then the struck flag
+            const gx = ph2 ? 47 : lerp(66, 30, (t - CHECKED) / (AGO - CHECKED)), gy = ph2 ? 34 : lerp(20, 44, (t - CHECKED) / (AGO - CHECKED));
+            aglow.style.left = gx.toFixed(2) + "cqw"; aglow.style.top = gy.toFixed(2) + "cqw";
+            const leaseGlow = t >= LEASE ? Math.exp(-(t - LEASE) / 0.7) * 0.06 : 0;
+            aglow.style.opacity = (0.06 + 0.05 * voc + leaseGlow).toFixed(3);
+            // the turn: the pages blur with their speed (approach blurred, landing sharp)
+            const sp = t >= TURN && t <= TURN + TURN_D ? Math.sin(Math.PI * (t - TURN) / TURN_D) : 0;
+            pageA.style.filter = sp > 0.05 ? `blur(${(7 * sp).toFixed(1)}px)` : "";
+            pageB.style.filter = sp > 0.05 && t < SO + 0.06 ? `blur(${(5 * sp).toFixed(1)}px)` : "";
+            // the flip: hinge at the top, the bottom edge leaves into the desk's depth and the sheet flies up and away
+            const p = flip.p, th = 104 * p;
+            const vel = lastT >= 0 && t > lastT && t - lastT < 0.1 ? (p - lastFlip) / (t - lastT) : 0;
+            if (p > 0 && t < DRUM) {
+              sheet.style.transform = `translateY(${(-p * p * 14 * PX).toFixed(1)}px) rotateX(${(-th).toFixed(2)}deg) rotateZ(${(-2.2 * p).toFixed(2)}deg)`;
+              sheet.style.filter = vel > 1.2 ? `blur(${Math.min(9, (vel - 1.2) * 1.6).toFixed(1)}px)` : "";
+              shade.style.opacity = Math.min(1, Math.sin((th * Math.PI) / 180) * 0.75).toFixed(3);
+            } else { sheet.style.transform = ""; sheet.style.filter = ""; shade.style.opacity = 0; }
+            lastFlip = p; lastT = t;
+            // the terminal: a fire glow behind "go", breathing with the drums; the cursor flickers with the fill's hits
+            const dr = HR.band("drums", T), hit = Math.max(HR.hit("kick", T, 0.12), HR.hit("snare", T, 0.12));
+            tglow.style.opacity = t >= GO ? (0.07 + 0.05 * dr + 0.05 * hit).toFixed(3) : 0;
+            tgo.classList.toggle("hr-glowbox", t >= GO);
+            tgo.style.setProperty("--hr-glow", (0.35 + 0.35 * dr + 0.4 * hit).toFixed(3));
+            block.style.opacity = t < DRUM ? 1 : (t - DRUM < 0.3 || hit > 0.35 ? 1 : 0.15);
+            // the hit-carried camera on the terminal, blurred by its own speed (render-driven: a plain CSS blur)
+            const [tx, ty, tz] = tcamAt(t), [px, py, pz] = tcamAt(Math.max(0, t - 1 / 60));
+            const neutral = Math.abs(tz - 1) < 1e-4 && Math.abs(tx) < 0.05 && Math.abs(ty) < 0.05;
+            tcam.style.transform = t >= DRUM - 0.001 && !neutral ? `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px) scale(${tz.toFixed(4)})` : "";
+            const csp = Math.hypot(tx - px, ty - py) + 900 * Math.abs(tz - pz);
+            tcam.style.filter = t >= DRUM && csp > 20 ? `blur(${Math.min(6, (csp - 20) / 12).toFixed(1)}px)` : "";
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();

@@ -18,9 +18,26 @@ copy, harvest-remix's included, hard-codes the orange and cream.)
 
 ## Traps that cost harvest-remix whole rounds
 
+- **A property only in a `fromTo`'s `from` is not rendered.** `tl.fromTo(el, {opacity: 1, x: 0}, {x: 100})`: the
+  render's frame-by-frame seeks skip `opacity`, although `snap` shows it (02-commit lost a word in the video this way).
+  Put every property in both `from` and `to`, or set it separately with `tl.set(el, {opacity: 1}, t)`.
+- **Motion blur clones its target once** and seeks with events suppressed: an element whose content changes blurs
+  stale content, and moves made in `render()` never blur. Put `data-hf-motion-blur` only on elements with fixed
+  content moved by timeline tweens; use a plain CSS blur for render-driven moves. The copies follow the element's
+  own opacity and visibility, but they sample the shutter around the current time: an element that waits invisible
+  at its landing spot can smear there for a frame or two, so park it off-frame instead (`tl.set(el, {x: 1900}, 0)`).
+  The copies are also on screen while the element's own tween settles: blur only the approach, and run a settle (an
+  elastic, a squash) on a wrapper, or the check fails the blurred copy on contrast.
 - **A script error kills the whole frame silently.** In the film it is just a dead frame; nothing fails. A kit call
   that uses `tl` before `const tl = …` (a TDZ error) did this to two frames. `./vid snap <id> <frame_id>` runs
   `hyperframes check` on the frame alone and fails on it.
+- **`WOW.explode` with a `parent` draws a flat shock ring and rays** (`WOW.shock`, `WOW.rays`), which
+  docs/visual-guidelines.md rule 9 forbids. Call it without `parent` (or with `fx: false`) and let the object carry the hit:
+  its parts, sparks and light.
+- **Switch a cut on one clock.** A `tl.set` switch and a `render()` switch at the same timestamp were seen to land a
+  frame apart in a render (35-chant3), leaving one blank frame at an in-frame cut. Drive both sides of a cut from the
+  same place, or offset them by a few ms so both have switched by the same frame (35 does this), and check the cut at
+  full rate.
 - **Pin the timeline's end.** Removing a frame's last tween shortens its timeline and freezes the frame's end:
   `tl.set({}, {}, DUR)`.
 - **Measure after the fonts.** DOM measurements taken before the fonts load give the wrong size and pose:

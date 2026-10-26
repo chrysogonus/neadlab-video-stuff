@@ -2,14 +2,19 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 24 — rewrote2 (chorus 2, L38, 117.160–121.534). Forks 11-rewrote: same set, the world moved on.
-         The log is the one 23 left (`9c0ffee` ready. on top, the revert PR's commit under it, the three cherry-picked
-         days, then moved in and initial commit), and `git rebase -i --root --force-rebase` rewrites it as she sings.
-         The wave climbs oldest first, one SHA per kick from "rewrote" (117.28), `Rebasing (n/6)` counting the picks.
-         The row it skips is `Revert "force push"`, the ex's attempt to undo the push: lit on "no" (119.848), struck on
-         "you" (120.04), gone on the 120.279 downbeat while the top row becomes 61e0a7f. `Successfully rebased…` lands
-         on the 120.736 kick. Chorus 2 is a notch louder: the hero spreads and camera punches are sized by the drums
-         measured at each hero (past, 0.61 here against 0.16 in 11), the kick pulse by this span's mean drums. -->
+    <!-- Frame 24 — rewrote2 (chorus 2, L38, 117.160–121.534). Refinement round 1. Forks 11-rewrote (its set, camera
+         wrapper, wave and counter), with the world moved on and everything a size up: the drums are louder.
+         The cut is a whipR out of 23 (0.06 s on this side: "I" starts 0.06 s in). The log opens as 23 left it, at its
+         scale: the revert PR's commit and the three cherry-picked days struck with 23's glowing bar, dimmed. `git rebase
+         -i --root --force-rebase` rewrites it oldest first, one SHA per kick from "rewrote" (117.28): the front (a fire
+         glow, a scan line, the cursor) climbs the column, each new hash scrambles in fire, a struck day is re-made clean
+         under a new hash, `Rebasing (n/6)` counts; the camera tilts up with the wave (a ~230 px truck plus a push).
+         On "no" (119.848) the camera snaps back and the row the rebase skips, `2b7d4e8 Revert "force push"`, is pulled
+         out of the log and thrown down to the bottom of the frame at 1.95× (display size, ~75 % of the width,
+         motion-blurred), leaving a gap. On "you" (120.04) a thick fire strike slams across it with a flash, a
+         shockwave, a 1.1 camera punch and a shake; on the 120.279 downbeat it falls off the frame (motion-blurred)
+         while the rows close the gap and the top row becomes 61e0a7f. `Successfully rebased…` lands on the 120.736
+         kick and the panel's edge lights. The out is a 0.25 s whipL into 25. -->
   </head>
   <body>
     <template>
@@ -25,77 +30,116 @@
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
+        #f24-cam { position: absolute; inset: 0; transform-origin: 42% 88%; } /* punches centre on the thrown row */
         #f24-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f24-strip b { color: var(--fire); font-weight: 600; }
-        /* the log, rewritten: git log --oneline after the rebase command */
-        #f24-log { position: absolute; left: 5.5cqw; top: 9.6cqw; width: 34cqw; }
-        #f24-cmd { font: 500 1.02cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        /* the log, as 23 left it: a lit terminal panel, hashes at 3 cqw, messages at 23's size */
+        #f24-log { position: absolute; left: 3.4cqw; top: 6.8cqw; width: 42cqw; box-sizing: border-box; padding: 1.3cqw 1.6cqw;
+          background: #161614; border: 1px solid var(--border); border-top-color: #3E3E3A; }
+        #f24-edge { position: absolute; left: -1px; top: -1px; bottom: -1px; width: 0.32cqw; background: var(--fire); }
+        #f24-cmd { font: 500 1.15cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
         #f24-cmd b { color: var(--cream); font-weight: 500; }
-        #f24-head { margin-top: 1.4cqw; font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase;
-          color: var(--cream-muted); padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+        #f24-head { margin-top: 1cqw; font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase;
+          color: #9A9A92; padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
         #f24-head b { color: var(--cream); font-weight: 600; }
-        #f24-rows { position: relative; margin-top: 0.9cqw; }
-        .f24-row { position: relative; height: 3.7cqw; overflow: hidden; padding-left: 2.1cqw; font: 400 1.75cqw/3.7cqw "IBM Plex Mono", monospace;
-          color: var(--cream-muted); white-space: nowrap; }
-        .f24-row .f24-h { font-weight: 500; color: var(--cream-muted); }
+        #f24-rows { position: relative; margin-top: 0.6cqw; height: 28cqw; }
+        /* the wave's light: a fire glow and a scan line at the row being rewritten (placed in render()) */
+        #f24-glow { position: absolute; left: 9cqw; top: 0; width: 70cqw; height: 34cqw; margin: -17cqw 0 0 -28cqw; pointer-events: none;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.19) 0%, rgba(232, 93, 38, 0.11) 38%, rgba(232, 93, 38, 0.05) 70%, rgba(232, 93, 38, 0) 100%); }
+        #f24-scan { position: absolute; left: -1.6cqw; right: -1.6cqw; top: 0; height: 2px; background: var(--fire); }
+        .f24-row { position: relative; height: 4cqw; padding-left: 2.2cqw; white-space: nowrap; color: #A4A49C; transform-origin: 0% 50%; }
+        .f24-txt { position: relative; display: inline-block; line-height: 4cqw; }
+        .f24-h { font: 500 2.8cqw/4cqw "IBM Plex Mono", monospace; letter-spacing: 0; color: var(--cream-muted); }
+        .f24-m { font: 500 2cqw/4cqw "IBM Plex Mono", monospace; margin-left: 1.2cqw; }
         .f24-row.f24-new .f24-h { color: var(--cream); font-weight: 600; }
+        .f24-row.f24-new .f24-m { color: var(--cream); }
         .f24-row .f24-h.f24-hot { color: var(--fire); font-weight: 600; }
-        .f24-row.f24-mark, .f24-row.f24-mark .f24-h { color: var(--fire); }
-        .f24-row .f24-x { position: absolute; left: 1.8cqw; width: 29.8cqw; top: 1.78cqw; height: 3px; background: var(--fire); transform-origin: 0% 50%; transform: scaleX(0); }
-        #f24-cur { position: absolute; left: 0; top: 0.95cqw; width: 0.95cqw; height: 1.8cqw; background: var(--fire); }
-        #f24-status { margin-top: 1.1cqw; font: 400 1.12cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; height: 1.6cqw; }
+        /* 23's strike: a thick glowing bar; a re-made day loses it (it shrinks to the right) */
+        .f24-x { position: absolute; left: -0.5cqw; right: -0.5cqw; top: 1.86cqw; height: 0.34cqw; background: var(--fire); transform-origin: 100% 50%;
+          box-shadow: 0 0 0.9cqw rgba(232, 93, 38, 0.6); }
+        #f24-cur { position: absolute; left: 0.4cqw; top: 0.95cqw; width: 1cqw; height: 2.1cqw; background: var(--fire); }
+        #f24-status { margin-top: 0.8cqw; font: 400 1.3cqw/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; height: 2cqw; }
         #f24-status.f24-done { color: var(--cream); }
-        /* the line: right-aligned, poster scale */
+        /* the dropped commit, pulled out to the bottom of the frame at 1.95x: fixed-content copies of the row
+           (motion blur clones its target once) — the lifted one (lit) and the falling one (struck) */
+        .f24-big { position: absolute; left: 0; top: 4cqw; height: 4cqw; padding-left: 2.2cqw; white-space: nowrap; transform-origin: 0% 50%; opacity: 0; }
+        .f24-big .f24-h { color: var(--fire); font-weight: 600; }
+        .f24-big .f24-m { color: var(--cream); font-weight: 600; }
+        .f24-big .f24-bfl { position: absolute; left: -0.8cqw; right: -0.6cqw; top: 0.35cqw; bottom: 0.35cqw; background: var(--fire); opacity: 0; }
+        .f24-big .f24-bx { position: absolute; left: -0.6cqw; right: -0.6cqw; top: 2.08cqw; height: 0.5cqw; background: var(--fire); transform-origin: 0% 50%;
+          box-shadow: 0 0 1.1cqw rgba(232, 93, 38, 0.7); transform: scaleX(0); }
+        #f24-fall .f24-m { color: #A4A49C; }
+        #f24-fall .f24-bx { transform: none; }
+        #f24-inner { position: relative; display: inline-block; }
+        #f24-bglow { position: absolute; left: 0; top: 0; width: 96cqw; height: 34cqw; margin: -17cqw 0 0 -48cqw; pointer-events: none; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.2) 0%, rgba(232, 93, 38, 0.11) 40%, rgba(232, 93, 38, 0.045) 72%, rgba(232, 93, 38, 0) 100%); }
+        #f24-fx { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+        /* the line: right-aligned, poster scale, a glow behind the word being sung */
+        #f24-hglow { position: absolute; left: 0; top: 0; width: 78cqw; height: 48cqw; margin: -24cqw 0 0 -39cqw; pointer-events: none;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.085) 40%, rgba(232, 93, 38, 0.035) 72%, rgba(232, 93, 38, 0) 100%); }
         .f24-lyric { position: absolute; right: 5.5cqw; text-align: right; color: var(--cream); white-space: nowrap; }
         .f24-lyric > div { white-space: nowrap; }
-        #f24-past { top: 8.6cqw; font: 900 11.5cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.045em; transform-origin: 100% 0%; }
-        #f24-now { top: 31.6cqw; font: 900 10.8cqw/0.92 "Barlow", sans-serif; letter-spacing: -0.045em; }
-        #f24-now .f24-small { font-weight: 800; font-size: 0.62em; letter-spacing: -0.035em; line-height: 1.12; }
+        #f24-past { top: 8.4cqw; font: 900 11cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.045em; transform-origin: 100% 0%; }
+        #f24-now { top: 31.6cqw; font: 900 10.2cqw/0.92 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        #f24-now .f24-small { font-weight: 800; font-size: 0.64em; letter-spacing: -0.035em; line-height: 1.12; }
         .f24-hero { color: var(--fire); }
       </style>
       <div id="root" data-composition-id="24-rewrote2" data-width="1920" data-height="1080" data-duration="4.374">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f24-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
-        </div>
+        <div id="f24-cam">
+          <div class="hr-layer" data-depth="0.15">
+            <div id="f24-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+          </div>
 
-        <div class="hr-layer" data-depth="0.5">
-          <div id="f24-log">
-            <div id="f24-cmd">~/us (main) $ <b>git rebase -i --root --force-rebase</b></div>
-            <div id="f24-head"><span>git log --oneline</span><b>main</b></div>
-            <div id="f24-rows">
-              <div class="f24-row"><span class="f24-h">9c0ffee</span>&nbsp; ready.</div>
-              <div class="f24-row" id="f24-drop"><span class="f24-h">2b7d4e8</span>&nbsp; Revert "force push"<i class="f24-x"></i></div>
-              <div class="f24-row"><span class="f24-h">0e96d4a</span>&nbsp; that sunday</div>
-              <div class="f24-row"><span class="f24-h">c7f2b18</span>&nbsp; the beach</div>
-              <div class="f24-row"><span class="f24-h">51d0a3e</span>&nbsp; first date</div>
-              <div class="f24-row"><span class="f24-h">8f4c61b</span>&nbsp; moved in</div>
-              <div class="f24-row"><span class="f24-h">b05d2f8</span>&nbsp; initial commit</div>
-              <div id="f24-cur"></div>
+          <div class="hr-layer" data-depth="0.5">
+            <div id="f24-log">
+              <i id="f24-edge" data-layout-ignore></i>
+              <div id="f24-cmd">~/us (main) $ <b>git rebase -i --root --force-rebase</b></div>
+              <div id="f24-head"><span>git log --oneline</span><b>main</b></div>
+              <div id="f24-rows">
+                <i id="f24-glow" data-layout-ignore></i>
+                <i id="f24-scan" data-layout-ignore></i>
+                <div class="f24-row"><span class="f24-txt"><span class="f24-h">9c0ffee</span><span class="f24-m">ready.</span></span></div>
+                <div class="f24-row" id="f24-drop"><span class="f24-txt"><span class="f24-h" data-layout-allow-occlusion>2b7d4e8</span><span class="f24-m" data-layout-allow-occlusion>Revert "force push"</span><i class="f24-x"></i></span></div>
+                <div class="f24-row"><span class="f24-txt"><span class="f24-h" data-layout-allow-occlusion>0e96d4a</span><span class="f24-m" data-layout-allow-occlusion>that sunday</span><i class="f24-x"></i></span></div>
+                <div class="f24-row"><span class="f24-txt"><span class="f24-h" data-layout-allow-occlusion>c7f2b18</span><span class="f24-m" data-layout-allow-occlusion>the beach</span><i class="f24-x"></i></span></div>
+                <div class="f24-row"><span class="f24-txt"><span class="f24-h" data-layout-allow-occlusion>51d0a3e</span><span class="f24-m" data-layout-allow-occlusion>first date</span><i class="f24-x"></i></span></div>
+                <div class="f24-row"><span class="f24-txt"><span class="f24-h">8f4c61b</span><span class="f24-m">moved in</span></span></div>
+                <div class="f24-row"><span class="f24-txt"><span class="f24-h">b05d2f8</span><span class="f24-m">initial commit</span></span></div>
+                <i id="f24-bglow" data-layout-ignore></i>
+                <div class="f24-big" id="f24-lift" data-layout-ignore data-hf-motion-blur='{"fps": 60}'><span id="f24-inner" class="f24-txt"><b class="f24-bfl"></b><span class="f24-h">2b7d4e8</span><span class="f24-m">Revert "force push"</span><i class="f24-bx"></i></span></div>
+                <div class="f24-big" id="f24-fall" data-layout-ignore data-hf-motion-blur='{"fps": 60}'><span class="f24-txt"><span class="f24-h">2b7d4e8</span><span class="f24-m">Revert "force push"</span><i class="f24-bx"></i></span></div>
+                <div id="f24-fx" data-layout-ignore></div>
+                <div id="f24-cur"></div>
+              </div>
+              <div id="f24-status"></div>
             </div>
-            <div id="f24-status"></div>
           </div>
-        </div>
 
-        <div class="hr-layer" data-depth="0.9">
-          <div class="f24-lyric" id="f24-past">
-            <div><span class="f24-w">i</span> <span class="f24-w f24-hero hr-glowbox" id="f24-rewrote">rewrote</span></div>
-            <div><span class="f24-w">the</span> <span class="f24-w f24-hero hr-glowbox" id="f24-pastw">past,</span></div>
-          </div>
-          <div class="f24-lyric" id="f24-now">
-            <div class="f24-small"><span class="f24-w">there's</span> <span class="f24-w">no</span></div>
-            <div><span class="f24-w f24-hero hr-glowbox" id="f24-you">you</span> <span class="f24-w">and</span> <span class="f24-w">me</span></div>
+          <div class="hr-layer" data-depth="0.9">
+            <i id="f24-hglow" data-layout-ignore></i>
+            <div class="f24-lyric" id="f24-past">
+              <div><span class="f24-w">i</span> <span class="f24-w f24-hero hr-glowbox" id="f24-rewrote">rewrote</span></div>
+              <div><span class="f24-w">the</span> <span class="f24-w f24-hero hr-glowbox" id="f24-pastw">past,</span></div>
+            </div>
+            <div class="f24-lyric" id="f24-now">
+              <div class="f24-small"><span class="f24-w">there's</span> <span class="f24-w">no</span></div>
+              <div><span class="f24-w f24-hero hr-glowbox" id="f24-you">you</span> <span class="f24-w">and</span> <span class="f24-w">me</span></div>
+            </div>
           </div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
-          const DUR = 4.374, T0 = 117.16, PX = 19.2; // 1cqw at 1920 wide
+          const DUR = 4.374, T0 = 117.16;
           const root = document.querySelector('[data-composition-id="24-rewrote2"]');
           const $ = (id) => root.querySelector("#" + id);
+          const PX = (root.clientWidth || 1920) / 100; // 1cqw
           // chorus 2 is louder: this span's mean drum envelope over 11's (0.492, measured 56.291–60.780), plus a notch
           let sum = 0, n = 0;
           for (let T = T0; T < T0 + DUR; T += 0.02) { sum += HR.band("drums", T); n++; }
@@ -103,6 +147,12 @@
           const stage = HR.stage(root, { seed: 24, pulse: K });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
+          const cam = $("f24-cam");
+
+          // ---- the cuts: whipR in from 23 (0.11 s from -0.05, so it lands as "I" starts 0.06 s in and opens on the log), whipL out into 25 (from 121.284, 0.34 s
+          //      after "me" starts) ----
+          WOW.transition(tl, cam, { in: "whipR", dur: 0.11, start: -0.05 });
+          WOW.transition(tl, cam, { out: "whipL", dur: 0.25, total: DUR });
 
           // ---- the sung line (lyrics.json L38) ----
           const w = root.querySelectorAll(".f24-w");
@@ -126,65 +176,133 @@
           // ---- the rebase: new commits are made oldest first, so the wave climbs; one SHA per kick ----
           const rows = Array.from(root.querySelectorAll(".f24-row"));
           const NEW = ["61e0a7f", null, "b8d2c53", "4a1f96e", "e3b8d07", "7c0e5b9", "2fa61c4"];
-          // [row, time] in rebase order (bottom row first); row 1 is the dropped commit (not a pick: git counts 6)
-          const steps = [[6, REWROTE], [5, at(117.525)], [4, at(117.996)], [3, at(118.437)], [2, at(118.916)], [1, YOU], [0, at(120.279)]];
+          const DROP = at(120.279), SUCCESS = at(120.736), RH = 4 * PX;
+          // [row, time] in rebase order (bottom row first); row 1 is the dropped commit
+          const steps = [[6, REWROTE], [5, at(117.525)], [4, at(117.996)], [3, at(118.437)], [2, at(118.916)], [1, YOU], [0, DROP]];
           const SCR = 0.2; // a SHA scrambles for 0.2 s and resolves left to right
           rows.forEach((r) => { const h = r.querySelector(".f24-h"); h.dataset.old = h.textContent; });
-          // the dropped row: lit on "no", struck on "you", gone on the downbeat (the list closes the gap)
-          const drop = $("f24-drop"), DROP = at(120.279);
-          tl.fromTo(drop.querySelector(".f24-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power2.out" }, YOU);
-          tl.fromTo(drop, { opacity: 1 }, { opacity: 0.45, duration: 0.15, immediateRender: false }, YOU + 0.1);
-          const RH = 3.7 * PX, gap = { h: RH }; // the dropped row's height, applied in render(); rows below sit from fixed coordinates
-          tl.fromTo(gap, { h: RH }, { h: 0, duration: 0.3, ease: "power3.inOut", immediateRender: false }, DROP);
-          tl.fromTo(drop, { opacity: 0.45 }, { opacity: 0, duration: 0.24, ease: "power2.in", immediateRender: false }, DROP);
-          const SUCCESS = at(120.736);
+          // a struck day (23's verdict) is re-made under a new hash: its strike shrinks away as the SHA resolves
+          steps.forEach(([ri, ts]) => {
+            if (ri < 2 || ri > 4) return;
+            tl.fromTo(rows[ri].querySelector(".f24-x"), { scaleX: 1 }, { scaleX: 0, duration: 0.18, ease: "power2.in", immediateRender: false }, ts + 0.04);
+          });
+          // the front of the wave (in rows): it starts on the oldest commit and climbs a row per kick; it reaches
+          // the revert on "no"
+          const FR = { y: 6 };
+          [[5, at(117.525)], [4, at(117.996)], [3, at(118.437)], [2, at(118.916)], [1, NO]].forEach(([ri, ts]) => {
+            tl.fromTo(FR, { y: ri + 1 }, { y: ri, duration: 0.2, ease: "power3.out", immediateRender: false }, ts - 0.03);
+          });
+          tl.fromTo(FR, { y: 1 }, { y: 0, duration: 0.2, ease: "power3.out", immediateRender: false }, DROP - 0.03);
 
-          // ---- the camera: punches on the three heroes sized by the measured drums; a slow push carries the frame ----
-          const punch = (t, base) => {
-            const k = base * (0.6 + 0.6 * HR.band("drums", T0 + t));
-            tl.to(stage.cam, { z: 1 + k + (t / DUR) * 0.03, y: -8, duration: 0.07, ease: "power2.in" }, t - 0.06);
-            tl.to(stage.cam, { z: 1.0 + ((t + 0.6) / DUR) * 0.03, y: 0, duration: 0.55, ease: "elastic.out(1, 0.5)" }, t + 0.01);
-          };
-          tl.fromTo(stage.cam, { x: 0 }, { x: 34 * K, duration: DUR, ease: "none", immediateRender: false }, 0);
-          punch(REWROTE, 0.045 * K); punch(PAST, 0.04 * K); punch(YOU, 0.05 * K);
-          tl.to(stage.cam, { z: 1.035, duration: DUR - (YOU + 0.6), ease: "none" }, YOU + 0.6);
+          // ---- the drop, the scene's big moment: on "no" the revert row is pulled out of the log and thrown to the
+          //      bottom of the frame at 1.95x; struck on "you"; it falls off the frame on the downbeat ----
+          const drop = $("f24-drop"), lift = $("f24-lift"), fall = $("f24-fall"), inner = $("f24-inner");
+          const BIG = 1.95, ROWS_TOP = 13.1, DY = (50 - (ROWS_TOP + 1.5 * 4)) * PX, DX = -0.6 * PX;
+          tl.set(drop, { opacity: 1 }, 0).set(drop, { opacity: 0 }, NO - 0.02);
+          tl.set(lift, { opacity: 0 }, 0).set(lift, { opacity: 1 }, NO - 0.02).set(lift, { opacity: 0 }, DROP);
+          tl.fromTo(lift, { x: 0, y: 0, scale: 1, rotation: 0 }, { x: DX, y: DY, scale: BIG, rotation: -1.2, duration: 0.2, ease: "power3.out", immediateRender: false }, NO - 0.02);
+          // "you": the strike slams across, the row flashes and jolts (on an inner wrapper: the lifted row itself holds still)
+          tl.fromTo(inner.querySelector(".f24-bx"), { scaleX: 0 }, { scaleX: 1, duration: 0.09, ease: "power2.out", immediateRender: false }, YOU);
+          const bfl = inner.querySelector(".f24-bfl");
+          tl.set(bfl, { opacity: 0 }, 0);
+          tl.fromTo(bfl, { opacity: 0.42 }, { opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false }, YOU);
+          tl.fromTo(inner.querySelector(".f24-m"), { color: "#F0ECE5" }, { color: "#A4A49C", duration: 0.12, immediateRender: false }, YOU + 0.06);
+          tl.fromTo(inner, { x: 0, y: 0 }, { x: 0.5 * PX, y: 0.25 * PX, duration: 0.05, ease: "power2.out", immediateRender: false }, YOU);
+          tl.fromTo(inner, { x: 0.5 * PX, y: 0.25 * PX }, { x: 0, y: 0, duration: 0.3, ease: "elastic.out(1, 0.5)", immediateRender: false }, YOU + 0.05);
+          // the downbeat: it falls off the frame, tipping, motion-blurred
+          tl.set(fall, { opacity: 0 }, 0).set(fall, { opacity: 1 }, DROP).set(fall, { opacity: 0 }, DROP + 0.42);
+          tl.fromTo(fall, { x: DX, y: DY, scale: BIG, rotation: -1.2 }, { x: DX + 5 * PX, y: DY + 24 * PX, scale: BIG, rotation: 9, duration: 0.42, ease: "power2.in", immediateRender: false }, DROP);
+          // the list closes the gap: the rows under it move up a slot
+          tl.fromTo(rows.slice(2), { y: 0 }, { y: -RH, duration: 0.3, ease: "power3.inOut", immediateRender: false }, DROP + 0.08);
+          // the hit's light and debris, at the lifted row's centre (in #f24-rows' coordinates)
+          const BX = (DX + 0.5 * BIG * (2.2 + 35.8) * PX), BY = 1.5 * RH + DY;
+          const fx = $("f24-fx");
+          WOW.shock(tl, fx, { x: BX, y: BY, t: YOU, r: 760 * K, n: 2, w: 5, dur: 0.6, color: "fire" });
+          WOW.rays(tl, fx, { x: BX, y: BY, t: YOU, n: 14, r0: 220, r1: 900, w: 3, dur: 0.32, seed: 24 });
+          WOW.burst(tl, fx, { x: BX, y: BY + 2 * PX, t: DROP, n: 26, speed: 1100, gravity: 2600, spread: 150, aim: 90, size: [6, 16], dur: 0.7, seed: 24 });
+          const bglow = $("f24-bglow");
+          bglow.style.left = BX.toFixed(1) + "px"; bglow.style.top = BY.toFixed(1) + "px";
+
+          // ---- the camera: the frame tilts up and pushes with the wave (a ~230 px truck), snaps back on "no" as the
+          //      row is thrown down, punches 1.1 on "you", then drifts left toward the whip; kick punches are sized
+          //      by the measured drums ----
+          const c = stage.cam;
+          tl.fromTo(c, { z: 1.0, x: 0, y: 0 }, { z: 1.07, x: 40, y: -230, duration: NO - 0.08, ease: "sine.inOut" }, 0);
+          tl.fromTo(c, { z: 1.07, x: 40, y: -230 }, { z: 1.0, x: 0, y: 0, duration: 0.3, ease: "power3.inOut", immediateRender: false }, NO - 0.08);
+          tl.fromTo(c, { z: 1.0, x: 0, y: 0 }, { z: 1.06, x: 70, y: -24, duration: DUR - (YOU + 0.3), ease: "sine.in", immediateRender: false }, YOU + 0.3);
+          const kp = (s, base) => 1 + base * K * (0.6 + 0.6 * HR.band("drums", s));
+          [[117.28, 0.035], [117.525, 0.014], [117.996, 0.014], [118.437, 0.022], [118.916, 0.014], [119.1, 0.035], [119.361, 0.012],
+           [120.279, 0.03], [120.736, 0.022], [121.197, 0.016]]
+            .forEach(([s, b]) => WOW.punch(tl, cam, at(s), { s: kp(s, b), dur: 0.4 }));
+          WOW.punch(tl, cam, YOU, { s: 1.1, dur: 0.5 });
+          WOW.shake(tl, cam, YOU + 0.01, { amp: 14 * K, dur: 0.4, rot: 0.35, seed: 24 });
+          WOW.shake(tl, cam, DROP + 0.01, { amp: 8 * K, dur: 0.3, rot: 0.2, seed: 25 });
           tl.set({}, {}, DUR);
 
-          // ---- per-frame state: SHAs, cursor, status, glow, camera ----
-          const cur = $("f24-cur"), status = $("f24-status");
+          // ---- per-frame state: SHAs, the wave's front, cursor, status, light, camera ----
+          const cur = $("f24-cur"), status = $("f24-status"), glow = $("f24-glow"), scan = $("f24-scan"), edge = $("f24-edge");
+          const hglow = $("f24-hglow");
           const HEXL = "0123456789abcdef";
           const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          const popE = (d) => (d < 0 || d > 0.45 ? 0 : Math.pow(1 - d / 0.45, 3));
           function render() {
             const t = tl.time(), T = T0 + t;
             let step = -1;
             steps.forEach(([ri, ts], n) => {
               if (t >= ts) step = n;
               if (ri === 1) return; // dropped: never rewritten
-              const h = rows[ri].querySelector(".f24-h"), nw = NEW[ri];
-              if (t < ts) { h.textContent = h.dataset.old; h.classList.remove("f24-hot"); rows[ri].classList.remove("f24-new"); return; }
+              const row = rows[ri], h = row.querySelector(".f24-h"), nw = NEW[ri];
+              const pop = 1 + 0.12 * popE(t - ts);
+              row.style.scale = pop !== 1 ? pop.toFixed(4) : "";
+              if (t < ts) { h.textContent = h.dataset.old; h.classList.remove("f24-hot"); row.classList.remove("f24-new"); return; }
               const p = (t - ts) / SCR, tick = Math.floor(t * 30);
               let s = "";
               for (let i = 0; i < 7; i++) s += p >= (i + 1) / 8 ? nw[i] : HEXL[(ri * 7 + tick * 5 + i * 3) % 16];
               h.textContent = s;
               h.classList.toggle("f24-hot", p < 1.6);
-              rows[ri].classList.add("f24-new");
+              row.classList.add("f24-new");
             });
-            // the cursor rides the row being rewritten; idle, it blinks on HEAD
+            // the front: the glow and the scan line ride it; the cursor rides it while the rebase runs, then blinks on HEAD
+            const fy = FR.y * RH;
+            glow.style.top = (fy + RH / 2).toFixed(1) + "px";
+            scan.style.transform = `translateY(${(fy + RH - 2).toFixed(1)}px)`;
+            const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.22);
+            const swell = t >= SUCCESS ? 0.45 * Math.exp(-(t - SUCCESS) / 0.5) : 0;
+            glow.style.opacity = Math.min(1, 0.66 + 0.3 * bass + 0.3 * kick + swell).toFixed(3);
+            scan.style.opacity = (step < 0 ? 0.35 : t >= SUCCESS ? 0.5 : 0.9).toFixed(2);
             if (step < 0) { cur.style.opacity = 0; }
             else {
-              const [ri, ts] = steps[step];
-              cur.style.transform = `translateY(${(ri * RH - (ri >= 2 ? RH - gap.h : 0)).toFixed(2)}px)`;
-              cur.style.opacity = blink(t, ts) ? 1 : 0;
+              cur.style.transform = `translateY(${fy.toFixed(2)}px)`;
+              cur.style.opacity = blink(t, steps[step][1]) ? 1 : 0;
             }
-            const picks = steps.filter(([ri, ts]) => ri !== 1 && t >= ts).length;
-            status.textContent = t >= SUCCESS ? "Successfully rebased and updated refs/heads/main." : picks > 0 ? `Rebasing (${picks}/6)` : "";
+            status.textContent = t >= SUCCESS ? "Successfully rebased and updated refs/heads/main." : step >= 0 ? `Rebasing (${Math.min(step + 1, 6)}/6)` : "";
             status.classList.toggle("f24-done", t >= SUCCESS);
-            drop.classList.toggle("f24-mark", t >= NO);
-            drop.style.height = gap.h.toFixed(2) + "px";
-            HR.glow(rewrote, T, 0.3, 0.45); HR.glow(pastw, T, 0.3, 0.45); HR.glow(you, T, 0.3, 0.45);
+            // the panel's fire edge lights when the rebase succeeds
+            edge.style.boxShadow = t >= SUCCESS ? `0 0 ${(18 + 26 * swell + 10 * bass).toFixed(1)}px rgba(232, 93, 38, 0.55)` : "";
+            // the light under the thrown row: up on "no", a flare on "you", gone after it falls
+            let bg = 0;
+            if (t >= NO - 0.02 && t < DROP + 0.5) {
+              const up = Math.min(1, (t - (NO - 0.02)) / 0.2), flare = t >= YOU ? 0.5 * Math.exp(-(t - YOU) / 0.35) : 0;
+              const out = t > DROP ? Math.max(0, 1 - (t - DROP) / 0.5) : 1;
+              bg = Math.min(1, (0.6 + 0.3 * bass + flare) * up * out);
+            }
+            bglow.style.opacity = bg.toFixed(3);
+            // a plain blur by speed on the thrown row (the proof showed it crossing the log sharp): the lift is a
+            // power3.out over 0.2 s, the fall a power2.in over 0.42 s; speed in px per 1/60 s
+            const ul = (t - (NO - 0.02)) / 0.2, uf = (t - DROP) / 0.42;
+            const vl = ul >= 0 && ul < 1 ? (3 * (1 - ul) * (1 - ul) * Math.hypot(DY, 0.95 * BX) / 0.2) / 60 : 0;
+            const vf = uf >= 0 && uf < 1 ? (2 * uf * 24 * PX / 0.42) / 60 : 0;
+            lift.style.filter = vl > 4 ? `blur(${Math.min(14, vl * 0.12).toFixed(1)}px)` : "";
+            fall.style.filter = vf > 4 ? `blur(${Math.min(10, vf * 0.2).toFixed(1)}px)` : "";
+            // the light behind the line: on "rewrote / past," then on "you and me", following the reflow
+            const k = Math.max(0, Math.min(1, (t - (NO - 0.08)) / 0.3)), ke = k * k * (3 - 2 * k);
+            hglow.style.transform = `translate(${((72 + (66 - 72) * ke) * PX).toFixed(1)}px, ${((18 + (32 - 18) * ke) * PX).toFixed(1)}px)`;
+            hglow.style.opacity = (t < REWROTE - 0.1 ? 0.35 : Math.min(1, 0.62 + 0.35 * bass + 0.3 * kick)).toFixed(3);
+            HR.glow(rewrote, T, 0.3, 0.45); HR.glow(pastw, T, 0.3, 0.45); HR.glow(you, T, 0.35, 0.5);
             if (t >= PAST) rewrote.style.setProperty("--hr-glow", "0"); // cooled: no glow once the accent has moved on
             if (t >= YOU) pastw.style.setProperty("--hr-glow", "0");
             stage.apply(T);
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();

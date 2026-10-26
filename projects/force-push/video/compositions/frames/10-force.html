@@ -2,11 +2,15 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 10 — force (chorus 1 hook, 53.380–56.291). Reference frame (SYSTEM.md): the hook.
-         The cut is the Enter: git answers (`(forced update)`), FORCE slams on 53.44 with no anticipation, PUSH! hits on
-         53.96 with the kick, "baby, you're" builds, and on "history" (55.62) the log called history loses every `you`,
-         row by row, while the counter flips 1,095 → 0. Patterns for workers: HR.hero for the slam, camera punches on
-         the hits, a strike drawn with scaleX, the counter's struck old value. -->
+    <!-- Frame 10 — force (chorus 1 hook, 53.380–56.291). Reference frame (SYSTEM.md): the hook. Refinement round 1.
+         The cut is the Enter (hard): git answers at once. For the first half-bar the hook is a poster: FORCE slams on
+         53.44 out of the lens (a motion-blurred approach, landing sharp) at ~88 % of the frame width, git's answer
+         printing in the gutter under it (`+ 3f2a1c9...e81b0d4 main -> main (forced update)` on 0.22); PUSH! slams up
+         into the lower half on 53.96 with the kick, a fire glow behind it. On the snare before "baby," (54.44) the
+         whole poster settles into the approved layout — the hook at the left, git's answer above it, the log called
+         history sliding in, lit, at the right — and "baby, you're" builds. On "history" (55.62) the log loses every
+         `you`, row by row, while the counter flips 1,095 → 0. The out is a 0.25 s whipL into 11 (from 56.04, after
+         "history"'s first 0.42 s). -->
   </head>
   <body>
     <template>
@@ -22,80 +26,122 @@
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
+        #f10-cam { position: absolute; inset: 0; }
         #f10-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f10-old { position: relative; color: var(--fire); font-weight: 600; }
         #f10-old i { position: absolute; left: -0.2em; right: -0.2em; top: 52%; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
         #f10-new { color: var(--fire); font-weight: 600; margin-left: 0.6em; }
-        /* git's own answer to the push */
-        #f10-out { position: absolute; left: 5.5cqw; top: 7.4cqw; font: 400 1.3cqw/1.55 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        /* git's own answer to the push: in the poster's gutter first, then above the hook (render() moves it) */
+        #f10-out { position: absolute; left: 5.5cqw; top: 7.4cqw; font: 400 1.3cqw/1.55 "IBM Plex Mono", monospace; color: var(--cream-muted);
+          white-space: nowrap; transform-origin: 0 0; }
         #f10-out .f10-plus { color: var(--fire); font-weight: 600; }
         #f10-out b { color: var(--cream); font-weight: 500; }
-        /* the hook: the one all-caps slam in the film */
-        #f10-hook { position: absolute; left: 4.4cqw; top: 10.8cqw; font: 900 19.5cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
-        #f10-hook > span { display: block; width: max-content; }
+        /* the hook: the one all-caps slam in the film; render() scales the block from the poster down to this layout */
+        #f10-hook { position: absolute; left: 4.4cqw; top: 10.8cqw; font: 900 19.5cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em;
+          color: var(--cream); transform-origin: 0 0; }
+        #f10-hook > span { position: relative; display: block; width: max-content; transform-origin: 50% 62%; }
         #f10-hook .f10-push { color: var(--fire); }
+        /* the light behind PUSH!: a soft fire glow, breathing with the bass (inside the hook, so it scales with it) */
+        #f10-pglow { position: absolute; left: 0; top: 0; width: 140cqw; height: 80cqw; margin: -40cqw 0 0 -70cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.13) 0%, rgba(232, 93, 38, 0.085) 35%, rgba(232, 93, 38, 0.04) 65%, rgba(232, 93, 38, 0) 100%); }
         #f10-line { position: absolute; left: 5.2cqw; top: 45.3cqw; font: 800 6.2cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
         #f10-line .f10-hero { color: var(--fire); }
-        /* "history" is the log: what is left of it */
-        #f10-log { position: absolute; left: 70.5cqw; top: 13.2cqw; width: 24cqw; }
+        /* "history" is the log: what is left of it, on a lit panel (a fire edge, its own glow) */
+        #f10-lglow { position: absolute; left: 81.5cqw; top: 25cqw; width: 64cqw; height: 52cqw; margin: -26cqw 0 0 -32cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.11) 0%, rgba(232, 93, 38, 0.06) 45%, rgba(232, 93, 38, 0) 100%); }
+        #f10-log { position: absolute; left: 68.6cqw; top: 12cqw; width: 24.4cqw; padding: 1.2cqw 1.2cqw 0.7cqw 1.5cqw; background: #121211;
+          border: 1px solid var(--border); border-top-color: #3A3A36; }
+        #f10-edge { position: absolute; left: -1px; top: -1px; bottom: -1px; width: 0.3cqw; background: var(--fire); transform-origin: 50% 0%; }
         #f10-log .f10-head { font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; margin-bottom: 1cqw; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
         #f10-log .f10-head b { color: var(--cream); font-weight: 600; }
-        .f10-row { position: relative; display: table; height: 2.45cqw; font: 400 1.05cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
+        .f10-row { position: relative; display: table; height: 2.75cqw; font: 400 1.2cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
         .f10-row .f10-h { color: var(--cream-hint); }
         .f10-row.f10-keep { color: var(--cream); }
-        .f10-row .f10-x { position: absolute; left: -0.3cqw; right: -0.3cqw; top: 0.48cqw; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
+        .f10-row .f10-x { position: absolute; left: -0.3cqw; right: -0.3cqw; top: 0.56cqw; height: 2px; background: var(--fire); transform-origin: 0% 50%; }
       </style>
       <div id="root" data-composition-id="10-force" data-width="1920" data-height="1080" data-duration="2.911">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f10-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<span id="f10-old">1,095<i></i></span><span id="f10-new">0</span></span></div>
-        </div>
-        <div class="hr-layer" data-depth="0.45" data-layout-ignore>
-          <div id="f10-out"><span id="f10-o1">To me@home:us.git</span><br /><span id="f10-o2"><span class="f10-plus">+</span> <b>3f2a1c9...e81b0d4</b> main -&gt; main (forced update)</span></div>
-          <div id="f10-log">
-            <div class="f10-head"><span>history</span><b>git log</b></div>
-            <div class="f10-row f10-keep"><span class="f10-h">e81b0d4</span> me &nbsp;ready.</div>
-            <div class="f10-row f10-gone"><span class="f10-h">9d03b7e</span> me &nbsp;merge branch 'you'<i class="f10-x"></i></div>
-            <div class="f10-row f10-gone"><span class="f10-h">3f2a1c9</span> you you and me<i class="f10-x"></i></div>
-            <div class="f10-row f10-gone"><span class="f10-h">a7c21f0</span> you we'll get to it<i class="f10-x"></i></div>
-            <div class="f10-row f10-gone"><span class="f10-h">4c9d7a1</span> you just a feature<i class="f10-x"></i></div>
-            <div class="f10-row f10-keep"><span class="f10-h">91be33a</span> me &nbsp;moved in</div>
-            <div class="f10-row f10-gone"><span class="f10-h">0b5f6e2</span> you nothing on the side<i class="f10-x"></i></div>
-            <div class="f10-row f10-keep"><span class="f10-h">5d0a8c4</span> me &nbsp;initial commit</div>
+        <div id="f10-cam">
+          <div class="hr-layer" data-depth="0.15">
+            <div id="f10-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<span id="f10-old">1,095<i></i></span><span id="f10-new">0</span></span></div>
           </div>
-        </div>
-        <div class="hr-layer" data-depth="1">
-          <div id="f10-hook"><span id="f10-force">FORCE</span><span class="f10-push hr-glow" id="f10-push">PUSH!</span></div>
-        </div>
-        <div class="hr-layer" data-depth="0.85">
-          <div id="f10-line"><span class="f10-w">baby,</span> <span class="f10-w">you're</span> <span class="f10-w f10-hero hr-glow">history</span></div>
+          <div class="hr-layer" data-depth="0.45" data-layout-ignore>
+            <div id="f10-lglow"></div>
+            <div id="f10-out"><span id="f10-o1">To me@home:us.git</span><br /><span id="f10-o2"><span class="f10-plus">+</span> <b>3f2a1c9...e81b0d4</b> main -&gt; main (forced update)</span></div>
+            <div id="f10-log">
+              <i id="f10-edge"></i>
+              <div class="f10-head"><span>history</span><b>git log</b></div>
+              <div class="f10-row f10-keep"><span class="f10-h">e81b0d4</span> me &nbsp;ready.</div>
+              <div class="f10-row f10-gone"><span class="f10-h">9d03b7e</span> me &nbsp;merge branch 'you'<i class="f10-x"></i></div>
+              <div class="f10-row f10-gone"><span class="f10-h">3f2a1c9</span> you you and me<i class="f10-x"></i></div>
+              <div class="f10-row f10-gone"><span class="f10-h">a7c21f0</span> you we'll get to it<i class="f10-x"></i></div>
+              <div class="f10-row f10-gone"><span class="f10-h">4c9d7a1</span> you just a feature<i class="f10-x"></i></div>
+              <div class="f10-row f10-keep"><span class="f10-h">91be33a</span> me &nbsp;moved in</div>
+              <div class="f10-row f10-gone"><span class="f10-h">0b5f6e2</span> you nothing on the side<i class="f10-x"></i></div>
+              <div class="f10-row f10-keep"><span class="f10-h">5d0a8c4</span> me &nbsp;initial commit</div>
+            </div>
+          </div>
+          <div class="hr-layer" data-depth="1">
+            <div id="f10-hook" data-layout-allow-overlap><i id="f10-pglow" data-layout-ignore></i><span id="f10-force" data-hf-motion-blur='{"fps": 60}'>FORCE</span><span class="f10-push hr-glow" id="f10-push" data-hf-motion-blur='{"fps": 60}'>PUSH!</span></div>
+          </div>
+          <div class="hr-layer" data-depth="0.85">
+            <div id="f10-line"><span class="f10-w">baby,</span> <span class="f10-w">you're</span> <span class="f10-w f10-hero hr-glow">history</span></div>
+          </div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
-          const DUR = 2.911, T0 = 53.38;
+          const DUR = 2.911, T0 = 53.38, W = 1920, PX = W / 100; // 1cqw
           const root = document.querySelector('[data-composition-id="10-force"]');
           const $ = (id) => root.querySelector("#" + id);
           const stage = HR.stage(root, { seed: 10 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
+          // the words (lyrics.json L15) and the drums (HR_ENV): PUSH! is the downbeat's kick (53.981 / 54.005);
+          // the poster settles from the snare before "baby," (54.438) and lands as "baby," starts
+          const FORCE = at(53.44), PUSH = at(53.96), BABY = at(54.66), YOURE = at(55.28), H = at(55.62);
+          const SET = at(54.418), SET_D = 0.24;
 
-          // the Enter: git answers at once, the forced update a beat later
+          // ---- the cuts: in is the Enter (a hard cut); out is a whipL into 11 over the last 0.25 s (from 56.041) ----
+          const cam = $("f10-cam");
+          WOW.transition(tl, cam, { in: "cut", out: "whipL", dur: 0.25, total: DUR });
+
+          // ---- the Enter: git answers at once, the forced update a beat later ----
           tl.set($("f10-o2"), { opacity: 0 }, 0).set($("f10-o2"), { opacity: 1 }, 0.22);
-          // the hook
-          HR.hero(tl, $("f10-force"), at(53.44), { spread: 34, over: 1.2, pre: 0.05, sharp: true });
-          HR.hero(tl, $("f10-push"), at(53.96), { spread: 40, over: 1.26, pre: 0.16, sharp: true });
-          // the line
+
+          // ---- the hook: two slams on their own wrappers (static text, so the motion blur smears the approach) ----
+          const force = $("f10-force"), push = $("f10-push");
+          // FORCE comes out of the lens from the first frame and lands sharp ON 53.44
+          tl.fromTo(force, { scale: 1.6, yPercent: -8, skewX: -10 }, { scale: 0.96, yPercent: 0, skewX: -6, duration: FORCE, ease: "power3.in" }, 0);
+          // a short settle, so the blur shows on the approach only (the camera carries the bounce)
+          tl.fromTo(force, { scale: 0.96, skewX: -6 }, { scale: 1, skewX: 0, duration: 0.09, ease: "power2.out", immediateRender: false }, FORCE);
+          // PUSH! slams up into the lower half ON 53.96 (its opacity as its own sets: the render's seeks skip from-only props)
+          tl.set(push, { opacity: 0 }, 0).set(push, { opacity: 1 }, PUSH - 0.08);
+          tl.fromTo(push, { scale: 2.2, yPercent: 34, skewX: -10 }, { scale: 0.96, yPercent: 0, skewX: -6, duration: 0.08, ease: "power3.in", immediateRender: false }, PUSH - 0.08);
+          tl.fromTo(push, { scale: 0.96, skewX: -6 }, { scale: 1, skewX: 0, duration: 0.09, ease: "power2.out", immediateRender: false }, PUSH);
+          WOW.shake(tl, cam, PUSH + 0.01, { amp: 7, dur: 0.3, rot: 0.25, seed: 10 });
+
+          // ---- the settle: poster → the approved layout (render() reads S.p) ----
+          const S = { p: 0 };
+          tl.fromTo(S, { p: 0 }, { p: 1, duration: SET_D, ease: "power3.inOut", immediateRender: false }, SET);
+
+          // ---- the line ----
           const w = root.querySelectorAll(".f10-w");
-          HR.lead(tl, w[0], at(54.66)); HR.lead(tl, w[1], at(55.28));
-          HR.hero(tl, w[2], at(55.62), { spread: 22, over: 1.16, pre: 0.14, sharp: true });
-          // history: the log is on screen from the Enter; on "history" every `you` is struck, top to bottom
-          const H = at(55.62);
-          tl.fromTo(root.querySelectorAll(".f10-row"), { opacity: 0, x: 14 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out", stagger: 0.035 }, 0.3);
+          HR.lead(tl, w[0], BABY); HR.lead(tl, w[1], YOURE);
+          HR.hero(tl, w[2], H, { spread: 22, over: 1.16, pre: 0.14, sharp: true });
+
+          // ---- history: the lit log slides in with the settle; on "history" every `you` is struck, top to bottom ----
+          const log = $("f10-log"), edge = $("f10-edge");
+          tl.fromTo(log, { opacity: 0, x: 3 * PX }, { opacity: 1, x: 0, duration: 0.32, ease: "power3.out", immediateRender: false }, SET + 0.06);
+          tl.set(log, { opacity: 0 }, 0);
+          tl.fromTo(edge, { scaleY: 0 }, { scaleY: 1, duration: 0.3, ease: "power3.out" }, SET + 0.12);
+          tl.fromTo(root.querySelectorAll(".f10-row"), { opacity: 0, x: 14 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out", stagger: 0.035 }, SET + 0.12);
           const gone = root.querySelectorAll(".f10-gone");
           gone.forEach((row, i) => {
             tl.fromTo(row.querySelector(".f10-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.14, ease: "power2.out" }, H + 0.04 + i * 0.07);
@@ -106,24 +152,69 @@
           tl.fromTo($("f10-old"), { opacity: 1 }, { opacity: 0.55, duration: 0.2, immediateRender: false }, H + 0.12);
           tl.set($("f10-new"), { opacity: 0 }, 0).set($("f10-new"), { opacity: 1 }, H + 0.16);
 
-          // the camera: a punch on FORCE, a bigger one on PUSH! (with the kick), a nudge on history; a slow push carries it
-          tl.fromTo(stage.cam, { z: 1.0, y: 0 }, { z: 1.045, y: -6, duration: 0.07, ease: "power2.in" }, at(53.44) - 0.06);
-          tl.to(stage.cam, { z: 1.0, y: 0, duration: 0.45, ease: "elastic.out(1, 0.55)" }, at(53.44) + 0.01);
-          tl.to(stage.cam, { z: 1.065, y: -10, duration: 0.07, ease: "power2.in" }, at(53.96) - 0.06);
-          tl.to(stage.cam, { z: 1.012, y: 0, duration: 0.6, ease: "elastic.out(1, 0.5)" }, at(53.96) + 0.01);
-          tl.to(stage.cam, { z: 1.03, duration: H - at(53.96) - 0.6, ease: "none" }, at(53.96) + 0.61);
-          tl.to(stage.cam, { z: 1.045, duration: 0.06, ease: "power2.in" }, H - 0.05);
-          tl.to(stage.cam, { z: 1.035, x: 18, duration: DUR - H, ease: "power2.out" }, H + 0.01);
+          // ---- the camera: a punch on FORCE, a bigger one on PUSH! (with the kick), still through the settle, a push
+          //      onto the line, a punch on "history", a drift left into the whip ----
+          const c = stage.cam;
+          tl.fromTo(c, { z: 1.0, x: 0, y: 0 }, { z: 1.04, y: -4, duration: FORCE, ease: "power2.in" }, 0);
+          tl.to(c, { z: 1.0, y: 0, duration: 0.45, ease: "elastic.out(1, 0.55)" }, FORCE + 0.01);
+          tl.to(c, { z: 1.035, y: 10, duration: 0.07, ease: "power2.in" }, PUSH - 0.06); // y lifts the poster: PUSH! sits near the bottom edge
+          tl.to(c, { z: 1.01, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, PUSH + 0.01);
+          tl.to(c, { z: 1.0, duration: SET_D, ease: "power3.inOut" }, SET);
+          tl.to(c, { z: 1.05, x: -36, y: 10, duration: H - 0.05 - (SET + SET_D + 0.04), ease: "sine.inOut" }, SET + SET_D + 0.04);
+          tl.to(c, { z: 1.075, duration: 0.05, ease: "power2.in" }, H - 0.05);
+          tl.to(c, { z: 1.06, x: 14, duration: DUR - H, ease: "power2.out" }, H + 0.01);
           tl.set({}, {}, DUR);
 
-          const push = $("f10-push"), hist = root.querySelector(".f10-hero");
+          // ---- geometry: the poster is the approved block scaled so its wider word spans ~88 % of the frame, its ink
+          //      centred under the strip; git's answer sits in the gutter between the two words. Measured after the fonts. ----
+          const hook = $("f10-hook"), out = $("f10-out"), pglow = $("f10-pglow");
+          let laid = false, K = 1.64, TX = 0, TY = 0, KO = 1.2, OX = 0, OY = 0;
+          const cv = document.createElement("canvas").getContext("2d");
+          function layout() {
+            const fs = 19.5 * PX, lh = 0.87 * fs; // #f10-hook's font-size
+            cv.font = `900 ${fs}px Barlow`;
+            const m = cv.measureText("FORCE");
+            const fa = m.fontBoundingBoxAscent || 1.0 * fs, fd = m.fontBoundingBoxDescent || 0.2 * fs, cap = m.actualBoundingBoxAscent || 0.7 * fs;
+            const base = (lh - (fa + fd)) / 2 + fa, a = base - cap, b = base; // cap top and baseline inside a line box
+            const wMax = Math.max(force.offsetWidth, push.offsetWidth);
+            const inkH = lh + b - a, top = 5.6 * PX, bot = 55.4 * PX;
+            K = Math.min((0.88 * W) / wMax, (bot - top) / inkH);
+            const L = (W - K * wMax) / 2, Tp = top + (bot - top - K * inkH) / 2 - K * a;
+            TX = L - hook.offsetLeft; TY = Tp - hook.offsetTop;
+            // the gutter between FORCE's baseline and PUSH!'s cap top, in the poster
+            const g0 = Tp + K * b, g1 = Tp + K * (lh + a), oh = out.offsetHeight;
+            KO = Math.min(1.3, (0.86 * (g1 - g0)) / oh);
+            OX = L + 0.012 * K * fs - out.offsetLeft; OY = (g0 + g1) / 2 - (KO * oh) / 2 - out.offsetTop;
+            // the glow sits on PUSH!'s centre, inside the hook
+            pglow.style.left = (push.offsetWidth / 2).toFixed(1) + "px";
+            pglow.style.top = (lh + (a + b) / 2).toFixed(1) + "px";
+            laid = document.fonts.status === "loaded";
+          }
+
+          // ---- per-frame state ----
+          const hist = root.querySelector(".f10-hero"), lglow = $("f10-lglow");
           function render() {
             const t = tl.time(), T = T0 + t;
+            if (!laid) layout();
+            const p = S.p, q = 1 - p;
+            hook.style.transform = `translate(${(TX * q).toFixed(2)}px, ${(TY * q).toFixed(2)}px) scale(${(K + (1 - K) * p).toFixed(4)})`;
+            out.style.transform = `translate(${(OX * q).toFixed(2)}px, ${(OY * q).toFixed(2)}px) scale(${(KO + (1 - KO) * p).toFixed(4)})`;
+            // the settle is fast: a soft blur at its peak speed only, sharp at both ends
+            const mv = Math.sin(Math.PI * p);
+            hook.style.filter = mv > 0.05 ? `blur(${(4 * mv).toFixed(2)}px)` : "";
+            out.style.filter = mv > 0.05 ? `blur(${(2 * mv).toFixed(2)}px)` : "";
+            // the light: waiting under FORCE, full on PUSH!, breathing with the bass; the log's light swells on "history"
+            const bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.2);
+            pglow.style.opacity = Math.min(1, (t < PUSH ? 0.45 : 0.8) + 0.3 * bass + 0.25 * kick).toFixed(3);
+            const swell = t >= H ? 0.5 * Math.exp(-(t - H) / 0.5) : 0;
+            lglow.style.opacity = (t < SET ? 0 : Math.min(1, (0.55 + 0.35 * bass + swell) * Math.min(1, (t - SET) / 0.3))).toFixed(3);
             HR.glow(push, T, 0.22, 0.35); HR.glow(hist, T, 0.3, 0.45);
             stage.apply(T);
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { laid = false; render(); });
           window.__timelines["10-force"] = tl;
         })();
       </script>

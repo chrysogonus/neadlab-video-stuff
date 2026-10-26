@@ -2,15 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 12 — lies (chorus 1, L17, 60.780–63.679). The hook again, staged unlike 10: FORCE PUSH! is one centred
-         line across the top, and under it is origin/main's old log, the ex's three commits, whose messages are his
-         lies from verse 1 (`we'll get to it`, `just a feature`, `nothing on the side`, same hashes as 10's log).
-         FORCE slams on 60.84, PUSH! on 61.33. Then the rest of the line is pushed over the log one row at a time:
-         on each word a graph edge runs out of the row's commit dot with an overwrite cursor at its tip. Behind the
-         cursor the lie is erased and the sung word is left in its place ("right" 61.86, "over" 62.42, "your" 62.72).
-         Each row's hash is rewritten and its author goes from `you` to `me`. On "lies" (62.96) the cursor finishes
-         the last lie, the lane and edges light up as the new main, and `3 commits overwritten` arrives. Hard cut
-         into 13. -->
+    <!-- Frame 12 — lies (chorus 1, L17, 60.780–63.679). Refinement round 1. The hook again, staged unlike 10: FORCE PUSH!
+         is one line across the top at ~90 % of the frame width; under it, on a lit panel, is origin/main's old log, the
+         ex's three commits, whose messages are his lies from verse 1 (`we'll get to it`, `just a feature`, `nothing on
+         the side`, same hashes as 10's log). The cut in is a whipR (the log and strip whip in from the left); FORCE is
+         not in the whipped layer: it slams out of the lens on its own, landing sharp on the 60.92 kick, and PUSH! slams
+         in from the right onto the 61.363 kick (a zoom blur on FORCE's approach, motion blur on PUSH!'s; both land sharp). Then the rest of the line is
+         pushed over the log one row at a time: on each word one fire pen strikes the row across the whole panel
+         (motion-blurred, a light trailing it), the lie is erased behind it and the sung word left in its place ("right"
+         61.86, "over" 62.42, "your" 62.72); each row's hash scrambles to a new one and its author is stamped `you` → `me`.
+         On "lies" (62.96, display scale) the pen strikes the last lie off, the lane and edges light as the new main, a
+         ring goes out, and `3 commits overwritten` arrives. The out is a 0.25 s whipL into 13 (from 63.429). -->
   </head>
   <body>
     <template>
@@ -26,188 +28,269 @@
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
+        #f12-cam, #f12-world { position: absolute; inset: 0; }
         #f12-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f12-strip b { color: var(--fire); font-weight: 600; }
-        /* the hook: one centred line, the film's one all-caps slam */
-        #f12-hook { position: absolute; left: 0; right: 0; top: 7.2cqw; text-align: center; white-space: nowrap;
-          font: 900 14.2cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
-        #f12-hook > span { display: inline-block; }
+        /* the hook: one centred line across the top, the film's one all-caps slam */
+        #f12-hook { position: absolute; left: 0; right: 0; top: 6.3cqw; text-align: center; white-space: nowrap;
+          font: 900 14.6cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f12-hook > span { position: relative; display: inline-block; transform-origin: 50% 62%; }
         #f12-hook .f12-push { color: var(--fire); }
-        /* origin/main's old log: three of your commits, their messages your lies */
-        #f12-log { position: absolute; left: 20.5cqw; top: 22.4cqw; width: 59cqw; height: 31cqw; }
-        #f12-head { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: space-between;
+        /* the light behind the hook: a soft fire glow, centred on PUSH!, breathing with the bass */
+        #f12-hglow { position: absolute; left: 62cqw; top: 13cqw; width: 130cqw; height: 46cqw; margin: -23cqw 0 0 -65cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.14) 0%, rgba(232, 93, 38, 0.09) 35%, rgba(232, 93, 38, 0.04) 68%, rgba(232, 93, 38, 0) 100%); }
+        /* the log's light: a glow larger than the panel, so its edges are lit */
+        #f12-lglow { position: absolute; left: 50cqw; top: 38cqw; width: 124cqw; height: 52cqw; margin: -26cqw 0 0 -62cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.10) 0%, rgba(232, 93, 38, 0.06) 45%, rgba(232, 93, 38, 0) 100%); }
+        /* origin/main's old log on a lit panel: three of your commits, their messages your lies */
+        #f12-log { position: absolute; left: 5.5cqw; top: 22.4cqw; width: 89cqw; height: 31.6cqw; background: #121211;
+          border: 1px solid var(--border); border-top-color: #3A3A36; box-sizing: border-box; }
+        #f12-head { position: absolute; left: 2.2cqw; right: 2.2cqw; top: 1.1cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f12-head b { color: var(--cream); font-weight: 600; }
         #f12-head i { font-style: normal; text-transform: none; letter-spacing: 0.04em; }
-        #f12-lane { position: absolute; left: 0; top: 2.6cqw; width: 2px; margin-left: -1px; height: 27.6cqw; background: var(--cream-hint); }
-        .f12-row { position: absolute; left: 0; width: 59cqw; height: 6.6cqw; }
-        .f12-dot { position: absolute; left: -0.75cqw; bottom: -1.65cqw; width: 1.5cqw; height: 1.5cqw; border-radius: 50%; box-sizing: border-box;
-          border: 3px solid var(--cream-hint); background: var(--ink); }
-        .f12-edge { position: absolute; left: 0; bottom: -0.98cqw; height: 3px; width: 0; background: var(--fire); }
-        .f12-gut { position: absolute; left: 1.9cqw; bottom: 0.7cqw; font: 400 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
-        .f12-gut .f12-au { color: var(--fire); font-weight: 600; }
+        #f12-lane { position: absolute; left: 3.4cqw; top: 4cqw; width: 2px; margin-left: -1px; height: 26.4cqw; background: var(--cream-hint); }
+        .f12-row { position: absolute; left: 3.4cqw; width: 83.4cqw; height: 8.2cqw; }
+        .f12-wash { position: absolute; left: 0; top: 0.4cqw; bottom: 0; width: 0; opacity: 0;
+          background: linear-gradient(90deg, rgba(232, 93, 38, 0.02), rgba(232, 93, 38, 0.09) 80%, rgba(232, 93, 38, 0.16)); }
+        .f12-edge { position: absolute; left: 0; bottom: 0.35cqw; height: 4px; margin-bottom: -2px; width: 0; background: var(--fire); }
+        .f12-dot { position: absolute; left: -0.75cqw; bottom: -0.4cqw; width: 1.5cqw; height: 1.5cqw; border-radius: 50%; box-sizing: border-box;
+          border: 3px solid var(--cream-hint); background: #121211; }
+        .f12-gut { position: absolute; left: 1.6cqw; bottom: 1.2cqw; font: 400 1.45cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        .f12-gut .f12-au { display: inline-block; color: var(--fire); font-weight: 600; transform-origin: 30% 60%; }
         .f12-gut .f12-au.f12-me { color: var(--cream); font-weight: 500; }
-        .f12-txt { position: absolute; left: 12.5cqw; bottom: 0; width: 46cqw; height: 6.6cqw; }
-        .f12-lie { position: absolute; left: 0; bottom: 0.55cqw; font: 400 3.9cqw/1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--cream-muted); white-space: pre; }
-        .f12-new { position: absolute; left: 0; bottom: 0; font: 800 6.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: pre; }
+        .f12-txt { position: absolute; left: 14.6cqw; right: 0; bottom: 0.9cqw; height: 7.2cqw; }
+        .f12-lie { position: absolute; left: 0; bottom: 0.5cqw; font: 400 4.3cqw/1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--cream-muted); white-space: pre; }
+        .f12-new { position: absolute; left: 0; bottom: 0; font: 800 7.2cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: pre; }
         .f12-new > span { display: inline-block; }
-        .f12-new .f12-hero { font-weight: 900; font-size: 1.2em; letter-spacing: -0.04em; color: var(--fire); }
-        .f12-cur { position: absolute; left: 0; bottom: 0.45cqw; width: 0.95cqw; height: 5cqw; background: var(--fire); }
-        #f12-foot { opacity: 0; position: absolute; left: 12.5cqw; top: 30.2cqw; font: 500 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f12-lies { position: absolute; left: 16.6cqw; bottom: -0.2cqw; font: 900 11.2cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--fire); white-space: pre; }
+        /* the pen: one fire bar with a comet tail, moved by timeline tweens (so the motion blur can smear it) */
+        #f12-pen { position: absolute; left: 0; top: 0; width: 0.95cqw; height: 6.6cqw; }
+        #f12-pen i { position: absolute; display: block; }
+        #f12-pen .f12-bar { left: 0; top: 0; width: 100%; height: 100%; background: var(--fire); }
+        #f12-pen .f12-tail { right: 100%; bottom: 0; width: 14cqw; height: 0.55cqw; background: linear-gradient(90deg, rgba(232, 93, 38, 0), rgba(232, 93, 38, 0.85)); }
+        #f12-penglow { position: absolute; left: 0; top: 0; width: 40cqw; height: 18cqw; margin: -9cqw 0 0 -20cqw; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.16) 0%, rgba(232, 93, 38, 0.07) 50%, rgba(232, 93, 38, 0) 100%); }
+        #f12-foot { opacity: 0; position: absolute; right: 2.2cqw; bottom: 0.9cqw; font: 500 1.3cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
         #f12-foot b { color: var(--fire); font-weight: 600; }
       </style>
       <div id="root" data-composition-id="12-lies" data-width="1920" data-height="1080" data-duration="2.899">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f12-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
-        </div>
+        <div id="f12-cam">
+          <div id="f12-world">
+            <div class="hr-layer" data-depth="0.15">
+              <div id="f12-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+            </div>
 
-        <div class="hr-layer" data-depth="0.6">
-          <div id="f12-log">
-            <div id="f12-head"><span>origin/main &nbsp;·&nbsp; <i>3f2a1c9...e81b0d4</i></span><b>git log</b></div>
-            <div id="f12-lane"></div>
-            <div class="f12-row" style="top: 3.9cqw">
-              <i class="f12-edge"></i><i class="f12-dot"></i>
-              <div class="f12-gut"><span class="f12-h">a7c21f0</span>  <span class="f12-au">you</span></div>
-              <div class="f12-txt">
-                <span class="f12-lie" data-layout-allow-overlap>we'll get to it</span>
-                <span class="f12-new" data-layout-allow-overlap><span class="f12-w">right</span></span>
-                <i class="f12-cur"></i>
+            <div class="hr-layer" data-depth="0.6">
+              <div id="f12-lglow" data-layout-ignore></div>
+              <div id="f12-log">
+                <div id="f12-head"><span>origin/main &nbsp;·&nbsp; <i>3f2a1c9...e81b0d4</i></span><b>git log</b></div>
+                <div id="f12-lane"></div>
+                <div class="f12-row" style="top: 4.4cqw">
+                  <i class="f12-wash" data-layout-ignore></i><i class="f12-edge"></i><i class="f12-dot"></i>
+                  <div class="f12-gut"><span class="f12-h">a7c21f0</span>  <span class="f12-au">you</span></div>
+                  <div class="f12-txt">
+                    <span class="f12-lie" data-layout-allow-overlap>we'll get to it</span>
+                    <span class="f12-new" data-layout-allow-overlap><span class="f12-w">right</span></span>
+                  </div>
+                </div>
+                <div class="f12-row" style="top: 12.8cqw">
+                  <i class="f12-wash" data-layout-ignore></i><i class="f12-edge"></i><i class="f12-dot"></i>
+                  <div class="f12-gut"><span class="f12-h">4c9d7a1</span>  <span class="f12-au">you</span></div>
+                  <div class="f12-txt">
+                    <span class="f12-lie" data-layout-allow-overlap>just a feature</span>
+                    <span class="f12-new" data-layout-allow-overlap><span class="f12-w">over</span></span>
+                  </div>
+                </div>
+                <div class="f12-row" style="top: 21.2cqw">
+                  <i class="f12-wash" data-layout-ignore></i><i class="f12-edge"></i><i class="f12-dot"></i>
+                  <div class="f12-gut"><span class="f12-h">0b5f6e2</span>  <span class="f12-au">you</span></div>
+                  <div class="f12-txt">
+                    <span class="f12-lie" data-layout-allow-overlap>nothing on the side</span>
+                    <span class="f12-new" data-layout-allow-overlap><span class="f12-w">your</span></span>
+                    <span class="hr-glowbox" id="f12-lies" data-layout-allow-overlap>lies</span>
+                  </div>
+                </div>
+                <div id="f12-foot"><b>3</b> commits overwritten</div>
+                <div id="f12-penglow" data-layout-ignore></div>
+                <div id="f12-pen" data-layout-ignore data-hf-motion-blur='{"fps": 60}'><i class="f12-tail"></i><i class="f12-bar"></i></div>
               </div>
             </div>
-            <div class="f12-row" style="top: 12.1cqw">
-              <i class="f12-edge"></i><i class="f12-dot"></i>
-              <div class="f12-gut"><span class="f12-h">4c9d7a1</span>  <span class="f12-au">you</span></div>
-              <div class="f12-txt">
-                <span class="f12-lie" data-layout-allow-overlap>just a feature</span>
-                <span class="f12-new" data-layout-allow-overlap><span class="f12-w">over</span></span>
-                <i class="f12-cur"></i>
-              </div>
-            </div>
-            <div class="f12-row" style="top: 21.2cqw">
-              <i class="f12-edge"></i><i class="f12-dot"></i>
-              <div class="f12-gut"><span class="f12-h">0b5f6e2</span>  <span class="f12-au">you</span></div>
-              <div class="f12-txt">
-                <span class="f12-lie" data-layout-allow-overlap>nothing on the side</span>
-                <span class="f12-new" data-layout-allow-overlap><span class="f12-w">your</span> <span class="f12-hero hr-glow" id="f12-lies">lies</span></span>
-                <i class="f12-cur"></i>
-              </div>
-            </div>
-            <div id="f12-foot"><b>3</b> commits overwritten</div>
           </div>
-        </div>
 
-        <div class="hr-layer" data-depth="1">
-          <div id="f12-hook"><span id="f12-force">FORCE</span> <span class="f12-push hr-glow" id="f12-push">PUSH!</span></div>
+          <div class="hr-layer" data-depth="0.9">
+            <div id="f12-hook" data-layout-allow-overlap><i id="f12-hglow" data-layout-ignore></i><span id="f12-force">FORCE</span> <span class="f12-push hr-glow" id="f12-push" data-hf-motion-blur='{"fps": 60}'>PUSH!</span></div>
+          </div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
-          const DUR = 2.899, T0 = 60.78;
+          const DUR = 2.899, T0 = 60.78, PX = 19.2; // 1cqw at 1920 wide
           const root = document.querySelector('[data-composition-id="12-lies"]');
           const $ = (id) => root.querySelector("#" + id);
           const stage = HR.stage(root, { seed: 12 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
+          // the words (lyrics.json L17) and the kicks they land on (HR_ENV): FORCE 60.92, PUSH! 61.363, the downbeat 63.22
           const FORCE = at(60.84), PUSH = at(61.33), RIGHT = at(61.86), OVER = at(62.42), YOUR = at(62.72), LIES = at(62.96);
+          const FL = at(60.92), PL = at(61.363), DB = at(63.22);
 
-          // ---- the hook: FORCE slams on the cut, PUSH! with the kick on the downbeat ----
-          HR.hero(tl, $("f12-force"), FORCE, { spread: 30, over: 1.18, pre: 0.05, sharp: true });
-          HR.hero(tl, $("f12-push"), PUSH, { spread: 36, over: 1.24, pre: 0.14, sharp: true });
+          // ---- the cuts: the world (strip + log) whips in from the left; FORCE is not in it, so it lands sharp.
+          //      The whole camera whips out to the left into 13 over the last 0.25 s (from 63.429). ----
+          const cam = $("f12-cam"), world = $("f12-world");
+          WOW.transition(tl, world, { in: "whipR", out: "cut", dur: 0.25, start: -0.1, total: DUR });
+          WOW.transition(tl, cam, { in: "cut", out: "whipL", dur: 0.25, total: DUR });
 
-          // ---- the rows: a pen per row (p 0..1; the last row 0..2: "your", then "lies") ----
+          // ---- the hook: two slams on their own wrappers, each landing exactly at rest (the camera carries the bounce) ----
+          const force = $("f12-force"), push = $("f12-push");
+          // FORCE comes out of the lens from its start − 0.04 and lands sharp on the kick
+          tl.set(force, { opacity: 0 }, 0).set(force, { opacity: 1 }, FORCE - 0.04);
+          // (FORCE scales out of the lens, so its blur is a zoom blur on the approach: a CSS blur, sharp on the kick)
+          tl.fromTo(force, { scale: 2.1, yPercent: -10, skewX: -12, filter: "blur(16px)" }, { scale: 1, yPercent: 0, skewX: 0, filter: "blur(0px)", duration: FL - (FORCE - 0.04), ease: "power3.in", immediateRender: false }, FORCE - 0.04);
+          tl.set(force, { scale: 2.1, yPercent: -10, skewX: -12, filter: "blur(16px)" }, 0);
+          // PUSH! is shoved in from the right edge from its start − 0.04, onto the kick and the downbeat
+          tl.set(push, { opacity: 0 }, 0).set(push, { opacity: 1 }, PUSH - 0.04);
+          tl.fromTo(push, { x: 62 * PX, scale: 1.25, skewX: -18 }, { x: 0, scale: 1, skewX: 0, duration: PL - (PUSH - 0.04), ease: "power3.in", immediateRender: false }, PUSH - 0.04);
+          tl.set(push, { x: 62 * PX, scale: 1.25, skewX: -18 }, 0);
+          WOW.shake(tl, cam, FL + 0.01, { amp: 6, dur: 0.28, rot: 0.2, seed: 12 });
+          WOW.shake(tl, cam, PL + 0.01, { amp: 9, dur: 0.34, rot: 0.3, seed: 21 });
+
+          // ---- the pen: one fire bar strikes each row across the whole panel, the lie erased behind it, the sung
+          //      word left in its place. Panel coordinates (px); the pen leaves 0.04 s before its word. ----
+          const LANE = 3.4 * PX, TXT = (3.4 + 14.6) * PX, END = (89 - 2.2) * PX, LIESX = TXT + 16.6 * PX - 0.6 * PX;
+          const ROWTOP = [4.4, 12.8, 21.2].map((v) => v * PX), PENY = ROWTOP.map((y) => y + 8.2 * PX - 0.35 * PX - 6.6 * PX);
+          const strikes = [
+            { row: 0, t: RIGHT - 0.04, a: LANE, b: END, dur: 0.3 },
+            { row: 1, t: OVER - 0.04, a: LANE, b: END, dur: 0.22 },
+            { row: 2, t: YOUR - 0.04, a: LANE, b: LIESX, dur: 0.17 },
+            { row: 2, t: LIES - 0.04, a: LIESX, b: END, dur: 0.26 },
+          ];
+          const pen = $("f12-pen");
+          // the pen jumps rows only while hidden, at least a shutter (1/60 s) away from either side, so it never smears
+          tl.set(pen, { x: LANE, y: PENY[0] }, 0);
+          tl.set(pen, { x: LANE, y: PENY[1] }, OVER - 0.08);
+          tl.set(pen, { x: LANE, y: PENY[2] }, YOUR - 0.08);
+          strikes.forEach((s) => tl.fromTo(pen, { x: s.a }, { x: s.b, duration: s.dur, ease: "power3.out", immediateRender: false }, s.t));
+          // visible: during each strike and its park (rows 0 and 1 hide 0.02 s after the strike; the last stays, blinking)
+          const penOn = (t) => (t >= strikes[0].t && t < strikes[0].t + strikes[0].dur + 0.02) || (t >= strikes[1].t && t < strikes[1].t + strikes[1].dur + 0.02) || t >= strikes[2].t;
+          const rowStart = [strikes[0].t, strikes[1].t, strikes[2].t];
+          const rowDone = [strikes[0].t + strikes[0].dur, strikes[1].t + strikes[1].dur, strikes[3].t + strikes[3].dur];
+          const STRIKE_T = strikes.map((s) => s.t);
+          // each strike hits the camera with the drums under it
+          strikes.forEach((s, i) => WOW.shake(tl, cam, s.t + 0.04, { amp: 3 + 7 * HR.band("drums", T0 + s.t + 0.04), dur: 0.25, rot: 0.15, seed: 30 + i }));
+
+          // ---- "lies": the hero lands at display scale as the pen strikes the last lie off; a ring goes out ----
+          const lies = $("f12-lies");
+          HR.hero(tl, lies, LIES, { spread: 22, over: 1.24, pre: 0.08, sharp: true, skew: false });
+          WOW.shock(tl, $("f12-log"), { x: TXT + 25 * PX, y: ROWTOP[2] + 4.2 * PX, t: LIES + 0.01, r: 620, n: 2, w: 5 });
+          // the footer lands whole, with the hat after "lies"
+          tl.set($("f12-foot"), { opacity: 0 }, 0).set($("f12-foot"), { opacity: 1 }, at(62.971));
+
+          // ---- the camera: a punch on FORCE, a bigger one on PUSH!, then it leans down the log row by row with the
+          //      strikes, a punch on "lies", one on the downbeat, a drift left into the whip ----
+          const c = stage.cam;
+          tl.fromTo(c, { z: 1.0, x: 0, y: 0 }, { z: 1.035, x: 0, y: -4, duration: FL, ease: "power2.in" }, 0);
+          tl.to(c, { z: 1.0, y: 0, duration: 0.4, ease: "elastic.out(1, 0.55)" }, FL + 0.01);
+          tl.to(c, { z: 1.05, y: -8, duration: 0.06, ease: "power2.in" }, PL - 0.06);
+          tl.to(c, { z: 1.01, y: 0, duration: 0.45, ease: "elastic.out(1, 0.5)" }, PL + 0.01);
+          tl.to(c, { z: 1.035, y: 12, duration: 0.34, ease: "power3.out" }, RIGHT - 0.02);
+          tl.to(c, { z: 1.055, y: 24, duration: 0.28, ease: "power3.out" }, OVER - 0.02);
+          tl.to(c, { z: 1.07, y: 34, duration: 0.2, ease: "power3.out" }, YOUR - 0.02);
+          tl.to(c, { z: 1.1, y: 42, duration: 0.05, ease: "power2.in" }, LIES - 0.05);
+          tl.to(c, { z: 1.075, y: 38, x: 6, duration: DB - 0.04 - LIES, ease: "power2.out" }, LIES + 0.01);
+          tl.to(c, { z: 1.095, duration: 0.04, ease: "power2.in" }, DB - 0.04);
+          tl.to(c, { z: 1.08, x: -22, duration: DUR - DB, ease: "power2.out" }, DB);
+          tl.set({}, {}, DUR);
+
+          // ---- per-frame state: reveals, erasure, edges, light, rewritten gutters, the lit lane, glow, camera ----
           const rows = Array.from(root.querySelectorAll(".f12-row")).map((el, i) => ({
-            el, i, pen: { p: 0 },
-            dot: el.querySelector(".f12-dot"), edge: el.querySelector(".f12-edge"), cur: el.querySelector(".f12-cur"),
+            el, i, dot: el.querySelector(".f12-dot"), edge: el.querySelector(".f12-edge"), wash: el.querySelector(".f12-wash"),
             txt: el.querySelector(".f12-txt"), lie: el.querySelector(".f12-lie"), neu: el.querySelector(".f12-new"),
             words: Array.from(el.querySelectorAll(".f12-w")), h: el.querySelector(".f12-h"), oldH: el.querySelector(".f12-h").textContent, au: el.querySelector(".f12-au"),
           }));
-          const NEWH = ["e81b0d4", "c40f9a2", "7b1e3d8"];
-          // each row is overwritten on its word: the pen leaves 0.04 s early and is past the word within a few frames
-          const starts = [RIGHT, OVER, YOUR];
-          rows.forEach((r, i) => {
-            r.t0 = starts[i] - 0.04;
-            tl.fromTo(r.pen, { p: 0 }, { p: 1, duration: i === 2 ? 0.2 : 0.34, ease: "power3.out", immediateRender: false }, r.t0);
-          });
-          // "lies": the pen finishes the last lie as the hero lands
-          tl.to(rows[2].pen, { p: 2, duration: 0.13, ease: "power2.out" }, LIES - 0.04);
-          HR.hero(tl, $("f12-lies"), LIES, { spread: 18, over: 1.26, pre: 0.08, sharp: true, skew: false });
-          // the footer lands whole, with the hat after "lies"
-          tl.set($("f12-foot"), { opacity: 1 }, at(62.971));
-
-          // ---- the camera: a punch on FORCE, a bigger one on PUSH!, a lean down the log, a punch on "lies" ----
-          tl.fromTo(stage.cam, { z: 1.0, y: 0 }, { z: 1.04, y: -5, duration: 0.05, ease: "power2.in" }, FORCE - 0.05);
-          tl.to(stage.cam, { z: 1.0, y: 0, duration: 0.45, ease: "elastic.out(1, 0.55)" }, FORCE);
-          tl.to(stage.cam, { z: 1.06, y: -9, duration: 0.07, ease: "power2.in" }, PUSH - 0.07);
-          tl.to(stage.cam, { z: 1.012, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, PUSH);
-          tl.to(stage.cam, { z: 1.03, y: 14, duration: LIES - 0.06 - (PUSH + 0.5), ease: "sine.inOut" }, PUSH + 0.5);
-          tl.to(stage.cam, { z: 1.065, y: 22, duration: 0.06, ease: "power2.in" }, LIES - 0.06);
-          tl.to(stage.cam, { z: 1.04, y: 18, x: 10, duration: DUR - LIES, ease: "power2.out" }, LIES);
-          tl.set({}, {}, DUR);
-
-          // ---- per-frame state: pens, erasure, cursors, edges, rewritten gutters, the lit lane, glow, camera ----
-          const lane = $("f12-lane"), push = $("f12-push"), lies = $("f12-lies");
+          const NEWH = ["e81b0d4", "c40f9a2", "7b1e3d8"], HEXL = "0123456789abcdef";
+          const lane = $("f12-lane"), penglow = $("f12-penglow"), hglow = $("f12-hglow"), lglow = $("f12-lglow");
           const fireRGB = [232, 93, 38], hintRGB = [80, 80, 72];
           const mix = (a, b, k) => `rgb(${a.map((v, j) => Math.round(v + (b[j] - v) * k)).join(",")})`;
-          const popE = gsap.parseEase("back.out(2.4)");
-          // geometry, measured until the fonts are in, then fixed
+          const popE = gsap.parseEase("back.out(2.6)");
           let laid = false;
           function layout() {
-            const ready = document.fonts.status === "loaded";
-            for (const r of rows) {
-              r.txtX = r.txt.offsetLeft;
-              r.end = Math.max(r.lie.offsetWidth, r.neu.offsetWidth) + 12;
-              r.ws = r.words.map((w) => w.offsetLeft + w.offsetWidth);
-            }
-            rows[2].xs = lies.offsetLeft - 6;
-            laid = ready;
+            for (const r of rows) r.ws = r.words.map((w) => w.offsetLeft + w.offsetWidth);
+            // the hook's glow sits on PUSH!'s centre
+            hglow.style.left = (push.offsetLeft + push.offsetWidth / 2).toFixed(1) + "px";
+            hglow.style.top = (push.offsetTop + push.offsetHeight * 0.55).toFixed(1) + "px";
+            laid = document.fonts.status === "loaded";
           }
           function render() {
             const t = tl.time(), T = T0 + t;
             if (!laid) layout();
-            const lit = t >= LIES;
+            const lit = t >= LIES, bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.2);
+            const px = gsap.getProperty(pen, "x"), py = gsap.getProperty(pen, "y");
             for (const r of rows) {
-              const txtX = r.txtX, end = r.end;
-              let x;
-              if (r.i === 2) {
-                const xs = r.xs;
-                x = r.pen.p <= 1 ? r.pen.p * xs : xs + (r.pen.p - 1) * (end - xs);
-              } else x = r.pen.p * end;
-              const done = r.pen.p >= (r.i === 2 ? 2 : 1);
-              // the lie is erased behind the pen, the sung word left in its place
-              r.lie.style.clipPath = done ? "inset(0 0 0 100%)" : `inset(-30% -2% -30% ${x.toFixed(1)}px)`;
+              const started = t >= rowStart[r.i], done = t >= rowDone[r.i];
+              // the pen's tip, in this row's text column (row 2 holds at "lies" between its two strikes)
+              const x = !started ? -1e4 : done ? END : px;
+              const xr = x - TXT;
+              r.lie.style.clipPath = done ? "inset(0 0 0 100%)" : `inset(-30% -2% -30% ${Math.max(0, xr).toFixed(1)}px)`;
               for (let j = 0; j < r.words.length; j++) {
-                const w = r.words[j], right = r.ws[j] - x;
-                w.style.clipPath = right <= 0 ? "none" : `inset(-40% ${right.toFixed(1)}px -40% -30%)`;
+                const right = r.ws[j] - xr;
+                r.words[j].style.clipPath = right <= 0 ? "none" : `inset(-40% ${right.toFixed(1)}px -40% -30%)`;
               }
-              // the cursor rides the pen tip while it writes, then goes
-              const on = t >= r.t0 && (r.i === 2 ? t < LIES + 0.2 : t < r.t0 + 0.42);
-              r.cur.style.opacity = on ? 1 : 0;
-              r.cur.style.transform = `translateX(${x.toFixed(1)}px)`;
-              // the edge: from the commit dot along the row, fire while it writes, cooling to a hairline, lit again on "lies"
-              const k = lit ? 0 : Math.max(0, Math.min(1, (t - (r.t0 + 0.34)) / 0.4));
-              r.edge.style.width = t >= r.t0 ? `${(txtX + x).toFixed(1)}px` : "0px";
+              // the edge: from the commit dot along the row, fire while it strikes, cooling to a hairline, lit again on "lies"
+              const ew = started ? Math.max(0, x - LANE) : 0;
+              const k = lit ? 0 : Math.max(0, Math.min(1, (t - (rowDone[r.i] + 0.05)) / 0.4));
+              r.edge.style.width = ew.toFixed(1) + "px";
               r.edge.style.background = mix(fireRGB, hintRGB, k);
-              // the commit is rewritten: a new hash, author me, a filled dot that pops in
-              const rw = t >= r.t0;
-              r.h.textContent = rw ? NEWH[r.i] : r.oldH;
-              r.au.textContent = rw ? "me" : "you";
-              r.au.classList.toggle("f12-me", rw);
-              const pk = rw ? popE(Math.min(1, (t - r.t0) / 0.3)) : 1;
-              r.dot.style.background = rw ? (lit ? "#E85D26" : "#F0ECE5") : "#0A0A0A";
-              r.dot.style.borderColor = rw ? (lit ? "#E85D26" : "#F0ECE5") : "#505048";
+              // the strike's light: a wash trailing the pen, fading after it; the overwritten log glows on "lies"
+              r.wash.style.width = ew.toFixed(1) + "px";
+              const fade = !started ? 0 : !done ? 1 : Math.exp(-(t - rowDone[r.i]) / 0.3);
+              r.wash.style.opacity = Math.max(fade, lit ? 0.45 + 0.35 * bass : 0).toFixed(3);
+              // the commit is rewritten: the hash scrambles to a new one, the author is stamped `me`, the dot fills
+              if (!started) { r.h.textContent = r.oldH; }
+              else {
+                const p = (t - rowStart[r.i]) / 0.2, tick = Math.floor(t * 30); let s = "";
+                for (let i = 0; i < 7; i++) s += p >= (i + 1) / 8 ? NEWH[r.i][i] : HEXL[(r.i * 7 + tick * 5 + i * 3) % 16];
+                r.h.textContent = s;
+              }
+              const stamped = t >= rowStart[r.i] + 0.03;
+              r.au.textContent = stamped ? "me" : "you";
+              r.au.classList.toggle("f12-me", stamped);
+              const sk = stamped ? popE(Math.min(1, (t - rowStart[r.i] - 0.03) / 0.25)) : 1;
+              r.au.style.transform = stamped ? `scale(${(1.9 - 0.9 * sk).toFixed(3)})` : "";
+              const pk = started ? popE(Math.min(1, (t - rowStart[r.i]) / 0.3)) : 1;
+              r.dot.style.background = started ? (lit ? "#E85D26" : "#F0ECE5") : "#121211";
+              r.dot.style.borderColor = started ? (lit ? "#E85D26" : "#F0ECE5") : "#505048";
               r.dot.style.transform = `scale(${pk.toFixed(3)})`;
             }
+            // the pen: on while it strikes; parked at the end after "lies", blinking at 2 Hz
+            const parked = t >= rowDone[2] + 0.3;
+            pen.style.opacity = penOn(t) && (!parked || Math.floor((t - rowDone[2] - 0.3) * 4) % 2 === 1) ? 1 : 0;
+            // the pen's light follows its tip, brightest while it moves
+            const moving = strikes.some((s) => t >= s.t && t < s.t + s.dur);
+            penglow.style.left = (px + 0.5 * PX).toFixed(1) + "px";
+            penglow.style.top = (py + 4.5 * PX).toFixed(1) + "px";
+            penglow.style.opacity = (penOn(t) ? (moving ? 1 : 0.45 + 0.25 * bass) : 0).toFixed(3);
+            // the lane lights as the new main on "lies"
             lane.style.background = lit ? "#E85D26" : "#505048";
-            HR.glow(push, T, 0.22, 0.35); HR.glow(lies, T, 0.14, 0.24);
+            lane.style.boxShadow = lit ? `0 0 ${(10 + 16 * kick).toFixed(1)}px rgba(232, 93, 38, 0.6)` : "none";
+            // the light: the hook's glow waits under FORCE and is full from PUSH!; the log's glow swells on "lies"
+            hglow.style.opacity = Math.min(1, (t < PL ? 0.4 + 0.3 * Math.max(0, Math.min(1, (t - FORCE) / 0.3)) : 0.85) + 0.3 * bass + 0.25 * kick).toFixed(3);
+            const swell = lit ? 0.45 * Math.exp(-(t - LIES) / 0.6) : 0;
+            lglow.style.opacity = Math.min(1, 0.55 + 0.3 * bass + 0.2 * kick + swell).toFixed(3);
+            HR.glow(push, T, 0.22, 0.35); HR.glow(lies, T, 0.3, 0.45);
             stage.apply(T);
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { laid = false; render(); });
           window.__timelines["12-lies"] = tl;
         })();
       </script>

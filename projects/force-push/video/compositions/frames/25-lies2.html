@@ -2,16 +2,21 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 25 — lies2 (chorus 2, L39, 121.534–124.580). Forks 12-lies: same set, the world moved on. FORCE PUSH!
-         is one centred line across the top; under it is origin/main's log as 23's push found it (`e81b0d4...9c0ffee`),
-         the ex's three newest commits, whose messages are his verse-2 lies: `please review?` (d4e19a6, his request on
-         #57 in 20), `Revert "force push"` (2b7d4e8, the PR from 20/22) and `lgtm` (a35c07b, his comment on #55 in 20).
-         FORCE slams on 121.594, PUSH! on 122.08 with the downbeat kick. On each word a graph edge runs out of the row's
-         commit dot with an overwrite cursor at its tip; behind it the lie is erased and the sung word is left in its
-         place ("right" 122.68, "over" 123.16, "your" 123.529). Hashes are rewritten (9c0ffee, 5f2b8e1, c81d3a4) and
-         authors go from `you` to `me`. "your" erases `lgtm`; on "lies" (123.72) the cursor writes the hero after it, the lane lights as the new main
-         and `3 commits overwritten` lands on the hat. A notch louder than 12: hero spreads and camera punches are
-         scaled by this span's mean drum envelope over 12's (0.513 / 0.446, ~1.15). Hard cut into 26. -->
+    <!-- Frame 25 — lies2 (chorus 2, L39, 121.534–124.580). Refinement round 1: forks 12-lies as refined (the overwrite
+         on a lit log panel, a camera wrapper, whips, motion blur on fixed-content slams) and makes chorus 2 bigger.
+         The world (strip + log) whips in from the right (whipL, from 24). The log is origin/main as 23's push found it
+         (`e81b0d4...9c0ffee`): the ex's three newest commits, whose messages are his verse-2 lies, `please review?`
+         (d4e19a6), `lgtm` (a35c07b) and, set large on the last row, `Revert "force push"` (2b7d4e8).
+         The hook is two poster slams, not 12's one line: FORCE comes out of the lens on the 121.669 kick at ~90 % of
+         the frame width, centred alone over the dimmed log; on the 122.12 kick (the downbeat) PUSH! is shoved in from
+         the right at the same poster scale and knocks FORCE up into its slot in the top line, with a shockwave, rays
+         and the heaviest shake of the scene. PUSH! then settles beside FORCE (FORCE PUSH! stays readable to the end)
+         and the log comes forward. The pen overwrites one row per word ("right" 122.68, "over" 123.16), the camera
+         pushing down the log (to ~1.13 on the log); "your" (123.529) erases `Revert`, and on "lies" (123.72, display
+         scale) the stroke crosses `"force push"`, the lane lights as the new main and a ring goes out;
+         `3 commits overwritten` lands on the 123.965 downbeat. The out is a 0.25 s whipR into 26 that ends on the cut.
+         Hits are sized by the measured drums (this span's mean over 12's, ~1.15). Rows 2 and 3 swap places against
+         the round-0 frame, so the revert is the lie the hero lands on. -->
   </head>
   <body>
     <template>
@@ -27,190 +32,329 @@
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
+        #f25-cam, #f25-world { position: absolute; inset: 0; }
         #f25-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f25-strip b { color: var(--fire); font-weight: 600; }
-        /* the hook: one centred line, the film's one all-caps slam */
-        #f25-hook { position: absolute; left: 0; right: 0; top: 7.2cqw; text-align: center; white-space: nowrap;
-          font: 900 14.2cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
-        #f25-hook > span { display: inline-block; }
-        #f25-hook .f25-push { color: var(--fire); }
-        /* origin/main's old log: three of your commits, their messages your lies */
-        #f25-log { position: absolute; left: 20.5cqw; top: 22.4cqw; width: 59cqw; height: 31cqw; }
-        #f25-head { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: space-between;
-          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
-          padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
+        /* the hook's resting layout: one centred line across the top; render() carries each word from its poster */
+        #f25-hook { position: absolute; left: 0; right: 0; top: 6cqw; text-align: center; white-space: nowrap;
+          font: 900 12.6cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
+        #f25-hook .f25-ow { position: relative; display: inline-block; transform-origin: 50% 50%; }
+        #f25-hook .f25-ow > span { position: relative; display: inline-block; transform-origin: 50% 62%; }
+        #f25-push { color: var(--fire); }
+        #f25-fx { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+        /* the light behind the hook: a soft fire glow on PUSH!, breathing with the bass */
+        #f25-hglow { position: absolute; left: 0; top: 0; width: 64cqw; height: 24cqw; margin: -12cqw 0 0 -32cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.08) 40%, rgba(232, 93, 38, 0.02) 75%, rgba(232, 93, 38, 0) 100%); }
+        /* the log's light: larger than the panel, so its edges are lit */
+        #f25-lglow { position: absolute; left: 50cqw; top: 36.6cqw; width: 100cqw; height: 42cqw; margin: -21cqw 0 0 -50cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.11) 0%, rgba(232, 93, 38, 0.07) 70%, rgba(232, 93, 38, 0) 100%); }
+        /* origin/main's old log on a lit panel: three of your commits, their messages your verse-2 lies */
+        #f25-log { position: absolute; left: 5.5cqw; top: 18.8cqw; width: 89cqw; height: 35.6cqw; background: linear-gradient(180deg, #161614 0%, #121211 22%, #0D0D0C 60%, #0C0C0B 100%);
+          border: 1px solid var(--border); border-top-color: #3A3A36; box-sizing: border-box; }
+        #f25-head { position: absolute; left: 2.2cqw; right: 2.2cqw; top: 1.0cqw; display: flex; justify-content: space-between;
+          font: 500 0.9cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
+          padding-bottom: 0.5cqw; border-bottom: 1px solid var(--border); }
         #f25-head b { color: var(--cream); font-weight: 600; }
         #f25-head i { font-style: normal; text-transform: none; letter-spacing: 0.04em; }
-        #f25-lane { position: absolute; left: 0; top: 2.6cqw; width: 2px; margin-left: -1px; height: 27.6cqw; background: var(--cream-hint); }
-        .f25-row { position: absolute; left: 0; width: 59cqw; height: 6.6cqw; }
-        .f25-dot { position: absolute; left: -0.75cqw; bottom: -1.65cqw; width: 1.5cqw; height: 1.5cqw; border-radius: 50%; box-sizing: border-box;
-          border: 3px solid var(--cream-hint); background: var(--ink); }
-        .f25-edge { position: absolute; left: 0; bottom: -0.98cqw; height: 3px; width: 0; background: var(--fire); }
-        .f25-gut { position: absolute; left: 1.9cqw; bottom: 0.7cqw; font: 400 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
-        .f25-gut .f25-au { color: var(--fire); font-weight: 600; }
+        #f25-lane { position: absolute; left: 3.4cqw; top: 3.8cqw; width: 2px; margin-left: -1px; height: 29.4cqw; background: var(--cream-hint); }
+        .f25-row { position: absolute; left: 3.4cqw; width: 83.4cqw; height: 8.2cqw; }
+        .f25-row.f25-big { height: 12.6cqw; }
+        .f25-wash { position: absolute; left: 0; top: 0.4cqw; bottom: 0; width: 0; opacity: 0;
+          background: linear-gradient(90deg, rgba(232, 93, 38, 0.02), rgba(232, 93, 38, 0.09) 80%, rgba(232, 93, 38, 0.17)); }
+        .f25-edge { position: absolute; left: 0; bottom: 0.35cqw; height: 4px; margin-bottom: -2px; width: 0; background: var(--fire); }
+        .f25-dot { position: absolute; left: -0.75cqw; bottom: -0.4cqw; width: 1.5cqw; height: 1.5cqw; border-radius: 50%; box-sizing: border-box;
+          border: 3px solid var(--cream-hint); background: #121211; }
+        .f25-gut { position: absolute; left: 1.6cqw; bottom: 1.2cqw; font: 400 1.55cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        .f25-gut .f25-au { display: inline-block; color: var(--fire); font-weight: 600; transform-origin: 30% 60%; }
         .f25-gut .f25-au.f25-me { color: var(--cream); font-weight: 500; }
-        .f25-txt { position: absolute; left: 12.5cqw; bottom: 0; width: 46cqw; height: 6.6cqw; }
-        .f25-lie { position: absolute; left: 0; bottom: 0.55cqw; font: 400 3.9cqw/1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--cream-muted); white-space: pre; }
-        .f25-new { position: absolute; left: 0; bottom: 0; font: 800 6.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: pre; }
+        .f25-txt { position: absolute; left: 14.6cqw; right: 0; bottom: 0.9cqw; height: 7cqw; }
+        .f25-big .f25-txt { height: 11.4cqw; }
+        .f25-lie { position: absolute; left: 0; bottom: 0.5cqw; font: 400 4.6cqw/1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--cream-muted); white-space: pre; }
+        .f25-big .f25-lie { font-size: 5.6cqw; font-weight: 500; color: var(--cream); bottom: 0.6cqw; }
+        .f25-new { position: absolute; left: 0; bottom: 0; font: 800 7.2cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: pre; }
         .f25-new > span { display: inline-block; }
-        .f25-new .f25-hero { font-weight: 900; font-size: 1.2em; letter-spacing: -0.04em; color: var(--fire); }
-        .f25-cur { position: absolute; left: 0; bottom: 0.45cqw; width: 0.95cqw; height: 5cqw; background: var(--fire); }
-        #f25-foot { opacity: 0; position: absolute; left: 12.5cqw; top: 30.2cqw; font: 500 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f25-lies { position: absolute; left: 17.8cqw; bottom: -0.3cqw; font: 900 13cqw/1 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--fire); white-space: pre; }
+        /* the pen: one fire bar with a comet tail, moved by timeline tweens (so the motion blur can smear it) */
+        #f25-pen { position: absolute; left: 0; top: 0; width: 0.95cqw; height: 7cqw; transform-origin: 50% 100%; }
+        #f25-pen i { position: absolute; display: block; }
+        #f25-pen .f25-bar { left: 0; top: 0; width: 100%; height: 100%; background: var(--fire); }
+        #f25-pen .f25-tail { right: 100%; bottom: 0; width: 15cqw; height: 0.55cqw; background: linear-gradient(90deg, rgba(232, 93, 38, 0), rgba(232, 93, 38, 0.85)); }
+        #f25-penglow { position: absolute; left: 0; top: 0; width: 44cqw; height: 20cqw; margin: -10cqw 0 0 -22cqw; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.17) 0%, rgba(232, 93, 38, 0.07) 50%, rgba(232, 93, 38, 0) 100%); }
+        #f25-foot { opacity: 0; position: absolute; right: 2.2cqw; bottom: 0.75cqw; font: 500 1.5cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
         #f25-foot b { color: var(--fire); font-weight: 600; }
       </style>
       <div id="root" data-composition-id="25-lies2" data-width="1920" data-height="1080" data-duration="3.046">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f25-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
-        </div>
+        <div id="f25-cam">
+          <div id="f25-world">
+            <div class="hr-layer" data-depth="0.15">
+              <div id="f25-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+            </div>
 
-        <div class="hr-layer" data-depth="0.6">
-          <div id="f25-log">
-            <div id="f25-head"><span>origin/main &nbsp;·&nbsp; <i>e81b0d4...9c0ffee</i></span><b>git log</b></div>
-            <div id="f25-lane"></div>
-            <div class="f25-row" style="top: 3.9cqw">
-              <i class="f25-edge"></i><i class="f25-dot"></i>
-              <div class="f25-gut"><span class="f25-h">d4e19a6</span>  <span class="f25-au">you</span></div>
-              <div class="f25-txt">
-                <span class="f25-lie" data-layout-allow-overlap>please review?</span>
-                <span class="f25-new" data-layout-allow-overlap><span class="f25-w">right</span></span>
-                <i class="f25-cur"></i>
+            <div class="hr-layer" data-depth="0.85">
+              <div id="f25-lglow" data-layout-ignore></div>
+              <div id="f25-log">
+                <div id="f25-head"><span>origin/main &nbsp;·&nbsp; <i>e81b0d4...9c0ffee</i></span><b>git log</b></div>
+                <div id="f25-lane"></div>
+                <div class="f25-row" style="top: 3.8cqw">
+                  <i class="f25-wash" data-layout-ignore></i><i class="f25-edge"></i><i class="f25-dot"></i>
+                  <div class="f25-gut"><span class="f25-h">d4e19a6</span>  <span class="f25-au">you</span></div>
+                  <div class="f25-txt">
+                    <span class="f25-lie" data-layout-allow-overlap>please review?</span>
+                    <span class="f25-new" data-layout-allow-overlap><span class="f25-w">right</span></span>
+                  </div>
+                </div>
+                <div class="f25-row" style="top: 12cqw">
+                  <i class="f25-wash" data-layout-ignore></i><i class="f25-edge"></i><i class="f25-dot"></i>
+                  <div class="f25-gut"><span class="f25-h">a35c07b</span>  <span class="f25-au">you</span></div>
+                  <div class="f25-txt">
+                    <span class="f25-lie" data-layout-allow-overlap>lgtm</span>
+                    <span class="f25-new" data-layout-allow-overlap><span class="f25-w">over</span></span>
+                  </div>
+                </div>
+                <div class="f25-row f25-big" style="top: 20.2cqw">
+                  <i class="f25-wash" data-layout-ignore></i><i class="f25-edge"></i><i class="f25-dot"></i>
+                  <div class="f25-gut"><span class="f25-h">2b7d4e8</span>  <span class="f25-au">you</span></div>
+                  <div class="f25-txt">
+                    <span class="f25-lie" data-layout-allow-overlap>Revert "force push"</span>
+                    <span class="f25-new" data-layout-allow-overlap><span class="f25-w">your</span></span>
+                    <span class="hr-glowbox" id="f25-lies" data-layout-allow-overlap>lies</span>
+                  </div>
+                </div>
+                <div id="f25-foot"><b>3</b> commits overwritten</div>
+                <div id="f25-penglow" data-layout-ignore></div>
+                <div id="f25-pen" data-layout-ignore data-hf-motion-blur='{"fps": 60}'><i class="f25-tail"></i><i class="f25-bar"></i></div>
               </div>
             </div>
-            <div class="f25-row" style="top: 12.1cqw">
-              <i class="f25-edge"></i><i class="f25-dot"></i>
-              <div class="f25-gut"><span class="f25-h">2b7d4e8</span>  <span class="f25-au">you</span></div>
-              <div class="f25-txt">
-                <span class="f25-lie" data-layout-allow-overlap>Revert "force push"</span>
-                <span class="f25-new" data-layout-allow-overlap><span class="f25-w">over</span></span>
-                <i class="f25-cur"></i>
-              </div>
-            </div>
-            <div class="f25-row" style="top: 21.2cqw">
-              <i class="f25-edge"></i><i class="f25-dot"></i>
-              <div class="f25-gut"><span class="f25-h">a35c07b</span>  <span class="f25-au">you</span></div>
-              <div class="f25-txt">
-                <span class="f25-lie" data-layout-allow-overlap>lgtm</span>
-                <span class="f25-new" data-layout-allow-overlap><span class="f25-w">your</span> <span class="f25-hero hr-glowbox" id="f25-lies">lies</span></span>
-                <i class="f25-cur"></i>
-              </div>
-            </div>
-            <div id="f25-foot"><b>3</b> commits overwritten</div>
           </div>
-        </div>
 
-        <div class="hr-layer" data-depth="1">
-          <div id="f25-hook"><span id="f25-force">FORCE</span> <span class="f25-push hr-glowbox" id="f25-push">PUSH!</span></div>
+          <div class="hr-layer" data-depth="0.4">
+            <i id="f25-hglow" data-layout-ignore></i>
+            <div id="f25-fx" data-layout-ignore></div>
+            <div id="f25-hook" data-layout-allow-overlap><span class="f25-ow" id="f25-fw"><span id="f25-force">FORCE</span></span> <span class="f25-ow" id="f25-pw"><span class="hr-glowbox" id="f25-push" data-hf-motion-blur='{"fps": 60}'>PUSH!</span></span></div>
+          </div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
-          const DUR = 3.046, T0 = 121.534;
+          const DUR = 3.046, T0 = 121.534, W = 1920, PX = W / 100; // 1cqw
           const root = document.querySelector('[data-composition-id="25-lies2"]');
           const $ = (id) => root.querySelector("#" + id);
-          const stage = HR.stage(root, { seed: 25 });
-          const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
+          // chorus 2 is louder: this span's mean drum envelope over 12's (0.446, measured 60.78–63.679), capped
+          let sum = 0, n = 0;
+          for (let T = T0; T < T0 + DUR; T += 0.02) { sum += HR.band("drums", T); n++; }
+          const K = Math.max(1, Math.min(1.25, sum / n / 0.446));
+          const stage = HR.stage(root, { seed: 25, pulse: K * 1.2 });
+          const tl = gsap.timeline({ paused: true });
+          // the words (lyrics.json L39) and the drums (HR_ENV): kicks 121.669, 122.12 (downbeat 122.118), 122.593,
+          // 123.036, 123.499, 123.956 (downbeat 123.965); hat 123.725 under "lies"
           const FORCE = at(121.594), PUSH = at(122.08), RIGHT = at(122.68), OVER = at(123.16), YOUR = at(123.529), LIES = at(123.72);
-          // chorus 2 is louder: this span's mean drums over 12's (0.513 / 0.446)
-          const K = 1.15;
+          const FL = at(121.669), PL = at(122.12), DB = at(123.965);
+          const KN0 = PL - 0.02, KND = 0.2; // FORCE is knocked up into its slot as PUSH! hits
+          const SET0 = 0.8, SETD = 0.23; // PUSH! settles beside it, landing just before the 122.593 kick
 
-          // ---- the hook: FORCE slams on the cut, PUSH! with the kick on the downbeat (122.118) ----
-          HR.hero(tl, $("f25-force"), FORCE, { spread: 30 * K, over: 1.2, pre: 0.05, sharp: true });
-          HR.hero(tl, $("f25-push"), PUSH, { spread: 36 * K, over: 1.27, pre: 0.14, sharp: true });
+          // ---- the cuts: the world (strip + log) whips in from the right; the hook is not in it, so FORCE lands sharp.
+          //      The whole camera whips out to the right into 26 over the last 0.25 s, ending on the cut. ----
+          const cam = $("f25-cam"), world = $("f25-world");
+          WOW.transition(tl, world, { in: "whipL", out: "cut", dur: 0.25, start: -0.1, total: DUR });
+          WOW.transition(tl, cam, { in: "cut", out: "whipR", dur: 0.25, total: DUR });
 
-          // ---- the rows: a pen per row (p 0..1; the last row 0..2: "your", then "lies") ----
-          const rows = Array.from(root.querySelectorAll(".f25-row")).map((el, i) => ({
-            el, i, pen: { p: 0 },
-            dot: el.querySelector(".f25-dot"), edge: el.querySelector(".f25-edge"), cur: el.querySelector(".f25-cur"),
-            txt: el.querySelector(".f25-txt"), lie: el.querySelector(".f25-lie"), neu: el.querySelector(".f25-new"),
-            words: Array.from(el.querySelectorAll(".f25-w")), h: el.querySelector(".f25-h"), oldH: el.querySelector(".f25-h").textContent, au: el.querySelector(".f25-au"),
-          }));
-          const NEWH = ["9c0ffee", "5f2b8e1", "c81d3a4"];
-          // each row is overwritten on its word: the pen leaves 0.04 s early and is past the word within a few frames
-          const starts = [RIGHT, OVER, YOUR];
-          rows.forEach((r, i) => {
-            r.t0 = starts[i] - 0.04;
-            tl.fromTo(r.pen, { p: 0 }, { p: 1, duration: i === 2 ? 0.16 : 0.34, ease: "power3.out", immediateRender: false }, r.t0);
-          });
-          // "lies": the pen finishes the last lie as the hero lands
-          tl.to(rows[2].pen, { p: 2, duration: 0.13, ease: "power2.out" }, LIES - 0.04);
-          HR.hero(tl, $("f25-lies"), LIES, { spread: 18 * K, over: 1.29, pre: 0.08, sharp: true, skew: false });
-          // the footer lands whole, with the hat under "lies"
-          tl.set($("f25-foot"), { opacity: 1 }, at(123.725));
+          // ---- the hook: two slams on fixed-content inner spans (render() carries their wrappers poster → line) ----
+          const force = $("f25-force"), push = $("f25-push"), fw = $("f25-fw"), pw = $("f25-pw");
+          // FORCE comes out of the lens from its start − 0.04 and lands sharp on the kick (a zoom: CSS blur, not clones)
+          tl.set(force, { opacity: 0 }, 0).set(force, { opacity: 1 }, FORCE - 0.04);
+          tl.set(force, { scale: 2.2, yPercent: -8, skewX: -12, filter: "blur(18px)" }, 0);
+          tl.fromTo(force, { scale: 2.2, yPercent: -8, skewX: -12, filter: "blur(18px)" }, { scale: 1, yPercent: 0, skewX: 0, filter: "blur(0px)", duration: FL - (FORCE - 0.04), ease: "power3.in", immediateRender: false }, FORCE - 0.04);
+          // PUSH! is parked off the right edge and shoved in from its start − 0.04, landing on the kick and the downbeat
+          tl.set(push, { opacity: 0 }, 0).set(push, { opacity: 1 }, PUSH - 0.04);
+          tl.set(push, { x: 1150, scale: 1.25, skewX: -18 }, 0);
+          tl.fromTo(push, { x: 1150, scale: 1.25, skewX: -18 }, { x: 0, scale: 1, skewX: 0, duration: PL - (PUSH - 0.04), ease: "power3.in", immediateRender: false }, PUSH - 0.04);
+          WOW.shake(tl, cam, FL + 0.01, { amp: 7 * K, dur: 0.3, rot: 0.25, seed: 25 });
+          WOW.shake(tl, cam, PL + 0.01, { amp: 13 * K, dur: 0.45, rot: 0.45, seed: 52 });
+          // the downbeat: a fire shockwave and cream rays out of the poster PUSH! (its centre is fixed: PXC, PYC)
+          const PXC = 50 * PX, PYF = 29.5 * PX, PYC = 31 * PX;
+          const fx = $("f25-fx");
+          WOW.shock(tl, fx, { x: PXC, y: PYC, t: PL, r: 860 * K, n: 2, w: 5, dur: 0.6, color: "fire" });
+          WOW.rays(tl, fx, { x: PXC, y: PYC, t: PL, n: 26, r0: 160, r1: 1000, w: 3, dur: 0.5, seed: 25 });
 
-          // ---- the camera: a punch on FORCE, a bigger one on PUSH!, a lean down the log, a punch on "lies" ----
-          tl.fromTo(stage.cam, { z: 1.0, y: 0 }, { z: 1 + 0.04 * K, y: -5 * K, duration: 0.05, ease: "power2.in" }, FORCE - 0.05);
-          tl.to(stage.cam, { z: 1.0, y: 0, duration: 0.45, ease: "elastic.out(1, 0.55)" }, FORCE);
-          tl.to(stage.cam, { z: 1 + 0.06 * K, y: -9 * K, duration: 0.07, ease: "power2.in" }, PUSH - 0.07);
-          tl.to(stage.cam, { z: 1.012, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, PUSH);
-          tl.to(stage.cam, { z: 1.03, y: 14, duration: LIES - 0.06 - (PUSH + 0.5), ease: "sine.inOut" }, PUSH + 0.5);
-          tl.to(stage.cam, { z: 1 + 0.065 * K, y: 22, duration: 0.06, ease: "power2.in" }, LIES - 0.06);
-          tl.to(stage.cam, { z: 1.04, y: 18, x: 10, duration: DUR - LIES, ease: "power2.out" }, LIES);
+          // ---- the pen: one fire bar strikes each row across the whole panel, the lie erased behind it, the sung
+          //      word left in its place. Panel coordinates (px); the pen leaves 0.04 s before its word. ----
+          const LANE = 3.4 * PX, TXT = (3.4 + 14.6) * PX, END = (89 - 2.2) * PX, LIESX = TXT + 17.8 * PX - 0.6 * PX;
+          const ROWTOP = [3.8, 12, 20.2].map((v) => v * PX), ROWH = [8.2, 8.2, 12.6].map((v) => v * PX), PENH = 7 * PX;
+          const PENY = ROWTOP.map((y, i) => y + ROWH[i] - 0.35 * PX - PENH); // bottom-anchored, so a scaleY keeps it on the row
+          const strikes = [
+            { row: 0, t: RIGHT - 0.04, a: LANE, b: END, dur: 0.3 },
+            { row: 1, t: OVER - 0.04, a: LANE, b: END, dur: 0.24 },
+            { row: 2, t: YOUR - 0.04, a: LANE, b: LIESX, dur: 0.15 },
+            { row: 2, t: LIES - 0.04, a: LIESX, b: END, dur: 0.26 },
+          ];
+          const pen = $("f25-pen");
+          // the pen jumps rows only while hidden, at least a shutter away from either side, so it never smears the jump
+          tl.set(pen, { x: LANE, y: PENY[0], scaleY: 1 }, 0);
+          tl.set(pen, { x: LANE, y: PENY[1] }, OVER - 0.09);
+          tl.set(pen, { x: LANE, y: PENY[2], scaleY: 1.55 }, YOUR - 0.08);
+          strikes.forEach((s) => tl.fromTo(pen, { x: s.a }, { x: s.b, duration: s.dur, ease: "power3.out", immediateRender: false }, s.t));
+          const penOn = (t) => (t >= strikes[0].t && t < strikes[0].t + strikes[0].dur + 0.02) || (t >= strikes[1].t && t < strikes[1].t + strikes[1].dur + 0.02) || t >= strikes[2].t;
+          const rowStart = [strikes[0].t, strikes[1].t, strikes[2].t];
+          const rowDone = [strikes[0].t + strikes[0].dur, strikes[1].t + strikes[1].dur, strikes[3].t + strikes[3].dur];
+          // each strike hits the camera with the drums under it
+          strikes.forEach((s, i) => WOW.shake(tl, cam, s.t + 0.04, { amp: (3 + 8 * HR.band("drums", T0 + s.t + 0.04)) * K, dur: 0.26, rot: 0.18, seed: 40 + i }));
+
+          // ---- "lies": the hero lands at display scale as the stroke crosses `"force push"`; a ring goes out ----
+          const lies = $("f25-lies");
+          HR.hero(tl, lies, LIES, { spread: 24 * K, over: 1 + 0.24 * K, pre: 0.08, sharp: true, skew: false });
+          WOW.shock(tl, $("f25-log"), { x: LIESX + 10 * PX, y: ROWTOP[2] + 6.5 * PX, t: LIES + 0.01, r: 700 * K, n: 2, w: 5 });
+          WOW.shake(tl, cam, LIES + 0.01, { amp: 8 * K, dur: 0.32, rot: 0.25, seed: 61 });
+          // the footer lands whole on the downbeat, after the last strike
+          tl.set($("f25-foot"), { opacity: 0 }, 0).set($("f25-foot"), { opacity: 1 }, DB);
+
+          // ---- the camera: a punch on FORCE, the biggest on PUSH!, still through the settle, then a push down the log
+          //      row by row with the strikes (z 1 → 1.15: the log layer grows ~13 %), a punch on "lies", one on the
+          //      downbeat, a drift to the left that leads into the whip ----
+          const c = stage.cam;
+          tl.fromTo(c, { z: 1.0, x: 0, y: 0 }, { z: 1.04, x: 0, y: -4, duration: FL, ease: "power2.in" }, 0);
+          tl.to(c, { z: 1.0, y: 0, duration: 0.4, ease: "elastic.out(1, 0.55)" }, FL + 0.01);
+          tl.to(c, { z: 1 + 0.07 * K, y: -10, duration: 0.06, ease: "power2.in" }, PL - 0.06);
+          tl.to(c, { z: 1.01, y: 0, duration: SET0 - PL - 0.01, ease: "elastic.out(1, 0.5)" }, PL + 0.01);
+          tl.to(c, { z: 1.0, duration: SETD, ease: "power3.inOut" }, SET0);
+          tl.to(c, { z: 1.045, y: 12, duration: 0.34, ease: "power3.out" }, RIGHT - 0.02);
+          tl.to(c, { z: 1.08, y: 22, duration: 0.3, ease: "power3.out" }, OVER - 0.02);
+          tl.to(c, { z: 1.105, y: 30, duration: 0.16, ease: "power3.out" }, YOUR - 0.02);
+          tl.to(c, { z: 1.15, y: 36, duration: 0.05, ease: "power2.in" }, LIES - 0.05);
+          tl.to(c, { z: 1.12, y: 34, duration: DB - 0.04 - (LIES + 0.01), ease: "power2.out" }, LIES + 0.01);
+          tl.to(c, { z: 1.14, duration: 0.04, ease: "power2.in" }, DB - 0.04);
+          tl.to(c, { z: 1.125, x: -40, duration: DUR - DB, ease: "power2.out" }, DB);
           tl.set({}, {}, DUR);
 
-          // ---- per-frame state: pens, erasure, cursors, edges, rewritten gutters, the lit lane, glow, camera ----
-          const lane = $("f25-lane"), push = $("f25-push"), lies = $("f25-lies");
+          // ---- the hook's poster moves, as pure functions of time (render() also reads their speed) ----
+          const knockE = gsap.parseEase("expo.out"), setE = gsap.parseEase("power3.inOut");
+          const pF = (t) => (t < KN0 ? 0 : knockE(Math.min(1, (t - KN0) / KND)));
+          const pP = (t) => (t < SET0 ? 0 : setE(Math.min(1, (t - SET0) / SETD)));
+          const hook = $("f25-hook"), hglow = $("f25-hglow");
+          // each wrapper: its centre in the line (cx, cy), its poster centre (X, Y) and poster scale k (FORCE/PUSH! at 90 % width)
+          const GF = { cx: 0, cy: 0, X: PXC, Y: PYF, k: 2.5, w: 1 }, GP = { cx: 0, cy: 0, X: PXC, Y: PYC, k: 2.3, w: 1 };
+          const pose = (g, p) => { const q = 1 - p; return { x: (g.X - g.cx) * q, y: (g.Y - g.cy) * q, s: 1 + (g.k - 1) * q }; };
+          const poseAt = (g, f, t) => pose(g, f(t));
+          const speed = (g, f, t) => {
+            const a = poseAt(g, f, t), b = poseAt(g, f, t - 1 / 60);
+            return (Math.hypot(a.x - b.x, a.y - b.y) + (Math.abs(a.s - b.s) * g.w) / 2) * 60; // px per second
+          };
+          const place = (el, g, f, t) => {
+            const a = poseAt(g, f, t), v = speed(g, f, t), bl = Math.min(14, v / 2500);
+            el.style.transform = `translate(${a.x.toFixed(2)}px, ${a.y.toFixed(2)}px) scale(${a.s.toFixed(4)})`;
+            el.style.filter = bl > 0.4 ? `blur(${bl.toFixed(1)}px)` : "";
+            return a;
+          };
+
+          // ---- per-frame state: reveals, erasure, edges, light, rewritten gutters, the lit lane, glow, camera ----
+          const rows = Array.from(root.querySelectorAll(".f25-row")).map((el, i) => ({
+            el, i, dot: el.querySelector(".f25-dot"), edge: el.querySelector(".f25-edge"), wash: el.querySelector(".f25-wash"),
+            lie: el.querySelector(".f25-lie"), words: Array.from(el.querySelectorAll(".f25-w")),
+            h: el.querySelector(".f25-h"), oldH: el.querySelector(".f25-h").textContent, au: el.querySelector(".f25-au"),
+          }));
+          const NEWH = ["9c0ffee", "5f2b8e1", "c81d3a4"], HEXL = "0123456789abcdef";
+          const lane = $("f25-lane"), penglow = $("f25-penglow"), lglow = $("f25-lglow"), log = $("f25-log");
           const fireRGB = [232, 93, 38], hintRGB = [80, 80, 72];
           const mix = (a, b, k) => `rgb(${a.map((v, j) => Math.round(v + (b[j] - v) * k)).join(",")})`;
-          const popE = gsap.parseEase("back.out(2.4)");
-          // geometry, measured until the fonts are in, then fixed
+          const popE = gsap.parseEase("back.out(2.6)");
           let laid = false;
           function layout() {
-            const ready = document.fonts.status === "loaded";
-            for (const r of rows) {
-              r.txtX = r.txt.offsetLeft;
-              r.end = Math.max(r.lie.offsetWidth, r.neu.offsetWidth) + 12;
-              r.ws = r.words.map((w) => w.offsetLeft + w.offsetWidth);
+            for (const r of rows) r.ws = r.words.map((w) => w.offsetLeft + w.offsetWidth);
+            for (const [g, el] of [[GF, fw], [GP, pw]]) {
+              g.w = el.offsetWidth || 1;
+              g.cx = hook.offsetLeft + el.offsetLeft + el.offsetWidth / 2;
+              g.cy = hook.offsetTop + el.offsetTop + el.offsetHeight / 2;
+              g.k = (0.9 * W) / g.w;
             }
-            rows[2].xs = lies.offsetLeft - 6;
-            laid = ready;
+            laid = document.fonts.status === "loaded";
           }
+          // the log dims under the poster and comes forward as PUSH! settles
+          const logOp = (t) => {
+            if (t < FL - 0.04) return 1;
+            if (t < SET0) return 1 - 0.7 * Math.min(1, (t - (FL - 0.04)) / 0.08);
+            return 0.3 + 0.7 * Math.min(1, (t - SET0) / SETD);
+          };
           function render() {
             const t = tl.time(), T = T0 + t;
             if (!laid) layout();
-            const lit = t >= LIES;
+            const lit = t >= LIES, bass = HR.band("bass", T), kick = HR.hit("kick", T, 0.2);
+            // the hook: FORCE's poster until the knock, PUSH!'s poster until the settle
+            place(fw, GF, pF, t);
+            const ap = place(pw, GP, pP, t);
+            // the hook's light: under FORCE's poster first, on PUSH! from its slam, scaled with it
+            const onPush = t >= PUSH - 0.04;
+            const gx = onPush ? GP.cx + ap.x : GF.X, gy = onPush ? GP.cy + ap.y : GF.Y, gs = onPush ? Math.sqrt(ap.s) : 1.4;
+            hglow.style.transform = `translate(${gx.toFixed(1)}px, ${gy.toFixed(1)}px) scale(${gs.toFixed(3)})`;
+            const hv = t < FORCE - 0.04 ? 0 : t < PL ? 0.45 + 0.3 * Math.min(1, (t - FORCE) / 0.3) : 0.85;
+            hglow.style.opacity = Math.min(1, hv + 0.3 * bass + 0.25 * kick).toFixed(3);
+            log.style.opacity = logOp(t).toFixed(3);
+
+            const px = gsap.getProperty(pen, "x"), py = gsap.getProperty(pen, "y"), psc = gsap.getProperty(pen, "scaleY");
             for (const r of rows) {
-              const txtX = r.txtX, end = r.end;
-              let x;
-              if (r.i === 2) {
-                const xs = r.xs;
-                x = r.pen.p <= 1 ? r.pen.p * xs : xs + (r.pen.p - 1) * (end - xs);
-              } else x = r.pen.p * end;
-              const done = r.pen.p >= (r.i === 2 ? 2 : 1);
-              // the lie is erased behind the pen, the sung word left in its place
-              r.lie.style.clipPath = done ? "inset(0 0 0 100%)" : `inset(-30% -2% -30% ${x.toFixed(1)}px)`;
+              const started = t >= rowStart[r.i], done = t >= rowDone[r.i];
+              // the pen's tip, in this row's text column (row 3 holds at "lies" between its two strikes)
+              const x = !started ? -1e4 : done ? END : px;
+              const xr = x - TXT;
+              r.lie.style.clipPath = done ? "inset(0 0 0 100%)" : `inset(-30% -2% -30% ${Math.max(0, xr).toFixed(1)}px)`;
               for (let j = 0; j < r.words.length; j++) {
-                const w = r.words[j], right = r.ws[j] - x;
-                w.style.clipPath = right <= 0 ? "none" : `inset(-40% ${right.toFixed(1)}px -40% -30%)`;
+                const right = r.ws[j] - xr;
+                r.words[j].style.clipPath = right <= 0 ? "none" : `inset(-40% ${right.toFixed(1)}px -40% -30%)`;
               }
-              // the cursor rides the pen tip while it writes, then goes
-              const on = t >= r.t0 && (r.i === 2 ? t < LIES + 0.2 : t < r.t0 + 0.42);
-              r.cur.style.opacity = on ? 1 : 0;
-              r.cur.style.transform = `translateX(${x.toFixed(1)}px)`;
-              // the edge: from the commit dot along the row, fire while it writes, cooling to a hairline, lit again on "lies"
-              const k = lit ? 0 : Math.max(0, Math.min(1, (t - (r.t0 + 0.34)) / 0.4));
-              r.edge.style.width = t >= r.t0 ? `${(txtX + x).toFixed(1)}px` : "0px";
+              // the edge: from the commit dot along the row, fire while it strikes, cooling to a hairline, lit again on "lies"
+              const ew = started ? Math.max(0, x - LANE) : 0;
+              const k = lit ? 0 : Math.max(0, Math.min(1, (t - (rowDone[r.i] + 0.05)) / 0.4));
+              r.edge.style.width = ew.toFixed(1) + "px";
               r.edge.style.background = mix(fireRGB, hintRGB, k);
-              // the commit is rewritten: a new hash, author me, a filled dot that pops in
-              const rw = t >= r.t0;
-              r.h.textContent = rw ? NEWH[r.i] : r.oldH;
-              r.au.textContent = rw ? "me" : "you";
-              r.au.classList.toggle("f25-me", rw);
-              const pk = rw ? popE(Math.min(1, (t - r.t0) / 0.3)) : 1;
-              r.dot.style.background = rw ? (lit ? "#E85D26" : "#F0ECE5") : "#0A0A0A";
-              r.dot.style.borderColor = rw ? (lit ? "#E85D26" : "#F0ECE5") : "#505048";
+              // the strike's light: a wash trailing the pen, fading after it; the overwritten log glows on "lies"
+              r.wash.style.width = ew.toFixed(1) + "px";
+              const fade = !started ? 0 : !done ? 1 : Math.exp(-(t - rowDone[r.i]) / 0.3);
+              r.wash.style.opacity = Math.max(fade, lit ? 0.5 + 0.35 * bass : 0).toFixed(3);
+              // the commit is rewritten: the hash scrambles to a new one, the author is stamped `me`, the dot fills
+              if (!started) r.h.textContent = r.oldH;
+              else {
+                const p = (t - rowStart[r.i]) / 0.2, tick = Math.floor(t * 30); let s = "";
+                for (let i = 0; i < 7; i++) s += p >= (i + 1) / 8 ? NEWH[r.i][i] : HEXL[(r.i * 7 + tick * 5 + i * 3) % 16];
+                r.h.textContent = s;
+              }
+              const stamped = t >= rowStart[r.i] + 0.03;
+              r.au.textContent = stamped ? "me" : "you";
+              r.au.classList.toggle("f25-me", stamped);
+              const sk = stamped ? popE(Math.min(1, (t - rowStart[r.i] - 0.03) / 0.25)) : 1;
+              r.au.style.transform = stamped ? `scale(${(1.9 - 0.9 * sk).toFixed(3)})` : "";
+              const pk = started ? popE(Math.min(1, (t - rowStart[r.i]) / 0.3)) : 1;
+              r.dot.style.background = started ? (lit ? "#E85D26" : "#F0ECE5") : "#121211";
+              r.dot.style.borderColor = started ? (lit ? "#E85D26" : "#F0ECE5") : "#505048";
               r.dot.style.transform = `scale(${pk.toFixed(3)})`;
             }
+            // the pen: on while it strikes; parked at the end after "lies", blinking at 2 Hz
+            const parked = t >= rowDone[2] + 0.3;
+            pen.style.opacity = penOn(t) && (!parked || Math.floor((t - rowDone[2] - 0.3) * 4) % 2 === 1) ? 1 : 0;
+            // the pen's light follows its tip, brightest while it moves
+            const moving = strikes.some((s) => t >= s.t && t < s.t + s.dur);
+            penglow.style.left = (px + 0.5 * PX).toFixed(1) + "px";
+            penglow.style.top = (py + PENH - (PENH * psc) / 2).toFixed(1) + "px";
+            penglow.style.transform = `scale(${psc.toFixed(3)})`;
+            penglow.style.opacity = (penOn(t) ? (moving ? 1 : 0.45 + 0.25 * bass) : 0).toFixed(3);
+            // the lane lights as the new main on "lies"
             lane.style.background = lit ? "#E85D26" : "#505048";
-            HR.glow(push, T, 0.22, 0.35); HR.glow(lies, T, 0.14, 0.24);
+            lane.style.boxShadow = lit ? `0 0 ${(10 + 16 * kick).toFixed(1)}px rgba(232, 93, 38, 0.6)` : "none";
+            // the log's light: low under the poster, full as the log comes forward, swelling on "lies"
+            const swell = lit ? 0.5 * Math.exp(-(t - LIES) / 0.6) : 0;
+            lglow.style.opacity = Math.min(1, (0.35 + 0.25 * (logOp(t) - 0.3) / 0.7) + 0.3 * bass + 0.2 * kick + swell).toFixed(3);
+            HR.glow(push, T, 0.25, 0.4 * K); HR.glow(lies, T, 0.32, 0.5 * K);
             stage.apply(T);
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { laid = false; render(); });
           window.__timelines["25-lies2"] = tl;
         })();
       </script>

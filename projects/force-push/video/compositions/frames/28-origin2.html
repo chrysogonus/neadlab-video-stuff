@@ -2,13 +2,19 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 28 — origin2 (chorus 2's last line, 133.152–136.790). Forks 15-origin: the same cream settings page, a
-         mono label column on the left and the values on the right, with the world moved on. REMOTES: "origin's mine"
-         over `git remote -v`; since 26's `git remote remove you`, a bare `git remote` beside it lists one name,
-         `origin`. On "mine" (134.04) the push line prints and its `me` is marked. ACCESS: `Collaborators: 1` and the
-         `me` row print on the kicks, and there is no row 2 at all: "and you're not" builds low, under an empty band
-         where 15's row 2 stood. On "there" (135.64) the space closes up: the whole line slams up under `me`, the
-         count gets the marker and the gutter pointer. Settles and holds the page for the hard cut into 29's chant. -->
+    <!-- Frame 28 — origin2 (chorus 2's last line, 133.152–136.790). Cream. Forks 15-origin: the same settings sheet on
+         the desk under the lamp, the same band, drift, jolt and zoom-out. The world has moved on: `you` is already gone.
+         Refinement round 1. The sheet rises in (27's `rise` carries on, shortened to a 0.2 s settle: "origin's" starts
+         0.128 s in). REMOTES: "origin's mine" over `git remote -v`; since 26's `git remote remove you`, a bare
+         `git remote` beside it lists one name, `origin` (prints on the first kick); on "mine" (134.04) the push line
+         prints, its `me` is marked and a fat marker underline draws under "mine". ACCESS: the collaborator panel still
+         has the room it had for you: row 1 `me` under the hover highlight, then an empty panel. On "and" the camera
+         trucks ~30 cqw down and pushes in (1.05 → 1.2) into the emptiness; on "you're" the hover drops off `me` into
+         the empty slot, on the kick it searches the next one, on "not" the last one: nothing anywhere. On "there"
+         (135.64) the panel CLOSES UP: its closing rule slams ~19 cqw up onto row 1 (blurred), the hover is crushed into
+         the seam, the seam lands in the accent, `Collaborators: 1` stamps large under it and the paper jolts. Chorus 2
+         is louder: every move and hit is sized by the drums (this span's mean over 15's, K ≈ 1.13). The camera follows
+         the seam up and zooms through it into 29's chant (`zoom`, 0.35 s). -->
   </head>
   <body>
     <template>
@@ -22,133 +28,212 @@
           position: absolute; inset: 0; overflow: hidden; container-type: size;
           --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --ink-on-cream: #111111; --muted-on-cream: #5F5B54; --marker: #C8481A;
           --hr-accent-rgb: 200, 72, 26;
-          background: var(--cream); color: var(--ink-on-cream);
+          /* the desk the sheet lies on: the cream ground in the lamp's shade (07, 15) */
+          --desk: color-mix(in srgb, var(--cream) 91%, var(--ink));
+          background: var(--desk); color: var(--ink-on-cream);
         }
-        /* header strip, cream register (07's colours) */
+        #f28-cam, #f28-in { position: absolute; inset: 0; }
+        /* the zoom out pushes through the seam (its place on screen at the end of the frame) */
+        #f28-cam { transform-origin: 50% 63.8%; }
+        /* the header strip on its band; the sheet slides under the band's lip */
+        #f28-band { position: absolute; left: 0; right: 0; top: 0; height: 6.4cqw; background: var(--desk);
+          box-shadow: 0 0.35cqw 0.9cqw rgba(10, 10, 10, 0.16); }
         #f28-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
-          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-on-cream);
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #3F3C37;
           padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
-        #f28-strip b { color: #B8461C; font-weight: 600; }
-        /* the finish layer's vignette darkens the corners of the cream page: the strip's small text needs a darker ink */
-        #f28-strip { color: #3F3C37; } #f28-strip b { color: #7E2E12; }
-        /* the form: label column at 5.5cqw, value column at 21cqw */
-        .f28-lbl { position: absolute; left: 5.5cqw; font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em;
+        #f28-strip b { color: #7E2E12; font-weight: 600; }
+        /* the view under the band: the sheet drifts in it (drift coordinates: y = frame y − 6.4cqw) */
+        #f28-view { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; overflow: hidden; }
+        #f28-drift { position: absolute; left: 0; top: 0; width: 100cqw; height: 100cqw; transform-origin: 0 0; }
+        #f28-jolt { position: absolute; inset: 0; transform-origin: 52% 40%; }
+        /* the sheet: paper on the desk, a shadow under it */
+        #f28-sheet { position: absolute; left: 2.6cqw; right: 2.6cqw; top: 1.2cqw; height: 90cqw; background: var(--cream);
+          box-shadow: 0 1.3cqw 3cqw rgba(10, 10, 10, 0.2), 0 0.15cqw 0.35cqw rgba(10, 10, 10, 0.16); }
+        /* the lamp: light falls off from what is being read, breathing with the bass; it follows the camera down */
+        #f28-lamp { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; pointer-events: none; --lx: 46%; --ly: 30%;
+          background: radial-gradient(ellipse 66% 84% at var(--lx) var(--ly), rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 0) 38%,
+            rgba(10, 10, 10, 0.07) 72%, rgba(10, 10, 10, 0.15) 100%); }
+        /* the form: label column at 5.5cqw, value column at ~21cqw */
+        .f28-lbl { position: absolute; left: 5.5cqw; font: 500 0.86cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em;
           text-transform: uppercase; color: var(--muted-on-cream); }
-        #f28-lbl1 { top: 9.2cqw; }
-        #f28-lbl2 { top: 31.1cqw; }
-        .f28-sep { position: absolute; left: 5.5cqw; right: 5.5cqw; height: 1px; background: rgba(17, 17, 17, 0.22); transform-origin: 0% 50%; }
-        #f28-sep1 { top: 29.6cqw; }
+        #f28-lbl1 { top: 2.8cqw; }
+        #f28-lbl2 { top: 22.5cqw; }
+        #f28-sep1 { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 21.2cqw; height: 1px; background: rgba(17, 17, 17, 0.22); }
         /* REMOTES: the lyric is the value; git's printouts are its detail */
-        #f28-a { position: absolute; left: 20.4cqw; top: 7.4cqw; font: 900 12cqw/0.92 "Barlow", sans-serif; letter-spacing: -0.045em;
+        #f28-a { position: absolute; left: 20.4cqw; top: 1.2cqw; font: 900 12cqw/0.92 "Barlow", sans-serif; letter-spacing: -0.045em;
           color: var(--ink-on-cream); white-space: nowrap; }
         .f28-hw { position: relative; display: inline-block; isolation: isolate; }
-        .f28-ul { position: absolute; z-index: -1; left: -0.02em; right: 0.04em; bottom: -0.01em; height: 0.07em; background: var(--marker); opacity: 0.85;
-          border-radius: 0.2cqw; transform-origin: 0% 50%; transform: rotate(-0.6deg) scaleX(0); }
-        .f28-print { position: absolute; top: 20.6cqw; font: 400 1.22cqw/1.6 "IBM Plex Mono", monospace; color: var(--muted-on-cream);
+        /* the marker underline under "mine": fat, the accent */
+        .f28-ul { position: absolute; z-index: -1; left: -0.03em; right: 0.02em; bottom: -0.07em; height: 0.2em; background: var(--marker); opacity: 0.92;
+          border-radius: 0.3cqw; transform-origin: 0% 50%; transform: rotate(-0.8deg) scaleX(0); }
+        .f28-print { position: absolute; top: 14cqw; font: 400 1.3cqw/1.6 "IBM Plex Mono", monospace; color: var(--muted-on-cream);
           white-space: pre; }
         #f28-remote { left: 21cqw; }
-        #f28-names { left: 52cqw; }
+        #f28-names { left: 60cqw; }
         .f28-print .f28-cmd { color: var(--ink-on-cream); font-weight: 500; }
-        .f28-print .f28-url { color: var(--ink-on-cream); }
+        .f28-print .f28-url, #f28-n1 { color: var(--ink-on-cream); }
         #f28-remote .f28-me { color: #B8461C; font-weight: 600; position: relative; display: inline-block; }
         #f28-remote .f28-me i { position: absolute; left: -0.1em; right: -0.1em; bottom: -0.12em; height: 0.16em; background: var(--marker);
           transform-origin: 0% 50%; }
-        /* ACCESS: one collaborator, and no row where you were */
-        #f28-tab { position: absolute; left: 21cqw; right: 5.5cqw; top: 30.8cqw; }
-        .f28-head { position: relative; display: inline-block; height: 2.4cqw; font: 400 1.1cqw/2.4cqw "IBM Plex Mono", monospace;
-          color: var(--muted-on-cream); isolation: isolate; }
-        .f28-head b { color: var(--ink-on-cream); font-weight: 600; }
-        #f28-hm { position: absolute; left: -0.15em; right: -0.25em; bottom: 0.2em; height: 0.3em; z-index: -1; background: var(--marker);
-          border-radius: 0.1cqw; transform-origin: 0% 50%; transform: rotate(-0.6deg) scaleX(0); }
-        #f28-ptr { position: absolute; left: -1.3cqw; top: 22%; bottom: 22%; width: 0.32cqw; background: var(--marker); opacity: 0; }
-        .f28-row { position: relative; height: 3.1cqw; display: flex; align-items: center; font: 500 1.45cqw/1 "IBM Plex Mono", monospace;
-          color: var(--ink-on-cream); }
-        .f28-row .f28-n { width: 3.4cqw; font-weight: 400; color: var(--muted-on-cream); }
-        .f28-row .f28-addr { margin-left: 6cqw; font-weight: 400; color: var(--muted-on-cream); }
-        .f28-rule { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: rgba(17, 17, 17, 0.22); transform-origin: 0% 50%; }
-        /* the second half of the line: it builds low, under the empty band where 15's row 2 stood, and closes up on "there" */
-        #f28-b { position: absolute; left: 20.6cqw; top: 43.6cqw; font: 800 8.4cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.04em;
+        /* the second half of the line: the access section's heading, a size up on 15's */
+        #f28-b { position: absolute; left: 20.6cqw; top: 22.2cqw; font: 800 8.4cqw/0.95 "Barlow", sans-serif; letter-spacing: -0.04em;
           color: var(--ink-on-cream); white-space: nowrap; }
         #f28-b .f28-hero { font-weight: 900; }
+        /* ACCESS: one collaborator in a panel still sized for more */
+        #f28-tab { position: absolute; left: 21cqw; right: 8cqw; top: 32.2cqw; }
+        #f28-box { position: absolute; left: 0; right: 0; top: 0; height: 25.6cqw; box-sizing: border-box;
+          border: 1px solid rgba(17, 17, 17, 0.3); border-bottom: 0; }
+        .f28-row { position: absolute; left: 0; right: 0; top: 0; height: 6.4cqw; }
+        .f28-cells { position: absolute; inset: 0; display: flex; align-items: center; padding-left: 1.4cqw; padding-right: 1.4cqw;
+          font: 600 3.6cqw/1 "IBM Plex Mono", monospace; color: var(--ink-on-cream); }
+        .f28-n { width: 5.2cqw; font-weight: 400; color: var(--muted-on-cream); }
+        .f28-name { width: 13cqw; }
+        .f28-addr { font: 400 2.3cqw/1 "IBM Plex Mono", monospace; color: var(--muted-on-cream); }
+        .f28-role { margin-left: auto; font: 400 1.6cqw/1 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase;
+          color: var(--muted-on-cream); }
+        .f28-rule { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: rgba(17, 17, 17, 0.22); }
+        /* the hover: a row highlight and the gutter pointer; it starts on `me` and goes looking for you */
+        #f28-hover { position: absolute; left: -2.4cqw; right: 0; top: 0; height: 6.4cqw; transform-origin: 50% 0%; }
+        #f28-hover .f28-tint { position: absolute; left: 2.4cqw; right: 0; top: 0; bottom: 0; background: rgba(200, 72, 26, 0.13); }
+        #f28-hover .f28-ptr { position: absolute; left: 0; width: 0.6cqw; top: 16%; bottom: 16%; background: var(--marker); }
+        /* the panel's closing rule: it slams up onto row 1 on "there"; the seam lands in the accent */
+        #f28-close { position: absolute; left: -2.4cqw; right: -0.6cqw; top: 25.6cqw; height: 0.3cqw; margin-top: -0.15cqw; background: var(--ink-on-cream); }
+        #f28-seam { position: absolute; left: -2.4cqw; right: -0.6cqw; top: 6.4cqw; height: 0.62cqw; margin-top: -0.31cqw; background: var(--marker);
+          transform-origin: 0% 50%; transform: scaleX(0); }
+        /* the count, stamped large under the closed panel */
+        #f28-foot { position: absolute; left: 0; top: 7.5cqw; font: 500 4.4cqw/1.3 "IBM Plex Mono", monospace; color: var(--ink-on-cream);
+          white-space: nowrap; transform-origin: 0% 50%; }
+        #f28-foot b { color: #B8461C; font-weight: 600; }
       </style>
       <div id="root" data-composition-id="28-origin2" data-width="1920" data-height="1080" data-duration="3.638">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f28-strip"><span>~/us &nbsp;·&nbsp; settings</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
-        </div>
-        <div class="hr-layer" data-depth="0.55">
-          <div class="f28-lbl" id="f28-lbl1">remotes</div>
-          <div class="f28-sep" id="f28-sep1"></div>
-          <div class="f28-lbl" id="f28-lbl2">access</div>
-          <div class="f28-print" id="f28-remote"><div><span class="f28-cmd">$ git remote -v</span></div><div id="f28-r1">origin&#9;<span class="f28-url">me@home:us.git</span> (fetch)</div><div id="f28-r2">origin&#9;<span class="f28-url"><span class="f28-me">me<i></i></span>@home:us.git</span> (push)</div></div>
-          <div class="f28-print" id="f28-names"><div><span class="f28-cmd">$ git remote</span></div><div id="f28-n1">origin</div></div>
-          <div id="f28-tab">
-            <div><span class="f28-head" id="f28-head"><i id="f28-hm"></i><i id="f28-ptr"></i>Collaborators: <b>1</b></span></div>
-            <div class="f28-row" id="f28-me"><span class="f28-n">1</span><span>me</span><span class="f28-addr">me@home</span><i class="f28-rule" id="f28-rule1"></i></div>
+        <div id="f28-cam">
+          <div id="f28-in">
+            <div id="f28-view">
+              <div id="f28-drift" data-layout-allow-overflow>
+                <div id="f28-jolt">
+                  <div id="f28-sheet"></div>
+                  <div class="f28-lbl" id="f28-lbl1">remotes</div>
+                  <div id="f28-sep1"></div>
+                  <div class="f28-lbl" id="f28-lbl2">access</div>
+                  <div id="f28-a"><span class="f28-hw"><span class="f28-w" id="f28-origin">origin's</span></span> <span class="f28-hw"><span class="f28-w" id="f28-mine">mine</span><i class="f28-ul" id="f28-ul"></i></span></div>
+                  <div class="f28-print" id="f28-remote"><div><span class="f28-cmd">$ git remote -v</span></div><div>origin&#9;<span class="f28-url">me@home:us.git</span> (fetch)</div><div id="f28-push">origin&#9;<span class="f28-url"><span class="f28-me">me<i></i></span>@home:us.git</span> (push)</div></div>
+                  <div class="f28-print" id="f28-names"><div><span class="f28-cmd">$ git remote</span></div><div id="f28-n1">origin</div></div>
+                  <div id="f28-b"><span class="f28-w">and</span> <span class="f28-w">you're</span> <span class="f28-w">not</span> <span class="f28-w f28-hero" id="f28-there">there</span></div>
+                  <div id="f28-tab">
+                    <div id="f28-box"></div>
+                    <div class="f28-row">
+                      <div class="f28-cells"><span class="f28-n">1</span><span class="f28-name">me</span><span class="f28-addr">me@home</span><span class="f28-role">owner</span></div>
+                      <i class="f28-rule"></i>
+                    </div>
+                    <div id="f28-hover" data-hf-motion-blur='{"fps": 60}'><i class="f28-tint"></i><i class="f28-ptr"></i></div>
+                    <i id="f28-close" data-hf-motion-blur='{"fps": 60}'></i>
+                    <i id="f28-seam"></i>
+                    <div id="f28-foot">Collaborators: <b>1</b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="f28-lamp" data-layout-ignore></div>
+            <div id="f28-band">
+              <div id="f28-strip"><span>~/us &nbsp;·&nbsp; settings</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+            </div>
           </div>
-        </div>
-        <div class="hr-layer" data-depth="0.9">
-          <div id="f28-a"><span class="f28-hw"><span class="f28-w" id="f28-origin">origin's</span></span> <span class="f28-hw"><span class="f28-w" id="f28-mine">mine</span><i class="f28-ul" id="f28-ul"></i></span></div>
-          <div id="f28-b"><span class="f28-w">and</span> <span class="f28-w">you're</span> <span class="f28-w">not</span> <span class="f28-w f28-hero" id="f28-there">there</span></div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
-          const DUR = 3.638, T0 = 133.152;
+          const DUR = 3.638, T0 = 133.152, PX = 19.2; // px per cqw at 1920 wide
           const root = document.querySelector('[data-composition-id="28-origin2"]');
           const $ = (id) => root.querySelector("#" + id);
-          const stage = HR.stage(root, { seed: 28 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
-          // L42's word starts (lyrics.json) and the kicks around them (HR_ENV)
+          // L42's word starts (lyrics.json) and the kicks of this span (HR_ENV)
           const ORIGIN = at(133.28), MINE = at(134.04), AND = at(134.66), YOURE = at(134.76), NOT = at(135.2), THERE = at(135.64);
-          const K_NAMES = at(133.602), K_ROW = at(134.512);
+          const K_NAMES = at(133.602), K_SEARCH = at(134.995), OUT = 0.35;
+          const cam = $("f28-cam"), drift = $("f28-drift"), jolt = $("f28-jolt");
+          const drums = (t) => HR.band("drums", T0 + t + 0.03);
+          // chorus 2 is louder: size every move by this span's drums over 15's (chorus 1's same line)
+          const mean = (a, b) => { let s = 0, n = 0; for (let T = a; T < b; T += 0.02) { s += HR.band("drums", T); n++; } return s / n; };
+          const K = Math.max(1, Math.min(1.25, mean(T0, T0 + DUR) / Math.max(0.05, mean(72.435, 76.09))));
 
-          // ---- the printouts: both commands and the fetch line are on the page at the cut ----
-          // `git remote` lists one name now (26 removed `you`); it prints on the first kick with the collaborator count
+          // ---- the cut: 27's `rise` carries on (the content keeps travelling up), shortened to a short settle because
+          //      "origin's" starts 0.128 s in: the page is on screen from the first frame and in place by the word ----
+          tl.fromTo($("f28-in"), { y: 300 }, { y: 0, duration: 0.2, ease: "expo.out" }, 0);
+          WOW.transition(tl, cam, { out: "zoom", dur: OUT, total: DUR });
+
+          // ---- REMOTES: `git remote` lists one name (26 removed `you`), on the first kick; the push line prints on "mine" ----
           tl.set($("f28-n1"), { opacity: 0 }, 0).set($("f28-n1"), { opacity: 1 }, K_NAMES);
-          tl.set($("f28-head"), { opacity: 0 }, 0).set($("f28-head"), { opacity: 1 }, K_NAMES);
-          // the push line prints on "mine"
-          tl.set($("f28-r2"), { opacity: 0 }, 0).set($("f28-r2"), { opacity: 1 }, MINE);
+          tl.set($("f28-push"), { opacity: 0 }, 0).set($("f28-push"), { opacity: 1 }, MINE);
           tl.fromTo(root.querySelector(".f28-me i"), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: "power2.out" }, MINE + 0.06);
-          // my row prints on the snare-kick before "and"; there is no row after it
-          tl.set($("f28-me"), { opacity: 0 }, 0).set($("f28-me"), { opacity: 1 }, K_ROW);
 
           // ---- the sung words, each on its own start ----
           HR.hero(tl, $("f28-origin"), ORIGIN, { spread: 32, over: 1.2, pre: 0.1, sharp: true });
           HR.hero(tl, $("f28-mine"), MINE, { spread: 26, over: 1.22, pre: 0.14, sharp: true });
-          tl.fromTo($("f28-ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power2.out" }, MINE + 0.04);
+          tl.fromTo($("f28-ul"), { scaleX: 0, rotation: -0.8 }, { scaleX: 1, rotation: -0.8, duration: 0.22, ease: "power2.out" }, MINE + 0.04);
           const w = root.querySelectorAll("#f28-b .f28-w");
           HR.lead(tl, w[0], AND); HR.lead(tl, w[1], YOURE); HR.lead(tl, w[2], NOT);
-          HR.hero(tl, w[3], THERE, { spread: 28, over: 1.24, pre: 0.14, sharp: true });
+          HR.hero(tl, w[3], THERE, { spread: 28, over: 1.26, pre: 0.14, sharp: true });
 
-          // ---- "there": the space where you were closes up ----
-          // the whole line slams up into the empty band, landing under my row on the word
-          tl.fromTo($("f28-b"), { yPercent: 0 }, { yPercent: -79, duration: 0.16, ease: "power4.out" }, THERE - 0.04);
-          // the count gets the marker, and the gutter pointer slams onto it
-          tl.fromTo($("f28-hm"), { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "power2.out" }, THERE + 0.06);
-          tl.set($("f28-ptr"), { opacity: 1 }, THERE);
-          tl.fromTo($("f28-ptr"), { scaleY: 1.8 }, { scaleY: 1, duration: 0.45, ease: "elastic.out(1, 0.5)", immediateRender: false }, THERE);
+          // ---- ACCESS: the hover goes looking for you — off `me` on "you're", the next empty slot on the kick, the last
+          //      on "not" (fixed content moved by tweens: it blurs on each drop and lands sharp) ----
+          const ROW = 6.4 * PX, hover = $("f28-hover");
+          tl.set(hover, { y: 0, scaleY: 1 }, 0);
+          [[YOURE, 1], [K_SEARCH, 2], [NOT, 3]].forEach(([t, k]) =>
+            tl.fromTo(hover, { y: (k - 1) * ROW, scaleY: 1 }, { y: k * ROW, scaleY: 1, duration: 0.08, ease: "power3.in", immediateRender: false }, t - 0.06));
+          // ---- "there": the panel closes up — its closing rule slams up onto row 1 (blurred), the hover is crushed into
+          //      the seam, the seam lands in the accent, the count stamps large under it ----
+          const SHUT = 0.1, T_SHUT = THERE - SHUT + 0.02, GAP = 3 * ROW;
+          tl.set($("f28-close"), { y: 0 }, 0);
+          tl.fromTo($("f28-close"), { y: 0 }, { y: -GAP, duration: SHUT, ease: "power3.in", immediateRender: false }, T_SHUT);
+          tl.fromTo($("f28-box"), { height: 4 * ROW }, { height: ROW, duration: SHUT, ease: "power3.in", immediateRender: false }, T_SHUT);
+          tl.fromTo(hover, { y: 3 * ROW, scaleY: 1 }, { y: ROW, scaleY: 0, duration: SHUT, ease: "power3.in", immediateRender: false }, T_SHUT);
+          tl.set($("f28-seam"), { scaleX: 0, scaleY: 1 }, 0);
+          tl.fromTo($("f28-seam"), { scaleX: 0.35, scaleY: 2.6 }, { scaleX: 1, scaleY: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, THERE + 0.02);
+          const foot = $("f28-foot");
+          tl.set(foot, { opacity: 0, scale: 1 }, 0);
+          tl.set(foot, { opacity: 1 }, THERE + 0.02);
+          tl.fromTo(foot, { scale: 1.3, y: -0.6 * PX }, { scale: 1, y: 0, duration: 0.4, ease: "elastic.out(1, 0.55)", immediateRender: false }, THERE + 0.02);
+          WOW.shake(tl, jolt, THERE + 0.02, { amp: (8 + 6 * drums(THERE)) * K, dur: 0.4, rot: 0.35, seed: 28 });
 
-          // ---- the camera: chorus 2 runs louder, punches sized by the measured drums; a slow push carries the page ----
-          const punch = (T) => 0.022 + 0.034 * HR.band("drums", T0 + T + 0.03);
-          const pO = punch(ORIGIN), pM = punch(MINE), pT = punch(THERE) + 0.012;
-          tl.fromTo(stage.cam, { z: 1.0, y: 0, x: 0 }, { z: 1.0 + pO, y: -4, duration: 0.06, ease: "power2.in" }, ORIGIN - 0.06);
-          tl.to(stage.cam, { z: 1.006, y: 0, duration: 0.5, ease: "elastic.out(1, 0.55)" }, ORIGIN);
-          tl.to(stage.cam, { z: 1.012, duration: MINE - ORIGIN - 0.56, ease: "none" }, ORIGIN + 0.5);
-          tl.to(stage.cam, { z: 1.012 + pM, y: -6, duration: 0.06, ease: "power2.in" }, MINE - 0.06);
-          tl.to(stage.cam, { z: 1.016, y: 0, duration: 0.5, ease: "elastic.out(1, 0.55)" }, MINE);
-          // "and you're not": the camera tilts down to the low line
-          tl.to(stage.cam, { z: 1.022, y: 16, duration: THERE - MINE - 0.56, ease: "sine.inOut" }, MINE + 0.5);
-          // "there": the punch rides up with the line, then the page settles and drifts to the cut
-          tl.to(stage.cam, { z: 1.022 + pT, y: 4, duration: 0.06, ease: "power2.in" }, THERE - 0.06);
-          tl.to(stage.cam, { z: 1.026, y: 6, duration: 0.6, ease: "elastic.out(1, 0.5)" }, THERE);
-          tl.to(stage.cam, { z: 1.036, x: -12, duration: DUR - THERE - 0.6, ease: "none" }, THERE + 0.6);
+          // ---- the camera: punches sized by the measured drums × K; one big move for the phrase — on "and" it trucks
+          //      ~30 cqw down and pushes in (1.05 → 1.2) into the empty panel, on "there" it rides the slam up onto the
+          //      seam, then keeps pushing into it ----
+          // a framing: drift point (cx, cy) in cqw shown at view point (sx, sy) at zoom s
+          const frame = (cx, cy, sx, sy, s) => ({ x: (sx - cx * s) * PX, y: (sy - cy * s) * PX, scale: s });
+          const z = (s) => 1 + (s - 1) * K;
+          tl.fromTo(drift, { ...frame(52, 12, 52, 12, 1.0) }, { ...frame(52, 12, 52, 12, z(1.05)), duration: AND, ease: "none" }, 0);
+          tl.to(drift, { ...frame(56, 42.8, 50, 25, z(1.18)), duration: 0.55, ease: "power3.inOut" }, AND);
+          tl.to(drift, { ...frame(56, 42.8, 50, 25, z(1.2)), duration: T_SHUT - AND - 0.55, ease: "none" }, AND + 0.55);
+          tl.to(drift, { ...frame(56, 38.6, 50, 29.5, z(1.22)), duration: 0.4, ease: "power3.out" }, T_SHUT);
+          tl.to(drift, { ...frame(56, 38.6, 50, 29.5, z(1.25)), duration: DUR - T_SHUT - 0.4, ease: "sine.in" }, T_SHUT + 0.4);
+          const pk = (t, base, amt) => ({ s: 1 + (base + amt * drums(t)) * K, dur: 0.45 });
+          WOW.punch(tl, cam, ORIGIN, pk(ORIGIN, 0.02, 0.03));
+          WOW.punch(tl, cam, MINE, pk(MINE, 0.02, 0.03));
+          WOW.punch(tl, cam, K_SEARCH, { s: 1 + 0.012 * K, dur: 0.3 });
+          WOW.punch(tl, cam, THERE, { ...pk(THERE, 0.04, 0.04), dur: 0.5 });
+          WOW.pulse(tl, cam, { kind: "kick", amt: 0.006 * K });
           tl.set({}, {}, DUR);
+          // the remotes block scrolls under the band's lip once its line is done (deliberate)
+          root.querySelectorAll("#f28-a, #f28-a *, #f28-remote, #f28-remote *, #f28-names, #f28-names *, #f28-lbl1")
+            .forEach((el) => el.setAttribute("data-layout-allow-occlusion", ""));
 
+          // ---- per-frame state: the lamp, the seam on the kicks, the camera ----
+          const lamp = $("f28-lamp"), seam = $("f28-seam");
+          const ease = (u) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
           function render() {
-            stage.apply(T0 + tl.time());
+            const t = tl.time(), T = T0 + t;
+            const after = t >= THERE;
+            const p = ease(Math.max(0, Math.min(1, (t - AND) / 0.55)));
+            const q = ease(Math.max(0, Math.min(1, (t - THERE) / 0.4)));
+            lamp.style.setProperty("--lx", (46 + 4 * p).toFixed(2) + "%");
+            lamp.style.setProperty("--ly", (30 + 34 * p - 6 * q).toFixed(2) + "%");
+            lamp.style.opacity = Math.max(0.45, 1 - 0.4 * HR.band("bass", T) - 0.25 * HR.hit("kick", T, 0.22)).toFixed(3);
+            seam.style.opacity = after ? (0.85 + 0.15 * HR.hit("kick", T, 0.2)).toFixed(3) : "";
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();

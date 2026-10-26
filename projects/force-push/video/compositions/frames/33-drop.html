@@ -2,22 +2,30 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 33 — drop (key change up, 169.270–177.150). The climax: 12's overwrite and 13's clean timeline combined
-         at full scale on one horizontal lane, after the hook at its largest.
-         A — the cut is 32's Enter: git answers at the foot of the terminal (`To me@home:us.git`, then the forced
-         update on the first kick). FORCE (169.33) slams alone across the frame, the biggest type of the film. On PUSH!
-         (169.86, the drop's first kick and downbeat) a 0 ms cut to the cream register: FORCE / PUSH! stacked edge to
-         edge in ink, for one beat (the finish layer's flash lands on the cut before it).
-         B — "right" (170.38, kick + snare): hard cut back to the terminal. FORCE PUSH! is a band across the top; under
-         it origin's lane holds two of your commits, their messages your lies (`we'll get to it`, `nothing on the
-         side`, same hashes as 10). The new main is drawn right over the old lane, and behind each row's cursor the lie
-         is erased and the sung word left in its place ("right over" above the lane, "your lies" hanging under it);
-         each commit is rewritten (new hash, author `me`). On "lies" (171.46) the lane lights.
-         C — "brand" (172.38): the camera whips along the lane to a clean stretch of it. "brand new" small above,
-         "timeline," the full-width display word riding the lane, written commit by commit, one step and one dot per
-         kick; on "no" the pen fast-forwards off the right edge, "no goodbyes" hangs from the line and "goodbyes"
-         (174.94) lands with the kick. The hold to the cut keeps moving with the drums: a glint runs the lane on every
-         kick, the camera pushes in. Hard cut into 34. -->
+    <!-- Frame 33 — drop (key change up, 169.270–177.150). Refinement round 1: the film's peak, its brightest and fastest
+         stretch. The first bar (the approved poster) is kept and made the biggest of the film; after it, the overwrite
+         and the clean timeline are one new set at full scale (no layout from 12, 13, 25 or 26).
+         A — the cut is 32's Enter: git answers at the foot of the terminal (`To me@home:us.git`, then the forced update
+         on the first kick) while FORCE comes out of the lens and lands on 169.33 at ~98 % of the frame width, a fire
+         shockwave and cream rays behind it. On PUSH! (169.86, the drop's first kick and downbeat) a 0 ms cut to the
+         cream register: FORCE / PUSH! stacked edge to edge, filling the page, PUSH! slamming out of the lens, fire shards
+         and a ring, the heaviest shake of the film. All hits are sized by the drums (this span's mean over 10's).
+         B — "right" (170.38): a hard cut back to ink, onto origin's old log as a wall: the ex's commits, every message
+         one of his lies, scrolling on the kicks. "right" slams in from the left across the frame, "over" drops onto
+         the line. "your" (171.16) waits mid-frame; on "lies" (171.46) a cream stroke tears across the whole frame,
+         left to right, a fire pen at its tip: it wipes the lies under it, turns "your" to ink and writes "lies" at
+         display scale on the page it leaves. The pen parks after "lies", blinking.
+         C — "brand" (172.38): the stroke collapses to a line and the line swings into perspective — the new timeline,
+         a lit lane the camera rides from the horizon under "timeline," (172.98, out of the lens, the second slam);
+         one commit rushes past per kick. On "no" (174.36) git fast-forwards: the ride surges, the camera pushes;
+         "goodbyes" (174.94) lands as the camera springs back, a cream flash and a ring; the push's last word,
+         `(forced update)`, prints at display size on the 175.392 downbeat while the lane lights and a glint runs at the
+         camera on every kick. The out is a 0.25 s whipL into 34.
+         Round 2 (REFINE-2.md): C no longer holds its pose. The lane runs at double speed; the words sit on their own
+         layer that takes 0.3 of the camera's move, so the camera rides the lane (banking, diving) under a lockup that
+         stays framed. One big move per bar: 173.557 a lunge down the lane banking left; "no" the fast-forward swinging
+         to the other bank and diving in; "goodbyes" level again on the hit; 175.392 a lunge banking right into the whip.
+         The hero ("timeline," then "goodbyes") lands on every kick of the hold, harder on the downbeats. -->
   </head>
   <body>
     <template>
@@ -33,301 +41,492 @@
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826; --ink-on-cream: #111111; --muted-on-cream: #5F5B54;
           background: var(--ink); color: var(--cream);
         }
+        #f33-cam { position: absolute; inset: 0; }
         #f33-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f33-strip b { color: var(--fire); font-weight: 600; }
         #f33-strip.f33-oncream { color: var(--muted-on-cream); border-bottom-color: #CFCAC1; }
         #f33-strip.f33-oncream b { color: var(--ink-on-cream); }
+        #f33-cv { position: absolute; left: 0; top: 0; width: 100cqw; height: 56.25cqw; }
+        #f33-fx, #f33-cfx, #f33-fx2 { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+        .f33-glow { position: absolute; left: 0; top: 0; pointer-events: none; opacity: 0; }
 
-        /* A: the hook at its largest; then one beat of cream paper */
-        #f33-giant { position: absolute; left: 0; right: 0; top: 13.2cqw; text-align: center; white-space: nowrap;
-          font: 900 34cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--cream); }
-        #f33-cream { position: absolute; inset: 0; background: var(--cream); opacity: 0; }
-        #f33-poster { position: absolute; left: 4.6cqw; top: 5.2cqw; font: 900 28.5cqw/0.84 "Barlow", sans-serif; letter-spacing: -0.045em;
-          color: var(--ink-on-cream); white-space: nowrap; }
-        #f33-poster > span { display: block; width: max-content; }
-
-        /* the world: B at 0..100cqw, C at 100..200cqw, one lane at y = 35cqw */
-        #f33-track { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
-        #f33-svg { position: absolute; left: 0; top: 0; overflow: visible; }
-        .f33-b { opacity: 0; }
-
-        /* the terminal, where 32 left the unsent prompt: now sent, git answers */
+        /* A: the terminal 32 sent; FORCE at its largest; one beat of cream paper */
         #f33-term { position: absolute; left: 5.5cqw; top: 46.2cqw; font: 500 1.68cqw/1.55 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
         #f33-term .f33-cmd { color: var(--cream); }
         #f33-term .f33-plus { color: var(--fire); font-weight: 600; }
         #f33-term b { color: var(--cream); font-weight: 500; }
+        #f33-fglow { width: 120cqw; height: 60cqw; margin: -30cqw 0 0 -60cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.16) 0%, rgba(232, 93, 38, 0.09) 40%, rgba(232, 93, 38, 0.03) 75%, rgba(232, 93, 38, 0) 100%); }
+        #f33-giant { position: absolute; left: 0; right: 0; top: 11.6cqw; text-align: center; white-space: nowrap;
+          font: 900 34cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--cream); }
+        #f33-gw { display: inline-block; transform-origin: 50% 55%; }
+        #f33-cream { position: absolute; left: -6cqw; top: -6cqw; right: -6cqw; bottom: -6cqw; background: var(--cream); opacity: 0; }
+        #f33-poster { position: absolute; left: 0; top: 0; font: 900 28.5cqw/0.84 "Barlow", sans-serif; letter-spacing: -0.045em;
+          color: var(--ink-on-cream); white-space: nowrap; transform-origin: 0 0; }
+        #f33-poster > span { display: block; width: max-content; }
+        #f33-pw { transform-origin: 50% 60%; }
 
-        /* B: the hook as a band, the two rows of lies on the lane */
-        #f33-hook { position: absolute; left: 0; width: 100cqw; top: 6.4cqw; text-align: center; white-space: nowrap;
-          font: 900 11cqw/0.87 "Barlow", sans-serif; letter-spacing: -0.04em; color: var(--cream); }
-        #f33-hook .f33-push { color: var(--fire); }
-        .f33-row { position: absolute; height: 11cqw; width: 50cqw; }
-        #f33-r1 { left: 5.5cqw; top: 22.6cqw; }
-        #f33-r2 { left: 46cqw; top: 36.6cqw; }
-        .f33-lie { position: absolute; left: 0; font: 400 4.2cqw/1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--cream-muted); white-space: pre; }
-        #f33-r1 .f33-lie { bottom: 1cqw; }
-        #f33-r2 .f33-lie { top: 1.2cqw; }
-        .f33-new { position: absolute; left: 0; font: 800 10.5cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--cream); white-space: pre; }
-        #f33-r1 .f33-new { bottom: 0; }
-        #f33-r2 .f33-new { top: 0; }
-        .f33-new > span { display: inline-block; }
-        .f33-new .f33-hero { font-weight: 900; font-size: 1.42em; letter-spacing: -0.04em; color: var(--fire); }
-        .f33-cur { position: absolute; left: 0; width: 1cqw; height: 8.4cqw; background: var(--fire); opacity: 0; }
-        #f33-r1 .f33-cur { bottom: 0.2cqw; }
-        #f33-r2 .f33-cur { top: 0.4cqw; height: 10.6cqw; }
-        .f33-gut { position: absolute; top: 36.4cqw; font: 400 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
-        .f33-gut .f33-au { color: var(--fire); font-weight: 600; }
-        .f33-gut .f33-au.f33-me { color: var(--cream); font-weight: 500; }
-        #f33-g1 { left: 6.6cqw; }
-        #f33-g2 { left: 33.2cqw; }
+        /* B: the overwrite. "right over" across the top; "your lies" on the stroke's band (canvas, 29..47cqw) */
+        #f33-bset { position: absolute; inset: 0; }
+        #f33-rl { position: absolute; left: 5.5cqw; top: 6.8cqw; font: 900 16cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--cream); white-space: nowrap; }
+        #f33-rw { display: inline-block; transform-origin: 0% 80%; }
+        #f33-ow { display: inline-block; transform-origin: 50% 100%; }
+        #f33-yl { position: absolute; left: 5.5cqw; top: 29cqw; height: 18cqw; display: flex; align-items: baseline; padding-top: 1.2cqw; box-sizing: border-box; white-space: nowrap; }
+        #f33-yw { position: relative; display: inline-block; font: 800 10cqw/1 "Barlow", sans-serif; letter-spacing: -0.035em; margin-right: 2.4cqw; }
+        #f33-yc { color: var(--cream); }
+        #f33-yi { position: absolute; left: 0; top: 0; color: var(--ink-on-cream); }
+        #f33-lw { position: relative; display: inline-block; font: 900 20cqw/0.8 "Barlow", sans-serif; letter-spacing: -0.045em; transform-origin: 0% 80%; }
+        #f33-li { color: var(--ink-on-cream); }
 
-        /* C: the clean timeline, 100cqw to the right */
-        #f33-cset { position: absolute; left: 100cqw; top: 0; width: 100cqw; height: 100%; }
+        /* C: the clean timeline */
+        #f33-cset { position: absolute; inset: 0; }
+        #f33-tglow { width: 110cqw; height: 44cqw; margin: -22cqw 0 0 -55cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.09) 40%, rgba(232, 93, 38, 0.03) 75%, rgba(232, 93, 38, 0) 100%); }
         .f33-c { position: absolute; font-family: "Barlow", sans-serif; color: var(--cream); white-space: nowrap; }
-        #f33-bn { left: 5.5cqw; top: 7.6cqw; font-size: 7.6cqw; line-height: 0.8; letter-spacing: -0.03em; }
+        #f33-bn { left: 5.5cqw; top: 6.4cqw; font-size: 6.6cqw; line-height: 0.8; letter-spacing: -0.03em; }
         #f33-bn span { display: inline-block; }
         #f33-brand { font-weight: 900; }
-        #f33-new2 { font-weight: 800; }
-        #f33-time { left: 4.6cqw; top: 16.4cqw; font-size: 24.5cqw; font-weight: 900; line-height: 0.72; letter-spacing: -0.045em; }
-        #f33-ng { right: 5.5cqw; top: 37cqw; line-height: 0.8; letter-spacing: -0.04em; text-align: right; }
+        #f33-new { font-weight: 800; }
+        #f33-time { left: 0; right: 0; top: 13.2cqw; text-align: center; font-size: 21.5cqw; font-weight: 900; line-height: 0.72; letter-spacing: -0.045em; }
+        #f33-tw, #f33-tst { display: inline-block; transform-origin: 50% 60%; }
+        #f33-ng { transform-origin: 100% 85%; }
+        #f33-ng { right: 5.5cqw; top: 39.8cqw; line-height: 0.8; letter-spacing: -0.04em; text-align: right; }
         #f33-ng span { display: inline-block; }
-        #f33-no { font-size: 9cqw; font-weight: 800; margin-right: 0.3em; }
-        #f33-good { font-size: 13.5cqw; font-weight: 900; }
+        #f33-no { font-size: 7.4cqw; font-weight: 800; margin-right: 0.3em; }
+        #f33-good { font-size: 13.4cqw; font-weight: 900; }
         .f33-fire { color: var(--fire); }
-        /* the hold flips to cream paper on its downbeat: the clean timeline, printed */
-        #f33-paperbg { position: absolute; inset: 0; background: var(--cream); opacity: 0; }
-        #f33-world.f33-paper .f33-c, #f33-world.f33-paper .f33-fire { color: var(--ink-on-cream); }
-        #f33-world.f33-paper .hr-glowbox { filter: none; }
+        #f33-fu { position: absolute; left: 5.5cqw; top: 32.4cqw; font-family: "IBM Plex Mono", monospace; color: var(--cream); white-space: pre; }
+        #f33-fu .f33-l1 { font: 400 1.5cqw/1.4 "IBM Plex Mono", monospace; color: var(--cream-muted); }
+        #f33-fu .f33-l1 i { font-style: normal; color: var(--fire); font-weight: 600; }
+        #f33-fu .f33-l2 { font: 500 4cqw/1.1 "IBM Plex Mono", monospace; letter-spacing: -0.02em; }
+        #f33-flash { position: absolute; inset: 0; pointer-events: none; }
       </style>
       <div id="root" data-composition-id="33-drop" data-width="1920" data-height="1080" data-duration="7.88">
-        <div id="f33-paperbg"></div>
-        <div class="hr-layer" data-depth="1" id="f33-world">
-          <div id="f33-track">
-            <svg id="f33-svg" width="3840" height="1080" viewBox="0 0 3840 1080" data-layout-ignore>
-              <path id="f33-old" d="M -100 672 L 1940 672" fill="none" stroke="#505048" stroke-width="2" opacity="0" />
-              <path id="f33-guide" d="M 1900 672 L 3940 672" fill="none" stroke="#282826" stroke-width="2" />
-              <path id="f33-line" d="M -100 672 L 3940 672" fill="none" stroke="#F0ECE5" stroke-width="6" />
-              <line id="f33-glint" x1="0" y1="672" x2="0" y2="672" stroke="#E85D26" stroke-width="6" />
-              <g id="f33-dots"></g>
-            </svg>
+        <div id="f33-cam">
+          <div class="hr-layer" data-depth="1" id="f33-world">
+            <canvas id="f33-cv" data-layout-ignore></canvas>
+            <i class="f33-glow" id="f33-fglow" data-layout-ignore></i>
 
-            <div id="f33-term"><span>~/us (main) $ </span><span class="f33-cmd">git push --force</span>
+            <div id="f33-term"><span>~/us (main) $ </span><span class="f33-cmd">git push --force origin main</span>
 <span id="f33-o1">To me@home:us.git</span>
 <span id="f33-o2"><span class="f33-plus">+</span> <b>5ab3e07...d4c7e19</b> main -&gt; main (forced update)</span></div>
 
-            <div id="f33-hook" class="f33-b"><span>FORCE</span> <span class="f33-push hr-glowbox" id="f33-push2">PUSH!</span></div>
-            <div class="f33-row f33-b" id="f33-r1">
-              <span class="f33-lie" data-layout-allow-overlap>we'll get to it</span>
-              <span class="f33-new" data-layout-allow-overlap><span class="f33-w">right</span> <span class="f33-w">over</span></span>
-              <i class="f33-cur"></i>
-            </div>
-            <div class="f33-gut f33-b" id="f33-g1"><span class="f33-h">a7c21f0</span>  <span class="f33-au">you</span></div>
-            <div class="f33-row f33-b" id="f33-r2">
-              <span class="f33-lie" data-layout-allow-overlap>nothing on the side</span>
-              <span class="f33-new" data-layout-allow-overlap><span class="f33-w">your</span> <span class="f33-w f33-hero hr-glowbox" id="f33-lies">lies</span></span>
-              <i class="f33-cur"></i>
-            </div>
-            <div class="f33-gut f33-b" id="f33-g2"><span class="f33-h">0b5f6e2</span>  <span class="f33-au">you</span></div>
+            <div id="f33-giant" data-layout-allow-overlap><span id="f33-gw" data-hf-motion-blur='{"fps": 60}'>FORCE</span></div>
 
-            <div id="f33-cset">
-            <div class="f33-c" id="f33-bn"><span id="f33-brand">brand</span> <span id="f33-new2">new</span></div>
-            <div class="f33-c" id="f33-time">timeline,</div>
-            <div class="f33-c" id="f33-ng"><span id="f33-no">no</span> <span id="f33-good">goodbyes</span></div>
+            <div id="f33-bset">
+              <div id="f33-rl"><span id="f33-rw" data-hf-motion-blur='{"fps": 60}'>right</span> <span id="f33-ow" data-hf-motion-blur='{"fps": 60}'>over</span></div>
+              <div id="f33-yl">
+                <span id="f33-yw"><span id="f33-yc" data-layout-allow-overlap>your</span><span id="f33-yi" data-layout-allow-overlap>your</span></span>
+                <span id="f33-lw"><span id="f33-li">lies</span></span>
+              </div>
             </div>
+
+            <div id="f33-fx" data-layout-ignore></div>
           </div>
-        </div>
 
-        <div class="hr-layer" data-depth="1">
-          <div id="f33-giant">FORCE</div>
-        </div>
-        <div class="hr-layer" data-depth="1" id="f33-creamlayer">
-          <div id="f33-cream"><div id="f33-poster"><span>FORCE</span><span id="f33-push1">PUSH!</span></div></div>
-        </div>
+          <!-- C: the words ride with the camera (a fifth of its move) while the lane rushes under them -->
+          <div class="hr-layer" data-depth="0.2" id="f33-clayer">
+            <i class="f33-glow" id="f33-tglow" data-layout-ignore></i>
+            <div id="f33-cset">
+              <div class="f33-c" id="f33-bn" data-layout-allow-overlap><span id="f33-brand">brand</span> <span id="f33-new">new</span></div>
+              <div class="f33-c" id="f33-time"><span id="f33-tst"><span id="f33-tw" class="hr-glowbox">timeline,</span></span></div>
+              <div id="f33-fu" data-layout-allow-overlap><div class="f33-l1"><i>+</i> 5ab3e07...d4c7e19 main -&gt; main</div><div class="f33-l2">(forced update)</div></div>
+              <div class="f33-c" id="f33-ng"><span id="f33-no" data-layout-allow-overlap>no</span> <span id="f33-good">goodbyes</span></div>
+            </div>
+            <div id="f33-fx2" data-layout-ignore></div>
+          </div>
 
-        <div class="hr-layer" data-depth="0">
-          <div id="f33-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+          <div class="hr-layer" data-depth="1" id="f33-creamlayer">
+            <div id="f33-cream"><div id="f33-poster"><span id="f33-pf">FORCE</span><span id="f33-pw" data-hf-motion-blur='{"fps": 60}'>PUSH!</span></div><div id="f33-cfx" data-layout-ignore></div></div>
+          </div>
+
+          <div class="hr-layer" data-depth="0.15">
+            <div id="f33-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+          </div>
+          <div id="f33-flash" data-layout-ignore></div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
-          const DUR = 7.88, T0 = 169.27;
+          const DUR = 7.88, T0 = 169.27, W = 1920, H = 1080, PX = W / 100; // 1cqw
           const root = document.querySelector('[data-composition-id="33-drop"]');
           const $ = (id) => root.querySelector("#" + id);
-          const stage = HR.stage(root, { seed: 33, pulse: 2.4 });
-          const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
-          const W = 1920, CQ = W / 100, LANE = 672;
-          // the words (lyrics.json) and the drums (HR_ENV)
+          // the drop is the loudest stretch: this span's mean drum envelope over chorus 1's hook (10: 0.409, 53.38–56.291)
+          let dsum = 0, dn = 0;
+          for (let T = T0; T < T0 + DUR; T += 0.02) { dsum += HR.band("drums", T); dn++; }
+          const K = Math.max(1, Math.min(1.5, dsum / dn / 0.409));
+          const stage = HR.stage(root, { seed: 33, pulse: 1.5 * K });
+          const tl = gsap.timeline({ paused: true });
+          // the words (lyrics.json L53, L54) and the drums (HR_ENV): kicks 169.419, 169.876 (downbeat 169.878), 170.355,
+          // 170.80, 171.277, 171.724 (down), 172.173, 172.646, 173.101, 173.554 (down), 174.015, 174.473, 174.934,
+          // 175.395 (down 175.392), 175.85, 176.303, 176.766
           const FORCE = at(169.33), PUSH = at(169.86), RIGHT = at(170.38), OVER = at(170.92), YOUR = at(171.16), LIES = at(171.46);
           const BRAND = at(172.38), NEW = at(172.76), TIME = at(172.98), NO = at(174.36), GOOD = at(174.94);
-          const CREAM = at(169.86), BACK = at(170.355);          // the cream beat: PUSH! (first kick, downbeat) to the next kick
-          const O2 = at(169.419);                                 // the forced update arrives on the first (soft) kick
-          const STEPS = [TIME, at(173.101), at(173.554), at(174.015)]; // "timeline," is written one step per kick
-          const FF = at(174.473);                                 // the kick after "no": fast-forward
-          const GLINTS = [175.395, 175.85, 176.303, 176.766].map(at); // the hold: a glint along the lane on every kick
-          const WHIP = BRAND - 0.03, WHIP_D = 0.22;
-          const PAPER = at(175.392);                              // the hold's downbeat: 0 ms cut to the cream register
+          const O2 = at(169.419), CREAM = PUSH - 0.02, BACK = at(170.355), DB = at(175.392), DB2 = at(173.557);
+          const C0 = BRAND - 0.05, C1 = C0 + 0.06, MORPH = 0.36;           // the stroke collapses, then swings into the road
+          const STEPS = [at(173.101), at(173.554), at(174.015), at(174.473)]; // one commit per kick while "timeline," holds
+          const GLINTS = [at(173.101), at(173.554), at(174.015), at(175.395), at(175.85), at(176.303), at(176.766)];
+          const WALLK = [at(170.80), at(171.277), at(171.724)];             // the wall of lies scrolls a row per kick
+          const TIP0 = LIES - 0.05, TIPD = 0.22;                            // the stroke: across the frame in 0.22 s
 
-          // ---- A: the Enter, FORCE alone, then one beat of cream ----
-          tl.set($("f33-term"), { opacity: 1 }, 0).set($("f33-term"), { opacity: 0 }, at(169.86)).set($("f33-term"), { opacity: 1 }, at(170.355));
+          // ---- the cuts: in is the Enter (hard); out is a whipL into 34 over the last 0.25 s ----
+          const cam = $("f33-cam");
+          WOW.transition(tl, cam, { in: "cut", out: "whipL", dur: 0.25, total: DUR });
+
+          // ================= A: the Enter, FORCE at its largest, one beat of cream =================
+          const term = $("f33-term"), giant = $("f33-giant"), gw = $("f33-gw");
+          tl.set(term, { opacity: 1 }, 0).set(term, { opacity: 0 }, CREAM);
           tl.set($("f33-o2"), { opacity: 0 }, 0).set($("f33-o2"), { opacity: 1 }, O2);
-          HR.hero(tl, $("f33-giant"), FORCE, { spread: 60, over: 1.16, pre: 0.05, sharp: true });
-          tl.set($("f33-giant"), { opacity: 1 }, 0).set($("f33-giant"), { opacity: 0 }, CREAM);
-          tl.set($("f33-cream"), { opacity: 0 }, 0).set($("f33-cream"), { opacity: 1 }, CREAM).set($("f33-cream"), { opacity: 0 }, BACK);
-          HR.hero(tl, $("f33-push1"), PUSH, { spread: 50, over: 1.2, pre: 0.12, sharp: true });
+          // FORCE comes out of the lens from the first frame (32 dived at the cursor) and lands ON 169.33
+          tl.fromTo(gw, { scale: 2.2, skewX: -12 }, { scale: 1, skewX: 0, duration: FORCE, ease: "power3.in" }, 0);
+          tl.fromTo(gw, { scale: 1 }, { scale: 1.04, duration: CREAM - FORCE, ease: "sine.inOut", immediateRender: false }, FORCE);
+          tl.set(giant, { opacity: 1 }, 0).set(giant, { opacity: 0 }, CREAM);
+          const fx = $("f33-fx"), cfx = $("f33-cfx"), fx2 = $("f33-fx2");
+          const fShock = WOW.shock(tl, fx, { x: 0, y: 0, t: FORCE, r: 900 * K, n: 2, w: 6, dur: 0.55, color: "fire" });
+          const fRays = WOW.rays(tl, fx, { x: 0, y: 0, t: FORCE, n: 26, r0: 220, r1: 1100, w: 4, dur: 0.5, seed: 33 });
+          WOW.shake(tl, cam, FORCE + 0.01, { amp: 9 * K, dur: 0.28, rot: 0.25, seed: 33 });
+          // the cream page: 0 ms on the downbeat; PUSH! slams out of the lens and knocks FORCE up
+          const cream = $("f33-cream"), pw = $("f33-pw"), pf = $("f33-pf");
+          tl.set(cream, { opacity: 0 }, 0).set(cream, { opacity: 1 }, CREAM).set(cream, { opacity: 0 }, BACK);
+          tl.set(pw, { scale: 2.6, yPercent: 16, skewX: -12 }, 0);
+          tl.fromTo(pw, { scale: 2.6, yPercent: 16, skewX: -12 }, { scale: 1, yPercent: 0, skewX: 0, duration: PUSH + 0.04 - CREAM, ease: "power3.in", immediateRender: false }, CREAM);
+          tl.fromTo(pw, { scale: 0.93 }, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.45)", immediateRender: false }, PUSH + 0.04);
+          tl.set(pf, { yPercent: 14 }, 0);
+          tl.fromTo(pf, { yPercent: 14 }, { yPercent: 0, duration: 0.16, ease: "expo.out", immediateRender: false }, PUSH + 0.03);
+          const pShock = WOW.shock(tl, cfx, { x: 0, y: 0, t: PUSH + 0.04, r: 1100 * K, n: 3, w: 7, dur: 0.5, color: "fire" });
+          const pBurst = WOW.burst(tl, cfx, { x: 0, y: 0, t: PUSH + 0.04, n: 44, speed: 1500 * K, size: [8, 22], color: "fire", cream: 0, dur: 0.75, seed: 34 });
+          WOW.shake(tl, cam, PUSH + 0.04, { amp: 18 * K, dur: 0.48, rot: 0.6, seed: 35 });
 
-          // ---- B: back on the terminal at the kick before "right" ----
-          const bs = root.querySelectorAll(".f33-b");
-          tl.set(bs, { opacity: 0 }, 0).set(bs, { opacity: 1 }, BACK);
-          tl.set($("f33-old"), { opacity: 0 }, 0).set($("f33-old"), { opacity: 1 }, BACK);
-          const rows = [$("f33-r1"), $("f33-r2")].map((el, i) => ({
-            el, i, pen: { p: 0 }, lie: el.querySelector(".f33-lie"), neu: el.querySelector(".f33-new"), cur: el.querySelector(".f33-cur"),
-            words: Array.from(el.querySelectorAll(".f33-w")), gut: $(i ? "f33-g2" : "f33-g1"),
-          }));
-          rows.forEach((r) => { r.h = r.gut.querySelector(".f33-h"); r.au = r.gut.querySelector(".f33-au"); r.oldH = r.h.textContent; });
-          const NEWH = ["3c9e0d2", "d4c7e19"];
-          // each row's pen: 0..1 writes its first word, 1..2 its second (and erases the rest of the lie)
-          const W1 = [[RIGHT, 0.3], [OVER, 0.2]], W2 = [[YOUR, 0.22], [LIES, 0.16]];
-          [W1, W2].forEach((ws, i) => {
-            const r = rows[i]; r.t0 = ws[0][0] - 0.04;
-            tl.fromTo(r.pen, { p: 0 }, { p: 1, duration: ws[0][1], ease: "power3.out", immediateRender: false }, ws[0][0] - 0.04);
-            tl.to(r.pen, { p: 2, duration: ws[1][1], ease: "power3.out" }, ws[1][0] - 0.04);
-          });
-          HR.hero(tl, $("f33-lies"), LIES, { spread: 22, over: 1.28, pre: 0.08, sharp: true, skew: false });
+          // ================= B: the wall of lies, "right over", the stroke on "lies" =================
+          const bset = $("f33-bset"), rw = $("f33-rw"), ow = $("f33-ow"), yw = $("f33-yw"), lw = $("f33-lw");
+          tl.set(bset, { opacity: 0 }, 0).set(bset, { opacity: 1 }, BACK);
+          // "right" slams in from the left across the frame (parked off-frame, so the blur never ghosts)
+          tl.set(rw, { x: -2300, skewX: -16 }, 0);
+          tl.fromTo(rw, { x: -2300, skewX: -16 }, { x: 0, skewX: 0, duration: 0.13, ease: "power3.in", immediateRender: false }, RIGHT - 0.04);
+          tl.fromTo(rw, { scaleX: 1.1 }, { scaleX: 1, duration: 0.45, ease: "elastic.out(1, 0.5)", immediateRender: false }, RIGHT + 0.09);
+          // "over" drops onto the line from above the frame
+          tl.set(ow, { y: -1300, scaleY: 1.25 }, 0);
+          tl.fromTo(ow, { y: -1300, scaleY: 1.25 }, { y: 0, scaleY: 1, duration: 0.12, ease: "power3.in", immediateRender: false }, OVER - 0.04);
+          tl.fromTo(ow, { scaleY: 0.78, scaleX: 1.12 }, { scaleY: 1, scaleX: 1, duration: 0.45, ease: "elastic.out(1, 0.45)", immediateRender: false }, OVER + 0.08);
+          WOW.shake(tl, cam, RIGHT + 0.09, { amp: 7 * K, dur: 0.26, rot: 0.2, seed: 36 });
+          WOW.shake(tl, cam, OVER + 0.08, { amp: 8 * K, dur: 0.28, rot: 0.2, seed: 37 });
+          // "your" waits mid-frame
+          tl.set(yw, { opacity: 0 }, 0);
+          tl.fromTo(yw, { opacity: 0, y: 40, filter: "blur(5px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, YOUR - 0.04);
+          // "lies": written by the stroke (render() reveals it at the tip), with a scale punch as it lands
+          tl.fromTo(lw, { scale: 1.16 }, { scale: 1, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, LIES + 0.02);
+          const lShock = WOW.shock(tl, fx, { x: 0, y: 0, t: LIES + 0.02, r: 950 * K, n: 2, w: 6, dur: 0.55, color: "fire" });
+          const lRays = WOW.rays(tl, fx, { x: 0, y: 0, t: LIES + 0.02, n: 22, r0: 260, r1: 1100, w: 4, dur: 0.45, seed: 38 });
+          WOW.shake(tl, cam, LIES + 0.02, { amp: 14 * K, dur: 0.4, rot: 0.45, seed: 39 });
+          // the line's words leave upwards as the stroke collapses into the timeline
+          tl.fromTo(bset, { y: 0 }, { y: 700, duration: 0.14, ease: "power3.in", immediateRender: false }, C0);
+          tl.set(bset, { opacity: 0 }, C0 + 0.14);
+          tl.set($("f33-rl"), { opacity: 1 }, 0).set($("f33-rl"), { opacity: 0 }, C0); // 0 ms: "brand" takes the top
 
-          // ---- C: the whip along the lane, then the clean timeline ----
-          tl.fromTo($("f33-track"), { x: 0 }, { x: -W, duration: WHIP_D, ease: "power4.inOut", immediateRender: false }, WHIP);
-          const brand = $("f33-brand"), neu = $("f33-new2"), time = $("f33-time"), no = $("f33-no"), good = $("f33-good");
-          HR.hero(tl, brand, BRAND, { spread: 18, over: 1.2, pre: 0.08, sharp: true, skew: false });
+          // ================= C: the timeline the camera rides =================
+          const cset = $("f33-cset"), brand = $("f33-brand"), neu = $("f33-new"), tw = $("f33-tw"), no = $("f33-no"), good = $("f33-good"), fu = $("f33-fu");
+          tl.set(cset, { opacity: 0 }, 0).set(cset, { opacity: 1 }, BRAND - 0.04);
+          HR.hero(tl, brand, BRAND, { spread: 20 * K, over: 1.2, pre: 0.08, sharp: true, skew: false });
           HR.lead(tl, neu, NEW); neu.classList.remove("hr-clip");
-          HR.hero(tl, time, TIME, { spread: 70, over: 1.22, pre: 0.14, sharp: true, skew: false });
-          HR.lead(tl, no, NO, { from: -105 }); no.classList.remove("hr-clip");
-          HR.hero(tl, good, GOOD, { spread: 40, over: 1.24, pre: 0.1, sharp: true, skew: false });
+          // "timeline," out of the lens (a zoom: CSS blur, not clones), the second slam of the frame
+          tl.set(tw, { opacity: 0 }, 0).set(tw, { opacity: 1 }, TIME - 0.04);
+          tl.fromTo(tw, { scale: 2.6, filter: "blur(20px)" }, { scale: 1, filter: "blur(0px)", duration: 0.1, ease: "power3.in", immediateRender: false }, TIME - 0.04);
+          tl.fromTo(tw, { scale: 1.07 }, { scale: 1, duration: 0.5, ease: "elastic.out(1, 0.45)", immediateRender: false }, TIME + 0.06);
+          const tShock = WOW.shock(tl, fx2, { x: 0, y: 0, t: TIME + 0.06, r: 1000 * K, n: 2, w: 6, dur: 0.55, color: "fire" });
+          const tRays = WOW.rays(tl, fx2, { x: 0, y: 0, t: TIME + 0.06, n: 26, r0: 300, r1: 1150, w: 4, dur: 0.5, seed: 40 });
+          WOW.shake(tl, cam, TIME + 0.06, { amp: 11 * K, dur: 0.34, rot: 0.3, seed: 41 });
+          WOW.word(tl, no, NO, { kind: "left" });
+          HR.hero(tl, good, GOOD, { spread: 46 * K, over: 1 + 0.26 * K, pre: 0.12, sharp: true });
+          const gShock = WOW.shock(tl, fx2, { x: 0, y: 0, t: GOOD, r: 1000 * K, n: 2, w: 6, dur: 0.6, color: "fire" });
+          const gBurst = WOW.burst(tl, fx2, { x: 0, y: 0, t: GOOD, n: 34, speed: 1300 * K, size: [6, 18], color: "fire", cream: 0.35, dur: 0.8, seed: 42 });
+          WOW.flash(tl, $("f33-flash"), GOOD, { a: Math.min(0.5, 0.36 * K), dur: 0.24 });
+          WOW.shake(tl, cam, GOOD + 0.01, { amp: 15 * K, dur: 0.42, rot: 0.45, seed: 43 });
+          // git's last word, at display size, on the downbeat
+          tl.set(fu, { opacity: 0 }, 0).set(fu, { opacity: 1 }, DB);
+          tl.fromTo(fu, { x: -36 }, { x: 0, duration: 0.26, ease: "power3.out", immediateRender: false }, DB);
+          WOW.shake(tl, cam, DB + 0.01, { amp: 6 * K, dur: 0.26, rot: 0.15, seed: 44 });
 
-          // ---- the camera: punch on FORCE; the cream beat lands zoomed and springs out; a lean through the overwrite,
-          //      a punch on "lies"; the whip; punches on "timeline," and "goodbyes"; a push through the hold ----
-          const cam = stage.cam;
-          tl.fromTo(cam, { z: 1.0, y: 0, x: 0 }, { z: 1.05, y: -8, duration: 0.05, ease: "power2.in" }, Math.max(0, FORCE - 0.05));
-          tl.to(cam, { z: 1.0, y: 0, duration: 0.45, ease: "elastic.out(1, 0.55)" }, FORCE);
-          tl.set(cam, { z: 1.07, y: -6 }, CREAM);
-          tl.to(cam, { z: 1.0, y: 0, duration: 0.42, ease: "elastic.out(1, 0.5)" }, CREAM + 0.01);
-          tl.set(cam, { z: 1.0, x: 0, y: 0 }, BACK);
-          tl.to(cam, { z: 1.03, y: 10, duration: LIES - 0.06 - BACK, ease: "sine.inOut" }, BACK);
-          tl.to(cam, { z: 1.075, y: 18, duration: 0.06, ease: "power2.in" }, LIES - 0.06);
-          tl.to(cam, { z: 1.035, y: 12, duration: WHIP - LIES, ease: "power2.out" }, LIES);
-          // the whip lands close on "brand new" (top left of C), the pull-out on "timeline," reveals the line
-          tl.to(cam, { z: 1.8, x: -840, y: -545, duration: WHIP_D, ease: "power4.inOut" }, WHIP);
-          tl.to(cam, { z: 1.9, x: -890, y: -576, duration: TIME - 0.04 - (WHIP + WHIP_D), ease: "sine.out" }, WHIP + WHIP_D);
-          tl.to(cam, { z: 0.98, x: 0, y: 0, duration: 0.1, ease: "power3.out" }, TIME - 0.04);
-          tl.to(cam, { z: 1.0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, TIME + 0.06);
-          tl.to(cam, { z: 1.02, x: 8, duration: FF - TIME - 0.55, ease: "sine.inOut" }, TIME + 0.55);
-          tl.to(cam, { x: 20, duration: GOOD - 0.06 - FF, ease: "expo.out" }, FF);
-          tl.to(cam, { z: 1.065, y: 12, duration: 0.06, ease: "power2.in" }, GOOD - 0.06);
-          tl.to(cam, { z: 1.02, y: 6, duration: 0.5, ease: "elastic.out(1, 0.55)" }, GOOD);
-          tl.to(cam, { z: 1.05, x: 24, y: 10, duration: DUR - GOOD - 0.5, ease: "sine.in" }, GOOD + 0.5);
+          // ---- the camera: punch on FORCE, the film's biggest on PUSH!, a push toward the stroke through B, the swing
+          //      into the road, a punch on "timeline,", the fast-forward push on "no", a spring back on "goodbyes", and a
+          //      slow push through the hold into the whip ----
+          const c = stage.cam;
+          tl.fromTo(c, { z: 1.0, x: 0, y: 0 }, { z: 1.07, x: 0, y: -6, duration: FORCE, ease: "power2.in" }, 0);
+          tl.to(c, { z: 1.0, y: 0, duration: 0.4, ease: "elastic.out(1, 0.55)" }, FORCE + 0.01);
+          tl.set(c, { z: 1 + 0.1 * K, y: -8 }, CREAM);
+          tl.to(c, { z: 1.0, y: 0, duration: 0.45, ease: "elastic.out(1, 0.45)" }, PUSH + 0.05);
+          tl.set(c, { z: 1.0, x: 0, y: 0 }, BACK);
+          tl.to(c, { z: 1.06, x: -30, y: 8, duration: TIP0 - BACK, ease: "sine.inOut" }, BACK);
+          tl.to(c, { z: 1.06 + 0.05 * K, duration: 0.05, ease: "power2.in" }, TIP0);
+          tl.to(c, { z: 1.05, x: -40, duration: C0 - (TIP0 + 0.05), ease: "power2.out" }, TIP0 + 0.05);
+          tl.to(c, { z: 1.0, x: 0, y: 0, duration: 0.4, ease: "power3.inOut" }, C0);
+          tl.to(c, { z: 1.02, duration: TIME - 0.05 - (C0 + 0.4), ease: "sine.inOut" }, C0 + 0.4);
+          tl.to(c, { z: 1 + 0.06 * K, duration: 0.05, ease: "power2.in" }, TIME - 0.05);
+          tl.to(c, { z: 1.02, duration: 0.45, ease: "elastic.out(1, 0.5)" }, TIME + 0.06);
+          // round 2: the hold rides. The world (the lane) takes the whole move, the words a quarter of it (their layer's
+          // depth), so the lane rushes and banks under a lockup that stays readable. One big move per bar:
+          //  bar 173.557 — the camera lunges down the lane, banking left, while "timeline," is held;
+          //  "no" (174.36) — the fast-forward: it swings across to the other bank and dives in, building to…
+          //  "goodbyes" (174.94) — the spring back to level on the hit (the cream flash);
+          //  bar 175.392 — (forced update): it lunges again down the lane, banking right, into the whip.
+          tl.to(c, { z: 1.16, x: -20, y: 36, rot: -5, duration: 0.5, ease: "expo.out" }, DB2);
+          tl.to(c, { z: 1.2, x: -25, y: 44, rot: -5.8, duration: NO - (DB2 + 0.5), ease: "sine.inOut" }, DB2 + 0.5);
+          tl.to(c, { z: 1.34, x: -60, y: 80, rot: 3.6, duration: GOOD - 0.02 - NO, ease: "power2.in" }, NO);
+          tl.to(c, { z: 1.0, x: 0, y: 0, rot: 0, duration: DB - 0.01 - (GOOD - 0.02), ease: "expo.out" }, GOOD - 0.02); // never under 1: the bank must not show the canvas edge
+          tl.to(c, { z: 1.18, x: 0, y: 30, rot: 5, duration: 0.5, ease: "expo.out" }, DB);
+          tl.to(c, { z: 1.24, x: 0, y: 38, rot: 5.8, duration: DUR - (DB + 0.5), ease: "sine.in" }, DB + 0.5);
+          // the words land on every kick of the hold: the hero punches (harder on the downbeats), the rest of the
+          // lockup nods with it
+          const KC = [173.101, 173.554, 174.015, 174.473, 175.395, 175.85, 176.303, 176.766].map(at);
+          const bnEl = $("f33-bn"), ngEl = $("f33-ng");
+          // …and rides the lane toward the camera: the hero steps closer on each kick ("timeline," through bar 173.557,
+          // released on "goodbyes"; then "goodbyes" through bar 175.392 into the whip)
+          const tst = $("f33-tst");
+          const stair = (el, steps, release) => {
+            tl.set(el, { scale: 1 }, 0);
+            let cur = 1;
+            for (const [T, sc] of steps) { tl.fromTo(el, { scale: cur }, { scale: sc, duration: 0.12, ease: "expo.out", immediateRender: false }, at(T)); cur = sc; }
+            if (release != null) tl.fromTo(el, { scale: cur }, { scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, release);
+          };
+          stair(tst, [[173.101, 1.03], [173.554, 1.055], [174.015, 1.08]], GOOD - 0.02);
+          stair(ngEl, [[175.395, 1.035], [175.85, 1.07], [176.303, 1.1], [176.766, 1.13]]);
+          // the lockup rocks on the lane: a step of tilt per kick, alternating sides, level again on "goodbyes"
+          const TILT = [[173.101, 1.5], [173.554, -2], [174.015, 1.5], [174.473, -1.5], [174.934, 0], [175.395, -2], [175.85, 1.8], [176.303, -1.8], [176.766, 2]];
+          tl.set(cset, { rotation: 0, transformOrigin: "50% 50%" }, 0);
+          TILT.reduce((cur, [T, r]) => { tl.fromTo(cset, { rotation: cur }, { rotation: r, duration: 0.14, ease: "expo.out", immediateRender: false }, at(T)); return r; }, 0);
+          KC.forEach((k) => {
+            const down = Math.abs(k - DB2) < 0.02 || Math.abs(k - DB) < 0.02;
+            WOW.punch(tl, k < GOOD ? tw : good, k, { s: down ? 1.08 : 1.05, dur: 0.32 });
+            WOW.punch(tl, bnEl, k, { s: 1.04, dur: 0.3 });
+            if (k > NO && k < GOOD) WOW.punch(tl, no, k, { s: 1.04, dur: 0.3 });
+          });
           tl.set({}, {}, DUR);
 
-          // ---- geometry, measured until the fonts are in ----
-          const NS = "http://www.w3.org/2000/svg";
-          const guide = $("f33-guide"), line = $("f33-line"), oldL = $("f33-old"), glint = $("f33-glint"), dotG = $("f33-dots");
-          const L0 = -100, LLEN = 4040;
-          line.style.strokeDasharray = `${LLEN} ${LLEN}`;
-          const mkDot = () => { const c = document.createElementNS(NS, "circle"); dotG.appendChild(c); return c; };
-          const bDots = [mkDot(), mkDot()];
-          const cDots = Array.from({ length: STEPS.length + 2 }, mkDot);
-          let laid = false, pen = [], cd = [];
-          const wl = (el) => { let x = 0; for (let e = el; e && e !== root; e = e.offsetParent) x += e.offsetLeft; return x; };
-          function layout() {
-            const ready = document.fonts.status === "loaded";
-            for (const r of rows) {
-              r.x0 = r.el.offsetLeft;
-              r.end = Math.max(r.lie.offsetWidth, r.neu.offsetWidth) + 14;
-              r.ws = r.words.map((w) => w.offsetLeft + w.offsetWidth + 6);
+          // ================= the canvas: the wall of lies, the stroke, the road =================
+          const cv = $("f33-cv"), DPR = Math.min(2, window.devicePixelRatio || 1);
+          cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+          const g = cv.getContext("2d");
+          // origin's old log: the ex's commits, each message one of his lies (hashes as the film set them)
+          const LOG = [["a7c21f0", "we'll get to it"], ["d4e19a6", "please review?"], ["0b5f6e2", "nothing on the side"], ["a35c07b", "lgtm"],
+            ["4c9d7a1", "just a feature"], ["2b7d4e8", "Revert \"force push\""], ["0e96d4a", "that sunday"], ["c7f2b18", "the beach"],
+            ["51d0a3e", "first date"], ["7e0c3b2", "fix: wasted time"]];
+          const WF = 34, WROW = 58, WCH = WF * 0.6;            // Plex Mono advances 0.6em
+          const BAND_T = 29 * PX, BAND_B = 47 * PX, BYC = (BAND_T + BAND_B) / 2, BH = BAND_B - BAND_T;
+          const ease = (n) => gsap.parseEase(n), e3o = ease("power3.out"), e2o = ease("power2.out"), e3io = ease("power3.inOut"), eExpo = ease("expo.out");
+          const cl = (x) => Math.max(0, Math.min(1, x));
+          const tipX = (t) => (t < TIP0 ? -1e4 : -60 + (W + 140) * e2o(cl((t - TIP0) / TIPD)));
+          // the wall scrolls: slow drift plus one row per kick
+          const wallY = (t) => { let y = (t - BACK) * 0.6; for (const k of WALLK) y += e3o(cl((t - k) / 0.22)); return y * WROW; };
+          // the ride: distance along the lane (one unit = the near sleeper gap at the bottom of the frame)
+          const RIDE = [[C1, TIME, 3.2], [TIME, NO, 4.4], [GOOD, DUR + 1, 13]]; // round 2: double speed
+          const rideS = (t) => {
+            let s = 0;
+            for (const [a, b, v] of RIDE) s += v * Math.max(0, Math.min(t, b) - a);
+            // the fast-forward: speed ramps 4.4 → 32 between "no" and "goodbyes"
+            if (t > NO) { const d = Math.min(t, GOOD) - NO, L = GOOD - NO; s += 4.4 * d + (27.6 * d * d) / (2 * L); }
+            for (const k of STEPS) s += 3.2 * eExpo(cl((t - k) / 0.32));
+            s += 4.8 * eExpo(cl((t - (TIME + 0.02)) / 0.4));
+            for (const k of [DB, at(175.85), at(176.303), at(176.766)]) s += 2.8 * eExpo(cl((t - k) / 0.3));
+            return s;
+          };
+          let VPX = W / 2, HZ = 600, BX = 300, D = 480, XL = -1;
+          const proj = (X, z) => [VPX + (X * D) / z, HZ + D / z];
+          const lerp = (a, b, k) => a + (b - a) * k;
+          const kickT = (T) => HR.hit("kick", T, 0.18);
+
+          function drawWall(t, a) {
+            if (a <= 0) return;
+            g.save();
+            g.globalAlpha = a;
+            g.translate(W / 2, H / 2); g.rotate(-0.07); g.translate(-W / 2, -H / 2);
+            g.font = `400 ${WF}px "IBM Plex Mono", monospace`; g.textBaseline = "alphabetic";
+            const off = wallY(t), r0 = Math.floor(off / WROW) - 4, frac = off - Math.floor(off / WROW) * WROW;
+            for (let r = 0; r < 26; r++) {
+              const row = r0 + r, y = (r - 4) * WROW - frac + 20;
+              for (let col = -1; col < 4; col++) {
+                const [h, m] = LOG[(((row * 3 + col * 7) % LOG.length) + LOG.length) % LOG.length];
+                let x = col * 780 + (((row % 2) + 2) % 2) * 390 - 120;
+                g.fillStyle = "#3C3C38"; g.fillText(h, x, y); x += 9 * WCH;
+                g.fillStyle = "rgba(232, 93, 38, 0.55)"; g.fillText("you", x, y); x += 5 * WCH;
+                g.fillStyle = "#54544E"; g.fillText(m, x, y);
+              }
             }
-            rows[0].dot = rows[0].x0; rows[1].dot = 44 * CQ;
-            // C: the pen through "brand new", one step per kick across "timeline,", then off the right edge
-            const tx = W + time.offsetLeft, tw = time.offsetWidth;
-            const bEnd = rows[1].x0 + rows[1].end, c0 = W + 1.5 * CQ;
-            pen = [[WHIP, bEnd], [WHIP + WHIP_D, c0, "power4.inOut"], [NEW + 0.2, tx + 0.04 * tw, "power3.out"]];
-            STEPS.forEach((t, i) => { pen.push([t - 0.02, i === 0 ? tx + 0.04 * tw : tx + (tw * i) / STEPS.length]); pen.push([t + 0.24, tx + (tw * (i + 1)) / STEPS.length, "power3.out"]); });
-            pen.push([FF - 0.02, tx + tw], [FF + 0.2, 2 * W + 120, "expo.out"]);
-            cd = [[c0 + 2 * CQ, WHIP + WHIP_D], ...STEPS.map((t, i) => [tx + (tw * (i + 1)) / STEPS.length, t + 0.2]), [2 * W - 4 * CQ, FF + 0.1]];
-            laid = ready;
+            g.restore();
           }
-          const penAt = (t) => {
-            if (t <= pen[0][0]) return null;
-            for (let i = 1; i < pen.length; i++) if (t < pen[i][0]) {
-              const [ta, sa] = pen[i - 1], [tb, sb, ease] = pen[i];
-              return sa + (sb - sa) * gsap.parseEase(ease || "none")((t - ta) / (tb - ta));
+          // the lane as a quad from near (n) to far (f) with half widths
+          function lane(n, f, hn, hf, style) {
+            const dx = f[0] - n[0], dy = f[1] - n[1], L = Math.hypot(dx, dy) || 1, px = -dy / L, py = dx / L;
+            g.beginPath();
+            g.moveTo(n[0] + px * hn, n[1] + py * hn); g.lineTo(f[0] + px * hf, f[1] + py * hf);
+            g.lineTo(f[0] - px * hf, f[1] - py * hf); g.lineTo(n[0] - px * hn, n[1] - py * hn); g.closePath();
+            g.fillStyle = style; g.fill();
+          }
+          const HEXL = "0123456789abcdef";
+          const hashOf = (k) => { const r = HR.rng(k * 977 + 33); let s = ""; for (let i = 0; i < 7; i++) s += HEXL[(r() * 16) | 0]; return s; };
+
+          function draw(t, T) {
+            g.setTransform(DPR, 0, 0, DPR, 0, 0);
+            g.clearRect(0, 0, W, H);
+            if (t < BACK) return;
+            const bass = HR.band("bass", T), kick = kickT(T);
+            // ---- B: the wall, the stroke ----
+            const wallA = t < C0 ? 1 : 1 - cl((t - C0) / 0.16);
+            drawWall(t, wallA);
+            const tip = tipX(t);
+            if (t < C0 + 0.14) {
+              // the band's height: full, then collapsing to the line
+              const h = t < C0 ? BH : lerp(BH, 6, e3o(cl((t - C0) / 0.14)));
+              const x1 = Math.min(tip, W + 80);
+              if (x1 > -60) {
+                // its light, then the cream band itself
+                g.fillStyle = "rgba(240, 236, 229, 0.06)"; g.fillRect(-60, BYC - h / 2 - 70, x1 + 60, h + 140);
+                g.fillStyle = "rgba(240, 236, 229, 0.12)"; g.fillRect(-60, BYC - h / 2 - 26, x1 + 60, h + 52);
+                g.fillStyle = "#F0ECE5"; g.fillRect(-60, BYC - h / 2, x1 + 60, h);
+                // the pen at the tip while it tears across
+                if (t < TIP0 + TIPD) {
+                  const grd = g.createLinearGradient(x1 - 420, 0, x1, 0);
+                  grd.addColorStop(0, "rgba(232, 93, 38, 0)"); grd.addColorStop(1, "rgba(232, 93, 38, 0.55)");
+                  g.fillStyle = grd; g.fillRect(x1 - 420, BYC - h / 2, 420, h);
+                  g.fillStyle = "#E85D26"; g.fillRect(x1 - 0.9 * PX, BYC - h / 2 - 10, 0.9 * PX, h + 20);
+                }
+              }
+              // the pen parked after "lies", blinking at 4 Hz
+              if (t >= TIP0 + TIPD + 0.08 && t < C0 && Math.floor((t - TIP0 - TIPD) * 4) % 2 === 0)
+                { g.fillStyle = "#E85D26"; g.fillRect(liesR + 1.4 * PX, BYC - 0.36 * BH, 1.1 * PX, 0.72 * BH); }
             }
-            return pen[pen.length - 1][1];
-          };
-          const popE = gsap.parseEase("back.out(2.4)");
-          const setDot = (c, x, r, fill, stroke) => {
-            c.setAttribute("cx", x.toFixed(1)); c.setAttribute("cy", LANE); c.setAttribute("r", Math.max(0, r).toFixed(2));
-            c.setAttribute("fill", fill); c.setAttribute("stroke", stroke); c.setAttribute("stroke-width", 4);
-          };
+            if (t < C1) return;
+            // ---- C: the line swings into the road ----
+            const u = e3io(cl((t - C1) / MORPH)), uu = u * u;
+            const s = rideS(t), lit = t >= DB ? 1 : 0;
+            // the floor's light: the lane's glow on the ground, brightest at the horizon
+            if (uu > 0) {
+              const fl = (0.16 + 0.1 * bass + 0.08 * kick + (lit ? 0.12 * Math.exp(-(t - DB) / 0.5) + 0.06 : 0)) * uu;
+              const rg = g.createRadialGradient(VPX, HZ, 10, VPX, HZ, 1250);
+              rg.addColorStop(0, `rgba(232, 93, 38, ${(fl * 1.6).toFixed(3)})`); rg.addColorStop(0.35, `rgba(232, 93, 38, ${(fl * 0.8).toFixed(3)})`);
+              rg.addColorStop(1, "rgba(232, 93, 38, 0)");
+              g.fillStyle = rg; g.fillRect(-300, HZ, W + 600, H - HZ + 300);
+              // the horizon: the old lane, a hairline across the whole frame
+              g.fillStyle = `rgba(80, 80, 72, ${uu.toFixed(3)})`; g.fillRect(-300, HZ - 1, W + 600, 2);
+              // rails either side of the lane
+              g.strokeStyle = `rgba(58, 58, 54, ${uu.toFixed(3)})`; g.lineWidth = 2;
+              for (const X of [XL - 1.1, XL + 1.1]) { const a = proj(X, 0.3), b = proj(X, 60); g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke(); }
+              // sleepers: the ruler of a literal timeline, rushing at the camera
+              const v = Math.abs(rideS(t) - rideS(t - 1 / 60)) * 60; // units per second
+              for (let k = Math.floor(s / 0.5); k < s / 0.5 + 70; k++) {
+                const z = k * 0.5 - s; if (z < 0.45 || z > 34) continue;
+                const a = proj(XL - 0.32, z), b = proj(XL + 0.32, z), al = Math.min(1, 2.2 / z) * 0.85 * uu;
+                g.strokeStyle = `rgba(136, 136, 128, ${al.toFixed(3)})`;
+                g.lineWidth = Math.max(1, (k % 4 === 0 ? 9 : 4) / z);
+                g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke();
+                if (v > 6 && z < 6) { // speed: each near sleeper smears toward the horizon
+                  const z2 = z + v * 0.025, c1 = proj(XL - 0.32, z2), c2 = proj(XL + 0.32, z2);
+                  g.fillStyle = `rgba(136, 136, 128, ${(al * 0.25).toFixed(3)})`;
+                  g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.lineTo(c2[0], c2[1]); g.lineTo(c1[0], c1[1]); g.closePath(); g.fill();
+                }
+              }
+            }
+            // the lane itself: its glow, then the lit line
+            const nB = proj(XL, D / (H + 260 - HZ)), fB = [VPX, HZ];
+            const n = [lerp(-60, nB[0], u), lerp(BYC, nB[1], u)], f = [lerp(W + 80, fB[0], u), lerp(BYC, fB[1], u)];
+            const glowA = 0.1 + 0.08 * bass + 0.1 * kick + lit * 0.08;
+            lane(n, f, lerp(3, 60, u), lerp(3, 4, u), `rgba(232, 93, 38, ${(glowA * 0.6).toFixed(3)})`);
+            lane(n, f, lerp(3, 26, u), lerp(3, 2, u), `rgba(232, 93, 38, ${(glowA * 1.6).toFixed(3)})`);
+            lane(n, f, lerp(3, 8, u), lerp(3, 0.8, u), lit ? "#F0ECE5" : "rgba(240, 236, 229, 0.92)");
+            if (uu <= 0) return;
+            // glints: a light runs down the lane at the camera on the kicks
+            for (const gt of GLINTS) {
+              const d = t - gt; if (d < 0 || d > 0.5) continue;
+              const z = lerp(24, 0.5, ease("power2.in")(d / 0.5)), a = proj(XL, z), b = proj(XL, z * 1.8);
+              g.strokeStyle = "rgba(232, 93, 38, 0.95)"; g.lineCap = "round"; g.lineWidth = Math.max(2, 26 / z);
+              g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke(); g.lineCap = "butt";
+            }
+            // commits: a dot every 2 units, hashes beside the near ones; the head at the horizon is fire
+            g.font = `400 16px "IBM Plex Mono", monospace`;
+            for (let k = Math.floor(s / 2); k < s / 2 + 18; k++) {
+              const z = k * 2 + 1 - s; if (z < 0.4 || z > 34) continue;
+              const [x, y] = proj(XL, z), r = Math.max(1.5, 15 / z), al = Math.min(1, 3 / z) * uu;
+              g.fillStyle = `rgba(240, 236, 229, ${al.toFixed(3)})`;
+              g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+              if (z < 5) {
+                const fs = 16 / Math.sqrt(z);
+                g.font = `400 ${fs.toFixed(1)}px "IBM Plex Mono", monospace`;
+                g.fillStyle = `rgba(136, 136, 128, ${al.toFixed(3)})`;
+                g.fillText(hashOf(k), x + r + 10 / z, y - r);
+              }
+            }
+            const hr = (10 + 8 * kick + 6 * lit) * uu;
+            g.fillStyle = "rgba(232, 93, 38, 0.25)"; g.beginPath(); g.arc(VPX, HZ, hr * 2.6, 0, Math.PI * 2); g.fill();
+            g.fillStyle = "#E85D26"; g.beginPath(); g.arc(VPX, HZ, hr, 0, Math.PI * 2); g.fill();
+          }
+
+          // ---- geometry, measured until the fonts are in ----
+          const wl = (el) => { let x = 0; for (let e = el; e && e !== root; e = e.offsetParent) x += e.offsetLeft; return x; };
+          const wt = (el) => { let y = 0; for (let e = el; e && e !== root; e = e.offsetParent) y += e.offsetTop; return y; };
+          const poster = $("f33-poster"), yc = $("f33-yc"), yi = $("f33-yi"), li = $("f33-li"), timeEl = $("f33-time");
+          const fglow = $("f33-fglow"), tglow = $("f33-tglow");
+          let laid = false, yL = 0, yW = 0, lL = 0, lW = 0, liesR = 0;
+          const place = (host, x, y) => { host.style.left = x.toFixed(1) + "px"; host.style.top = y.toFixed(1) + "px"; };
+          function layout() {
+            // A: FORCE at ~98 % of the width; the cream poster fills the page (FORCE / PUSH! edge to edge)
+            const gk = (0.98 * W) / (gw.offsetWidth || 1);
+            giant.style.transform = `scale(${gk.toFixed(4)})`;
+            const gcx = W / 2, gcy = giant.offsetTop + giant.offsetHeight * 0.52;
+            giant.style.transformOrigin = `50% 52%`;
+            place(fShock, gcx, gcy); place(fRays, gcx, gcy);
+            fglow.style.transform = `translate(${gcx}px, ${gcy}px)`;
+            const pwid = Math.max(pf.offsetWidth, pw.offsetWidth), phei = poster.offsetHeight;
+            const pk = Math.min((0.95 * W) / pwid, (0.93 * H) / phei);
+            const px0 = (W - pk * pwid) / 2, py0 = (H - pk * phei) / 2;
+            // (the cream page bleeds 6cqw past the frame, so its own origin is 6cqw up and left)
+            poster.style.transform = `translate(${(px0 + 6 * PX).toFixed(1)}px, ${(py0 + 6 * PX).toFixed(1)}px) scale(${pk.toFixed(4)})`;
+            const ccx = px0 + 6 * PX + pk * (pw.offsetLeft + pw.offsetWidth / 2), ccy = py0 + 6 * PX + pk * (pw.offsetTop + pw.offsetHeight * 0.55);
+            place(pShock, ccx, ccy); place(pBurst, ccx, ccy);
+            // B: the copies of "your" and "lies" in world x, for the stroke's clip
+            yL = wl(yc); yW = yc.offsetWidth; lL = wl(li); lW = li.offsetWidth; liesR = lL + lW;
+            place(lShock, lL + lW / 2, BYC); place(lRays, lL + lW / 2, BYC);
+            // C: the horizon sits under "timeline,"; the lane runs from it to the bottom left
+            HZ = wt(timeEl) + timeEl.offsetHeight + 0.7 * PX; D = H - HZ; VPX = W / 2; BX = 0.2 * W; XL = (BX - VPX) / D;
+            const tcx = W / 2, tcy = wt(timeEl) + timeEl.offsetHeight * 0.5;
+            place(tShock, tcx, tcy); place(tRays, tcx, tcy);
+            tglow.style.transform = `translate(${tcx}px, ${tcy}px)`;
+            place(gShock, wl(good) + good.offsetWidth / 2, wt(good) + good.offsetHeight / 2);
+            place(gBurst, wl(good) + good.offsetWidth / 2, wt(good) + good.offsetHeight / 2);
+            laid = document.fonts.status === "loaded";
+          }
 
           // ---- per-frame state ----
-          const world = $("f33-world"), paperbg = $("f33-paperbg"), push2 = $("f33-push2"), lies = $("f33-lies"), strip = $("f33-strip");
+          const strip = $("f33-strip"), flash = $("f33-flash");
           function render() {
             const t = tl.time(), T = T0 + t;
             if (!laid) layout();
-            const lit = t >= LIES;
-            // B: pens, erasure, cursors, rewritten commits
-            let laneB = rows[0].dot;
-            for (const r of rows) {
-              const p = r.pen.p, a = r.ws[0], b = r.end;
-              const x = p <= 1 ? p * a : a + (p - 1) * (b - a);
-              r.lie.style.clipPath = p >= 2 ? "inset(0 0 0 100%)" : `inset(-30% -2% -30% ${x.toFixed(1)}px)`;
-              r.words.forEach((w, j) => {
-                const right = w.offsetLeft + w.offsetWidth - x;
-                w.style.clipPath = right <= 0 ? "none" : `inset(-40% ${right.toFixed(1)}px -40% -30%)`;
-              });
-              const writing = t >= r.t0 && (r.i ? t < LIES + 0.22 : t < OVER + 0.3);
-              r.cur.style.opacity = writing ? 1 : 0;
-              r.cur.style.transform = `translateX(${x.toFixed(1)}px)`;
-              const rw = t >= r.t0;
-              r.h.textContent = rw ? NEWH[r.i] : r.oldH;
-              r.au.textContent = rw ? "me" : "you";
-              r.au.classList.toggle("f33-me", rw);
-              const k = rw ? popE(Math.min(1, (t - r.t0) / 0.3)) : 1;
-              const col = rw ? (lit ? "#E85D26" : "#F0ECE5") : "#505048";
-              setDot(bDots[r.i], r.dot, 13 * k, rw ? col : "#0A0A0A", col);
-              if (t >= r.t0) laneB = Math.max(laneB, r.x0 + x);
-            }
-            // the new main, drawn right over the old lane; then C's pen
-            const pc = penAt(t);
-            const head = t < BACK ? L0 : pc === null ? laneB : pc;
-            line.style.strokeDashoffset = (LLEN - (head - L0)).toFixed(1);
-            const paper = t >= PAPER, ink = paper ? "#111111" : "#F0ECE5";
-            world.classList.toggle("f33-paper", paper);
-            paperbg.style.opacity = paper ? 1 : 0;
-            guide.setAttribute("stroke", paper ? "#CFCAC1" : "#282826");
-            line.setAttribute("stroke", lit && t < WHIP + WHIP_D ? "#E85D26" : ink);
-            bDots.forEach((c) => c.setAttribute("opacity", t >= BACK && t < WHIP + WHIP_D + 0.1 ? 1 : 0));
-            // C: a dot per step, the newest in fire
-            let newest = -1; cd.forEach(([, td], i) => { if (t >= td) newest = i; });
-            cDots.forEach((c, i) => {
-              const [x, td] = cd[i] || [0, 99], k = Math.max(0, Math.min(1, (t - td) / 0.3));
-              setDot(c, x, 12 * (k > 0 ? Math.max(0.05, popE(k)) : 0), i === newest ? "#E85D26" : ink, i === newest ? "#E85D26" : ink);
-            });
-            // the hold: a glint runs the lane on every kick
-            let g = -1; GLINTS.forEach((gt) => { if (t >= gt && t < gt + 0.4) g = gt; });
-            if (g >= 0) {
-              const u = gsap.parseEase("power2.out")((t - g) / 0.4), gx = W + u * (W + 200);
-              glint.setAttribute("x1", (gx - 260).toFixed(1)); glint.setAttribute("x2", gx.toFixed(1)); glint.setAttribute("opacity", 1);
-            } else glint.setAttribute("opacity", 0);
+            const bass = HR.band("bass", T), kick = kickT(T);
+            // B: the stroke turns "your" to ink and writes "lies"
+            const tip = tipX(t);
+            const ry = Math.max(0, Math.min(yW, tip - yL)), rl = Math.max(0, Math.min(lW, tip - lL));
+            yc.style.clipPath = `inset(-30% -10% -30% ${ry.toFixed(1)}px)`;
+            yc.style.visibility = ry >= yW ? "hidden" : "visible";
+            yi.style.clipPath = `inset(-30% ${(yW - ry).toFixed(1)}px -30% 0)`;
+            yi.style.visibility = ry <= 0 ? "hidden" : "visible";
+            li.style.clipPath = `inset(-30% ${(lW - rl).toFixed(1)}px -30% -10%)`;
+            li.style.visibility = rl <= 0 ? "hidden" : "visible";
+            // the light: behind FORCE in A, behind "timeline," in C, breathing with the bass and the kicks
+            fglow.style.opacity = t < CREAM ? Math.min(1, 0.55 + 0.3 * bass + 0.4 * kick).toFixed(3) : 0;
+            const cOn = t >= BRAND ? Math.min(1, (t - BRAND) / 0.3) : 0;
+            tglow.style.opacity = (cOn * Math.min(1, 0.55 + 0.3 * bass + 0.3 * kick + (t >= DB ? 0.2 : 0))).toFixed(3);
             // the accent points at the current hero in C
-            const hot = t >= GOOD ? good : t >= TIME ? time : brand;
-            for (const w of [brand, time, good]) { const on = w === hot; w.classList.toggle("f33-fire", on); w.classList.toggle("hr-glowbox", on); }
-            HR.glow(hot, T, 0.3, 0.45); HR.glow(push2, T, 0.2, 0.3); HR.glow(lies, T, 0.2, 0.3);
-            strip.classList.toggle("f33-oncream", (t >= CREAM && t < BACK) || paper);
+            const hot = t >= GOOD ? good : tw;
+            for (const w of [tw, good]) { const on = w === hot; w.classList.toggle("f33-fire", on); w.classList.toggle("hr-glowbox", on); }
+            HR.glow(hot, T, 0.35, 0.5 * K);
+            strip.classList.toggle("f33-oncream", t >= CREAM && t < BACK);
+            draw(t, T);
             stage.apply(T);
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();

@@ -2,13 +2,19 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 30 — shared (the bridge, 144.169–151.680). Cream: the singer reading the docs, git-push(1) printed on the
-         page. The -f, --force entry prints line by line after the cut; the soft voice (Instrument Serif Italic) quotes
-         the warning as a pull quote with the fire rule. L47 builds word by word ("never" 145.08, "shared" 146.577 swell
-         in the marker colour); --force-with-lease prints on the 146.011 downbeat; the marker writes (shared with whom?)
-         while "shared" is held. On the 147.863 downbeat L47 shrinks and rises, word by word, into the small previous
-         line, and L48 takes the quote; on "lose" (148.76) the manual's "lose commits" is underlined in marker; "chance"
-         (151.002) swells last. No punches: a slow camera push carries the page, the doc drifts up like a pager. -->
+    <!-- Frame 30 — shared (the bridge, 144.169–151.680). Cream: the singer reading the docs, git-push(1) printed on a
+         sheet on the desk under the lamp (28's set), set to read on a phone: the `-f, --force` entry, then the lyric as
+         the WARNING box in the soft voice (Instrument Serif Italic), then `--force-with-lease`. Refinement round 1: the
+         breath is calm, never frozen. The cut pulls out of 29's blame (`pullOut`, shortened to 0.40 s: "they" starts
+         0.41 s in) onto the page already printed. Phrase 1: the camera drifts down the man page and pushes into the box
+         (1.0 → 1.13); `--force-with-lease` and its text print as one block on the 146.011 downbeat. On the 147.863
+         downbeat L47 greys and the box's text scrolls up a line pair like a pager; L48 rises into its place. Phrase 2:
+         the camera eases back and reads on down to the lease entry, whose own words are the deadpan: "If somebody else
+         built on top of your original history … blindly pushing with --force will lose their work." — its "somebody"
+         inks on "somebody", its "lose their work" is underlined on "lose". The accent is a pointer: a marker stroke
+         under the sung hero word that slides from "never" to "shared" to "lose" (growing over "it all,") to "chance".
+         The marker writes (shared with whom?) while "shared" is held. The lamp's pool breathes with the pads, one swell
+         a bar. No hits, no shake. Out: `glideUp` (0.42 s) into 31's page. -->
   </head>
   <body>
     <template>
@@ -22,90 +28,138 @@
           position: absolute; inset: 0; overflow: hidden; container-type: size;
           --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --ink-on-cream: #111111; --muted-on-cream: #5F5B54; --marker: #C8481A;
           --hr-accent-rgb: 200, 72, 26;
-          background: var(--cream); color: var(--ink-on-cream);
+          /* the desk the sheet lies on: the cream ground in the lamp's shade (07, 15, 28) */
+          --desk: color-mix(in srgb, var(--cream) 91%, var(--ink));
+          background: var(--desk); color: var(--ink-on-cream);
         }
-        /* header strip, cream register (07 / 15) */
+        #f30-cam { position: absolute; inset: 0; }
+        /* the header strip on its band; the page scrolls under the band's lip (28) */
+        #f30-band { position: absolute; left: 0; right: 0; top: 0; height: 6.4cqw; background: var(--desk);
+          box-shadow: 0 0.35cqw 0.9cqw rgba(10, 10, 10, 0.16); }
         #f30-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
-          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-on-cream);
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #3F3C37;
           padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
-        #f30-strip b { color: #B8461C; font-weight: 600; }
-        /* the finish layer's vignette darkens the corners of the cream page: the strip's small text needs a darker ink */
-        #f30-strip { color: #3F3C37; } #f30-strip b { color: #6E2810; }
-        /* the man page: header line, section, the option */
-        #f30-head { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 7.2cqw; display: flex; justify-content: space-between;
-          font: 500 0.95cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.06em; color: #3F3C37;
-          padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
-        #f30-doc { position: absolute; left: 5.5cqw; top: 11.6cqw; width: 52cqw; font: 400 1.22cqw/1.62 "IBM Plex Mono", monospace; color: var(--muted-on-cream); }
-        #f30-doc h4 { font: 600 1.05cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; color: var(--ink-on-cream); margin: 0 0 1cqw; }
-        #f30-doc .f30-opt { color: var(--ink-on-cream); font-weight: 600; }
-        #f30-doc p { margin: 0.2cqw 0 1.1cqw 3.2cqw; }
-        #f30-doc p span { display: block; }
-        #f30-doc .f30-lose { display: inline; position: relative; }
-        #f30-ul { position: absolute; left: -0.2cqw; right: -0.2cqw; bottom: -0.25cqw; height: 0.42cqw; background: var(--marker); opacity: 0.85;
-          border-radius: 0.2cqw; transform-origin: 0% 50%; transform: rotate(-0.6deg) scaleX(0); }
-        /* the soft voice quotes the warning: the lyric as a pull quote, the fire rule at its left */
-        #f30-rule { position: absolute; left: 5.5cqw; top: 31.6cqw; width: 0.28cqw; height: 14.2cqw; background: var(--fire); transform-origin: 50% 0%; }
-        .f30-q { position: absolute; left: 7.98cqw; top: 31.6cqw; width: 81.5cqw; font: italic 400 7.1cqw/1.0 "Instrument Serif", serif;
-          letter-spacing: -0.01em; color: var(--ink-on-cream); }
-        .f30-w { display: inline-block; transform-origin: 0% 0%; }
+        #f30-strip b { color: #6E2810; font-weight: 600; }
+        /* the view under the band; the page (drift) moves in it: drift coordinates are page cqw, origin top left */
+        #f30-view { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; overflow: hidden; }
+        #f30-drift { position: absolute; left: 0; top: 0; width: 100cqw; height: 120cqw; transform-origin: 0 0; }
+        #f30-sheet { position: absolute; left: 2.6cqw; right: 2.6cqw; top: 1.2cqw; height: 118cqw; background: var(--cream);
+          box-shadow: 0 1.3cqw 3cqw rgba(10, 10, 10, 0.2), 0 0.15cqw 0.35cqw rgba(10, 10, 10, 0.16); }
+        /* the lamp: a pool of light on what is being read; it breathes with the pads */
+        #f30-shade { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; pointer-events: none; --lx: 44%; --ly: 46%;
+          background: radial-gradient(ellipse 70% 88% at var(--lx) var(--ly), rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 0) 36%,
+            rgba(10, 10, 10, 0.08) 70%, rgba(10, 10, 10, 0.17) 100%); }
+        #f30-warm { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; pointer-events: none; --lx: 44%; --ly: 46%;
+          background: radial-gradient(ellipse 46% 58% at var(--lx) var(--ly), rgba(232, 93, 38, 0.075) 0%, rgba(232, 93, 38, 0.03) 55%,
+            rgba(232, 93, 38, 0) 100%); }
+        /* the man page, set to read on a phone: header, section, the two entries */
+        #f30-head { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 2.8cqw; display: flex; justify-content: space-between;
+          font: 500 1.2cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.06em; color: #3F3C37;
+          padding-bottom: 0.5cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
+        .f30-sec { position: absolute; left: 5.5cqw; font: 600 1.35cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; color: var(--ink-on-cream); }
+        .f30-opt { position: absolute; left: 5.5cqw; font: 600 2.4cqw/1.3 "IBM Plex Mono", monospace; color: var(--ink-on-cream); white-space: nowrap; }
+        .f30-p { position: absolute; left: 8.6cqw; font: 400 1.8cqw/1.53 "IBM Plex Mono", monospace; color: #4A4741; white-space: pre; }
+        .f30-p span { display: block; }
+        .f30-p .f30-in { display: inline; position: relative; }
+        #f30-sec1 { top: 6.8cqw; }
+        #f30-opt1 { top: 9.5cqw; }
+        #f30-p1 { top: 13cqw; }
+        #f30-opt2 { top: 45.6cqw; }
+        #f30-p2 { top: 49.2cqw; }
+        #f30-opt3 { top: 61cqw; }
+        #f30-p3 { top: 64.6cqw; }
+        #f30-ul { position: absolute; left: -0.2cqw; right: -0.2cqw; bottom: -0.2cqw; height: 0.36cqw; background: var(--marker);
+          transform-origin: 0% 50%; transform: rotate(-0.5deg) scaleX(0); }
+        /* the warning boxes: hairline frame, the accent bar at the left, the label, the soft voice inside */
+        .f30-box { position: absolute; left: 5.5cqw; right: 5.5cqw; height: 21cqw; box-sizing: border-box;
+          border: 1px solid rgba(17, 17, 17, 0.3); background: rgba(255, 252, 246, 0.35); }
+        #f30-box1 { top: 21.4cqw; }
+        /* the box's text window: the lines scroll up through it like a pager; the pointer rides with them */
+        #f30-clip { position: absolute; left: 0; right: 0; top: 3.4cqw; bottom: 0.4cqw; overflow: hidden; }
+        #f30-scroll { position: absolute; left: 0; right: 0; top: 0; height: 40cqw; }
+        .f30-bar { position: absolute; left: -1px; top: -1px; bottom: -1px; width: 0.75cqw; background: var(--marker); transform-origin: 50% 0%; }
+        .f30-lbl { position: absolute; left: 3.2cqw; top: 1.5cqw; font: 600 1.25cqw/1 "IBM Plex Mono", monospace; letter-spacing: 0.24em; color: #7E2E12; }
+        .f30-q { position: absolute; left: 3cqw; top: 0.7cqw; width: 84cqw; font: italic 400 7.4cqw/1.02 "Instrument Serif", serif;
+          letter-spacing: -0.01em; color: var(--ink-on-cream); white-space: nowrap; }
+        #f30-q48 { top: 17.9cqw; }
+        .f30-w { display: inline-block; transform-origin: 50% 75%; }
         .f30-q .f30-hero { color: var(--marker); }
-        #f30-prev { position: absolute; left: 7.7cqw; top: 27.4cqw; font: italic 400 2.3cqw/1 "Instrument Serif", serif; color: var(--muted-on-cream);
-          white-space: nowrap; visibility: hidden; }
-        #f30-note { position: absolute; left: 62cqw; top: 16.2cqw; font: 400 2.6cqw/1.05 "Caveat Brush", cursive; color: var(--marker); transform: rotate(-3deg);
-          opacity: 0; }
+        #f30-note { position: absolute; left: 57cqw; top: 12.6cqw; font: 400 3cqw/1.05 "Caveat Brush", cursive; color: var(--marker);
+          transform: rotate(-3deg); opacity: 0; white-space: nowrap; }
+        /* the pointer: a marker stroke under the sung hero word (page px, placed in render()) */
+        #f30-ptr { position: absolute; left: 0; top: 0; width: 0; height: 1.3cqw; background: var(--marker); border-radius: 0.25cqw;
+          transform: rotate(-0.6deg); opacity: 0; }
       </style>
       <div id="root" data-composition-id="30-shared" data-width="1920" data-height="1080" data-duration="7.511">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f30-strip"><span>~/us &nbsp;·&nbsp; man git-push</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
-        </div>
-        <div class="hr-layer" data-depth="0.4">
-          <div id="f30-head"><span>GIT-PUSH(1)</span><span>Git Manual</span><span>GIT-PUSH(1)</span></div>
-          <div id="f30-doc" data-layout-ignore>
-            <h4>OPTIONS</h4>
-            <div class="f30-opt">-f, --force</div>
-            <p><span id="f30-p1">This flag disables these checks, and can cause the remote</span><span id="f30-p2">repository to <span class="f30-lose" id="f30-lose">lose commits<i id="f30-ul"></i></span>; use it with care.</span></p>
-            <div class="f30-opt" id="f30-lease">--force-with-lease</div>
+        <div id="f30-cam">
+          <div id="f30-view">
+            <div id="f30-drift" data-layout-allow-overflow>
+              <div id="f30-sheet"></div>
+              <div id="f30-head"><span>GIT-PUSH(1)</span><span>Git Manual</span><span>GIT-PUSH(1)</span></div>
+              <div class="f30-sec" id="f30-sec1">OPTIONS</div>
+              <div class="f30-opt" id="f30-opt1">-f, --force</div>
+              <div class="f30-p" id="f30-p1"><span>This flag disables these checks, and can cause the remote</span><span>repository to lose commits; use it with care.</span></div>
+              <div class="f30-box" id="f30-box1">
+                <i class="f30-bar"></i>
+                <div class="f30-lbl">WARNING</div>
+                <div id="f30-clip">
+                  <div id="f30-scroll">
+                    <i id="f30-ptr"></i>
+                    <div class="f30-q" id="f30-q47" data-layout-allow-overlap><span class="f30-w">they</span> <span class="f30-w">say</span> <span class="f30-w f30-hero">never</span> <span class="f30-w">force</span> <span class="f30-w">it</span><br /><span class="f30-w">on</span> <span class="f30-w">a</span> <span class="f30-w f30-hero">shared</span> <span class="f30-w">branch</span></div>
+                    <div class="f30-q" id="f30-q48" data-layout-allow-overlap><span class="f30-w">somebody</span> <span class="f30-w">could</span> <span class="f30-w f30-hero">lose</span> <span class="f30-w f30-hero">it</span> <span class="f30-w f30-hero">all,</span><br /><span class="f30-w">no</span> <span class="f30-w">second</span> <span class="f30-w">chance</span></div>
+                  </div>
+                </div>
+                <div id="f30-note" data-layout-allow-overlap>(shared with whom?)</div>
+              </div>
+              <div class="f30-opt" id="f30-opt2">--force-with-lease</div>
+              <div class="f30-p" id="f30-p2"><span><span id="f30-p2a">If <span class="f30-in" id="f30-some">somebody</span> else built on top of your original history while you</span></span><span id="f30-p2b">are rebasing, the tip of the branch at the remote may advance with</span><span id="f30-p2c">their commit, and blindly pushing with --force will <span class="f30-in" id="f30-lose">lose their work<i id="f30-ul"></i></span>.</span></div>
+              <div class="f30-opt" id="f30-opt3">--force-if-includes</div>
+              <div class="f30-p" id="f30-p3"><span>Force an update only if the tip of the remote-tracking ref has</span><span>been integrated locally.</span></div>
+            </div>
           </div>
-          <div id="f30-note">(shared with whom?)</div>
-        </div>
-        <div class="hr-layer" data-depth="0.85">
-          <div id="f30-rule"></div>
-          <div id="f30-prev" data-layout-allow-overlap><span class="f30-pw">they</span> <span class="f30-pw">say</span> <span class="f30-pw">never</span> <span class="f30-pw">force</span> <span class="f30-pw">it</span> <span class="f30-pw">on</span> <span class="f30-pw">a</span> <span class="f30-pw">shared</span> <span class="f30-pw">branch</span></div>
-          <div class="f30-q" id="f30-q47" data-layout-allow-overlap><span class="f30-w">they</span> <span class="f30-w">say</span> <span class="f30-w f30-hero">never</span> <span class="f30-w">force</span> <span class="f30-w">it</span><br /><span class="f30-w">on</span> <span class="f30-w">a</span> <span class="f30-w f30-hero">shared</span> <span class="f30-w">branch</span></div>
-          <div class="f30-q" id="f30-q48" data-layout-allow-overlap><span class="f30-w">somebody</span> <span class="f30-w">could</span> <span class="f30-w f30-hero">lose</span> <span class="f30-w f30-hero">it</span> <span class="f30-w f30-hero">all,</span><br /><span class="f30-w">no</span> <span class="f30-w">second</span> <span class="f30-w">chance</span></div>
+          <div id="f30-shade" data-layout-ignore></div>
+          <div id="f30-warm" data-layout-ignore></div>
+          <div id="f30-band">
+            <div id="f30-strip"><span>~/us &nbsp;·&nbsp; man git-push</span><span>commits by you on origin &nbsp;<b>0</b></span></div>
+          </div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
       <script>
         (() => {
           const DUR = 7.511, T0 = 144.169;
           const root = document.querySelector('[data-composition-id="30-shared"]');
           const $ = (id) => root.querySelector("#" + id);
-          const stage = HR.stage(root, { seed: 30, drift: 0.8 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
+          const cam = $("f30-cam"), drift = $("f30-drift");
 
           const W47 = Array.from($("f30-q47").querySelectorAll(".f30-w"));
-          const P47 = Array.from($("f30-prev").querySelectorAll(".f30-pw"));
           const W48 = Array.from($("f30-q48").querySelectorAll(".f30-w"));
           const T47 = [144.58, 144.751, 145.08, 145.41, 145.853, 146.198, 146.48, 146.577, 147.32];
           const T48 = [147.959, 148.453, 148.76, 149.12, 149.36, 149.92, 150.254, 151.002];
-          const NEVER = at(145.08), SHARED = at(146.577), LOSE = at(148.76), CHANCE = at(151.002);
+          const NEVER = at(145.08), SHARED = at(146.577), SOME = at(147.959), LOSE = at(148.76), IT = at(149.12), ALL = at(149.36);
+          const CHANCE = at(151.002);
           const DOWN2 = at(146.011), DOWN3 = at(147.863);
 
-          // ---- the man page prints: the entry's lines arrive whole after the cut; the safe flag on the downbeat ----
-          tl.set([$("f30-p1"), $("f30-p2"), $("f30-lease")], { opacity: 0 }, 0);
-          tl.set($("f30-p1"), { opacity: 1 }, 0.1).set($("f30-p2"), { opacity: 1 }, 0.22).set($("f30-lease"), { opacity: 1 }, DOWN2);
-          // the pager drifts up a little through the whole bridge (the eye reading down the page)
-          tl.fromTo([$("f30-doc"), $("f30-note")], { y: 10 }, { y: -12, duration: DUR, ease: "none" }, 0);
-          $("f30-lose").style.color = "var(--muted-on-cream)";
-          // on "lose": the manual's own words go ink and the marker underlines them
-          tl.to($("f30-lose"), { color: "#111111", duration: 0.4, ease: "power2.out" }, LOSE);
-          tl.fromTo($("f30-ul"), { scaleX: 0, rotation: -0.6 }, { scaleX: 1, rotation: -0.6, duration: 0.55, ease: "power2.inOut", immediateRender: false }, LOSE + 0.04);
+          // ---- the cuts: 29's pullOut carries through (shortened: "they" starts 0.41 s in); glideUp into 31's page ----
+          WOW.transition(tl, cam, { in: "pullOut", dur: 0.4, total: DUR });
+          WOW.transition(tl, cam, { out: "glideUp", dur: 0.42, total: DUR });
 
-          // ---- the soft voice: the rule draws down with the first word; every word rises in slowly on its start ----
-          tl.fromTo($("f30-rule"), { scaleY: 0 }, { scaleY: 1, duration: 1.1, ease: "power3.out" }, at(144.58) - 0.04);
+          // ---- the man page is printed from the first frame; the safe flag and its text print on the downbeat, a
+          //      line at a time (the pager) ----
+          const P2 = [$("f30-opt2"), $("f30-p2a"), $("f30-p2b"), $("f30-p2c")];
+          tl.set(P2, { opacity: 0 }, 0);
+          tl.set(P2, { opacity: 1 }, DOWN2);
+          // the page's own words: its "somebody" inks on "somebody"; on "lose" its "lose their work" inks and is underlined
+          tl.set([$("f30-some"), $("f30-lose")], { color: "#4A4741" }, 0);
+          tl.to($("f30-some"), { color: "#111111", duration: 0.5, ease: "power2.out" }, SOME);
+          tl.to($("f30-lose"), { color: "#111111", duration: 0.4, ease: "power2.out" }, LOSE);
+          tl.fromTo($("f30-ul"), { scaleX: 0, rotation: -0.5 }, { scaleX: 1, rotation: -0.5, duration: 0.55, ease: "power2.inOut", immediateRender: false }, LOSE + 0.04);
+
+          // ---- the soft voice: every word rises in slowly on its start; heroes arrive a touch large and settle ----
           const soft = (w, T, hero) => {
             const n = w.textContent.length;
             HR.lead(tl, w, at(T), { from: hero ? 40 : 32, dur: hero ? 0.7 : 0.6, stagger: Math.min(0.03, 0.12 / n) });
@@ -113,76 +167,103 @@
           };
           W47.forEach((w, i) => soft(w, T47[i], i === 2 || i === 7));
           W48.forEach((w, i) => soft(w, T48[i], i === 2 || i === 7));
-          // hero swell: the word arrives a touch large and settles over a bar (L47's words are transformed in render())
-          const sw = { never: 1, shared: 1 };
-          tl.fromTo(sw, { never: 1.1 }, { never: 1, duration: 1.4, ease: "power2.out", immediateRender: false }, NEVER - 0.03);
-          tl.fromTo(sw, { shared: 1.1 }, { shared: 1, duration: 1.4, ease: "power2.out", immediateRender: false }, SHARED - 0.03);
-          tl.fromTo(W48[2], { scale: 1.1 }, { scale: 1, duration: 1.4, ease: "power2.out", immediateRender: false }, LOSE - 0.03);
-          tl.fromTo(W48[7], { scale: 1.1 }, { scale: 1, duration: 1.4, ease: "power2.out", immediateRender: false }, CHANCE - 0.03);
-
-          // ---- L47 becomes the previous line. A (on the downbeat before L48): the quote shrinks as a block and rises
-          // until its second line sits on the small line's row, while the quote column scrolls up a line pair, so L48
-          // enters below L47 and rises into the quote. B: up there, "on a shared branch" slides right and "they say never
-          // force it" settles in front of it: one small line, nothing crossing the big type ----
-          const fl = { p: 0 }, fb = { p: 0 }, FLD = 0.6;
-          tl.fromTo(fl, { p: 0 }, { p: 1, duration: FLD, ease: "power2.inOut", immediateRender: false }, DOWN3);
-          tl.fromTo(fb, { p: 0 }, { p: 1, duration: 0.6, ease: "none", immediateRender: false }, DOWN3 + FLD - 0.05);
-          tl.to(W47, { color: "#5F5B54", duration: 0.6, ease: "power2.inOut" }, DOWN3);
-          tl.set($("f30-q48"), { yPercent: 100 }, 0);
-          tl.to($("f30-q48"), { yPercent: 0, duration: FLD, ease: "power2.inOut" }, DOWN3);
+          const swell = (w, t) => tl.fromTo(w, { scale: 1.1 }, { scale: 1, duration: 1.4, ease: "power2.out", immediateRender: false }, t - 0.03);
+          tl.set([...W47, ...W48], { scale: 1 }, 0);
+          swell(W47[2], NEVER); swell(W47[7], SHARED); swell(W48[2], LOSE); swell(W48[7], CHANCE);
+          // L47 is read: on the downbeat before L48 it greys and the box's text scrolls up a line pair, like a pager; L48
+          // rises into the place it leaves (L47 is still on screen at "somebody")
+          tl.to(W47, { color: "#5F5B54", duration: 0.5, ease: "power2.inOut" }, DOWN3);
+          tl.set($("f30-scroll"), { y: 0 }, 0);
+          tl.fromTo($("f30-scroll"), { y: 0 }, { y: -17.2 * 19.2, duration: 0.8, ease: "power2.inOut", immediateRender: false }, DOWN3);
+          // the accent bars of the boxes draw down as each box is first read
+          tl.fromTo(root.querySelector(".f30-bar"), { scaleY: 0.2 }, { scaleY: 1, duration: 1.1, ease: "power3.out" }, 0);
 
           // ---- the marker's aside, written while "shared" is held ----
           const nt = { p: 0 };
           tl.fromTo(nt, { p: 0 }, { p: 1, duration: 0.85, ease: "power1.inOut", immediateRender: false }, SHARED + 0.3);
-
-          // ---- the camera: one slow push through the bridge, easing a little further on each hero ----
-          tl.fromTo(stage.cam, { z: 1.0, x: -8, y: 0 }, { z: 1.006, x: -6, duration: NEVER, ease: "none" }, 0);
-          const swell = (from, to, z, x) => {
-            tl.to(stage.cam, { z: z + 0.008, x, duration: 0.9, ease: "power2.out" }, from);
-            tl.to(stage.cam, { z: z + 0.012, x: x + 2, duration: Math.max(0.1, to - from - 0.9), ease: "none" }, from + 0.9);
-          };
-          swell(NEVER, SHARED, 1.006, -3);
-          swell(SHARED, LOSE, 1.018, 1);
-          swell(LOSE, CHANCE, 1.030, 5);
-          swell(CHANCE, DUR, 1.042, 9);
           tl.set({}, {}, DUR);
 
-          const k = 2.3 / 7.1;
-          const q47 = $("f30-q47"), prev = $("f30-prev"), note = $("f30-note");
-          // each L47 word's offset from its quote place to its place in the small line: layout offsets, taken once the
-          // serif has loaded (transforms never change them)
-          let geo = null;
-          const measure = () => {
-            const px = prev.offsetLeft, py = prev.offsetTop, qx = q47.offsetLeft, qy = q47.offsetTop;
-            // the shrunk block's origin: its first word on the small line's left edge, its second line on the small row
-            const bx = px + P47[0].offsetLeft - k * W47[0].offsetLeft, by = py + P47[5].offsetTop - k * W47[5].offsetTop;
-            geo = W47.map((w, i) => {
-              const ox = qx + w.offsetLeft, oy = qy + w.offsetTop, Bx = bx + k * w.offsetLeft, By = by + k * w.offsetTop;
-              return [Bx - ox, By - oy, px + P47[i].offsetLeft - Bx, py + P47[i].offsetTop - By];
-            });
+          // ---- the camera: one continuous read down the page. Keys: page point (cx, cy) in cqw at the view's centre,
+          //      zoom s. Phrase 1 drifts down and pushes into the WARNING box; phrase 2 pulls back a little and reads on down
+          //      to the lease entry (its "lose their work" on "lose"), then leans in again for "chance". A monotone cubic through the keys: the speed never jumps, never stops ----
+          const KEYS = [
+            [0, 50, 25.4, 1.0], [0.41, 49.6, 26.0, 1.012], [NEVER, 48.8, 27.0, 1.035], [DOWN2, 47.6, 28.8, 1.075],
+            [SHARED, 46.8, 30.0, 1.1], [at(147.32), 46.2, 31.4, 1.122], [SOME, 45.8, 32.6, 1.13], [LOSE, 45.6, 36.4, 1.1],
+            [at(149.92), 45.6, 37.9, 1.07], [CHANCE, 45.6, 39.0, 1.08], [DUR, 45.6, 39.8, 1.1],
+          ];
+          const spline = (ch) => {
+            const xs = KEYS.map((k) => k[0]), ys = KEYS.map((k) => k[ch]), n = xs.length, d = [], m = [];
+            for (let i = 0; i < n - 1; i++) d.push((ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]));
+            for (let i = 0; i < n; i++) {
+              if (i === 0) m.push(d[0]); else if (i === n - 1) m.push(d[n - 2]);
+              else m.push(d[i - 1] * d[i] <= 0 ? 0 : (2 * d[i - 1] * d[i]) / (d[i - 1] + d[i])); // Fritsch–Carlson (harmonic)
+            }
+            return (x) => {
+              if (x <= xs[0]) return ys[0]; if (x >= xs[n - 1]) return ys[n - 1];
+              let i = 0; while (x > xs[i + 1]) i++;
+              const h = xs[i + 1] - xs[i], u = (x - xs[i]) / h, u2 = u * u, u3 = u2 * u;
+              return (2 * u3 - 3 * u2 + 1) * ys[i] + (u3 - 2 * u2 + u) * h * m[i] + (-2 * u3 + 3 * u2) * ys[i + 1] + (u3 - u2) * h * m[i + 1];
+            };
           };
-          const sine = (x) => 0.5 - 0.5 * Math.cos(Math.PI * Math.max(0, Math.min(1, x)));
+          const CX = spline(1), CY = spline(2), CS = spline(3);
+
+          // ---- the pointer: page-px rects of the hero words, taken once the serif has loaded ----
+          const ptr = $("f30-ptr"), note = $("f30-note"), shade = $("f30-shade"), warm = $("f30-warm");
+          const scrollEl = $("f30-scroll");
+          const pageOff = (el) => { let x = 0, y = 0; while (el && el !== scrollEl) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; } return [x, y]; };
+          let R = null;
+          const measure = () => {
+            const fs = parseFloat(getComputedStyle($("f30-q47")).fontSize);
+            const rect = (a, b) => { const [x, y] = pageOff(a), [x2] = pageOff(b || a); return { x: x - 0.04 * fs, y: y + 0.9 * fs, w: x2 + (b || a).offsetWidth - x + 0.06 * fs }; };
+            R = { never: rect(W47[2]), shared: rect(W47[7]), lose: rect(W48[2]), loseIt: rect(W48[2], W48[3]), loseAll: rect(W48[2], W48[4]), chance: rect(W48[7]) };
+          };
+          const sine = (u) => 0.5 - 0.5 * Math.cos(Math.PI * Math.max(0, Math.min(1, u)));
+          const lerp = (a, b, u) => ({ x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u, w: a.w + (b.w - a.w) * u });
+          // [start, end, from, to]: the pointer leads the eye to where the hero word lands, arriving on its start; it rides
+          // the box's scroll, so "shared" → "lose" is one line down
+          const MOVES = [[SHARED - 0.36, SHARED + 0.04, "never", "shared"], [LOSE - 0.36, LOSE + 0.04, "shared", "lose"],
+            [IT - 0.02, IT + 0.24, "lose", "loseIt"], [ALL - 0.02, ALL + 0.26, "loseIt", "loseAll"], [CHANCE - 0.36, CHANCE + 0.04, "loseAll", "chance"]];
+          const pointer = (t) => {
+            let r = R.never;
+            for (const [a, b, f, g] of MOVES) { if (t >= a) r = lerp(R[f], R[g], sine((t - a) / (b - a))); }
+            return { x: r.x, y: r.y, w: r.w * sine((t - NEVER) / 0.36) };
+          };
+
+          // the pads swell once a bar (half time): a slow breath peaking just after each downbeat, sized by the loudness
+          const DOWNS = window.HR_ENV.downbeats.filter((x) => x > T0 - 2.5 && x < T0 + DUR + 2.5);
+          const breath = (T) => {
+            let d = DOWNS[0]; for (const x of DOWNS) if (x <= T) d = x;
+            const u = (T - d) / 1.846, b = Math.pow(Math.sin(Math.PI * Math.min(1, Math.max(0, (u + 0.08) / 1.08))), 2);
+            return Math.min(1, 0.55 * b + 0.45 * WOW.energy(T) + 0.1);
+          };
+
           function render() {
-            const t = tl.time();
-            stage.apply(T0 + t);
-            // L47: hero swell, then the reflow into the small line
-            const p = geo ? fl.p : 0, pb = geo ? fb.p : 0;
-            W47.forEach((w, i) => {
-              const s0 = i === 2 ? sw.never : i === 7 ? sw.shared : 1;
-              const b = i >= 5 ? sine(pb / 0.6) : sine((pb - 0.4) / 0.6);
-              const dx = p ? geo[i][0] * p + geo[i][2] * b : 0, dy = p ? geo[i][1] * p + geo[i][3] * b : 0;
-              const s = s0 * (1 + (k - 1) * p);
-              w.style.transform = `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px) scale(${s.toFixed(4)})`;
-            });
-            q47.style.visibility = pb >= 1 ? "hidden" : "visible";
-            prev.style.visibility = pb >= 1 ? "visible" : "hidden";
+            const t = tl.time(), T = T0 + t, PX = 19.2, VW = 100, VH = 56.25 - 6.4;
+            const s = CS(t), cx = CX(t), cy = CY(t);
+            drift.style.transform = `translate(${((VW / 2 - cx * s) * PX).toFixed(2)}px, ${((VH / 2 - cy * s) * PX).toFixed(2)}px) scale(${s.toFixed(4)})`;
+            // the lamp follows the reading and breathes
+            const b = breath(T);
+            shade.style.opacity = (1 - 0.4 * b).toFixed(3);
+            warm.style.opacity = (0.45 + 0.55 * b).toFixed(3);
+            const ly = (44 + 6 * Math.sin((t / DUR) * Math.PI)).toFixed(2) + "%";
+            shade.style.setProperty("--ly", ly); warm.style.setProperty("--ly", ly);
+            // the pointer: drawn on under "never", then it travels
+            if (R && t >= NEVER) {
+              const r = pointer(t);
+              ptr.style.opacity = r.w > 0.5 ? 1 : 0;
+              ptr.style.left = r.x.toFixed(2) + "px"; ptr.style.top = r.y.toFixed(2) + "px"; ptr.style.width = Math.max(0, r.w).toFixed(2) + "px";
+            } else ptr.style.opacity = 0;
             // the marker note writes on left to right
             note.style.opacity = nt.p > 0 ? 1 : 0;
             note.style.clipPath = `inset(-30% ${((1 - nt.p) * 104).toFixed(2)}% -30% -6%)`;
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();
           document.fonts.load('italic 400 100px "Instrument Serif"').then(() => { measure(); render(); });
+          // the page scrolls under the band's lip once it is read (deliberate)
+          root.querySelectorAll("#f30-head, #f30-head *, .f30-sec, .f30-opt, .f30-p, .f30-p *, .f30-box, .f30-box *")
+            .forEach((el) => el.setAttribute("data-layout-allow-occlusion", ""));
           window.__timelines["30-shared"] = tl;
         })();
       </script>

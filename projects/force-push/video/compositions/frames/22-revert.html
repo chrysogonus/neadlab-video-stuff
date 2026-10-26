@@ -2,18 +2,23 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 22 — revert (pre-chorus 2, 107.370–114.120). The set of 08 returns, bigger and faster: the terminal climbs one
-         row per line, and now it also ticks up a step on every kick. Each row is one screen: the command and its output
-         at the left, the sung line right-aligned at poster scale.
-         Row 1: `git clean -f '*.patch'` — git removes the one-more-try patches (two more since 08: v3, v4), one per
-         eighth, each struck as it goes; "patches," the hero (107.865).
-         Row 2: the same `git log --author=you` as 08, but only the three cherry-picked days are left, none at 03:12;
-         "logs" the hero (110.16), the times light up.
-         Row 3: the pull request from 20-phone, `#57 Revert "force push"` from you, assembles on the kicks; on "revert?"
-         (111.32) its `Revert` is underlined; on "cute" (112.42) the marker answers on the merge button: (cute.).
-         Row 4: the drums drop out on "watch" (112.88): the page jumps a row with no scroll, and `git push --force origin
-         main` types at the prompt through "what i do"; the frame ends on the typed command, cursor blinking. The cut
-         into 23 is the Enter. -->
+    <!-- Frame 22 — revert (pre-chorus 2, 107.370–114.120). 08's climb again, bigger: the drums here are three times 08's
+         (mean 0.37 against 0.12 up to the drop-out), so every Enter scrolls a whole screen harder, every kick punches, and
+         the camera leans further row by row (1.055 → 1.16 → a snap in on "revert?"). Refinement round 1.
+         Cut-in (21's `glideUp` carried on, no blur: "No" starts 30 ms in): the page is already up, 21's `nothing to commit`
+         scrolling away at the top, `ls *.patch` listing the six patches at display size (two more since 08: v3, v4) and
+         `git clean -f '*.patch'` typed at the prompt; its Enter is the first kick.
+         Row 1: git removes a patch on every eighth, each struck in the big list; "patches," the hero (107.865), the lyric
+         low on the right; the page steps up a notch on every strike.
+         Enter (109.15): Row 2, lyric low on the left under the log: `git log --author=you`, only the three cherry-picked
+         days left, none at night; "logs" (110.16) the hero, the times light; the camera pushes into the time column.
+         Enter (110.45): Row 3, the pull request from 20-phone whips in whole (motion-blurred) at poster scale on the left,
+         lyric on the right: `Revert` underlined on "revert?" (111.32); on "cute" (112.42) the marker answers big beside
+         the merge button: (cute.).
+         Row 4: the drums drop out on "watch" (112.88): the page jumps a row with no scroll, "watch" slams down (blurred
+         approach, sharp landing), and `git push --force origin main` types a word per sung word on the lit line. The held
+         breath: the camera pushes in, accelerating, the cursor's light swelling; the cut into 23 is the Enter.
+         A fire glow behind each row's hero, breathing with the bass and the hits, grows with the climb. -->
   </head>
   <body>
     <template>
@@ -30,117 +35,154 @@
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
+        /* the camera: punches and shakes (WOW) on #f22-cam, the cut-in glide on #f22-in */
+        #f22-cam, #f22-in { position: absolute; inset: 0; transform-origin: 50% 50%; }
         #f22-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f22-strip b { color: var(--fire); font-weight: 600; }
+        /* the light: one soft fire glow per row behind its hero, and the cursor's own light in row 4 */
+        .f22-glow { position: absolute; left: 0; top: 0; width: 112cqw; height: 80cqw; margin: -40cqw 0 0 -56cqw; pointer-events: none; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.18), rgba(232, 93, 38, 0.115) 45%, rgba(232, 93, 38, 0.06) 75%, rgba(232, 93, 38, 0) 100%); }
+        #f22-cglow { position: absolute; left: 0; top: 0; width: 60cqw; height: 38cqw; margin: -19cqw 0 0 -30cqw; pointer-events: none; opacity: 0;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.3) 0%, rgba(232, 93, 38, 0.16) 28%, rgba(232, 93, 38, 0.07) 60%, rgba(232, 93, 38, 0) 100%); }
         /* the terminal: rows stacked one screen apart; the page climbs */
-        #f22-view { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; overflow: hidden; }
+        #f22-view { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; overflow: hidden;
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2.6cqw); mask-image: linear-gradient(to bottom, transparent 0, #000 2.6cqw); }
         #f22-climb, #f22-page { position: absolute; left: 0; top: 0; width: 100cqw; height: 200cqw; }
-        .f22-row { position: absolute; left: 0; width: 100cqw; height: 40cqw; }
-        .f22-prompt { position: absolute; left: 5.5cqw; font: 500 1.3cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        .f22-row { position: absolute; left: 0; width: 100cqw; height: 50cqw; }
+        .f22-prompt { position: absolute; left: 5.5cqw; font: 500 1.6cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
         .f22-prompt .f22-cmd { color: var(--cream); }
-        .f22-mono { position: absolute; left: 5.5cqw; font: 400 1.4cqw/1.8 "IBM Plex Mono", monospace; color: var(--cream); }
+        .f22-you { color: var(--fire); }
+        .f22-hist { position: absolute; left: 5.5cqw; font: 400 1.3cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        /* the output the joke is in, at display size */
+        .f22-mono { position: absolute; left: 5.5cqw; font: 400 2.6cqw/1.45 "IBM Plex Mono", monospace; letter-spacing: -0.01em; color: var(--cream); }
         .f22-mono > div { position: relative; width: max-content; white-space: pre; }
-        .f22-x { position: absolute; left: -0.3cqw; right: -0.3cqw; top: 57%; height: 3px; background: var(--fire); transform-origin: 0% 50%; }
+        .f22-x { position: absolute; left: -0.4cqw; right: -0.4cqw; top: 52%; height: 0.32cqw; background: var(--fire); transform-origin: 0% 50%; }
+        .f22-out { position: absolute; left: 5.5cqw; font: 400 1.3cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
         .f22-time { color: var(--cream-muted); }
-        /* the song, right-aligned */
-        .f22-lyric { position: absolute; right: 5.5cqw; top: 2.4cqw; text-align: right; font: 800 6.2cqw/1 "Barlow", sans-serif;
+        .f22-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        /* the song: low right (rows 1, 3), low left (row 2), centred over the prompt (row 4) */
+        .f22-lyric { position: absolute; right: 5.5cqw; text-align: right; font: 800 6.2cqw/1 "Barlow", sans-serif;
           letter-spacing: -0.035em; color: var(--cream); white-space: nowrap; }
+        .f22-lyric.f22-left { right: auto; left: 5.1cqw; text-align: left; }
         .f22-lyric > div { white-space: nowrap; }
         .f22-big { font: 900 15cqw/0.86 "Barlow", sans-serif; letter-spacing: -0.045em; }
-        .f22-huge { font: 900 17cqw/0.86 "Barlow", sans-serif; letter-spacing: -0.045em; }
+        .f22-huge { font: 900 19cqw/0.86 "Barlow", sans-serif; letter-spacing: -0.045em; }
         .f22-hero { color: var(--fire); }
         .f22-w { display: inline-block; padding-bottom: 0.16em; margin-bottom: -0.16em; } /* keeps descenders inside the lead clip */
-        /* row 3: the pull request */
-        #f22-pr { position: absolute; left: 5.5cqw; top: 1.2cqw; width: 35.5cqw; padding: 1.3cqw 1.8cqw 1.5cqw; background: var(--ink);
-          border: 1px solid var(--border); }
-        #f22-pr .f22-head { display: flex; justify-content: space-between; font: 500 0.82cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em;
-          text-transform: uppercase; color: var(--cream-muted); padding-bottom: 0.6cqw; margin-bottom: 1cqw; border-bottom: 1px solid var(--border); }
-        #f22-title { font: 500 2cqw/1.2 "IBM Plex Mono", monospace; color: var(--cream); white-space: nowrap; }
+        /* row 3: the pull request, at poster scale */
+        #f22-pr { position: absolute; left: 7.5cqw; top: 4cqw; width: 42cqw; box-sizing: border-box; padding: 1.6cqw 2.2cqw 2cqw; background: var(--ink-alt);
+          border: 1px solid #3A3A36; }
+        #f22-pr .f22-head { display: flex; justify-content: space-between; font: 500 1.05cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--cream-muted); padding-bottom: 0.7cqw; margin-bottom: 1.3cqw; border-bottom: 1px solid #3A3A36; }
+        #f22-pr .f22-head b { color: var(--cream); font-weight: 500; }
+        #f22-title { font: 500 3.2cqw/1.2 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--cream); white-space: nowrap; }
         #f22-rv { position: relative; display: inline-block; }
-        #f22-ul { position: absolute; left: 0; right: 0; bottom: -0.25cqw; height: 3px; background: var(--fire); transform-origin: 0% 50%; }
-        .f22-m { font: 400 1.15cqw/1.6 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
-        .f22-you { color: var(--fire); font-weight: 500; }
-        #f22-meta { margin-top: 0.8cqw; }
-        #f22-box { margin-top: 1.3cqw; padding-top: 1cqw; border-top: 1px solid var(--border); }
+        #f22-ul { position: absolute; left: 0; right: 0; bottom: -0.2cqw; height: 0.36cqw; background: var(--fire); transform-origin: 0% 50%; }
+        .f22-m { font: 400 1.25cqw/1.65 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
+        .f22-m .f22-you { font-weight: 500; }
+        #f22-meta { margin-top: 1cqw; }
+        #f22-box { margin-top: 1.4cqw; padding-top: 1.2cqw; border-top: 1px solid #3A3A36; }
         #f22-box .f22-m:first-child { color: var(--cream); }
-        #f22-btn { position: relative; display: inline-block; margin-top: 1.1cqw; padding: 0.6cqw 1.2cqw; border: 1px solid var(--cream-muted);
-          font: 500 1.15cqw/1.2 "IBM Plex Mono", monospace; color: var(--cream); white-space: nowrap; }
-        /* the marker's answer, beside the merge button */
-        #f22-note { position: absolute; left: 100%; top: 50%; margin: -2.4cqw 0 0 1.4cqw; font: 400 4cqw/1 "Caveat Brush", cursive; color: var(--fire);
-          transform: rotate(-5deg); white-space: nowrap; }
-        /* row 4: the prompt at display size */
-        #f22-push { position: absolute; left: 5.5cqw; top: 33.5cqw; font: 500 2.9cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f22-btn { position: relative; display: inline-block; margin-top: 1.4cqw; padding: 0.7cqw 1.4cqw; border: 1px solid var(--cream-muted);
+          font: 500 1.5cqw/1.2 "IBM Plex Mono", monospace; color: var(--cream); white-space: nowrap; }
+        /* the marker's answer, beside the merge button, at poster scale */
+        #f22-note { position: absolute; left: 29cqw; top: 31cqw; font: 400 8cqw/1 "Caveat Brush", cursive; color: var(--fire);
+          transform: rotate(-6deg); transform-origin: 0% 50%; white-space: nowrap; }
+        /* row 4: the lit line and the prompt at display size */
+        #f22-band { position: absolute; left: 0; right: 0; top: 34.2cqw; height: 5.4cqw; background: #141413;
+          border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        #f22-tick { position: absolute; left: 3.3cqw; top: 1.2cqw; width: 0.42cqw; height: 3cqw; background: var(--fire); }
+        #f22-push { position: absolute; left: 5.5cqw; top: 35.45cqw; font: 500 2.9cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
         #f22-push .f22-cmd { color: var(--cream); }
-        #f22-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
+        #f22-l4 { position: absolute; left: 0; right: 0; top: 13cqw; text-align: center; white-space: nowrap; font: 800 6.2cqw/1 "Barlow", sans-serif;
+          letter-spacing: -0.035em; color: var(--cream); }
+        #f22-wg { display: inline-block; }
+        #f22-watch { display: inline-block; font: 900 19cqw/0.86 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--fire); padding-bottom: 0.1em; }
       </style>
       <div id="root" data-composition-id="22-revert" data-width="1920" data-height="1080" data-duration="6.75">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f22-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>3</b></span></div>
-        </div>
-        <div class="hr-layer" data-depth="0.85">
-          <div id="f22-view">
-            <div id="f22-climb" data-layout-allow-overflow>
-              <div id="f22-page">
-                <!-- row 1: no more patches, no more one more try -->
-                <div class="f22-row" style="top: 8cqw">
-                  <div class="f22-prompt" style="top: 0"><span>~/us (main) $ </span><span class="f22-cmd">git clean -f '*.patch'</span></div>
-                  <div class="f22-mono" style="top: 3.2cqw">
-                    <div class="f22-rm">Removing 0001-one-more-try.patch<i class="f22-x"></i></div>
-                    <div class="f22-rm">Removing 0002-one-more-try.patch<i class="f22-x"></i></div>
-                    <div class="f22-rm">Removing 0003-one-more-try-v2.patch<i class="f22-x"></i></div>
-                    <div class="f22-rm">Removing 0004-one-more-try-final.patch<i class="f22-x"></i></div>
-                    <div class="f22-rm">Removing 0005-one-more-try-v3.patch<i class="f22-x"></i></div>
-                    <div class="f22-rm">Removing 0006-one-more-try-v4.patch<i class="f22-x"></i></div>
-                  </div>
-                  <div class="f22-lyric">
-                    <div><span class="f22-w f22-a">no</span> <span class="f22-w f22-a">more</span></div>
-                    <div class="f22-big"><span class="f22-w f22-a f22-hero hr-glowbox" id="f22-h1">patches,</span></div>
-                    <div style="margin-top: 0.9cqw"><span class="f22-w f22-a">no</span> <span class="f22-w f22-a">more</span> <span class="f22-w f22-a">one</span> <span class="f22-w f22-a">more</span> <span class="f22-w f22-a">try</span></div>
-                  </div>
-                </div>
-                <!-- row 2: no more reading your logs -->
-                <div class="f22-row" style="top: 54cqw">
-                  <div class="f22-prompt" style="top: 0"><span>~/us (main) $ </span><span class="f22-cmd">git log --author=you --date=format:%H:%M --pretty='%ad %s'</span></div>
-                  <div class="f22-mono" style="top: 3.2cqw; font-size: 1.7cqw">
-                    <div class="f22-log"><span class="f22-time">11:02</span> that sunday</div>
-                    <div class="f22-log"><span class="f22-time">18:40</span> the beach</div>
-                    <div class="f22-log"><span class="f22-time">20:13</span> first date</div>
-                  </div>
-                  <div class="f22-lyric" style="top: 6.2cqw">
-                    <div><span class="f22-w f22-b">no</span> <span class="f22-w f22-b">more</span> <span class="f22-w f22-b">reading</span> <span class="f22-w f22-b">your</span></div>
-                    <div class="f22-huge"><span class="f22-w f22-b f22-hero hr-glowbox" id="f22-h2">logs</span></div>
-                  </div>
-                </div>
-                <!-- row 3: and now you want a revert? baby, that's cute -->
-                <div class="f22-row" style="top: 100cqw">
-                  <div id="f22-pr">
-                    <div class="f22-head f22-pr0"><span>pull request #57</span><span>open</span></div>
-                    <div id="f22-title" class="f22-pr0"><span id="f22-rv">Revert<i id="f22-ul"></i></span> "force push"</div>
-                    <div id="f22-meta" class="f22-pr1">
-                      <div class="f22-m"><span class="f22-you">you</span> wants to merge 1 commit into main</div>
-                      <div class="f22-m">from revert-force-push</div>
+        <div id="f22-cam">
+          <div id="f22-in">
+            <div class="hr-layer" data-depth="0.85" data-layout-ignore>
+              <i class="f22-glow" data-layout-ignore></i><i class="f22-glow" data-layout-ignore></i><i class="f22-glow" data-layout-ignore></i><i class="f22-glow" data-layout-ignore></i>
+              <i id="f22-cglow" data-layout-ignore></i>
+            </div>
+            <div class="hr-layer" data-depth="0.15">
+              <div id="f22-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>3</b></span></div>
+            </div>
+            <div class="hr-layer" data-depth="0.85">
+              <div id="f22-view">
+                <div id="f22-climb" data-layout-allow-overflow>
+                  <div id="f22-page">
+                    <!-- row 1: no more patches, no more one more try (21's git status scrolling away at the top) -->
+                    <div class="f22-row" style="top: 0">
+                      <div class="f22-hist" style="top: 0.4cqw" data-layout-ignore>On branch main<br />nothing to commit, working tree clean</div>
+                      <div class="f22-prompt" style="top: 5.2cqw"><span>~/us (main) $ </span><span class="f22-cmd">ls *.patch</span></div>
+                      <div class="f22-mono" style="top: 8cqw">
+                        <div class="f22-file">0001-one-more-try.patch<i class="f22-x"></i></div>
+                        <div class="f22-file">0002-one-more-try.patch<i class="f22-x"></i></div>
+                        <div class="f22-file">0003-one-more-try-v2.patch<i class="f22-x"></i></div>
+                        <div class="f22-file">0004-one-more-try-final.patch<i class="f22-x"></i></div>
+                        <div class="f22-file">0005-one-more-try-v3.patch<i class="f22-x"></i></div>
+                        <div class="f22-file">0006-one-more-try-v4.patch<i class="f22-x"></i></div>
+                      </div>
+                      <div class="f22-prompt" style="top: 32cqw"><span>~/us (main) $ </span><span class="f22-cmd">git clean -f '*.patch'</span><span class="f22-cursor" id="f22-cur1"></span></div>
+                      <div class="f22-out" style="top: 34.8cqw"><span class="f22-rm">Removing 0001-one-more-try.patch</span>
+<span class="f22-rm">Removing 0002-one-more-try.patch</span>
+<span class="f22-rm">Removing 0003-one-more-try-v2.patch</span>
+<span class="f22-rm">Removing 0004-one-more-try-final.patch</span>
+<span class="f22-rm">Removing 0005-one-more-try-v3.patch</span>
+<span class="f22-rm">Removing 0006-one-more-try-v4.patch</span></div>
+                      <div class="f22-lyric" style="top: 24cqw">
+                        <div><span class="f22-w f22-a">no</span> <span class="f22-w f22-a">more</span></div>
+                        <div class="f22-big"><span class="f22-w f22-a f22-hero hr-glowbox" id="f22-h1">patches,</span></div>
+                        <div style="margin-top: 0.9cqw"><span class="f22-w f22-a">no</span> <span class="f22-w f22-a">more</span> <span class="f22-w f22-a">one</span> <span class="f22-w f22-a">more</span> <span class="f22-w f22-a">try</span></div>
+                      </div>
                     </div>
-                    <div id="f22-box" class="f22-pr2">
-                      <div class="f22-m">This branch has no conflicts with the base branch</div>
-                      <div class="f22-m">Merging can be performed automatically.</div>
+                    <!-- row 2: no more reading your logs -->
+                    <div class="f22-row" style="top: 50cqw">
+                      <div class="f22-prompt" id="f22-p2" style="top: 3.6cqw"><span>~/us (main) $ </span><span class="f22-cmd">git log --author=<span class="f22-you">you</span> --date=format:%H:%M --pretty='%ad %s'</span></div>
+                      <div class="f22-mono" style="top: 6.8cqw; font-size: 3.4cqw; line-height: 1.4">
+                        <div class="f22-log"><span class="f22-time">11:02</span> that sunday</div>
+                        <div class="f22-log"><span class="f22-time">18:40</span> the beach</div>
+                        <div class="f22-log"><span class="f22-time">20:13</span> first date</div>
+                      </div>
+                      <div class="f22-lyric f22-left" style="top: 23.4cqw">
+                        <div><span class="f22-w f22-b">no</span> <span class="f22-w f22-b">more</span> <span class="f22-w f22-b">reading</span> <span class="f22-w f22-b">your</span></div>
+                        <div class="f22-huge"><span class="f22-w f22-b f22-hero hr-glowbox" id="f22-h2">logs</span></div>
+                      </div>
                     </div>
-                    <div id="f22-btn" class="f22-pr3">Merge pull request<span id="f22-note" data-layout-allow-overlap>(cute.)</span></div>
+                    <!-- row 3: and now you want a revert? baby, that's cute -->
+                    <div class="f22-row" style="top: 100cqw">
+                      <div id="f22-pr" data-hf-motion-blur='{"fps": 60}'>
+                        <div class="f22-head"><span>pull request #57</span><b>open</b></div>
+                        <div id="f22-title"><span id="f22-rv">Revert<i id="f22-ul"></i></span> "force push"</div>
+                        <div id="f22-meta">
+                          <div class="f22-m"><span class="f22-you">you</span> wants to merge 1 commit into main</div>
+                          <div class="f22-m">from revert-force-push</div>
+                        </div>
+                        <div id="f22-box">
+                          <div class="f22-m">This branch has no conflicts with the base branch</div>
+                          <div class="f22-m">Merging can be performed automatically.</div>
+                        </div>
+                        <div id="f22-btn">Merge pull request</div>
+                      </div>
+                      <div id="f22-note" data-layout-allow-overlap>(cute.)</div>
+                      <div class="f22-lyric" style="top: 4.6cqw; right: 7.5cqw">
+                        <div><span class="f22-w f22-c">and</span> <span class="f22-w f22-c">now</span> <span class="f22-w f22-c">you</span></div>
+                        <div><span class="f22-w f22-c">want</span> <span class="f22-w f22-c">a</span></div>
+                        <div class="f22-big" style="font-size: 12.5cqw"><span class="f22-w f22-c f22-hero hr-glowbox" id="f22-h3">revert?</span></div>
+                        <div style="margin-top: 1.2cqw"><span class="f22-w f22-c">baby,</span> <span class="f22-w f22-c">that's</span> <span class="f22-w f22-c f22-hero hr-glowbox" id="f22-h4">cute</span></div>
+                      </div>
+                    </div>
+                    <!-- row 4: watch what i do -->
+                    <div class="f22-row" style="top: 150cqw">
+                      <div id="f22-band" data-layout-ignore><i id="f22-tick"></i></div>
+                      <div id="f22-l4"><span id="f22-wg" class="hr-glowbox"><span id="f22-watch" data-hf-motion-blur='{"fps": 60}'>watch</span></span> <span class="f22-w f22-d">what</span> <span class="f22-w f22-d">i</span> <span class="f22-w f22-d">do</span></div>
+                      <div id="f22-push"><span>~/us (main) $ </span><span class="f22-cmd" id="f22-cmd"></span><span class="f22-cursor" id="f22-cursor"></span></div>
+                    </div>
                   </div>
-                  <div class="f22-lyric">
-                    <div><span class="f22-w f22-c">and</span> <span class="f22-w f22-c">now</span> <span class="f22-w f22-c">you</span> <span class="f22-w f22-c">want</span> <span class="f22-w f22-c">a</span></div>
-                    <div class="f22-big"><span class="f22-w f22-c f22-hero hr-glowbox" id="f22-h3">revert?</span></div>
-                    <div style="margin-top: 0.9cqw"><span class="f22-w f22-c">baby,</span> <span class="f22-w f22-c">that's</span> <span class="f22-w f22-c f22-hero hr-glowbox" id="f22-h4">cute</span></div>
-                  </div>
-                </div>
-                <!-- row 4: watch what i do -->
-                <div class="f22-row" style="top: 146cqw">
-                  <div class="f22-lyric" style="top: 1.6cqw">
-                    <div class="f22-huge"><span class="f22-w f22-hero hr-glowbox" id="f22-h5">watch</span></div>
-                    <div style="margin-top: 0.6cqw"><span class="f22-w f22-d">what</span> <span class="f22-w f22-d">i</span> <span class="f22-w f22-d">do</span></div>
-                  </div>
-                  <div id="f22-push"><span>~/us (main) $ </span><span class="f22-cmd" id="f22-cmd"></span><span id="f22-cursor"></span></div>
                 </div>
               </div>
             </div>
@@ -149,6 +191,8 @@
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
           const DUR = 6.75, T0 = 107.37, PX = 19.2; // 1cqw at 1920 wide
@@ -157,96 +201,145 @@
           const stage = HR.stage(root, { seed: 22 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
-          const show = (el, s) => tl.set(el, { opacity: 0 }, 0).set(el, { opacity: 1 }, at(s));
+          const cam = $("f22-cam"), page = $("f22-page"), C = stage.cam;
+          const ROW = 50 * PX;
+          const E1 = at(107.398), R2 = at(109.15), R3 = at(110.45), R4 = at(112.88); // the Enters: clean (kick), row 2, row 3, the drop-out
 
-          // ---- row 1: "no more patches, no more one more try"; git removes a patch on every eighth, each struck ----
+          // ---- the cut in: 21's glideUp carries on (the page arrives from 80 px below, on #f22-in) as a plain glide: no
+          //      blur because "No" starts 30 ms in, no cover scale because the ground is flat ink ----
+          tl.fromTo($("f22-in"), { y: 80 }, { y: 0, duration: 0.42, ease: "power2.out" }, 0);
+          WOW.transition(tl, cam, { in: "cut", out: "cut", dur: 0, total: DUR }); // 22 → 23 is the Enter: hard
+
+          // ---- row 1: "no more patches, no more one more try"; the Enter on the first kick, a patch removed per eighth ----
+          tl.set($("f22-cur1"), { opacity: 1 }, 0).set($("f22-cur1"), { opacity: 0 }, E1);
           const a = root.querySelectorAll(".f22-a");
           HR.lead(tl, a[0], at(107.4)); HR.lead(tl, a[1], at(107.62));
-          HR.hero(tl, a[2], at(107.865), { spread: 24, over: 1.2, pre: 0.14, sharp: true });
+          HR.hero(tl, a[2], at(107.865), { spread: 28, over: 1.24, pre: 0.14, sharp: true });
           [108.129, 108.2, 108.354, 108.54, 108.72].forEach((s, i) => HR.lead(tl, a[3 + i], at(s)));
-          root.querySelectorAll(".f22-rm").forEach((r, i) => {
-            const s = [107.873, 108.1, 108.328, 108.555, 108.781, 109.01][i];
-            show(r, s);
-            tl.fromTo(r.querySelector(".f22-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.1, ease: "power2.out" }, at(s) + 0.06);
-            tl.fromTo(r, { color: "#F0ECE5" }, { color: "#888880", duration: 0.2, immediateRender: false }, at(s) + 0.1);
+          const files = root.querySelectorAll(".f22-file"), rms = root.querySelectorAll(".f22-rm");
+          [107.873, 108.1, 108.328, 108.555, 108.781, 109.01].forEach((s, i) => {
+            tl.set(rms[i], { opacity: 0 }, 0).set(rms[i], { opacity: 1 }, at(s));
+            tl.fromTo(files[i].querySelector(".f22-x"), { scaleX: 0 }, { scaleX: 1, duration: 0.09, ease: "power3.out" }, at(s));
+            tl.fromTo(files[i], { color: "#F0ECE5" }, { color: "#888880", duration: 0.2, immediateRender: false }, at(s) + 0.05);
           });
 
           // ---- row 2: "no more reading your logs"; only the three cherry-picked days are left, and none at night ----
+          tl.set($("f22-p2"), { opacity: 0 }, 0).set($("f22-p2"), { opacity: 1 }, R2); // the command arrives with its Enter
           const b = root.querySelectorAll(".f22-b");
           [109.18, 109.46, 109.7, 109.965].forEach((s, i) => HR.lead(tl, b[i], at(s)));
-          HR.hero(tl, b[4], at(110.16), { spread: 30, over: 1.24, pre: 0.14, sharp: true });
-          root.querySelectorAll(".f22-log").forEach((l, i) => show(l, [109.242, 109.47, 109.697][i]));
+          HR.hero(tl, b[4], at(110.16), { spread: 34, over: 1.26, pre: 0.14, sharp: true });
+          root.querySelectorAll(".f22-log").forEach((l, i) => tl.set(l, { opacity: 0 }, 0).set(l, { opacity: 1 }, at([109.242, 109.47, 109.697][i])));
           tl.fromTo(root.querySelectorAll(".f22-time"), { color: "#888880" }, { color: "#E85D26", duration: 0.12, stagger: 0.05, immediateRender: false }, at(110.16));
 
-          // ---- row 3: "and now you want a revert? baby, that's cute"; the PR assembles on the kicks ----
+          // ---- row 3: "and now you want a revert? baby, that's cute"; the PR whips in whole on the Enter ----
+          // (fixed content moved only by these tweens, so it carries the motion blur; parked off-frame until then)
+          const pr = $("f22-pr");
+          tl.set(pr, { x: -1400 }, 0);
+          tl.fromTo(pr, { x: -1400 }, { x: 0, duration: 0.3, ease: "expo.out", immediateRender: false }, R3);
           const c = root.querySelectorAll(".f22-c");
           [110.48, 110.62, 110.86, 111.06, 111.24].forEach((s, i) => HR.lead(tl, c[i], at(s)));
-          HR.hero(tl, c[5], at(111.32), { spread: 28, over: 1.24, pre: 0.14, sharp: true });
+          HR.hero(tl, c[5], at(111.32), { spread: 30, over: 1.26, pre: 0.14, sharp: true });
           HR.lead(tl, c[6], at(111.98)); HR.lead(tl, c[7], at(112.22));
-          HR.hero(tl, c[8], at(112.42), { spread: 10, over: 1.3, pre: 0.1, sharp: true });
-          [[".f22-pr0", 110.48], [".f22-pr1", 110.625], [".f22-pr2", 111.564], [".f22-pr3", 111.999]].forEach(([sel, s]) =>
-            root.querySelectorAll(sel).forEach((el) => show(el, s)));
-          tl.set($("f22-pr"), { opacity: 0 }, 0).set($("f22-pr"), { opacity: 1 }, at(110.48));
-          tl.fromTo($("f22-ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.14, ease: "power2.out" }, at(111.32));
-          const N0 = at(112.46), N1 = at(112.82); // the marker writes (cute.) after the word
+          HR.hero(tl, c[8], at(112.42), { spread: 12, over: 1.3, pre: 0.1, sharp: true });
+          tl.fromTo($("f22-ul"), { scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power3.out" }, at(111.32));
+          const N0 = at(112.46), N1 = at(112.84); // the marker writes (cute.) after the word
 
-          // ---- row 4: "watch what i do"; the drums drop out, the command types through the line ----
-          const R4 = at(112.88);
-          const h5 = $("f22-h5");
-          tl.set(h5, { opacity: 0 }, 0).set(h5, { opacity: 1 }, R4);
-          tl.fromTo(h5, { scale: 1.14, transformOrigin: "100% 80%" }, { scale: 1, duration: 0.34, ease: "expo.out", immediateRender: false }, R4);
+          // ---- row 4: "watch what i do"; the drums drop out, a word of the command per sung word ----
+          const watch = $("f22-watch"), wg = $("f22-wg");
+          // parked at the slam's start (still, so the blur makes no copies) inside its hidden still wrapper until the jump;
+          // the copies inherit the wrapper's visibility
+          tl.set(watch, { y: -440, scale: 1.12 }, 0);
+          tl.set(wg, { visibility: "hidden" }, 0).set(wg, { visibility: "visible" }, R4);
+          tl.fromTo(watch, { y: -440, scale: 1.12 }, { y: 0, scale: 1, duration: 0.15, ease: "power3.out", immediateRender: false }, R4);
           const d = root.querySelectorAll(".f22-d");
           [113.34, 113.632, 113.82].forEach((s, i) => HR.lead(tl, d[i], at(s)));
-          const CMD = "git push --force origin main", K0 = at(112.93), K1 = at(113.97);
           const keys = [[0, ""]];
-          for (let i = 0; i < CMD.length; i++) keys.push([K0 + ((K1 - K0) * i) / CMD.length, CMD.slice(0, i + 1)]);
+          let typed = "";
+          [["git push", 112.95, 113.26], [" --force", 113.36, 113.6], [" origin", 113.64, 113.8], [" main", 113.83, 113.99]].forEach(([w, s, e]) => {
+            for (let i = 0; i < w.length; i++) keys.push([at(s) + ((at(e) - at(s)) * i) / w.length, typed + w.slice(0, i + 1)]);
+            typed += w;
+          });
+          const TYPED = keys[keys.length - 1][0];
+
+          // ---- the climb: the page steps up on every strike (row 1) and every kick (rows 2, 3), and each Enter scrolls a
+          //      whole screen (harder each time); row 4 jumps ----
+          let py0 = 0;
+          const to = (t, y, dur, ease) => { tl.fromTo(page, { y: py0 * PX }, { y: y * PX, duration: dur, ease, immediateRender: false }, t); py0 = y; };
+          [107.873, 108.1, 108.328, 108.555, 108.781, 109.01].forEach((s, i) => to(at(s), -1.7 * (i + 1), 0.2, "expo.out"));
+          to(R2, -50, 0.34, "expo.out");
+          [109.697, 110.16].forEach((s, i) => to(at(s), -50 - 0.75 * (i + 1), 0.22, "expo.out"));
+          to(R3, -100, 0.28, "expo.out");
+          [111.086, 111.564, 111.999, 112.458].forEach((s, i) => to(at(s), -100 - (i + 1), 0.22, "expo.out"));
+          tl.set(page, { y: -3 * ROW }, R4);
+
+          // ---- the camera: the lean grows row by row (1.055 → 1.16, recoiling on each Enter; row 3 snaps in on "revert?"), row 2 leans left into
+          //      the time column; row 4 pushes in through the silence, accelerating, to 1.3 on the Enter ----
+          tl.fromTo(C, { z: 1.0, x: 0 }, { z: 1.055, x: 30, duration: R2, ease: "sine.inOut" }, 0);
+          tl.fromTo(C, { z: 1.055, x: 30 }, { z: 1.0, x: 0, duration: 0.34, ease: "expo.out", immediateRender: false }, R2);
+          tl.fromTo(C, { z: 1.0, x: 0 }, { z: 1.16, x: -150, duration: R3 - R2 - 0.34, ease: "power1.in", immediateRender: false }, R2 + 0.34);
+          tl.fromTo(C, { z: 1.16, x: -150 }, { z: 1.0, x: 0, duration: 0.3, ease: "expo.out", immediateRender: false }, R3);
+          const RV = at(111.32); // "revert?": the camera snaps in on the word, then keeps leaning
+          tl.fromTo(C, { z: 1.0, x: 0 }, { z: 1.01, x: 0, duration: RV - R3 - 0.3, ease: "sine.inOut", immediateRender: false }, R3 + 0.3);
+          tl.fromTo(C, { z: 1.01, x: 0 }, { z: 1.035, x: 0, duration: 0.24, ease: "expo.out", immediateRender: false }, RV);
+          tl.fromTo(C, { z: 1.035, x: 0 }, { z: 1.04, x: 0, duration: R4 - RV - 0.24, ease: "none", immediateRender: false }, RV + 0.24);
+          tl.set(C, { z: 1.0, x: 0 }, R4);
+          tl.fromTo(C, { z: 1.0, x: 0 }, { z: 1.28, x: 24, duration: DUR - R4, ease: "power3.in", immediateRender: false }, R4);
+          [[107.865, 7], [110.16, 10], [111.32, 13], [112.42, 8]].forEach(([s, k]) => {
+            tl.fromTo(C, { y: 0 }, { y: -k, duration: 0.06, ease: "power2.in", immediateRender: false }, at(s) - 0.06);
+            tl.fromTo(C, { y: -k }, { y: 0, duration: 0.45, ease: "elastic.out(1, 0.5)", immediateRender: false }, at(s) + 0.01);
+          });
+          // every kick punches, sized by its drums and growing with the climb (08 peaked at 1.05; these reach ~1.07)
+          const KICKS = HR.onsetsIn("kick", T0, 112.6);
+          KICKS.forEach((s) => {
+            const p = at(s) / R4, dr = Math.min(1, HR.band("drums", s + 0.02) / 0.8);
+            WOW.punch(tl, cam, at(s), { s: 1 + (0.025 + 0.05 * p) * (0.6 + 0.4 * dr), dur: 0.36 });
+          });
+          WOW.shake(tl, cam, R2, { amp: 9, dur: 0.3, seed: 22 });
+          WOW.shake(tl, cam, R3, { amp: 13, dur: 0.34, seed: 23 });
+          WOW.shake(tl, cam, at(111.32), { amp: 11, dur: 0.34, seed: 24 });
+          WOW.shake(tl, cam, R4 + 0.15, { amp: 7, dur: 0.26, rot: 0.3, seed: 25 }); // "watch" lands
+          WOW.pulse(tl, cam, { kind: "kick", amt: 0.01 });
           tl.set({}, {}, DUR);
 
-          // ---- the climb: a row per line (expo), a step per kick within a row, a slow rise under it all; row 4 jumps ----
-          const ROW = 46 * PX, TICK = 0.7 * PX, STEP = 0.3;
-          const STARTS = [0, at(109.15), at(110.45), R4];
-          const KICKS = HR.onsetsIn("kick", T0, 112.6).map(at);
-          const ease = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.pow(2, -10 * x));
-          const ticks = (k, t) => {
-            let s = 0;
-            for (const q of KICKS) if (q > STARTS[k] + 0.12 && q <= t && (k === 3 || q < STARTS[k + 1])) s += ease((t - q) / 0.22);
-            return s * TICK;
-          };
-          const rowY = (k, t) => -(k * ROW + ticks(k, t));
-          function pageY(t) {
-            let k = 0; for (let i = 0; i < STARTS.length; i++) if (t >= STARTS[i]) k = i;
-            const y = rowY(k, t);
-            if (k === 0 || k === 3) return y;
-            const from = rowY(k - 1, STARTS[k]);
-            return from + (y - from) * ease((t - STARTS[k]) / STEP);
-          }
-
-          // ---- per-frame state: page, typing, cursor, marker, glow, camera ----
-          const PUNCH = [[107.865, 7], [110.16, 8], [111.32, 10], [112.42, 4]].map(([s, k]) => [at(s), k]);
-          const page = $("f22-page"), climb = $("f22-climb"), cmd = $("f22-cmd"), cur = $("f22-cursor"), note = $("f22-note");
-          const heroes = ["f22-h1", "f22-h2", "f22-h3", "f22-h4", "f22-h5"].map($);
+          // ---- per-frame state: the glows, the cursor and its light, the marker, the hero glow, the camera ----
+          const heroes = ["f22-h1", "f22-h2", "f22-h3", "f22-h4"].map($);
+          const glows = root.querySelectorAll(".f22-glow"), cglow = $("f22-cglow");
+          const GL = [[71, 37], [24, 29], [29, 16], [50, 24]]; // each row's glow centre (cqw, row coordinates)
+          const cmd = $("f22-cmd"), cur = $("f22-cursor"), note = $("f22-note");
           function render() {
             const t = tl.time(), T = T0 + t;
-            page.style.transform = `translateY(${pageY(t).toFixed(2)}px)`;
-            climb.style.transform = `translateY(${(-4 * PX * t / DUR).toFixed(2)}px)`;
+            const py = gsap.getProperty(page, "y") / PX, pos = -py / 50; // page offset in cqw, the row on screen (0..3)
+            const level = 0.6 + 0.4 * Math.min(1, t / R4); // the climb
+            const breathe = 0.8 + 0.6 * HR.band("bass", T) + 0.35 * HR.hit("snare", T, 0.25) + 0.35 * HR.hit("kick", T, 0.25) + 0.15 * HR.band("high", T);
+            glows.forEach((g, k) => {
+              const w = Math.max(0, 1 - Math.abs(pos - k) * 1.4);
+              g.style.transform = `translate(${(GL[k][0] * PX).toFixed(1)}px, ${((6.4 + 50 * k + GL[k][1] + py) * PX).toFixed(1)}px)`;
+              g.style.opacity = (k === 3 ? 0.75 * w : Math.min(1, level * breathe) * w).toFixed(3);
+            });
+            // row 4: the command types; the cursor stays solid while typing, then holds as its light swells to the Enter
             let s = keys[0]; for (const st of keys) if (st[0] <= t) s = st;
             cmd.textContent = s[1];
-            cur.style.opacity = t - s[0] < 0.3 || Math.floor((t - s[0]) * 2) % 2 === 0 ? 1 : 0;
+            const blinkOn = t < TYPED + 0.3 || Math.floor((t - TYPED) * 2) % 2 === 0 || t > DUR - 0.25;
+            cur.style.opacity = blinkOn ? 1 : 0;
+            const hold = Math.max(0, Math.min(1, (t - R4) / (DUR - R4))), swell = hold * hold;
+            // (computed, not measured: Plex Mono advances 0.6em; the prompt is 2.9cqw at (5.5cqw, 35.45cqw); 14 prompt chars)
+            cglow.style.left = (PX * (5.5 + 2.9 * (0.6 * (14 + s[1].length) + 0.12 + 0.31))).toFixed(1) + "px";
+            cglow.style.top = (PX * (6.4 + 150 + 35.45 + 2.9 * 0.42 + py)).toFixed(1) + "px";
+            cglow.style.opacity = t < R4 ? "0" : ((0.55 + 0.45 * swell) * (blinkOn ? 1 : 0.35)).toFixed(3);
+            cglow.style.scale = (1 + 0.8 * swell).toFixed(3);
+            wg.style.setProperty("--hr-glow", t < R4 + 0.15 ? "0" : (0.4 + 0.5 * HR.band("vocal", T)).toFixed(3));
+            // the marker
             const p = Math.max(0, Math.min(1, (t - N0) / (N1 - N0)));
             note.style.opacity = p > 0 ? 1 : 0;
             note.style.clipPath = `inset(-30% ${((1 - p) * 104).toFixed(2)}% -30% -6%)`;
             for (const h of heroes) HR.glow(h, T, 0.3, 0.5);
-            // the camera leans in as the rows climb, punches on the heroes, then leans slowly into the typed command
-            let z, y = 0;
-            if (t < R4) z = 1 + 0.05 * Math.sin((Math.PI / 2) * (t / R4));
-            else z = 1.02 + 0.045 * Math.sin((Math.PI / 2) * Math.min(1, (t - R4) / (DUR - R4)));
-            for (const [tp, k] of PUNCH) {
-              const dd = t - tp;
-              if (dd > -0.06 && dd < 0) y -= k * (1 + dd / 0.06);
-              else if (dd >= 0 && dd < 0.8) y -= k * Math.exp(-dd / 0.12) * Math.cos(dd * 14);
-            }
-            stage.cam.z = z; stage.cam.y = y;
-            stage.apply(T);
+            // the silent bar: no drift, no pulse once the drums are gone
+            stage.apply(t < R4 ? T : T0 + R4 + 0.25 * (t - R4));
+            // the kick punches scale about the row's lyric side, so the edge-hugging words stay in frame: right (row 1),
+            // left (row 2), centre (row 3: words at both edges; row 4)
+            const k = Math.min(3, Math.round(pos));
+            cam.style.transformOrigin = ["86% 60%", "14% 60%", "50% 45%", "50% 50%"][k];
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();

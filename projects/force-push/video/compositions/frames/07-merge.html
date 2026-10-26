@@ -2,12 +2,15 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 7 — merge (verse 1's last couplet, 38.723–46.550). The film's first cream frame: us.txt printed mid-merge.
-         git's verdict heads the page; the file's line 6 is the line 06 just blamed; the verse is the conflict hunk.
-         L9 fills the HEAD side; "merge," gathers its letters from both sides; on L10 the HEAD side greys out and the
-         other side fills; "conflict," lands on the downbeat misregistered (two versions disagreeing); the drums drop
-         out under "baby,"; on "you" (45.42, the drums back) the closing marker `>>>>>>> you` slams in, in the accent.
-         A gutter pointer marks the line being sung. -->
+    <!-- Frame 7 — merge (verse 1's last couplet, 38.723–46.550). The film's first cream frame: us.txt printed mid-merge, a
+         sheet of paper under a lamp. Refinement round 1. git's verdict heads the page; the file's line 6 is the line 06 just
+         blamed (the hand-over); the verse is the conflict hunk. The sheet rises in (06's `rise` carries on, shortened: the
+         first word starts 37 ms in), and the camera drifts down the file, one big move per phrase: a push in onto the HEAD
+         side through L9 (zoom 1.0 → 1.14), a truck of ~410 px down past `=======` on "but". A marker swipe points at the
+         words that matter, one at a time ("you", "merge,", "conflict,"). "merge," gathers its letters from both sides; on
+         L10 the HEAD side greys out; "conflict," lands on the downbeat misregistered; on "you" (45.42) the closing marker
+         `>>>>>>> you` STAMPS onto line 13 at display scale (11cqw, the accent, tilted like a rubber stamp) with a paper jolt,
+         and the camera settles back to show it under the line. Glides up into 08 (`glideUp`). -->
   </head>
   <body>
     <template>
@@ -21,84 +24,118 @@
           position: absolute; inset: 0; overflow: hidden; container-type: size;
           --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --ink-on-cream: #111111; --muted-on-cream: #5F5B54; --marker: #C8481A;
           --hr-accent-rgb: 200, 72, 26;
-          background: var(--cream); color: var(--ink-on-cream);
+          /* the desk the sheet lies on: the cream ground in the lamp's shade */
+          --desk: color-mix(in srgb, var(--cream) 91%, var(--ink));
+          background: var(--desk); color: var(--ink-on-cream);
         }
-        /* header strip, cream register (30-shared's head colours, the label voice of 01–06) */
+        #f07-cam, #f07-in { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        /* the header strip on its band; the page slides under the band's lip */
+        #f07-band { position: absolute; left: 0; right: 0; top: 0; height: 6.4cqw; background: var(--desk);
+          box-shadow: 0 0.35cqw 0.9cqw rgba(10, 10, 10, 0.16); }
         #f07-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
-          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-on-cream);
+          font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #3F3C37;
           padding-bottom: 0.6cqw; border-bottom: 1px solid rgba(17, 17, 17, 0.22); }
-        #f07-strip b { color: #B8461C; font-weight: 600; }
-        /* the finish layer's vignette darkens the corners of the cream page: the strip's small text needs a darker ink */
-        #f07-strip { color: #3F3C37; } #f07-strip b { color: #7E2E12; }
+        #f07-strip b { color: #7E2E12; font-weight: 600; }
+        /* the view under the band: the sheet drifts in it */
+        #f07-view { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; overflow: hidden; }
+        #f07-drift { position: absolute; left: 0; top: 0; width: 100cqw; height: 100cqw; transform-origin: 5.5cqw 0; }
+        #f07-jolt { position: absolute; inset: 0; transform-origin: 50% 40%; }
+        /* the sheet: paper on the desk, a shadow under it */
+        #f07-sheet { position: absolute; left: 2.6cqw; right: 2.6cqw; top: 1.2cqw; height: 70cqw; background: var(--cream);
+          box-shadow: 0 1.3cqw 3cqw rgba(10, 10, 10, 0.2), 0 0.15cqw 0.35cqw rgba(10, 10, 10, 0.16); }
+        /* the lamp: light falls off from the line being read towards the edges, breathing with the bass */
+        #f07-lamp { position: absolute; left: 0; right: 0; top: 6.4cqw; bottom: 0; pointer-events: none;
+          background: radial-gradient(ellipse 64% 82% at 44% 44%, rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 0) 38%,
+            rgba(10, 10, 10, 0.07) 72%, rgba(10, 10, 10, 0.15) 100%); }
         /* git's verdict, printed at the head of the page */
-        #f07-git { position: absolute; left: 5.5cqw; top: 7.1cqw; font: 400 1.05cqw/1.6 "IBM Plex Mono", monospace; color: var(--muted-on-cream); }
+        #f07-git { position: absolute; left: 2.9cqw; top: 2.4cqw; font: 400 1.2cqw/1.6 "IBM Plex Mono", monospace; color: var(--muted-on-cream); }
         #f07-fail, #f07-conflict { opacity: 0; }
-        #f07-git .f07-conf { font: 500 1.35cqw/1.5 "IBM Plex Mono", monospace; color: var(--ink-on-cream); }
+        #f07-git .f07-conf { font: 500 2cqw/1.4 "IBM Plex Mono", monospace; color: var(--ink-on-cream); }
         /* the file: a line-number gutter, a pointer on the sung line, the text */
-        #f07-file { position: absolute; left: 5.5cqw; top: 12.3cqw; width: 89cqw; }
+        #f07-file { position: absolute; left: 2.9cqw; top: 9cqw; width: 89cqw; }
         .f07-row { position: relative; display: flex; align-items: baseline; white-space: nowrap; }
         .f07-n { flex: none; width: 3.2cqw; text-align: right; margin-right: 2.3cqw; font: 400 1.05cqw/1 "IBM Plex Mono", monospace; color: var(--muted-on-cream); }
-        .f07-ptr { position: absolute; left: 4.15cqw; top: 18%; bottom: 18%; width: 0.32cqw; background: var(--marker); opacity: 0; }
-        .f07-ctx { height: 2.4cqw; font: 400 1.15cqw/2.4cqw "IBM Plex Mono", monospace; color: var(--muted-on-cream); }
-        .f07-mk { height: 2.8cqw; font: 600 1.45cqw/2.8cqw "IBM Plex Mono", monospace; color: var(--ink-on-cream); letter-spacing: 0.02em; }
-        .f07-mk .f07-lbl { font-weight: 400; color: var(--muted-on-cream); }
+        .f07-ptr { position: absolute; left: 4.15cqw; top: 18%; bottom: 18%; width: 0.45cqw; background: var(--marker); opacity: 0; }
+        .f07-ctx { height: 3cqw; font: 400 1.5cqw/3cqw "IBM Plex Mono", monospace; color: var(--muted-on-cream); }
+        .f07-mk { height: 4cqw; font: 600 2.1cqw/4cqw "IBM Plex Mono", monospace; color: var(--ink-on-cream); letter-spacing: 0.02em; }
         /* the sung lines: Barlow, ink on paper; hero words take the heavier cut */
-        .f07-ly { height: 5.9cqw; font: 700 6cqw/5.9cqw "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--ink-on-cream); }
+        .f07-ly { height: 7.2cqw; font: 700 6.2cqw/7.2cqw "Barlow", sans-serif; letter-spacing: -0.035em; color: var(--ink-on-cream); }
         .f07-ly .f07-n { align-self: center; }
         .f07-hero { font-weight: 900; }
         .f07-hw { position: relative; display: inline-block; isolation: isolate; }
-        .f07-ul { position: absolute; left: -0.1em; right: 0.12em; bottom: 0.02em; height: 0.075em; background: var(--marker); opacity: 0.85;
-          border-radius: 0.2cqw; transform-origin: 0% 50%; transform: rotate(-0.6deg) scaleX(0); }
+        /* the marker swipe behind the word the pointer is on */
+        .f07-hl { position: absolute; left: -0.12em; right: -0.1em; top: 0.24em; bottom: 0.06em; background: var(--marker); opacity: 0;
+          z-index: -1; transform-origin: 0% 50%; pointer-events: none; }
         .f07-ghost { position: absolute; left: 0; top: 0; color: var(--marker); font-weight: 900; opacity: 0; pointer-events: none; z-index: -1; }
         .f07-you { color: var(--marker); }
-        /* the closing marker: the payoff, display mono in the accent */
-        .f07-end { height: 6.6cqw; font: 600 5.4cqw/6.6cqw "IBM Plex Mono", monospace; letter-spacing: -0.01em; color: var(--marker); }
-        .f07-end .f07-n { align-self: center; }
-        #f07-endmk { display: inline-block; transform-origin: 0% 60%; opacity: 0; }
+        /* the closing marker: the payoff, a rubber stamp at display scale in the accent */
+        .f07-end { height: 15cqw; align-items: center; }
+        .f07-end .f07-ptr { top: 34%; bottom: 34%; }
+        #f07-stamp { display: inline-block; margin-left: -0.6cqw; padding: 0.02em 0.16em 0.12em; border: 0.42cqw solid var(--marker);
+          font: 600 11cqw/0.92 "IBM Plex Mono", monospace; letter-spacing: -0.02em; color: var(--marker); white-space: pre;
+          transform-origin: 50% 55%; opacity: 0; }
       </style>
       <div id="root" data-composition-id="07-merge" data-width="1920" data-height="1080" data-duration="7.827">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f07-strip"><span>~/us &nbsp;·&nbsp; main|merging</span><span>commits by you &nbsp;<b>1,095</b></span></div>
-        </div>
-        <div class="hr-layer" data-depth="0.7">
-          <div id="f07-git">
-            <div class="f07-conf">CONFLICT (content): Merge conflict in us.txt</div>
-            <div id="f07-fail">Automatic merge failed; fix conflicts and then commit the result.</div>
-          </div>
-          <div id="f07-file">
-            <div class="f07-row f07-ctx"><span class="f07-n">6</span>every single one had your name, not mine</div>
-            <div class="f07-row f07-mk"><span class="f07-n">7</span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div>
-            <div class="f07-l9">
-              <div class="f07-row f07-ly"><i class="f07-ptr"></i><span class="f07-n">8</span><span>
-                <span class="f07-w">you</span> <span class="f07-w">said</span> <span class="f07-w">we</span> <span class="f07-w">could</span>
-                <span class="f07-hw"><span class="f07-w f07-hero" id="f07-merge">merge,</span><i class="f07-ul" id="f07-ul1"></i></span></span></div>
-              <div class="f07-row f07-ly"><i class="f07-ptr"></i><span class="f07-n">9</span><span>
-                <span class="f07-w">work</span> <span class="f07-w">the</span> <span class="f07-w">conflicts</span> <span class="f07-w">through</span></span></div>
+        <div id="f07-cam">
+          <div id="f07-in">
+            <div id="f07-view">
+              <div id="f07-drift" data-layout-allow-overflow>
+                <div id="f07-jolt">
+                  <div id="f07-sheet">
+                    <div id="f07-git">
+                      <div class="f07-conf">CONFLICT (content): Merge conflict in us.txt</div>
+                      <div id="f07-fail">Automatic merge failed; fix conflicts and then commit the result.</div>
+                    </div>
+                    <div id="f07-file">
+                      <div class="f07-row f07-ctx"><span class="f07-n">6</span>every single one had your name, not mine</div>
+                      <div class="f07-row f07-mk"><span class="f07-n">7</span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div>
+                      <div class="f07-l9">
+                        <div class="f07-row f07-ly"><i class="f07-ptr"></i><span class="f07-n">8</span><span>
+                          <span class="f07-hw"><span class="f07-w">you</span><i class="f07-hl" id="f07-hl0"></i></span> <span class="f07-w">said</span> <span class="f07-w">we</span> <span class="f07-w">could</span>
+                          <span class="f07-hw"><span class="f07-w f07-hero" id="f07-merge">merge,</span><i class="f07-hl" id="f07-hl1"></i></span></span></div>
+                        <div class="f07-row f07-ly"><i class="f07-ptr"></i><span class="f07-n">9</span><span>
+                          <span class="f07-w">work</span> <span class="f07-w">the</span> <span class="f07-w">conflicts</span> <span class="f07-w">through</span></span></div>
+                      </div>
+                      <div class="f07-row f07-mk"><span class="f07-n">10</span>=======</div>
+                      <div class="f07-l10">
+                        <div class="f07-row f07-ly"><i class="f07-ptr"></i><span class="f07-n">11</span><span>
+                          <span class="f07-w">but</span> <span class="f07-w">every</span>
+                          <span class="f07-hw"><span class="f07-w f07-hero" id="f07-conflict">conflict,</span><i class="f07-hl" id="f07-hl2"></i><span class="f07-ghost" id="f07-ghost" aria-hidden="true" data-layout-ignore>conflict,</span></span>
+                          <span class="f07-w">baby,</span></span></div>
+                        <div class="f07-row f07-ly"><i class="f07-ptr"></i><span class="f07-n">12</span><span>
+                          <span class="f07-w">started</span> <span class="f07-w">with</span> <span class="f07-w f07-hero f07-you" id="f07-you">you</span></span></div>
+                      </div>
+                      <div class="f07-row f07-end"><i class="f07-ptr"></i><span class="f07-n">13</span><span id="f07-stamp" data-hf-motion-blur='{"fps": 60}'>&gt;&gt;&gt;&gt;&gt;&gt;&gt; you</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="f07-row f07-mk"><span class="f07-n">10</span>=======</div>
-            <div class="f07-l10">
-              <div class="f07-row f07-ly"><i class="f07-ptr"></i><span class="f07-n">11</span><span>
-                <span class="f07-w">but</span> <span class="f07-w">every</span>
-                <span class="f07-hw"><span class="f07-w f07-hero" id="f07-conflict">conflict,</span><span class="f07-ghost" id="f07-ghost" aria-hidden="true" data-layout-ignore>conflict,</span></span>
-                <span class="f07-w">baby,</span></span></div>
-              <div class="f07-row f07-ly"><i class="f07-ptr"></i><span class="f07-n">12</span><span>
-                <span class="f07-w">started</span> <span class="f07-w">with</span> <span class="f07-w f07-hero f07-you" id="f07-you">you</span></span></div>
+            <div id="f07-lamp" data-layout-ignore></div>
+            <div id="f07-band">
+              <div id="f07-strip"><span>~/us &nbsp;·&nbsp; main|merging</span><span>commits by you &nbsp;<b>1,095</b></span></div>
             </div>
-            <div class="f07-row f07-end"><i class="f07-ptr"></i><span class="f07-n">13</span><span id="f07-endmk">&gt;&gt;&gt;&gt;&gt;&gt;&gt; you</span></div>
           </div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
-          const DUR = 7.827, T0 = 38.723;
+          const DUR = 7.827, T0 = 38.723, PX = 19.2; // px per cqw at 1920 wide
           const root = document.querySelector('[data-composition-id="07-merge"]');
           const $ = (id) => root.querySelector("#" + id);
-          const stage = HR.stage(root, { seed: 7 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
           const MERGE = at(40.1), BUT = at(42.16), CONF = at(42.88), YOU = at(45.42);
+          const OUT = 0.42; // glideUp into 08: starts 0.71 s after the stamp, no word starts inside it
+          const cam = $("f07-cam"), drift = $("f07-drift"), jolt = $("f07-jolt");
+
+          // ---- the cut in: 06's `rise` carries on (the content keeps travelling up), shortened to a short settle with no
+          //      blur because "you" starts 37 ms in; the sheet is in place and the line readable from ~0.1 s ----
+          tl.fromTo($("f07-in"), { y: 220 }, { y: 0, duration: 0.32, ease: "expo.out" }, 0);
 
           // ---- git's verdict: the CONFLICT line is the cut; the failure arrives whole on the 39.187 downbeat ----
           tl.set($("f07-fail"), { opacity: 1 }, at(39.187));
@@ -108,25 +145,33 @@
           // L9: you said we could merge, | work the conflicts through
           [38.76, 38.857, 39.4, 39.84].forEach((T, i) => HR.lead(tl, w[i], at(T)));
           HR.hero(tl, w[4], MERGE, { spread: 70, over: 1.14, pre: 0.18, sharp: true }); // the letters merge from both sides
-          tl.to($("f07-ul1"), { scaleX: 1, duration: 0.22, ease: "power2.out" }, MERGE + 0.04);
           [40.508, 40.8, 40.98, 41.635].forEach((T, i) => HR.lead(tl, w[5 + i], at(T)));
           // L10 starts: the HEAD side greys out, still readable
           tl.fromTo(root.querySelectorAll(".f07-l9 .f07-ly"), { color: "#111111" }, { color: "#5F5B54", duration: 0.35, ease: "power2.out", immediateRender: false }, BUT);
-          tl.fromTo($("f07-ul1"), { opacity: 0.85 }, { opacity: 0.4, duration: 0.35, immediateRender: false }, BUT);
           // L10: but every conflict, baby, | started with you
           HR.lead(tl, w[9], BUT); HR.lead(tl, w[10], at(42.56));
           // "conflict," lands on the downbeat with no anticipation, misregistered: a second copy that disagrees, then gives way
           const conf = $("f07-conflict"), ghost = $("f07-ghost");
           tl.set(conf, { opacity: 1 }, CONF);
           tl.fromTo(conf, { x: 14 }, { x: 0, duration: 0.6, ease: "elastic.out(1.1, 0.32)", immediateRender: false }, CONF);
-          tl.set(ghost, { opacity: 0.55, x: -18, y: -5 }, CONF);
-          tl.to(ghost, { x: 0, y: 0, opacity: 0, duration: 0.42, ease: "power3.out" }, CONF + 0.02);
+          tl.fromTo(ghost, { x: -18, y: -5, opacity: 0.55 }, { x: 0, y: 0, opacity: 0, duration: 0.42, ease: "power3.out", immediateRender: false }, CONF);
           HR.lead(tl, w[12], at(43.78)); HR.lead(tl, w[13], at(44.554)); HR.lead(tl, w[14], at(45.14));
           HR.hero(tl, w[15], YOU, { spread: 16, over: 1.2, pre: 0.1, sharp: true });
-          // the closing marker slams in on "you": 0 ms, overscaled, elastic settle
-          const endmk = $("f07-endmk");
-          tl.set(endmk, { opacity: 1 }, YOU);
-          tl.fromTo(endmk, { scale: 1.16, x: -10 }, { scale: 1, x: 0, duration: 0.55, ease: "elastic.out(1, 0.5)", immediateRender: false }, YOU);
+
+          // ---- the pointer: a marker swipe draws under the word that matters, the last one dims as the next is marked ----
+          const HL = [[$("f07-hl0"), at(38.76)], [$("f07-hl1"), MERGE + 0.02], [$("f07-hl2"), CONF + 0.02]];
+          HL.forEach(([el, t], i) => {
+            tl.fromTo(el, { scaleX: 0, opacity: 0.62, rotation: -0.8 }, { scaleX: 1, opacity: 0.62, rotation: -0.8, duration: 0.2, ease: "power2.out" }, t);
+            const next = i + 1 < HL.length ? HL[i + 1][1] : YOU;
+            tl.fromTo(el, { opacity: 0.62 }, { opacity: 0.2, duration: 0.3, ease: "power2.out", immediateRender: false }, next);
+          });
+
+          // ---- the stamp: `>>>>>>> you` comes down on line 13 ON "you" (a 60 ms fall, blurred, landing sharp), the ink
+          //      presses (a small squash), the paper jolts, the camera punches ----
+          const stamp = $("f07-stamp");
+          tl.fromTo(stamp, { opacity: 0, scale: 1.7, rotation: -9 }, { opacity: 1, scale: 1, rotation: -4, duration: 0.06, ease: "power2.in" }, YOU - 0.06);
+          tl.fromTo(stamp, { scale: 0.965, rotation: -4 }, { scale: 1, rotation: -4, duration: 0.34, ease: "elastic.out(1, 0.45)", immediateRender: false }, YOU);
+          WOW.shake(tl, jolt, YOU, { amp: 9, dur: 0.34, rot: 0.35, seed: 7 });
 
           // ---- the gutter pointer marks the line being sung (lines 8, 9, 11, 12, 13) ----
           const ptr = root.querySelectorAll(".f07-ptr"), ON = [at(38.76), at(40.508), BUT, at(44.554), YOU];
@@ -135,23 +180,31 @@
             if (i + 1 < ON.length) tl.set(p, { opacity: 0 }, ON[i + 1]);
           });
 
-          // ---- the camera: a slow push through L9, a punch on "merge,", a tilt down to the other side on "but",
-          //      a nudge on the downbeat, the drop-out held calm, the biggest punch on "you" as the drums return ----
-          tl.fromTo(stage.cam, { z: 1.0, y: 0 }, { z: 1.02, y: 4, duration: MERGE - 0.06, ease: "power1.in" }, 0);
-          tl.to(stage.cam, { z: 1.034, duration: 0.06, ease: "power2.in" }, MERGE - 0.06);
-          tl.to(stage.cam, { z: 1.02, duration: 0.5, ease: "elastic.out(1, 0.55)" }, MERGE);
-          tl.to(stage.cam, { z: 1.026, duration: BUT - MERGE - 0.5, ease: "none" }, MERGE + 0.5);
-          tl.to(stage.cam, { z: 1.012, y: 20, duration: 0.6, ease: "power2.inOut" }, BUT);
-          tl.to(stage.cam, { z: 1.026, duration: 0.06, ease: "power2.in" }, CONF - 0.06);
-          tl.to(stage.cam, { z: 1.012, duration: 0.5, ease: "elastic.out(1, 0.55)" }, CONF);
-          tl.to(stage.cam, { z: 1.026, duration: YOU - CONF - 0.56, ease: "sine.inOut" }, CONF + 0.5);
-          tl.to(stage.cam, { z: 1.05, duration: 0.06, ease: "power2.in" }, YOU - 0.06);
-          tl.to(stage.cam, { z: 1.022, duration: 0.6, ease: "elastic.out(1, 0.5)" }, YOU);
-          tl.to(stage.cam, { z: 1.03, x: -14, duration: DUR - YOU - 0.6, ease: "none" }, YOU + 0.6);
+          // ---- the camera drifts down the file, one big move per phrase: L9 is a push in onto the HEAD side
+          //      (zoom 1.0 → 1.14), "but" trucks ~410 px down past `=======` to the other side (the HEAD line slides under the band), a slow ease out
+          //      under L10 makes room for line 13; on "you" it settles back to frame the stamp under the line ----
+          tl.fromTo(drift, { y: 0, scale: 1 }, { y: -4.3 * PX, scale: 1.12, duration: MERGE - 0.2, ease: "sine.inOut" }, 0.2);
+          tl.to(drift, { y: -4.8 * PX, scale: 1.14, duration: BUT - MERGE, ease: "none" }, MERGE);
+          tl.to(drift, { y: -26.4 * PX, scale: 1.08, duration: 0.62, ease: "power3.inOut" }, BUT);
+          tl.to(drift, { y: -26.1 * PX, scale: 1.065, duration: YOU - BUT - 0.62, ease: "sine.inOut" }, BUT + 0.62);
+          tl.to(drift, { y: -24.6 * PX, scale: 1.0, duration: DUR - YOU, ease: "power3.out" }, YOU);
+          WOW.punch(tl, cam, MERGE, { s: 1.035, dur: 0.45 });
+          WOW.punch(tl, cam, CONF, { s: 1.025, dur: 0.4 });
+          WOW.punch(tl, cam, YOU, { s: 1.06, dur: 0.5 });
+          WOW.pulse(tl, cam, { kind: "kick", amt: 0.006 });
+          WOW.transition(tl, cam, { out: "glideUp", dur: OUT, total: DUR });
           tl.set({}, {}, DUR);
+          // the file above L10 scrolls under the band's lip once its lines are done (deliberate; the check reads every
+          // text node, the kit's glyph spans included, so the flag goes on each one after the build)
+          root.querySelectorAll("#f07-git, #f07-git *, .f07-ctx, .f07-ctx *, .f07-mk, .f07-mk *, .f07-l9 *")
+            .forEach((el) => el.setAttribute("data-layout-allow-occlusion", ""));
 
+          // ---- per-frame state: the lamp, the camera ----
+          const lamp = $("f07-lamp");
           function render() {
-            stage.apply(T0 + tl.time());
+            const T = T0 + tl.time();
+            lamp.style.opacity = Math.max(0.45, 1 - 0.4 * HR.band("bass", T) - 0.25 * HR.hit("kick", T, 0.22)).toFixed(3);
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();

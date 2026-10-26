@@ -2,82 +2,149 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 9 — stop (pre-chorus 1's last line, 51.907–53.380). Everything stops: the sung line arrives word by word
-         while the push command types itself at the prompt; on "gone" (53.06) the frame holds through the silent beat and
-         only the cursor blinks. The cut into 10 is the Enter. -->
+    <!-- Frame 9 — stop (pre-chorus 1's last line, 51.907–53.380). Refinement round 1. Everything stops: 08's push-in
+         carries through the cut and brakes dead as "stop," slams down in the accent (a motion-blurred fall, landing
+         sharp, a short jolt). The terminal keeps 08's thread: HEAD is reattached (`git switch main`, "Previous HEAD
+         position was 3f2a1c9 you and me"), and on the lit current line `git push --force origin main` types itself
+         while the line builds word by word, the cursor's light travelling with it. From "one" the camera leans in hard
+         (line ×1.13) and stops dead on "gone", which takes the accent from "stop,". Then the silent beat: nothing moves,
+         the cursor blinks once and its light swells to its peak on the cut. The cut into 10 is the Enter (hard). -->
   </head>
   <body>
     <template>
       <style>
         @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-800.woff2") format("woff2"); font-weight: 800; }
         @font-face { font-family: "Barlow"; src: url("assets/fonts/barlow-900.woff2") format("woff2"); font-weight: 900; }
+        @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-400.woff2") format("woff2"); font-weight: 400; }
         @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-500.woff2") format("woff2"); font-weight: 500; }
         @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/ibm-plex-mono-600.woff2") format("woff2"); font-weight: 600; }
         #root {
           position: absolute; inset: 0; overflow: hidden; container-type: size;
-          --ink: #0A0A0A; --fire: #E85D26; --cream: #F0ECE5; --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
+          --ink: #0A0A0A; --ink-alt: #1A1A18; --fire: #E85D26; --cream: #F0ECE5; --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
+        #f09-cam, #f09-in { position: absolute; inset: 0; transform-origin: 30% 50%; }
         #f09-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f09-strip b { color: var(--fire); font-weight: 600; }
+        /* the layers lean in from their own left edge, so the line and the prompt grow into the frame, not off it */
+        #f09-ll { transform-origin: 5% 18%; }
+        #f09-pl { transform-origin: 5.5% 79%; }
+        /* the light: a soft accent glow under the line, breathing with the voice (there is no bass in the stop) */
+        #f09-lglow { position: absolute; left: 30cqw; top: 20cqw; width: 136cqw; height: 74cqw; margin: -37cqw 0 0 -68cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.15) 0%, rgba(232, 93, 38, 0.11) 34%, rgba(232, 93, 38, 0.055) 64%, rgba(232, 93, 38, 0) 100%); }
         #f09-line { position: absolute; left: 5.1cqw; top: 10.4cqw; font: 900 10.2cqw/0.9 "Barlow", sans-serif; letter-spacing: -0.045em; color: var(--cream); }
         #f09-line div { white-space: nowrap; }
+        #f09-stopg { display: inline-block; }
+        #f09-stop { display: inline-block; color: var(--fire); transform-origin: 0% 80%; }
         #f09-line .f09-hero { color: var(--fire); }
-        #f09-prompt { position: absolute; left: 5.5cqw; top: 44.4cqw; font: 500 2.6cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        /* the terminal: the current line is lit, a fire tick in its gutter; the cursor carries its own light */
+        #f09-band { position: absolute; left: 0; right: 0; top: 43.1cqw; height: 5.5cqw; background: #141413;
+          border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        #f09-tick { position: absolute; left: 3.3cqw; top: 1.25cqw; width: 0.42cqw; height: 3cqw; background: var(--fire); }
+        #f09-cglow { position: absolute; left: 0; top: 0; width: 64cqw; height: 40cqw; margin: -20cqw 0 0 -32cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.26) 0%, rgba(232, 93, 38, 0.15) 28%, rgba(232, 93, 38, 0.065) 60%, rgba(232, 93, 38, 0) 100%); }
+        #f09-hist { position: absolute; left: 5.5cqw; top: 35.4cqw; font: 400 1.35cqw/1.65 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f09-hist b { font-weight: 400; color: var(--cream); }
+        #f09-prompt { position: absolute; left: 5.5cqw; top: 44.4cqw; font: 500 2.9cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
         #f09-prompt .f09-cmd { color: var(--cream); }
         #f09-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
       </style>
       <div id="root" data-composition-id="09-stop" data-width="1920" data-height="1080" data-duration="1.473">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f09-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
-        </div>
-        <div class="hr-layer" data-depth="0.9">
-          <div id="f09-line">
-            <div><span class="f09-w">stop,</span> <span class="f09-w">one</span> <span class="f09-w">beat</span></div>
-            <div><span class="f09-w">and</span> <span class="f09-w">you're</span> <span class="f09-w f09-hero hr-glow">gone</span></div>
+        <div id="f09-cam">
+          <div id="f09-in">
+            <div class="hr-layer" data-depth="0.15">
+              <div id="f09-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+            </div>
+            <div class="hr-layer" data-depth="0.5" data-layout-ignore>
+              <div id="f09-lglow"></div>
+            </div>
+            <div class="hr-layer" id="f09-pl" data-depth="0.6">
+              <div id="f09-band" data-layout-ignore><i id="f09-tick"></i></div>
+              <div id="f09-cglow" data-layout-ignore></div>
+              <div id="f09-hist"><div>~/us ((3f2a1c9...)) $ <b>git switch main</b></div><div>Previous HEAD position was 3f2a1c9 you and me</div><div>Switched to branch 'main'</div></div>
+              <div id="f09-prompt"><span>~/us (main) $ </span><span class="f09-cmd" id="f09-cmd"></span><span id="f09-cursor"></span></div>
+            </div>
+            <div class="hr-layer" id="f09-ll" data-depth="0.9">
+              <div id="f09-line">
+                <div><span id="f09-stopg" class="hr-glowbox"><span id="f09-stop" data-hf-motion-blur='{"fps": 60}'>stop,</span></span> <span class="f09-w">one</span> <span class="f09-w">beat</span></div>
+                <div><span class="f09-w">and</span> <span class="f09-w">you're</span> <span class="f09-w f09-hero hr-glow" id="f09-gone">gone</span></div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="hr-layer" data-depth="0.6">
-          <div id="f09-prompt"><span>~/us (main) $ </span><span class="f09-cmd" id="f09-cmd"></span><span id="f09-cursor"></span></div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
-          const DUR = 1.473, T0 = 51.907;
+          const DUR = 1.473, T0 = 51.907, PX = 19.2; // px per cqw at 1920 wide
           const root = document.querySelector('[data-composition-id="09-stop"]');
           const $ = (id) => root.querySelector("#" + id);
           const stage = HR.stage(root, { seed: 9 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
+          const STOP = at(51.967), ONE = at(52.376), GONE = at(53.06);
+          const BLINK_OFF = at(53.17), BLINK_ON = at(53.27); // the cursor blinks once in the silent beat
+          const cam = $("f09-cam"), cin = $("f09-in");
 
-          // the sung line: "stop," hits with no anticipation (a stop is a stop); the rest builds; "gone" is the hero
+          // ---- the cut in: 08's `pushIn` carries through and brakes dead as "stop," lands. Written here rather than as
+          //      WOW.transition's pushIn (0.46 s, blurred), which would cover "stop," (it starts 60 ms in); the out is a cut ----
+          tl.fromTo(cin, { scale: 1.12 }, { scale: 1, duration: 0.16, ease: "power3.out" }, 0);
+
+          // ---- "stop," falls onto the line in the accent: a motion-blurred 42 ms approach, landing sharp ON its start ----
+          const stop = $("f09-stop");
+          tl.set(stop, { opacity: 0, scale: 1 }, 0);
+          // (opacity as its own set: a fromTo's from-only property is skipped by the render's seeks). It lands dead, with
+          // no settle, so the blur's copies exist only around the fall and the word is sharp from ~0.1 s on.
+          const LAND = STOP + 0.004, FALL = STOP - 0.038;
+          tl.set(stop, { opacity: 1 }, FALL);
+          tl.fromTo(stop, { scale: 2.1, y: -24 }, { scale: 1, y: 0, duration: LAND - FALL, ease: "power3.in", immediateRender: false }, FALL);
+          WOW.shake(tl, cam, LAND, { amp: 8, dur: 0.28, rot: 0.3, seed: 9 });
+          WOW.punch(tl, cam, LAND, { s: 1.03, dur: 0.3 });
+          // the accent hands over to "gone"
+          tl.fromTo(stop, { color: "#E85D26" }, { color: "#F0ECE5", duration: 0.18, ease: "power2.out", immediateRender: false }, GONE);
+
+          // ---- the rest of the line builds; "gone" is the hero ----
           const w = root.querySelectorAll(".f09-w");
-          tl.set(w[0], { opacity: 0 }, 0).set(w[0], { opacity: 1 }, at(51.967));
-          tl.fromTo(w[0], { scale: 1.12, transformOrigin: "0% 80%" }, { scale: 1, duration: 0.3, ease: "expo.out", immediateRender: false }, at(51.967));
-          HR.lead(tl, w[1], at(52.376)); HR.lead(tl, w[2], at(52.56)); HR.lead(tl, w[3], at(52.76)); HR.lead(tl, w[4], at(52.885));
-          HR.hero(tl, w[5], at(53.06), { spread: 20, over: 1.16, pre: 0.12, sharp: true });
+          HR.lead(tl, w[0], ONE); HR.lead(tl, w[1], at(52.56)); HR.lead(tl, w[2], at(52.76)); HR.lead(tl, w[3], at(52.885));
+          HR.hero(tl, w[4], GONE, { spread: 20, over: 1.16, pre: 0.12, sharp: true });
 
-          // the command types across the line; done by "gone", then nothing but the cursor until the Enter (the cut)
+          // ---- the command types across the line; done by "gone", then only the cursor until the Enter (the cut) ----
           const CMD = "git push --force origin main", T_A = at(51.98), T_B = at(53.0);
           const states = [[0, ""]];
           for (let i = 0; i < CMD.length; i++) states.push([T_A + ((T_B - T_A) * i) / CMD.length, CMD.slice(0, i + 1)]);
-          // the camera leans in while the line builds and stops dead on "gone"
-          tl.fromTo(stage.cam, { z: 1.0 }, { z: 1.035, duration: at(53.06), ease: "power1.in" }, 0);
+
+          // ---- the camera: still through "stop,", then a hard lean in (accelerating) from "one", stopping dead on "gone" ----
+          tl.fromTo(stage.cam, { z: 1.0 }, { z: 1.145, duration: GONE - ONE, ease: "power2.in" }, ONE);
           tl.set({}, {}, DUR);
 
-          const cmd = $("f09-cmd"), cur = $("f09-cursor"), GONE = at(53.06);
+          const stopg = $("f09-stopg"), cmd = $("f09-cmd"), cur = $("f09-cursor"), cglow = $("f09-cglow"), lglow = $("f09-lglow"), gone = $("f09-gone");
           function render() {
-            const t = tl.time();
+            const t = tl.time(), T = T0 + t;
             let s = states[0]; for (const st of states) if (st[0] <= t) s = st;
             cmd.textContent = s[1];
-            cur.style.opacity = t - s[0] < 0.35 || Math.floor((t - s[0]) * 2.2) % 2 === 0 ? 1 : 0;
-            HR.glow(root.querySelector(".f09-hero"), T0 + t);
+            const on = !(t >= BLINK_OFF && t < BLINK_ON);
+            cur.style.opacity = on ? 1 : 0;
+            // the cursor's light follows it; in the silent beat it swells to its peak on the cut
+            const hold = Math.max(0, Math.min(1, (t - GONE) / (DUR - GONE))), swell = hold * hold;
+            // (computed, not measured: Plex Mono advances 0.6em; the prompt is 2.9cqw at (5.5cqw, 44.4cqw); 14 prompt chars)
+            cglow.style.left = (PX * (5.5 + 2.9 * (0.6 * (14 + s[1].length) + 0.12 + 0.31))).toFixed(1) + "px";
+            cglow.style.top = (PX * (44.4 + 2.9 * 0.42)).toFixed(1) + "px";
+            cglow.style.opacity = ((0.62 + 0.38 * swell) * (on ? 1 : 0.3)).toFixed(3);
+            cglow.style.scale = (1 + 0.7 * swell).toFixed(3);
+            // the light under the line comes on with "stop," and breathes with the voice
+            const lit = t < STOP ? 0.35 : Math.min(1, 0.55 + 0.6 * HR.band("vocal", T));
+            lglow.style.opacity = lit.toFixed(3);
+            gone.style.setProperty("--hr-glow", (0.5 + 0.7 * swell).toFixed(3));
+            // (the glow sits on a still wrapper: the blur's copies are cloned once and would carry a stale halo)
+            stopg.style.setProperty("--hr-glow", t < LAND ? "0" : t < GONE ? (0.45 + 0.35 * HR.band("vocal", T)).toFixed(3) : "0");
             // the silent beat: no drift, no pulse after "gone"
-            stage.apply(t < GONE ? T0 + t : T0 + GONE);
+            stage.apply(t < GONE ? T : T0 + GONE);
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();

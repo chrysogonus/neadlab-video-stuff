@@ -2,11 +2,18 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 4 — feature (verse 1, L5, 23.696–27.570). The lyric becomes a branch name. "said it's just a" leads in while, on the ex's machine (`you@laptop`),
-         `git switch -c ` types; "feature," slams on 25.183 and the prompt starts typing its argument in kebab-case as she
-         sings it (`feature/nothing-on-the-side`), while the big line still shows the sung text. On "side" (26.744) the
-         big line conforms: the comma snaps to `/`, the spaces to `-`. The Enter is the 27.14 kick: git switches the ex to the new
-         branch (the strip stays the singer's view, `main`). Plant 1 (paid off in 05 and 26). Hard cut into 05. -->
+    <!-- Frame 4 — feature (verse 1, L5, 23.696–27.570). Refinement round 2 (REFINE-2.md): cut onto content. The lyric
+         becomes a branch name, on the ex's machine. The cut glides left out of 03 onto the ex's terminal window
+         (`you@laptop`), framed tight and lit: its history (`git branch` → `* main`) and `git switch -c ` already typing
+         at the prompt, with "said it's just a" building under it at the lead size. The camera drifts in on the window
+         through the lead-in, then pulls out wide into "feature," (25.183), which slams at display scale (band scale
+         2.15) along the bottom as the prompt types `feature/`; the band pulls out one step per sung word ("nothing",
+         "on", "side"), so the sung words line up along the bottom and the name grows to run the full width. On "side"
+         (26.744) the line conforms to kebab-case (`,` → `/`, spaces → `-`) and the fire lane under it reaches the right
+         edge: `feature/nothing-on-the-side`, full-bleed, plant 1. Enter on the 27.14 kick: git answers whole. The cut
+         drops (`drop`, 0.40 s) into 05, where the name lands as the hidden curve's label (full width, baseline 1002 px).
+         The `in` glide moves only the window, light and strip: the lyric layer is never blurred ("said" starts at
+         0.06 s). -->
   </head>
   <body>
     <template>
@@ -22,47 +29,68 @@
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
+        #f04-cam, #f04-in { position: absolute; inset: 0; transform-origin: 50% 50%; }
         #f04-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f04-strip b { color: var(--fire); font-weight: 600; }
-        /* the sung line: a lead-in, then the branch name as the display block */
-        #f04-lead { position: absolute; left: 5.3cqw; top: 8.6cqw; font: 800 5.2cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em;
+        /* the light: a soft accent glow behind the branch name, breathing with the bass (placed in render) */
+        #f04-glow { position: absolute; left: 0; top: 0; width: 150cqw; height: 80cqw; margin: -40cqw 0 0 -75cqw;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.16) 0%, rgba(232, 93, 38, 0.115) 36%, rgba(232, 93, 38, 0.05) 68%, rgba(232, 93, 38, 0) 100%); }
+        /* the ex's machine: a terminal window across the top, lit from inside */
+        #f04-win { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 7.2cqw; height: 18.6cqw; background: var(--ink-alt);
+          border: 1px solid var(--border); box-shadow: 0 0 6cqw rgba(232, 93, 38, 0.07); }
+        #f04-title { position: absolute; left: 0; right: 0; top: 0; height: 2.3cqw; border-bottom: 1px solid var(--border);
+          font: 500 0.9cqw/2.3cqw "IBM Plex Mono", monospace; letter-spacing: 0.08em; color: var(--cream-muted); padding-left: 1.4cqw; }
+        #f04-title::before { content: ""; display: inline-block; width: 0.55cqw; height: 0.55cqw; margin-right: 0.8cqw; background: var(--fire); vertical-align: 0.05cqw; }
+        #f04-body { position: absolute; left: 1.4cqw; top: 3.2cqw; font: 400 1.8cqw/1.58 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f04-body .f04-cmd { color: var(--cream); }
+        #f04-body .f04-you { color: var(--fire); font-weight: 500; }
+        #f04-body b { color: var(--cream); font-weight: 500; }
+        .f04-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.2em; }
+        /* the sung line: the lead-in above, the branch name as the band along the bottom (both placed in render) */
+        #f04-lead { position: absolute; left: 5.4cqw; top: 0; font: 800 5.4cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em;
           color: var(--cream); white-space: nowrap; }
-        #f04-name { position: absolute; left: 4.6cqw; top: 14.4cqw; font-family: "Barlow", sans-serif; font-weight: 900; color: var(--cream); }
-        #f04-name > div { white-space: pre; width: max-content; }
-        #f04-r1 { font-size: 17cqw; line-height: 0.86; letter-spacing: -0.045em; }
-        #f04-r2 { font-size: 8.7cqw; line-height: 1; letter-spacing: -0.04em; margin-left: 0.25cqw; }
-        #f04-name .f04-hero { color: var(--fire); }
-        .f04-sep { display: inline-block; color: var(--fire); transform-origin: 50% 60%; margin: 0 0.035em; }
-        /* the terminal at the foot: the command, then git's answer on the Enter */
-        .f04-prompt { position: absolute; left: 5.5cqw; font: 500 1.9cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
-        .f04-prompt .f04-cmd { color: var(--cream); }
-        .f04-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.16em; }
-        #f04-p1 { top: 42.6cqw; }
-        #f04-out { position: absolute; left: 5.5cqw; top: 46.2cqw; font: 400 1.35cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
-        #f04-out b { color: var(--cream); font-weight: 500; }
-        #f04-p2 { top: 49.2cqw; }
+        #f04-band { position: absolute; left: 5.5cqw; top: 0; font-family: "Barlow", sans-serif; font-weight: 900; font-size: 6.9cqw;
+          line-height: 0.9; letter-spacing: -0.04em; color: var(--cream); white-space: pre; width: max-content; transform-origin: 0 100%; }
+        #f04-band .f04-hero { color: var(--fire); }
+        .f04-sep { display: inline-block; color: var(--fire); transform-origin: 50% 60%; }
+        /* the lead line's cursor: it follows the words as they are said, until "feature," takes over the band */
+        #f04-lcur { position: absolute; left: 0; top: 0.16em; width: 0.42em; height: 0.7em; background: var(--fire); }
+        #f04-dcur { position: absolute; left: 0; top: 0.12em; width: 0.42em; height: 0.66em; background: var(--fire); }
+        #f04-lane { position: absolute; left: 5.5cqw; top: 0; width: 89cqw; height: 0.3cqw; background: var(--fire); transform-origin: 0 50%; }
       </style>
       <div id="root" data-composition-id="04-feature" data-width="1920" data-height="1080" data-duration="3.874">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f04-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
-        </div>
-        <div class="hr-layer" data-depth="0.9">
-          <div id="f04-lead"><span class="f04-w">said</span> <span class="f04-w">it's</span> <span class="f04-w">just</span> <span class="f04-w">a</span></div>
-          <div id="f04-name">
-            <div id="f04-r1"><span class="f04-w f04-hero hr-glow" id="f04-feature">feature</span><span class="f04-sep" id="f04-s0" data-layout-allow-overlap>,</span></div>
-            <div id="f04-r2"><span class="f04-w">nothing</span><span class="f04-sep"> </span><span class="f04-w">on</span><span class="f04-sep"> </span><span class="f04-w">the</span><span class="f04-sep"> </span><span class="f04-w f04-hero hr-glow" id="f04-side">side</span></div>
+        <div id="f04-cam">
+          <div id="f04-in">
+            <div class="hr-layer" data-depth="0.6">
+              <div id="f04-glow" data-layout-ignore></div>
+            </div>
+            <div class="hr-layer" data-depth="0.15">
+              <div id="f04-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+            </div>
+            <div class="hr-layer" data-depth="0.85">
+              <div id="f04-win">
+                <div id="f04-title">you@laptop: ~/us</div>
+                <div id="f04-body"><span><span class="f04-you">you</span>@laptop ~/us (main) $ <span class="f04-cmd">git branch</span></span>
+<span class="f04-cmd">* main</span>
+<span><span class="f04-you">you</span>@laptop ~/us (main) $ </span><span class="f04-cmd" id="f04-cmd"></span><span class="f04-cursor" id="f04-cur1"></span>
+<span id="f04-out">Switched to a new branch '<b>feature/nothing-on-the-side</b>'</span>
+<span id="f04-p2"><span class="f04-you">you</span>@laptop ~/us (feature/nothing-on-the-side) $ <span class="f04-cursor" id="f04-cur2"></span></span></div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="hr-layer" data-depth="0.6">
-          <div class="f04-prompt" id="f04-p1"><span>you@laptop ~/us (main) $ </span><span class="f04-cmd" id="f04-cmd"></span><span class="f04-cursor" id="f04-cur1"></span></div>
-          <div id="f04-out">Switched to a new branch '<b>feature/nothing-on-the-side</b>'</div>
-          <div class="f04-prompt" id="f04-p2"><span>you@laptop ~/us (feature/nothing-on-the-side) $ </span><span class="f04-cursor" id="f04-cur2"></span></div>
+          <div class="hr-layer" data-depth="0.85" id="f04-lyr">
+            <div id="f04-lane" data-layout-ignore></div>
+            <div id="f04-lead"><span class="f04-lw">said</span> <span class="f04-lw">it's</span> <span class="f04-lw">just</span> <span class="f04-lw">a</span><span id="f04-lcur" data-layout-allow-overlap></span></div>
+            <div id="f04-band"><span class="f04-bw f04-hero hr-glowbox" id="f04-feature" data-hf-motion-blur='{"fps": 60}'>feature</span><span class="f04-sep" id="f04-s0" data-layout-allow-overlap>,</span><span class="f04-sep"> </span><span class="f04-bw">nothing</span><span class="f04-sep"> </span><span class="f04-bw">on</span><span class="f04-sep"> </span><span class="f04-bw">the</span><span class="f04-sep"> </span><span class="f04-bw f04-hero hr-glowbox" id="f04-side">side</span><span id="f04-dcur" data-layout-allow-overlap></span></div>
+          </div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
           const DUR = 3.874, T0 = 23.696;
@@ -71,50 +99,111 @@
           const stage = HR.stage(root, { seed: 4 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
-          const FEATURE = at(25.183), SIDE = at(26.744), ENTER = at(27.14); // the Enter is the kick after "side"
+          const PX = 19.2; // px per cqw
+          const FEATURE = at(25.183), NOTHING = at(25.74), ON = at(26.36), THE = at(26.64), SIDE = at(26.744);
+          const ENTER = at(27.14); // the kick after "side"
+          const OUT = 0.4; // the drop into 05 (table); "side" is 0.43 s old when it starts
+          const IN = 0.42; // the glideL from 03, on the window, light and strip only
+          const PULL_A = FEATURE - 0.36, PULL_B = FEATURE - 0.02; // the pull-out from the window into "feature,"
+          const LEAD_TIGHT = 27.4 * PX; // the lead words' top while the camera is tight: just under the window
+          const S0 = 2.15; // the band's scale while it holds "feature," alone: display size
+          const BOTTOM = 52.2 * PX; // the band's glyph box sits on this line (px from the top)
+
+          // ---- the cut in: 03's glideL carries on, offset + cover scale as WOW's glideL; the lyric layer stays put ----
+          const win = $("f04-in");
+          tl.fromTo(win, { x: 140, scale: 1 + (140 / 960) * 1.04, filter: "blur(8px)" },
+            { x: 0, scale: 1, filter: "blur(0px)", duration: IN, ease: "power2.out" }, 0);
 
           // ---- the sung line, every word on its start ----
-          const w = root.querySelectorAll(".f04-w");
-          HR.lead(tl, w[0], at(23.756)); HR.lead(tl, w[1], at(24.2)); HR.lead(tl, w[2], at(24.3)); HR.lead(tl, w[3], at(24.863));
-          HR.hero(tl, w[4], FEATURE, { spread: 30, over: 1.2, pre: 0.08, sharp: true });
-          HR.lead(tl, w[5], at(25.74)); HR.lead(tl, w[6], at(26.36)); HR.lead(tl, w[7], at(26.64));
-          HR.hero(tl, w[8], SIDE, { spread: 18, over: 1.24, pre: 0.05, sharp: true });
+          const lw = root.querySelectorAll(".f04-lw"), bw = root.querySelectorAll(".f04-bw");
+          HR.lead(tl, lw[0], at(23.756)); HR.lead(tl, lw[1], at(24.2)); HR.lead(tl, lw[2], at(24.3)); HR.lead(tl, lw[3], at(24.863));
+          HR.hero(tl, bw[0], FEATURE, { spread: 40, over: 1.24, pre: 0.1, sharp: true });
+          HR.lead(tl, bw[1], NOTHING); HR.lead(tl, bw[2], ON); HR.lead(tl, bw[3], THE);
+          HR.hero(tl, bw[4], SIDE, { spread: 14, over: 1.1, pre: 0.05, sharp: true }); // a small overshoot: the name already spans the frame
           // the comma belongs to "feature,": it lands with the word
           tl.set($("f04-s0"), { opacity: 0 }, 0).set($("f04-s0"), { opacity: 1 }, FEATURE);
           // on "side" the separators snap to kebab-case (text swap in render); a pop points at each
           const seps = root.querySelectorAll(".f04-sep");
           tl.fromTo(seps, { scale: 1.9, y: -6 }, { scale: 1, y: 0, duration: 0.32, ease: "expo.out", stagger: 0.025, immediateRender: false }, SIDE);
 
+          // ---- the band pulls out one step per sung word, each step settling as its word lands (scales set in measure) ----
+          const band = { s: S0 };
+          const steps = []; // [from t, to t] per step; the target scales are filled in once measured
           // ---- the prompt: the command types under the lead-in, its argument in kebab-case as she sings it ----
           const keys = [[0, ""]];
           const type = (t0, t1, text) => {
             const base = keys[keys.length - 1][1];
             for (let i = 0; i < text.length; i++) keys.push([t0 + ((t1 - t0) * i) / text.length, base + text.slice(0, i + 1)]);
           };
-          type(at(23.8), at(24.5), "git switch -c ");
+          type(at(23.42), at(24.5), "git switch -c "); // already typing at the cut
           type(FEATURE, at(25.6), "feature/");
-          type(at(25.74), at(26.22), "nothing-");
-          type(at(26.36), at(26.5), "on-");
-          type(at(26.64), at(26.74), "the-");
+          type(NOTHING, at(26.22), "nothing-");
+          type(ON, at(26.5), "on-");
+          type(THE, SIDE, "the-");
           type(at(26.76), at(26.98), "side");
 
-          // ---- the Enter: git answers whole, the new prompt, the strip's branch ----
+          // ---- the Enter: git answers whole, the new prompt ----
           tl.set([$("f04-out"), $("f04-p2")], { opacity: 0 }, 0).set([$("f04-out"), $("f04-p2")], { opacity: 1 }, ENTER);
 
-          // ---- the camera: a slow push carries the line; a punch on "feature"; the fill leans into "side" ----
-          tl.fromTo(stage.cam, { z: 1.0, x: 0 }, { z: 1.012, x: 6, duration: FEATURE - 0.06, ease: "none" }, 0);
-          tl.to(stage.cam, { z: 1.045, y: -6, duration: 0.06, ease: "power2.in" }, FEATURE - 0.06);
-          tl.to(stage.cam, { z: 1.016, y: 0, duration: 0.55, ease: "elastic.out(1, 0.55)" }, FEATURE);
-          tl.to(stage.cam, { z: 1.03, x: 14, duration: SIDE - 0.06 - at(25.96), ease: "power1.in" }, at(25.96));
-          tl.to(stage.cam, { z: 1.06, y: -8, duration: 0.06, ease: "power2.in" }, SIDE - 0.06);
-          tl.to(stage.cam, { z: 1.03, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, SIDE);
-          tl.to(stage.cam, { z: 1.038, x: 20, duration: DUR - SIDE - 0.5, ease: "none" }, SIDE + 0.5);
+          // ---- the camera: tight on the window and the lead words, drifting in; the big pull-out lands wide ON "feature,"
+          // as it slams along the bottom; a settle back to the frame 05 picks up from; a punch on "side" ----
+          // (world px; layer scale = 1 + (z − 1) · 0.85: z 1.86 → 1.94 frames the window and the lead words at 1.73–1.8×,
+          // the frame's left edge at world x 60; at most 1.8× so the layer still holds 30 % of itself in frame)
+          const cam = $("f04-cam");
+          tl.fromTo(stage.cam, { z: 1.86, x: -702, y: -317 }, { z: 1.94, x: -776, y: -330, duration: PULL_A, ease: "sine.inOut" }, 0);
+          tl.to(stage.cam, { z: 0.98, x: 0, y: 14, duration: PULL_B - PULL_A, ease: "power3.inOut" }, PULL_A);
+          tl.to(stage.cam, { z: 1.0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.55)" }, FEATURE - 0.02);
+          WOW.punch(tl, cam, at(23.896), { s: 1.02, dur: 0.3 }); // the kick under "said"
+          tl.to(stage.cam, { z: 1.012, x: 6, duration: DUR - SIDE, ease: "sine.out" }, SIDE);
+          WOW.punch(tl, cam, at(25.289), { s: 1.04, dur: 0.4 }); // the kick under "feature," (the pull-out lands on the word)
+          WOW.punch(tl, cam, at(26.215), { s: 1.025, dur: 0.3 }); // the downbeat between "nothing" and "on"
+          WOW.punch(tl, cam, SIDE, { s: 1.03, dur: 0.42 });
+          WOW.punch(tl, cam, ENTER, { s: 1.015, dur: 0.2 });
+          WOW.transition(tl, cam, { out: "drop", dur: OUT, total: DUR });
           tl.set({}, {}, DUR);
 
-          // ---- per-frame state: typing, cursors, the kebab swap, the glow, the camera ----
+          // ---- layout, measured once the fonts are in: fit the kebab name to the full width, then the word ends ----
+          const bandEl = $("f04-band"), lead = $("f04-lead"), lane = $("f04-lane"), dcur = $("f04-dcur"), glow = $("f04-glow");
+          // kebab: the comma becomes `/`, the space after it closes up, the other spaces become `-`
+          const setSeps = (kebab) => seps.forEach((s, i) => { s.textContent = kebab ? (i === 0 ? "/" : i === 1 ? "" : "-") : i === 0 ? "," : " "; });
+          const WIDE = 89 * PX;
+          let M = null;
+          function measure() {
+            setSeps(true);
+            bandEl.style.fontSize = "6.9cqw";
+            const fs = (6.9 * PX * WIDE) / bandEl.offsetWidth;
+            bandEl.style.fontSize = fs.toFixed(3) + "px";
+            setSeps(false);
+            const ends = [bandEl.querySelector("#f04-s0").offsetLeft + bandEl.querySelector("#f04-s0").offsetWidth]
+              .concat([...bw].slice(1).map((e) => e.offsetLeft + e.offsetWidth));
+            const starts = [...bw].map((e) => e.offsetLeft);
+            M = { fs, ends, starts, h: bandEl.offsetHeight, lh: lead.offsetHeight, lends: [...lw].map((e) => e.offsetLeft + e.offsetWidth) };
+            // each step's target: the prefix through the word about to land fits the width
+            steps.length = 0;
+            steps.push([FEATURE + 0.24, NOTHING - 0.03, S0, Math.min(S0, WIDE / ends[1])]);
+            steps.push([NOTHING + 0.12, ON - 0.03, steps[0][3], Math.min(S0, WIDE / ends[2])]);
+            steps.push([ON + 0.1, SIDE - 0.02, steps[1][3], 1.0]);
+          }
+          const sAt = (t) => {
+            if (!steps.length) return 1;
+            if (t < steps[0][0]) return S0;
+            let s = steps[0][2];
+            for (const [a, b, s0, s1] of steps) {
+              if (t >= b) s = s1;
+              else if (t > a) { const u = (t - a) / (b - a), e = u < 0.5 ? 2 * u * u : 1 - 2 * (1 - u) * (1 - u); s = s0 + (s1 - s0) * e; break; }
+              else break;
+            }
+            return s;
+          };
+          if (document.fonts.check('900 100px "Barlow"') && document.fonts.check('800 100px "Barlow"')) measure();
+          Promise.all([document.fonts.load('900 100px "Barlow"'), document.fonts.load('800 100px "Barlow"')]).then(() => { measure(); render(); });
+
+          // ---- per-frame state: typing, cursors, the kebab swap, the band, the lane, the light, the camera ----
           const cmd = $("f04-cmd"), cur1 = $("f04-cur1"), cur2 = $("f04-cur2");
           const feat = $("f04-feature"), side = $("f04-side");
           const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
+          const LANDS = [FEATURE, NOTHING, ON, THE, SIDE];
+          const LEAD_T = [at(23.756), at(24.2), at(24.3), at(24.863)], lcur = $("f04-lcur");
           function render() {
             const t = tl.time(), T = T0 + t;
             let k = keys[0]; for (const s of keys) if (s[0] <= t) k = s;
@@ -122,9 +211,41 @@
             cur1.style.opacity = t < ENTER && blink(t, k[0]) ? 1 : 0;
             cur2.style.opacity = t >= ENTER && blink(t, ENTER) ? 1 : 0;
             const kebab = t >= SIDE;
-            seps.forEach((s, i) => { s.textContent = kebab ? (i === 0 ? "/" : "-") : i === 0 ? "," : " "; });
+            setSeps(kebab);
+            if (M) {
+              const s = sAt(t), top = BOTTOM - M.h;
+              bandEl.style.top = top.toFixed(2) + "px";
+              bandEl.style.scale = s.toFixed(4);
+              // the lead sits just above the band's scaled glyph box
+              // (while the camera is tight it sits just under the window, and moves into place during the pull-out)
+              const leadTop = BOTTOM - M.h * s - M.lh - 0.9 * PX, lu = Math.max(0, Math.min(1, (t - PULL_A) / (PULL_B - PULL_A)));
+              const le = lu < 0.5 ? 4 * lu * lu * lu : 1 - Math.pow(-2 * lu + 2, 3) / 2;
+              lead.style.top = (LEAD_TIGHT + (leadTop - LEAD_TIGHT) * le).toFixed(2) + "px";
+              // the display cursor waits where the next word is filed, until the name is complete
+              let n = 0; for (const a of LANDS) if (t >= a) n++;
+              const since = n ? LANDS[n - 1] : 0, nextAt = n < LANDS.length ? LANDS[n] : 1e9;
+              const cx = n === 0 ? 0 : M.ends[n - 1] + 0.12 * M.fs;
+              dcur.style.left = cx.toFixed(2) + "px";
+              // the lead cursor sits after the last lead word landed (solid as each lands, then blinking) until "feature,"
+              let m = 0; for (const a of LEAD_T) if (t >= a) m++;
+              const lsince = m ? LEAD_T[m - 1] : 0;
+              lcur.style.left = ((m ? M.lends[m - 1] : 0) + 0.12 * 5.4 * PX).toFixed(2) + "px";
+              lcur.style.opacity = m > 0 && t < FEATURE - 0.1 && (t - lsince < 0.3 || blink(t, lsince + 0.3)) ? 1 : 0;
+              dcur.style.opacity = n > 0 && n < 5 && t < nextAt - 0.05 && t > since + 0.12 && blink(t, since + 0.12) ? 1 : 0;
+              // the lane under the name: it runs to the last landed word, and to the full width on "side"
+              const reach = n === 0 ? 0 : kebab ? WIDE : M.ends[n - 1] * s;
+              lane.style.top = (BOTTOM + 0.7 * PX).toFixed(2) + "px";
+              const lp = n === 0 ? 0 : Math.min(1, (t - since) / 0.22), prev = n <= 1 ? 0 : (n === 5 ? M.ends[3] * s : M.ends[n - 2] * s);
+              const wNow = prev + (reach - prev) * (1 - Math.pow(1 - lp, 3));
+              lane.style.transform = `scaleX(${Math.max(0, wNow / WIDE).toFixed(4)})`;
+              // the light follows the band's centre
+              const gx = 5.5 * PX + (Math.min(WIDE, (n ? M.ends[n - 1] : 0.5 * M.fs) * s)) / 2, gy = BOTTOM - (M.h * s) / 2;
+              glow.style.left = gx.toFixed(1) + "px"; glow.style.top = gy.toFixed(1) + "px";
+            }
+            glow.style.opacity = Math.min(1, 0.7 + 0.9 * HR.band("bass", T) + 0.25 * HR.hit("kick", T, 0.22)).toFixed(3);
             HR.glow(feat, T, 0.3, 0.45); HR.glow(side, T, 0.3, 0.45);
             stage.apply(T);
+            WOW.draw(tl, T0);
           }
           tl.eventCallback("onUpdate", render);
           render();

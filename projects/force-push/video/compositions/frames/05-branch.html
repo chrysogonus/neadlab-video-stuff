@@ -2,15 +2,19 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Frame 5 — branch (verse 1, L6, 27.570–31.139). The singer finds the ex's branch from 04.
-         On the singer's machine `git branch -a` types under "then i found"; its list arrives whole on the kicks. The
-         log graph fills the frame: "then i found the other" sits on `main`; from "other" a second lane, drawn behind
-         `main` and dim, peels off from three years back, and the rest of the line rides its curve: "branch" swoops
-         down the bend (hero, 28.98), "you tried to" follows the pen along the lane, "hide" lands at its head
-         (hero, 30.805, in the drums' silence). On "hide" the lane lights and its placeholder note
-         `(hidden: 1 branch)` swaps to the name, `remotes/you/feature/nothing-on-the-side` (plant 1). Hard cut into 06.
+    <!-- Frame 5 — branch (verse 1, L6, 27.570–31.139). Refinement round 1. The singer finds the ex's branch from 04.
+         The cut drops in from 04 (`drop`, 0.40 s): the world falls in from above, and 04's branch name
+         `feature/nothing-on-the-side` leads the fall on its own (speed-blurred) and lands exactly where 04 held it, full
+         width along the bottom with its fire underline: it becomes the label of the hidden lane. The lyric layer is not
+         in the drop ("then" starts 0.03 s in). The camera pushes in on the singer's terminal and `main`, where "then i
+         found the other" builds while `git branch -a` types (top left), and trucks left to right along `main`. From
+         "other" the hidden lane peels off `main` three years back; on "branch" (28.98, the kick that prints
+         `remotes/you/feature/nothing-on-the-side`) the camera dives down the curve as the hero slams on the bend and the
+         label gains its `remotes/you/` prefix. "you tried to" rides the lane while the camera drifts along it; it pulls
+         out wide into "hide" (30.805, in the drums' silence): the curve lights in fire end to end, the name flares.
+         Out: `glideUp` (0.42 s) into 06; the lyric keeps out of its blur ("hide" is 0.33 s old when it starts).
          The path text: each glyph sits in a wrapper placed on the lane (arclength + tangent, measured after the fonts in
-         render()); the kit animates the glyph inside it. -->
+         render()); the kit animates the glyph inside it. World px throughout: the camera maps world → screen. -->
   </head>
   <body>
     <template>
@@ -26,75 +30,106 @@
           --cream-muted: #888880; --cream-hint: #505048; --border: #282826;
           background: var(--ink); color: var(--cream);
         }
+        #f05-tx { position: absolute; inset: 0; transform-origin: 50% 50%; }
+        #f05-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+        #f05-drop, #f05-namew, #f05-lyr, #f05-hud { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        /* below the strip: what the camera moves above its line is clipped there (from the landing on) */
+        #f05-clip { position: absolute; inset: 0; }
         #f05-strip { position: absolute; left: 5.5cqw; right: 5.5cqw; top: 3.4cqw; display: flex; justify-content: space-between;
           font: 500 0.78cqw/1.5 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-muted);
           padding-bottom: 0.6cqw; border-bottom: 1px solid var(--border); }
         #f05-strip b { color: var(--fire); font-weight: 600; }
-        /* the singer's terminal, top right: the command and its list */
-        #f05-term { position: absolute; left: 62cqw; top: 7cqw; font: 400 1.3cqw/1.65 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
-        #f05-term .f05-ps { color: var(--cream-muted); }
-        #f05-term .f05-cmd { color: var(--cream); }
-        #f05-term .f05-cur { color: var(--cream); font-weight: 500; }
-        #f05-term .f05-found { color: var(--cream); }
+        /* the light: a soft accent glow on the scene's object (name → main → the bend → the lane), breathing with the bass */
+        #f05-glow { position: absolute; left: 0; top: 0; width: 2880px; height: 1536px; margin: -768px 0 0 -1440px;
+          background: radial-gradient(closest-side, rgba(232, 93, 38, 0.17) 0%, rgba(232, 93, 38, 0.12) 36%, rgba(232, 93, 38, 0.055) 68%, rgba(232, 93, 38, 0) 100%); }
+        /* the singer's terminal, top left, lit from inside */
+        #f05-term { position: absolute; left: 105px; top: 124px; padding: 14px 24px; background: var(--ink-alt); border: 1px solid var(--border);
+          box-shadow: 0 0 120px rgba(232, 93, 38, 0.08); font: 400 26px/1.5 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f05-term .f05-cmd, #f05-term .f05-cur { color: var(--cream); }
+        #f05-term .f05-cur { font-weight: 500; }
+        #f05-term .f05-found { color: var(--cream); font-weight: 500; }
+        #f05-term .f05-you { color: var(--fire); }
         .f05-cursor { display: inline-block; width: 0.62em; height: 1.1em; margin-left: 0.12em; background: var(--fire); vertical-align: -0.2em; }
-        /* the graph: lane labels */
-        .f05-label { position: absolute; font: 500 1.15cqw/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
-        #f05-head { right: 7.3cqw; top: 24.2cqw; }
-        #f05-tip { right: 7.3cqw; top: 46.6cqw; font-size: 1.45cqw; color: var(--cream-muted); transform-origin: 100% 50%; }
-        #f05-tip.f05-lit { color: var(--fire); font-weight: 600; }
+        #f05-head { position: absolute; right: 80px; top: 424px; font: 500 24px/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: nowrap; }
+        /* 04's branch name, landed: the hidden lane's label */
+        #f05-name { position: absolute; left: 105.6px; top: 0; font-family: "Barlow", sans-serif; font-weight: 900; font-size: 145px; line-height: 0.9;
+          letter-spacing: -0.04em; color: var(--cream); white-space: pre; width: max-content; transform-origin: 50% 100%; }
+        #f05-name .f05-f { color: var(--fire); }
+        #f05-uline { position: absolute; left: 0; top: calc(100% + 13.4px); width: 100%; height: 5.76px; background: var(--fire); }
+        #f05-tag { position: absolute; left: 105.6px; top: 852px; font: 600 30px/1 "IBM Plex Mono", monospace; color: var(--cream-muted); white-space: pre; }
+        #f05-tag .f05-you { color: var(--fire); }
         /* the sung line: row 1 on main, row 2 on the hidden lane (glyph wrappers placed in JS) */
-        #f05-row1 { position: absolute; left: 5.2cqw; top: 17.4cqw; font: 800 4.6cqw/1 "Barlow", sans-serif; letter-spacing: -0.03em; color: var(--cream); white-space: nowrap; }
+        #f05-row1 { position: absolute; left: 105px; top: 362px; font: 800 100px/1 "Barlow", sans-serif; letter-spacing: -0.03em; color: var(--cream); white-space: nowrap; }
         .f05-w2 { position: absolute; left: 0; top: 0; font-family: "Barlow", sans-serif; color: var(--cream); }
         .f05-gp { position: absolute; left: 0; top: 0; line-height: 1; white-space: pre; }
         .f05-lead .f05-gp { clip-path: inset(-0.6em -0.4em 0 -0.4em); }
-        .f05-small { font-size: 4.4cqw; font-weight: 800; letter-spacing: -0.03em; }
-        #f05-branch { font-size: 10.6cqw; font-weight: 900; letter-spacing: -0.012em; color: var(--fire); }
-        #f05-hide { font-size: 8cqw; font-weight: 900; letter-spacing: -0.04em; color: var(--fire); }
+        .f05-small { font-size: 85px; font-weight: 800; letter-spacing: -0.03em; }
+        #f05-branch { font-size: 203px; font-weight: 900; letter-spacing: -0.012em; color: var(--fire); }
+        #f05-hide { font-size: 154px; font-weight: 900; letter-spacing: -0.04em; color: var(--fire); }
       </style>
       <div id="root" data-composition-id="05-branch" data-width="1920" data-height="1080" data-duration="3.569">
-        <div class="hr-layer" data-depth="0.15">
-          <div id="f05-strip"><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
-        </div>
-
-        <div class="hr-layer" data-depth="0.45">
-          <div id="f05-term"><span class="f05-ps">~/us (main) $ </span><span class="f05-cmd" id="f05-cmd"></span><span class="f05-cursor" id="f05-cur1"></span>
+        <div id="f05-tx">
+          <div id="f05-clip">
+          <div id="f05-cam">
+            <div id="f05-drop">
+              <div id="f05-glow" data-layout-ignore></div>
+              <div id="f05-term"><span>~/us (main) $ </span><span class="f05-cmd" id="f05-cmd"></span><span class="f05-cursor" id="f05-cur1"></span>
 <span id="f05-o1"><span class="f05-cur">* main</span></span>
 <span id="f05-o2">  remotes/origin/main</span>
-<span id="f05-o3" class="f05-found">  remotes/you/feature/nothing-on-the-side</span>
-<span id="f05-p2"><span class="f05-ps">~/us (main) $ </span><span class="f05-cursor" id="f05-cur2"></span></span></div>
-        </div>
-
-        <div class="hr-layer" data-depth="0.8" id="f05-world">
-          <svg id="f05-svg" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0; overflow: visible" data-layout-ignore>
-            <!-- the hidden lane first, so main is drawn over the fork -->
-            <path id="f05-hid" d="M 40 440 C 470 440, 470 870, 960 870 H 1776" fill="none" stroke="#505048" stroke-width="4" />
-            <path id="f05-main" d="M -80 440 H 1776" fill="none" stroke="#888880" stroke-width="4" />
-            <g id="f05-medots" fill="#F0ECE5"></g>
-            <circle id="f05-fork" cx="40" cy="440" r="10" fill="#0A0A0A" stroke="#888880" stroke-width="4" />
-            <g id="f05-youdots"></g>
-          </svg>
-          <div class="f05-label" id="f05-head" data-layout-ignore>HEAD -&gt; main</div>
-          <div class="f05-label" id="f05-tip">(hidden: 1 branch)</div>
-          <div id="f05-row1"><span class="f05-w">then</span> <span class="f05-w">i</span> <span class="f05-w">found</span> <span class="f05-w">the</span> <span class="f05-w">other</span></div>
-          <span class="f05-w2 hr-glow" id="f05-branch">branch</span>
-          <span class="f05-w2 f05-lead f05-small">you</span>
-          <span class="f05-w2 f05-lead f05-small">tried</span>
-          <span class="f05-w2 f05-lead f05-small">to</span>
-          <span class="f05-w2 hr-glow" id="f05-hide">hide</span>
+<span id="f05-o3" class="f05-found">  remotes/<span class="f05-you">you</span>/feature/nothing-on-the-side</span>
+<span id="f05-p2"><span>~/us (main) $ </span><span class="f05-cursor" id="f05-cur2"></span></span></div>
+              <svg id="f05-svg" width="1920" height="1080" viewBox="0 0 1920 1080" style="position: absolute; left: 0; top: 0; overflow: visible" data-layout-ignore>
+                <!-- the hidden lane first, so main is drawn over the fork; its lit copy on top of it -->
+                <path id="f05-hid" d="M 60 470 C 460 470, 460 840, 900 840 H 1840" fill="none" stroke="#505048" stroke-width="5" />
+                <path id="f05-lit" d="M 60 470 C 460 470, 460 840, 900 840 H 1840" fill="none" stroke="#E85D26" stroke-width="7" style="filter: drop-shadow(0 0 10px rgba(232, 93, 38, 0.8))" />
+                <path id="f05-main" d="M -500 470 H 1840" fill="none" stroke="#888880" stroke-width="5" />
+                <g id="f05-medots" fill="#F0ECE5"></g>
+                <circle id="f05-fork" cx="60" cy="470" r="11" fill="#0A0A0A" stroke="#888880" stroke-width="5" />
+                <g id="f05-youdots"></g>
+              </svg>
+              <div id="f05-head" data-layout-ignore>HEAD -&gt; main</div>
+              <div id="f05-tag" data-hf-motion-blur='{"fps": 60}' data-layout-allow-overlap>remotes/<span class="f05-you">you</span>/</div>
+            </div>
+            <div id="f05-namew">
+              <div id="f05-name" data-layout-allow-overlap><span class="f05-f hr-glowbox f05-gl">feature</span><span class="f05-f">/</span>nothing<span class="f05-f">-</span>on<span class="f05-f">-</span>the<span class="f05-f">-</span><span class="f05-f hr-glowbox f05-gl">side</span><div id="f05-uline"></div></div>
+            </div>
+            <div id="f05-lyr">
+              <div id="f05-row1"><span class="f05-w">then</span> <span class="f05-w">i</span> <span class="f05-w">found</span> <span class="f05-w">the</span> <span class="f05-w">other</span></div>
+              <span class="f05-w2 hr-glowbox" id="f05-branch">branch</span>
+              <span class="f05-w2 f05-lead f05-small">you</span>
+              <span class="f05-w2 f05-lead f05-small">tried</span>
+              <span class="f05-w2 f05-lead f05-small">to</span>
+              <span class="f05-w2 hr-glowbox" id="f05-hide">hide</span>
+            </div>
+          </div>
+          </div>
+          <div id="f05-hud">
+            <div id="f05-strip" data-layout-allow-overlap><span>~/us &nbsp;·&nbsp; main</span><span>commits by you &nbsp;<b>1,095</b></span></div>
+          </div>
         </div>
       </div>
       <script src="assets/kit/env.js"></script>
       <script src="assets/kit/hr-kit.js"></script>
+      <script src="assets/kit/wow-kit.js"></script>
+      <script src="assets/kit/motion-blur.js"></script>
       <script>
         (() => {
           const DUR = 3.569, T0 = 27.57;
           const root = document.querySelector('[data-composition-id="05-branch"]');
           const $ = (id) => root.querySelector("#" + id);
-          const stage = HR.stage(root, { seed: 5 });
           const tl = gsap.timeline({ paused: true });
           const at = (T) => T - T0;
           const BRANCH = at(28.98), HIDE = at(30.805), ENTER = at(28.541);
+          const IN = 0.4, OUT = 0.42; // the drop from 04, the glideUp into 06 (REFINE-1's table)
           const NS = "http://www.w3.org/2000/svg";
+          const smooth = (u) => u * u * (3 - 2 * u);
+          const clamp01 = (x) => Math.max(0, Math.min(1, x));
+
+          // ---- the cuts. One proxy carries both switches; render() hands the drop to the world and the strip (the lyric
+          // is not in it: "then" starts 0.03 s in), and the glideUp's move to everything but its blur only to the world ----
+          const px = document.createElement("div"); px.style.display = "none"; root.appendChild(px);
+          WOW.transition(tl, px, { in: "drop", dur: IN });
+          WOW.transition(tl, px, { out: "glideUp", dur: OUT, total: DUR });
 
           // ---- row 1, on main: every word on its start ----
           const w1 = root.querySelectorAll("#f05-row1 .f05-w");
@@ -114,32 +149,64 @@
           [29.5, 29.88, 30.36].forEach((T, i) => { HR.lead(tl, w2[i + 1], at(T)); w2[i + 1].classList.remove("hr-clip"); });
           HR.hero(tl, w2[4], HIDE, { spread: 22, over: 1.2, pre: 0.08, sharp: true, skew: false });
 
+          // ---- 04's name falls in ahead of the world (its own fall and speed blur) and lands where 04 held it ----
+          const name = $("f05-name");
+          const FALL = 0.3;
+          tl.fromTo(name, { y: -860, scale: 1 }, { y: 0, scale: 1, duration: FALL, ease: "power3.out", immediateRender: false }, 0);
+          // "hide": the label flares with the curve
+          tl.fromTo(name, { scale: 1.035 }, { scale: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, HIDE);
+          // "branch": git lists it as remotes/you/…, and the label takes the prefix
+          WOW.word(tl, $("f05-tag"), BRANCH, { kind: "left" });
+
           // ---- the terminal: `git branch -a` types under "then i found"; the list arrives whole on the kicks ----
           const keys = [[0, ""]];
           const CMD = "git branch -a", K0 = at(27.62), K1 = at(28.3);
           for (let i = 0; i < CMD.length; i++) keys.push([K0 + ((K1 - K0) * i) / CMD.length, CMD.slice(0, i + 1)]);
           const outs = [[$("f05-o1"), ENTER], [$("f05-o2"), ENTER], [$("f05-o3"), BRANCH], [$("f05-p2"), BRANCH]];
           for (const [el, t] of outs) tl.set(el, { opacity: 0 }, 0).set(el, { opacity: 1 }, t);
-
-          // ---- "hide": the name replaces the note, a pop points at it ----
-          tl.fromTo($("f05-tip"), { scale: 1.35 }, { scale: 1, duration: 0.4, ease: "expo.out", immediateRender: false }, HIDE);
-
-          // ---- the camera: it follows the pen down the lane; a punch on "branch"; a quiet lean into "hide" ----
-          tl.fromTo(stage.cam, { z: 1.0, x: 0, y: 0 }, { z: 1.012, x: 6, y: 6, duration: BRANCH - 0.06, ease: "none" }, 0);
-          tl.to(stage.cam, { z: 1.045, y: 14, duration: 0.06, ease: "power2.in" }, BRANCH - 0.06);
-          tl.to(stage.cam, { z: 1.016, y: 10, duration: 0.55, ease: "elastic.out(1, 0.55)" }, BRANCH);
-          tl.to(stage.cam, { z: 1.026, x: 14, y: 18, duration: HIDE - BRANCH - 0.55, ease: "sine.inOut" }, BRANCH + 0.55);
-          tl.to(stage.cam, { z: 1.034, x: 16, y: 22, duration: DUR - HIDE, ease: "power2.out" }, HIDE);
           tl.set({}, {}, DUR);
 
-          // ---- the path text: placed once the fonts are in (until then, re-measured every frame) ----
-          const hid = $("f05-hid"), L = hid.getTotalLength();
-          const S0 = 410, LIFT = 12, GAP = 0.3; // where "branch" starts on the lane (px of arclength), glyph lift, word gap (em)
+          // ---- the camera (world centre cx, cy and zoom z per key; eased between keys) ----
+          // land wide as 04 left it → push in on the terminal and main → truck right along main → dive down the curve
+          // on "branch" → drift along the lane → pull out wide into "hide"
+          const io3 = (u) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2), io2 = (u) => (u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2);
+          const CAM = [
+            [0, 960, 540, 1.0, null], [IN, 960, 540, 1.0, io2], [0.86, 600, 410, 1.36, io3], [1.2, 760, 420, 1.36, io2],
+            [BRANCH + 0.02, 720, 640, 1.5, io3], [2.95, 840, 600, 1.22, io2], [HIDE + 0.02, 960, 540, 0.98, io3], [DUR, 960, 540, 0.97, (u) => 1 - (1 - u) * (1 - u)],
+          ];
+          const camAt = (t) => {
+            for (let i = 1; i < CAM.length; i++) if (t < CAM[i][0]) {
+              const a = CAM[i - 1], b = CAM[i], u = b[4]((t - a[0]) / (b[0] - a[0]));
+              return { cx: a[1] + (b[1] - a[1]) * u, cy: a[2] + (b[2] - a[2]) * u, z: a[3] + (b[3] - a[3]) * u };
+            }
+            const e = CAM[CAM.length - 1]; return { cx: e[1], cy: e[2], z: e[3] };
+          };
+          // the light's anchor in the world: the name → the terminal and main → the bend → the lane → the whole curve
+          const GLOW = [[0, 960, 930], [0.5, 960, 930], [0.95, 520, 380], [1.25, 720, 420], [BRANCH + 0.1, 560, 690], [2.9, 1120, 770], [HIDE, 980, 700], [DUR, 980, 700]];
+          const glowAt = (t) => {
+            for (let i = 1; i < GLOW.length; i++) if (t < GLOW[i][0]) {
+              const a = GLOW[i - 1], b = GLOW[i], u = smooth((t - a[0]) / (b[0] - a[0]));
+              return [a[1] + (b[1] - a[1]) * u, a[2] + (b[2] - a[2]) * u];
+            }
+            return GLOW[GLOW.length - 1].slice(1);
+          };
+
+          // ---- the path text and the name: placed once the fonts are in (until then, re-measured every frame) ----
+          const hid = $("f05-hid"), lit = $("f05-lit"), L = hid.getTotalLength();
+          const LIFT = 12, GAP = 0.3, WIDE = 89 * 19.2, BOTTOM = 52.2 * 19.2; // glyph lift, word gap (em); 04's name width and line
           const tan = (s) => { const a = hid.getPointAtLength(Math.max(0, s - 2)), b = hid.getPointAtLength(Math.min(L, s + 2)); return Math.atan2(b.y - a.y, b.x - a.x); };
           let laid = false, pen = [], dots = [];
           function layout() {
             const ready = document.fonts.status === "loaded";
-            let s = S0;
+            // the name: 04's fit (the kebab name runs 89cqw), its line box bottom on 04's line
+            name.style.fontSize = "145px";
+            const fs = (145 * WIDE) / name.offsetWidth;
+            name.style.fontSize = fs.toFixed(3) + "px";
+            name.style.top = (BOTTOM - name.offsetHeight).toFixed(2) + "px";
+            // row 2: the words end 70 px before the lane's head
+            let total = 0;
+            for (const w of w2) { const em = parseFloat(getComputedStyle(w).fontSize); for (const g of w._hrG) total += g.parentNode.offsetWidth; total += em * GAP; }
+            let s = Math.max(300, L - 70 - total + parseFloat(getComputedStyle(w2[4]).fontSize) * GAP);
             for (const w of w2) {
               const em = parseFloat(getComputedStyle(w).fontSize);
               w._s0 = s;
@@ -154,25 +221,24 @@
             }
             const [br, you, tried, to, hide] = w2;
             // the pen: the lane is revealed from the fork during "other", passes under "branch" as it lands, then writes
-            // each word's stretch of lane while it is sung, and reaches the branch's head just after "hide"
+            // each word's stretch of lane while it is sung, and reaches the branch's head just before "hide"
             pen = [[at(28.7), 0], [BRANCH + 0.06, br._s1], [at(29.5), you._s0], [at(29.88), tried._s0], [at(30.36), to._s0],
-              [HIDE, hide._s0], [HIDE + 0.16, hide._s1], [HIDE + 0.24, L]];
-            // you's commits sit in the gaps between the words, and on the head
+              [HIDE - 0.12, hide._s0], [HIDE - 0.02, L]];
             dots = [(br._s1 + you._s0) / 2, (tried._s1 + to._s0) / 2, (to._s1 + hide._s0) / 2, L].map((s) => {
               let t = pen[pen.length - 1][0];
               for (let i = 1; i < pen.length; i++) if (s <= pen[i][1]) { const [ta, sa] = pen[i - 1], [tb, sb] = pen[i]; t = ta + ((tb - ta) * (s - sa)) / Math.max(1e-6, sb - sa); break; }
               const p = hid.getPointAtLength(s);
-              return { x: p.x, y: p.y, t };
+              return { x: p.x, y: p.y, t, s };
             });
             laid = ready;
           }
           // main's commits (static history) and you's commit circles
           const meDots = $("f05-medots");
-          for (const x of [330, 700, 1060, 1420, 1776]) {
-            const c = document.createElementNS(NS, "circle"); c.setAttribute("cx", x); c.setAttribute("cy", 440); c.setAttribute("r", 11); meDots.appendChild(c);
+          for (const x of [330, 660, 1000, 1340, 1660, 1840]) {
+            const c = document.createElementNS(NS, "circle"); c.setAttribute("cx", x); c.setAttribute("cy", 470); c.setAttribute("r", 12); meDots.appendChild(c);
           }
           const youG = $("f05-youdots"), youC = [0, 1, 2, 3].map(() => {
-            const c = document.createElementNS(NS, "circle"); c.setAttribute("r", 10); c.setAttribute("fill", "#0A0A0A"); c.setAttribute("stroke-width", "5");
+            const c = document.createElementNS(NS, "circle"); c.setAttribute("fill", "#0A0A0A"); c.setAttribute("stroke-width", "6");
             youG.appendChild(c); return c;
           });
           const popE = gsap.parseEase("back.out(2.2)");
@@ -181,30 +247,59 @@
             for (let i = 1; i < pen.length; i++) if (t < pen[i][0]) { const [ta, sa] = pen[i - 1], [tb, sb] = pen[i]; return sa + ((sb - sa) * (t - ta)) / (tb - ta); }
             return L;
           };
+          // "hide": the light runs the lane from the fork to the head
+          const SW0 = HIDE - 0.02, SW1 = HIDE + 0.2;
+          const litAt = (t) => (t <= SW0 ? 0 : L * (1 - Math.pow(1 - clamp01((t - SW0) / (SW1 - SW0)), 2)));
 
-          // ---- per-frame state: layout, the pen, the dots, typing, cursors, the swap, glow, camera ----
-          const cmd = $("f05-cmd"), cur1 = $("f05-cur1"), cur2 = $("f05-cur2"), tip = $("f05-tip");
+          // ---- per-frame state ----
+          const clip = $("f05-clip"), tx = $("f05-tx"), cam = $("f05-cam"), drop = $("f05-drop"), hud = $("f05-hud"), namew = $("f05-namew"), glow = $("f05-glow");
+          const cmd = $("f05-cmd"), cur1 = $("f05-cur1"), cur2 = $("f05-cur2"), tag = $("f05-tag");
+          const nameGl = root.querySelectorAll(".f05-gl");
           const blink = (t, since) => t - since < 0.35 || Math.floor((t - since) * 2) % 2 === 0;
-          hid.style.strokeDasharray = `${L} ${L}`;
+          hid.style.strokeDasharray = `${L} ${L}`; lit.style.strokeDasharray = `${L} ${L}`;
           function render() {
-            const t = tl.time(), T = T0 + t;
+            const t = tl.time(), T = T0 + t, bass = HR.band("bass", T);
             if (!laid) layout();
-            const lit = t >= HIDE, col = lit ? "#E85D26" : "#505048";
-            hid.style.strokeDashoffset = (L - penAt(t)).toFixed(2);
-            hid.setAttribute("stroke", col);
-            youC.forEach((c, i) => {
-              const d = dots[i], k = Math.max(0, Math.min(1, (t - d.t) / 0.32));
-              c.setAttribute("cx", d.x); c.setAttribute("cy", d.y); c.setAttribute("stroke", col);
-              c.setAttribute("r", (10 * (k > 0 ? Math.max(0.05, popE(k)) : 0)).toFixed(2));
+            // the camera: keys, a punch as "branch" lands, the kick pulse and a slow seeded drift
+            const c = camAt(t);
+            let z = c.z * (1 + 0.012 * HR.hit("kick", T, 0.14));
+            if (t >= BRANCH) z *= 1 + 0.045 * Math.pow(1 - clamp01((t - BRANCH) / 0.45), 3);
+            const dx = Math.sin(T * 0.41 + 5) * 6 + Math.sin(T * 0.13 + 10) * 4, dy = Math.sin(T * 0.33 + 15) * 4 + Math.sin(T * 0.09 + 5) * 3;
+            const cx = c.cx + dx / z, cy = c.cy + dy / z;
+            cam.style.transform = `translate(${(960 - cx * z).toFixed(2)}px, ${(540 - cy * z).toFixed(2)}px) scale(${z.toFixed(4)})`;
+            // the lanes: the pen draws the hidden one; on "hide" it lights end to end
+            const pe = penAt(t), li = Math.min(pe, litAt(t)), on = t >= SW0;
+            hid.style.strokeDashoffset = (L - pe).toFixed(2);
+            lit.style.strokeDashoffset = (L - li).toFixed(2);
+            lit.style.opacity = li > 0.5 ? 1 : 0;
+            youC.forEach((cc, i) => {
+              const d = dots[i], k = clamp01((t - d.t) / 0.32), hot = on && li >= d.s - 1;
+              cc.setAttribute("cx", d.x); cc.setAttribute("cy", d.y); cc.setAttribute("stroke", hot ? "#E85D26" : "#888880");
+              cc.setAttribute("r", (11 * (k > 0 ? Math.max(0.05, popE(k)) : 0) * (hot ? 1.25 : 1)).toFixed(2));
             });
+            // the terminal
             let k = keys[0]; for (const st of keys) if (st[0] <= t) k = st;
             cmd.textContent = k[1];
             cur1.style.opacity = t < ENTER && blink(t, k[0]) ? 1 : 0;
             cur2.style.opacity = t >= BRANCH && blink(t, BRANCH) ? 1 : 0;
-            tip.textContent = lit ? "remotes/you/feature/nothing-on-the-side" : "(hidden: 1 branch)";
-            tip.classList.toggle("f05-lit", lit);
+            tag.style.color = on ? "#F0ECE5" : "";
+            // light: on the scene's object, breathing with the bass, a surge on "hide"
+            const [gx, gy] = glowAt(t);
+            glow.style.transform = `translate(${gx.toFixed(1)}px, ${gy.toFixed(1)}px)`;
+            const surge = on ? 0.45 * Math.exp(-(t - SW0) / 0.5) : 0;
+            glow.style.opacity = Math.min(1, 0.68 + 0.6 * bass + 0.25 * HR.hit("kick", T, 0.2) + surge).toFixed(3);
             HR.glow(w2[0], T, 0.3, 0.45); HR.glow(w2[4], T, 0.3, 0.45);
-            stage.apply(T);
+            nameGl.forEach((el) => HR.glow(el, T, 0.35 + (on ? 1.2 * Math.exp(-(t - SW0) / 0.4) : 0), 0.45));
+            // the switches: the drop moves the world and the strip; the glideUp moves everything, blurring all but the lyric
+            WOW.draw(tl, T0);
+            const inP = t < IN, outP = t > DUR - OUT;
+            clip.style.clipPath = inP ? "none" : "inset(6.2cqw 0 0 0)";
+            for (const el of [drop, hud]) { el.style.translate = inP ? px.style.translate : ""; el.style.filter = inP || outP ? px.style.filter : ""; }
+            // the name's own fall: a speed blur that clears as it lands
+            const fb = t < FALL ? 16 * Math.pow(1 - t / FALL, 2) : 0;
+            namew.style.filter = outP ? px.style.filter : fb > 0.3 ? `blur(${fb.toFixed(1)}px)` : "";
+            tx.style.translate = outP ? px.style.translate : "";
+            tx.style.scale = outP ? px.style.scale : "";
           }
           tl.eventCallback("onUpdate", render);
           render();
