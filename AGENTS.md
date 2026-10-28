@@ -15,9 +15,9 @@ the work; load them before planning or writing a single composition:
   three.js adapters. Pick rules from its `rules-index.md` before inventing motion.
 
 Their companions (`/hyperframes`, `/hyperframes-core`, `/hyperframes-creative`, `/hyperframes-cli`,
-`/hyperframes-registry`, `/hyperframes-keyframes`, `/hyperframes-audio`, `/media-use`) live beside them in
-`.agents/skills/` (linked from `.claude/skills/`); the two skills point into them by relative path, so they stay
-together. Refresh the whole set with `npx hyperframes skills update`, then copy the updated folders into
+`/hyperframes-registry`, `/hyperframes-keyframes`, `/hyperframes-audio`, `/hyperframes-studio`, `/media-use`) live
+beside them in `.agents/skills/` (linked from `.claude/skills/`); the two skills point into them by relative path, so
+they stay together. Refresh the whole set with `npx hyperframes skills update`, then copy the updated folders into
 `.agents/skills/`.
 
 ## Making a video
@@ -31,8 +31,8 @@ the song?
    word-level lyric alignment, sung-line detection, the tracked beat grid. Done when `projects/<id>/data/lyrics.json`
    exists and `work/qa/align_report.md` flags nothing you have not resolved. Then `./vid video <id>`: it scaffolds
    the HyperFrames project at **`projects/<id>/video/`** (the skill's `PROJECT_DIR`) and refreshes
-   `assets/bgm.mp3`, `audiomap.json` and `lyrics.json`. Rerun it after any change to the analysis; it never touches
-   the brief, storyboard or frames.
+   `assets/bgm.mp3`, `audiomap.json`, `lyrics.json` and `assets/kit/env.js`. Rerun it after any change to the
+   analysis; it never touches the brief, storyboard or frames.
 2. **Interpret.** The skill's Steps 2–3 with the house style: the song's world, a literal pun for each sung line,
    and what develops across the song (counters, plants and payoffs, the bookend). Write `BRIEF.md`,
    `STORYBOARD.md` and the video's `SYSTEM.md` (how this video uses `frame.md`: its idea, tokens, lyric rule,
@@ -45,37 +45,40 @@ the song?
    check the contact sheet against the four questions and for repeated layouts. Stills judge the look, not the
    motion.
 4. **Motion.** Animate the opening and the first chorus with its hook yourself: they are the reference frames.
-   Render `./vid proof <id> --to <end of the first chorus>` and measure it (step A below:
-   `./vid audit <id> --file projects/<id>/video/renders/proof-<from>-<to>.mp4`). **Stop for the user's verdict on the
-   motion**, with the audit's film table beside the proof.
+   Run `./vid assemble <id>` (proofs cut `index.html`), render `./vid proof <id> --to <end of the first chorus>` and
+   measure it (step A below: `./vid audit <id> --file projects/<id>/video/renders/proof-<from>-<to>.mp4`).
+   **Stop for the user's verdict on the motion**, with the audit's film table beside the proof.
 5. **Build.** Dispatch frame-workers (the skill's Step 4) three at a time, each with `SYSTEM.md`, both reference
    frames and the rough still of its scene. Each worker checks its own scene:
-   - `./vid snap <id> <frame_id> --at …` runs `hyperframes check` on the scene alone, then takes the stills. It fails
-     when a script throws; in the film that would only be a dead scene.
+   - `./vid snap <id> <frame_id> --at …` runs `hyperframes check` on the scene alone, takes the stills, and fails
+     if the check failed (a script that throws, say; in the film that would only be a dead scene).
    - `./vid proof <id> --from <s> --to <s>` shows the scene moving, and `./vid audit` on that proof measures it.
 
    The kit and the traps that cost earlier rounds are in `assets/kit/README.md`; set pieces are built with its
    `lines.js` (lines, shutter, type on a path; `projects/force-push/video/compositions/frames/05-branch.html` is the
    worked example). Review the signals in
    [docs/visual-guidelines.md](docs/visual-guidelines.md); never game them.
-6. **Review: measure, critique, refine.** `./vid assemble <id>`, then `npx hyperframes check --no-browser-gpu` (a
-   broken rule is a defect and gets fixed), then render a draft of the whole film to `renders/video.mp4` and run the
+6. **Review: measure, critique, refine.** `./vid assemble <id>`, then, in `video/` with the display variables unset,
+   `npx hyperframes@0.8.164 check --no-browser-gpu` (the pinned version; a broken rule is a defect and gets fixed),
+   then render a draft of the whole film to `renders/video.mp4` and run the
    three steps below on it until they pass or two rounds are done (`./vid render <id>` renders the draft). The loop answers the skill's render question.
    - **A. Measure.** `./vid audit <id> --name draft-<n>` measures the draft against LGTM and p(doom) (motion, big
-     moves, composition change, cuts, black area, mid-tones, detail, accent colour) and per scene, and writes
-     `audit/draft-<n>/report.md` with the weakest scenes against their music, still runs and unseen hits, plus
-     `strips/<scene>.jpg` for step B. A flag is a reason to look, not a target to game.
+     moves, composition change, cuts, black area, mid-tones, light frames, detail, accent colour) and per scene, and
+     writes `audit/draft-<n>/report.md` (and `report.json`) with the weakest scenes against their music, still runs and
+     unseen hits, plus `strips/<scene>.jpg` for step B. Without `--name` it writes to `audit/<file name>/`. A flag is a
+     reason to look, not a target to game.
    - **B. Critique.** A fresh reviewer agent, which built nothing, follows [docs/REVIEW.md](docs/REVIEW.md): it
-     scores every scene on idea, motion, transitions, legibility, colour and light, craft and variety from the strips,
-     checks the hook, the pacing curve and the ending, and writes `audit/draft-<n>/review.md` with the weakest scenes
+     scores every scene on idea, motion, transitions, legibility, colour and light, craft, variety and spectacle from
+     the strips, checks the hook, the pacing curve and the ending, and writes `audit/draft-<n>/review.md` with the weakest scenes
      ranked and one concrete fix each.
    - **C. Refine.** Take the weakest scenes from A and B (5–10), write the round's brief (`REFINE-<n>.md`: the
      film-level fixes and one fix per scene), dispatch workers three at a time as in stage 5, then re-render and run A
      and B again. Done when no scene scores below 3 in the review and every film metric on the "below/above" side
      has a written reason, or after two rounds; report what is left.
-7. **Deliver.** `./vid render <id> --4k` renders the film through the GPU and the light pass to `renders/video.mp4`;
-   `./vid master <id>` writes `out/<id>.mp4`, the render with the master's audio (AAC 320k): the file
-   to upload; keep an earlier master under another name rather than overwrite it. With it come:
+7. **Deliver.** `./vid render <id> --4k` renders the film at 4K (through the GPU and the light pass, like every
+   render) to `renders/video.mp4`; `./vid master <id>` writes `out/<id>.mp4`, the render with the master's audio
+   (AAC 320k): the file to upload. It overwrites `out/<id>.mp4`, so rename an earlier master first to keep
+   it. With it come:
    - subtitles (`.srt`) built from `lyrics.json`;
    - a technical check with ffprobe: duration equals the master's, constant fps, audio present;
    - **the YouTube package check:** three thumbnail candidates (the t = 0 poster and two strong frames), compared
@@ -92,14 +95,16 @@ the song?
 
 When one lands, update its stage here.
 
-`./vid snap <id> [<frame_id>] --at <track seconds,…>` writes stills and a contact sheet to
-`projects/<id>/video/snapshots/`. With a frame id it mounts that frame alone at its storyboard span, so a frame can
-be judged before the others exist, and it runs `hyperframes check` on it first. Read the sheet after every change you
+`./vid snap <id> [<frame_id>] --at <track seconds,…>` writes stills (`at-<t>s.png`) and a contact sheet
+(`sheet.png`) to `projects/<id>/video/snapshots/<frame_id>/` (or `snapshots/all/`). With a frame id it mounts that
+frame alone at its storyboard span, so a frame can be judged before the others exist, runs `hyperframes check` on it,
+and names the stills by frame-local time (the console maps them to track seconds). Read the sheet after every change you
 want to trust.
 
 `./vid proof <id> [--from <s>] --to <s>` renders a 60 fps proof of that range to
 `renders/proof-<from>-<to>.mp4`, one per range, so workers can proof side by side. `--from` moves back to the start of
-the frame playing there: to see a handoff, pick a time inside the previous frame.
+the frame playing there, and the file is named by that start: to see a handoff, pick a time inside the previous
+frame.
 
 ## This repo's deviations from `/music-to-video`
 
@@ -113,7 +118,10 @@ the frame playing there: to see a handoff, pick a time inside the previous frame
   with both reference frames (stage 5). `projects/harvest-remix/video/` is the worked example.
 - **GPU renders, the light pass, software checks.** `./vid proof` and `./vid render` capture through
   `tools/chrome-gpu` (the full Chrome, windowed on WSLg, reaches the GPU; HyperFrames' headless Chrome cannot under
-  WSL) and then run the light pass (`analysis/finish.py`: accent bloom, halation, grain, vignette) on the CUDA GPU.
+  WSL) and then run the light pass (`analysis/finish.py`: accent bloom, halation, chromatic aberration, a tone
+  shoulder, grain, vignette) on the CUDA GPU, keeping the unlit capture as `<name>.raw.mp4`. The pass runs when the
+  finish layer (`compositions/overlays/finish.html`) names `analysis/finish.py`, as the template's does, and needs
+  `light: {"accent": …}` in the storyboard frontmatter; `--raw` skips it, and harvest-remix predates it.
   `./vid snap` and every `hyperframes check` stay software (SwiftShader) with the display variables unset. If WSLg
   hangs (`xdpyinfo` does not answer; a GPU render times out waiting for Chrome), add `--no-browser-gpu` to proofs
   and renders until WSL is restarted (`wsl --shutdown` from Windows, the user's call). The HyperFrames CLI has no
@@ -138,7 +146,8 @@ song. In short: a world built from the song's subject, told in kinetic type (pos
 world's objects, one literal pun per line, a deadpan small-text layer, counters and plants that pay off); black
 and restrained (one small accent, a cream-paper register); every scene a lit set piece in a space, the accent
 emitting light through the light pass; motion from the shared kit; 3D only as line drawing. **Complex or realistic 3D is out**: it cost the most and still read as a generic CG demo
-(harvest-remix v1–v6). `projects/harvest-remix/video/` is the approved model; the reference videos and why they
+(harvest-remix v1–v6). `projects/harvest-remix/video/` is the approved model (before the light pass;
+`projects/force-push/video/compositions/frames/05-branch.html` shows light and depth); the reference videos and why they
 work are in [docs/REFERENCE-VIDEOS.md](docs/REFERENCE-VIDEOS.md).
 
 ## Quality bar
@@ -152,8 +161,11 @@ signals, is [docs/visual-guidelines.md](docs/visual-guidelines.md).
 ## Repository checks
 
 `./vid check` (the pre-commit hook and CI) guards the repository: no tracked file over 5 MB outside
-`projects/*/input/`, `tools/` typechecks and its tests pass, `analysis/` lints and its tests pass. Keep it green.
-`./vid check --full` also reruns the beat analysis and requires every project's `data/audio.json` byte for byte.
+`projects/*/input/`, `tools/` typechecks and its tests pass, Ruff passes on `analysis/` and `projects/`, the
+`analysis/` tests pass. Keep it green. `./vid check --full` (local only: it needs every project's `work/stems/`) also
+reruns the beat analysis into `out/check/<id>/` and requires every project's `data/audio.json` byte for byte.
 
 The published Harvest and Force Push videos and harvest-remix v1–v6 came from a TypeScript/three.js engine, retired
-on 2026-10-19; it is in git history up to `e4376f8` (`app/`, `prompts/`, the engine docs). Their masters are in `out/`.
+on 2026-10-19; it is in git history up to `e4376f8` (`app/`, `prompts/`, the engine docs). Their masters in `out/`
+are `harvest.mp4` and `force-push-engine.mp4` (`force-push.mp4` is the HyperFrames v2); harvest-remix v1–v6 were
+not kept.

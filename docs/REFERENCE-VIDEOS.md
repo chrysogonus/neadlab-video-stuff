@@ -14,11 +14,12 @@ we take from it belong in `HOUSE-STYLE.md` once agreed.
   median frame difference at 60 fps). Hard cuts were detected at 60 fps and compared with the beat grid.
 - **Lyrics** come from Whisper `large-v3-turbo`, used only to label the sheets; the on-screen text is the real
   lyric.
-- **Why they succeeded:** YouTube statistics and the top 400 / 211 comments, sorted by likes
-  (`analysis/<video>/youtube.json`).
+- **Why they succeeded:** YouTube statistics and the 60 most-liked of their 400 / 211 comments
+  (`successful-videos-reference/analysis/<video>/youtube.json`).
 - **Intent:** p(doom)'s own treatment and engine notes, which sit in this repository's git history (this repo is
   a fork of `mexicat/pdoom-video`): `git show c4299a2:docs/TREATMENT.md`, and the revision-6 commit `fa164b7`.
-- **For comparison:** our delivered harvest-remix v12 (`out/harvest-remix.mp4`) got the same measurements.
+- **For comparison:** our delivered harvest-remix v12 got the same measurements
+  (`successful-videos-reference/analysis/harvest-remix-v12/`; its master is no longer in `out/`).
 
 Scripts: `successful-videos-reference/analysis/scripts/`.
 
@@ -37,7 +38,10 @@ analysis/.venv/bin/python -I $A/metrics.py $D
 analysis/.venv/bin/python -I $A/summary.py $D
 ```
 
-The `HOUSE STYLE` line gives the three targets: `ground` is the 20th-percentile luma of a frame (median over the film), `dark09` the share of pixels darker than 0.09. `black` is the mean share of pixels with luma < 0.06, `sat_area` the share carrying a saturated hue (the
+The `HOUSE STYLE` line gives three reference figures (signals, not targets; docs/visual-guidelines.md): `ground` is the 20th-percentile luma of a frame (median over the film), `dark09` the share of pixels darker than 0.09, and the accent area. The line prints only for a
+render measured with the current `metrics.py`: the committed references' `metrics.json` predate the `ground` and
+`dark09` keys, so the ground figures quoted for them cannot be reproduced from the committed data; rerun
+`metrics.py` on the videos to get them. `black` is the mean share of pixels with luma < 0.06, `sat_area` the share carrying a saturated hue (the
 accent), "light frames" the seconds with mean luma > 0.5.
 
 ## The numbers
@@ -51,7 +55,7 @@ accent), "light frames" the seconds with mean luma > 0.5.
 | Distinct set pieces | ~50 (~6 s each; the chorus set of ~11 is reused 3×) | ~50 (~3 s each, about one per line) | 21 scenes (~8 s each) |
 | Seconds whose composition changes (> 0.03 / > 0.10) | 63 % / 19 % | 86 % / 35 % | 61 % / 26 % |
 | Motion, median frame difference | 0.37 | 1.17 | 0.64 |
-| Hard cuts per minute | ~8 (it moves the camera and morphs instead) | ~25 clean cuts, plus flashes and whips | ~33 (detector count) |
+| Hard cuts per minute | ~8 (it moves the camera and morphs instead) | ~48 (detector count); ~25 clean cuts (hard-cut share ≥ 0.5), plus flashes and whips | ~33 (detector count) |
 | Light frames (luma > 0.5) | **20 %** | 9 % | 12 % |
 | Dark frames (luma < 0.15) | 53 % | 58 % | 34 % |
 | **Area of true black** (mean) | **20 %** | **44 %** | **2.6 %** |
@@ -261,7 +265,7 @@ colour fringes).
 
 ## Where harvest-remix v12 stands
 
-Seen against them (v12, `analysis/harvest-remix-v12/`):
+Seen against them (v12, `successful-videos-reference/analysis/harvest-remix-v12/`):
 
 - **Strong already:** one idea per line, the cream issue-tracker register, the marker voice "(didn't need)",
   "(sure.)", "(it never was)", the serif voice, the BYTES HELD counter, the outbox bookend, a character

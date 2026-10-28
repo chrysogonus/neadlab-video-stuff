@@ -2,7 +2,7 @@
 // The pipeline: a song and its lyric sheet in, a HyperFrames project and the upload out (run from the repo root as ./vid).
 //   ./vid new <id> --audio <file> --transcript <file> [--title <title>]   create projects/<id>/
 //   ./vid analyze <id> [--force step,step]   run the analysis steps whose inputs changed (see STEPS)
-//   ./vid status <id>                        which steps are current, stale or missing
+//   ./vid status <id>                        each step: current, stale, missing, unrecorded or frozen
 //   ./vid check [--full]                     fast repository quality gates (no GPU or Chrome); --full adds the
 //                                            analysis reproducing every project's data/audio.json
 //   ./vid video <id>                         the HyperFrames project for the music-to-video skill (see HYPERFRAMES)

@@ -71,7 +71,7 @@ the ranked list.
 
 1. **Verdict** in three sentences: how close this is to the references, the single biggest weakness, the single best
    thing to keep.
-2. **Scene table:** every scene, its seven scores and the lowest score's reason in a few words.
+2. **Scene table:** every scene, its eight scores and the lowest score's reason in a few words.
 3. **The weakest scenes, ranked** (up to 10): for each, what is wrong (cite the strip frame or the track second) and
    one concrete fix in the film's world — a specific image, move or transition a builder can act on, not "make it more
    dynamic".

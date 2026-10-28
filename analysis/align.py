@@ -3,7 +3,7 @@
 Pipeline
   1. ctc_emissions.py  : frame-wise CTC log-probs of the (time-corrected) vocal
                          stem from two acoustic models (MMS_FA, wav2vec2 LV60K).
-  2. whisper_run.py    : mlx-whisper large-v3-turbo word timestamps (cross-check).
+  2. whisper_run.py    : faster-whisper large-v3-turbo word timestamps (cross-check).
   3. vocal_feats.py    : vocal-stem RMS / pitch / onset features (5 ms hop).
   4. this script       : one global constrained CTC Viterbi pass over the whole
                          song on the fused emissions (garbage "star" token

@@ -53,24 +53,25 @@ film gets worse.
 
 ## Signals
 
-The audit reports these. A flag is a question about that moment, not a failure.
+`./vid audit` measures the signals marked *(measured)*; the rest are checked by eye on its strips and on stills,
+and by the reviewer (docs/REVIEW.md). A flag is a question about that moment, not a failure.
 
 | Signal | Flags | Source | For comparison |
 |---|---|---|---|
-| Still run | motion below 1.5 for more than 2 s | Audit (V20) | |
-| Motion vs drums | a scene's motion median under 12 where drums ≥ 0.6, under 6 in a verse, outside 2.5–6 in a breath | Audit (V20) | harvest-remix v19: the drawer tunnel 23, small props in black voids 3.7, the Mosca chart 1.2. *Refs:* pace is not what separates the hits; LGTM, the bigger one, moves less than harvest-remix v12 |
+| Still run *(measured)* | motion below 1.5 for more than 2 s | Audit (V20) | |
+| Motion vs drums *(measured, not flagged)* | a scene's motion median under 12 where drums ≥ 0.6, under 6 in a verse, outside 2.5–6 in a breath | Audit (V20) | harvest-remix v19: the drawer tunnel 23, small props in black voids 3.7, the Mosca chart 1.2. *Refs:* pace is not what separates the hits; LGTM, the bigger one, moves less than harvest-remix v12 |
 | Jolts | a scene's peak motion well above three times its median | Audit (V17) | the steady scenes (17-watch, 11-petabytes) measure about 3 |
-| Unseen hit | an onset ≥ 0.9 or a downbeat with no visible change within ±1 frame | Audit (V20) | a change does not prove it is the right one |
+| Unseen hit *(measured)* | a kick or snare onset ≥ 0.9, or a downbeat, with no visible change within ±2 frames (60 fps) | Audit (V20) | a change does not prove it is the right one |
 | Slow opening | motion under 6 after 0.3 s, or no object hit before 2.5 s | Audit (V20) | |
 | Hero-word width | a section with no sung word across ≥ 60 % of the frame width | Audit (V18) | p(doom)'s full-frame words |
 | Small element | the biggest element under about a third of the frame | Audit (V20, V21) | the weak harvest-remix v19 verse props: 15–25 % |
-| No highlight | 90th-percentile luma under 80 | Audit (V21) | harvest-remix v20, ranked by an agent: the 10 best shots 74–239, the 10 worst 34–68 |
-| Ground | 20th-percentile luma, median over the film | Refs | p(doom) 0.047, LGTM 0.063 |
-| True black | mean share of pixels darker than 0.06 | Refs | LGTM 20 %, p(doom) 44 %; the threshold sits just under the ink `#111111`, so it partly counts the ink |
-| Accent area | median share of the frame carrying the accent | Refs | about 3 % in both |
-| Accent light | a scene whose accent, bloom and halo included, lights over ~30 % of the frame, or a hook or drop that lights under 2 % | Audit (2026-10-26) | p(doom) median 8.6 %, p90 32 %; LGTM median 3.3 %, p90 13 % (1 fps) |
-| Cream frames | share of frames in the cream register | Refs | p(doom) 9 %, LGTM 20 % |
-| Repeated layout | neighbouring lines with the lyric in the same position; a scene whose edge layout matches the one before it over 0.8 (the audit's *layout vs previous*) | Audit (V18; measured 2026-10-26) | v17: a small lead line top left in five shots in a row; the references: 2–5 % of neighbouring 3 s blocks over 0.8 |
+| No highlight *(measured, not flagged)* | 90th-percentile luma under 80 | Audit (V21) | harvest-remix v20, ranked by an agent: the 10 best shots 74–239, the 10 worst 34–68 |
+| Ground | 20th-percentile luma, median over the film (`metrics.py`, not the audit) | Refs | p(doom) 0.047, LGTM 0.063 |
+| True black *(measured)* | mean share of pixels darker than 0.06 | Refs | LGTM 20 %, p(doom) 44 %; the threshold sits just under the ink `#111111`, so it partly counts the ink (`#0A0A0A` in the house style, `#111111` in the broadside `frame.md`) |
+| Accent area *(measured)* | median share of the frame carrying the accent | Refs | about 3 % in both |
+| Accent light *(measured, not flagged)* | a scene whose accent, bloom and halo included, lights over ~30 % of the frame, or a hook or drop that lights under 2 % | Audit (2026-10-26) | p(doom) median 8.6 %, p90 32 %; LGTM median 3.3 %, p90 13 % (1 fps) |
+| Cream frames *(measured: light seconds, luma > 0.5)* | share of frames in the cream register | Refs | p(doom) 9 %, LGTM 20 % |
+| Repeated layout *(measured: layout vs previous)* | neighbouring lines with the lyric in the same position; a scene whose edge layout matches the one before it over 0.8 (the audit's *layout vs previous*) | Audit (V18; measured 2026-10-26) | v17: a small lead line top left in five shots in a row; the references: 2–5 % of neighbouring 3 s blocks over 0.8 |
 | Few framings | a scene over 4 s without tight, mid and wide framings | Audit (V19, V20) | one sustained typographic transformation can be the better choice |
 | Flat depth | no parallax between two stills 0.5 s apart | Audit (V20) | |
 | No transformation | a scene whose last frame differs from its first only in position; under a third of scene switches as object match cuts | Audit (V20); the idea is *Refs* | p(doom)'s best quality is transformation; LGTM cuts ~8 times a minute and moves the camera or morphs instead |
@@ -79,8 +80,10 @@ The audit reports these. A flag is a question about that moment, not a failure.
 
 ## How to measure
 
-`./vid audit <id> [--file <mp4>]` (analysis/audit.py) measures all of the below on a render, per scene and against
-the references, and writes the strips the reviewer reads (docs/REVIEW.md). By hand:
+`./vid audit <id> [--file <mp4>] [--name <name>]` (analysis/audit.py) measures a render film-wide against the
+references and per scene, and writes `video/audit/<name>/report.md`, `report.json` and the strips the reviewer reads
+(`strips/<scene>.jpg`: the first 0.2 s at 30 fps, then the scene at 4 fps; docs/REVIEW.md). `--name` defaults to the
+file's name (`video` for the draft). The same measures by hand, and those it leaves out:
 
 - **Contact sheets:** 2 fps of the whole film, 5–10 fps strips around every drop and every scene switch.
 - **Luma and motion:** per frame at 10 fps, 320×180 gray. Luma is the mean (`signalstats` YAVG). Motion is the

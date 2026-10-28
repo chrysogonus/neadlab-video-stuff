@@ -84,7 +84,8 @@ restrained and lit by one accent; 3D only as line drawing.
 
    Nothing holds dead.
 9. **Light: glow on the accent only.** The accent emits light; bone type stays crisp. The light pass
-   (`analysis/finish.py`, p(doom)'s post chain, run by `./vid snap`, `proof` and `render`) blooms whatever is drawn in
+   (`analysis/finish.py`, p(doom)'s post chain, run by `./vid snap`, `proof` and `render` whenever the finish layer
+   names `analysis/finish.py`, as the template's does; `--raw` skips it) blooms whatever is drawn in
    the accent, adds a red-orange halation, low chromatic aberration, a tone shoulder, film grain and a gentle
    vignette; `STORYBOARD.md`'s frontmatter names the accent (`light: {"accent": "#E85D26"}`), and a frame's
    `- light: {…}` line changes it for that frame (a drop blooms harder). The finish layer
@@ -134,8 +135,9 @@ restrained and lit by one accent; 3D only as line drawing.
 
 The stages are in [AGENTS.md](../AGENTS.md) ("Making a video"). What the house style adds to them:
 
-- **Analyze:** `./vid video` installs the kit (`hr-kit.js`, `wow-kit.js`, `motion-blur.js`, `env.js`, and the kit's
-  `README.md` with its traps) and the finish layer from `templates/hyperframes/`.
+- **Analyze:** `./vid video` installs the kit (`hr-kit.js`, `wow-kit.js`, `motion-blur.js`, `lines.js` with the
+  vendored three.js, and the kit's `README.md` with its traps) and the finish layer from `templates/hyperframes/`,
+  once, and writes `assets/kit/env.js` (the song's beats, envelopes and onsets) from `data/audio.json` on every run.
 - **Interpret:** the song's world, its idea and preset; a line table (each sung line and its literal pun); the
   running devices (counter, plants and payoffs, the bookend, a character only if the story needs one); the
   small-text jokes. The song's `SYSTEM.md` follows harvest-remix's: the world, the tokens, the three voices, the

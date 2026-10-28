@@ -4,7 +4,7 @@ Delivered 2026-10-19 from the user-approved V21.md plan ("implement these refine
 in 4k at 60 fps") and uploaded to YouTube. The plan, the per-shot measurements and the render log are in V21.md;
 V9.md … V20.md hold the earlier rounds.
 
-**Upload:** repository-root `out/harvest-remix.mp4`.
+**Upload:** repository-root `out/harvest-remix.mp4`, renamed `out/harvest-remix-v21.mp4` when v22 replaced it (2026-10-22).
 **Subtitles:** `renders/harvest-remix-lyrics.en.srt`.
 **Thumbnails** (1280×720, YouTube Test & Compare): `renders/thumbnail-v21-1-sealed-read.png` (recommended),
 `-2-every-byte-mine.png`, `-3-decrypted-now.png` (and `.jpg` copies). Source: `compositions/thumbnail/v21/`, a
@@ -34,7 +34,8 @@ standalone composition over three of the master's own 4K frames (158.95, 92.4, 1
 | 22 globe | read per kick, top to bottom, fully lit at the cut into 23 |
 
 The rule behind them (every shot has a near-white highlight, a world object filling half the frame and its own light
-source) is guideline 16 in docs/visual-guidelines.md.
+source) was guideline 16; docs/visual-guidelines.md now carries it as rule 5 and the *No highlight* and *Small element*
+signals.
 
 ## Measurements (master vs the v20 proof)
 
